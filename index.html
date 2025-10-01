@@ -26,8 +26,8 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            opacity: 0.1;
-            font-size: 24px;
+            opacity: 0.15;
+            font-size: 48px;
             color: white;
             overflow: hidden;
             pointer-events: none;
@@ -36,12 +36,32 @@
         .formula {
             position: absolute;
             white-space: nowrap;
-            animation: float 20s infinite linear;
         }
 
-        @keyframes float {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(100vw); }
+        @keyframes floatDiagonal1 {
+            from { transform: translate(-100%, -100%) rotate(0deg); }
+            to { transform: translate(100vw, 100vh) rotate(360deg); }
+        }
+
+        @keyframes floatDiagonal2 {
+            from { transform: translate(100vw, -100%) rotate(0deg); }
+            to { transform: translate(-100%, 100vh) rotate(-360deg); }
+        }
+
+        @keyframes floatVertical {
+            from { transform: translateY(-100%) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(180deg); }
+        }
+
+        @keyframes floatHorizontal {
+            from { transform: translateX(-100%) rotate(0deg); }
+            to { transform: translateX(100vw) rotate(-180deg); }
+        }
+
+        @keyframes floatCurve {
+            0% { transform: translate(-100%, 50vh) rotate(0deg); }
+            50% { transform: translate(50vw, -50%) rotate(180deg); }
+            100% { transform: translate(100vw, 50vh) rotate(360deg); }
         }
 
         .container {
@@ -214,14 +234,26 @@
         ];
 
         const mathBg = document.getElementById('mathBg');
+        const animations = ['floatDiagonal1', 'floatDiagonal2', 'floatVertical', 'floatHorizontal', 'floatCurve'];
         
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 20; i++) {
             const formula = document.createElement('div');
             formula.className = 'formula';
             formula.textContent = formulas[Math.floor(Math.random() * formulas.length)];
+            
+            // Position de départ aléatoire
+            formula.style.left = Math.random() * 100 + '%';
             formula.style.top = Math.random() * 100 + '%';
-            formula.style.animationDuration = (15 + Math.random() * 10) + 's';
+            
+            // Animation aléatoire
+            const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+            formula.style.animation = `${randomAnimation} ${15 + Math.random() * 15}s infinite linear`;
             formula.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Taille aléatoire
+            formula.style.fontSize = (0.8 + Math.random() * 0.6) + 'em';
+            formula.style.opacity = 0.3 + Math.random() * 0.4;
+            
             mathBg.appendChild(formula);
         }
     </script>
