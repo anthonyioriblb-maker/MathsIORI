@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Les nombres décimaux</title>
+    <style>
+        .couleur-speciale {
+            color: red;
+            text-decoration: line-through;
+        }
+        .mf {
+            color: red;
+        }
+        th:first-child, td:first-child {
+            text-align: right;
+        }
+        th:last-child, td:last-child {
+            text-align: left;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: red;
+            text-align: center;
+            border-bottom: 2px solid red;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: red;
+            margin-top: 20px;
+            text-decoration: underline;
+        }
+        h3 {
+            color: red;
+            margin-top: 30px;
+        }
+        .definition {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .example {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2ecc71;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .important {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .method {
+            background-color: #D3D3D3;
+            border-left: 4px solid black;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .remarque {
+            background-color: #f0f0f0;
+            border-left: 4px solid #666;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #D3D3D3;
+            color: black;
+            font-weight: bold;
+        }
+        .math {
+            font-style: italic;
+            font-weight: bold;
+        }
+        .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 3px;
+        }
+        .numerateur {
+            display: block;
+            border-bottom: 1px solid black;
+            padding-bottom: 2px;
+        }
+        .denominateur {
+            display: block;
+            padding-top: 2px;
+        }
+        body {
+            counter-reset: section-counter;
+        }
+        h2 {
+            counter-increment: section-counter;
+            counter-reset: subsection-counter;
+        }
+        h2::before {
+            content: counter(section-counter, upper-roman) ". ";
+            color: red;
+        }
+        h3 {
+            counter-increment: subsection-counter;
+        }
+        h3::before {
+            content: counter(subsection-counter) ") ";
+            color: red;
+        }
+        ul {
+            margin: 10px 0;
+        }
+        .tableau-decimaux {
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Chapitre 3: Écriture fractionnaire</h1>
+    <h2>Rappels</h2>
+    <h3>Définitions</h3>
+    <div class="definition">
+        Soient <span class="math">a</span> et <span class="math">b</span> deux nombres relatifs avec <span class="math">b ≠ 0</span>.<br>
+        Le nombre <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> est une <strong>fraction</strong> et <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span>=<span class="math">a</span>&divide;<span class="math">b</span>
+        <ul>
+            <li><span class="math">a</span> est le <strong>numérateur</strong>.</li>
+            <li><span class="math">b</span> est le <strong>dénominateur</strong>.</li>
+        </ul>
+    </div>
+	<div class="definition">
+		Soient <span class="math">a</span> et <span class="math">b</span> deux nombres relatifs avec <span class="math">b ≠ 0</span>.<br>
+        <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> = <span class="fraction">a &times;</span> <span class="fraction"><span class="numerateur">1</span><span class="denominateur">b</span></span><br>
+	</div>
+    <h3>Signe d’une fraction</h3>
+    <div class="important">
+       
+        Le signe de la fraction <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> dépend du signe de <span class="math">a</span> et de <span class="math">b</span> :
+        <ul>
+            <li>Si <span class="math">a</span> et <span class="math">b</span> sont de même signe, alors <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> est positif.</li>
+            <li>Si <span class="math">a</span> et <span class="math">b</span> sont de signes contraires, alors <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> est négatif.</li>
+        </ul>
+    </div>
+    <h3>Simplifier une fraction</h3>
+	<div class="definition">	
+		<strong>Définition :</strong> Un nombre entier est <strong>premier</strong> s’il possède exactement deux diviseurs positifs : 1 et lui-même.<br>
+		La liste des nombres premiers à connaitre est : 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ...<br>
+	</div>
+	<div class="method">
+		<strong>Méthode: Décomposition en facteurs premiers de 300</strong><br>
+			<table>
+			<tr><th>300<br>150<br>75<br>25<br>5<br>1</th><th>2<br>2<br>3<br>5<br>5<br>&nbsp</th></tr>
+			</table>
+			<p>300 = 2 × 2 × 3 × 5 × 5</p>
+    </div>
+	<div class="important">
+        <strong>Règle fondamentale :</strong> On ne change pas la valeur d'une fraction si l'on multiplie ou divise le numérateur <strong>et</strong> le dénominateur par un même nombre non nul.<br>
+    </div>
+    <div class="definition">
+        <strong>Simplifier une fraction</strong>, c'est trouver une fraction égale avec un numérateur et un dénominateur entiers les plus petits possibles.<br>
+    </div>
+	<div class="example">
+	   Exemple : <span class="fraction"><span class="numerateur">12</span><span class="denominateur">18</span></span>= <span class="fraction"><span class="numerateur"><span class="couleur-speciale">2&times;3</span>&times;2</span><span class="denominateur"><span class="couleur-speciale">2&times;3</span>&times;3</span></span> = <span class="fraction"><span class="numerateur">2</span><span class="denominateur">3</span></span> (on a simplifié par 6).<br>
+    </div>
+	<div class="definition">
+	   Une fraction est <strong>irréductible</strong> lorsqu'elle est simplifiée au maximum.
+    </div>
+    <h2>2. Addition et soustraction</h2>
+    <div class="important">
+        Pour additionner ou soustraire deux fractions :
+        <ol>
+            <li>Réduire les fractions au même dénominateur.</li>
+            <li>Additionner ou soustraire les numérateurs.</li>
+            <li>Gardez le même dénominateur.</li>
+            <li>Simplifier si possible.</li>
+        </ol>
+    </div>
+    <div class="example">
+        <strong>Exemple :</strong><br>
+        <span class="fraction"><span class="numerateur">3</span><span class="denominateur">4</span></span> + <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>= <span class="fraction"><span class="numerateur">3<span class="mf">&times;3</span></span><span class="denominateur">4<span class="mf">&times;3</span></span></span> + <span class="fraction"><span class="numerateur">1<span class="mf">&times;2</span></span><span class="denominateur">6<span class="mf">&times;2</span></span></span> = <span class="fraction"><span class="numerateur">9</span><span class="denominateur">12</span></span> + <span class="fraction"><span class="numerateur">2</span><span class="denominateur">12</span></span> = <span class="fraction"><span class="numerateur">11</span><span class="denominateur">12</span></span>
+    </div>
+	<br>
+	<br>
+    <h2>3. Multiplication</h2>
+    <div class="important">
+        Pour multiplier deux fractions :
+        <ol>
+            <li>Multiplier les numérateurs ensemble (attention à la règle des signes).</li>
+            <li>Multiplier les dénominateurs ensemble (attention à la règle des signes).</li>
+            <li>Simplifier si possible.</li>
+        </ol>
+    </div>
+    <div class="example">
+        <strong>Exemple :</strong><br>
+        <span class="fraction"><span class="numerateur">2</span><span class="denominateur">3</span></span> × <span class="fraction"><span class="numerateur">5</span><span class="denominateur">7</span></span> = <span class="fraction"><span class="numerateur">10</span><span class="denominateur">21</span></span>
+    </div>
+    <div class="important">
+        <strong>Propriété :</strong> Prendre une fraction d’une quantité, c’est multiplier la quantité par la fraction.<br>
+    </div>
+	<div class="example">
+		<strong>Exemple :</strong> Dans une classe de 24 élèves, il y a <span class="fraction"><span class="numerateur">3</span><span class="denominateur">8</span></span> de filles.<br>
+        Nombre de filles = 24&times;<span class="fraction"><span class="numerateur">3</span><span class="denominateur">8</span></span> = <span class="fraction"><span class="numerateur">24&times;3</span><span class="denominateur">8</span></span>= <span class="fraction"><span class="numerateur"><span class="couleur-speciale">2&times;2&times;2</span>&times;3&times;3</span><span class="denominateur"><span class="couleur-speciale">2&times;2&times;2</span></span></span>= 9.
+    </div>
+</body>
+</html>
