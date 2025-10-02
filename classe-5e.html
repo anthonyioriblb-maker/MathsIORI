@@ -75,6 +75,33 @@
             overflow: hidden;
             opacity: 0.7;
             cursor: not-allowed;
+            transition: all 0.3s ease;
+        }
+        
+        .chapter-card.available {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            opacity: 1;
+            cursor: pointer;
+        }
+        
+        .chapter-card.available::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.5s ease;
+        }
+        
+        .chapter-card.available:hover::before {
+            left: 100%;
+        }
+        
+        .chapter-card.available:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
         .chapter-number {
@@ -114,11 +141,22 @@
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255,255,255,0.5);
         }
+        
         .badge.available {
             background: rgba(255,255,255,0.9);
-            color: #fa709a;
+            color: #6c5ce7;
             animation: pulse 2s infinite;
         }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
         .home-button {
             display: inline-block;
             padding: 15px 40px;
@@ -162,9 +200,7 @@
         <h1>🎓 Cours de 5ème</h1>
         <p class="subtitle">Tes cours arriveront très bientôt !</p>
         
-        <div class="info-message">
-            ⏳ Tous les chapitres sont en préparation. Reviens bientôt pour découvrir tes nouveaux cours !
-        </div>
+    
        
         <div class="chapters">
             <div class="chapter-card">
@@ -181,7 +217,7 @@
                 <div class="badge">Bientôt disponible 🚀</div>
             </div>
             
-            <a href="5e-chapitre3.html" class="chapter-card">
+            <a href="5e-chapitre3.html" class="chapter-card available">
                 <div class="chapter-number">3</div>
                 <div class="chapter-title"><span class="emoji">💸</span>Proportionnalité et ratio</div>
                 <div class="chapter-desc">Pour devenir un pro des pourcentages</div>
