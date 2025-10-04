@@ -65,26 +65,51 @@
         }
         
         .chapter-card {
-            background: linear-gradient(135deg, #b8b8b8 0%, #8a8a8a 100%);
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
             padding: 25px;
             border-radius: 15px;
             text-decoration: none;
             color: white;
+            transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .chapter-card:nth-child(2) {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+        }
+        
+        .chapter-card:nth-child(3) {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+        }
+        
+        .chapter-card:nth-child(4) {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        }
+        
+        .chapter-card:nth-child(5) {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+        }
+        
+        .chapter-card.coming-soon {
             opacity: 0.7;
             cursor: not-allowed;
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #b8b8b8 0%, #8a8a8a 100%);
         }
         
-        .chapter-card.available {
-            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
-            opacity: 1;
-            cursor: pointer;
+        .chapter-card.coming-soon:hover {
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
-        .chapter-card.available::before {
+        .chapter-card.coming-soon::before {
+            display: none;
+        }
+        
+        .chapter-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -95,11 +120,11 @@
             transition: left 0.5s ease;
         }
         
-        .chapter-card.available:hover::before {
+        .chapter-card:hover::before {
             left: 100%;
         }
         
-        .chapter-card.available:hover {
+        .chapter-card:not(.coming-soon):hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
@@ -181,51 +206,88 @@
             font-size: 1.3em;
             margin-right: 8px;
         }
-        
-        .info-message {
-            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2d3436;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 5px 15px rgba(253, 203, 110, 0.3);
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🎓 Cours de 5ème</h1>
         <p class="subtitle">Choisis ton chapitre et apprends en t'amusant !</p>
-        
-    
        
-        <div class="chapters">
-            <div class="chapter-card">
-                <div class="chapter-number">1</div>
-                <div class="chapter-title"><span class="emoji">📚</span>Chapitre 1</div>
-                <div class="chapter-desc">Contenu en cours de préparation</div>
-                <div class="badge">Bientôt disponible 🚀</div>
-            </div>
-            
-            <div class="chapter-card">
-                <div class="chapter-number">2</div>
-                <div class="chapter-title"><span class="emoji">📚</span>Chapitre 2</div>
-                <div class="chapter-desc">Contenu en cours de préparation</div>
-                <div class="badge">Bientôt disponible 🚀</div>
-            </div>
-            
-            <a href="5e-chapitre3.html" class="chapter-card available">
-                <div class="chapter-number">3</div>
-                <div class="chapter-title"><span class="emoji">💸</span>Proportionnalité et ratio</div>
-                <div class="chapter-desc">Pour devenir un pro des pourcentages</div>
-                <div class="badge available">Disponible maintenant ✨</div>
-            </a>
+        <div class="chapters" id="chaptersContainer">
+            <!-- Les chapitres seront générés automatiquement par JavaScript -->
         </div>
        
         <a href="index.html" class="home-button">← Retour à l'accueil</a>
     </div>
+
+    <script>
+        // Configuration des chapitres intégrée
+        const configChapitres = {
+            chapitre1: {
+                disponible: false,
+                titre: "Chapitre 1",
+                description: "Contenu en cours de préparation",
+                emoji: "📚",
+                fichier: "5e-chapitre1.html"
+            },
+            chapitre2: {
+                disponible: false,
+                titre: "Chapitre 2",
+                description: "Contenu en cours de préparation",
+                emoji: "📚",
+                fichier: "5e-chapitre2.html"
+            },
+            chapitre3: {
+                disponible: true,
+                titre: "Proportionnalité et ratio",
+                description: "Pour devenir un pro des pourcentages",
+                emoji: "💸",
+                fichier: "5e-chapitre3.html"
+            },
+            chapitre4: {
+                disponible: false,
+                titre: "Chapitre 4",
+                description: "Contenu en cours de préparation",
+                emoji: "📚",
+                fichier: "5e-chapitre4.html"
+            },
+            chapitre5: {
+                disponible: false,
+                titre: "Chapitre 5",
+                description: "Contenu en cours de préparation",
+                emoji: "📚",
+                fichier: "5e-chapitre5.html"
+            }
+        };
+        
+        // Génération automatique des chapitres depuis la configuration
+        const container = document.getElementById('chaptersContainer');
+        
+        Object.keys(configChapitres).forEach((key, index) => {
+            const chapitre = configChapitres[key];
+            const chapitreNum = index + 1;
+            
+            // Créer l'élément du chapitre
+            const card = document.createElement(chapitre.disponible ? 'a' : 'div');
+            card.className = 'chapter-card' + (chapitre.disponible ? '' : ' coming-soon');
+            
+            if (chapitre.disponible) {
+                card.href = chapitre.fichier;
+            }
+            
+            card.innerHTML = `
+                <div class="chapter-number">${chapitreNum}</div>
+                <div class="chapter-title">
+                    <span class="emoji">${chapitre.emoji}</span>${chapitre.titre}
+                </div>
+                <div class="chapter-desc">${chapitre.description}</div>
+                <div class="badge ${chapitre.disponible ? 'available' : ''}">
+                    ${chapitre.disponible ? 'Disponible maintenant ✨' : 'Bientôt disponible 🚀'}
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+    </script>
 </body>
 </html>

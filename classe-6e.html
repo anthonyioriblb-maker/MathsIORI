@@ -74,6 +74,8 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            display: block;
         }
         
         .chapter-card:nth-child(2) {
@@ -82,6 +84,14 @@
         
         .chapter-card:nth-child(3) {
             background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .chapter-card:nth-child(4) {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .chapter-card:nth-child(5) {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         }
         
         .chapter-card.coming-soon {
@@ -142,7 +152,7 @@
             left: 100%;
         }
         
-        .chapter-card:hover {
+        .chapter-card:not(.coming-soon):hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
@@ -203,30 +213,81 @@
         <h1>🎓 Cours de 6ème</h1>
         <p class="subtitle">Choisis ton chapitre et apprends en t'amusant !</p>
        
-        <div class="chapters">
-            <div class="chapter-card coming-soon">
-                <div class="chapter-number">1</div>
-                <div class="chapter-title"><span class="emoji">🌐</span>Les nombres entiers</div>
-                <div class="chapter-desc">Découvre les nombres entiers et leurs propriétés</div>
-                <div class="badge">Bientôt disponible 🚀</div>
-            </div>
-            
-            <div class="chapter-card coming-soon">
-                <div class="chapter-number">2</div>
-                <div class="chapter-title"><span class="emoji">🎮</span>Les bases de géométrie</div>
-                <div class="chapter-desc">Découvre les points, les droites et tout ce qui compose la géométrie</div>
-                <div class="badge">Bientôt disponible 🚀</div>
-            </div>
-            
-            <a href="6e-chapitre3.html" class="chapter-card">
-                <div class="chapter-number">3</div>
-                <div class="chapter-title"><span class="emoji">🔢</span>Les nombres décimaux</div>
-                <div class="chapter-desc">Maîtrise les virgules et les nombres décimaux</div>
-                <div class="badge available">Disponible maintenant ✨</div>
-            </a>
+        <div class="chapters" id="chaptersContainer">
+            <!-- Les chapitres seront générés automatiquement par JavaScript -->
         </div>
        
         <a href="index.html" class="home-button">← Retour à l'accueil</a>
     </div>
+
+    <script>
+        // Configuration des chapitres intégrée
+        const configChapitres = {
+            chapitre1: {
+                disponible: false,
+                titre: "Les nombres entiers",
+                description: "Découvre les nombres entiers et leurs propriétés",
+                emoji: "🌍",
+                fichier: "6e-chapitre1.html"
+            },
+            chapitre2: {
+                disponible: false,
+                titre: "Les bases de géométrie",
+                description: "Découvre les points, les droites et tout ce qui compose la géométrie",
+                emoji: "🎮",
+                fichier: "6e-chapitre2.html"
+            },
+            chapitre3: {
+                disponible: true,
+                titre: "Les nombres décimaux",
+                description: "Maîtrise les virgules et les nombres décimaux",
+                emoji: "🔢",
+                fichier: "6e-chapitre3.html"
+            },
+            chapitre4: {
+                disponible: false,
+                titre: "Chapitre 4",
+                description: "Contenu en cours de préparation",
+                emoji: "📚",
+                fichier: "6e-chapitre4.html"
+            },
+            chapitre5: {
+                disponible: false,
+                titre: "Chapitre 5",
+                description: "Contenu en cours de préparation",
+                emoji: "📚",
+                fichier: "6e-chapitre5.html"
+            }
+        };
+        
+        // Génération automatique des chapitres depuis la configuration
+        const container = document.getElementById('chaptersContainer');
+        
+        Object.keys(configChapitres).forEach((key, index) => {
+            const chapitre = configChapitres[key];
+            const chapitreNum = index + 1;
+            
+            // Créer l'élément du chapitre
+            const card = document.createElement(chapitre.disponible ? 'a' : 'div');
+            card.className = 'chapter-card' + (chapitre.disponible ? '' : ' coming-soon');
+            
+            if (chapitre.disponible) {
+                card.href = chapitre.fichier;
+            }
+            
+            card.innerHTML = `
+                <div class="chapter-number">${chapitreNum}</div>
+                <div class="chapter-title">
+                    <span class="emoji">${chapitre.emoji}</span>${chapitre.titre}
+                </div>
+                <div class="chapter-desc">${chapitre.description}</div>
+                <div class="badge ${chapitre.disponible ? 'available' : ''}">
+                    ${chapitre.disponible ? 'Disponible maintenant ✨' : 'Bientôt disponible 🚀'}
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+    </script>
 </body>
 </html>

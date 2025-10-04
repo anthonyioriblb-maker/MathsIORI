@@ -68,6 +68,8 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            display: block;
         }
         
         .chapter-card:nth-child(2) {
@@ -76,6 +78,14 @@
         
         .chapter-card:nth-child(3) {
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+        
+        .chapter-card:nth-child(4) {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .chapter-card:nth-child(5) {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
         }
         
         .chapter-card.coming-soon {
@@ -104,7 +114,7 @@
         
         .chapter-card:hover::before { left: 100%; }
         
-        .chapter-card:hover {
+        .chapter-card:not(.coming-soon):hover {
             transform: translateY(-5px) scale(1.02);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
@@ -189,30 +199,81 @@
         <h1>📘 Cours de 3ème</h1>
         <p class="subtitle">Choisis ton chapitre et prépare-toi pour le brevet !</p>
        
-        <div class="chapters">
-            <<div class="chapter-card coming-soon">
-                <div class="chapter-number">1</div>
-                <div class="chapter-title"><span class="emoji">🔢</span>Chapitre 1</div>
-                <div class="chapter-desc">Contenu en cours de préparation</div>
-                <div class="badge">Bientôt disponible 🚀</div>
-            </div>
-            
-            <a href="3e-chapitre2.html" class="chapter-card">
-                <div class="chapter-number">2</div>
-                <div class="chapter-title"><span class="emoji">📏</span>Théorème de Thalès</div>
-                <div class="chapter-desc">Découvre les propriétés de proportionnalité dans les triangles</div>
-                <div class="badge available">Disponible maintenant ✨</div>
-            </a>
-            
-            <div class="chapter-card coming-soon">
-                <div class="chapter-number">3</div>
-                <div class="chapter-title"><span class="emoji">🔢</span>Chapitre 3</div>
-                <div class="chapter-desc">Contenu en cours de préparation</div>
-                <div class="badge">Bientôt disponible 🚀</div>
-            </div>
+        <div class="chapters" id="chaptersContainer">
+            <!-- Les chapitres seront générés automatiquement par JavaScript -->
         </div>
        
         <a href="index.html" class="home-button">← Retour à l'accueil</a>
     </div>
+
+    <script>
+        // Configuration des chapitres intégrée
+        const configChapitres = {
+            chapitre1: {
+                disponible: false,
+                titre: "Chapitre 1",
+                description: "Contenu en cours de préparation",
+                emoji: "🔢",
+                fichier: "3e-chapitre1.html"
+            },
+            chapitre2: {
+                disponible: true,
+                titre: "Théorème de Thalès",
+                description: "Découvre les propriétés de proportionnalité dans les triangles",
+                emoji: "📐",
+                fichier: "3e-chapitre2.html"
+            },
+            chapitre3: {
+                disponible: false,
+                titre: "Chapitre 3",
+                description: "Contenu en cours de préparation",
+                emoji: "🔢",
+                fichier: "3e-chapitre3.html"
+            },
+            chapitre4: {
+                disponible: false,
+                titre: "Chapitre 4",
+                description: "Contenu en cours de préparation",
+                emoji: "🔢",
+                fichier: "3e-chapitre4.html"
+            },
+            chapitre5: {
+                disponible: false,
+                titre: "Chapitre 5",
+                description: "Contenu en cours de préparation",
+                emoji: "🔢",
+                fichier: "3e-chapitre5.html"
+            }
+        };
+        
+        // Génération automatique des chapitres depuis la configuration
+        const container = document.getElementById('chaptersContainer');
+        
+        Object.keys(configChapitres).forEach((key, index) => {
+            const chapitre = configChapitres[key];
+            const chapitreNum = index + 1;
+            
+            // Créer l'élément du chapitre
+            const card = document.createElement(chapitre.disponible ? 'a' : 'div');
+            card.className = 'chapter-card' + (chapitre.disponible ? '' : ' coming-soon');
+            
+            if (chapitre.disponible) {
+                card.href = chapitre.fichier;
+            }
+            
+            card.innerHTML = `
+                <div class="chapter-number">${chapitreNum}</div>
+                <div class="chapter-title">
+                    <span class="emoji">${chapitre.emoji}</span>${chapitre.titre}
+                </div>
+                <div class="chapter-desc">${chapitre.description}</div>
+                <div class="badge ${chapitre.disponible ? 'available' : ''}">
+                    ${chapitre.disponible ? 'Disponible maintenant ✨' : 'Bientôt disponible 🚀'}
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+    </script>
 </body>
 </html>
