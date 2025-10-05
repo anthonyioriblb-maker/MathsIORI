@@ -80,6 +80,19 @@
             font-style: italic;
             font-family: 'Georgia', 'Times New Roman', serif;
         }
+        .angle {
+            position: relative;
+            display: inline-block;
+        }
+        .angle::before {
+            content: '^';
+            position: absolute;
+            top: -0.5em;
+            left: 50%;
+            transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
+            font-size: 1.5em;
+            font-weight: 300;
+        }
         body {
             counter-reset: section-counter;
         }
@@ -128,14 +141,16 @@
 
     <h2>Points alignés et droites</h2>
     
-    <img src="6-23.png " alt="Points alignés et droites" style="display: block; margin: 0 auto; max-width: 400px;">
+    <img src="6-23.png" alt="Points alignés et droites" style="display: block; margin: 0 auto; max-width: 400px;">
+    
     <div class="definition">
-    <p>Le point D est sur la droite (AB), on dit que "D appartient à la droite (AB)" et on note D ∈ (AB).</p>
+        <p>Le point D est sur la droite (AB), on dit que "D appartient à la droite (AB)" et on <strong>note</strong> <strong>D ∈ (AB)</strong>.</p>
+        
+        <p>Le point C n'est pas sur la droite (AB), on dit que "C n'appartient pas à la droite (AB)" et on <strong>note</strong> <strong>C ∉ (AB)</strong>.</p>
+    </div>
     
-    <p>Le point C n'est pas sur la droite (AB), on dit que "C n'appartient pas à la droite (AB)" et on note C ∉ (AB).</p>
-    
-    
-        Lorsque trois points sont sur une même droite, on dit qu'ils sont alignés. Ici, A, B, et D sont alignés.
+    <div class="definition">
+        Lorsque trois points sont sur une même droite, on dit qu'ils sont <strong>alignés</strong>. Ici, A, B, et D sont alignés.
     </div>
     
     <h2>Position relative de deux droites</h2>
@@ -143,16 +158,16 @@
     <h3>Définitions</h3>
     
     <div class="definition">
-        Lorsque deux droites ont un seul point en commun, on dit qu'elles sont sécantes. Le point où elles se rencontrent s'appelle le point d'intersection.
+        Lorsque deux droites ont un seul point en commun, on dit qu'elles sont <strong>sécantes</strong>. Le point où elles se rencontrent s'appelle le <strong>point d'intersection</strong>.
     </div>
     
     <div class="definition">
-        Deux droites qui ne sont pas sécantes sont parallèles.
+        Deux droites qui ne sont pas sécantes sont <strong>parallèles</strong>.
     </div>
     
     <div class="example">
         <strong>Exemples :</strong><br><br>
-        <img src="6-24.png" alt="Droites sécantes" style="display: block; margin: 0 auto; width: 100%;">
+        <img src="6-24.png" alt="Droites sécantes et parallèles" style="display: block; margin: 0 auto; width: 100%;">
     </div>
     
     <div class="remarque">
@@ -160,28 +175,38 @@
     </div>
     
     <h3>Angles formés par deux droites</h3>
+    
     <div class="definition">
         Deux droites sont sécantes si elles ont un point d'intersection. Elles forment alors quatre angles.
     </div>
+    
     <div class="example">
         <strong>Exemple :</strong><br><br>
         <img src="6-25.png" alt="Angles formés par deux droites" style="display: block; margin: 0 auto; max-width: 300px;">
-    
-    
     </div>
-<div class="definition">
-    On note ces quatre angles de la manière suivante : <span class="math">BÊC ou CÊB ; BÊD ou DÊB ; DÊA ou AÊD ; CÊA ou AÊC</span>.</p>
-    </div>
+    
     <div class="definition">
-        Deux droites sont perpendiculaires si elles sont sécantes et forment quatre angles égaux. Dans ce cas, on dit que chacun de ces angles est un angle droit.
+        <p>On <strong>note</strong> ces quatre angles de la manière suivante :</p>
+        <p style="text-align: center;">
+            <span style="color: red;"><span class="math angle">BEC</span></span> ou <span style="color: red;"><span class="math angle">CEB</span></span> ; 
+            <span style="color: blue;"><span class="math angle">BED</span></span> ou <span style="color: blue;"><span class="math angle">DEB</span></span> ; 
+            <span style="color: black;"><span class="math angle">DEA</span></span> ou <span style="color: black;"><span class="math angle">AED</span></span> ; 
+            <span style="color: green;"><span class="math angle">CEA</span></span> ou <span style="color: green;"><span class="math angle">AEC</span></span>
+        </p>
     </div>
+    
+    <div class="definition">
+        Deux droites sont <strong>perpendiculaires</strong> si elles sont sécantes et forment quatre angles égaux. Dans ce cas, on dit que chacun de ces angles est un <strong>angle droit</strong>.
+    </div>
+    
     <div class="example">
         <strong>Exemple :</strong><br><br>
-    <img src="6-26.png" alt="Droites perpendiculaires" style="display: block; margin: 0 auto; max-width: 300px;">
-
-    <p>On code un angle droit en faisant un petit carré sur la figure.</p>
-    
-    <p>On dit que les droites (DC) et (AB) sont perpendiculaires en K et on note (DC) ⊥ (AB).</p>
+        <img src="6-26.png" alt="Droites perpendiculaires" style="display: block; margin: 0 auto; max-width: 300px;">
+        
+        <p>On <strong>code</strong> un angle droit en faisant un petit carré sur la figure.</p>
+        
+        <p>On dit que les droites (DC) et (AB) sont perpendiculaires en K et on <strong>note</strong> <strong>(DC) ⊥ (AB)</strong>.</p>
     </div>
+
 </body>
 </html>
