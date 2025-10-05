@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Bases de la géométrie</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: red;
+            text-align: center;
+            border-bottom: 2px solid red;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: red;
+            margin-top: 20px;
+            text-decoration: underline;
+        }
+        h3 {
+            color: red;
+            margin-top: 30px;
+        }
+        .definition {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .example {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2ecc71;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .important {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .method {
+            background-color: #D3D3D3;
+            border-left: 4px solid black;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .remarque {
+            background-color: #f0f0f0;
+            border-left: 4px solid #666;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #D3D3D3;
+            color: black;
+            font-weight: bold;
+        }
+        .math {
+            font-style: italic;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        body {
+            counter-reset: section-counter;
+        }
+        h2 {
+            counter-increment: section-counter;
+            counter-reset: subsection-counter;
+        }
+        h2::before {
+            content: counter(section-counter, upper-roman) ". ";
+            color: red;
+        }
+        h3 {
+            counter-increment: subsection-counter;
+        }
+        h3::before {
+            content: counter(subsection-counter) ") ";
+            color: red;
+        }
+        ul {
+            margin: 10px 0;
+        }
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .exercice {
+            background-color: #ffe6f0;
+            border-left: 4px solid #ff1493;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .figure {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bases de la géométrie</h1>
+    
+    <h2>Rappels</h2>
+    
+    <img src="6-21.png" alt="Notations géométriques" style="display: block; margin: 0 auto; width: 100%;"><br>
+    <img src="6-22.png" alt="Notations géométriques" style="display: block; margin: 0 auto; width: 100%;">
+
+    <h2>Points alignés et droites</h2>
+    
+    <img src="6-23.png " alt="Points alignés et droites" style="display: block; margin: 0 auto; max-width: 400px;">
+    <div class="definition">
+    <p>Le point D est sur la droite (AB), on dit que "D appartient à la droite (AB)" et on note D ∈ (AB).</p>
+    
+    <p>Le point C n'est pas sur la droite (AB), on dit que "C n'appartient pas à la droite (AB)" et on note C ∉ (AB).</p>
+    
+    
+        Lorsque trois points sont sur une même droite, on dit qu'ils sont alignés. Ici, A, B, et D sont alignés.
+    </div>
+    
+    <h2>Position relative de deux droites</h2>
+    
+    <h3>Définitions</h3>
+    
+    <div class="definition">
+        Lorsque deux droites ont un seul point en commun, on dit qu'elles sont sécantes. Le point où elles se rencontrent s'appelle le point d'intersection.
+    </div>
+    
+    <div class="definition">
+        Deux droites qui ne sont pas sécantes sont parallèles.
+    </div>
+    
+    <div class="example">
+        <strong>Exemples :</strong><br><br>
+        <img src="6-24.png" alt="Droites sécantes" style="display: block; margin: 0 auto; width: 100%;">
+    </div>
+    
+    <div class="remarque">
+        <strong>Remarque :</strong> Lorsque l'on parle de deux droites, elles sont soit sécantes, soit parallèles.
+    </div>
+    
+    <h3>Angles formés par deux droites</h3>
+    <div class="definition">
+        Deux droites sont sécantes si elles ont un point d'intersection. Elles forment alors quatre angles.
+    </div>
+    <div class="example">
+        <strong>Exemple :</strong><br><br>
+        <img src="6-25.png" alt="Angles formés par deux droites" style="display: block; margin: 0 auto; max-width: 300px;">
+    
+    
+    </div>
+<div class="definition">
+    On note ces quatre angles de la manière suivante : <span class="math">BÊC ou CÊB ; BÊD ou DÊB ; DÊA ou AÊD ; CÊA ou AÊC</span>.</p>
+    </div>
+    <div class="definition">
+        Deux droites sont perpendiculaires si elles sont sécantes et forment quatre angles égaux. Dans ce cas, on dit que chacun de ces angles est un angle droit.
+    </div>
+    <div class="example">
+        <strong>Exemple :</strong><br><br>
+    <img src="6-26.png" alt="Droites perpendiculaires" style="display: block; margin: 0 auto; max-width: 300px;">
+
+    <p>On code un angle droit en faisant un petit carré sur la figure.</p>
+    
+    <p>On dit que les droites (DC) et (AB) sont perpendiculaires en K et on note (DC) ⊥ (AB).</p>
+    </div>
+</body>
+</html>
