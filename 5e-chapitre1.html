@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Priorités opératoires</title>
+    <style>
+        .couleur-speciale {
+            color: red;
+            text-decoration: line-through;
+        }
+        .mf {
+            color: red;
+        }
+        th:first-child, td:first-child {
+            text-align: right;
+        }
+        th:last-child, td:last-child {
+            text-align: left;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: red;
+            text-align: center;
+            border-bottom: 2px solid red;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: red;
+            margin-top: 20px;
+            text-decoration: underline;
+        }
+        h3 {
+            color: red;
+            margin-top: 30px;
+        }
+        .definition {
+            background-color: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .example {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2ecc71;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .important {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .method {
+            background-color: #D3D3D3;
+            border-left: 4px solid black;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        .remarque {
+            background-color: #f0f0f0;
+            border-left: 4px solid #666;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #D3D3D3;
+            color: black;
+            font-weight: bold;
+        }
+        .math {
+            font-style: italic;
+            font-weight: bold;
+        }
+        .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 3px;
+        }
+        .numerateur {
+            display: block;
+            border-bottom: 1px solid black;
+            padding-bottom: 2px;
+        }
+        .denominateur {
+            display: block;
+            padding-top: 2px;
+        }
+        body {
+            counter-reset: section-counter;
+        }
+        h2 {
+            counter-increment: section-counter;
+            counter-reset: subsection-counter;
+        }
+        h2::before {
+            content: counter(section-counter, upper-roman) ". ";
+            color: red;
+        }
+        h3 {
+            counter-increment: subsection-counter;
+        }
+        h3::before {
+            content: counter(subsection-counter) ") ";
+            color: red;
+        }
+        ul {
+            margin: 10px 0;
+        }
+        .calcul-etapes {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .calcul-etapes div {
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Chapitre 1 : Priorités opératoires</h1>
+
+    <h2>Rappels vocabulaire</h2>
+    
+    <div class="definition">
+        <strong>Définitions :</strong><br><br>
+        Dans une <strong>addition</strong>, on ajoute les <strong>termes</strong> et le résultat obtenu s'appelle la <strong>somme</strong>.<br><br>
+        Dans une <strong>soustraction</strong>, on soustrait (ou on retranche) les <strong>termes</strong> et le résultat obtenu s'appelle la <strong>différence</strong>.<br><br>
+        Dans une <strong>multiplication</strong>, on multiplie les <strong>facteurs</strong> et le résultat obtenu s'appelle le <strong>produit</strong>.<br><br>
+        Dans une <strong>division</strong>, le résultat obtenu s'appelle le <strong>quotient</strong>.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br><br>
+        <span class="math">A</span> = 16 + 3 × 5 ; <span class="math">A</span> est la somme de 16 et du produit de 3 par 5.<br><br>
+        <span class="math">B</span> = 30 − (2 + 7) ; <span class="math">B</span> est la différence de 30 par la somme de 2 et de 7.<br><br>
+        <span class="math">C</span> = <span class="fraction"><span class="numerateur">6</span><span class="denominateur">5 + 3</span></span> ; <span class="math">C</span> est le quotient de 6 par la somme de 5 et de 3.
+    </div>
+
+    <h2>Calculs sans parenthèses</h2>
+
+    <div class="important">
+        <strong>Propriété :</strong> Dans une expression numérique <strong>sans parenthèses</strong>, on effectue :<br><br>
+        • <strong>d'abord</strong> les multiplications et les divisions, de gauche à droite,<br><br>
+        • <strong>puis</strong> les additions et les soustractions, également de gauche à droite.<br><br>
+        On dit que la multiplication et la division sont <strong>prioritaires</strong> sur l'addition et la soustraction.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong>
+        <div class="calcul-etapes">
+            <div><span class="math">D</span> = <span style="background-color: yellow;">4 × 7</span> − 8 : 2</div>
+            <div><span class="math">D</span> = 28 − <span style="background-color: yellow;">8 : 2</span></div>
+            <div><span class="math">D</span> = <span style="background-color: yellow;">28 − 4</span></div>
+            <div><span class="math">D</span> = 24</div>
+        </div>
+    </div>
+
+    <h2>Calculs avec des parenthèses</h2>
+
+    <div class="important">
+        <strong>Propriété :</strong> Dans une expression <strong>avec parenthèses</strong>, on effectue :<br><br>
+        • <strong>d'abord</strong> les calculs entre parenthèses en commençant par les parenthèses les plus à l'intérieur,<br><br>
+        • <strong>puis</strong> on suit les règles de calculs sans parenthèses.
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Lorsque des parenthèses sont à l'intérieur d'autres parenthèses, les plus à l'extérieur sont souvent remplacées par des crochets.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong>
+        <div class="calcul-etapes">
+            <div><span class="math">E</span> = 3 × (10 − (<span style="background-color: yellow;">4 + 2</span> − 3))</div>
+            <div><span class="math">E</span> = 3 × (10 − (<span style="background-color: yellow;">6 − 3</span>))</div>
+            <div><span class="math">E</span> = 3 × <span style="background-color: yellow;">(10 − 3)</span></div>
+            <div><span class="math">E</span> = <span style="background-color: yellow;">3 × 7</span></div>
+            <div><span class="math">E</span> = 21</div>
+        </div>
+    </div>
+
+</body>
+</html>
