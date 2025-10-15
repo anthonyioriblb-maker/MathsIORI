@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Distributivité Simple</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #185a9d;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+        
+        .quiz-info {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: #185a9d;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .question-container {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .question-container.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .question-header {
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .question-number {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .question-body {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 0 0 15px 15px;
+            margin-bottom: 30px;
+        }
+        
+        .question-text {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+        }
+        
+        .math-expression {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.4em;
+            text-align: center;
+            margin: 20px 0;
+            border: 2px solid #185a9d;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .option {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 1.1em;
+            position: relative;
+        }
+        
+        .option:hover {
+            border-color: #43cea2;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(67, 206, 162, 0.2);
+        }
+        
+        .option.selected {
+            border-color: #185a9d;
+            background: #f0f4ff;
+        }
+        
+        .option.correct {
+            border-color: #43cea2;
+            background: #f0fff4;
+        }
+        
+        .option.incorrect {
+            border-color: #ff5e62;
+            background: #fff5f5;
+        }
+        
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .option-label {
+            display: inline-block;
+            background: #185a9d;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .option.correct .option-label {
+            background: #43cea2;
+        }
+        
+        .option.incorrect .option-label {
+            background: #ff5e62;
+        }
+        
+        .explanation {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            font-family: Arial, sans-serif;
+        }
+        
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .explanation-title {
+            font-weight: bold;
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(24, 90, 157, 0.4);
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(24, 90, 157, 0.6);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #185a9d;
+            border: 2px solid #185a9d;
+        }
+        
+        .btn-secondary:hover {
+            background: #185a9d;
+            color: white;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .results-container.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .results-score {
+            background: linear-gradient(135deg, #43cea2 0%, #38f9d7 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+        
+        .results-score.low {
+            background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%);
+        }
+        
+        .results-score.medium {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .score-big {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.5em;
+            margin-top: 15px;
+        }
+        
+        .results-details {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(24, 90, 157, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Quiz - Distributivité Simple</h1>
+            <p class="subtitle">Calcul littéral - 3ème</p>
+        </div>
+        
+        <div class="quiz-info">
+            <div class="info-item">
+                <div class="info-label">Questions</div>
+                <div class="info-value" id="totalQuestions">8</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Question actuelle</div>
+                <div class="info-value" id="currentQuestion">1</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Score</div>
+                <div class="info-value" id="currentScore">0</div>
+            </div>
+        </div>
+
+        <!-- QUESTION 1 -->
+        <div class="question-container active" id="question1">
+            <div class="question-header">
+                <div class="question-number">Question 1/8</div>
+            </div>
+            <div class="question-body">
+                <div class="question-text">
+                    Développe l'expression suivante :
+                </div>
+                <div class="math-expression">3(x + 5)</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(1, 0)">
+                        <span class="option-label">A</span>
+                        <span>3x + 5</span>
+                    </div>
+                    <div class="option" onclick="selectOption(1, 1)">
+                        <span class="option-label">B</span>
+                        <span>3x + 15</span>
+                    </div>
+                    <div class="option" onclick="selectOption(1, 2)">
+                        <span class="option-label">C</span>
+                        <span>3x + 8</span>
+                    </div>
+                    <div class="option" onclick="selectOption(1, 3)">
+                        <span class="option-label">D</span>
+                        <span>x + 15</span>
+                    </div>
+                </div>
+                <div class="explanation" id="explanation1">
+                    <div class="explanation-title">💡 Explication</div>
+                    On multiplie 3 par chaque terme : 3 × x = 3x et 3 × 5 = 15. Donc 3(x + 5) = 3x + 15
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 2 -->
+        <div class="question-container" id="question2">
+            <div class="question-header">
+                <div class="question-number">Question 2/8</div>
+            </div>
+            <div class="question-body">
+                <div class="question-text">
+                    Développe l'expression suivante :
+                </div>
+                <div class="math-expression">-2(x - 4)</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(2, 0)">
+                        <span class="option-label">A</span>
+                        <span>-2x - 4</span>
+                    </div>
+                    <div class="option" onclick="selectOption(2, 1)">
+                        <span class="option-label">B</span>
+                        <span>-2x + 8</span>
+                    </div>
+                    <div class="option" onclick="selectOption(2, 2)">
+                        <span class="option-label">C</span>
+                        <span>-2x - 8</span>
+                    </div>
+                    <div class="option" onclick="selectOption(2, 3)">
+                        <span class="option-label">D</span>
+                        <span>2x + 8</span>
+                    </div>
+                </div>
+                <div class="explanation" id="explanation2">
+                    <div class="explanation-title">💡 Explication</div>
+                    -2 × x = -2x et -2 × (-4) = +8 (attention aux signes !). Donc -2(x - 4) = -2x + 8
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 3 -->
+        <div class="question-container" id="question3">
+            <div class="question-header">
+                <div class="question-number">Question 3/8</div>
+            </div>
+            <div class="question-body">
+                <div class="question-text">
+                    Développe l'expression suivante :
+                </div>
+                <div class="math-expression">5(2x + 3)</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(3, 0)">
+                        <span class="option-label">A</span>
+                        <span>10x + 3</span>
+                    </div>
+                    <div class="option" onclick="selectOption(3, 1)">
+                        <span class="option-label">B</span>
+                        <span>7x + 8</span>
+                    </div>
+                    <div class="option" onclick="selectOption(3, 2)">
+                        <span class="option-label">C</span>
+                        <span>10x + 15</span>
+                    </div>
+                    <div class="option" onclick="selectOption(3, 3)">
+                        <span class="option-label">D</span>
+                        <span>5x + 15</span>
+                    </div>
+                </div>
+                <div class="explanation" id="explanation3">
+                    <div class="explanation-title">💡 Explication</div>
+                    5 × 2x = 10x et 5 × 3 = 15. Donc 5(2x + 3) = 10x + 15
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 4 -->
+        <div class="question-container" id="question4">
+            <div class="question-header">
+                <div class="question-number">Question 4/8</div>
+            </div>
+            <div class="question-body">
+                <div class="question-text">
+                    Développe l'expression suivante :
+                </div>
+                <div class="math-expression">x(x + 7)</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(4, 0)">
+                        <span class="option-label">A</span>
+                        <span>x² + 7</span>
+                    </div>
+                    <div class="option" onclick="selectOption(4, 1)">
+                        <span class="option-label">B</span>
+                        <span>x² + 7x</span>
+                    </div>
+                    <div class="option" onclick="selectOption(4, 2)">
+                        <span class="option-label">C</span>
+                        <span>2x + 7</span>
+                    </div>
+                    <div class="option" onclick="selectOption(4, 3)">
+                        <span class="option-label">D</span>
+                        <span>x + 7x</span>
+                    </div>
+                </div>
+                <div class="explanation" id="explanation4">
+                    <div class="explanation-title">💡 Explication</div>
+                    x × x = x² et x × 7 = 7x. Donc x(x + 7) = x² + 7x
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 5 -->
+        <div class="question-container" id="question5">
+            <div class="question-header">
+                <div class="question-number">Question 5/8</div>
+            </div>
+            <div class="question-body">
+                <div class="question-text">
+                    Développe l'expression suivante :
+                </div>
+                <div class="math-expression">-3(2x - 5)</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(5, 0)">
+                        <span class="option-label">A</span>
+                        <span>-6x - 15</span>
+                    </div>
+                    <div class="option" onclick="selectOption(5, 1)">
+                        <span class="option-label">B</span>
+                        <span>-6x + 15</span>
+                    </div>
+                    <div class="option" onclick="selectOption(5, 2)">
+                        <span class="option-label">C</span>
+                        <span>-5x + 15</span>
+                    </div>
+                    <div class="option" onclick="selectOption(5, 3)">
+                        <span class="option-label">D</span>
+                        <span>6x - 15</span>
+                    </div>
+                </div>
+                <div class="explanation" id="explanation5">
+                    <div class="explanation-title">💡 Explication</div>
+                    -3 × 2x = -6x et -3 × (-5) = +15. Donc -3(2x - 5) = -6x + 15
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 6 -->
+        <div class="question-container" id="question6">
+            <div class="question-header">
+                <div class="question-number">Question 6/8</div>
+            </div>
+            <div class="question-body">
+                <div class="question-text">
+                    Développe l'expression suivante :
+                </div>
+                <div class="math-expression">4(3 - x)</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(6, 0)">
+                        <span class="option-label">A</span>
+                        <span>12 - 4x</span>
+                    </div>
+                    <div class="option" onclick="selectOption(6, 1)">
+                        <span class="option-label">B</span>
+                        <span>7 - 4x</span>
+                    </div>
+                    <div class="option" onclick="selectOption(6, 2)">
+                        <span class="option-label">C</span>
+                        <span>12 - x</span>
+                    </div>
+                    <div class="option" onclick="selectOption(6, 3)">
+                        <span class="option-label">D</span>
+                        <span>4 - 3x</span>
+                    </div>
+                </div>
+                <div class="explanation" id="explanation6">
+                    <div class="explanation-title">💡 Explication</div>
+                    4 × 3 = 12 et 4 × (-x) = -4x. Donc 4(3 - x) = 12 - 4x
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 7 -->
+        <div class="question-container" id="question7">
+            <div class="question-header">
+                <div class="question-number">Question 7/8</div>
+            </div>
+            <div class="question-body">
+                <div class="question-text">
+                    Développe l'expression suivante :
+                </div>
+                <div class="math-expression">-x(4 + 2x)</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(7, 0)">
+                        <span class="option-label">A</span>
+                        <span>-4x - 2x²</span>
+                    </div>
+                    <div class="option" onclick="selectOption(7, 1)">
+                        <span class="option-label">B</span>
+                        <span>4x + 2x²</span>
+                    </div>
+                    <div class="option" onclick="selectOption(7, 2)">
+                        <span class="option-label">C</span>
+                        <span>-4x + 2x²</span>
+                    </div>
+                    <div class="option" onclick="selectOption(7, 3)">
+                        <span class="option-label">D</span>
+                        <span>-4 - 2x²</span>
+                    </div>
+                </div>
+                <div class="explanation" id="explanation7">
+                    <div class="explanation-title">💡 Explication</div>
+                    -x × 4 = -4x et -x × 2x = -2x². Donc -x(4 + 2x) = -4x - 2x²
+                </div>
+            </div>
+        </div>
+
+        <!-- QUESTION 8 -->
+        <div class="question-container" id="question8">
+            <div class="question-header">
+                <div class="question-number">Question 8/8</div>
+            </div>
+            <div class="question-body">
+                <div class="question-text">
+                    Développe l'expression suivante :
+                </div>
+                <div class="math-expression">7(x - 3)</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(8, 0)">
+                        <span class="option-label">A</span>
+                        <span>7x - 3</span>
+                    </div>
+                    <div class="option" onclick="selectOption(8, 1)">
+                        <span class="option-label">B</span>
+                        <span>7x - 21</span>
+                    </div>
+                    <div class="option" onclick="selectOption(8, 2)">
+                        <span class="option-label">C</span>
+                        <span>x - 21</span>
+                    </div>
+                    <div class="option" onclick="selectOption(8, 3)">
+                        <span class="option-label">D</span>
+                        <span>7x + 21</span>
+                    </div>
+                </div>
+                <div class="explanation" id="explanation8">
+                    <div class="explanation-title">💡 Explication</div>
+                    7 × x = 7x et 7 × (-3) = -21. Donc 7(x - 3) = 7x - 21
+                </div>
+            </div>
+        </div>
+
+        <!-- BOUTONS DE NAVIGATION -->
+        <div class="button-group" id="quizButtons">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display: none;">← Précédent</button>
+            <button class="btn btn-primary" id="validateBtn" onclick="validateAnswer()" disabled>Valider la réponse</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display: none;">Suivant →</button>
+            <button class="btn btn-primary" id="finishBtn" onclick="showResults()" style="display: none;">Voir les résultats 🎉</button>
+        </div>
+
+        <!-- RÉSULTATS -->
+        <div class="results-container" id="resultsContainer">
+            <h2>🎉 Quiz terminé !</h2>
+            
+            <div class="results-score" id="resultsScore">
+                <div class="score-big" id="scoreBig">0/8</div>
+                <div class="score-message" id="scoreMessage">Bravo !</div>
+            </div>
+
+            <div class="results-details">
+                <div class="detail-row">
+                    <span><strong>Bonnes réponses :</strong></span>
+                    <span id="correctCount">0</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Mauvaises réponses :</strong></span>
+                    <span id="incorrectCount">0</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Pourcentage :</strong></span>
+                    <span id="percentage">0%</span>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="classe-3e.html" class="nav-btn">← Retour au chapitre</a>
+                <button class="btn btn-primary" onclick="restartQuiz()">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <!-- NAVIGATION INITIALE -->
+        <div class="navigation" id="initialNav">
+            <a href="classe-3e.html" class="nav-btn">← Retour au chapitre</a>
+        </div>
+    </div>
+
+    <script>
+        // Configuration du quiz
+        const quizData = [
+            { question: 1, correctAnswer: 1 }, // 3x + 15
+            { question: 2, correctAnswer: 1 }, // -2x + 8
+            { question: 3, correctAnswer: 2 }, // 10x + 15
+            { question: 4, correctAnswer: 1 }, // x² + 7x
+            { question: 5, correctAnswer: 1 }, // -6x + 15
+            { question: 6, correctAnswer: 0 }, // 12 - 4x
+            { question: 7, correctAnswer: 0 }, // -4x - 2x²
+            { question: 8, correctAnswer: 1 }  // 7x - 21
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answeredQuestions = [];
+
+        // Sélectionner une option
+        function selectOption(questionNum, optionIndex) {
+            if (answeredQuestions.includes(questionNum)) return;
+
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+            
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            selectedAnswer = optionIndex;
+            
+            document.getElementById('validateBtn').disabled = false;
+        }
+
+        // Valider la réponse
+        function validateAnswer() {
+            const questionNum = currentQuestionIndex + 1;
+            const correctAnswerIndex = quizData[currentQuestionIndex].correctAnswer;
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+            
+            answeredQuestions.push(questionNum);
+            
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.style.cursor = 'not-allowed';
+            });
+            
+            if (selectedAnswer === correctAnswerIndex) {
+                options[selectedAnswer].classList.add('correct');
+                score++;
+            } else {
+                options[selectedAnswer].classList.add('incorrect');
+                options[correctAnswerIndex].classList.add('correct');
+            }
+            
+            document.getElementById(`explanation${questionNum}`).classList.add('show');
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('validateBtn').style.display = 'none';
+            
+            if (currentQuestionIndex < quizData.length - 1) {
+                document.getElementById('nextBtn').style.display = 'block';
+            } else {
+                document.getElementById('finishBtn').style.display = 'block';
+            }
+        }
+
+        // Question suivante
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex++;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            selectedAnswer = null;
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            document.getElementById('nextBtn').style.display = 'none';
+            
+            if (currentQuestionIndex > 0) {
+                document.getElementById('prevBtn').style.display = 'block';
+            }
+        }
+
+        // Question précédente
+        function previousQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex--;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            if (currentQuestionIndex === 0) {
+                document.getElementById('prevBtn').style.display = 'none';
+            }
+            
+            if (answeredQuestions.includes(currentQuestionIndex + 1)) {
+                document.getElementById('validateBtn').style.display = 'none';
+                if (currentQuestionIndex < quizData.length - 1) {
+                    document.getElementById('nextBtn').style.display = 'block';
+                } else {
+                    document.getElementById('finishBtn').style.display = 'block';
+                }
+            } else {
+                document.getElementById('validateBtn').style.display = 'block';
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('finishBtn').style.display = 'none';
+            }
+        }
+
+        // Afficher les résultats
+        function showResults() {
+            document.querySelector('.quiz-info').style.display = 'none';
+            document.querySelectorAll('.question-container').forEach(q => q.style.display = 'none');
+            document.getElementById('quizButtons').style.display = 'none';
+            document.getElementById('initialNav').style.display = 'none';
+            
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.classList.add('show');
+            
+            const totalQuestions = quizData.length;
+            const incorrectCount = totalQuestions - score;
+            const percentageValue = Math.round((score / totalQuestions) * 100);
+            
+            document.getElementById('scoreBig').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('percentage').textContent = percentageValue + '%';
+            
+            const resultsScore = document.getElementById('resultsScore');
+            const scoreMessage = document.getElementById('scoreMessage');
+            
+            if (percentageValue === 100) {
+                scoreMessage.textContent = '🏆 Parfait ! Tu maîtrises la distributivité simple !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 75) {
+                scoreMessage.textContent = '🌟 Très bien ! Tu as bien compris !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 50) {
+                scoreMessage.textContent = '👍 Pas mal ! Révise encore un peu les signes !';
+                resultsScore.className = 'results-score medium';
+            } else {
+                scoreMessage.textContent = '💪 Continue à t\'entraîner, tu vas y arriver !';
+                resultsScore.className = 'results-score low';
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Recommencer le quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            answeredQuestions = [];
+            
+            document.querySelector('.quiz-info').style.display = 'flex';
+            document.getElementById('quizButtons').style.display = 'flex';
+            document.getElementById('initialNav').style.display = 'flex';
+            document.getElementById('resultsContainer').classList.remove('show');
+            
+            for (let i = 1; i <= quizData.length; i++) {
+                const questionContainer = document.getElementById(`question${i}`);
+                const options = questionContainer.querySelectorAll('.option');
+                const explanation = document.getElementById(`explanation${i}`);
+                
+                if (i === 1) {
+                    questionContainer.classList.add('active');
+                } else {
+                    questionContainer.classList.remove('active');
+                }
+                
+                options.forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'incorrect', 'disabled');
+                    opt.style.cursor = 'pointer';
+                });
+                
+                explanation.classList.remove('show');
+            }
+            
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            document.getElementById('prevBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('finishBtn').style.display = 'none';
+            
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('currentScore').textContent = '0';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
