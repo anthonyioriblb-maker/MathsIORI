@@ -22,7 +22,7 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             background: white;
             padding: 40px;
@@ -32,8 +32,14 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
         
         h1 {
@@ -54,7 +60,7 @@
         
         .chapters {
             display: grid;
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 30px;
         }
         
@@ -62,14 +68,10 @@
             background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
             padding: 25px;
             border-radius: 15px;
-            text-decoration: none;
             color: white;
-            transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            display: block;
+            overflow: visible;
         }
         
         .chapter-card:nth-child(2) {
@@ -90,33 +92,7 @@
         
         .chapter-card.coming-soon {
             opacity: 0.7;
-            cursor: not-allowed;
             background: linear-gradient(135deg, #b8b8b8 0%, #8a8a8a 100%);
-        }
-        
-        .chapter-card.coming-soon:hover {
-            transform: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .chapter-card.coming-soon::before { display: none; }
-        
-        .chapter-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.2);
-            transition: left 0.5s ease;
-        }
-        
-        .chapter-card:hover::before { left: 100%; }
-        
-        .chapter-card:not(.coming-soon):hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
         .chapter-number {
@@ -126,6 +102,10 @@
             position: absolute;
             right: 20px;
             top: 10px;
+        }
+        
+        .chapter-header {
+            margin-bottom: 20px;
         }
         
         .chapter-title {
@@ -142,11 +122,126 @@
             position: relative;
             z-index: 1;
             font-family: Arial, sans-serif;
+            margin-bottom: 15px;
+        }
+        
+        .chapter-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        
+        .action-button {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: Arial, sans-serif;
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .action-button.cours {
+            background: rgba(255,255,255,0.95);
+            color: #185a9d;
+        }
+        
+        .action-button.exercices, .action-button.quiz {
+            background: rgba(255,255,255,0.85);
+        }
+        
+        .action-button.exercices {
+            color: #ff5e62;
+        }
+        
+        .action-button.quiz {
+            color: #43cea2;
+        }
+        
+        .action-button:not(.disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,1);
+        }
+        
+        .action-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(255,255,255,0.4);
+            color: #666;
+        }
+        
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-width: 200px;
+            margin-top: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .dropdown-wrapper:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.2s ease;
+            font-family: Arial, sans-serif;
+            font-size: 0.9em;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-item:hover {
+            background: #f8f9fa;
+            padding-left: 25px;
+        }
+        
+        .dropdown-item.exercices-item {
+            color: #ff5e62;
+        }
+        
+        .dropdown-item.quiz-item {
+            color: #43cea2;
+        }
+        
+        .dropdown-arrow {
+            font-size: 0.7em;
+            margin-left: 4px;
         }
         
         .badge {
             position: absolute;
-            bottom: 15px;
+            top: 15px;
             right: 15px;
             background: rgba(255,255,255,0.3);
             padding: 8px 15px;
@@ -164,8 +259,12 @@
         }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { 
+                transform: scale(1); 
+            }
+            50% { 
+                transform: scale(1.05); 
+            }
         }
         
         .home-button {
@@ -214,35 +313,60 @@
                 titre: "Rappels de calculs",
                 description: "Mise à niveau pour être au point pour cette année !",
                 emoji: "🔢",
-                fichier: "3e-chapitre1.html"
+                cours: {
+                    actif: true,
+                    fichier: "3e-chapitre1.html"
+                },
+                exercices: [],
+                quiz: []
             },
             chapitre2: {
                 disponible: true,
                 titre: "Théorème de Thalès",
-                description: "Découvre les propriétés de proportionnalité dans les triangles.",
+                description: "Découvre les propriétés de proportionnalité dans les triangles",
                 emoji: "📐",
-                fichier: "3e-chapitre2.html"
+                cours: {
+                    actif: true,
+                    fichier: "3e-chapitre2.html"
+                },
+                exercices: [],
+                quiz: []
             },
             chapitre3: {
                 disponible: true,
                 titre: "Calcul littéral",
                 description: "Maîtrise les expressions algébriques et sois un pro du calcul avec des lettres !",
                 emoji: "🔢",
-                fichier: "3e-chapitre3.html"
+                cours: {
+                    actif: true,
+                    fichier: "3e-chapitre3.html"
+                },
+                exercices: [],
+                quiz: []
             },
             chapitre4: {
                 disponible: false,
                 titre: "Chapitre 4",
                 description: "Contenu en cours de préparation",
-                emoji: "🔢",
-                fichier: "3e-chapitre4.html"
+                emoji: "📚",
+                cours: {
+                    actif: false,
+                    fichier: ""
+                },
+                exercices: [],
+                quiz: []
             },
             chapitre5: {
                 disponible: false,
                 titre: "Chapitre 5",
                 description: "Contenu en cours de préparation",
-                emoji: "🔢",
-                fichier: "3e-chapitre5.html"
+                emoji: "📚",
+                cours: {
+                    actif: false,
+                    fichier: ""
+                },
+                exercices: [],
+                quiz: []
             }
         };
         
@@ -254,21 +378,71 @@
             const chapitreNum = index + 1;
             
             // Créer l'élément du chapitre
-            const card = document.createElement(chapitre.disponible ? 'a' : 'div');
+            const card = document.createElement('div');
             card.className = 'chapter-card' + (chapitre.disponible ? '' : ' coming-soon');
             
-            if (chapitre.disponible) {
-                card.href = chapitre.fichier;
+            // Bouton cours
+            const coursBtn = chapitre.cours.actif 
+                ? `<a href="${chapitre.cours.fichier}" class="action-button cours">📖 Cours</a>`
+                : `<span class="action-button cours disabled">📖 Cours</span>`;
+            
+            // Menu déroulant exercices
+            let exercicesBtn = '';
+            if (chapitre.exercices.length > 0) {
+                const exercicesItems = chapitre.exercices.map(exo => 
+                    `<a href="${exo.fichier}" class="dropdown-item exercices-item">✍️ ${exo.titre}</a>`
+                ).join('');
+                
+                exercicesBtn = `
+                    <div class="dropdown-wrapper">
+                        <button class="action-button exercices">
+                            ✍️ Exercices <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            ${exercicesItems}
+                        </div>
+                    </div>
+                `;
+            } else {
+                exercicesBtn = `<span class="action-button exercices disabled">✍️ Exercices</span>`;
+            }
+            
+            // Menu déroulant quiz
+            let quizBtn = '';
+            if (chapitre.quiz.length > 0) {
+                const quizItems = chapitre.quiz.map(q => 
+                    `<a href="${q.fichier}" class="dropdown-item quiz-item">🎯 ${q.titre}</a>`
+                ).join('');
+                
+                quizBtn = `
+                    <div class="dropdown-wrapper">
+                        <button class="action-button quiz">
+                            🎯 Quiz <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            ${quizItems}
+                        </div>
+                    </div>
+                `;
+            } else {
+                quizBtn = `<span class="action-button quiz disabled">🎯 Quiz</span>`;
             }
             
             card.innerHTML = `
                 <div class="chapter-number">${chapitreNum}</div>
-                <div class="chapter-title">
-                    <span class="emoji">${chapitre.emoji}</span>${chapitre.titre}
-                </div>
-                <div class="chapter-desc">${chapitre.description}</div>
                 <div class="badge ${chapitre.disponible ? 'available' : ''}">
                     ${chapitre.disponible ? 'Disponible maintenant ✨' : 'Bientôt disponible 🚀'}
+                </div>
+                <div class="chapter-header">
+                    <div class="chapter-title">
+                        <span class="emoji">${chapitre.emoji}</span>${chapitre.titre}
+                    </div>
+                    <div class="chapter-desc">${chapitre.description}</div>
+                </div>
+                <div class="chapter-actions">
+                    ${coursBtn}
+                    ${exercicesBtn}
+                    ${quizBtn}
                 </div>
             `;
             
