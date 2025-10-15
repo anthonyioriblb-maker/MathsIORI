@@ -317,18 +317,22 @@
                     actif: true,
                     fichier: "6e-chapitre1.html"
                 },
-                exercices: [
+                exercices: {
                     actif: false,
-                    { titre: "Exercices faciles", fichier: "6e-chapitre1-exo-faciles.html" },
-                    { titre: "Exercices moyens", fichier: "6e-chapitre1-exo-moyens.html" },
-                    { titre: "Exercices difficiles", fichier: "6e-chapitre1-exo-difficiles.html" }
-                ],
-                quiz: [
+                    items: [
+                        { titre: "Exercices faciles", fichier: "6e-chapitre1-exo-faciles.html" },
+                        { titre: "Exercices moyens", fichier: "6e-chapitre1-exo-moyens.html" },
+                        { titre: "Exercices difficiles", fichier: "6e-chapitre1-exo-difficiles.html" }
+                    ]
+                },
+                quiz: {
                     actif: false,
-                    { titre: "Quiz niveau 1", fichier: "6e-chapitre1-quiz1.html" },
-                    { titre: "Quiz niveau 2", fichier: "6e-chapitre1-quiz2.html" },
-                    { titre: "Quiz final", fichier: "6e-chapitre1-quiz-final.html" }
-                ]
+                    items: [
+                        { titre: "Quiz niveau 1", fichier: "6e-chapitre1-quiz1.html" },
+                        { titre: "Quiz niveau 2", fichier: "6e-chapitre1-quiz2.html" },
+                        { titre: "Quiz final", fichier: "6e-chapitre1-quiz-final.html" }
+                    ]
+                }
             },
             chapitre2: {
                 disponible: true,
@@ -339,17 +343,21 @@
                     actif: true,
                     fichier: "6e-chapitre2.html"
                 },
-                exercices: [
-                actif: false,
-                    { titre: "Points et droites", fichier: "6e-chapitre2-exo-points-droites.html" },
-                    { titre: "Angles", fichier: "6e-chapitre2-exo-angles.html" },
-                    { titre: "Figures géométriques", fichier: "6e-chapitre2-exo-figures.html" }
-                ],
-                quiz: [
+                exercices: {
                     actif: false,
-                    { titre: "Quiz géométrie de base", fichier: "6e-chapitre2-quiz1.html" },
-                    { titre: "Quiz avancé", fichier: "6e-chapitre2-quiz2.html" }
-                ]
+                    items: [
+                        { titre: "Points et droites", fichier: "6e-chapitre2-exo-points-droites.html" },
+                        { titre: "Angles", fichier: "6e-chapitre2-exo-angles.html" },
+                        { titre: "Figures géométriques", fichier: "6e-chapitre2-exo-figures.html" }
+                    ]
+                },
+                quiz: {
+                    actif: false,
+                    items: [
+                        { titre: "Quiz géométrie de base", fichier: "6e-chapitre2-quiz1.html" },
+                        { titre: "Quiz avancé", fichier: "6e-chapitre2-quiz2.html" }
+                    ]
+                }
             },
             chapitre3: {
                 disponible: true,
@@ -360,16 +368,20 @@
                     actif: true,
                     fichier: "6e-chapitre3.html"
                 },
-                exercices: [
+                exercices: {
                     actif: false,
-                    { titre: "Lire et écrire", fichier: "6e-chapitre3-exo-lire-ecrire.html" },
-                    { titre: "Comparer", fichier: "6e-chapitre3-exo-comparer.html" },
-                    { titre: "Calculs", fichier: "6e-chapitre3-exo-calculs.html" }
-                ],
-                quiz: [
+                    items: [
+                        { titre: "Lire et écrire", fichier: "6e-chapitre3-exo-lire-ecrire.html" },
+                        { titre: "Comparer", fichier: "6e-chapitre3-exo-comparer.html" },
+                        { titre: "Calculs", fichier: "6e-chapitre3-exo-calculs.html" }
+                    ]
+                },
+                quiz: {
                     actif: false,
-                    { titre: "Quiz décimaux", fichier: "6e-chapitre3-quiz1.html" }
-                ]
+                    items: [
+                        { titre: "Quiz décimaux", fichier: "6e-chapitre3-quiz1.html" }
+                    ]
+                }
             },
             chapitre4: {
                 disponible: false,
@@ -380,8 +392,14 @@
                     actif: false,
                     fichier: ""
                 },
-                exercices: [],
-                quiz: []
+                exercices: {
+                    actif: false,
+                    items: []
+                },
+                quiz: {
+                    actif: false,
+                    items: []
+                }
             },
             chapitre5: {
                 disponible: false,
@@ -392,8 +410,14 @@
                     actif: false,
                     fichier: ""
                 },
-                exercices: [],
-                quiz: []
+                exercices: {
+                    actif: false,
+                    items: []
+                },
+                quiz: {
+                    actif: false,
+                    items: []
+                }
             }
         };
         
@@ -415,15 +439,15 @@
             
             // Menu déroulant exercices
             let exercicesBtn = '';
-            if (chapitre.exercices.length > 0) {
-                const exercicesItems = chapitre.exercices.map(exo => 
-                    `<a href="${exo.fichier}" class="dropdown-item exercices-item">✍️ ${exo.titre}</a>`
+            if (chapitre.exercices.actif && chapitre.exercices.items.length > 0) {
+                const exercicesItems = chapitre.exercices.items.map(exo => 
+                    `<a href="${exo.fichier}" class="dropdown-item exercices-item">✏️ ${exo.titre}</a>`
                 ).join('');
                 
                 exercicesBtn = `
                     <div class="dropdown-wrapper">
                         <button class="action-button exercices">
-                            ✍️ Exercices <span class="dropdown-arrow">▼</span>
+                            ✏️ Exercices <span class="dropdown-arrow">▼</span>
                         </button>
                         <div class="dropdown-menu">
                             ${exercicesItems}
@@ -431,13 +455,13 @@
                     </div>
                 `;
             } else {
-                exercicesBtn = `<span class="action-button exercices disabled">✍️ Exercices</span>`;
+                exercicesBtn = `<span class="action-button exercices disabled">✏️ Exercices</span>`;
             }
             
             // Menu déroulant quiz
             let quizBtn = '';
-            if (chapitre.quiz.length > 0) {
-                const quizItems = chapitre.quiz.map(q => 
+            if (chapitre.quiz.actif && chapitre.quiz.items.length > 0) {
+                const quizItems = chapitre.quiz.items.map(q => 
                     `<a href="${q.fichier}" class="dropdown-item quiz-item">🎯 ${q.titre}</a>`
                 ).join('');
                 
