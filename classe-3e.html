@@ -317,8 +317,14 @@
                     actif: true,
                     fichier: "3e-chapitre1.html"
                 },
-                exercices: [],
-                quiz: []
+                exercices: {
+                    actif: false,
+                    items: []
+                },
+                quiz: {
+                    actif: false,
+                    items: []
+                }
             },
             chapitre2: {
                 disponible: true,
@@ -329,8 +335,14 @@
                     actif: true,
                     fichier: "3e-chapitre2.html"
                 },
-                exercices: [],
-                quiz: []
+                exercices: {
+                    actif: false,
+                    items: []
+                },
+                quiz: {
+                    actif: false,
+                    items: []
+                }
             },
             chapitre3: {
                 disponible: true,
@@ -341,9 +353,16 @@
                     actif: true,
                     fichier: "3e-chapitre3.html"
                 },
-                exercices: [],
-                quiz: [actif: false,
-                    {titre: "distributivité simple", fichier: "quiz-3e-chapitre1-distributivitesimple.html"},]
+                exercices: {
+                    actif: false,
+                    items: []
+                },
+                quiz: {
+                    actif: false,
+                    items: [
+                        { titre: "Distributivité simple", fichier: "quiz-3e-chapitre3-distributivitesimple.html" }
+                    ]
+                }
             },
             chapitre4: {
                 disponible: false,
@@ -354,8 +373,14 @@
                     actif: false,
                     fichier: ""
                 },
-                exercices: [],
-                quiz: []
+                exercices: {
+                    actif: false,
+                    items: []
+                },
+                quiz: {
+                    actif: false,
+                    items: []
+                }
             },
             chapitre5: {
                 disponible: false,
@@ -366,8 +391,14 @@
                     actif: false,
                     fichier: ""
                 },
-                exercices: [],
-                quiz: []
+                exercices: {
+                    actif: false,
+                    items: []
+                },
+                quiz: {
+                    actif: false,
+                    items: []
+                }
             }
         };
         
@@ -389,15 +420,15 @@
             
             // Menu déroulant exercices
             let exercicesBtn = '';
-            if (chapitre.exercices.length > 0) {
-                const exercicesItems = chapitre.exercices.map(exo => 
-                    `<a href="${exo.fichier}" class="dropdown-item exercices-item">✍️ ${exo.titre}</a>`
+            if (chapitre.exercices.actif && chapitre.exercices.items.length > 0) {
+                const exercicesItems = chapitre.exercices.items.map(exo => 
+                    `<a href="${exo.fichier}" class="dropdown-item exercices-item">✏️ ${exo.titre}</a>`
                 ).join('');
                 
                 exercicesBtn = `
                     <div class="dropdown-wrapper">
                         <button class="action-button exercices">
-                            ✍️ Exercices <span class="dropdown-arrow">▼</span>
+                            ✏️ Exercices <span class="dropdown-arrow">▼</span>
                         </button>
                         <div class="dropdown-menu">
                             ${exercicesItems}
@@ -405,13 +436,13 @@
                     </div>
                 `;
             } else {
-                exercicesBtn = `<span class="action-button exercices disabled">✍️ Exercices</span>`;
+                exercicesBtn = `<span class="action-button exercices disabled">✏️ Exercices</span>`;
             }
             
             // Menu déroulant quiz
             let quizBtn = '';
-            if (chapitre.quiz.length > 0) {
-                const quizItems = chapitre.quiz.map(q => 
+            if (chapitre.quiz.actif && chapitre.quiz.items.length > 0) {
+                const quizItems = chapitre.quiz.items.map(q => 
                     `<a href="${q.fichier}" class="dropdown-item quiz-item">🎯 ${q.titre}</a>`
                 ).join('');
                 
