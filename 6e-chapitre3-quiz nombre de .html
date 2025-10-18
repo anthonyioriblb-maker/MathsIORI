@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz sur les Nombres Décimaux</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .score {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .option-btn {
+            padding: 25px;
+            font-size: 20px;
+            font-weight: 600;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+        
+        .option-btn.correct {
+            border-color: #10b981;
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .option-btn.incorrect {
+            border-color: #ef4444;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .option-btn.disabled {
+            opacity: 0.5;
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .input-field {
+            flex: 1;
+            padding: 20px;
+            font-size: 24px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            outline: none;
+        }
+        
+        .input-field:focus {
+            border-color: #667eea;
+        }
+        
+        .input-field:disabled {
+            background: #f5f5f5;
+        }
+        
+        .submit-btn {
+            padding: 20px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover:not(:disabled) {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .feedback {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+            margin-top: 15px;
+        }
+        
+        .feedback.correct {
+            background: #d1fae5;
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+        
+        .feedback.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #ef4444;
+        }
+        
+        .warning {
+            padding: 15px;
+            border-radius: 10px;
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #fbbf24;
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .result-container {
+            text-align: center;
+        }
+        
+        .result-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .result-score {
+            font-size: 60px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .result-message {
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .restart-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .restart-btn:hover {
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="quiz-container">
+            <div class="header">
+                <span class="question-number" id="question-number">Question 1/10</span>
+                <span class="score" id="score">Score: 0</span>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            
+            <h3 class="question" id="question"></h3>
+            
+            <div id="options-container"></div>
+        </div>
+        
+        <div id="result-container" class="result-container hidden">
+            <h2 class="result-title">Résultats</h2>
+            <div class="result-score" id="final-score"></div>
+            <p class="result-message" id="result-message"></p>
+            <button class="restart-btn" onclick="resetQuiz()">
+                🔄 Nouveau Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        var questions = [];
+        var currentQuestion = 0;
+        var score = 0;
+        var isAnswered = false;
+
+        function formaterNombre(nombre) {
+            var str = nombre.toString();
+            var parties = str.split(',');
+            var partieEntiere = parties[0];
+            var partieDecimale = parties[1] || '';
+            
+            var entierFormate = '';
+            for (var i = partieEntiere.length - 1, count = 0; i >= 0; i--, count++) {
+                if (count > 0 && count % 3 === 0) {
+                    entierFormate = ' ' + entierFormate;
+                }
+                entierFormate = partieEntiere[i] + entierFormate;
+            }
+            
+            return partieDecimale ? entierFormate + ',' + partieDecimale : entierFormate;
+        }
+
+        function genererNombreDecimal() {
+            var partieEntiere = Math.floor(Math.random() * 100000) + 100;
+            var nbDecimales = Math.floor(Math.random() * 3) + 2;
+            var partieDecimale = '';
+            for (var i = 0; i < nbDecimales; i++) {
+                partieDecimale += Math.floor(Math.random() * 10);
+            }
+            return formaterNombre(partieEntiere + ',' + partieDecimale);
+        }
+
+        function genererQuestions() {
+            questions = [];
+            
+            for (var i = 0; i < 10; i++) {
+                var nombre = genererNombreDecimal();
+                var typeQuestion = Math.random() < 0.5 ? 'qcm' : 'saisie';
+                var typeDeQuestion = Math.random() < 0.5 ? 'chiffre' : 'nombre';
+                var positions = ['unités', 'dizaines', 'centaines', 'dixièmes', 'centièmes', 'millièmes'];
+                var positionNom = positions[Math.floor(Math.random() * positions.length)];
+                
+                var nombreSansEspace = nombre.replace(/ /g, '');
+                var indexVirgule = nombreSansEspace.indexOf(',');
+                var positionIndex;
+                var reponseCorrecte;
+                
+                if (typeDeQuestion === 'chiffre') {
+                    switch(positionNom) {
+                        case 'unités': positionIndex = indexVirgule - 1; break;
+                        case 'dizaines': positionIndex = indexVirgule - 2; break;
+                        case 'centaines': positionIndex = indexVirgule - 3; break;
+                        case 'dixièmes': positionIndex = indexVirgule + 1; break;
+                        case 'centièmes': positionIndex = indexVirgule + 2; break;
+                        case 'millièmes': positionIndex = indexVirgule + 3; break;
+                    }
+                    
+                    if (positionIndex >= 0 && positionIndex < nombreSansEspace.length && nombreSansEspace[positionIndex] !== ',') {
+                        reponseCorrecte = nombreSansEspace[positionIndex];
+                    } else {
+                        reponseCorrecte = '0';
+                    }
+                    
+                    if (typeQuestion === 'qcm') {
+                        var options = [reponseCorrecte];
+                        while (options.length < 4) {
+                            var opt = Math.floor(Math.random() * 10).toString();
+                            if (options.indexOf(opt) === -1) options.push(opt);
+                        }
+                        options.sort(function() { return Math.random() - 0.5; });
+                        
+                        questions.push({
+                            type: 'qcm',
+                            question: 'Quel est le chiffre des ' + positionNom + ' dans ' + nombre + ' ?',
+                            options: options,
+                            reponse: reponseCorrecte
+                        });
+                    } else {
+                        questions.push({
+                            type: 'saisie',
+                            question: 'Quel est le chiffre des ' + positionNom + ' dans ' + nombre + ' ?',
+                            reponse: reponseCorrecte
+                        });
+                    }
+                } else {
+                    switch(positionNom) {
+                        case 'unités': positionIndex = indexVirgule - 1; break;
+                        case 'dizaines': positionIndex = indexVirgule - 2; break;
+                        case 'centaines': positionIndex = indexVirgule - 3; break;
+                        case 'dixièmes': positionIndex = indexVirgule + 1; break;
+                        case 'centièmes': positionIndex = indexVirgule + 2; break;
+                        case 'millièmes': positionIndex = indexVirgule + 3; break;
+                    }
+                    
+                    var nombreDe;
+                    if (positionIndex < indexVirgule) {
+                        nombreDe = nombreSansEspace.substring(0, positionIndex + 1);
+                    } else {
+                        nombreDe = nombreSansEspace.substring(0, indexVirgule) + nombreSansEspace.substring(indexVirgule + 1, positionIndex + 1);
+                    }
+                    
+                    reponseCorrecte = formaterNombre(nombreDe + ',0').replace(',0', '') || '0';
+                    
+                    if (typeQuestion === 'qcm') {
+                        var options = [reponseCorrecte];
+                        while (options.length < 4) {
+                            var variation = Math.floor(Math.random() * 20) - 10;
+                            var opt = (parseInt(reponseCorrecte.replace(/ /g, '')) + variation).toString();
+                            var optFormate = formaterNombre(opt + ',0').replace(',0', '');
+                            if (opt !== reponseCorrecte.replace(/ /g, '') && parseInt(opt) >= 0 && options.indexOf(optFormate) === -1) {
+                                options.push(optFormate);
+                            }
+                        }
+                        options.sort(function() { return Math.random() - 0.5; });
+                        
+                        questions.push({
+                            type: 'qcm',
+                            question: 'Quel est le nombre de ' + positionNom + ' dans ' + nombre + ' ?',
+                            options: options,
+                            reponse: reponseCorrecte
+                        });
+                    } else {
+                        questions.push({
+                            type: 'saisie',
+                            question: 'Quel est le nombre de ' + positionNom + ' dans ' + nombre + ' ?',
+                            reponse: reponseCorrecte
+                        });
+                    }
+                }
+            }
+        }
+
+        function afficherQuestion() {
+            var q = questions[currentQuestion];
+            document.getElementById('question-number').textContent = 'Question ' + (currentQuestion + 1) + '/10';
+            document.getElementById('score').textContent = 'Score: ' + score;
+            document.getElementById('progress').style.width = ((currentQuestion + 1) / 10) * 100 + '%';
+            document.getElementById('question').textContent = q.question;
+            
+            var container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            if (q.type === 'qcm') {
+                var optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                
+                for (var j = 0; j < q.options.length; j++) {
+                    var option = q.options[j];
+                    var btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = option;
+                    btn.setAttribute('data-option', option);
+                    btn.onclick = function() {
+                        handleQCMAnswer(this.getAttribute('data-option'), this);
+                    };
+                    optionsDiv.appendChild(btn);
+                }
+                
+                container.appendChild(optionsDiv);
+            } else {
+                var inputDiv = document.createElement('div');
+                inputDiv.className = 'input-container';
+                
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'input-field';
+                input.placeholder = 'Ta réponse...';
+                input.id = 'user-input';
+                input.onkeypress = function(e) {
+                    if (e.key === 'Enter' && !isAnswered) handleInputSubmit();
+                };
+                
+                var btn = document.createElement('button');
+                btn.className = 'submit-btn';
+                btn.textContent = 'Valider';
+                btn.onclick = handleInputSubmit;
+                
+                inputDiv.appendChild(input);
+                inputDiv.appendChild(btn);
+                container.appendChild(inputDiv);
+            }
+        }
+
+        function handleQCMAnswer(option, btn) {
+            if (isAnswered) return;
+            isAnswered = true;
+            
+            var isCorrect = option.toString() === questions[currentQuestion].reponse.toString();
+            
+            if (isCorrect) {
+                score++;
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('incorrect');
+            }
+            
+            var buttons = document.querySelectorAll('.option-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                if (buttons[i].textContent === questions[currentQuestion].reponse.toString()) {
+                    buttons[i].classList.add('correct');
+                } else if (buttons[i] !== btn) {
+                    buttons[i].classList.add('disabled');
+                }
+            }
+            
+            setTimeout(nextQuestion, 1500);
+        }
+
+        function handleInputSubmit() {
+            var input = document.getElementById('user-input');
+            if (!input || input.value.trim() === '' || isAnswered) return;
+            
+            isAnswered = true;
+            input.disabled = true;
+            document.querySelector('.submit-btn').disabled = true;
+            
+            var userAnswer = input.value.trim().replace(/ /g, '');
+            var correctAnswer = questions[currentQuestion].reponse.toString().replace(/ /g, '');
+            var isCorrect = userAnswer === correctAnswer;
+            var hasCorrectSpaces = input.value.trim() === questions[currentQuestion].reponse.toString();
+            
+            if (isCorrect) score++;
+            
+            var feedback = document.createElement('div');
+            feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+            if (isCorrect) {
+                feedback.textContent = '✓ Correct ! La réponse est ' + questions[currentQuestion].reponse;
+            } else {
+                feedback.textContent = '✗ Incorrect ! La bonne réponse est ' + questions[currentQuestion].reponse;
+            }
+            
+            document.getElementById('options-container').appendChild(feedback);
+            
+            if (isCorrect && !hasCorrectSpaces) {
+                var warning = document.createElement('div');
+                warning.className = 'warning';
+                warning.textContent = '⚠️ Attention : n\'oublie pas les espaces ! La notation correcte est : ' + questions[currentQuestion].reponse;
+                document.getElementById('options-container').appendChild(warning);
+                setTimeout(nextQuestion, 3500);
+            } else {
+                setTimeout(nextQuestion, 1500);
+            }
+        }
+
+        function nextQuestion() {
+            isAnswered = false;
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                afficherQuestion();
+            } else {
+                afficherResultats();
+            }
+        }
+
+        function afficherResultats() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('result-container').classList.remove('hidden');
+            document.getElementById('final-score').textContent = score + '/10';
+            
+            var message = '';
+            if (score === 10) message = '🎉 Parfait !';
+            else if (score >= 7) message = '👍 Très bien !';
+            else if (score >= 5) message = '😊 Pas mal !';
+            else message = '💪 Continue à t\'entraîner !';
+            
+            document.getElementById('result-message').textContent = message;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            isAnswered = false;
+            genererQuestions();
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('result-container').classList.add('hidden');
+            afficherQuestion();
+        }
+
+        genererQuestions();
+        afficherQuestion();
+    </script>
+</body>
+</html>
