@@ -16,7 +16,6 @@
             background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
             min-height: 100vh;
             padding: 20px;
-            padding-bottom: 100px;
         }
         
         .container {
@@ -354,78 +353,15 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(24, 90, 157, 0.6);
         }
-
-        /* Boutons flottants fixes en bas */
-        .floating-buttons {
+        /* Floating next button (always visible) */
+        .floating-next {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 15px 20px;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            z-index: 1000;
-        }
-
-        .floating-btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: Arial, sans-serif;
-            flex: 1;
-            max-width: 200px;
-        }
-
-        .floating-btn.validate {
-            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
-            color: white;
-            box-shadow: 0 3px 10px rgba(24, 90, 157, 0.4);
-        }
-
-        .floating-btn.next {
-            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
-            color: white;
-            box-shadow: 0 3px 10px rgba(24, 90, 157, 0.4);
-        }
-
-        .floating-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .floating-btn:not(:disabled):hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(24, 90, 157, 0.6);
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 1.8em;
-            }
-            
-            .math-expression {
-                font-size: 1.2em;
-            }
-
-            .floating-buttons {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .floating-btn {
-                max-width: 100%;
-            }
+            right: 20px;
+            bottom: 20px;
+            z-index: 9999;
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-size: 1.05em;
         }
     </style>
 </head>
@@ -731,6 +667,14 @@
             </div>
         </div>
 
+        <!-- BOUTONS DE NAVIGATION -->
+        <div class="button-group" id="quizButtons">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>← Précédent</button>
+            <button class="btn btn-primary" id="validateBtn" onclick="validateAnswer()" disabled>Valider la réponse</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Suivant →</button>
+            <button class="btn btn-primary" id="finishBtn" onclick="showResults()" disabled>Voir les résultats 🎉</button>
+        </div>
+
         <!-- RÉSULTATS -->
         <div class="results-container" id="resultsContainer">
             <h2>🎉 Quiz terminé !</h2>
@@ -765,31 +709,21 @@
         <div class="navigation" id="initialNav">
             <a href="classe-3e.html" class="nav-btn">← Retour au chapitre</a>
         </div>
-    </div>
-
-    <!-- BOUTONS FLOTTANTS -->
-    <div class="floating-buttons" id="floatingButtons">
-        <button class="floating-btn validate" id="floatingValidate" onclick="validateAnswer()" disabled>
-            ✓ Valider
-        </button>
-        <button class="floating-btn next" id="floatingNext" onclick="nextQuestion()" disabled>
-            Suivant →
-        </button>
-        <button class="floating-btn next" id="floatingFinish" onclick="showResults()" style="display:none;" disabled>
-            Résultats 🎉
-        </button>
+        <!-- Bouton flottant Suivant toujours visible -->
+        <button id="floatingNextBtn" class="btn btn-primary floating-next" onclick="nextQuestion()" disabled aria-label="Suivant">Suivant →</button>
     </div>
 
     <script>
+        // Configuration du quiz
         const quizData = [
-            { question: 1, correctAnswer: 1 },
-            { question: 2, correctAnswer: 1 },
-            { question: 3, correctAnswer: 2 },
-            { question: 4, correctAnswer: 1 },
-            { question: 5, correctAnswer: 1 },
-            { question: 6, correctAnswer: 0 },
-            { question: 7, correctAnswer: 0 },
-            { question: 8, correctAnswer: 1 }
+            { question: 1, correctAnswer: 1 }, // 3x + 15
+            { question: 2, correctAnswer: 1 }, // -2x + 8
+            { question: 3, correctAnswer: 2 }, // 10x + 15
+            { question: 4, correctAnswer: 1 }, // x² + 7x
+            { question: 5, correctAnswer: 1 }, // -6x + 15
+            { question: 6, correctAnswer: 0 }, // 12 - 4x
+            { question: 7, correctAnswer: 0 }, // -4x - 2x²
+            { question: 8, correctAnswer: 1 }  // 7x - 21
         ];
 
         let currentQuestionIndex = 0;
@@ -797,6 +731,15 @@
         let selectedAnswer = null;
         let answeredQuestions = [];
 
+        // Helper to enable/disable both next buttons (inline and floating)
+        function setNextEnabled(enabled) {
+            const next = document.getElementById('nextBtn');
+            const floating = document.getElementById('floatingNextBtn');
+            if (next) next.disabled = !enabled;
+            if (floating) floating.disabled = !enabled;
+        }
+
+        // Sélectionner une option
         function selectOption(questionNum, optionIndex) {
             if (answeredQuestions.includes(questionNum)) return;
 
@@ -806,9 +749,10 @@
             options[optionIndex].classList.add('selected');
             selectedAnswer = optionIndex;
             
-            document.getElementById('floatingValidate').disabled = false;
+            document.getElementById('validateBtn').disabled = false;
         }
 
+        // Valider la réponse
         function validateAnswer() {
             const questionNum = currentQuestionIndex + 1;
             const correctAnswerIndex = quizData[currentQuestionIndex].correctAnswer;
@@ -831,19 +775,19 @@
             
             document.getElementById(`explanation${questionNum}`).classList.add('show');
             document.getElementById('currentScore').textContent = score;
-            document.getElementById('floatingValidate').style.display = 'none';
+            document.getElementById('validateBtn').style.display = 'none';
             
+            // Activer le bouton Suivant ou Voir les résultats sans changer la visibilité
             if (currentQuestionIndex < quizData.length - 1) {
-                document.getElementById('floatingNext').disabled = false;
-                document.getElementById('floatingNext').style.display = 'block';
-                document.getElementById('floatingFinish').style.display = 'none';
+                setNextEnabled(true);
+                document.getElementById('finishBtn').disabled = true;
             } else {
-                document.getElementById('floatingNext').style.display = 'none';
-                document.getElementById('floatingFinish').style.display = 'block';
-                document.getElementById('floatingFinish').disabled = false;
+                setNextEnabled(false);
+                document.getElementById('finishBtn').disabled = false;
             }
         }
 
+        // Question suivante
         function nextQuestion() {
             document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
             currentQuestionIndex++;
@@ -851,19 +795,57 @@
             document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
             
             selectedAnswer = null;
-            document.getElementById('floatingValidate').style.display = 'block';
-            document.getElementById('floatingValidate').disabled = true;
-            document.getElementById('floatingNext').disabled = true;
-            document.getElementById('floatingFinish').style.display = 'none';
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            // Désactiver le bouton Suivant car on revient sur une question non validée
+            setNextEnabled(false);
+            document.getElementById('finishBtn').disabled = true;
             
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (currentQuestionIndex > 0) {
+                document.getElementById('prevBtn').style.display = 'block';
+            }
         }
 
+        // Question précédente
+        function previousQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex--;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            if (currentQuestionIndex === 0) {
+                document.getElementById('prevBtn').style.display = 'none';
+            }
+            
+            if (answeredQuestions.includes(currentQuestionIndex + 1)) {
+                document.getElementById('validateBtn').style.display = 'none';
+                if (currentQuestionIndex < quizData.length - 1) {
+                    setNextEnabled(true);
+                    document.getElementById('finishBtn').disabled = true;
+                } else {
+                    document.getElementById('finishBtn').disabled = false;
+                    setNextEnabled(false);
+                }
+            } else {
+                document.getElementById('validateBtn').style.display = 'block';
+                setNextEnabled(false);
+                document.getElementById('finishBtn').disabled = true;
+            }
+        }
+
+        // Afficher les résultats
         function showResults() {
             document.querySelector('.quiz-info').style.display = 'none';
             document.querySelectorAll('.question-container').forEach(q => q.style.display = 'none');
+            // Masquer la zone de boutons mais conserver les boutons individuels visibles pour layout
+            document.getElementById('quizButtons').style.display = 'none';
             document.getElementById('initialNav').style.display = 'none';
-            document.getElementById('floatingButtons').style.display = 'none';
+            // Cacher le bouton flottant sur l'écran des résultats
+            const floating = document.getElementById('floatingNextBtn');
+            if (floating) {
+                floating.style.display = 'none';
+                floating.setAttribute('aria-hidden', 'true');
+            }
             
             const resultsContainer = document.getElementById('resultsContainer');
             resultsContainer.classList.add('show');
@@ -897,6 +879,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Recommencer le quiz
         function restartQuiz() {
             currentQuestionIndex = 0;
             score = 0;
@@ -904,8 +887,8 @@
             answeredQuestions = [];
             
             document.querySelector('.quiz-info').style.display = 'flex';
+            document.getElementById('quizButtons').style.display = 'flex';
             document.getElementById('initialNav').style.display = 'flex';
-            document.getElementById('floatingButtons').style.display = 'flex';
             document.getElementById('resultsContainer').classList.remove('show');
             
             for (let i = 1; i <= quizData.length; i++) {
@@ -927,11 +910,18 @@
                 explanation.classList.remove('show');
             }
             
-            document.getElementById('floatingValidate').style.display = 'block';
-            document.getElementById('floatingValidate').disabled = true;
-            document.getElementById('floatingNext').style.display = 'block';
-            document.getElementById('floatingNext').disabled = true;
-            document.getElementById('floatingFinish').style.display = 'none';
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            document.getElementById('prevBtn').style.display = 'none';
+            // Réinitialiser les états disabled plutôt que la visibilité
+            setNextEnabled(false);
+            document.getElementById('finishBtn').disabled = true;
+            // Restaurer le bouton flottant si nécessaire
+            const floatingBtn = document.getElementById('floatingNextBtn');
+            if (floatingBtn) {
+                floatingBtn.style.display = 'inline-block';
+                floatingBtn.setAttribute('aria-hidden', 'false');
+            }
             
             document.getElementById('currentQuestion').textContent = '1';
             document.getElementById('currentScore').textContent = '0';
