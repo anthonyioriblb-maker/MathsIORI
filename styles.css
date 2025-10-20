@@ -178,15 +178,21 @@ img {
     text-align: center;
 }
 
-.frac > .num, .frac > .numerateur, .numerateur {
-    display: inline-block;
+.frac > .num, 
+.frac > .numerateur, 
+.fraction > .numerateur,
+.numerateur {
+    display: block;
     padding: 0 .1em;
     border-bottom: 1px solid black;
     padding-bottom: 2px;
 }
 
-.frac > .den, .frac > .denominateur, .denominateur {
-    display: inline-block;
+.frac > .den, 
+.frac > .denominateur,
+.fraction > .denominateur,
+.denominateur {
+    display: block;
     padding: 0 .1em;
     padding-top: 2px;
 }
