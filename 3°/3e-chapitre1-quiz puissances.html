@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Les Puissances</title>
+    <link rel="stylesheet" href="quiz_styles.css">
+    <style>
+        /* Styles spécifiques pour ce quiz */
+        .reponse-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            border: 3px solid #ddd;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .reponse-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .reponse-input:disabled {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
+
+        .sup {
+            vertical-align: super;
+            font-size: 0.75em;
+        }
+
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 3px;
+        }
+
+        .frac > span {
+            display: block;
+            padding: 0.1em;
+        }
+
+        .frac .num {
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.2em;
+        }
+
+        .frac .den {
+            padding-top: 0.2em;
+        }
+
+        .formule-box {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: Arial, sans-serif;
+            font-size: 1.1em;
+        }
+
+        .correction-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .correction-box.show {
+            display: block;
+        }
+
+        .correction-box.correct {
+            background: #f0fff4;
+            border-left-color: #48bb78;
+        }
+
+        .correction-box.incorrect {
+            background: #fff5f5;
+            border-left-color: #ff5e62;
+        }
+
+        .correction-titre {
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #1565c0;
+        }
+
+        .correction-box.correct .correction-titre {
+            color: #48bb78;
+        }
+
+        .correction-box.incorrect .correction-titre {
+            color: #ff5e62;
+        }
+
+        .correction-detail {
+            margin: 10px 0;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔢 Quiz - Les Puissances</h1>
+            <p class="subtitle">Entraînez-vous sur les définitions et les formules</p>
+        </div>
+
+        <div class="hint">
+            <div class="hint-title">💡 Comment répondre ?</div>
+            <p>Utilisez ces symboles pour écrire vos réponses :</p>
+            <ul>
+                <li><strong>^</strong> pour les puissances : 5^3 pour 5³</li>
+                <li><strong>*</strong> ou <strong>×</strong> pour les multiplications : 3*5 ou 3×5</li>
+                <li><strong>/</strong> pour les fractions : 1/8 pour ⅛</li>
+                <li><strong>( )</strong> pour les parenthèses : (2*3)^4</li>
+            </ul>
+            <p><em>Exemples : 2^-3 &nbsp;•&nbsp; (4*5)^2 &nbsp;•&nbsp; 1/2^3 &nbsp;•&nbsp; (7/3)^5</em></p>
+        </div>
+
+        <div class="quiz-info">
+            <div class="info-item">
+                <div class="info-label">Score</div>
+                <div class="info-value"><span id="score">0</span> / <span id="total">0</span></div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Pourcentage</div>
+                <div class="info-value" id="pourcentage">0%</div>
+            </div>
+        </div>
+
+        <div class="question-container active">
+            <div class="question-header">
+                <span class="question-number">Question <span id="numQuestion">1</span></span>
+            </div>
+
+            <div class="question-body">
+                <div class="question-text" id="question"></div>
+
+                <input type="text" class="reponse-input" id="reponse" placeholder="Entrez votre réponse ici">
+
+                <div class="button-group">
+                    <button class="btn btn-primary" id="btnValider">Valider ma réponse</button>
+                    <button class="btn btn-secondary" id="btnSuivant" style="display: none;">Question suivante →</button>
+                </div>
+
+                <div class="correction-box" id="correction"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let total = 0;
+        let questionActuelle = null;
+
+        // Types de questions
+        const typesQuestions = [
+            'definition_positive',
+            'definition_negative',
+            'produit_puissances',
+            'quotient_puissances',
+            'puissance_de_puissance',
+            'produit_en_puissance',
+            'quotient_en_puissance'
+        ];
+
+        function genererQuestion() {
+            const type = typesQuestions[Math.floor(Math.random() * typesQuestions.length)];
+            
+            switch(type) {
+                case 'definition_positive':
+                    return genererDefinitionPositive();
+                case 'definition_negative':
+                    return genererDefinitionNegative();
+                case 'produit_puissances':
+                    return genererProduitPuissances();
+                case 'quotient_puissances':
+                    return genererQuotientPuissances();
+                case 'puissance_de_puissance':
+                    return genererPuissanceDePuissance();
+                case 'produit_en_puissance':
+                    return genererProduitEnPuissance();
+                case 'quotient_en_puissance':
+                    return genererQuotientEnPuissance();
+            }
+        }
+
+        function genererDefinitionPositive() {
+            const base = Math.floor(Math.random() * 8) + 2;
+            const exposant = Math.floor(Math.random() * 5) + 2;
+            
+            const choix = Math.random() < 0.5;
+            
+            if (choix) {
+                let produit = Array(exposant).fill(base).join(' × ');
+                return {
+                    enonce: `Écrire ${base}<span class="sup">${exposant}</span> sous forme d'un produit :`,
+                    reponseAttendue: produit,
+                    reponsesAcceptees: [produit, produit.replace(/\s/g, '')],
+                    explication: `<div class="formule-box">a<span class="sup">n</span> = a × a × ... × a (n fois)</div>
+                                 ${base}<span class="sup">${exposant}</span> = ${produit}`,
+                    type: 'definition'
+                };
+            } else {
+                let produit = Array(exposant).fill(base).join(' × ');
+                return {
+                    enonce: `Écrire ${produit} sous forme d'une puissance de ${base} :`,
+                    reponseAttendue: `${base}^${exposant}`,
+                    reponsesAcceptees: [`${base}^${exposant}`, `${base} ^ ${exposant}`],
+                    explication: `<div class="formule-box">a × a × ... × a (n fois) = a<span class="sup">n</span></div>
+                                 ${produit} = ${base}<span class="sup">${exposant}</span>`,
+                    type: 'definition'
+                };
+            }
+        }
+
+        function genererDefinitionNegative() {
+            const base = Math.floor(Math.random() * 8) + 2;
+            const exposant = -(Math.floor(Math.random() * 4) + 1);
+            
+            const choix = Math.random();
+            
+            if (choix < 0.25) {
+                return {
+                    enonce: `Écrire ${base}<span class="sup">${exposant}</span> sous la forme <span class="frac"><span class="num">1</span><span class="den">...</span></span> :`,
+                    reponseAttendue: `1/${base}^${-exposant}`,
+                    reponsesAcceptees: [`1/${base}^${-exposant}`, `1 / ${base}^${-exposant}`, `1/${base} ^ ${-exposant}`],
+                    explication: `<div class="formule-box">a<span class="sup">-n</span> = <span class="frac"><span class="num">1</span><span class="den">a<span class="sup">n</span></span></span></div>
+                                 ${base}<span class="sup">${exposant}</span> = <span class="frac"><span class="num">1</span><span class="den">${base}<span class="sup">${-exposant}</span></span></span>`,
+                    type: 'definition'
+                };
+            } else if (choix < 0.5) {
+                return {
+                    enonce: `Écrire <span class="frac"><span class="num">1</span><span class="den">${base}<span class="sup">${-exposant}</span></span></span> sous forme d'une puissance de ${base} :`,
+                    reponseAttendue: `${base}^${exposant}`,
+                    reponsesAcceptees: [`${base}^${exposant}`, `${base} ^ ${exposant}`, `${base}^(${exposant})`],
+                    explication: `<div class="formule-box"><span class="frac"><span class="num">1</span><span class="den">a<span class="sup">n</span></span></span> = a<span class="sup">-n</span></div>
+                                 <span class="frac"><span class="num">1</span><span class="den">${base}<span class="sup">${-exposant}</span></span></span> = ${base}<span class="sup">${exposant}</span>`,
+                    type: 'definition'
+                };
+            } else if (choix < 0.75) {
+                const produit = Array(-exposant).fill(base).join(' × ');
+                return {
+                    enonce: `Écrire <span class="frac"><span class="num">1</span><span class="den">${produit}</span></span> sous forme d'une puissance de ${base} :`,
+                    reponseAttendue: `${base}^${exposant}`,
+                    reponsesAcceptees: [`${base}^${exposant}`, `${base} ^ ${exposant}`, `${base}^(${exposant})`],
+                    explication: `<div class="formule-box"><span class="frac"><span class="num">1</span><span class="den">a × a × ... × a (n fois)</span></span> = a<span class="sup">-n</span></div>
+                                 <span class="frac"><span class="num">1</span><span class="den">${produit}</span></span> = <span class="frac"><span class="num">1</span><span class="den">${base}<span class="sup">${-exposant}</span></span></span> = ${base}<span class="sup">${exposant}</span>`,
+                    type: 'definition'
+                };
+            } else {
+                const valeur = 1 / Math.pow(base, -exposant);
+                const denominateur = Math.pow(base, -exposant);
+                return {
+                    enonce: `Calculer ${base}<span class="sup">${exposant}</span> (donner le résultat sous forme décimale ou sous forme de fraction) :`,
+                    reponseAttendue: valeur.toString(),
+                    reponsesAcceptees: [valeur.toString(), `1/${denominateur}`, `1 / ${denominateur}`],
+                    explication: `<div class="formule-box">a<span class="sup">-n</span> = <span class="frac"><span class="num">1</span><span class="den">a<span class="sup">n</span></span></span></div>
+                                 ${base}<span class="sup">${exposant}</span> = <span class="frac"><span class="num">1</span><span class="den">${base}<span class="sup">${-exposant}</span></span></span> = <span class="frac"><span class="num">1</span><span class="den">${denominateur}</span></span>${valeur < 1 ? ` = ${valeur}` : ''}`,
+                    type: 'calcul'
+                };
+            }
+        }
+
+        function genererProduitPuissances() {
+            const base = Math.floor(Math.random() * 6) + 2;
+            const exp1 = Math.floor(Math.random() * 6) + 1;
+            const exp2 = Math.floor(Math.random() * 6) + 1;
+            const somme = exp1 + exp2;
+            
+            return {
+                enonce: `Écrire sous la forme d'une puissance : ${base}<span class="sup">${exp1}</span> × ${base}<span class="sup">${exp2}</span>`,
+                reponseAttendue: somme === 1 ? base.toString() : `${base}^${somme}`,
+                reponsesAcceptees: somme === 1 ? [base.toString(), `${base}^1`, `${base} ^ 1`] : [`${base}^${somme}`, `${base} ^ ${somme}`],
+                explication: `<div class="formule-box">a<span class="sup">m</span> × a<span class="sup">n</span> = a<span class="sup">m+n</span></div>
+                             ${base}<span class="sup">${exp1}</span> × ${base}<span class="sup">${exp2}</span> = ${base}<span class="sup">${exp1}+${exp2}</span> = ${somme === 1 ? base : `${base}<span class="sup">${somme}</span>`}`,
+                type: 'formule'
+            };
+        }
+
+        function genererQuotientPuissances() {
+            const base = Math.floor(Math.random() * 6) + 2;
+            
+            // Permettre des exposants négatifs pour plus de difficulté
+            const choixType = Math.random();
+            let exp1, exp2;
+            
+            if (choixType < 0.5) {
+                // Cas classique avec exposants positifs
+                exp1 = Math.floor(Math.random() * 8) + 1;
+                exp2 = Math.floor(Math.random() * 6) + 1;
+                if (Math.random() < 0.5 && exp1 < exp2) {
+                    [exp1, exp2] = [exp2, exp1];
+                }
+            } else {
+                // Cas avec exposants négatifs (plus difficile)
+                exp1 = Math.floor(Math.random() * 6) + 1;
+                exp2 = -(Math.floor(Math.random() * 5) + 1);
+            }
+            
+            const difference = exp1 - exp2;
+            
+            return {
+                enonce: `Écrire sous la forme d'une puissance : <span class="frac"><span class="num">${base}<span class="sup">${exp1}</span></span><span class="den">${base}<span class="sup">${exp2}</span></span></span>`,
+                reponseAttendue: difference === 1 ? base.toString() : (difference === 0 ? '1' : `${base}^${difference}`),
+                reponsesAcceptees: [
+                    `${base}^${difference}`, 
+                    `${base} ^ ${difference}`, 
+                    difference === 0 ? '1' : null, 
+                    difference === 1 ? base.toString() : null,
+                    difference === 1 ? `${base}^1` : null
+                ].filter(x => x),
+                explication: `<div class="formule-box"><span class="frac"><span class="num">a<span class="sup">m</span></span><span class="den">a<span class="sup">n</span></span></span> = a<span class="sup">m-n</span></div>
+                             <span class="frac"><span class="num">${base}<span class="sup">${exp1}</span></span><span class="den">${base}<span class="sup">${exp2}</span></span></span> = ${base}<span class="sup">${exp1}-(${exp2})</span> = ${base}<span class="sup">${exp1}${exp2 < 0 ? '+' + (-exp2) : '-' + exp2}</span> = ${difference === 0 ? '1' : (difference === 1 ? base : `${base}<span class="sup">${difference}</span>`)}`,
+                type: 'formule'
+            };
+        }
+
+        function genererPuissanceDePuissance() {
+            const base = Math.floor(Math.random() * 6) + 2;
+            const exp1 = Math.floor(Math.random() * 5) + 1;
+            const exp2 = Math.floor(Math.random() * 4) + 2;
+            const produit = exp1 * exp2;
+            
+            return {
+                enonce: `Écrire sous la forme d'une puissance : (${base}<span class="sup">${exp1}</span>)<span class="sup">${exp2}</span>`,
+                reponseAttendue: produit === 1 ? base.toString() : `${base}^${produit}`,
+                reponsesAcceptees: produit === 1 ? [base.toString(), `${base}^1`, `${base} ^ 1`] : [`${base}^${produit}`, `${base} ^ ${produit}`],
+                explication: `<div class="formule-box">(a<span class="sup">m</span>)<span class="sup">n</span> = a<span class="sup">m×n</span></div>
+                             (${base}<span class="sup">${exp1}</span>)<span class="sup">${exp2}</span> = ${base}<span class="sup">${exp1}×${exp2}</span> = ${produit === 1 ? base : `${base}<span class="sup">${produit}</span>`}`,
+                type: 'formule'
+            };
+        }
+
+        function genererProduitEnPuissance() {
+            const base1 = Math.floor(Math.random() * 5) + 2;
+            const base2 = Math.floor(Math.random() * 5) + 2;
+            const exposant = Math.floor(Math.random() * 5) + 2;
+            const produit = base1 * base2;
+            
+            return {
+                enonce: `Écrire ${base1}<span class="sup">${exposant}</span> × ${base2}<span class="sup">${exposant}</span> sous la forme d'une puissance :`,
+                reponseAttendue: `${produit}^${exposant}`,
+                reponsesAcceptees: [
+                    `${produit}^${exposant}`,
+                    `${produit} ^ ${exposant}`,
+                    `(${base1}*${base2})^${exposant}`,
+                    `(${base1} * ${base2})^${exposant}`,
+                    `(${base1}×${base2})^${exposant}`,
+                    `(${base1} × ${base2})^${exposant}`,
+                    `(${base2}*${base1})^${exposant}`,
+                    `(${base2} * ${base1})^${exposant}`,
+                    `(${base2}×${base1})^${exposant}`,
+                    `(${base2} × ${base1})^${exposant}`
+                ],
+                explication: `<div class="formule-box">a<span class="sup">n</span> × b<span class="sup">n</span> = (a × b)<span class="sup">n</span></div>
+                             ${base1}<span class="sup">${exposant}</span> × ${base2}<span class="sup">${exposant}</span> = (${base1} × ${base2})<span class="sup">${exposant}</span> = ${produit}<span class="sup">${exposant}</span>`,
+                type: 'formule'
+            };
+        }
+
+        function genererQuotientEnPuissance() {
+            const base1 = Math.floor(Math.random() * 7) + 2;
+            const base2 = Math.floor(Math.random() * 5) + 2;
+            const exposant = Math.floor(Math.random() * 5) + 2;
+            
+            return {
+                enonce: `Écrire <span class="frac"><span class="num">${base1}<span class="sup">${exposant}</span></span><span class="den">${base2}<span class="sup">${exposant}</span></span></span> sous la forme d'une puissance :`,
+                reponseAttendue: `(${base1}/${base2})^${exposant}`,
+                reponsesAcceptees: [
+                    `(${base1}/${base2})^${exposant}`,
+                    `(${base1} / ${base2})^${exposant}`
+                ],
+                explication: `<div class="formule-box"><span class="frac"><span class="num">a<span class="sup">n</span></span><span class="den">b<span class="sup">n</span></span></span> = (<span class="frac"><span class="num">a</span><span class="den">b</span></span>)<span class="sup">n</span></div>
+                             <span class="frac"><span class="num">${base1}<span class="sup">${exposant}</span></span><span class="den">${base2}<span class="sup">${exposant}</span></span></span> = (<span class="frac"><span class="num">${base1}</span><span class="den">${base2}</span></span>)<span class="sup">${exposant}</span>`,
+                type: 'formule'
+            };
+        }
+
+        function afficherQuestion() {
+            questionActuelle = genererQuestion();
+            document.getElementById('question').innerHTML = questionActuelle.enonce;
+            document.getElementById('reponse').value = '';
+            document.getElementById('reponse').disabled = false;
+            document.getElementById('btnValider').style.display = 'inline-block';
+            document.getElementById('btnSuivant').style.display = 'none';
+            document.getElementById('correction').className = 'correction-box';
+            document.getElementById('correction').innerHTML = '';
+            document.getElementById('reponse').focus();
+        }
+
+        function normaliserReponse(str) {
+            return str.toLowerCase()
+                      .replace(/\s+/g, '')
+                      .replace(/×/g, '*')
+                      .replace(/x/g, '*')
+                      .replace(/\^/g, '^')
+                      .replace(/\(/g, '')
+                      .replace(/\)/g, '');
+        }
+
+        function validerReponse() {
+            const reponseUser = document.getElementById('reponse').value.trim();
+            const correction = document.getElementById('correction');
+            
+            if (!reponseUser) {
+                alert('Veuillez entrer une réponse');
+                return;
+            }
+
+            total++;
+            
+            const reponseNormalisee = normaliserReponse(reponseUser);
+            const reponsesAcceptees = questionActuelle.reponsesAcceptees || [questionActuelle.reponseAttendue];
+            const isCorrect = reponsesAcceptees.some(r => normaliserReponse(r) === reponseNormalisee);
+            
+            if (isCorrect) {
+                score++;
+                correction.className = 'correction-box correct show';
+                correction.innerHTML = `
+                    <div class="correction-titre">✓ Bravo ! C'est correct !</div>
+                    <div class="correction-detail">${questionActuelle.explication}</div>
+                `;
+            } else {
+                correction.className = 'correction-box incorrect show';
+                correction.innerHTML = `
+                    <div class="correction-titre">✗ Pas tout à fait...</div>
+                    <div class="correction-detail">
+                        <strong>Votre réponse :</strong> ${reponseUser}<br><br>
+                        ${questionActuelle.explication}
+                    </div>
+                `;
+            }
+            
+            document.getElementById('reponse').disabled = true;
+            document.getElementById('btnValider').style.display = 'none';
+            document.getElementById('btnSuivant').style.display = 'inline-block';
+            
+            updateScore();
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('total').textContent = total;
+            const pourcentage = total > 0 ? Math.round((score / total) * 100) : 0;
+            document.getElementById('pourcentage').textContent = pourcentage + '%';
+        }
+
+        document.getElementById('btnValider').addEventListener('click', validerReponse);
+        document.getElementById('btnSuivant').addEventListener('click', afficherQuestion);
+        
+        document.getElementById('reponse').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                if (document.getElementById('btnValider').style.display !== 'none') {
+                    validerReponse();
+                } else {
+                    afficherQuestion();
+                }
+            }
+        });
+
+        // Afficher la première question au chargement
+        afficherQuestion();
+    </script>
+</body>
+</html>
