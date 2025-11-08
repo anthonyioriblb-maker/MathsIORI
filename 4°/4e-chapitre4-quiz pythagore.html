@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Théorème de Pythagore : Réciproque et Contraposée</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-family: Arial, sans-serif;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #764ba2;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .question-container {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-number {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .question-body {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 0 0 15px 15px;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+        }
+
+        .triangle-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #764ba2;
+            font-family: Arial, sans-serif;
+            font-size: 1.1em;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 1.1em;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .option.selected {
+            border-color: #764ba2;
+            background: #f0f4ff;
+        }
+
+        .option.correct {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .option.incorrect {
+            border-color: #ff5e62;
+            background: #fff5f5;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .option-label {
+            display: inline-block;
+            background: #764ba2;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .option.correct .option-label {
+            background: #48bb78;
+        }
+
+        .option.incorrect .option-label {
+            background: #ff5e62;
+        }
+
+        .explanation {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            font-family: Arial, sans-serif;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .explanation-title {
+            font-weight: bold;
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .calcul {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid #764ba2;
+            font-family: 'Courier New', monospace;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.6);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #764ba2;
+            border: 2px solid #764ba2;
+        }
+
+        .btn-secondary:hover {
+            background: #764ba2;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .results-container.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .results-score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .results-score.low {
+            background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%);
+        }
+
+        .results-score.medium {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .score-big {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .score-message {
+            font-size: 1.5em;
+            margin-top: 15px;
+        }
+
+        .results-details {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.6);
+        }
+
+        .floating-next {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9999;
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-size: 1.05em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Quiz - Théorème de Pythagore</h1>
+            <p class="subtitle">Réciproque et Contraposée - 4ème</p>
+        </div>
+
+        <div class="quiz-info">
+            <div class="info-item">
+                <div class="info-label">Questions</div>
+                <div class="info-value" id="totalQuestions">8</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Question actuelle</div>
+                <div class="info-value" id="currentQuestion">1</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Score</div>
+                <div class="info-value" id="currentScore">0</div>
+            </div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="button-group" id="quizButtons">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>← Précédent</button>
+            <button class="btn btn-primary" id="validateBtn" onclick="validateAnswer()" disabled>Valider la réponse</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Suivant →</button>
+            <button class="btn btn-primary" id="finishBtn" onclick="showResults()" disabled>Voir les résultats 🎉</button>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+            <h2>🎉 Quiz terminé !</h2>
+
+            <div class="results-score" id="resultsScore">
+                <div class="score-big" id="scoreBig">0/8</div>
+                <div class="score-message" id="scoreMessage">Bravo !</div>
+            </div>
+
+            <div class="results-details">
+                <div class="detail-row">
+                    <span><strong>Bonnes réponses :</strong></span>
+                    <span id="correctCount">0</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Mauvaises réponses :</strong></span>
+                    <span id="incorrectCount">0</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Pourcentage :</strong></span>
+                    <span id="percentage">0%</span>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="classe-4e.html" class="nav-btn">← Retour au chapitre</a>
+                <button class="btn btn-primary" onclick="restartQuiz()">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <div class="navigation" id="initialNav">
+            <a href="classe-4e.html" class="nav-btn">← Retour au chapitre</a>
+        </div>
+
+        <button id="floatingNextBtn" class="btn btn-primary floating-next" onclick="nextQuestion()" disabled aria-label="Suivant">Suivant →</button>
+    </div>
+
+    <script>
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function randomIntExcluding(min, max, exclude) {
+            let num;
+            do {
+                num = randomInt(min, max);
+            } while (exclude.includes(num));
+            return num;
+        }
+
+        let quizData = [];
+        let questionsData = [];
+
+        function generateQuestions() {
+            questionsData = [];
+
+            // Question 1: Triangle rectangle simple (réciproque - OUI)
+            const a1 = 3, b1 = 4, c1 = 5;
+            questionsData.push({
+                type: 'reciproque_oui',
+                AB: a1, AC: b1, BC: c1,
+                question: `Le triangle ABC est-il rectangle ?`,
+                correctAnswer: 'Oui, le triangle ABC est rectangle en A',
+                isRectangle: true,
+                rightAngle: 'A'
+            });
+
+            // Question 2: Triangle non rectangle (contraposée - NON)
+            const a2 = 5, b2 = 6, c2 = 9;
+            questionsData.push({
+                type: 'contraposee_non',
+                AB: a2, AC: b2, BC: c2,
+                question: `Le triangle ABC est-il rectangle ?`,
+                correctAnswer: 'Non, le triangle ABC n\'est pas rectangle',
+                isRectangle: false
+            });
+
+            // Question 3: Triangle rectangle avec nombres décimaux (réciproque - OUI)
+            const a3 = 5.2, b3 = 3.9, c3 = 6.5;
+            questionsData.push({
+                type: 'reciproque_oui',
+                AB: a3, AC: b3, BC: c3,
+                question: `Le triangle ABC est-il rectangle ?`,
+                correctAnswer: 'Oui, le triangle ABC est rectangle en A',
+                isRectangle: true,
+                rightAngle: 'A'
+            });
+
+            // Question 4: Triangle non rectangle (contraposée - NON)
+            const a4 = 7, b4 = 8, c4 = 11;
+            questionsData.push({
+                type: 'contraposee_non',
+                AB: a4, AC: b4, BC: c4,
+                question: `Le triangle ABC est-il rectangle ?`,
+                correctAnswer: 'Non, le triangle ABC n\'est pas rectangle',
+                isRectangle: false
+            });
+
+            // Question 5: Triangle rectangle (réciproque - OUI)
+            const a5 = 6, b5 = 8, c5 = 10;
+            questionsData.push({
+                type: 'reciproque_oui',
+                AB: a5, AC: b5, BC: c5,
+                question: `Le triangle ABC est-il rectangle ?`,
+                correctAnswer: 'Oui, le triangle ABC est rectangle en A',
+                isRectangle: true,
+                rightAngle: 'A'
+            });
+
+            // Question 6: Triangle non rectangle (contraposée - NON)
+            const a6 = 10, b6 = 12, c6 = 18;
+            questionsData.push({
+                type: 'contraposee_non',
+                AB: a6, AC: b6, BC: c6,
+                question: `Le triangle ABC est-il rectangle ?`,
+                correctAnswer: 'Non, le triangle ABC n\'est pas rectangle',
+                isRectangle: false
+            });
+
+            // Question 7: Triangle rectangle (réciproque - OUI)
+            const a7 = 5, b7 = 12, c7 = 13;
+            questionsData.push({
+                type: 'reciproque_oui',
+                AB: a7, AC: b7, BC: c7,
+                question: `Le triangle ABC est-il rectangle ?`,
+                correctAnswer: 'Oui, le triangle ABC est rectangle en A',
+                isRectangle: true,
+                rightAngle: 'A'
+            });
+
+            // Question 8: Triangle non rectangle (contraposée - NON)
+            const a8 = 15, b8 = 11, c8 = 10;
+            questionsData.push({
+                type: 'contraposee_non',
+                AB: a8, AC: b8, BC: c8,
+                question: `Le triangle ABC est-il rectangle ?`,
+                correctAnswer: 'Non, le triangle ABC n\'est pas rectangle',
+                isRectangle: false
+            });
+
+            quizData = questionsData.map((q, i) => ({ question: i + 1, correctAnswer: -1 }));
+        }
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answeredQuestions = [];
+
+        function generateWrongAnswers(data) {
+            const wrong = [];
+
+            if (data.isRectangle) {
+                wrong.push('Non, le triangle ABC n\'est pas rectangle');
+                wrong.push('On ne peut pas savoir');
+                wrong.push('Oui, le triangle ABC est rectangle en B');
+            } else {
+                wrong.push('Oui, le triangle ABC est rectangle en A');
+                wrong.push('Oui, le triangle ABC est rectangle en B');
+                wrong.push('On ne peut pas savoir');
+            }
+
+            return wrong;
+        }
+
+        function generateExplanation(data) {
+            const AB2 = (data.AB * data.AB).toFixed(2);
+            const AC2 = (data.AC * data.AC).toFixed(2);
+            const BC2 = (data.BC * data.BC).toFixed(2);
+            const sum = (data.AB * data.AB + data.AC * data.AC).toFixed(2);
+
+            let explanation = '';
+
+            explanation += '<div class="calcul">Dans le triangle ABC, le côté le plus long est [BC].</div>';
+
+            explanation += `<div class="calcul">D'une part, BC² = ${data.BC}² = <strong>${BC2}</strong></div>`;
+
+            explanation += `<div class="calcul">D'autre part, AB² + AC² = ${data.AB}² + ${data.AC}² = ${AB2} + ${AC2} = <strong>${sum}</strong></div>`;
+
+            if (data.isRectangle) {
+                explanation += `<div class="calcul">Ainsi AB² + AC² = BC², d'après la <strong>réciproque du théorème de Pythagore</strong>, le triangle ABC est <strong>rectangle en A</strong>.</div>`;
+            } else {
+                explanation += `<div class="calcul">Ainsi AB² + AC² ≠ BC², d'après la <strong>contraposée du théorème de Pythagore</strong>, le triangle ABC <strong>n'est pas rectangle</strong>.</div>`;
+            }
+
+            return explanation;
+        }
+
+        function createQuestionHTML(questionNum, data) {
+            const container = document.createElement('div');
+            container.className = 'question-container' + (questionNum === 1 ? ' active' : '');
+            container.id = `question${questionNum}`;
+
+            const wrongAnswers = generateWrongAnswers(data);
+            const allAnswers = [data.correctAnswer, ...wrongAnswers];
+
+            for (let i = allAnswers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allAnswers[i], allAnswers[j]] = [allAnswers[j], allAnswers[i]];
+            }
+
+            const correctIndex = allAnswers.indexOf(data.correctAnswer);
+            quizData[questionNum - 1].correctAnswer = correctIndex;
+
+            const labels = ['A', 'B', 'C', 'D'];
+            let optionsHTML = '';
+            allAnswers.forEach((answer, idx) => {
+                optionsHTML += `
+                    <div class="option" onclick="selectOption(${questionNum}, ${idx})">
+                        <span class="option-label">${labels[idx]}</span>
+                        <span>${answer}</span>
+                    </div>
+                `;
+            });
+
+            const explanation = generateExplanation(data);
+
+            container.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">Question ${questionNum}/8</div>
+                </div>
+                <div class="question-body">
+                    <div class="question-text">
+                        ${data.question}
+                    </div>
+                    <div class="triangle-info">
+                        Triangle ABC tel que :<br>
+                        AB = ${data.AB} cm<br>
+                        AC = ${data.AC} cm<br>
+                        BC = ${data.BC} cm
+                    </div>
+                    <div class="options">
+                        ${optionsHTML}
+                    </div>
+                    <div class="explanation" id="explanation${questionNum}">
+                        <div class="explanation-title">💡 Explication</div>
+                        ${explanation}
+                    </div>
+                </div>
+            `;
+
+            return container;
+        }
+
+        function initQuiz() {
+            generateQuestions();
+            const questionsContainer = document.getElementById('questionsContainer');
+            questionsContainer.innerHTML = '';
+
+            questionsData.forEach((data, idx) => {
+                const questionHTML = createQuestionHTML(idx + 1, data);
+                questionsContainer.appendChild(questionHTML);
+            });
+
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            answeredQuestions = [];
+
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('currentScore').textContent = '0';
+        }
+
+        window.addEventListener('DOMContentLoaded', initQuiz);
+
+        function setNextEnabled(enabled) {
+            const next = document.getElementById('nextBtn');
+            const floating = document.getElementById('floatingNextBtn');
+            if (next) next.disabled = !enabled;
+            if (floating) floating.disabled = !enabled;
+        }
+
+        function selectOption(questionNum, optionIndex) {
+            if (answeredQuestions.includes(questionNum)) return;
+
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            selectedAnswer = optionIndex;
+
+            document.getElementById('validateBtn').disabled = false;
+        }
+
+        function validateAnswer() {
+            const questionNum = currentQuestionIndex + 1;
+            const correctAnswerIndex = quizData[currentQuestionIndex].correctAnswer;
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+
+            answeredQuestions.push(questionNum);
+
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.style.cursor = 'not-allowed';
+            });
+
+            if (selectedAnswer === correctAnswerIndex) {
+                options[selectedAnswer].classList.add('correct');
+                score++;
+            } else {
+                options[selectedAnswer].classList.add('incorrect');
+                options[correctAnswerIndex].classList.add('correct');
+            }
+
+            document.getElementById(`explanation${questionNum}`).classList.add('show');
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('validateBtn').style.display = 'none';
+
+            if (currentQuestionIndex < quizData.length - 1) {
+                setNextEnabled(true);
+                document.getElementById('finishBtn').disabled = true;
+            } else {
+                setNextEnabled(false);
+                document.getElementById('finishBtn').disabled = false;
+            }
+        }
+
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex++;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+
+            selectedAnswer = null;
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            setNextEnabled(false);
+            document.getElementById('finishBtn').disabled = true;
+
+            if (currentQuestionIndex > 0) {
+                document.getElementById('prevBtn').style.display = 'block';
+            }
+        }
+
+        function previousQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex--;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+
+            if (currentQuestionIndex === 0) {
+                document.getElementById('prevBtn').style.display = 'none';
+            }
+
+            if (answeredQuestions.includes(currentQuestionIndex + 1)) {
+                document.getElementById('validateBtn').style.display = 'none';
+                if (currentQuestionIndex < quizData.length - 1) {
+                    setNextEnabled(true);
+                    document.getElementById('finishBtn').disabled = true;
+                } else {
+                    document.getElementById('finishBtn').disabled = false;
+                    setNextEnabled(false);
+                }
+            } else {
+                document.getElementById('validateBtn').style.display = 'block';
+                setNextEnabled(false);
+                document.getElementById('finishBtn').disabled = true;
+            }
+        }
+
+        function showResults() {
+            document.querySelector('.quiz-info').style.display = 'none';
+            document.querySelectorAll('.question-container').forEach(q => q.style.display = 'none');
+            document.getElementById('quizButtons').style.display = 'none';
+            document.getElementById('initialNav').style.display = 'none';
+
+            const floating = document.getElementById('floatingNextBtn');
+            if (floating) {
+                floating.style.display = 'none';
+                floating.setAttribute('aria-hidden', 'true');
+            }
+
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.classList.add('show');
+
+            const totalQuestions = quizData.length;
+            const incorrectCount = totalQuestions - score;
+            const percentageValue = Math.round((score / totalQuestions) * 100);
+
+            document.getElementById('scoreBig').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('percentage').textContent = percentageValue + '%';
+
+            const resultsScore = document.getElementById('resultsScore');
+            const scoreMessage = document.getElementById('scoreMessage');
+
+            if (percentageValue === 100) {
+                scoreMessage.textContent = '🏆 Parfait ! Tu maîtrises le théorème de Pythagore !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 75) {
+                scoreMessage.textContent = '🌟 Très bien ! Tu as bien compris !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 50) {
+                scoreMessage.textContent = '👍 Pas mal ! Révise encore un peu !';
+                resultsScore.className = 'results-score medium';
+            } else {
+                scoreMessage.textContent = '💪 Continue à t\'entraîner, tu vas y arriver !';
+                resultsScore.className = 'results-score low';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            document.querySelector('.quiz-info').style.display = 'flex';
+            document.getElementById('quizButtons').style.display = 'flex';
+            document.getElementById('initialNav').style.display = 'flex';
+            document.getElementById('resultsContainer').classList.remove('show');
+
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            document.getElementById('prevBtn').style.display = 'none';
+            setNextEnabled(false);
+            document.getElementById('finishBtn').disabled = true;
+
+            const floatingBtn = document.getElementById('floatingNextBtn');
+            if (floatingBtn) {
+                floatingBtn.style.display = 'inline-block';
+                floatingBtn.setAttribute('aria-hidden', 'false');
+            }
+
+            initQuiz();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
