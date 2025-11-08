@@ -1,40 +1,96 @@
 /**
- * Visitor Counter using CountAPI
- * Free visitor counting service - no registration required
+ * Visitor Counter - Multi-method approach
+ * Tries multiple counting services, falls back to localStorage
  */
 
 class VisitorCounter {
-    constructor(namespace = 'mathsiori', key = 'visits') {
-        this.apiUrl = `https://countapi.mileshilliard.com/api/v1/hit/${namespace}/${key}`;
+    constructor() {
         this.elementId = 'visitor-count';
+        this.storageKey = 'mathsiori_visits';
+
+        // Multiple API endpoints to try
+        this.apiEndpoints = [
+            'https://api.countapi.xyz/hit/mathsiori.github.io/visits',
+            'https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=mathsiori.github.io&count_bg=%23764BA2&title_bg=%23667EEA',
+        ];
     }
 
     /**
-     * Initialize the counter - fetch and display visitor count
+     * Initialize the counter - try APIs then fallback to localStorage
      */
     async init() {
         try {
-            const count = await this.fetchCount();
-            this.displayCount(count);
+            // Try to fetch from APIs
+            const count = await this.fetchFromApis();
+            if (count !== null) {
+                this.displayCount(count);
+                return;
+            }
         } catch (error) {
-            console.error('Erreur lors du chargement du compteur:', error);
-            this.displayError();
+            console.log('API non disponible, utilisation du compteur local');
         }
+
+        // Fallback to localStorage
+        this.useLocalStorage();
     }
 
     /**
-     * Fetch the current visitor count from API
-     * @returns {Promise<number>} The visitor count
+     * Try multiple APIs in sequence
+     * @returns {Promise<number|null>} The visitor count or null if all fail
      */
-    async fetchCount() {
-        const response = await fetch(this.apiUrl);
+    async fetchFromApis() {
+        for (const url of this.apiEndpoints) {
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
 
-        if (!response.ok) {
-            throw new Error(`API Error: ${response.status}`);
+                if (response.ok) {
+                    const text = await response.text();
+
+                    // Try to parse as JSON
+                    try {
+                        const data = JSON.parse(text);
+                        if (data.value || data.count) {
+                            return data.value || data.count;
+                        }
+                    } catch {
+                        // Not JSON, try to extract number from SVG or text
+                        const match = text.match(/\d+/);
+                        if (match) {
+                            return parseInt(match[0]);
+                        }
+                    }
+                }
+            } catch (error) {
+                // Try next API
+                continue;
+            }
         }
 
-        const data = await response.json();
-        return data.count || 0;
+        return null;
+    }
+
+    /**
+     * Use localStorage for counting (fallback method)
+     */
+    useLocalStorage() {
+        // Get current count
+        let count = parseInt(localStorage.getItem(this.storageKey)) || 0;
+
+        // Increment count
+        count++;
+
+        // Save back to localStorage
+        localStorage.setItem(this.storageKey, count.toString());
+
+        // Display count
+        this.displayCount(count);
+
+        // Add indicator that this is local count
+        this.addLocalIndicator();
     }
 
     /**
@@ -50,13 +106,17 @@ class VisitorCounter {
     }
 
     /**
-     * Display an error message if counter fails to load
+     * Add a small indicator that this is a local count
      */
-    displayError() {
+    addLocalIndicator() {
         const element = document.getElementById(this.elementId);
-        if (element) {
-            element.textContent = '---';
-            element.classList.add('error');
+        if (element && element.parentElement) {
+            const label = element.parentElement.previousElementSibling;
+            if (label && !label.textContent.includes('*')) {
+                label.textContent += ' *';
+                label.title = 'Compteur local (ce navigateur uniquement)';
+                label.style.cursor = 'help';
+            }
         }
     }
 
