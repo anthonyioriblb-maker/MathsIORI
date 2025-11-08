@@ -146,6 +146,12 @@
             line-height: 2.2;
         }
 
+        .calc-line {
+            white-space: nowrap;
+            overflow-x: auto;
+            margin: 5px 0;
+        }
+
         .input-field {
             display: inline-block;
             border: none;
@@ -643,29 +649,39 @@
                     est rectangle en <input type="text" class="input-field input-small" id="q${questionNum}_angle" data-answer="${L2}" placeholder="...">,
                     d'après le théorème de Pythagore on a :<br><br>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc1a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
-                    = <input type="text" class="input-field input-small" id="q${questionNum}_calc1b" data-answer="${L1}${L2}²" data-type="squared" placeholder="...">
-                    <select class="select-field" id="q${questionNum}_op1" data-answer="+">
-                        <option value="">...</option>
-                        <option value="+">+</option>
-                        <option value="-">−</option>
-                    </select>
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc1c" data-answer="${L2}${L3}²" data-type="squared" placeholder="..."><br>
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc1a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                        = <input type="text" class="input-field input-small" id="q${questionNum}_calc1b" data-answer="${L1}${L2}²" data-type="squared" placeholder="...">
+                        <select class="select-field" id="q${questionNum}_op1" data-answer="+">
+                            <option value="">...</option>
+                            <option value="+">+</option>
+                            <option value="-">−</option>
+                        </select>
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc1c" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                    </div>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
-                    = <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="${formatNumber(side1)}²" data-type="squared-num" placeholder="...">
-                    + <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(side2)}²" data-type="squared-num" placeholder="..."><br>
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                        = <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="${formatNumber(side1)}²" data-type="squared-num" placeholder="...">
+                        + <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(side2)}²" data-type="squared-num" placeholder="...">
+                    </div>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc3a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
-                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc3b" data-answer="${formatNumber(side1_sq)}" placeholder="...">
-                    + <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(side2_sq)}" placeholder="..."><br>
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc3a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc3b" data-answer="${formatNumber(side1_sq)}" placeholder="...">
+                        + <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(side2_sq)}" placeholder="...">
+                    </div>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc4a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
-                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc4b" data-answer="${formatNumber(hyp_sq)}" placeholder="..."><br>
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc4a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc4b" data-answer="${formatNumber(hyp_sq)}" placeholder="...">
+                    </div>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L1}${L3}" placeholder="...">
-                    = <span class="sqrt"><input type="text" class="input-field input-medium" id="q${questionNum}_calc5b" data-answer="${formatNumber(hyp_sq)}" placeholder="..."></span>
-                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc5c" data-answer="${isExactSquare ? formatNumber(Math.sqrt(hyp_sq)) : '√' + hyp_sq}" data-type="final-sqrt" data-sqrt-value="${hyp_sq}" placeholder="...">
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L1}${L3}" placeholder="...">
+                        = <span class="sqrt"><input type="text" class="input-field input-medium" id="q${questionNum}_calc5b" data-answer="${formatNumber(hyp_sq)}" placeholder="..."></span>
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc5c" data-answer="${isExactSquare ? formatNumber(Math.sqrt(hyp_sq)) : '√' + hyp_sq}" data-type="final-sqrt" data-sqrt-value="${hyp_sq}" placeholder="...">
+                    </div>
                 `;
 
                 const finalAnswer = isExactSquare ? formatNumber(Math.sqrt(hyp_sq)) : `<span class="sqrt">${hyp_sq}</span>`;
@@ -696,29 +712,39 @@
                     est rectangle en <input type="text" class="input-field input-small" id="q${questionNum}_angle" data-answer="${L2}" placeholder="...">,
                     d'après le théorème de Pythagore on a :<br><br>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc1a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
-                    = <input type="text" class="input-field input-small" id="q${questionNum}_calc1b" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
-                    <select class="select-field" id="q${questionNum}_op1" data-answer="-">
-                        <option value="">...</option>
-                        <option value="+">+</option>
-                        <option value="-">−</option>
-                    </select>
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc1c" data-answer="${L1}${L2}²" data-type="squared" placeholder="..."><br>
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc1a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                        = <input type="text" class="input-field input-small" id="q${questionNum}_calc1b" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                        <select class="select-field" id="q${questionNum}_op1" data-answer="-">
+                            <option value="">...</option>
+                            <option value="+">+</option>
+                            <option value="-">−</option>
+                        </select>
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc1c" data-answer="${L1}${L2}²" data-type="squared" placeholder="...">
+                    </div>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
-                    = <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="${formatNumber(hyp)}²" data-type="squared-num" placeholder="...">
-                    − <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(knownSide)}²" data-type="squared-num" placeholder="..."><br>
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                        = <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="${formatNumber(hyp)}²" data-type="squared-num" placeholder="...">
+                        − <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(knownSide)}²" data-type="squared-num" placeholder="...">
+                    </div>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc3a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
-                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc3b" data-answer="${formatNumber(hyp_sq)}" placeholder="...">
-                    − <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(knownSide_sq)}" placeholder="..."><br>
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc3a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc3b" data-answer="${formatNumber(hyp_sq)}" placeholder="...">
+                        − <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(knownSide_sq)}" placeholder="...">
+                    </div>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc4a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
-                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc4b" data-answer="${formatNumber(unknownSide_sq)}" placeholder="..."><br>
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc4a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc4b" data-answer="${formatNumber(unknownSide_sq)}" placeholder="...">
+                    </div>
 
-                    <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L2}${L3}" placeholder="...">
-                    = <span class="sqrt"><input type="text" class="input-field input-medium" id="q${questionNum}_calc5b" data-answer="${formatNumber(unknownSide_sq)}" placeholder="..."></span>
-                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc5c" data-answer="${isExactSquare ? formatNumber(Math.sqrt(unknownSide_sq)) : '√' + unknownSide_sq}" data-type="final-sqrt" data-sqrt-value="${unknownSide_sq}" placeholder="...">
+                    <div class="calc-line">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L2}${L3}" placeholder="...">
+                        = <span class="sqrt"><input type="text" class="input-field input-medium" id="q${questionNum}_calc5b" data-answer="${formatNumber(unknownSide_sq)}" placeholder="..."></span>
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc5c" data-answer="${isExactSquare ? formatNumber(Math.sqrt(unknownSide_sq)) : '√' + unknownSide_sq}" data-type="final-sqrt" data-sqrt-value="${unknownSide_sq}" placeholder="...">
+                    </div>
                 `;
 
                 const finalAnswer = isExactSquare ? formatNumber(Math.sqrt(unknownSide_sq)) : `<span class="sqrt">${unknownSide_sq}</span>`;

@@ -1,90 +1,95 @@
 /**
- * Visitor Counter - Multi-method approach
- * Tries multiple counting services, falls back to localStorage
+ * Visitor Counter with Firebase Realtime Database
+ * Global visitor counting with real-time updates
  */
 
 class VisitorCounter {
     constructor() {
         this.elementId = 'visitor-count';
-        this.storageKey = 'mathsiori_visits';
-
-        // Multiple API endpoints to try
-        this.apiEndpoints = [
-            'https://api.countapi.xyz/hit/mathsiori.github.io/visits',
-            'https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=mathsiori.github.io&count_bg=%23764BA2&title_bg=%23667EEA',
-        ];
+        this.firebaseInitialized = false;
+        this.db = null;
+        this.counterRef = null;
     }
 
     /**
-     * Initialize the counter - try APIs then fallback to localStorage
+     * Initialize the counter - try Firebase, fallback to localStorage
      */
     async init() {
-        try {
-            // Try to fetch from APIs
-            const count = await this.fetchFromApis();
-            if (count !== null) {
-                this.displayCount(count);
-                return;
+        // Check if Firebase is configured
+        if (typeof firebase !== 'undefined' && typeof firebaseConfig !== 'undefined') {
+            try {
+                // Check if config is filled
+                if (firebaseConfig.apiKey !== 'VOTRE_API_KEY') {
+                    await this.initFirebase();
+                    return;
+                }
+            } catch (error) {
+                console.error('Erreur Firebase:', error);
             }
-        } catch (error) {
-            console.log('API non disponible, utilisation du compteur local');
         }
 
         // Fallback to localStorage
+        console.log('Firebase non configuré, utilisation du compteur local');
         this.useLocalStorage();
     }
 
     /**
-     * Try multiple APIs in sequence
-     * @returns {Promise<number|null>} The visitor count or null if all fail
+     * Initialize Firebase and set up the counter
      */
-    async fetchFromApis() {
-        for (const url of this.apiEndpoints) {
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    mode: 'cors',
-                    cache: 'no-cache'
-                });
-
-                if (response.ok) {
-                    const text = await response.text();
-
-                    // Try to parse as JSON
-                    try {
-                        const data = JSON.parse(text);
-                        if (data.value || data.count) {
-                            return data.value || data.count;
-                        }
-                    } catch {
-                        // Not JSON, try to extract number from SVG or text
-                        const match = text.match(/\d+/);
-                        if (match) {
-                            return parseInt(match[0]);
-                        }
-                    }
-                }
-            } catch (error) {
-                // Try next API
-                continue;
+    async initFirebase() {
+        try {
+            // Initialize Firebase
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
             }
-        }
 
-        return null;
+            this.db = firebase.database();
+            this.counterRef = this.db.ref('visitors/count');
+
+            // Listen for real-time updates
+            this.counterRef.on('value', (snapshot) => {
+                const count = snapshot.val() || 0;
+                this.displayCount(count);
+            });
+
+            // Increment counter on visit
+            await this.incrementFirebaseCounter();
+
+            this.firebaseInitialized = true;
+        } catch (error) {
+            console.error('Erreur initialisation Firebase:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Increment the Firebase counter
+     */
+    async incrementFirebaseCounter() {
+        try {
+            // Use transaction to safely increment
+            await this.counterRef.transaction((currentCount) => {
+                return (currentCount || 0) + 1;
+            });
+        } catch (error) {
+            console.error('Erreur incrémentation Firebase:', error);
+        }
     }
 
     /**
      * Use localStorage for counting (fallback method)
      */
     useLocalStorage() {
+        const storageKey = 'mathsiori_visits';
+
         // Get current count
-        let count = parseInt(localStorage.getItem(this.storageKey)) || 0;
+        let count = parseInt(localStorage.getItem(storageKey)) || 0;
 
         // Increment count
         count++;
 
         // Save back to localStorage
-        localStorage.setItem(this.storageKey, count.toString());
+        localStorage.setItem(storageKey, count.toString());
 
         // Display count
         this.displayCount(count);
@@ -102,6 +107,9 @@ class VisitorCounter {
         if (element) {
             element.textContent = this.formatNumber(count);
             element.classList.add('loaded');
+
+            // Remove loading animation
+            element.style.animation = 'none';
         }
     }
 
@@ -128,10 +136,26 @@ class VisitorCounter {
     formatNumber(num) {
         return num.toLocaleString('fr-FR');
     }
+
+    /**
+     * Clean up Firebase listeners
+     */
+    destroy() {
+        if (this.counterRef) {
+            this.counterRef.off();
+        }
+    }
 }
 
 // Initialize counter when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     const counter = new VisitorCounter();
     counter.init();
+});
+
+// Clean up on page unload
+window.addEventListener('beforeunload', () => {
+    if (window.visitorCounter) {
+        window.visitorCounter.destroy();
+    }
 });
