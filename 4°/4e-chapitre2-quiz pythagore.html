@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz - Théorème de Pythagore : Réciproque et Contraposée</title>
+    <title>Quiz - Théorème de Pythagore : Calculs</title>
     <style>
         * {
             margin: 0;
@@ -192,10 +192,6 @@
 
         .input-large {
             min-width: 120px;
-        }
-
-        .input-xlarge {
-            min-width: 200px;
         }
 
         .select-field {
@@ -403,13 +399,17 @@
             padding: 12px 20px;
             font-size: 1.05em;
         }
+
+        .sqrt {
+            text-decoration: overline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🎯 Quiz - Théorème de Pythagore</h1>
-            <p class="subtitle">Réciproque et Contraposée - 4ème</p>
+            <p class="subtitle">Calculs de longueurs - 4ème</p>
         </div>
 
         <div class="quiz-info">
@@ -474,7 +474,6 @@
 
     <script>
         function formatNumber(num) {
-            // Affiche les nombres sans décimales inutiles (9 au lieu de 9.00)
             if (num === Math.floor(num)) {
                 return num.toString();
             }
@@ -482,35 +481,15 @@
         }
 
         function normalizeAnswer(answer) {
-            // Normalise la réponse : enlève espaces, met en minuscules
-            return answer.trim().toLowerCase().replace(/\s+/g, '');
+            return answer.trim().toLowerCase().replace(/\s+/g, '').replace(',', '.');
         }
 
-        function checkSegment(input, expected) {
-            // Accepte [BC] et [CB]
+        function checkSquared(input, expected) {
             const normalized = normalizeAnswer(input);
             const exp = normalizeAnswer(expected);
 
             if (normalized === exp) return true;
 
-            // Vérifier si c'est un segment avec lettres inversées
-            const match1 = exp.match(/\[([a-z])([a-z])\]/);
-            if (match1) {
-                const reversed = `[${match1[2]}${match1[1]}]`;
-                if (normalized === reversed) return true;
-            }
-
-            return false;
-        }
-
-        function checkSquared(input, expected) {
-            // Accepte AB² et BA², BC² et CB², 6,5² et 6.5², etc.
-            const normalized = normalizeAnswer(input).replace(',', '.');
-            const exp = normalizeAnswer(expected).replace(',', '.');
-
-            if (normalized === exp) return true;
-
-            // Vérifier si c'est une expression au carré avec lettres inversées
             const match1 = exp.match(/([a-z])([a-z])²/);
             if (match1) {
                 const reversed = `${match1[2]}${match1[1]}²`;
@@ -521,32 +500,30 @@
         }
 
         function checkSum(input, expected) {
-            // Accepte AB² + AC² et AC² + AB² (et aussi BA² + CA², virgules/points, etc.)
-            const normalized = normalizeAnswer(input).replace(',', '.');
-            const exp = normalizeAnswer(expected).replace(',', '.');
+            const normalized = normalizeAnswer(input);
+            const exp = normalizeAnswer(expected);
 
             if (normalized === exp) return true;
 
-            // Vérifier si c'est une somme avec termes inversés
-            const match1 = exp.match(/([a-z²\.0-9]+)\+([a-z²\.0-9]+)/);
+            const match1 = exp.match(/([a-z²\.0-9]+)[\+\-]([a-z²\.0-9]+)/);
             if (match1) {
-                const reversed = `${match1[2]}+${match1[1]}`;
+                const reversed = `${match1[2]}${match1[0].includes('+') ? '+' : '-'}${match1[1]}`;
                 if (normalized === reversed) return true;
             }
 
-            // Vérifier aussi avec lettres inversées dans chaque terme
-            // AB² + AC² -> BA² + CA², AB² + AC² -> BA² + AC², etc.
             const variations = [
                 exp,
-                exp.replace(/ab²/g, 'ba²').replace(/ac²/g, 'ca²').replace(/bc²/g, 'cb²'),
+                exp.replace(/ab²/g, 'ba²').replace(/ac²/g, 'ca²').replace(/bc²/g, 'cb²')
+                   .replace(/em²/g, 'me²').replace(/er²/g, 're²').replace(/mr²/g, 'rm²')
+                   .replace(/ra²/g, 'ar²').replace(/as²/g, 'sa²').replace(/rs²/g, 'sr²'),
             ];
 
             for (let variant of variations) {
                 if (normalized === variant) return true;
-                // Vérifier aussi l'ordre inversé de chaque variante
-                const match2 = variant.match(/([a-z²\.0-9]+)\+([a-z²\.0-9]+)/);
+                const match2 = variant.match(/([a-z²\.0-9]+)[\+\-]([a-z²\.0-9]+)/);
                 if (match2) {
-                    const reversed = `${match2[2]}+${match2[1]}`;
+                    const op = match2[0].includes('+') ? '+' : '-';
+                    const reversed = `${match2[2]}${op}${match2[1]}`;
                     if (normalized === reversed) return true;
                 }
             }
@@ -555,11 +532,21 @@
         }
 
         function checkNumber(input, expected) {
-            // Accepte , ou . comme séparateur décimal
             const normalized = input.trim().replace(',', '.');
             const exp = expected.toString().replace(',', '.');
 
             return parseFloat(normalized) === parseFloat(exp);
+        }
+
+        function checkSqrt(input, expected) {
+            const normalized = normalizeAnswer(input);
+            const exp = normalizeAnswer(expected);
+
+            return normalized === exp || normalized === `√${exp}` || normalized === `racine(${exp})`;
+        }
+
+        function isSquare(n) {
+            return Math.sqrt(n) === Math.floor(Math.sqrt(n));
         }
 
         let questionsData = [];
@@ -567,25 +554,65 @@
         let score = 0;
         let answeredQuestions = [];
 
+        function generateRandomTriplet() {
+            // Générer aléatoirement soit un triplet pythagoricien, soit un triplet non pythagoricien
+            const isPythagorean = Math.random() < 0.5;
+
+            if (isPythagorean) {
+                // Triplets pythagoriciens classiques
+                const pythagoreanTriplets = [
+                    { a: 3, b: 4, c: 5 },
+                    { a: 5, b: 12, c: 13 },
+                    { a: 8, b: 15, c: 17 },
+                    { a: 6, b: 8, c: 10 },
+                    { a: 9, b: 12, c: 15 },
+                    { a: 7, b: 24, c: 25 },
+                    { a: 20, b: 21, c: 29 },
+                    { a: 12, b: 16, c: 20 }
+                ];
+                return pythagoreanTriplets[Math.floor(Math.random() * pythagoreanTriplets.length)];
+            } else {
+                // Générer un triplet non pythagoricien avec racine carrée
+                const nonPythagoreanPairs = [
+                    { a: 2, b: 3 },   // c² = 13
+                    { a: 2, b: 5 },   // c² = 29
+                    { a: 3, b: 5 },   // c² = 34
+                    { a: 4, b: 5 },   // c² = 41
+                    { a: 5, b: 6 },   // c² = 61
+                    { a: 3, b: 7 },   // c² = 58
+                    { a: 4, b: 7 },   // c² = 65
+                    { a: 6, b: 7 }    // c² = 85
+                ];
+                const pair = nonPythagoreanPairs[Math.floor(Math.random() * nonPythagoreanPairs.length)];
+                const c_squared = pair.a * pair.a + pair.b * pair.b;
+                return { a: pair.a, b: pair.b, c: Math.sqrt(c_squared) };
+            }
+        }
+
         function generateQuestions() {
-            questionsData = [
-                // Question 1: Triangle rectangle (3, 4, 5)
-                { AB: 3, AC: 4, BC: 5, isRectangle: true, rightAngle: 'A' },
-                // Question 2: Triangle non rectangle
-                { AB: 5, AC: 6, BC: 9, isRectangle: false },
-                // Question 3: Triangle rectangle avec décimaux
-                { AB: 5.2, AC: 3.9, BC: 6.5, isRectangle: true, rightAngle: 'A' },
-                // Question 4: Triangle non rectangle
-                { AB: 7, AC: 8, BC: 11, isRectangle: false },
-                // Question 5: Triangle rectangle (6, 8, 10)
-                { AB: 6, AC: 8, BC: 10, isRectangle: true, rightAngle: 'A' },
-                // Question 6: Triangle non rectangle
-                { AB: 15, AC: 11, BC: 10, isRectangle: false },
-                // Question 7: Triangle rectangle (5, 12, 13)
-                { AB: 5, AC: 12, BC: 13, isRectangle: true, rightAngle: 'A' },
-                // Question 8: Triangle non rectangle
-                { AB: 10, AC: 12, BC: 18, isRectangle: false }
+            questionsData = [];
+            const letterSets = [
+                ['M', 'E', 'R'],
+                ['R', 'A', 'S'],
+                ['T', 'U', 'V'],
+                ['L', 'O', 'P'],
+                ['D', 'E', 'F'],
+                ['G', 'H', 'I'],
+                ['J', 'K', 'L'],
+                ['N', 'O', 'P']
             ];
+
+            for (let i = 0; i < 8; i++) {
+                const triplet = generateRandomTriplet();
+                const type = (i % 2 === 0) ? 'hypotenuse' : 'cote';
+
+                questionsData.push({
+                    type,
+                    ...triplet,
+                    letters: letterSets[i],
+                    rightAngle: 1
+                });
+            }
         }
 
         function createQuestionHTML(questionNum, data) {
@@ -593,10 +620,118 @@
             container.className = 'question-container' + (questionNum === 1 ? ' active' : '');
             container.id = `question${questionNum}`;
 
-            const AB2 = data.AB * data.AB;
-            const AC2 = data.AC * data.AC;
-            const BC2 = data.BC * data.BC;
-            const sum = AB2 + AC2;
+            const L1 = data.letters[0];
+            const L2 = data.letters[1];
+            const L3 = data.letters[2];
+
+            let enonce, calcHTML, correctionHTML;
+
+            if (data.type === 'hypotenuse') {
+                // Calcul de l'hypoténuse
+                const side1 = Math.round(data.a);
+                const side2 = Math.round(data.b);
+                const hyp = data.c;
+                const side1_sq = side1 * side1;
+                const side2_sq = side2 * side2;
+                const hyp_sq = Math.round(hyp * hyp);
+                const isExactSquare = isSquare(hyp_sq);
+
+                enonce = `Le triangle ${L1}${L2}${L3} est rectangle en ${L2} tel que ${L1}${L2} = ${side1} cm et ${L2}${L3} = ${side2} cm. Déterminer ${L1}${L3}.`;
+
+                calcHTML = `
+                    Le triangle <input type="text" class="input-field input-small" id="q${questionNum}_tri" data-answer="${L1}${L2}${L3}" data-type="triangle" placeholder="...">
+                    est rectangle en <input type="text" class="input-field input-small" id="q${questionNum}_angle" data-answer="${L2}" placeholder="...">,
+                    d'après le théorème de Pythagore on a :<br><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc1a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                    = <input type="text" class="input-field input-small" id="q${questionNum}_calc1b" data-answer="${L1}${L2}²" data-type="squared" placeholder="...">
+                    <select class="select-field" id="q${questionNum}_op1" data-answer="+">
+                        <option value="">...</option>
+                        <option value="+">+</option>
+                        <option value="-">−</option>
+                    </select>
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc1c" data-answer="${L2}${L3}²" data-type="squared" placeholder="..."><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                    = <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="${formatNumber(side1)}²" data-type="squared-num" placeholder="...">
+                    + <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(side2)}²" data-type="squared-num" placeholder="..."><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc3a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc3b" data-answer="${formatNumber(side1_sq)}" placeholder="...">
+                    + <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(side2_sq)}" placeholder="..."><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc4a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc4b" data-answer="${formatNumber(hyp_sq)}" placeholder="..."><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L1}${L3}" placeholder="...">
+                    = <span class="sqrt"><input type="text" class="input-field input-medium" id="q${questionNum}_calc5b" data-answer="${formatNumber(hyp_sq)}" placeholder="..."></span>
+                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc5c" data-answer="${isExactSquare ? formatNumber(Math.sqrt(hyp_sq)) : '√' + hyp_sq}" data-type="final-sqrt" data-sqrt-value="${hyp_sq}" placeholder="...">
+                `;
+
+                const finalAnswer = isExactSquare ? formatNumber(Math.sqrt(hyp_sq)) : `<span class="sqrt">${hyp_sq}</span>`;
+                correctionHTML = `
+                    Le triangle <strong>${L1}${L2}${L3}</strong> est rectangle en <strong>${L2}</strong>, d'après le théorème de Pythagore on a :<br><br>
+                    <strong>${L1}${L3}²</strong> = <strong>${L1}${L2}²</strong> + <strong>${L2}${L3}²</strong><br>
+                    <strong>${L1}${L3}²</strong> = <strong>${formatNumber(side1)}²</strong> + <strong>${formatNumber(side2)}²</strong><br>
+                    <strong>${L1}${L3}²</strong> = <strong>${formatNumber(side1_sq)}</strong> + <strong>${formatNumber(side2_sq)}</strong><br>
+                    <strong>${L1}${L3}²</strong> = <strong>${formatNumber(hyp_sq)}</strong><br>
+                    <strong>${L1}${L3}</strong> = <span class="sqrt"><strong>${formatNumber(hyp_sq)}</strong></span> = <strong>${finalAnswer}</strong><br><br>
+                    <strong>[${L1}${L3}] mesure ${finalAnswer} cm.</strong>
+                `;
+
+            } else {
+                // Calcul d'un côté de l'angle droit
+                const hyp = Math.round(data.c);
+                const knownSide = Math.round(data.a);
+                const unknownSide = data.b;
+                const hyp_sq = hyp * hyp;
+                const knownSide_sq = knownSide * knownSide;
+                const unknownSide_sq = Math.round(unknownSide * unknownSide);
+                const isExactSquare = isSquare(unknownSide_sq);
+
+                enonce = `Le triangle ${L1}${L2}${L3} est rectangle en ${L2} tel que ${L1}${L3} = ${hyp} cm et ${L1}${L2} = ${knownSide} cm. Déterminer ${L2}${L3}.`;
+
+                calcHTML = `
+                    Le triangle <input type="text" class="input-field input-small" id="q${questionNum}_tri" data-answer="${L1}${L2}${L3}" data-type="triangle" placeholder="...">
+                    est rectangle en <input type="text" class="input-field input-small" id="q${questionNum}_angle" data-answer="${L2}" placeholder="...">,
+                    d'après le théorème de Pythagore on a :<br><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc1a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                    = <input type="text" class="input-field input-small" id="q${questionNum}_calc1b" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
+                    <select class="select-field" id="q${questionNum}_op1" data-answer="-">
+                        <option value="">...</option>
+                        <option value="+">+</option>
+                        <option value="-">−</option>
+                    </select>
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc1c" data-answer="${L1}${L2}²" data-type="squared" placeholder="..."><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                    = <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="${formatNumber(hyp)}²" data-type="squared-num" placeholder="...">
+                    − <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(knownSide)}²" data-type="squared-num" placeholder="..."><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc3a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc3b" data-answer="${formatNumber(hyp_sq)}" placeholder="...">
+                    − <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(knownSide_sq)}" placeholder="..."><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc4a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
+                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc4b" data-answer="${formatNumber(unknownSide_sq)}" placeholder="..."><br>
+
+                    <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L2}${L3}" placeholder="...">
+                    = <span class="sqrt"><input type="text" class="input-field input-medium" id="q${questionNum}_calc5b" data-answer="${formatNumber(unknownSide_sq)}" placeholder="..."></span>
+                    = <input type="text" class="input-field input-medium" id="q${questionNum}_calc5c" data-answer="${isExactSquare ? formatNumber(Math.sqrt(unknownSide_sq)) : '√' + unknownSide_sq}" data-type="final-sqrt" data-sqrt-value="${unknownSide_sq}" placeholder="...">
+                `;
+
+                const finalAnswer = isExactSquare ? formatNumber(Math.sqrt(unknownSide_sq)) : `<span class="sqrt">${unknownSide_sq}</span>`;
+                correctionHTML = `
+                    Le triangle <strong>${L1}${L2}${L3}</strong> est rectangle en <strong>${L2}</strong>, d'après le théorème de Pythagore on a :<br><br>
+                    <strong>${L2}${L3}²</strong> = <strong>${L1}${L3}²</strong> − <strong>${L1}${L2}²</strong><br>
+                    <strong>${L2}${L3}²</strong> = <strong>${formatNumber(hyp)}²</strong> − <strong>${formatNumber(knownSide)}²</strong><br>
+                    <strong>${L2}${L3}²</strong> = <strong>${formatNumber(hyp_sq)}</strong> − <strong>${formatNumber(knownSide_sq)}</strong><br>
+                    <strong>${L2}${L3}²</strong> = <strong>${formatNumber(unknownSide_sq)}</strong><br>
+                    <strong>${L2}${L3}</strong> = <span class="sqrt"><strong>${formatNumber(unknownSide_sq)}</strong></span> = <strong>${finalAnswer}</strong><br><br>
+                    <strong>[${L2}${L3}] mesure ${finalAnswer} cm.</strong>
+                `;
+            }
 
             container.innerHTML = `
                 <div class="question-header">
@@ -604,49 +739,18 @@
                 </div>
                 <div class="question-body">
                     <div class="triangle-info">
-                        Triangle ABC tel que :<br>
-                        AB = ${formatNumber(data.AB)} cm, AC = ${formatNumber(data.AC)} cm, BC = ${formatNumber(data.BC)} cm
+                        ${enonce}
                     </div>
 
                     <div class="redaction">
-                        Dans le triangle ABC, le côté le plus long est <input type="text" class="input-field input-small" id="q${questionNum}_seg1" data-answer="[BC]" placeholder="[...]">.<br><br>
-
-                        D'une part, <input type="text" class="input-field input-small" id="q${questionNum}_calc1a" data-answer="BC²" placeholder="...">
-                        = <input type="text" class="input-field input-small" id="q${questionNum}_calc1b" data-answer="${formatNumber(data.BC)}²" placeholder="...">
-                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc1c" data-answer="${formatNumber(BC2)}" placeholder="..."><br><br>
-
-                        D'autre part, <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="AB²" data-type="sum-part1" placeholder="...">
-                        + <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="AC²" data-type="sum-part2" placeholder="...">
-                        = <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(data.AB)}²" placeholder="...">
-                        + <input type="text" class="input-field input-small" id="q${questionNum}_calc2d" data-answer="${formatNumber(data.AC)}²" placeholder="...">
-                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc2e" data-answer="${formatNumber(AB2)}" placeholder="...">
-                        + <input type="text" class="input-field input-medium" id="q${questionNum}_calc2f" data-answer="${formatNumber(AC2)}" placeholder="...">
-                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc2g" data-answer="${formatNumber(sum)}" placeholder="..."><br><br>
-
-                        Ainsi <input type="text" class="input-field input-medium" id="q${questionNum}_calc3a" data-answer="AB² + AC²" data-type="sum" placeholder="...">
-                        <select class="select-field" id="q${questionNum}_calc3b" data-answer="${data.isRectangle ? '=' : '≠'}">
-                            <option value="">...</option>
-                            <option value="=">=</option>
-                            <option value="≠">≠</option>
-                        </select>
-                        <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="BC²" placeholder="...">,
-                        d'après la <select class="select-field" id="q${questionNum}_theoreme" data-answer="${data.isRectangle ? 'réciproque du théorème de Pythagore' : 'contraposée du théorème de Pythagore'}" style="min-width: 250px;">
-                            <option value="">...</option>
-                            <option value="réciproque du théorème de Pythagore">réciproque du théorème de Pythagore</option>
-                            <option value="contraposée du théorème de Pythagore">contraposée du théorème de Pythagore</option>
-                        </select>,
-                        <select class="select-field" id="q${questionNum}_conclusion" data-answer="${data.isRectangle ? 'le triangle ABC est rectangle en A' : 'le triangle ABC n\'est pas rectangle'}" style="min-width: 280px;">
-                            <option value="">...</option>
-                            <option value="le triangle ABC est rectangle en A">le triangle ABC est rectangle en A</option>
-                            <option value="le triangle ABC est rectangle en B">le triangle ABC est rectangle en B</option>
-                            <option value="le triangle ABC est rectangle en C">le triangle ABC est rectangle en C</option>
-                            <option value="le triangle ABC n'est pas rectangle">le triangle ABC n'est pas rectangle</option>
-                        </select>.
+                        ${calcHTML}
                     </div>
 
                     <div class="explanation" id="explanation${questionNum}">
                         <div class="explanation-title">💡 Correction</div>
-                        <div class="correction" id="correctionText${questionNum}"></div>
+                        <div class="correction" id="correctionText${questionNum}">
+                            ${correctionHTML}
+                        </div>
                     </div>
                 </div>
             `;
@@ -681,7 +785,6 @@
             if (answeredQuestions.includes(questionNum)) return;
 
             const fields = document.querySelectorAll(`#question${questionNum} .input-field, #question${questionNum} .select-field`);
-            let allCorrect = true;
             let totalInputs = fields.length;
             let correctInputs = 0;
 
@@ -691,33 +794,45 @@
                 const fieldType = field.dataset.type;
                 let isCorrect = false;
 
-                // Vérifier selon le type de réponse
-                if (expectedAnswer.includes('[')) {
-                    // C'est un segment
-                    isCorrect = checkSegment(userAnswer, expectedAnswer);
-                } else if (fieldType === 'sum') {
-                    // C'est une somme (accepte ordre inversé)
-                    isCorrect = checkSum(userAnswer, expectedAnswer);
-                } else if (fieldType === 'sum-part1' || fieldType === 'sum-part2') {
-                    // Parties de la somme (accepte AB² ou AC², et aussi BA² ou CA²)
-                    const alt1 = 'AB²';
-                    const alt2 = 'AC²';
-                    isCorrect = checkSquared(userAnswer, alt1) || checkSquared(userAnswer, alt2);
-                } else if (expectedAnswer.includes('²') && !expectedAnswer.includes('+')) {
-                    // C'est une expression avec carré simple (BC², AB², etc.)
-                    // Accepte aussi l'ordre inversé (CB², BA², etc.)
+                if (fieldType === 'triangle') {
+                    // Accepte toutes les permutations du triangle
+                    const norm = normalizeAnswer(userAnswer);
+                    const letters = expectedAnswer.split('');
+                    const permutations = [
+                        letters.join(''),
+                        letters[0] + letters[2] + letters[1],
+                        letters[1] + letters[0] + letters[2],
+                        letters[1] + letters[2] + letters[0],
+                        letters[2] + letters[0] + letters[1],
+                        letters[2] + letters[1] + letters[0]
+                    ];
+                    isCorrect = permutations.some(p => normalizeAnswer(p) === norm);
+                } else if (fieldType === 'final-sqrt') {
+                    // Accepte soit le nombre exact, soit la racine carrée
+                    const sqrtValue = field.dataset.sqrtValue;
+                    const norm = normalizeAnswer(userAnswer);
+
+                    // Vérifier si c'est un carré parfait
+                    if (isSquare(parseInt(sqrtValue))) {
+                        const exactValue = Math.sqrt(parseInt(sqrtValue));
+                        // Accepter le nombre exact ou √n
+                        isCorrect = checkNumber(userAnswer, exactValue) ||
+                                    norm === `√${sqrtValue}` ||
+                                    norm === `racine${sqrtValue}` ||
+                                    norm === `racine(${sqrtValue})`;
+                    } else {
+                        // Accepter uniquement √n ou la valeur décimale approximative
+                        isCorrect = norm === `√${sqrtValue}` ||
+                                    norm === `racine${sqrtValue}` ||
+                                    norm === `racine(${sqrtValue})` ||
+                                    Math.abs(parseFloat(userAnswer.replace(',', '.')) - Math.sqrt(parseInt(sqrtValue))) < 0.01;
+                    }
+                } else if (fieldType === 'squared' || fieldType === 'squared-num') {
                     isCorrect = checkSquared(userAnswer, expectedAnswer);
-                } else if (expectedAnswer === '=' || expectedAnswer === '≠') {
-                    // C'est un symbole
-                    isCorrect = userAnswer.trim() === expectedAnswer;
-                } else if (expectedAnswer.includes('théorème') || expectedAnswer.includes('triangle')) {
-                    // C'est du texte
-                    isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(expectedAnswer);
-                } else if (expectedAnswer.includes('+')) {
-                    // C'est une somme (avec ordre inversé possible)
-                    isCorrect = checkSum(userAnswer, expectedAnswer);
+                } else if (expectedAnswer === '+' || expectedAnswer === '-' || expectedAnswer === '−') {
+                    const norm = userAnswer.trim();
+                    isCorrect = norm === expectedAnswer || (expectedAnswer === '-' && norm === '−') || (expectedAnswer === '−' && norm === '-');
                 } else {
-                    // C'est un nombre
                     isCorrect = checkNumber(userAnswer, expectedAnswer);
                 }
 
@@ -728,7 +843,6 @@
                 } else {
                     field.classList.add('incorrect');
                     field.classList.remove('correct');
-                    allCorrect = false;
                 }
 
                 field.disabled = true;
@@ -736,31 +850,9 @@
 
             answeredQuestions.push(questionNum);
 
-            // Calculer le score pour cette question (proportionnel au nombre de bonnes réponses)
             const questionScore = correctInputs / totalInputs;
             score += questionScore;
 
-            // Afficher la correction
-            const AB2 = data.AB * data.AB;
-            const AC2 = data.AC * data.AC;
-            const BC2 = data.BC * data.BC;
-            const sum = AB2 + AC2;
-
-            let correctionHTML = `
-                Dans le triangle ABC, le côté le plus long est <strong>[BC]</strong>.<br><br>
-
-                D'une part, <strong>BC²</strong> = <strong>${formatNumber(data.BC)}²</strong> = <strong>${formatNumber(BC2)}</strong><br><br>
-
-                D'autre part, <strong>AB²</strong> + <strong>AC²</strong> = <strong>${formatNumber(data.AB)}²</strong> + <strong>${formatNumber(data.AC)}²</strong> = <strong>${formatNumber(AB2)}</strong> + <strong>${formatNumber(AC2)}</strong> = <strong>${formatNumber(sum)}</strong><br><br>
-            `;
-
-            if (data.isRectangle) {
-                correctionHTML += `Ainsi <strong>AB² + AC²</strong> <strong>=</strong> <strong>BC²</strong>, d'après la <strong>réciproque du théorème de Pythagore</strong>, <strong>le triangle ABC est rectangle en A</strong>.`;
-            } else {
-                correctionHTML += `Ainsi <strong>AB² + AC²</strong> <strong>≠</strong> <strong>BC²</strong>, d'après la <strong>contraposée du théorème de Pythagore</strong>, <strong>le triangle ABC n'est pas rectangle</strong>.`;
-            }
-
-            document.getElementById(`correctionText${questionNum}`).innerHTML = correctionHTML;
             document.getElementById(`explanation${questionNum}`).classList.add('show');
             document.getElementById('currentScore').textContent = Math.round(score);
 
