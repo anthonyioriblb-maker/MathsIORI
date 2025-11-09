@@ -46,7 +46,50 @@
     </div>
 
     <div class="remarque">
-        <strong>⚠ Attention :</strong> La partie hachurée de la figure ci-contre ne correspond pas au <span class="fraction"><span class="numerateur">3</span><span class="denominateur">7</span></span> du disque car les 7 parts ne sont pas égales.
+        <strong>⚠ Attention :</strong> La partie hachurée de la figure ci-contre ne correspond pas au <span class="fraction"><span class="numerateur">3</span><span class="denominateur">7</span></span> du disque car les 7 parts ne sont pas égales.<br><br>
+        <div style="text-align: center;">
+            <svg width="250" height="250" viewBox="0 0 250 250">
+                <!-- Définition du motif hachuré -->
+                <defs>
+                    <pattern id="hachure" patternUnits="userSpaceOnUse" width="8" height="8">
+                        <path d="M-1,1 l2,-2 M0,8 l8,-8 M7,9 l2,-2" stroke="#ff6b6b" stroke-width="1.5"/>
+                    </pattern>
+                </defs>
+
+                <!-- Centre du disque -->
+                <g transform="translate(125, 125)">
+                    <!-- Part 1: 60° (hachurée) -->
+                    <path d="M 0,0 L 100,0 A 100,100 0 0,1 50,86.6 Z"
+                          fill="url(#hachure)" stroke="#333" stroke-width="2"/>
+
+                    <!-- Part 2: 40° (non hachurée) -->
+                    <path d="M 0,0 L 50,86.6 A 100,100 0 0,1 -17.4,98.5 Z"
+                          fill="#f0f0f0" stroke="#333" stroke-width="2"/>
+
+                    <!-- Part 3: 70° (hachurée) -->
+                    <path d="M 0,0 L -17.4,98.5 A 100,100 0 0,1 -76.6,64.3 Z"
+                          fill="url(#hachure)" stroke="#333" stroke-width="2"/>
+
+                    <!-- Part 4: 50° (non hachurée) -->
+                    <path d="M 0,0 L -76.6,64.3 A 100,100 0 0,1 -93.9,34.2 Z"
+                          fill="#f0f0f0" stroke="#333" stroke-width="2"/>
+
+                    <!-- Part 5: 45° (hachurée) -->
+                    <path d="M 0,0 L -93.9,34.2 A 100,100 0 0,1 -70.7,-70.7 Z"
+                          fill="url(#hachure)" stroke="#333" stroke-width="2"/>
+
+                    <!-- Part 6: 55° (non hachurée) -->
+                    <path d="M 0,0 L -70.7,-70.7 A 100,100 0 0,1 17.4,-98.5 Z"
+                          fill="#f0f0f0" stroke="#333" stroke-width="2"/>
+
+                    <!-- Part 7: 40° (non hachurée) -->
+                    <path d="M 0,0 L 17.4,-98.5 A 100,100 0 0,1 100,0 Z"
+                          fill="#f0f0f0" stroke="#333" stroke-width="2"/>
+                </g>
+            </svg>
+            <br>
+            <span style="font-size: 0.9em; color: #666;">3 parts hachurées sur 7, mais les parts sont inégales !</span>
+        </div>
     </div>
 
 
@@ -79,48 +122,36 @@
     <div class="example">
         <strong>Observation :</strong><br><br>
         <div class="fraction-visual">
-            <div style="display: inline-block; text-align: center; margin: 20px;">
-                <div class="fraction-rectangle">
-                    <div class="fraction-part colored"></div>
-                    <div class="fraction-part"></div>
+            <div style="display: inline-block; text-align: center; margin: 20px; vertical-align: top;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; gap: 2px; width: 200px; height: 200px; border: 2px solid #333;">
+                    <div style="background-color: #4a90e2; border: 1px solid #333;"></div>
+                    <div style="background-color: white; border: 1px solid #333;"></div>
                 </div>
                 <br>On a colorié <span class="fraction"><span class="numerateur">1</span><span class="denominateur">2</span></span> de la figure
             </div>
             <span style="font-size: 2em; vertical-align: middle;"> = </span>
-            <div style="display: inline-block; text-align: center; margin: 20px;">
-                <div class="fraction-rectangle">
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
+            <div style="display: inline-block; text-align: center; margin: 20px; vertical-align: top;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; width: 200px; height: 200px; border: 2px solid #333;">
+                    <div style="background-color: #6fdc6f; border: 1px solid #333;"></div>
+                    <div style="background-color: #6fdc6f; border: 1px solid #333;"></div>
+                    <div style="background-color: white; border: 1px solid #333;"></div>
+                    <div style="background-color: white; border: 1px solid #333;"></div>
                 </div>
-                <br>On a colorié <span class="fraction"><span class="numerateur">4</span><span class="denominateur">8</span></span> de la figure
+                <br>On a colorié <span class="fraction"><span class="numerateur">2</span><span class="denominateur">4</span></span> de la figure
             </div>
             <span style="font-size: 2em; vertical-align: middle;"> = </span>
-            <div style="display: inline-block; text-align: center; margin: 20px;">
-                <div class="fraction-rectangle">
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
+            <div style="display: inline-block; text-align: center; margin: 20px; vertical-align: top;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr 1fr; gap: 2px; width: 200px; height: 200px; border: 2px solid #333;">
+                    <div style="background-color: #e24a4a; border: 1px solid #333;"></div>
+                    <div style="background-color: #e24a4a; border: 1px solid #333;"></div>
+                    <div style="background-color: #e24a4a; border: 1px solid #333;"></div>
+                    <div style="background-color: #e24a4a; border: 1px solid #333;"></div>
+                    <div style="background-color: white; border: 1px solid #333;"></div>
+                    <div style="background-color: white; border: 1px solid #333;"></div>
+                    <div style="background-color: white; border: 1px solid #333;"></div>
+                    <div style="background-color: white; border: 1px solid #333;"></div>
                 </div>
-                <br>On a colorié <span class="fraction"><span class="numerateur">8</span><span class="denominateur">16</span></span> de la figure
+                <br>On a colorié <span class="fraction"><span class="numerateur">4</span><span class="denominateur">8</span></span> de la figure
             </div>
         </div>
         <br>
@@ -128,8 +159,8 @@
         Cela veut dire que les fractions sont <strong>égales</strong> :<br><br>
         <div style="text-align: center; font-size: 1.2em; margin: 20px 0;">
             <span class="fraction"><span class="numerateur">1</span><span class="denominateur">2</span></span> =
-            <span class="fraction"><span class="numerateur">4</span><span class="denominateur">8</span></span> =
-            <span class="fraction"><span class="numerateur">8</span><span class="denominateur">16</span></span>
+            <span class="fraction"><span class="numerateur">2</span><span class="denominateur">4</span></span> =
+            <span class="fraction"><span class="numerateur">4</span><span class="denominateur">8</span></span>
         </div>
     </div>
 
@@ -170,59 +201,7 @@
         On observe que : <span class="fraction"><span class="numerateur">7</span><span class="denominateur">5</span></span> = 7 × <span class="fraction"><span class="numerateur">1</span><span class="denominateur">5</span></span> = 1 + <span class="fraction"><span class="numerateur">2</span><span class="denominateur">5</span></span>
     </div>
 
-    <h2>Fractions égales - Plusieurs écritures pour une même fraction</h2>
-
-    <div class="example">
-        <strong>Exemple visuel :</strong><br><br>
-        Les trois parts bleue, verte et rouge représentent des surfaces égales.<br><br>
-        <div class="fraction-visual">
-            <div style="display: inline-block; text-align: center; margin: 20px;">
-                <div class="fraction-rectangle large">
-                    <div class="fraction-part colored"></div>
-                    <div class="fraction-part colored"></div>
-                    <div class="fraction-part colored"></div>
-                    <div class="fraction-part"></div>
-                </div>
-                <br><span class="fraction"><span class="numerateur">3</span><span class="denominateur">4</span></span>
-            </div>
-            <span style="font-size: 2em; vertical-align: middle;"> = </span>
-            <div style="display: inline-block; text-align: center; margin: 20px;">
-                <div class="fraction-rectangle large">
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part green"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                </div>
-                <br><span class="fraction"><span class="numerateur">6</span><span class="denominateur">8</span></span>
-            </div>
-            <span style="font-size: 2em; vertical-align: middle;"> = </span>
-            <div style="display: inline-block; text-align: center; margin: 20px;">
-                <div class="fraction-rectangle large">
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part red"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                    <div class="fraction-part"></div>
-                </div>
-                <br><span class="fraction"><span class="numerateur">9</span><span class="denominateur">12</span></span>
-            </div>
-        </div>
-        <br>
-        Traduction avec des fractions :<br>
-        <span class="fraction"><span class="numerateur">3</span><span class="denominateur">4</span></span> = <span class="fraction"><span class="numerateur">6</span><span class="denominateur">8</span></span> = <span class="fraction"><span class="numerateur">9</span><span class="denominateur">12</span></span>
-    </div>
-
+    
     <h2>Comparaison de fractions</h2>
 
     <h3>Mettre des fractions au même dénominateur</h3>
