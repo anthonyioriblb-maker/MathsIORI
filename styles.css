@@ -452,31 +452,108 @@ a:hover {
     }
 }
 
+/* --- RECTANGLES FRACTIONNAIRES --- */
+.fraction-rectangle {
+    display: inline-flex;
+    border: 2px solid #333;
+    height: 60px;
+    margin: 10px 5px;
+    vertical-align: middle;
+}
+
+.fraction-rectangle.large {
+    height: 80px;
+}
+
+.fraction-part {
+    flex: 1;
+    border-right: 1px solid #333;
+    min-width: 40px;
+}
+
+.fraction-part:last-child {
+    border-right: none;
+}
+
+.fraction-part.colored {
+    background-color: #4a90e2;
+}
+
+.fraction-part.orange {
+    background-color: #ff8c42;
+}
+
+.fraction-part.green {
+    background-color: #6fdc6f;
+}
+
+.fraction-part.red {
+    background-color: #e24a4a;
+}
+
+.fraction-visual {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Cercles fractionnaires */
+.circle-fraction {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    display: inline-block;
+    margin: 10px 20px;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.circle-half {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.circle-half.colored {
+    background-color: #4a90e2;
+}
+
 /* --- RESPONSIVE --- */
 @media screen and (max-width: 768px) {
     body {
         padding: 10px;
     }
-    
+
     .tableau-avec-fleche {
         margin-right: 0;
     }
-    
+
     .fleche-coefficient {
         position: static;
         transform: none;
         margin: 10px auto;
     }
-    
+
     .exemples-colonnes {
         grid-template-columns: 1fr;
     }
-    
+
     h3 {
         margin-left: 10px;
     }
-    
+
     h4 {
         margin-left: 20px;
+    }
+
+    .fraction-rectangle {
+        height: 50px;
+    }
+
+    .fraction-part {
+        min-width: 30px;
     }
 }
