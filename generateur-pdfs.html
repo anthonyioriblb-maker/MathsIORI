@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de PDFs - Cours de Mathématiques</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .instructions h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .niveau-section {
+            margin-bottom: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .niveau-section:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .niveau-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .niveau-title {
+            font-size: 1.8em;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .btn-print-all {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-print-all:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .cours-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .cours-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .cours-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .cours-name {
+            font-weight: 500;
+            color: #333;
+            flex: 1;
+        }
+
+        .btn-print-single {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .btn-print-single:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .note strong {
+            color: #856404;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📄 Générateur de PDFs</h1>
+        <p class="subtitle">Convertissez vos cours de mathématiques en PDF</p>
+
+        <div class="instructions">
+            <h2>📚 Comment utiliser ce générateur ?</h2>
+            <ol>
+                <li><strong>Cliquez sur "Imprimer ce chapitre"</strong> pour ouvrir un cours spécifique</li>
+                <li>Une nouvelle fenêtre s'ouvrira avec le cours</li>
+                <li>Utilisez <strong>Ctrl+P</strong> (ou Cmd+P sur Mac) pour ouvrir la boîte d'impression</li>
+                <li>Sélectionnez <strong>"Enregistrer au format PDF"</strong> ou <strong>"Microsoft Print to PDF"</strong></li>
+                <li>Choisissez l'emplacement et le nom du fichier</li>
+                <li>Cliquez sur <strong>"Enregistrer"</strong></li>
+            </ol>
+        </div>
+
+        <div class="note">
+            <strong>💡 Astuce :</strong> Vous pouvez aussi utiliser le bouton "Imprimer tous les cours" pour ouvrir tous les cours d'un niveau dans des onglets séparés, puis les imprimer en PDF un par un.
+        </div>
+
+        <div id="cours-container">
+            <!-- Le contenu sera généré par JavaScript -->
+        </div>
+
+        <div class="footer">
+            <p>Générateur de PDFs pour les cours de mathématiques</p>
+            <p>Les PDFs sont générés directement depuis votre navigateur</p>
+        </div>
+    </div>
+
+    <script>
+        // Structure des cours par niveau
+        const coursParNiveau = {
+            '6°': [
+                { nom: 'Chapitre 1 - Les nombres entiers', fichier: '6°/6e-chapitre1.html' },
+                { nom: 'Chapitre 2', fichier: '6°/6e-chapitre2.html' },
+                { nom: 'Chapitre 3', fichier: '6°/6e-chapitre3.html' },
+                { nom: 'Chapitre 4', fichier: '6°/6e-chapitre4.html' },
+                { nom: 'Chapitre 5', fichier: '6°/6e-chapitre5.html' },
+                { nom: 'Chapitre 6', fichier: '6°/6e-chapitre6.html' }
+            ],
+            '5°': [
+                { nom: 'Chapitre 1', fichier: '5°/5e-chapitre1.html' },
+                { nom: 'Chapitre 2', fichier: '5°/5e-chapitre2.html' },
+                { nom: 'Chapitre 3', fichier: '5°/5e-chapitre3.html' },
+                { nom: 'Chapitre 4', fichier: '5°/5e-chapitre4.html' },
+                { nom: 'Chapitre 5', fichier: '5°/5e-chapitre5.html' }
+            ],
+            '4°': [
+                { nom: 'Chapitre 1', fichier: '4°/4e-chapitre1.html' },
+                { nom: 'Chapitre 2', fichier: '4°/4e-chapitre2.html' },
+                { nom: 'Chapitre 3', fichier: '4°/4e-chapitre3.html' },
+                { nom: 'Chapitre 4', fichier: '4°/4e-chapitre4.html' }
+            ],
+            '3°': [
+                { nom: 'Chapitre 1', fichier: '3°/3e-chapitre1.html' },
+                { nom: 'Chapitre 2', fichier: '3°/3e-chapitre2.html' },
+                { nom: 'Chapitre 3', fichier: '3°/3e-chapitre3.html' },
+                { nom: 'Chapitre 4', fichier: '3°/3e-chapitre4.html' },
+                { nom: 'Chapitre 5', fichier: '3°/3e-chapitre5.html' }
+            ]
+        };
+
+        // Fonction pour ouvrir un cours
+        function ouvrirCours(fichier) {
+            window.open(fichier, '_blank');
+        }
+
+        // Fonction pour ouvrir tous les cours d'un niveau
+        function ouvrirTousCours(niveau) {
+            const cours = coursParNiveau[niveau];
+            if (confirm(`Voulez-vous ouvrir les ${cours.length} cours de ${niveau} dans des onglets séparés ?`)) {
+                cours.forEach((cours, index) => {
+                    setTimeout(() => {
+                        ouvrirCours(cours.fichier);
+                    }, index * 500); // Délai de 500ms entre chaque ouverture
+                });
+            }
+        }
+
+        // Générer le HTML pour chaque niveau
+        function genererHTML() {
+            const container = document.getElementById('cours-container');
+
+            Object.keys(coursParNiveau).forEach(niveau => {
+                const section = document.createElement('div');
+                section.className = 'niveau-section';
+
+                const header = document.createElement('div');
+                header.className = 'niveau-header';
+
+                const title = document.createElement('div');
+                title.className = 'niveau-title';
+                title.textContent = `Classe de ${niveau}`;
+
+                const btnPrintAll = document.createElement('button');
+                btnPrintAll.className = 'btn-print-all';
+                btnPrintAll.textContent = '📑 Imprimer tous les cours';
+                btnPrintAll.onclick = () => ouvrirTousCours(niveau);
+
+                header.appendChild(title);
+                header.appendChild(btnPrintAll);
+
+                const coursList = document.createElement('div');
+                coursList.className = 'cours-list';
+
+                coursParNiveau[niveau].forEach(cours => {
+                    const coursItem = document.createElement('div');
+                    coursItem.className = 'cours-item';
+
+                    const coursName = document.createElement('div');
+                    coursName.className = 'cours-name';
+                    coursName.textContent = cours.nom;
+
+                    const btnPrint = document.createElement('button');
+                    btnPrint.className = 'btn-print-single';
+                    btnPrint.textContent = '🖨️ Imprimer';
+                    btnPrint.onclick = () => ouvrirCours(cours.fichier);
+
+                    coursItem.appendChild(coursName);
+                    coursItem.appendChild(btnPrint);
+                    coursList.appendChild(coursItem);
+                });
+
+                section.appendChild(header);
+                section.appendChild(coursList);
+                container.appendChild(section);
+            });
+        }
+
+        // Générer le HTML au chargement de la page
+        genererHTML();
+    </script>
+</body>
+</html>

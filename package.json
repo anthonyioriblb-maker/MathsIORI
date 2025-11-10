@@ -1,0 +1,21 @@
+{
+  "name": "mathsiori-pdf-generator",
+  "version": "1.0.0",
+  "description": "Générateur automatique de PDFs pour les cours de mathématiques",
+  "main": "generate-pdfs.js",
+  "scripts": {
+    "generate": "node generate-pdfs.js",
+    "generate:all": "node generate-pdfs.js --all",
+    "generate:6e": "node generate-pdfs.js --niveau 6",
+    "generate:5e": "node generate-pdfs.js --niveau 5",
+    "generate:4e": "node generate-pdfs.js --niveau 4",
+    "generate:3e": "node generate-pdfs.js --niveau 3"
+  },
+  "dependencies": {
+    "puppeteer": "^21.5.2"
+  },
+  "devDependencies": {},
+  "keywords": ["pdf", "generator", "maths", "cours"],
+  "author": "",
+  "license": "ISC"
+}

@@ -446,9 +446,56 @@ a:hover {
         background-color: white;
         max-width: 100%;
     }
-    
+
+    /* Forcer l'impression des arrière-plans et couleurs */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
     .definition, .property, .important, .example, .remarque, .method, .exercice {
         page-break-inside: avoid;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* Forcer l'impression des couleurs pour les rectangles de fractions */
+    .fraction-part.colored,
+    .fraction-part.orange,
+    .fraction-part.green,
+    .fraction-part.red {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* Forcer l'impression des couleurs de mise en évidence */
+    .highlight,
+    .highlight-blue,
+    .mark,
+    .mark-blue,
+    .mark-green,
+    .mark-pink,
+    .mark-orange {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* Forcer l'impression des arrière-plans de tableaux */
+    th {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* Forcer l'impression des cercles de fractions colorés */
+    .circle-half.colored {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
     }
 }
 
