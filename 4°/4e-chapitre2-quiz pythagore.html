@@ -664,13 +664,23 @@
                     <div class="calc-line">
                         <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
                         = <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="${formatNumber(side1)}²" data-type="squared-num" placeholder="...">
-                        + <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(side2)}²" data-type="squared-num" placeholder="...">
+                        <select class="select-field" id="q${questionNum}_op2" data-answer="+">
+                            <option value="">...</option>
+                            <option value="+">+</option>
+                            <option value="-">−</option>
+                        </select>
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(side2)}²" data-type="squared-num" placeholder="...">
                     </div>
 
                     <div class="calc-line">
                         <input type="text" class="input-field input-small" id="q${questionNum}_calc3a" data-answer="${L1}${L3}²" data-type="squared" placeholder="...">
                         = <input type="text" class="input-field input-medium" id="q${questionNum}_calc3b" data-answer="${formatNumber(side1_sq)}" placeholder="...">
-                        + <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(side2_sq)}" placeholder="...">
+                        <select class="select-field" id="q${questionNum}_op3" data-answer="+">
+                            <option value="">...</option>
+                            <option value="+">+</option>
+                            <option value="-">−</option>
+                        </select>
+                        <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(side2_sq)}" placeholder="...">
                     </div>
 
                     <div class="calc-line">
@@ -727,13 +737,23 @@
                     <div class="calc-line">
                         <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
                         = <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="${formatNumber(hyp)}²" data-type="squared-num" placeholder="...">
-                        − <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(knownSide)}²" data-type="squared-num" placeholder="...">
+                        <select class="select-field" id="q${questionNum}_op2" data-answer="-">
+                            <option value="">...</option>
+                            <option value="+">+</option>
+                            <option value="-">−</option>
+                        </select>
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(knownSide)}²" data-type="squared-num" placeholder="...">
                     </div>
 
                     <div class="calc-line">
                         <input type="text" class="input-field input-small" id="q${questionNum}_calc3a" data-answer="${L2}${L3}²" data-type="squared" placeholder="...">
                         = <input type="text" class="input-field input-medium" id="q${questionNum}_calc3b" data-answer="${formatNumber(hyp_sq)}" placeholder="...">
-                        − <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(knownSide_sq)}" placeholder="...">
+                        <select class="select-field" id="q${questionNum}_op3" data-answer="-">
+                            <option value="">...</option>
+                            <option value="+">+</option>
+                            <option value="-">−</option>
+                        </select>
+                        <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="${formatNumber(knownSide_sq)}" placeholder="...">
                     </div>
 
                     <div class="calc-line">
