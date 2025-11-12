@@ -15,17 +15,32 @@
             font-family: 'Comic Sans MS', 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
-            padding: 40px;
+            padding: 20px;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             animation: fadeIn 0.6s ease-in;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            .container {
+                padding: 30px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 40px;
+            }
         }
 
         @keyframes fadeIn {
@@ -137,19 +152,19 @@
 
         .redaction {
             background: white;
-            padding: 25px;
+            padding: 10px;
             border-radius: 10px;
-            margin: 20px 0;
+            margin: 15px 0;
             border: 2px solid #764ba2;
             font-family: Arial, sans-serif;
-            font-size: 1.15em;
-            line-height: 2.2;
+            font-size: 0.85em;
+            line-height: 1.8;
         }
 
         .calc-line {
             white-space: nowrap;
             overflow-x: auto;
-            margin: 5px 0;
+            margin: 3px 0;
         }
 
         .input-field {
@@ -157,13 +172,13 @@
             border: none;
             border-bottom: 2px solid #764ba2;
             background: #f0f4ff;
-            padding: 2px 4px;
-            font-size: 1em;
+            padding: 1px 1px;
+            font-size: 0.85em;
             font-family: 'Courier New', monospace;
             font-weight: bold;
             text-align: center;
             transition: all 0.3s;
-            min-width: 40px;
+            min-width: 25px;
         }
 
         .input-field:focus {
@@ -189,29 +204,30 @@
         }
 
         .input-small {
-            min-width: 35px;
+            min-width: 24px;
         }
 
         .input-medium {
-            min-width: 50px;
+            min-width: 35px;
         }
 
         .input-large {
-            min-width: 70px;
+            min-width: 48px;
         }
 
         .select-field {
             display: inline-block;
             border: 2px solid #764ba2;
             background: #f0f4ff;
-            padding: 2px 4px;
-            font-size: 1em;
+            padding: 1px 1px;
+            font-size: 0.85em;
             font-family: 'Courier New', monospace;
             font-weight: bold;
             text-align: center;
             transition: all 0.3s;
             border-radius: 4px;
             cursor: pointer;
+            min-width: 30px;
         }
 
         .select-field:focus {
@@ -407,6 +423,14 @@
         }
 
         .sqrt {
+            text-decoration: overline;
+        }
+
+        .sqrt-display {
+            white-space: nowrap;
+        }
+
+        .sqrt-display .overline {
             text-decoration: overline;
         }
     </style>
@@ -695,14 +719,14 @@
                     </div>
                 `;
 
-                const finalAnswer = isExactSquare ? formatNumber(Math.sqrt(hyp_sq)) : `<span class="sqrt">${hyp_sq}</span>`;
+                const finalAnswer = isExactSquare ? formatNumber(Math.sqrt(hyp_sq)) : `<span class="sqrt-display">√<span class="overline">${hyp_sq}</span></span>`;
                 correctionHTML = `
                     Le triangle <strong>${L1}${L2}${L3}</strong> est rectangle en <strong>${L2}</strong>, d'après le théorème de Pythagore on a :<br><br>
                     <strong>${L1}${L3}²</strong> = <strong>${L1}${L2}²</strong> + <strong>${L2}${L3}²</strong><br>
                     <strong>${L1}${L3}²</strong> = <strong>${formatNumber(side1)}²</strong> + <strong>${formatNumber(side2)}²</strong><br>
                     <strong>${L1}${L3}²</strong> = <strong>${formatNumber(side1_sq)}</strong> + <strong>${formatNumber(side2_sq)}</strong><br>
                     <strong>${L1}${L3}²</strong> = <strong>${formatNumber(hyp_sq)}</strong><br>
-                    <strong>${L1}${L3}</strong> = <span class="sqrt"><strong>${formatNumber(hyp_sq)}</strong></span> = <strong>${finalAnswer}</strong><br><br>
+                    <strong>${L1}${L3}</strong> = <span class="sqrt-display">√<span class="overline"><strong>${formatNumber(hyp_sq)}</strong></span></span> = <strong>${finalAnswer}</strong><br><br>
                     <strong>[${L1}${L3}] mesure ${finalAnswer} cm.</strong>
                 `;
 
@@ -768,14 +792,14 @@
                     </div>
                 `;
 
-                const finalAnswer = isExactSquare ? formatNumber(Math.sqrt(unknownSide_sq)) : `<span class="sqrt">${unknownSide_sq}</span>`;
+                const finalAnswer = isExactSquare ? formatNumber(Math.sqrt(unknownSide_sq)) : `<span class="sqrt-display">√<span class="overline">${unknownSide_sq}</span></span>`;
                 correctionHTML = `
                     Le triangle <strong>${L1}${L2}${L3}</strong> est rectangle en <strong>${L2}</strong>, d'après le théorème de Pythagore on a :<br><br>
                     <strong>${L2}${L3}²</strong> = <strong>${L1}${L3}²</strong> − <strong>${L1}${L2}²</strong><br>
                     <strong>${L2}${L3}²</strong> = <strong>${formatNumber(hyp)}²</strong> − <strong>${formatNumber(knownSide)}²</strong><br>
                     <strong>${L2}${L3}²</strong> = <strong>${formatNumber(hyp_sq)}</strong> − <strong>${formatNumber(knownSide_sq)}</strong><br>
                     <strong>${L2}${L3}²</strong> = <strong>${formatNumber(unknownSide_sq)}</strong><br>
-                    <strong>${L2}${L3}</strong> = <span class="sqrt"><strong>${formatNumber(unknownSide_sq)}</strong></span> = <strong>${finalAnswer}</strong><br><br>
+                    <strong>${L2}${L3}</strong> = <span class="sqrt-display">√<span class="overline"><strong>${formatNumber(unknownSide_sq)}</strong></span></span> = <strong>${finalAnswer}</strong><br><br>
                     <strong>[${L2}${L3}] mesure ${finalAnswer} cm.</strong>
                 `;
             }
