@@ -568,6 +568,93 @@ a:hover {
     background-color: #4a90e2;
 }
 
+/* --- SIMPLIFICATION DE FRACTIONS --- */
+/* Traits colorés pour barrer les facteurs qui se simplifient */
+.strikethrough {
+    position: relative;
+    display: inline-block;
+}
+
+.strikethrough-red {
+    position: relative;
+    display: inline-block;
+}
+
+.strikethrough-red::after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: 50%;
+    border-bottom: 2px solid red;
+    transform: translateY(-50%);
+}
+
+.strikethrough-blue {
+    position: relative;
+    display: inline-block;
+}
+
+.strikethrough-blue::after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: 50%;
+    border-bottom: 2px solid blue;
+    transform: translateY(-50%);
+}
+
+.strikethrough-green {
+    position: relative;
+    display: inline-block;
+}
+
+.strikethrough-green::after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: 50%;
+    border-bottom: 2px solid green;
+    transform: translateY(-50%);
+}
+
+.strikethrough-orange {
+    position: relative;
+    display: inline-block;
+}
+
+.strikethrough-orange::after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: 50%;
+    border-bottom: 2px solid orange;
+    transform: translateY(-50%);
+}
+
+.strikethrough-purple {
+    position: relative;
+    display: inline-block;
+}
+
+.strikethrough-purple::after {
+    content: '';
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: 50%;
+    border-bottom: 2px solid purple;
+    transform: translateY(-50%);
+}
+
+.decomposition {
+    font-size: 0.95em;
+    line-height: 2.2;
+}
+
 /* --- RESPONSIVE --- */
 @media screen and (max-width: 768px) {
     body {
