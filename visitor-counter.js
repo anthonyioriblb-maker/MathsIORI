@@ -63,14 +63,25 @@ class VisitorCounter {
     }
 
     /**
-     * Increment the Firebase counter
+     * Increment the Firebase counter (only once per session)
      */
     async incrementFirebaseCounter() {
         try {
-            // Use transaction to safely increment
-            await this.counterRef.transaction((currentCount) => {
-                return (currentCount || 0) + 1;
-            });
+            // Check if visitor was already counted in this session
+            const sessionKey = 'mathsiori_visitor_counted';
+            const alreadyCounted = sessionStorage.getItem(sessionKey);
+
+            if (!alreadyCounted) {
+                // Use transaction to safely increment
+                await this.counterRef.transaction((currentCount) => {
+                    return (currentCount || 0) + 1;
+                });
+
+                // Mark as counted for this session
+                sessionStorage.setItem(sessionKey, 'true');
+            } else {
+                console.log('Visiteur déjà compté dans cette session');
+            }
         } catch (error) {
             console.error('Erreur incrémentation Firebase:', error);
         }
@@ -81,15 +92,26 @@ class VisitorCounter {
      */
     useLocalStorage() {
         const storageKey = 'mathsiori_visits';
+        const sessionKey = 'mathsiori_visitor_counted';
 
         // Get current count
         let count = parseInt(localStorage.getItem(storageKey)) || 0;
 
-        // Increment count
-        count++;
+        // Check if visitor was already counted in this session
+        const alreadyCounted = sessionStorage.getItem(sessionKey);
 
-        // Save back to localStorage
-        localStorage.setItem(storageKey, count.toString());
+        if (!alreadyCounted) {
+            // Increment count only if not already counted
+            count++;
+
+            // Save back to localStorage
+            localStorage.setItem(storageKey, count.toString());
+
+            // Mark as counted for this session
+            sessionStorage.setItem(sessionKey, 'true');
+        } else {
+            console.log('Visiteur déjà compté dans cette session');
+        }
 
         // Display count
         this.displayCount(count);
