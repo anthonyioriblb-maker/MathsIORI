@@ -25,10 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('div');
         card.className = 'chapter-card' + (chapitre.disponible ? '' : ' coming-soon');
 
-        // Bouton cours
-        const coursBtn = chapitre.cours.actif
-            ? `<a href="${chapitre.cours.fichier}" class="action-button cours">📖 Cours</a>`
-            : `<span class="action-button cours disabled">📖 Cours</span>`;
+        // Bouton cours (ne pas afficher si inactif et fichier vide)
+        let coursBtn = '';
+        if (chapitre.cours.actif) {
+            coursBtn = `<a href="${chapitre.cours.fichier}" class="action-button cours">📖 Cours</a>`;
+        } else if (chapitre.cours.fichier) {
+            coursBtn = `<span class="action-button cours disabled">📖 Cours</span>`;
+        }
 
         // Menu déroulant exercices ou activité (pour Scratch)
         let exercicesBtn = '';
