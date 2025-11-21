@@ -30,9 +30,16 @@ document.addEventListener('DOMContentLoaded', function() {
             ? `<a href="${chapitre.cours.fichier}" class="action-button cours">📖 Cours</a>`
             : `<span class="action-button cours disabled">📖 Cours</span>`;
 
-        // Menu déroulant exercices
+        // Menu déroulant exercices ou activité (pour Scratch)
         let exercicesBtn = '';
-        if (chapitre.exercices.actif && chapitre.exercices.items.length > 0) {
+        if (chapitre.activite) {
+            // Mode Scratch : bouton Activité
+            if (chapitre.activite.actif) {
+                exercicesBtn = `<a href="${chapitre.activite.fichier}" class="action-button exercices">🎨 Activité</a>`;
+            } else {
+                exercicesBtn = `<span class="action-button exercices disabled">🎨 Activité</span>`;
+            }
+        } else if (chapitre.exercices && chapitre.exercices.actif && chapitre.exercices.items.length > 0) {
             const exercicesItems = chapitre.exercices.items.map(exo =>
                 `<a href="${exo.fichier}" class="dropdown-item exercices-item">✏️ ${exo.titre}</a>`
             ).join('');
@@ -47,13 +54,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `;
-        } else {
+        } else if (chapitre.exercices) {
             exercicesBtn = `<span class="action-button exercices disabled">✏️ Exercices</span>`;
         }
 
-        // Menu déroulant quiz
+        // Menu déroulant quiz ou correction (pour Scratch)
         let quizBtn = '';
-        if (chapitre.quiz.actif && chapitre.quiz.items.length > 0) {
+        if (chapitre.correction) {
+            // Mode Scratch : bouton Correction
+            if (chapitre.correction.actif) {
+                quizBtn = `<a href="${chapitre.correction.fichier}" class="action-button quiz">✅ Correction</a>`;
+            } else {
+                quizBtn = `<span class="action-button quiz disabled">✅ Correction</span>`;
+            }
+        } else if (chapitre.quiz && chapitre.quiz.actif && chapitre.quiz.items.length > 0) {
             const quizItems = chapitre.quiz.items.map(q =>
                 `<a href="${q.fichier}" class="dropdown-item quiz-item">🎯 ${q.titre}</a>`
             ).join('');
@@ -68,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `;
-        } else {
+        } else if (chapitre.quiz) {
             quizBtn = `<span class="action-button quiz disabled">🎯 Quiz</span>`;
         }
 

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aides et Corrections - Exercices Scratch Figures (4ème)</title>
+    <style>
+        @media print {
+            body {
+                margin: 0.4cm;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 21cm;
+            margin: 0 auto;
+            padding: 0.4cm;
+            line-height: 1.2;
+            font-size: 9px;
+        }
+
+        h1 {
+            color: #FF6B35;
+            border-bottom: 2px solid #FF6B35;
+            padding-bottom: 4px;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        h2 {
+            color: #4C97FF;
+            font-size: 13px;
+            margin-top: 8px;
+            margin-bottom: 4px;
+            border-left: 3px solid #4C97FF;
+            padding-left: 6px;
+        }
+
+        h3 {
+            color: #333;
+            font-size: 10px;
+            margin-top: 3px;
+            margin-bottom: 2px;
+        }
+
+        .exercise {
+            background: #f9f9f9;
+            border: 1px solid #4C97FF;
+            border-radius: 4px;
+            padding: 6px;
+            margin: 6px 0;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+
+        .exercise-number {
+            background: #4C97FF;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .difficulty {
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .difficulty.facile {
+            background: #40BF4A;
+            color: white;
+        }
+
+        .difficulty.moyen {
+            background: #FFD500;
+            color: #333;
+        }
+
+        .difficulty.difficile {
+            background: #FF6B35;
+            color: white;
+        }
+
+        .hint {
+            background: #FFF9E6;
+            border-left: 2px solid #FFD500;
+            padding: 4px;
+            margin: 4px 0;
+            font-size: 8px;
+        }
+
+        .solution {
+            background: #E6F7FF;
+            border-left: 2px solid #4C97FF;
+            padding: 4px;
+            margin: 4px 0;
+            font-size: 8px;
+        }
+
+        .scratch-block {
+            padding: 2px 5px;
+            border-radius: 6px;
+            display: inline-block;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 7px;
+            font-weight: 500;
+            color: white;
+            line-height: 1.3;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+            border: 0.5px solid rgba(0, 0, 0, 0.15);
+            margin: 1px;
+        }
+
+        .scratch-value {
+            background: white;
+            color: #575E75;
+            padding: 1px 3px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 0 1px;
+            font-weight: 600;
+            min-width: 12px;
+            text-align: center;
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .scratch-block.motion { background: #4C97FF; border-color: #3373CC; }
+        .scratch-block.control { background: #FFAB19; border-color: #CF8B17; }
+        .scratch-block.pen { background: #0FBD8C; border-color: #0B8E69; }
+        .scratch-block.events { background: #FFD500; border-color: #CC9900; }
+        .scratch-block.data { background: #FF8C1A; border-color: #DB6E00; }
+        .scratch-block.sensing { background: #4CBFE6; border-color: #2E8EB8; }
+        .scratch-block.operators { background: #40BF4A; border-color: #389438; }
+
+        .concept {
+            background: #E8F5E9;
+            border-left: 2px solid #40BF4A;
+            padding: 4px;
+            margin: 4px 0;
+            font-size: 8px;
+        }
+
+        .concept strong {
+            color: #2E7D32;
+        }
+
+        ul {
+            margin: 3px 0;
+            padding-left: 15px;
+        }
+
+        li {
+            margin: 2px 0;
+        }
+
+        .math-formula {
+            background: white;
+            border: 1px dashed #999;
+            padding: 3px;
+            margin: 3px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📐 Aides et Corrections - Figures géométriques</h1>
+    <p style="font-size: 9px; color: #666; margin-bottom: 4px;">Niveau 4ème - Solutions détaillées</p>
+
+    <!-- ========== NIVEAU 1 ========== -->
+    <h2>📘 Niveau 1 : Figures simples</h2>
+
+    <!-- Exercice 1 : Carré -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 1</div>
+            <div class="difficulty facile">⭐ Facile</div>
+        </div>
+        <h3>Dessiner un carré de côté 100</h3>
+
+        <div class="hint">
+            💡 <strong>Indices :</strong>
+            <ul>
+                <li>Un carré a 4 côtés égaux et 4 sommets</li>
+                <li>À chaque sommet, on tourne de 90° (angle extérieur)</li>
+                <li>Utilise une boucle <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span></li>
+                <li>N'oublie pas : <span class="scratch-block pen">stylo en position d'écriture</span></li>
+            </ul>
+        </div>
+
+        <div class="concept">
+            <strong>📐 Mathématiques :</strong> Dans un carré, l'angle extérieur à chaque sommet = 360° ÷ 4 = 90°
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span><br>
+            → <span class="scratch-block motion">avancer de <span class="scratch-value">100</span> pas</span><br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span>
+        </div>
+    </div>
+
+    <!-- Exercice 2 : Triangle équilatéral -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 2</div>
+            <div class="difficulty facile">⭐ Facile</div>
+        </div>
+        <h3>Dessiner un triangle équilatéral de côté 120</h3>
+
+        <div class="hint">
+            💡 <strong>Indices :</strong>
+            <ul>
+                <li>Un triangle équilatéral a 3 côtés égaux et 3 sommets</li>
+                <li>L'angle intérieur = 60°</li>
+                <li>L'angle extérieur (pour tourner) = 180° - 60° = 120°</li>
+                <li>Utilise <span class="scratch-block control">répéter <span class="scratch-value">3</span> fois</span></li>
+            </ul>
+        </div>
+
+        <div class="concept">
+            <strong>📐 Explication mathématique :</strong><br>
+            • Angle intérieur d'un triangle équilatéral = 60°<br>
+            • Angle extérieur = 180° - angle intérieur = 180° - 60° = <strong>120°</strong><br>
+            • C'est l'angle extérieur qu'on utilise pour tourner dans Scratch
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">3</span> fois</span><br>
+            → <span class="scratch-block motion">avancer de <span class="scratch-value">120</span> pas</span><br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">120</span> degrés</span>
+        </div>
+    </div>
+
+    <!-- Exercice 3 : Rectangle -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 3</div>
+            <div class="difficulty facile">⭐ Facile</div>
+        </div>
+        <h3>Dessiner un rectangle (longueur 150, largeur 80)</h3>
+
+        <div class="hint">
+            💡 <strong>Indices :</strong>
+            <ul>
+                <li>Un rectangle a 2 longueurs et 2 largeurs (4 sommets)</li>
+                <li>On tourne toujours de 90° aux sommets</li>
+                <li>Utilise <span class="scratch-block control">répéter <span class="scratch-value">2</span> fois</span> pour les 2 paires de côtés</li>
+            </ul>
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">2</span> fois</span><br>
+            → <span class="scratch-block motion">avancer de <span class="scratch-value">150</span> pas</span><br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span><br>
+            → <span class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</span><br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span>
+        </div>
+    </div>
+
+    <!-- Exercice 4 : Hexagone -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 4</div>
+            <div class="difficulty moyen">⭐⭐ Moyen</div>
+        </div>
+        <h3>Dessiner un hexagone régulier de côté 80</h3>
+
+        <div class="hint">
+            💡 <strong>Calcul à faire :</strong>
+            <ul>
+                <li>Nombre de côtés : <strong>6</strong></li>
+                <li>Nombre de sommets : <strong>6</strong></li>
+                <li>Angle extérieur : 360° ÷ 6 = <strong>60°</strong></li>
+            </ul>
+        </div>
+
+        <div class="math-formula">
+            Angle extérieur = 360° ÷ 6 = 60°
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">6</span> fois</span><br>
+            → <span class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</span><br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">60</span> degrés</span>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ========== NIVEAU 2 ========== -->
+    <h2>📗 Niveau 2 : Polygones réguliers avec variables</h2>
+
+    <!-- Exercice 5 : Polygone paramétré -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 5</div>
+            <div class="difficulty moyen">⭐⭐ Moyen</div>
+        </div>
+        <h3>Polygone régulier paramétré</h3>
+
+        <div class="hint">
+            💡 <strong>Méthode :</strong>
+            <ol>
+                <li>Crée deux variables : <span class="scratch-block data">côtés</span> et <span class="scratch-block data">longueur</span></li>
+                <li>Demande au début : "Combien de côtés ?" → stocke dans <span class="scratch-block data">côtés</span></li>
+                <li>Demande : "Quelle longueur ?" → stocke dans <span class="scratch-block data">longueur</span></li>
+                <li>Calcule l'angle : <span class="scratch-block data">mettre angle à</span> <span class="scratch-block operators"><span class="scratch-value">360</span> / côtés</span></li>
+                <li>Répète <span class="scratch-block data">côtés</span> fois : avancer + tourner de <span class="scratch-block data">angle</span></li>
+            </ol>
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block sensing">demander Combien de côtés ? et attendre</span><br>
+            <span class="scratch-block data">mettre côtés à <span class="scratch-value">réponse</span></span><br>
+            <span class="scratch-block sensing">demander Quelle longueur ? et attendre</span><br>
+            <span class="scratch-block data">mettre longueur à <span class="scratch-value">réponse</span></span><br>
+            <span class="scratch-block data">mettre angle à</span> <span class="scratch-block operators"><span class="scratch-value">360</span> / côtés</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block control">répéter côtés fois</span><br>
+            → <span class="scratch-block motion">avancer de longueur pas</span><br>
+            → <span class="scratch-block motion">tourner ↻ de angle degrés</span>
+        </div>
+    </div>
+
+    <!-- Exercice 6 : Série de carrés -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 6</div>
+            <div class="difficulty moyen">⭐⭐ Moyen</div>
+        </div>
+        <h3>Série de carrés emboîtés</h3>
+
+        <div class="hint">
+            💡 <strong>Méthode :</strong>
+            <ul>
+                <li>Crée une variable <span class="scratch-block data">taille</span> qui commence à 50</li>
+                <li>Répète 4 fois :
+                    <ul>
+                        <li>Dessine un carré de côté <span class="scratch-block data">taille</span></li>
+                        <li>Ajoute 30 à <span class="scratch-block data">taille</span></li>
+                        <li>Repositionne le lutin au centre : <span class="scratch-block motion">aller à x: <span class="scratch-value">0</span> y: <span class="scratch-value">0</span></span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block data">mettre taille à <span class="scratch-value">50</span></span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span><br>
+            → <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            → <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span> (carré)<br>
+            → → <span class="scratch-block motion">avancer de taille pas</span><br>
+            → → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span><br>
+            → <span class="scratch-block data">ajouter <span class="scratch-value">30</span> à taille</span><br>
+            → <span class="scratch-block pen">relever le stylo</span><br>
+            → <span class="scratch-block motion">aller à x: <span class="scratch-value">0</span> y: <span class="scratch-value">0</span></span>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ========== NIVEAU 3 ========== -->
+    <h2>📕 Niveau 3 : Figures complexes</h2>
+
+    <!-- Exercice 7 : Étoile -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 7</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Étoile à 5 branches</h3>
+
+        <div class="hint">
+            💡 <strong>Méthode :</strong>
+            <ul>
+                <li>Pour une étoile à 5 branches, on trace 5 segments</li>
+                <li>Mais on tourne de 144° (et non 72°) à chaque fois</li>
+                <li>Formule : angle = 360° ÷ 5 × 2 = 144°</li>
+            </ul>
+        </div>
+
+        <div class="math-formula">
+            Pour une étoile à N branches : angle = 360° × 2 ÷ N<br>
+            Pour N = 5 : angle = 720° ÷ 5 = 144°
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">5</span> fois</span><br>
+            → <span class="scratch-block motion">avancer de <span class="scratch-value">100</span> pas</span><br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">144</span> degrés</span>
+        </div>
+    </div>
+
+    <!-- Exercice 8 : Rosace -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 8</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Rosace de 12 carrés</h3>
+
+        <div class="hint">
+            💡 <strong>Méthode :</strong>
+            <ul>
+                <li>Répète 12 fois :
+                    <ul>
+                        <li>Dessine un carré (avec une boucle interne de 4)</li>
+                        <li>Tourne de 30° (360° ÷ 12)</li>
+                    </ul>
+                </li>
+                <li>Tu auras donc <strong>2 boucles imbriquées</strong></li>
+            </ul>
+        </div>
+
+        <div class="concept">
+            <strong>🔄 Boucles imbriquées :</strong><br>
+            Boucle extérieure (12 fois) → Boucle intérieure (4 fois pour le carré)
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">12</span> fois</span><br>
+            → <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span><br>
+            → → <span class="scratch-block motion">avancer de <span class="scratch-value">50</span> pas</span><br>
+            → → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span><br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">30</span> degrés</span>
+        </div>
+    </div>
+
+    <!-- Exercice 9 : Spirale -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 9</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Spirale carrée</h3>
+
+        <div class="hint">
+            💡 <strong>Méthode :</strong>
+            <ul>
+                <li>Crée une variable <span class="scratch-block data">distance</span> = 10</li>
+                <li>Répète 40 fois :
+                    <ul>
+                        <li>Avance de <span class="scratch-block data">distance</span> pas</li>
+                        <li>Tourne de 90°</li>
+                        <li>Ajoute 5 à <span class="scratch-block data">distance</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block data">mettre distance à <span class="scratch-value">10</span></span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">40</span> fois</span><br>
+            → <span class="scratch-block motion">avancer de distance pas</span><br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span><br>
+            → <span class="scratch-block data">ajouter <span class="scratch-value">5</span> à distance</span>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ========== NIVEAU 4 ========== -->
+    <h2>🏆 Niveau 4 : Défis</h2>
+
+    <!-- Exercice 10 : Maison -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 10</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Dessiner une maison</h3>
+
+        <div class="hint">
+            💡 <strong>Éléments à combiner :</strong>
+            <ul>
+                <li>Un carré pour la base (côté 100)</li>
+                <li>Un triangle pour le toit (se positionner au sommet du carré)</li>
+                <li>Un rectangle pour la porte (se déplacer sans dessiner)</li>
+                <li>Des carrés pour les fenêtres</li>
+            </ul>
+        </div>
+
+        <div class="concept">
+            <strong>🎨 Astuce clé :</strong> Utilise <span class="scratch-block pen">relever le stylo</span> pour te déplacer sans dessiner entre chaque forme, puis <span class="scratch-block pen">stylo en position d'écriture</span> pour recommencer à dessiner.
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Méthode :</strong><br>
+            1. Dessine le carré de base<br>
+            2. Relève le stylo, positionne-toi pour le toit<br>
+            3. Abaisse le stylo, dessine le triangle<br>
+            4. Répète pour la porte et les fenêtres
+        </div>
+    </div>
+
+    <!-- Exercice 11 : Flocon -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 11</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Flocon de neige</h3>
+
+        <div class="hint">
+            💡 <strong>Méthode :</strong>
+            <ul>
+                <li>6 branches → angle entre chaque branche : 360° ÷ 6 = 60°</li>
+                <li>Répète 6 fois :
+                    <ul>
+                        <li>Avance de 80 (dessine la branche)</li>
+                        <li>Recule de 80 (reviens au centre)</li>
+                        <li>Tourne de 60°</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="solution">
+            ✅ <strong>Programme :</strong><br>
+            <span class="scratch-block events">quand ⚑ cliqué</span><br>
+            <span class="scratch-block pen">effacer tout</span><br>
+            <span class="scratch-block pen">stylo en position d'écriture</span><br>
+            <span class="scratch-block control">répéter <span class="scratch-value">6</span> fois</span><br>
+            → <span class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</span><br>
+            → <span class="scratch-block motion">avancer de <span class="scratch-value">-80</span> pas</span> (reculer)<br>
+            → <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">60</span> degrés</span>
+        </div>
+    </div>
+
+    <!-- Exercice 12 : Création libre -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 12</div>
+            <div class="difficulty moyen">🎨 Créatif</div>
+        </div>
+        <h3>Création libre</h3>
+
+        <div class="concept">
+            <strong>💡 Idées de motifs :</strong>
+            <ul>
+                <li>Rosace d'hexagones (comme exercice 8 mais avec des hexagones)</li>
+                <li>Spirale colorée (change la couleur du stylo dans la boucle)</li>
+                <li>Motif de cercles concentriques (polygones à 36 côtés)</li>
+                <li>Fractale simple (étoiles de plus en plus petites)</li>
+            </ul>
+        </div>
+
+        <div class="hint">
+            🎯 <strong>Rappel contraintes :</strong>
+            <ul>
+                <li>Au moins 2 boucles imbriquées</li>
+                <li>Au moins 1 variable</li>
+                <li>Utilise <span class="scratch-block pen">mettre la couleur du stylo à</span> pour varier les couleurs</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
