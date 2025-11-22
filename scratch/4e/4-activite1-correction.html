@@ -335,7 +335,7 @@
                         <li>On répète 4 fois : avancer de 100 pas, tourner de 90°</li>
                     </ul>
                 `,
-                scratchCode: `quand drapeau vert pressé
+                scratchCode: `quand @greenFlag cliqué
 effacer tout
 stylo en position d'écriture
 répéter (4) fois
@@ -357,7 +357,7 @@ end`,
                         <li>On répète 3 fois : avancer de 120 pas, tourner de 120°</li>
                     </ul>
                 `,
-                scratchCode: `quand drapeau vert pressé
+                scratchCode: `quand @greenFlag cliqué
 effacer tout
 stylo en position d'écriture
 répéter (3) fois
@@ -379,7 +379,7 @@ end`,
                         <li>On répète 2 fois : longueur, tourner 90°, largeur, tourner 90°</li>
                     </ul>
                 `,
-                scratchCode: `quand drapeau vert pressé
+                scratchCode: `quand @greenFlag cliqué
 effacer tout
 stylo en position d'écriture
 répéter (2) fois
@@ -403,7 +403,7 @@ end`,
                         <li>On répète 6 fois : avancer de 80 pas, tourner de 60°</li>
                     </ul>
                 `,
-                scratchCode: `quand drapeau vert pressé
+                scratchCode: `quand @greenFlag cliqué
 effacer tout
 stylo en position d'écriture
 répéter (6) fois
@@ -422,18 +422,21 @@ end`,
                     <ul>
                         <li>On utilise des <strong>variables</strong> pour rendre le programme flexible</li>
                         <li>Variable <strong>côtés</strong> : nombre de côtés du polygone</li>
+                        <li>Variable <strong>longueur</strong> : longueur des côtés</li>
                         <li>Variable <strong>angle</strong> : calculée avec 360 ÷ côtés</li>
-                        <li>Exemple montré : pentagone (5 côtés, 72°)</li>
+                        <li>Exemple montré : pentagone (5 côtés, 80 pas, 72°)</li>
                     </ul>
                 `,
-                scratchCode: `quand drapeau vert pressé
+                scratchCode: `quand @greenFlag cliqué
 effacer tout
 demander [Combien de côtés ?] et attendre
 mettre [côtés v] à (réponse)
+demander [Quelle longueur de côtés ?] et attendre
+mettre [longueur v] à (réponse)
 mettre [angle v] à ((360) / (côtés))
 stylo en position d'écriture
 répéter (côtés) fois
-  avancer de (80) pas
+  avancer de (longueur) pas
   tourner droite de (angle) degrés
 end`,
                 tip: "Avec des variables, un seul programme peut dessiner n'importe quel polygone !",
@@ -452,7 +455,7 @@ end`,
                         <li>On revient au centre entre chaque carré</li>
                     </ul>
                 `,
-                scratchCode: `quand drapeau vert pressé
+                scratchCode: `quand @greenFlag cliqué
 effacer tout
 mettre [taille v] à (50)
 répéter (4) fois
@@ -480,7 +483,7 @@ end`,
                         <li>On répète 5 fois : avancer de 100, tourner de 144°</li>
                     </ul>
                 `,
-                scratchCode: `quand drapeau vert pressé
+                scratchCode: `quand @greenFlag cliqué
 effacer tout
 stylo en position d'écriture
 répéter (5) fois
@@ -503,7 +506,7 @@ end`,
                         <li>Deux boucles imbriquées créent ce beau motif !</li>
                     </ul>
                 `,
-                scratchCode: `quand drapeau vert pressé
+                scratchCode: `quand @greenFlag cliqué
 effacer tout
 stylo en position d'écriture
 répéter (12) fois
