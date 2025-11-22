@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corrections Scratch 4ème - Figures géométriques</title>
+
+    <!-- Scratchblocks CSS -->
+    <link rel="stylesheet" href="https://scratchblocks.github.io/css/scratchblocks3.css">
+
     <style>
         * {
             margin: 0;
@@ -162,99 +166,6 @@
             gap: 8px;
         }
 
-        .scratch-block {
-            padding: 8px 15px;
-            border-radius: 6px;
-            display: inline-block;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            color: white;
-            margin: 4px 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-            position: relative;
-        }
-
-        .scratch-block.events { background: linear-gradient(180deg, #FFD500 0%, #DCBE00 100%); color: #333; }
-        .scratch-block.motion { background: linear-gradient(180deg, #4C97FF 0%, #4280D7 100%); }
-        .scratch-block.pen { background: linear-gradient(180deg, #0FBD8C 0%, #0DA57A 100%); }
-        .scratch-block.control { background: linear-gradient(180deg, #FFAB19 0%, #EC9C13 100%); }
-        .scratch-block.data { background: linear-gradient(180deg, #FF8C1A 0%, #FF8000 100%); }
-        .scratch-block.sensing { background: linear-gradient(180deg, #4CBFE6 0%, #2E8EB8 100%); }
-
-        /* Bloc répéter en forme de C */
-        .scratch-block.control-c {
-            display: block;
-            padding: 8px 15px 6px 15px;
-            margin-bottom: 0;
-        }
-
-        .scratch-value {
-            background: white;
-            color: #575E75;
-            padding: 4px 10px;
-            border-radius: 12px;
-            display: inline-block;
-            margin: 0 3px;
-            font-weight: 600;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-            min-width: 25px;
-            text-align: center;
-        }
-
-        /* Variable (ovale orange) */
-        .scratch-variable {
-            background: linear-gradient(180deg, #FF8C1A 0%, #FF8000 100%);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 14px;
-            display: inline-block;
-            margin: 0 3px;
-            font-weight: 600;
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Opérateur (ovale vert) */
-        .scratch-operator {
-            background: linear-gradient(180deg, #40BF4A 0%, #389438 100%);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            display: inline-block;
-            margin: 0 3px;
-            font-weight: 600;
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
-        }
-
-        .scratch-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            width: fit-content;
-        }
-
-        /* Blocs imbriqués - forme en C */
-        .scratch-nested {
-            margin-left: 20px;
-            padding: 10px 15px 10px 20px;
-            border-left: 5px solid #FFAB19;
-            border-bottom: 5px solid #FFAB19;
-            border-radius: 0 0 0 10px;
-            margin-top: 2px;
-            margin-bottom: 5px;
-            background: transparent;
-        }
-
-        .scratch-nested::before {
-            content: '';
-            position: absolute;
-            right: 0;
-            bottom: -5px;
-            width: 25px;
-            height: 5px;
-            background: #FFAB19;
-        }
-
         .canvas-panel {
             background: white;
             border-radius: 12px;
@@ -343,6 +254,12 @@
             color: #CC9900;
             margin-bottom: 8px;
         }
+
+        /* Style pour les blocs Scratchblocks */
+        pre.blocks {
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
@@ -403,6 +320,9 @@
         </div>
     </div>
 
+    <!-- Scratchblocks JS -->
+    <script src="https://scratchblocks.github.io/js/scratchblocks-v3.6-min.js"></script>
+
     <script>
         const exercises = {
             1: {
@@ -415,22 +335,16 @@
                         <li>On répète 4 fois : avancer de 100 pas, tourner de 90°</li>
                     </ul>
                 `,
-                blocks: `
-                    <div class="scratch-stack">
-                        <div class="scratch-block events">quand ⚑ cliqué</div>
-                        <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control-c">répéter <span class="scratch-value">4</span> fois
-                            <div class="scratch-nested">
-                                <div class="scratch-block motion">avancer de <span class="scratch-value">100</span> pas</div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
+                scratchCode: `quand drapeau vert pressé
+effacer tout
+stylo en position d'écriture
+répéter (4) fois
+  avancer de (100) pas
+  tourner droite de (90) degrés
+end`,
                 tip: "N'oublie pas de mettre le bloc \"stylo en position d'écriture\" avant la boucle, sinon le lutin ne dessinera rien !",
                 draw: function(ctx, sprite, coords) {
-                    drawSquare(ctx, sprite, coords, 100, 90, 4);
+                    drawPolygon(ctx, sprite, coords, 100, 90, 4);
                 }
             },
             2: {
@@ -443,22 +357,16 @@
                         <li>On répète 3 fois : avancer de 120 pas, tourner de 120°</li>
                     </ul>
                 `,
-                blocks: `
-                    <div class="scratch-stack">
-                        <div class="scratch-block events">quand ⚑ cliqué</div>
-                        <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control-c">répéter <span class="scratch-value">3</span> fois
-                            <div class="scratch-nested">
-                                <div class="scratch-block motion">avancer de <span class="scratch-value">120</span> pas</div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">120</span> degrés</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
+                scratchCode: `quand drapeau vert pressé
+effacer tout
+stylo en position d'écriture
+répéter (3) fois
+  avancer de (120) pas
+  tourner droite de (120) degrés
+end`,
                 tip: "Pour un triangle équilatéral, on tourne de 120° et non de 60° ! C'est l'angle extérieur qui compte.",
                 draw: function(ctx, sprite, coords) {
-                    drawSquare(ctx, sprite, coords, 120, 120, 3);
+                    drawPolygon(ctx, sprite, coords, 120, 120, 3);
                 }
             },
             3: {
@@ -471,21 +379,15 @@
                         <li>On répète 2 fois : longueur, tourner 90°, largeur, tourner 90°</li>
                     </ul>
                 `,
-                blocks: `
-                    <div class="scratch-stack">
-                        <div class="scratch-block events">quand ⚑ cliqué</div>
-                        <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control-c">répéter <span class="scratch-value">2</span> fois
-                            <div class="scratch-nested">
-                                <div class="scratch-block motion">avancer de <span class="scratch-value">150</span> pas</div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
-                                <div class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
+                scratchCode: `quand drapeau vert pressé
+effacer tout
+stylo en position d'écriture
+répéter (2) fois
+  avancer de (150) pas
+  tourner droite de (90) degrés
+  avancer de (80) pas
+  tourner droite de (90) degrés
+end`,
                 tip: "On met 4 blocs dans la boucle \"répéter 2 fois\" pour tracer les 2 paires de côtés.",
                 draw: function(ctx, sprite, coords) {
                     drawRectangle(ctx, sprite, coords);
@@ -501,22 +403,16 @@
                         <li>On répète 6 fois : avancer de 80 pas, tourner de 60°</li>
                     </ul>
                 `,
-                blocks: `
-                    <div class="scratch-stack">
-                        <div class="scratch-block events">quand ⚑ cliqué</div>
-                        <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control-c">répéter <span class="scratch-value">6</span> fois
-                            <div class="scratch-nested">
-                                <div class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">60</span> degrés</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
+                scratchCode: `quand drapeau vert pressé
+effacer tout
+stylo en position d'écriture
+répéter (6) fois
+  avancer de (80) pas
+  tourner droite de (60) degrés
+end`,
                 tip: "Formule générale : Angle = 360° ÷ nombre de côtés",
                 draw: function(ctx, sprite, coords) {
-                    drawSquare(ctx, sprite, coords, 80, 60, 6);
+                    drawPolygon(ctx, sprite, coords, 80, 60, 6);
                 }
             },
             5: {
@@ -530,25 +426,19 @@
                         <li>Exemple montré : pentagone (5 côtés, 72°)</li>
                     </ul>
                 `,
-                blocks: `
-                    <div class="scratch-stack">
-                        <div class="scratch-block events">quand ⚑ cliqué</div>
-                        <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block sensing">demander "Combien de côtés ?" et attendre</div>
-                        <div class="scratch-block data">mettre <span class="scratch-variable">côtés</span> à <span class="scratch-variable">réponse</span></div>
-                        <div class="scratch-block data">mettre <span class="scratch-variable">angle</span> à <span class="scratch-operator"><span class="scratch-value">360</span> / <span class="scratch-variable">côtés</span></span></div>
-                        <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control-c">répéter <span class="scratch-variable">côtés</span> fois
-                            <div class="scratch-nested">
-                                <div class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-variable">angle</span> degrés</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
+                scratchCode: `quand drapeau vert pressé
+effacer tout
+demander [Combien de côtés ?] et attendre
+mettre [côtés v] à (réponse)
+mettre [angle v] à ((360) / (côtés))
+stylo en position d'écriture
+répéter (côtés) fois
+  avancer de (80) pas
+  tourner droite de (angle) degrés
+end`,
                 tip: "Avec des variables, un seul programme peut dessiner n'importe quel polygone !",
                 draw: function(ctx, sprite, coords) {
-                    drawSquare(ctx, sprite, coords, 80, 72, 5);
+                    drawPolygon(ctx, sprite, coords, 80, 72, 5);
                 }
             },
             6: {
@@ -562,27 +452,19 @@
                         <li>On revient au centre entre chaque carré</li>
                     </ul>
                 `,
-                blocks: `
-                    <div class="scratch-stack">
-                        <div class="scratch-block events">quand ⚑ cliqué</div>
-                        <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block data">mettre <span class="scratch-variable">taille</span> à <span class="scratch-value">50</span></div>
-                        <div class="scratch-block control-c">répéter <span class="scratch-value">4</span> fois
-                            <div class="scratch-nested">
-                                <div class="scratch-block pen">stylo en position d'écriture</div>
-                                <div class="scratch-block control-c">répéter <span class="scratch-value">4</span> fois
-                                    <div class="scratch-nested">
-                                        <div class="scratch-block motion">avancer de <span class="scratch-variable">taille</span> pas</div>
-                                        <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
-                                    </div>
-                                </div>
-                                <div class="scratch-block data">ajouter <span class="scratch-value">30</span> à <span class="scratch-variable">taille</span></div>
-                                <div class="scratch-block pen">relever le stylo</div>
-                                <div class="scratch-block motion">aller à x: <span class="scratch-value">0</span> y: <span class="scratch-value">0</span></div>
-                            </div>
-                        </div>
-                    </div>
-                `,
+                scratchCode: `quand drapeau vert pressé
+effacer tout
+mettre [taille v] à (50)
+répéter (4) fois
+  stylo en position d'écriture
+  répéter (4) fois
+    avancer de (taille) pas
+    tourner droite de (90) degrés
+  end
+  ajouter (30) à [taille v]
+  relever le stylo
+  aller à x: (0) y: (0)
+end`,
                 tip: "Boucles imbriquées : une boucle DANS une autre boucle !",
                 draw: function(ctx, sprite, coords) {
                     drawNestedSquares(ctx, sprite, coords);
@@ -598,22 +480,16 @@
                         <li>On répète 5 fois : avancer de 100, tourner de 144°</li>
                     </ul>
                 `,
-                blocks: `
-                    <div class="scratch-stack">
-                        <div class="scratch-block events">quand ⚑ cliqué</div>
-                        <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control-c">répéter <span class="scratch-value">5</span> fois
-                            <div class="scratch-nested">
-                                <div class="scratch-block motion">avancer de <span class="scratch-value">100</span> pas</div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">144</span> degrés</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
+                scratchCode: `quand drapeau vert pressé
+effacer tout
+stylo en position d'écriture
+répéter (5) fois
+  avancer de (100) pas
+  tourner droite de (144) degrés
+end`,
                 tip: "L'angle d'une étoile est différent d'un polygone régulier !",
                 draw: function(ctx, sprite, coords) {
-                    drawSquare(ctx, sprite, coords, 100, 144, 5);
+                    drawPolygon(ctx, sprite, coords, 100, 144, 5);
                 }
             },
             8: {
@@ -627,24 +503,16 @@
                         <li>Deux boucles imbriquées créent ce beau motif !</li>
                     </ul>
                 `,
-                blocks: `
-                    <div class="scratch-stack">
-                        <div class="scratch-block events">quand ⚑ cliqué</div>
-                        <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control-c">répéter <span class="scratch-value">12</span> fois
-                            <div class="scratch-nested">
-                                <div class="scratch-block control-c">répéter <span class="scratch-value">4</span> fois
-                                    <div class="scratch-nested">
-                                        <div class="scratch-block motion">avancer de <span class="scratch-value">50</span> pas</div>
-                                        <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
-                                    </div>
-                                </div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">30</span> degrés</div>
-                            </div>
-                        </div>
-                    </div>
-                `,
+                scratchCode: `quand drapeau vert pressé
+effacer tout
+stylo en position d'écriture
+répéter (12) fois
+  répéter (4) fois
+    avancer de (50) pas
+    tourner droite de (90) degrés
+  end
+  tourner droite de (30) degrés
+end`,
                 tip: "C'est l'exercice le plus complexe avec deux boucles imbriquées !",
                 draw: function(ctx, sprite, coords) {
                     drawRosace(ctx, sprite, coords);
@@ -681,7 +549,7 @@
             ctx.stroke();
         }
 
-        async function drawSquare(ctx, sprite, coords, length, angle, sides) {
+        async function drawPolygon(ctx, sprite, coords, length, angle, sides) {
             clearCanvas(ctx);
             let x = 0, y = 0, dir = 0;
 
@@ -820,7 +688,12 @@
             const ex = exercises[num];
             document.getElementById('exerciseTitle').textContent = ex.title;
             document.getElementById('explanation').innerHTML = ex.explanation;
-            document.getElementById('scratchBlocks').innerHTML = ex.blocks;
+
+            // Afficher les blocs Scratch avec scratchblocks
+            const blocksContainer = document.getElementById('scratchBlocks');
+            blocksContainer.innerHTML = `<pre class="blocks">${ex.scratchCode}</pre>`;
+            scratchblocks.renderMatching('pre.blocks', { languages: ['fr'] });
+
             document.getElementById('tipBox').innerHTML = `<h4>💡 Astuce</h4><p>${ex.tip}</p>`;
             clearCanvas(ctx);
             sprite.style.left = '185px';
