@@ -335,13 +335,13 @@
                         <li>On répète 4 fois : avancer de 100 pas, tourner de 90°</li>
                     </ul>
                 `,
-                scratchCode: `when green flag clicked
-pen down
-clear
-repeat (4)
-  move (100) steps
-  turn cw (90) degrees
-end`,
+                scratchCode: `quand le drapeau vert est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (4) fois
+  avancer de (100) pas
+  tourner droite de (90) degrés
+fin`,
                 tip: "N'oublie pas de mettre le bloc \"stylo en position d'écriture\" avant la boucle, sinon le lutin ne dessinera rien !",
                 draw: function(ctx, sprite, coords) {
                     drawPolygon(ctx, sprite, coords, 100, 90, 4);
@@ -357,13 +357,13 @@ end`,
                         <li>On répète 3 fois : avancer de 120 pas, tourner de 120°</li>
                     </ul>
                 `,
-                scratchCode: `when green flag clicked
-pen down
-clear
-repeat (3)
-  move (120) steps
-  turn cw (120) degrees
-end`,
+                scratchCode: `quand le drapeau vert est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (3) fois
+  avancer de (120) pas
+  tourner droite de (120) degrés
+fin`,
                 tip: "Pour un triangle équilatéral, on tourne de 120° et non de 60° ! C'est l'angle extérieur qui compte.",
                 draw: function(ctx, sprite, coords) {
                     drawPolygon(ctx, sprite, coords, 120, 120, 3);
@@ -379,15 +379,15 @@ end`,
                         <li>On répète 2 fois : longueur, tourner 90°, largeur, tourner 90°</li>
                     </ul>
                 `,
-                scratchCode: `when green flag clicked
-pen down
-clear
-repeat (2)
-  move (150) steps
-  turn cw (90) degrees
-  move (80) steps
-  turn cw (90) degrees
-end`,
+                scratchCode: `quand le drapeau vert est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (2) fois
+  avancer de (150) pas
+  tourner droite de (90) degrés
+  avancer de (80) pas
+  tourner droite de (90) degrés
+fin`,
                 tip: "On met 4 blocs dans la boucle \"répéter 2 fois\" pour tracer les 2 paires de côtés.",
                 draw: function(ctx, sprite, coords) {
                     drawRectangle(ctx, sprite, coords);
@@ -403,13 +403,13 @@ end`,
                         <li>On répète 6 fois : avancer de 80 pas, tourner de 60°</li>
                     </ul>
                 `,
-                scratchCode: `when green flag clicked
-pen down
-clear
-repeat (6)
-  move (80) steps
-  turn cw (60) degrees
-end`,
+                scratchCode: `quand le drapeau vert est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (6) fois
+  avancer de (80) pas
+  tourner droite de (60) degrés
+fin`,
                 tip: "Formule générale : Angle = 360° ÷ nombre de côtés",
                 draw: function(ctx, sprite, coords) {
                     drawPolygon(ctx, sprite, coords, 80, 60, 6);
@@ -427,18 +427,18 @@ end`,
                         <li>Exemple montré : pentagone (5 côtés, 80 pas, 72°)</li>
                     </ul>
                 `,
-                scratchCode: `when green flag clicked
-clear
-ask [Combien de côtés ?] and wait
-set [côtés v] to (answer)
-ask [Quelle longueur ?] and wait
-set [longueur v] to (answer)
-set [angle v] to ((360) / (côtés))
-pen down
-repeat (côtés)
-  move (longueur) steps
-  turn cw (angle) degrees
-end`,
+                scratchCode: `quand le drapeau vert est cliqué
+effacer tout
+demander [Combien de côtés ?] et attendre
+mettre [côtés v] à (réponse)
+demander [Quelle longueur ?] et attendre
+mettre [longueur v] à (réponse)
+mettre [angle v] à ((360) / (côtés))
+stylo en position d'écriture
+répéter (côtés) fois
+  avancer de (longueur) pas
+  tourner droite de (angle) degrés
+fin`,
                 tip: "Avec des variables, un seul programme peut dessiner n'importe quel polygone !",
                 draw: function(ctx, sprite, coords) {
                     drawPolygon(ctx, sprite, coords, 80, 72, 5);
@@ -455,19 +455,19 @@ end`,
                         <li>On revient au centre entre chaque carré</li>
                     </ul>
                 `,
-                scratchCode: `when green flag clicked
-clear
-set [taille v] to (50)
-repeat (4)
-  pen down
-  repeat (4)
-    move (taille) steps
-    turn cw (90) degrees
-  end
-  change [taille v] by (30)
-  pen up
-  go to x: (0) y: (0)
-end`,
+                scratchCode: `quand le drapeau vert est cliqué
+effacer tout
+mettre [taille v] à (50)
+répéter (4) fois
+  stylo en position d'écriture
+  répéter (4) fois
+    avancer de (taille) pas
+    tourner droite de (90) degrés
+  fin
+  ajouter (30) à [taille v]
+  relever le stylo
+  aller à x: (0) y: (0)
+fin`,
                 tip: "Boucles imbriquées : une boucle DANS une autre boucle !",
                 draw: function(ctx, sprite, coords) {
                     drawNestedSquares(ctx, sprite, coords);
@@ -483,13 +483,13 @@ end`,
                         <li>On répète 5 fois : avancer de 100, tourner de 144°</li>
                     </ul>
                 `,
-                scratchCode: `when green flag clicked
-pen down
-clear
-repeat (5)
-  move (100) steps
-  turn cw (144) degrees
-end`,
+                scratchCode: `quand le drapeau vert est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (5) fois
+  avancer de (100) pas
+  tourner droite de (144) degrés
+fin`,
                 tip: "L'angle d'une étoile est différent d'un polygone régulier !",
                 draw: function(ctx, sprite, coords) {
                     drawPolygon(ctx, sprite, coords, 100, 144, 5);
@@ -506,16 +506,16 @@ end`,
                         <li>Deux boucles imbriquées créent ce beau motif !</li>
                     </ul>
                 `,
-                scratchCode: `when green flag clicked
-pen down
-clear
-repeat (12)
-  repeat (4)
-    move (50) steps
-    turn cw (90) degrees
-  end
-  turn cw (30) degrees
-end`,
+                scratchCode: `quand le drapeau vert est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (12) fois
+  répéter (4) fois
+    avancer de (50) pas
+    tourner droite de (90) degrés
+  fin
+  tourner droite de (30) degrés
+fin`,
                 tip: "C'est l'exercice le plus complexe avec deux boucles imbriquées !",
                 draw: function(ctx, sprite, coords) {
                     drawRosace(ctx, sprite, coords);
@@ -695,7 +695,7 @@ end`,
             // Afficher les blocs Scratch avec scratchblocks
             const blocksContainer = document.getElementById('scratchBlocks');
             blocksContainer.innerHTML = `<pre class="blocks">${ex.scratchCode}</pre>`;
-            scratchblocks.renderMatching('pre.blocks');
+            scratchblocks.renderMatching('pre.blocks', { languages: ['fr'] });
 
             document.getElementById('tipBox').innerHTML = `<h4>💡 Astuce</h4><p>${ex.tip}</p>`;
             clearCanvas(ctx);
