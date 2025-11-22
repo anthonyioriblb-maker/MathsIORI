@@ -1,0 +1,38 @@
+DIAGNOSTIC ERREUR 404 - SCRATCH 4ème
+=====================================
+
+Structure des fichiers :
+------------------------
+/scratch/classe-scratch-4e.html  (page qui contient les boutons)
+/scratch/4e/4-activite1.html     (fichier cible)
+
+Configuration dans classe-scratch-4e.html :
+-------------------------------------------
+activite: {
+    actif: true,
+    fichier: "4e/4-activite1.html"
+}
+
+Lien généré par classe-page.js (ligne 41) :
+-------------------------------------------
+<a href="4e/4-activite1.html" class="action-button exercices">🎨 Activité</a>
+
+Chemin relatif attendu :
+------------------------
+Depuis : http://votresite.com/scratch/classe-scratch-4e.html
+Vers   : http://votresite.com/scratch/4e/4-activite1.html
+
+SOLUTIONS À TESTER :
+====================
+
+1. Videz le cache de votre navigateur (Ctrl+Shift+R ou Cmd+Shift+R)
+
+2. Vérifiez l'URL exacte de l'erreur 404 dans la barre d'adresse
+
+3. Ouvrez la console du navigateur (F12) et regardez les erreurs
+
+4. Testez le fichier test-lien-4e.html dans le même dossier
+
+5. Vérifiez que votre serveur web sert bien les sous-dossiers
+
+Si l'erreur persiste, notez l'URL exacte qui apparaît lors de l'erreur 404.

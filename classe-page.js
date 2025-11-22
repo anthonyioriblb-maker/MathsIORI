@@ -5,10 +5,14 @@
 // via une variable globale : window.configChapitres
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('[classe-page.js] Script chargé');
+
     if (typeof configChapitres === 'undefined') {
         console.error('Configuration des chapitres non trouvée. Définissez window.configChapitres avant d\'inclure ce script.');
         return;
     }
+
+    console.log('[classe-page.js] Configuration trouvée:', configChapitres);
 
     const container = document.getElementById('chaptersContainer');
 
@@ -38,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chapitre.activite) {
             // Mode Scratch : bouton Activité
             if (chapitre.activite.actif) {
+                console.log('[classe-page.js] Génération lien activité:', chapitre.activite.fichier);
                 exercicesBtn = `<a href="${chapitre.activite.fichier}" class="action-button exercices">🎨 Activité</a>`;
             } else {
                 exercicesBtn = `<span class="action-button exercices disabled">🎨 Activité</span>`;
