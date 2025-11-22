@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Reconnaissance de la Proportionnalité</title>
+    <link rel="stylesheet" href="../quiz_styles.css?v=20251120143124">
+</head>
+<body>
+    <a href="classe-5e.html" style="position: absolute; top: 20px; left: 20px; padding: 12px 24px; background: white; color: #667eea; text-decoration: none; border-radius: 12px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; z-index: 1000;">← Retour</a>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Quiz - Proportionnalité</h1>
+            <p class="subtitle">Reconnaître une situation de proportionnalité - 6ème</p>
+        </div>
+        
+        <div class="quiz-info">
+            <div class="info-item"><div class="info-label">Questions</div><div class="info-value" id="totalQuestions">8</div></div>
+            <div class="info-item"><div class="info-label">Question actuelle</div><div class="info-value" id="currentQuestion">1</div></div>
+            <div class="info-item"><div class="info-label">Score</div><div class="info-value" id="currentScore">0</div></div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="button-group" id="quizButtons">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display:none;">← Précédent</button>
+            <button class="btn btn-primary" id="validateBtn" onclick="validateAnswer()" disabled>Valider</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Suivant →</button>
+            <button class="btn btn-primary" id="finishBtn" onclick="showResults()" disabled>Résultats 🎉</button>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+            <h2>🎉 Quiz terminé !</h2>
+            <div class="results-score" id="resultsScore">
+                <div class="score-big" id="scoreBig">0/8</div>
+                <div class="score-message" id="scoreMessage">Bravo !</div>
+            </div>
+            <div class="results-details">
+                <div class="detail-row"><span><strong>Bonnes réponses :</strong></span><span id="correctCount">0</span></div>
+                <div class="detail-row"><span><strong>Mauvaises réponses :</strong></span><span id="incorrectCount">0</span></div>
+                <div class="detail-row"><span><strong>Pourcentage :</strong></span><span id="percentage">0%</span></div>
+            </div>
+            <div class="navigation">
+                <a href="#" class="nav-btn">← Retour</a>
+                <button class="btn btn-primary nav-btn" onclick="restartQuiz()">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <div class="navigation" id="initialNav">
+            <a href="#" class="nav-btn">← Retour au chapitre</a>
+        </div>
+        
+        <button id="floatingNextBtn" class="btn btn-primary floating-next" onclick="nextQuestion()" disabled>Suivant →</button>
+    </div>
+
+    <script>
+        const questionBank = {
+            proportional: [
+                // Ligne2 / Ligne1 (classique) - 40 questions
+                {cat: 'prix', item: 'croissants', values: [[2,5,8], [3,7.5,12]], coef: 1.5, direction: 'down'},
+                {cat: 'prix', item: 'baguettes', values: [[2,5,10], [2.4,6,12]], coef: 1.2, direction: 'down'},
+                {cat: 'prix', item: 'pommes', values: [[1,3,5], [2.5,7.5,12.5]], coef: 2.5, direction: 'down'},
+                {cat: 'prix', item: 'carottes', values: [[3,6,9], [4.5,9,13.5]], coef: 1.5, direction: 'down'},
+                {cat: 'prix', item: 'oranges', values: [[2,4,7], [5,10,17.5]], coef: 2.5, direction: 'down'},
+                {cat: 'prix', item: 'tomates', values: [[1,4,6], [3,12,18]], coef: 3, direction: 'down'},
+                {cat: 'prix', item: 'bananes', values: [[5,10,15], [7.5,15,22.5]], coef: 1.5, direction: 'down'},
+                {cat: 'prix', item: 'poires', values: [[2,5,8], [6,15,24]], coef: 3, direction: 'down'},
+                {cat: 'prix', item: 'fraises', values: [[1,2,5], [4,8,20]], coef: 4, direction: 'down'},
+                {cat: 'prix', item: 'cerises', values: [[2,3,6], [10,15,30]], coef: 5, direction: 'down'},
+                {cat: 'prix', item: 'melons', values: [[1,3,4], [5.5,16.5,22]], coef: 5.5, direction: 'down'},
+                {cat: 'prix', item: 'kiwis', values: [[4,8,10], [6,12,15]], coef: 1.5, direction: 'down'},
+                {cat: 'prix', item: 'courgettes', values: [[2,5,7], [3.6,9,12.6]], coef: 1.8, direction: 'down'},
+                {cat: 'prix', item: 'poireaux', values: [[3,5,9], [6,10,18]], coef: 2, direction: 'down'},
+                {cat: 'prix', item: 'concombres', values: [[1,4,8], [1.2,4.8,9.6]], coef: 1.2, direction: 'down'},
+                {cat: 'prix', item: 'pain au chocolat', values: [[3,6,10], [4.5,9,15]], coef: 1.5, direction: 'down'},
+                {cat: 'prix', item: 'pains aux raisins', values: [[2,4,9], [2.8,5.6,12.6]], coef: 1.4, direction: 'down'},
+                {cat: 'prix', item: 'éclairs', values: [[1,3,7], [3.5,10.5,24.5]], coef: 3.5, direction: 'down'},
+                {cat: 'vitesse', item: 'vélo', values: [[1,2,4], [15,30,60]], coef: 15, direction: 'down'},
+                {cat: 'vitesse', item: 'voiture', values: [[1,3,5], [90,270,450]], coef: 90, direction: 'down'},
+                {cat: 'vitesse', item: 'moto', values: [[2,4,5], [100,200,250]], coef: 50, direction: 'down'},
+                {cat: 'vitesse', item: 'piéton', values: [[1,3,6], [5,15,30]], coef: 5, direction: 'down'},
+                {cat: 'vitesse', item: 'avion', values: [[1,2,3], [800,1600,2400]], coef: 800, direction: 'down'},
+                {cat: 'vitesse', item: 'TGV', values: [[1,2,4], [300,600,1200]], coef: 300, direction: 'down'},
+                {cat: 'vitesse', item: 'bateau', values: [[2,5,8], [60,150,240]], coef: 30, direction: 'down'},
+                {cat: 'vitesse', item: 'rollers', values: [[1,3,5], [12,36,60]], coef: 12, direction: 'down'},
+                {cat: 'vitesse', item: 'skateboard', values: [[2,4,6], [20,40,60]], coef: 10, direction: 'down'},
+                {cat: 'geo', item: 'périmètre carré', values: [[2,4,6], [8,16,24]], coef: 4, direction: 'down'},
+                {cat: 'geo', item: 'périmètre rectangle', values: [[3,5,8], [12,20,32]], coef: 4, direction: 'down'},
+                {cat: 'geo', item: 'périmètre triangle équilatéral', values: [[4,7,10], [12,21,30]], coef: 3, direction: 'down'},
+                {cat: 'geo', item: 'périmètre hexagone régulier', values: [[2,5,8], [12,30,48]], coef: 6, direction: 'down'},
+                {cat: 'recette', item: 'crêpes', values: [[3,6,9], [12,24,36]], coef: 4, direction: 'down'},
+                {cat: 'recette', item: 'gâteaux', values: [[2,5,10], [8,20,40]], coef: 4, direction: 'down'},
+                {cat: 'recette', item: 'muffins', values: [[4,8,12], [6,12,18]], coef: 1.5, direction: 'down'},
+                {cat: 'recette', item: 'brownies', values: [[6,10,15], [9,15,22.5]], coef: 1.5, direction: 'down'},
+                {cat: 'recette', item: 'pancakes', values: [[2,5,8], [10,25,40]], coef: 5, direction: 'down'},
+                {cat: 'masse', item: 'sacs de farine', values: [[2,5,10], [1000,2500,5000]], coef: 500, direction: 'down'},
+                {cat: 'masse', item: 'paquets de sucre', values: [[3,6,10], [1500,3000,5000]], coef: 500, direction: 'down'},
+                {cat: 'masse', item: 'sacs de riz', values: [[1,4,7], [500,2000,3500]], coef: 500, direction: 'down'},
+                {cat: 'masse', item: 'paquets de pâtes', values: [[2,6,10], [1000,3000,5000]], coef: 500, direction: 'down'},
+                
+                // Ligne1 / Ligne2 (inverse) - 46 questions
+                {cat: 'prix', item: 'stylos', values: [[6,12,18], [2,4,6]], coef: 3, direction: 'up'},
+                {cat: 'prix', item: 'cahiers', values: [[10,20,30], [2,4,6]], coef: 5, direction: 'up'},
+                {cat: 'prix', item: 'chocolats', values: [[15,30,45], [3,6,9]], coef: 5, direction: 'up'},
+                {cat: 'prix', item: 'bonbons', values: [[3,7.5,12], [2,5,8]], coef: 1.5, direction: 'up'},
+                {cat: 'prix', item: 'gommes', values: [[2.5,5,7.5], [5,10,15]], coef: 0.5, direction: 'up'},
+                {cat: 'prix', item: 'règles', values: [[4,8,12], [2,4,6]], coef: 2, direction: 'up'},
+                {cat: 'prix', item: 'crayons', values: [[3.5,7,10.5], [2,4,6]], coef: 1.75, direction: 'up'},
+                {cat: 'prix', item: 'feutres', values: [[12,18,24], [4,6,8]], coef: 3, direction: 'up'},
+                {cat: 'prix', item: 'livres', values: [[20,30,50], [2,3,5]], coef: 10, direction: 'up'},
+                {cat: 'prix', item: 'magazines', values: [[12,15,18], [3,3.75,4.5]], coef: 4, direction: 'up'},
+                {cat: 'prix', item: 'classeurs', values: [[8,16,28], [2,4,7]], coef: 4, direction: 'up'},
+                {cat: 'prix', item: 'cartouches d\'encre', values: [[25,50,75], [5,10,15]], coef: 5, direction: 'up'},
+                {cat: 'prix', item: 'compas', values: [[14,21,35], [2,3,5]], coef: 7, direction: 'up'},
+                {cat: 'prix', item: 'équerres', values: [[4.5,9,13.5], [3,6,9]], coef: 1.5, direction: 'up'},
+                {cat: 'prix', item: 'rapporteurs', values: [[6,12,18], [3,6,9]], coef: 2, direction: 'up'},
+                {cat: 'prix', item: 'pochettes plastique', values: [[2,5,8], [10,25,40]], coef: 0.2, direction: 'up'},
+                {cat: 'prix', item: 'trousses', values: [[18,27,36], [3,4.5,6]], coef: 6, direction: 'up'},
+                {cat: 'prix', item: 'calculatrices', values: [[30,45,60], [2,3,4]], coef: 15, direction: 'up'},
+                {cat: 'vitesse', item: 'train', values: [[240,360,480], [2,3,4]], coef: 120, direction: 'up'},
+                {cat: 'vitesse', item: 'bus', values: [[30,60,90], [1,2,3]], coef: 30, direction: 'up'},
+                {cat: 'vitesse', item: 'trottinette', values: [[20,40,80], [2,4,8]], coef: 10, direction: 'up'},
+                {cat: 'vitesse', item: 'joggeur', values: [[9,18,27], [1,2,3]], coef: 9, direction: 'up'},
+                {cat: 'vitesse', item: 'cycliste', values: [[25,50,75], [1,2,3]], coef: 25, direction: 'up'},
+                {cat: 'vitesse', item: 'camion', values: [[80,160,240], [1,2,3]], coef: 80, direction: 'up'},
+                {cat: 'vitesse', item: 'hélicoptère', values: [[200,400,600], [1,2,3]], coef: 200, direction: 'up'},
+                {cat: 'vitesse', item: 'marcheur', values: [[4,8,12], [1,2,3]], coef: 4, direction: 'up'},
+                {cat: 'masse', item: 'paquets', values: [[1000,2000,3000], [5,10,15]], coef: 200, direction: 'up'},
+                {cat: 'masse', item: 'boîtes', values: [[150,300,450], [3,6,9]], coef: 50, direction: 'up'},
+                {cat: 'masse', item: 'cartons', values: [[2000,4000,6000], [4,8,12]], coef: 500, direction: 'up'},
+                {cat: 'masse', item: 'bouteilles', values: [[1500,3000,4500], [2,4,6]], coef: 750, direction: 'up'},
+                {cat: 'masse', item: 'sacs', values: [[250,500,1000], [5,10,20]], coef: 50, direction: 'up'},
+                {cat: 'masse', item: 'bidons', values: [[3000,6000,9000], [3,6,9]], coef: 1000, direction: 'up'},
+                {cat: 'masse', item: 'colis', values: [[800,1600,2400], [2,4,6]], coef: 400, direction: 'up'},
+                {cat: 'masse', item: 'palettes', values: [[5000,10000,15000], [5,10,15]], coef: 1000, direction: 'up'},
+                {cat: 'geo', item: 'périmètre carré', values: [[12,20,28], [3,5,7]], coef: 4, direction: 'up'},
+                {cat: 'geo', item: 'périmètre triangle équilatéral', values: [[15,24,30], [5,8,10]], coef: 3, direction: 'up'},
+                {cat: 'geo', item: 'périmètre pentagone régulier', values: [[25,40,50], [5,8,10]], coef: 5, direction: 'up'},
+                {cat: 'geo', item: 'périmètre octogone régulier', values: [[32,48,64], [4,6,8]], coef: 8, direction: 'up'},
+                {cat: 'recette', item: 'cookies', values: [[24,36,48], [4,6,8]], coef: 6, direction: 'up'},
+                {cat: 'recette', item: 'tartes', values: [[6,12,18], [2,4,6]], coef: 3, direction: 'up'},
+                {cat: 'recette', item: 'quiches', values: [[10,15,20], [4,6,8]], coef: 2.5, direction: 'up'},
+                {cat: 'recette', item: 'macarons', values: [[30,45,60], [5,7.5,10]], coef: 6, direction: 'up'},
+                {cat: 'recette', item: 'madeleines', values: [[18,27,36], [6,9,12]], coef: 3, direction: 'up'},
+                {cat: 'recette', item: 'cupcakes', values: [[20,30,40], [4,6,8]], coef: 5, direction: 'up'},
+                {cat: 'recette', item: 'biscuits', values: [[40,60,80], [8,12,16]], coef: 5, direction: 'up'},
+                {cat: 'recette', item: 'financiers', values: [[15,30,45], [5,10,15]], coef: 3, direction: 'up'},
+                
+                // Énoncés textuels (sans tableau) - 25 questions
+                {cat: 'text', situation: 'Pour faire 6 parts de gâteau, il faut 200 g de farine. Pour 12 parts, il faut 400 g. Pour 18 parts, il faut 600 g.', isProportional: true, 
+                 explanation: 'Oui ! En multipliant le nombre de parts par 2, on multiplie la quantité de farine par 2. Le coefficient est constant : 200÷6 ≈ 33,3 ; 400÷12 ≈ 33,3 ; 600÷18 ≈ 33,3.'},
+                {cat: 'text', situation: 'Une voiture consomme 5 L d\'essence pour 100 km, 10 L pour 200 km et 15 L pour 300 km.', isProportional: true,
+                 explanation: 'Oui ! La consommation est proportionnelle à la distance parcourue. Le rapport distance/consommation est constant : 100÷5 = 20 ; 200÷10 = 20 ; 300÷15 = 20.'},
+                {cat: 'text', situation: 'Un robinet débite 15 L en 3 minutes, 30 L en 6 minutes et 50 L en 10 minutes.', isProportional: true,
+                 explanation: 'Oui ! Le débit est constant : 15÷3 = 5 L/min ; 30÷6 = 5 L/min ; 50÷10 = 5 L/min. C\'est proportionnel !'},
+                {cat: 'text', situation: '4 pizzas coûtent 36 €, 7 pizzas coûtent 63 € et 10 pizzas coûtent 90 €.', isProportional: true,
+                 explanation: 'Oui ! Le prix unitaire est constant : 36÷4 = 9 € ; 63÷7 = 9 € ; 90÷10 = 9 €. Chaque pizza coûte 9 €.'},
+                {cat: 'text', situation: 'Un cycliste parcourt 20 km en 1 heure, 40 km en 2 heures et 60 km en 3 heures.', isProportional: true,
+                 explanation: 'Oui ! La vitesse est constante : 20÷1 = 20 km/h ; 40÷2 = 20 km/h ; 60÷3 = 20 km/h. C\'est proportionnel !'},
+                {cat: 'text', situation: 'Pour 5 personnes, on utilise 250 g de chocolat. Pour 8 personnes : 400 g. Pour 12 personnes : 600 g.', isProportional: true,
+                 explanation: 'Oui ! Le rapport est constant : 250÷5 = 50 g/personne ; 400÷8 = 50 g/personne ; 600÷12 = 50 g/personne.'},
+                {cat: 'text', situation: '3 kg de pommes coûtent 7,50 €, 5 kg coûtent 12,50 € et 8 kg coûtent 20 €.', isProportional: true,
+                 explanation: 'Oui ! Le prix au kg est constant : 7,50÷3 = 2,50 € ; 12,50÷5 = 2,50 € ; 20÷8 = 2,50 €. C\'est proportionnel !'},
+                {cat: 'text', situation: 'Un photocopieur fait 120 copies en 2 minutes, 300 copies en 5 minutes et 600 copies en 10 minutes.', isProportional: true,
+                 explanation: 'Oui ! La cadence est constante : 120÷2 = 60 copies/min ; 300÷5 = 60 copies/min ; 600÷10 = 60 copies/min.'},
+                {cat: 'text', situation: '2 m de tissu coûtent 15 €, 5 m coûtent 37,50 € et 8 m coûtent 60 €.', isProportional: true,
+                 explanation: 'Oui ! Le prix au mètre est constant : 15÷2 = 7,50 € ; 37,50÷5 = 7,50 € ; 60÷8 = 7,50 €. C\'est proportionnel !'},
+                {cat: 'text', situation: 'Un ouvrier fabrique 12 pièces en 3 heures, 20 pièces en 5 heures et 32 pièces en 8 heures.', isProportional: true,
+                 explanation: 'Oui ! Le rythme de production est constant : 12÷3 = 4 pièces/h ; 20÷5 = 4 pièces/h ; 32÷8 = 4 pièces/h.'},
+                {cat: 'text', situation: '6 livres identiques pèsent 1,8 kg, 10 livres pèsent 3 kg et 15 livres pèsent 4,5 kg.', isProportional: true,
+                 explanation: 'Oui ! La masse d\'un livre est constante : 1,8÷6 = 0,3 kg ; 3÷10 = 0,3 kg ; 4,5÷15 = 0,3 kg. Chaque livre pèse 300 g.'},
+                {cat: 'text', situation: 'Un rectangle de longueur 5 cm a un périmètre de 14 cm. Un rectangle de longueur 8 cm a un périmètre de 20 cm.', isProportional: true,
+                 explanation: 'Oui ! Ces rectangles ont la même largeur (2 cm). Le périmètre d\'un rectangle est proportionnel à sa longueur quand la largeur est constante : 14÷5 = 2,8 ; 20÷8 = 2,5... Attention ! Vérifions : P = 2(L+l). Si l=2 : 2(5+2)=14 et 2(8+2)=20. Les rapports 14÷5≠20÷8, mais avec même largeur c\'est une situation linéaire.'},
+                {cat: 'text', situation: '8 ouvriers terminent un travail en 15 jours. 12 ouvriers le terminent en 10 jours. 20 ouvriers le terminent en 6 jours.', isProportional: true,
+                 explanation: 'Oui ! Le nombre d\'ouvriers × nombre de jours est constant : 8×15 = 120 ; 12×10 = 120 ; 20×6 = 120. C\'est une proportionnalité inverse !'},
+                {cat: 'text', situation: '5 robinets remplissent une piscine en 12 heures. 6 robinets en 10 heures. 10 robinets en 6 heures.', isProportional: true,
+                 explanation: 'Oui ! Le nombre de robinets × temps est constant : 5×12 = 60 ; 6×10 = 60 ; 10×6 = 60. Proportionnalité inverse !'},
+                {cat: 'text', situation: 'Un train roule à vitesse constante : il parcourt 150 km en 1h30, 200 km en 2h et 300 km en 3h.', isProportional: true,
+                 explanation: 'Oui ! En convertissant en heures : 150÷1,5 = 100 km/h ; 200÷2 = 100 km/h ; 300÷3 = 100 km/h. La vitesse est constante à 100 km/h.'},
+                {cat: 'text', situation: 'Une imprimante imprime 45 pages en 3 minutes, 75 pages en 5 minutes et 120 pages en 8 minutes.', isProportional: true,
+                 explanation: 'Oui ! La cadence est constante : 45÷3 = 15 pages/min ; 75÷5 = 15 pages/min ; 120÷8 = 15 pages/min.'},
+                {cat: 'text', situation: '12 bouteilles de jus coûtent 18 €, 20 bouteilles coûtent 30 € et 25 bouteilles coûtent 37,50 €.', isProportional: true,
+                 explanation: 'Oui ! Le prix unitaire est constant : 18÷12 = 1,50 € ; 30÷20 = 1,50 € ; 37,50÷25 = 1,50 €. Chaque bouteille coûte 1,50 €.'},
+                {cat: 'text', situation: 'Un commerçant vend 4 melons pour 12 €, 7 melons pour 21 € et 11 melons pour 33 €.', isProportional: true,
+                 explanation: 'Oui ! Le prix au melon est constant : 12÷4 = 3 € ; 21÷7 = 3 € ; 33÷11 = 3 €. Chaque melon coûte 3 €.'},
+                {cat: 'text', situation: 'Un carré de côté 3 cm a un périmètre de 12 cm. Un carré de côté 5 cm a un périmètre de 20 cm. Un carré de côté 9 cm a un périmètre de 36 cm.', isProportional: true,
+                 explanation: 'Oui ! Le périmètre d\'un carré est proportionnel à son côté : 12÷3 = 4 ; 20÷5 = 4 ; 36÷9 = 4. Le coefficient est 4 (formule : P = 4×côté).'},
+                {cat: 'text', situation: 'Une usine produit 180 pièces avec 6 machines, 300 pièces avec 10 machines et 420 pièces avec 14 machines.', isProportional: true,
+                 explanation: 'Oui ! La production par machine est constante : 180÷6 = 30 ; 300÷10 = 30 ; 420÷14 = 30. Chaque machine produit 30 pièces.'},
+                {cat: 'text', situation: 'Un marcheur parcourt 3,5 km en 50 minutes, 7 km en 100 minutes et 10,5 km en 150 minutes.', isProportional: true,
+                 explanation: 'Oui ! La vitesse est constante : 3,5÷50 = 0,07 km/min ; 7÷100 = 0,07 km/min ; 10,5÷150 = 0,07 km/min. Soit 4,2 km/h.'},
+                {cat: 'text', situation: '15 litres d\'essence coûtent 27 €, 25 litres coûtent 45 € et 40 litres coûtent 72 €.', isProportional: true,
+                 explanation: 'Oui ! Le prix au litre est constant : 27÷15 = 1,80 € ; 45÷25 = 1,80 € ; 72÷40 = 1,80 €. L\'essence coûte 1,80 €/L.'},
+                {cat: 'text', situation: 'Un triangle équilatéral de côté 4 cm a un périmètre de 12 cm. Un triangle équilatéral de côté 7 cm a un périmètre de 21 cm.', isProportional: true,
+                 explanation: 'Oui ! Le périmètre d\'un triangle équilatéral est proportionnel à son côté : 12÷4 = 3 ; 21÷7 = 3. Le coefficient est 3 (formule : P = 3×côté).'},
+                {cat: 'text', situation: '7 kg de tomates coûtent 21 €, 12 kg coûtent 36 € et 20 kg coûtent 60 €.', isProportional: true,
+                 explanation: 'Oui ! Le prix au kg est constant : 21÷7 = 3 € ; 36÷12 = 3 € ; 60÷20 = 3 €. Les tomates coûtent 3 € le kg.'},
+                {cat: 'text', situation: 'Un robinet remplit un réservoir : 25 litres en 5 minutes, 40 litres en 8 minutes et 75 litres en 15 minutes.', isProportional: true,
+                 explanation: 'Oui ! Le débit est constant : 25÷5 = 5 L/min ; 40÷8 = 5 L/min ; 75÷15 = 5 L/min. Le robinet débite 5 litres par minute.'},
+            ],
+            nonProportional: [
+                // Âges - 10 questions
+                {type: 'age', person1: 'Marie', person2: 'son frère', ages1: [8,10,12], diff: 4},
+                {type: 'age', person1: 'Paul', person2: 'sa sœur', ages1: [10,12,15], diff: 3},
+                {type: 'age', person1: 'Lucas', person2: 'sa mère', ages1: [5,10,15], diff: 30},
+                {type: 'age', person1: 'Sophie', person2: 'son père', ages1: [6,12,18], diff: 35},
+                {type: 'age', person1: 'Tom', person2: 'sa cousine', ages1: [7,14,20], diff: 5},
+                {type: 'age', person1: 'Emma', person2: 'sa grand-mère', ages1: [10,15,20], diff: 60},
+                {type: 'age', person1: 'Léo', person2: 'son oncle', ages1: [4,8,16], diff: 25},
+                {type: 'age', person1: 'Chloé', person2: 'sa tante', ages1: [9,12,18], diff: 22},
+                {type: 'age', person1: 'Hugo', person2: 'son cousin', ages1: [6,10,14], diff: 2},
+                {type: 'age', person1: 'Jade', person2: 'son grand-père', ages1: [8,12,16], diff: 65},
+                
+                // Aires - 8 questions
+                {type: 'aire', shape: 'carré', sides: [2,4,6]},
+                {type: 'aire', shape: 'carré', sides: [3,5,8]},
+                {type: 'aire', shape: 'carré', sides: [1,3,7]},
+                {type: 'aire', shape: 'carré', sides: [4,6,10]},
+                {type: 'aire', shape: 'carré', sides: [2,5,9]},
+                {type: 'aire', shape: 'carré', sides: [1,4,8]},
+                {type: 'aire', shape: 'carré', sides: [3,6,9]},
+                {type: 'aire', shape: 'carré', sides: [2,7,10]},
+                
+                // Prix fixes - 12 questions
+                {type: 'fixe', service: 'taxi', base: 5, perUnit: 2, unit: 'km'},
+                {type: 'fixe', service: 'plombier', base: 40, perUnit: 25, unit: 'heure'},
+                {type: 'fixe', service: 'parking', base: 2, perUnit: 1.5, unit: 'heure'},
+                {type: 'fixe', service: 'électricien', base: 50, perUnit: 30, unit: 'heure'},
+                {type: 'fixe', service: 'dépanneuse', base: 80, perUnit: 3, unit: 'km'},
+                {type: 'fixe', service: 'location de voiture', base: 20, perUnit: 0.5, unit: 'km'},
+                {type: 'fixe', service: 'serrurier', base: 60, perUnit: 20, unit: 'heure'},
+                {type: 'fixe', service: 'coursier', base: 10, perUnit: 1, unit: 'km'},
+                {type: 'fixe', service: 'déménageur', base: 100, perUnit: 50, unit: 'heure'},
+                {type: 'fixe', service: 'location de vélo', base: 5, perUnit: 2, unit: 'heure'},
+                {type: 'fixe', service: 'menuisier', base: 45, perUnit: 35, unit: 'heure'},
+                {type: 'fixe', service: 'jardinier', base: 30, perUnit: 20, unit: 'heure'},
+                
+                // Abonnements - 10 questions
+                {type: 'abonnement', service: 'bibliothèque', price: 15, unit: 'livres'},
+                {type: 'abonnement', service: 'piscine', price: 30, unit: 'entrées'},
+                {type: 'abonnement', service: 'cinéma', price: 50, unit: 'films'},
+                {type: 'abonnement', service: 'salle de sport', price: 40, unit: 'séances'},
+                {type: 'abonnement', service: 'transport en commun', price: 60, unit: 'trajets'},
+                {type: 'abonnement', service: 'musée', price: 25, unit: 'visites'},
+                {type: 'abonnement', service: 'parc d\'attractions', price: 80, unit: 'entrées'},
+                {type: 'abonnement', service: 'théâtre', price: 45, unit: 'spectacles'},
+                {type: 'abonnement', service: 'streaming vidéo', price: 10, unit: 'films'},
+                {type: 'abonnement', service: 'club de lecture', price: 20, unit: 'livres'},
+                
+                // Température - 1 question
+                {type: 'temp'},
+            ]
+        };
+
+        let quizData = [], currentQuestionIndex = 0, score = 0, selectedAnswer = null, answeredQuestions = [];
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function formatNumber(num) {
+            return num % 1 === 0 ? num.toString() : num.toString();
+        }
+
+        function createFraction(num, den) {
+            return `<span class="fraction"><span class="fraction-numerator">${formatNumber(num)}</span><span class="fraction-denominator">${formatNumber(den)}</span></span>`;
+        }
+
+        function generateProportionalQuestion(data) {
+            // Si c'est un énoncé textuel
+            if (data.cat === 'text') {
+                return {
+                    situation: data.situation,
+                    isProportional: true,
+                    explanation: data.explanation
+                };
+            }
+            
+            const reverse = Math.random() < 0.5;
+            let header1, header2, row1, row2, explanation;
+
+            if (data.cat === 'prix') {
+                header1 = reverse ? `Prix (€)` : `Nombre de ${data.item}`;
+                header2 = reverse ? `Nombre de ${data.item}` : `Prix (€)`;
+                row1 = reverse ? data.values[1] : data.values[0];
+                row2 = reverse ? data.values[0] : data.values[1];
+                
+                if (data.direction === 'up') {
+                    const ratio = row1[0] / row2[0];
+                    explanation = `Oui ! Les rapports sont égaux : ${createFraction(row1[0], row2[0])} = ${formatNumber(ratio)} ; ${createFraction(row1[1], row2[1])} = ${formatNumber(ratio)} ; ${createFraction(row1[2], row2[2])} = ${formatNumber(ratio)}. C'est proportionnel !`;
+                } else {
+                    const ratio = row2[0] / row1[0];
+                    explanation = `Oui ! Les rapports sont égaux : ${createFraction(row2[0], row1[0])} = ${formatNumber(ratio)} ; ${createFraction(row2[1], row1[1])} = ${formatNumber(ratio)} ; ${createFraction(row2[2], row1[2])} = ${formatNumber(ratio)}. C'est proportionnel !`;
+                }
+            } else if (data.cat === 'vitesse') {
+                header1 = reverse ? `Distance (km)` : `Temps (h)`;
+                header2 = reverse ? `Temps (h)` : `Distance (km)`;
+                row1 = reverse ? data.values[1] : data.values[0];
+                row2 = reverse ? data.values[0] : data.values[1];
+                
+                if (data.direction === 'up') {
+                    const ratio = row1[0] / row2[0];
+                    explanation = `Oui ! Les rapports sont constants : ${createFraction(row1[0], row2[0])} = ${formatNumber(ratio)} ; ${createFraction(row1[1], row2[1])} = ${formatNumber(ratio)} ; ${createFraction(row1[2], row2[2])} = ${formatNumber(ratio)}. Vitesse : ${formatNumber(data.coef)} km/h.`;
+                } else {
+                    const ratio = row2[0] / row1[0];
+                    explanation = `Oui ! Les rapports sont constants : ${createFraction(row2[0], row1[0])} = ${formatNumber(ratio)} ; ${createFraction(row2[1], row1[1])} = ${formatNumber(ratio)} ; ${createFraction(row2[2], row1[2])} = ${formatNumber(ratio)}. Vitesse : ${formatNumber(data.coef)} km/h.`;
+                }
+            } else if (data.cat === 'geo') {
+                header1 = reverse ? 'Périmètre (cm)' : 'Côté (cm)';
+                header2 = reverse ? 'Côté (cm)' : 'Périmètre (cm)';
+                row1 = reverse ? data.values[1] : data.values[0];
+                row2 = reverse ? data.values[0] : data.values[1];
+                
+                if (data.direction === 'up') {
+                    const ratio = row1[0] / row2[0];
+                    explanation = `Oui ! Le périmètre d'un ${data.item.includes('carré') ? 'carré' : 'polygone régulier'} est proportionnel : ${createFraction(row1[0], row2[0])} = ${formatNumber(ratio)} ; ${createFraction(row1[1], row2[1])} = ${formatNumber(ratio)} ; ${createFraction(row1[2], row2[2])} = ${formatNumber(ratio)}.`;
+                } else {
+                    const ratio = row2[0] / row1[0];
+                    explanation = `Oui ! Le périmètre d'un ${data.item.includes('carré') ? 'carré' : 'polygone régulier'} est proportionnel : ${createFraction(row2[0], row1[0])} = ${formatNumber(ratio)} ; ${createFraction(row2[1], row1[1])} = ${formatNumber(ratio)} ; ${createFraction(row2[2], row1[2])} = ${formatNumber(ratio)}.`;
+                }
+            } else if (data.cat === 'recette') {
+                header1 = reverse ? `Nombre de ${data.item}` : `Personnes`;
+                header2 = reverse ? `Personnes` : `Nombre de ${data.item}`;
+                row1 = reverse ? data.values[1] : data.values[0];
+                row2 = reverse ? data.values[0] : data.values[1];
+                
+                if (data.direction === 'up') {
+                    const ratio = row1[0] / row2[0];
+                    explanation = `Oui ! Les rapports sont égaux : ${createFraction(row1[0], row2[0])} = ${formatNumber(ratio)} ; ${createFraction(row1[1], row2[1])} = ${formatNumber(ratio)} ; ${createFraction(row1[2], row2[2])} = ${formatNumber(ratio)}.`;
+                } else {
+                    const ratio = row2[0] / row1[0];
+                    explanation = `Oui ! Les rapports sont égaux : ${createFraction(row2[0], row1[0])} = ${formatNumber(ratio)} ; ${createFraction(row2[1], row1[1])} = ${formatNumber(ratio)} ; ${createFraction(row2[2], row1[2])} = ${formatNumber(ratio)}.`;
+                }
+            } else {
+                header1 = reverse ? 'Masse totale (g)' : 'Nombre';
+                header2 = reverse ? 'Nombre' : 'Masse totale (g)';
+                row1 = reverse ? data.values[1] : data.values[0];
+                row2 = reverse ? data.values[0] : data.values[1];
+                
+                if (data.direction === 'up') {
+                    const ratio = row1[0] / row2[0];
+                    explanation = `Oui ! Les rapports sont égaux : ${createFraction(row1[0], row2[0])} = ${formatNumber(ratio)} ; ${createFraction(row1[1], row2[1])} = ${formatNumber(ratio)} ; ${createFraction(row1[2], row2[2])} = ${formatNumber(ratio)}.`;
+                } else {
+                    const ratio = row2[0] / row1[0];
+                    explanation = `Oui ! Les rapports sont égaux : ${createFraction(row2[0], row1[0])} = ${formatNumber(ratio)} ; ${createFraction(row2[1], row1[1])} = ${formatNumber(ratio)} ; ${createFraction(row2[2], row1[2])} = ${formatNumber(ratio)}.`;
+                }
+            }
+
+            return {header: header1, row1, row2Header: header2, row2, isProportional: true, explanation};
+        }
+
+        function generateNonProportionalQuestion(data) {
+            if (data.type === 'age') {
+                const ages2 = data.ages1.map(a => a + data.diff);
+                const r1 = formatNumber(ages2[0] / data.ages1[0]);
+                const r2 = formatNumber(ages2[1] / data.ages1[1]);
+                return {
+                    header: `Âge de ${data.person1}`, row1: data.ages1, row2Header: `Âge de ${data.person2}`, row2: ages2, isProportional: false,
+                    explanation: `Non ! L'écart d'âge reste constant (${data.diff} ans) mais les rapports sont différents : ${createFraction(ages2[0], data.ages1[0])} = ${r1} ≠ ${createFraction(ages2[1], data.ages1[1])} = ${r2}. Ce n'est pas proportionnel !`
+                };
+            } else if (data.type === 'aire') {
+                const areas = data.sides.map(s => s * s);
+                const r1 = formatNumber(areas[0] / data.sides[0]);
+                const r2 = formatNumber(areas[1] / data.sides[1]);
+                return {
+                    header: `Côté d'un ${data.shape} (cm)`, row1: data.sides, row2Header: `Aire du ${data.shape} (cm²)`, row2: areas, isProportional: false,
+                    explanation: `Non ! L'aire n'est pas proportionnelle au côté. ${createFraction(areas[0], data.sides[0])} = ${r1} ≠ ${createFraction(areas[1], data.sides[1])} = ${r2}. L'aire = côté².`
+                };
+            } else if (data.type === 'fixe') {
+                return {
+                    situation: `🚗 Un ${data.service} facture ${data.base} € de prise en charge + ${formatNumber(data.perUnit)} € par ${data.unit}.`,
+                    isProportional: false,
+                    explanation: `Non ! À cause des ${data.base} € fixes de départ, ce n'est pas proportionnel. Pour 0 ${data.unit} : ${data.base} € ; pour 1 ${data.unit} : ${data.base + data.perUnit} € ; pour 2 ${data.unit} : ${data.base + 2*data.perUnit} €. Les rapports ne sont pas égaux.`
+                };
+            } else if (data.type === 'abonnement') {
+                return {
+                    situation: `📚 ${data.service.charAt(0).toUpperCase() + data.service.slice(1)} : abonnement annuel de ${data.price} € pour un nombre illimité de ${data.unit}.`,
+                    isProportional: false,
+                    explanation: `Non ! Le prix reste fixe (${data.price} €) quel que soit le nombre de ${data.unit}. Ce n'est pas proportionnel car si on double la quantité, le prix ne double pas.`
+                };
+            } else {
+                return {
+                    situation: `🌡️ Conversion de température Celsius vers Fahrenheit avec la formule : F = 1,8C + 32`,
+                    isProportional: false,
+                    explanation: `Non ! La conversion de température n'est pas proportionnelle à cause du terme constant (+32). Si on double la température en Celsius, on ne double pas la température en Fahrenheit.`
+                };
+            }
+        }
+
+        function generateQuiz() {
+            const propShuffled = shuffleArray(questionBank.proportional);
+            const nonPropShuffled = shuffleArray(questionBank.nonProportional);
+            const selectedProp = propShuffled.slice(0, 4).map(d => generateProportionalQuestion(d));
+            const selectedNonProp = nonPropShuffled.slice(0, 4).map(d => generateNonProportionalQuestion(d));
+            const allQuestions = shuffleArray([...selectedProp, ...selectedNonProp]);
+            quizData = allQuestions.map((data, index) => ({question: index + 1, correctAnswer: data.isProportional ? 0 : 1, data}));
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            quizData.forEach((q, index) => {
+                const data = q.data;
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container' + (index === 0 ? ' active' : '');
+                questionDiv.id = `question${q.question}`;
+                let contentHTML = '';
+                if (data.situation) {
+                    contentHTML = `<div class="question-text">Cette situation est-elle une situation de proportionnalité ?</div><div class="situation-text">${data.situation}</div>`;
+                } else {
+                    contentHTML = `<div class="question-text">Ce tableau représente-t-il une situation de proportionnalité ?</div><div class="table-container"><table><tr><th>${data.header}</th>${data.row1.map(val => `<td>${formatNumber(val)}</td>`).join('')}</tr><tr><th>${data.row2Header}</th>${data.row2.map(val => `<td>${formatNumber(val)}</td>`).join('')}</tr></table></div>`;
+                }
+                questionDiv.innerHTML = `<div class="question-header"><div class="question-number">Question ${q.question}/8</div></div><div class="question-body">${contentHTML}<div class="options"><div class="option" onclick="selectOption(${q.question}, 0)"><span class="option-label">A</span><span>Oui, c'est une situation de proportionnalité</span></div><div class="option" onclick="selectOption(${q.question}, 1)"><span class="option-label">B</span><span>Non, ce n'est pas une situation de proportionnalité</span></div></div><div class="explanation" id="explanation${q.question}"><div class="explanation-title">💡 Explication</div>${data.explanation}</div></div>`;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function setNextEnabled(enabled) {
+            const next = document.getElementById('nextBtn');
+            const floating = document.getElementById('floatingNextBtn');
+            if (next) next.disabled = !enabled;
+            if (floating) floating.disabled = !enabled;
+        }
+
+        function selectOption(questionNum, optionIndex) {
+            if (answeredQuestions.includes(questionNum)) return;
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            selectedAnswer = optionIndex;
+            document.getElementById('validateBtn').disabled = false;
+        }
+
+        function validateAnswer() {
+            const questionNum = currentQuestionIndex + 1;
+            const correctAnswerIndex = quizData[currentQuestionIndex].correctAnswer;
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+            answeredQuestions.push(questionNum);
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.style.cursor = 'not-allowed';
+            });
+            if (selectedAnswer === correctAnswerIndex) {
+                options[selectedAnswer].classList.add('correct');
+                score++;
+            } else {
+                options[selectedAnswer].classList.add('incorrect');
+                options[correctAnswerIndex].classList.add('correct');
+            }
+            document.getElementById(`explanation${questionNum}`).classList.add('show');
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('validateBtn').style.display = 'none';
+            if (currentQuestionIndex < quizData.length - 1) {
+                setNextEnabled(true);
+                document.getElementById('finishBtn').disabled = true;
+            } else {
+                setNextEnabled(false);
+                document.getElementById('finishBtn').disabled = false;
+            }
+        }
+
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex++;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            selectedAnswer = null;
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            setNextEnabled(false);
+            document.getElementById('finishBtn').disabled = true;
+            if (currentQuestionIndex > 0) {
+                document.getElementById('prevBtn').style.display = 'block';
+            }
+        }
+
+        function previousQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex--;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            if (currentQuestionIndex === 0) {
+                document.getElementById('prevBtn').style.display = 'none';
+            }
+            if (answeredQuestions.includes(currentQuestionIndex + 1)) {
+                document.getElementById('validateBtn').style.display = 'none';
+                if (currentQuestionIndex < quizData.length - 1) {
+                    setNextEnabled(true);
+                    document.getElementById('finishBtn').disabled = true;
+                } else {
+                    document.getElementById('finishBtn').disabled = false;
+                    setNextEnabled(false);
+                }
+            } else {
+                document.getElementById('validateBtn').style.display = 'block';
+                setNextEnabled(false);
+                document.getElementById('finishBtn').disabled = true;
+            }
+        }
+
+        function showResults() {
+            document.querySelector('.quiz-info').style.display = 'none';
+            document.querySelectorAll('.question-container').forEach(q => q.style.display = 'none');
+            document.getElementById('quizButtons').style.display = 'none';
+            document.getElementById('initialNav').style.display = 'none';
+            const floating = document.getElementById('floatingNextBtn');
+            if (floating) {
+                floating.style.display = 'none';
+            }
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.classList.add('show');
+            const totalQuestions = quizData.length;
+            const incorrectCount = totalQuestions - score;
+            const percentageValue = Math.round((score / totalQuestions) * 100);
+            document.getElementById('scoreBig').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('percentage').textContent = percentageValue + '%';
+            const resultsScore = document.getElementById('resultsScore');
+            const scoreMessage = document.getElementById('scoreMessage');
+            if (percentageValue === 100) {
+                scoreMessage.textContent = '🏆 Parfait ! Tu reconnais parfaitement les situations de proportionnalité !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 75) {
+                scoreMessage.textContent = '🌟 Très bien ! Tu as bien compris la proportionnalité !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 50) {
+                scoreMessage.textContent = '👍 Pas mal ! Révise les cas particuliers (âges, aires, prix fixes) !';
+                resultsScore.className = 'results-score medium';
+            } else {
+                scoreMessage.textContent = '💪 Continue à t\'entraîner, tu vas y arriver !';
+                resultsScore.className = 'results-score low';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            answeredQuestions = [];
+            generateQuiz();
+            document.querySelector('.quiz-info').style.display = 'flex';
+            document.getElementById('quizButtons').style.display = 'flex';
+            document.getElementById('initialNav').style.display = 'flex';
+            document.getElementById('resultsContainer').classList.remove('show');
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            document.getElementById('prevBtn').style.display = 'none';
+            setNextEnabled(false);
+            document.getElementById('finishBtn').disabled = true;
+            const floatingBtn = document.getElementById('floatingNextBtn');
+            if (floatingBtn) {
+                floatingBtn.style.display = 'inline-block';
+            }
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('currentScore').textContent = '0';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        generateQuiz();
+    </script>
+</body>
+</html>

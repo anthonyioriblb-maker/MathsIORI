@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercices Scratch - Figures géométriques (4ème)</title>
+    <style>
+        @media print {
+            body {
+                margin: 0.4cm;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        h1 {
+            color: #FF6B35;
+            border-bottom: 3px solid #FF6B35;
+            padding-bottom: 10px;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #4C97FF;
+            font-size: 1.8em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4C97FF;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #333;
+            font-size: 1.3em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .exercise {
+            background: #f9f9f9;
+            border: 2px solid #4C97FF;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .exercise-number {
+            background: #4C97FF;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .difficulty {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .difficulty.facile {
+            background: #40BF4A;
+            color: white;
+        }
+
+        .difficulty.moyen {
+            background: #FFD500;
+            color: #333;
+        }
+
+        .difficulty.difficile {
+            background: #FF6B35;
+            color: white;
+        }
+
+        .concept {
+            background: #E8F5E9;
+            border-left: 4px solid #40BF4A;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 1em;
+        }
+
+        .concept strong {
+            color: #2E7D32;
+        }
+
+        .note {
+            background: #FFF3E0;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 1em;
+        }
+
+        .math-formula {
+            background: white;
+            border: 2px dashed #999;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+        }
+
+        .scratch-block {
+            padding: 5px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.9em;
+            font-weight: 500;
+            color: white;
+            line-height: 1.3;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+            border: 0.5px solid rgba(0, 0, 0, 0.15);
+            margin: 1px;
+        }
+
+        .scratch-value {
+            background: white;
+            color: #575E75;
+            padding: 1px 4px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 0 1px;
+            font-weight: 600;
+            min-width: 15px;
+            text-align: center;
+            box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .scratch-block.motion { background: #4C97FF; border-color: #3373CC; }
+        .scratch-block.control { background: #FFAB19; border-color: #CF8B17; }
+        .scratch-block.pen { background: #0FBD8C; border-color: #0B8E69; }
+        .scratch-block.events { background: #FFD500; border-color: #CC9900; }
+        .scratch-block.data { background: #FF8C1A; border-color: #DB6E00; }
+
+        ul {
+            margin: 4px 0;
+            padding-left: 18px;
+        }
+
+        li {
+            margin: 2px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>📐 Exercices Scratch - Figures géométriques</h1>
+    <p style="font-size: 10px; color: #666; margin-bottom: 5px;">Niveau 4ème - Dessiner avec le stylo</p>
+
+    <div class="concept">
+        <strong>🎯 Prérequis :</strong> Activer l'extension <strong>Stylo</strong> dans Scratch.
+    </div>
+
+    <!-- ========== NIVEAU 1 : FIGURES SIMPLES ========== -->
+    <h2>📘 Niveau 1 : Figures simples</h2>
+
+    <!-- Exercice 1 : Carré -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 1</div>
+            <div class="difficulty facile">⭐ Facile</div>
+        </div>
+        <h3>Dessiner un carré de côté 100</h3>
+        <p><strong>Objectif :</strong> Tracer un carré avec des côtés de 100 pas.</p>
+
+        <p><strong>Questions :</strong></p>
+        <ul>
+            <li>Combien de côtés a un carré ? ___________</li>
+            <li>Quel est l'angle à chaque sommet ? ___________</li>
+            <li>Quel bloc utiliser pour répéter 4 fois ? ___________</li>
+        </ul>
+    </div>
+
+    <!-- Exercice 2 : Triangle équilatéral -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 2</div>
+            <div class="difficulty facile">⭐ Facile</div>
+        </div>
+        <h3>Dessiner un triangle équilatéral de côté 120</h3>
+        <p><strong>Objectif :</strong> Tracer un triangle avec 3 côtés égaux de 120 pas.</p>
+
+        <p><strong>Questions :</strong></p>
+        <ul>
+            <li>Combien de sommets a un triangle équilatéral ? ___________</li>
+            <li>Combien de côtés a un triangle équilatéral ? ___________</li>
+            <li>Calcule l'angle de rotation du lutin : 360° ÷ _____ = _____</li>
+        </ul>
+    </div>
+
+    <!-- Exercice 3 : Rectangle -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 3</div>
+            <div class="difficulty facile">⭐ Facile</div>
+        </div>
+        <h3>Dessiner un rectangle (longueur 150, largeur 80)</h3>
+        <p><strong>Objectif :</strong> Tracer un rectangle avec longueur 150 et largeur 80.</p>
+
+        <p><strong>Questions :</strong></p>
+        <ul>
+            <li>Combien de côtés différents faut-il dessiner ? ___________</li>
+            <li>Quel est l'angle à chaque sommet ? ___________</li>
+            <li>Quelle boucle utiliser pour éviter de répéter le code ? ___________</li>
+        </ul>
+    </div>
+
+    <!-- Exercice 4 : Hexagone -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 4</div>
+            <div class="difficulty moyen">⭐⭐ Moyen</div>
+        </div>
+        <h3>Dessiner un hexagone régulier de côté 80</h3>
+        <p><strong>Objectif :</strong> Tracer un hexagone (6 côtés) régulier.</p>
+
+        <p><strong>Questions :</strong></p>
+        <ul>
+            <li>Combien de sommets a un hexagone ? ___________</li>
+            <li>Calcule l'angle de rotation du lutin : 360° ÷ _____ = _____</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ========== NIVEAU 2 : FIGURES AVEC VARIABLES ========== -->
+    <h2>📗 Niveau 2 : Polygones réguliers avec variables</h2>
+
+    <!-- Exercice 5 : Polygone paramétré -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 5</div>
+            <div class="difficulty moyen">⭐⭐ Moyen</div>
+        </div>
+        <h3>Polygone régulier paramétré</h3>
+        <p><strong>Objectif :</strong> Créer un programme qui dessine n'importe quel polygone régulier.</p>
+
+        <p><strong>Consignes :</strong></p>
+        <ul>
+            <li>Crée deux variables : <span class="scratch-block data">côtés</span> et <span class="scratch-block data">longueur</span></li>
+            <li>Demande à l'utilisateur le nombre de côtés et la longueur</li>
+            <li>Calcule l'angle de rotation en fonction du nombre de côtés</li>
+            <li>Dessine le polygone avec une boucle</li>
+        </ul>
+    </div>
+
+    <!-- Exercice 6 : Série de carrés -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 6</div>
+            <div class="difficulty moyen">⭐⭐ Moyen</div>
+        </div>
+        <h3>Série de carrés emboîtés</h3>
+        <p><strong>Objectif :</strong> Dessiner 4 carrés de tailles différentes, les uns dans les autres.</p>
+
+        <p><strong>Questions :</strong></p>
+        <ul>
+            <li>Quelle variable faut-il créer pour la taille ? ___________</li>
+            <li>De combien augmenter la taille à chaque fois ? ___________</li>
+            <li>Comment se repositionner au centre entre chaque carré ? ___________</li>
+        </ul>
+    </div>
+
+    <!-- ========== NIVEAU 3 : FIGURES COMPLEXES ========== -->
+    <h2>📕 Niveau 3 : Figures complexes</h2>
+
+    <!-- Exercice 7 : Étoile à 5 branches -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 7</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Étoile à 5 branches</h3>
+        <p><strong>Objectif :</strong> Dessiner une étoile à 5 branches.</p>
+
+        <p><strong>Rappel :</strong> Pour une étoile, l'angle de rotation n'est pas le même que pour un pentagone !</p>
+
+        <div class="math-formula">
+            Angle pour une étoile à N branches = ?
+        </div>
+    </div>
+
+    <!-- Exercice 8 : Rosace -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 8</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Rosace de 12 carrés</h3>
+        <p><strong>Objectif :</strong> Dessiner 12 carrés disposés en cercle (rosace).</p>
+
+        <p><strong>Questions :</strong></p>
+        <ul>
+            <li>Combien de boucles imbriquées faut-il ? ___________</li>
+            <li>Quelle est la boucle extérieure ? ___________</li>
+            <li>Quelle est la boucle intérieure ? ___________</li>
+            <li>De combien tourner entre chaque carré ? ___________</li>
+        </ul>
+    </div>
+
+    <!-- Exercice 9 : Spirale carrée -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 9</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Spirale carrée</h3>
+        <p><strong>Objectif :</strong> Créer une spirale en augmentant progressivement la longueur.</p>
+
+        <p><strong>Consignes :</strong></p>
+        <ul>
+            <li>Utilise une variable pour la distance</li>
+            <li>Augmente cette distance à chaque itération</li>
+            <li>Tourne de 90° à chaque fois</li>
+        </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ========== NIVEAU 4 : DÉFIS ========== -->
+    <h2>🏆 Niveau 4 : Défis</h2>
+
+    <!-- Exercice 10 : Maison -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 10</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Dessiner une maison</h3>
+        <p><strong>Objectif :</strong> Combiner plusieurs figures pour dessiner une maison.</p>
+
+        <p><strong>Éléments à dessiner :</strong></p>
+        <ul>
+            <li>Un carré pour la base (côté 100)</li>
+            <li>Un triangle pour le toit</li>
+            <li>Un rectangle pour la porte</li>
+            <li>Des carrés pour les fenêtres</li>
+        </ul>
+    </div>
+
+    <!-- Exercice 11 : Flocon de neige -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 11</div>
+            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
+        </div>
+        <h3>Flocon de neige</h3>
+        <p><strong>Objectif :</strong> Créer un motif en forme de flocon avec 6 branches.</p>
+
+        <p><strong>Questions :</strong></p>
+        <ul>
+            <li>Combien de branches ? ___________</li>
+            <li>De combien tourner entre chaque branche ? ___________</li>
+            <li>Comment revenir au centre après chaque branche ? ___________</li>
+        </ul>
+    </div>
+
+    <!-- Exercice 12 : Création libre -->
+    <div class="exercise">
+        <div class="exercise-header">
+            <div class="exercise-number">Exercice 12</div>
+            <div class="difficulty moyen">🎨 Créatif</div>
+        </div>
+        <h3>Création libre : Ton motif personnel</h3>
+        <p><strong>Objectif :</strong> Invente ton propre motif géométrique !</p>
+
+        <p><strong>Contraintes :</strong></p>
+        <ul>
+            <li>Utilise au moins 2 boucles imbriquées</li>
+            <li>Utilise au moins 1 variable</li>
+            <li>Combine plusieurs polygones ou crée des motifs répétés</li>
+        </ul>
+    </div>
+
+    <!-- ========== AIDE-MÉMOIRE ========== -->
+    <div class="page-break"></div>
+    <h2>📋 Aide-mémoire : Angles des polygones réguliers</h2>
+
+    <div style="background: white; border: 2px solid #4C97FF; padding: 15px; border-radius: 8px;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #4C97FF; color: white;">
+                    <th style="padding: 8px; border: 1px solid #ddd;">Figure</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Nb côtés</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Nb sommets</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Angle de rotation du lutin</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Calcul</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Triangle équilatéral</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">3</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">3</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><strong>120°</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">360° ÷ 3</td>
+                </tr>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 8px; border: 1px solid #ddd;">Carré</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">4</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">4</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><strong>90°</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">360° ÷ 4</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Pentagone</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">5</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">5</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><strong>72°</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">360° ÷ 5</td>
+                </tr>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 8px; border: 1px solid #ddd;">Hexagone</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">6</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">6</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><strong>60°</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">360° ÷ 6</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Octogone</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">8</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">8</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><strong>45°</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">360° ÷ 8</td>
+                </tr>
+                <tr style="background: #f9f9f9;">
+                    <td style="padding: 8px; border: 1px solid #ddd;">Décagone</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">10</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">10</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><strong>36°</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">360° ÷ 10</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Dodécagone</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">12</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">12</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><strong>30°</strong></td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">360° ÷ 12</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="concept" style="margin-top: 20px;">
+        <strong>📐 Formule générale :</strong><br>
+        <div class="math-formula">
+            Angle de rotation du lutin = 360° ÷ nombre de côtés
+        </div>
+        <p style="margin-top: 10px; font-size: 0.95em;">
+            ⚠️ <strong>Attention :</strong> Cet angle correspond à la rotation que doit effectuer le lutin à chaque sommet pour continuer son chemin. Ce n'est pas l'angle intérieur du polygone !
+        </p>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center;">
+        <a href="../classe-scratch-4e.html" style="display: inline-block; background: linear-gradient(135deg, #FF6B35 0%, #FFD500 100%); color: white; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+            ← Retour aux exercices 4ème
+        </a>
+    </div>
+
+</body>
+</html>

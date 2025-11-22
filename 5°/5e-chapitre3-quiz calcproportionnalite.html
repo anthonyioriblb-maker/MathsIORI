@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Quatrième Proportionnelle</title>
+    <link rel="stylesheet" href="../quiz_styles.css?v=20251120143124">
+    <style>
+        /* Styles pour les tableaux avec flèches */
+        .tableau-avec-fleche {
+            display: inline-block;
+            position: relative;
+            margin: 15px 120px 15px 0;
+        }
+
+        .fleche-coefficient {
+            position: absolute;
+            right: -120px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fleche-coefficient svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .fleche-coefficient .coefficient {
+            position: absolute;
+            background-color: white;
+            border: 2px solid #2ecc71;
+            border-radius: 50%;
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        /* Styles pour les fractions */
+        .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .fraction-numerator {
+            display: block;
+            border-bottom: 1px solid currentColor;
+            padding: 0 0.2em;
+        }
+
+        .fraction-denominator {
+            display: block;
+            padding: 0 0.2em;
+        }
+    </style>
+
+</head>
+<body>
+    <a href="classe-5e.html" style="position: absolute; top: 20px; left: 20px; padding: 12px 24px; background: white; color: #667eea; text-decoration: none; border-radius: 12px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; z-index: 1000;">← Retour</a>
+    <div class="container">
+        <!-- En-tête -->
+        <div class="header">
+            <h1>🎯 Quiz : Quatrième Proportionnelle</h1>
+            <p class="subtitle">Trouve la valeur manquante dans chaque situation de proportionnalité</p>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container">
+            <div class="quiz-info">
+                <div class="info-item">
+                    <div class="info-label">Question</div>
+                    <div class="info-value" id="question-number">1/10</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Score</div>
+                    <div class="info-value" id="score">0</div>
+                </div>
+            </div>
+            
+            <div style="width: 100%; height: 8px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin-bottom: 25px;">
+                <div id="progress" style="height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); width: 10%; transition: width 0.3s ease;"></div>
+            </div>
+            
+            <div class="question-container active" id="question-card">
+                <!-- Le contenu de la question sera inséré ici -->
+            </div>
+        </div>
+
+        <!-- Résultats -->
+        <div id="result-container" class="results-container">
+            <h2>🎉 Résultats du Quiz</h2>
+            <div class="results-score" id="results-score-box">
+                <div class="score-big" id="final-score">0/10</div>
+                <div class="score-message" id="result-message">Bravo !</div>
+            </div>
+            <div class="results-details">
+                <div class="detail-row">
+                    <span>Bonnes réponses :</span>
+                    <span id="correct-count" style="color: #48bb78; font-weight: bold;">0</span>
+                </div>
+                <div class="detail-row">
+                    <span>Mauvaises réponses :</span>
+                    <span id="incorrect-count" style="color: #ff5e62; font-weight: bold;">0</span>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="resetQuiz()">🔄 Recommencer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var banqueQuestions = [];
+        var questions = [];
+        var currentQuestion = 0;
+        var score = 0;
+        var isAnswered = false;
+
+        function pgcd(a, b) {
+            a = Math.abs(Math.round(a));
+            b = Math.abs(Math.round(b));
+            while (b !== 0) {
+                var t = b;
+                b = a % b;
+                a = t;
+            }
+            return a;
+        }
+
+        function simplifierFraction(num, den) {
+            var numInt = Math.round(num * 1000);
+            var denInt = Math.round(den * 1000);
+            var diviseur = pgcd(numInt, denInt);
+            return {num: numInt / diviseur, den: denInt / diviseur};
+        }
+
+        function afficherFraction(num, den) {
+            var frac = simplifierFraction(num, den);
+            if (frac.den === 1) {
+                return frac.num.toString();
+            }
+            return '<span class="fraction"><span class="fraction-numerator">' + frac.num + '</span><span class="fraction-denominator">' + frac.den + '</span></span>';
+        }
+
+        function afficherFractionNonSimplifiee(num, den) {
+            return '<span class="fraction"><span class="fraction-numerator">' + num + '</span><span class="fraction-denominator">' + den + '</span></span>';
+        }
+
+        function initialiserBanqueQuestions() {
+            banqueQuestions = [
+                // GROUPE 1 : ACHATS ET PRIX (30 questions)
+                {type: 'tableau', situation: "Au supermarché, 4 kg de pommes coûtent 12 €.", tableau: [["Masse (kg)", "4", "?"], ["Prix (€)", "12", "21"]], question: "Combien de kg de pommes avec 21 € ?", tableauCorrection: [["Masse (kg)", "4", "7"], ["Prix (€)", "12", "21"]], reponse: "7", unite: "kg"},
+                {type: 'texte', situation: "5 cahiers coûtent 15 €. Combien coûteront 9 cahiers ?", question: "Prix pour 9 cahiers ?", tableauCorrection: [["Cahiers", "5", "9"], ["Prix (€)", "15", "27"]], reponse: "27", unite: "€"},
+                {type: 'tableau', situation: "8 stylos coûtent 12 €.", tableau: [["Stylos", "8", "12"], ["Prix (€)", "12", "?"]], question: "Prix de 12 stylos ?", tableauCorrection: [["Stylos", "8", "12"], ["Prix (€)", "12", "18"]], reponse: "18", unite: "€"},
+                {type: 'texte', situation: "3 magazines coûtent 18 €. Avec 30 €, combien de magazines ?", question: "Nombre de magazines ?", tableauCorrection: [["Magazines", "3", "5"], ["Prix (€)", "18", "30"]], reponse: "5", unite: "magazines"},
+                {type: 'texte', situation: "6 croissants coûtent 9 €. Quel est le prix de 10 croissants ?", question: "Prix en € ?", tableauCorrection: [["Croissants", "6", "10"], ["Prix (€)", "9", "15"]], reponse: "15", unite: "€"},
+                {type: 'tableau', situation: "2 kg de tomates coûtent 7 €.", tableau: [["Masse (kg)", "2", "?"], ["Prix (€)", "7", "17,5"]], question: "Combien de kg avec 17,50 € ?", tableauCorrection: [["Masse (kg)", "2", "5"], ["Prix (€)", "7", "17,5"]], reponse: "5", unite: "kg"},
+                {type: 'texte', situation: "4 paquets de biscuits coûtent 10 €. Combien coûteront 6 paquets ?", question: "Prix en € ?", tableauCorrection: [["Paquets", "4", "6"], ["Prix (€)", "10", "15"]], reponse: "15", unite: "€"},
+                {type: 'tableau', situation: "7 livres coûtent 84 €.", tableau: [["Livres", "7", "10"], ["Prix (€)", "84", "?"]], question: "Prix de 10 livres ?", tableauCorrection: [["Livres", "7", "10"], ["Prix (€)", "84", "120"]], reponse: "120", unite: "€"},
+                {type: 'texte', situation: "5 kg de riz coûtent 12,50 €. Quel est le prix de 8 kg ?", question: "Prix en € ?", tableauCorrection: [["Masse (kg)", "5", "8"], ["Prix (€)", "12,5", "20"]], reponse: "20", unite: "€"},
+                {type: 'texte', situation: "9 barres chocolatées coûtent 18 €. Avec 24 €, combien de barres ?", question: "Nombre de barres ?", tableauCorrection: [["Barres", "9", "12"], ["Prix (€)", "18", "24"]], reponse: "12", unite: "barres"},
+                {type: 'tableau', situation: "3 kg de carottes coûtent 4,50 €.", tableau: [["Masse (kg)", "3", "7"], ["Prix (€)", "4,5", "?"]], question: "Prix de 7 kg ?", tableauCorrection: [["Masse (kg)", "3", "7"], ["Prix (€)", "4,5", "10,5"]], reponse: "10,5", unite: "€"},
+                {type: 'texte', situation: "10 gommes coûtent 5 €. Quel est le prix de 16 gommes ?", question: "Prix en € ?", tableauCorrection: [["Gommes", "10", "16"], ["Prix (€)", "5", "8"]], reponse: "8", unite: "€"},
+                {type: 'tableau', situation: "6 bouteilles d'eau coûtent 3 €.", tableau: [["Bouteilles", "6", "?"], ["Prix (€)", "3", "7,5"]], question: "Combien de bouteilles avec 7,50 € ?", tableauCorrection: [["Bouteilles", "6", "15"], ["Prix (€)", "3", "7,5"]], reponse: "15", unite: "bouteilles"},
+                {type: 'texte', situation: "8 pizzas coûtent 96 €. Combien coûteront 5 pizzas ?", question: "Prix en € ?", tableauCorrection: [["Pizzas", "8", "5"], ["Prix (€)", "96", "60"]], reponse: "60", unite: "€"},
+                {type: 'texte', situation: "4 kg de fraises coûtent 16 €. Avec 28 €, combien de kg ?", question: "Masse en kg ?", tableauCorrection: [["Masse (kg)", "4", "7"], ["Prix (€)", "16", "28"]], reponse: "7", unite: "kg"},
+                
+                // GROUPE 2 : CUISINE ET RECETTES (20 questions)
+                {type: 'texte', situation: "Pour 6 personnes, une recette nécessite 300 g de farine. Quelle quantité pour 10 personnes ?", question: "Quantité en g ?", tableauCorrection: [["Personnes", "6", "10"], ["Farine (g)", "300", "500"]], reponse: "500", unite: "g"},
+                {type: 'tableau', situation: "Pour 4 personnes, il faut 8 œufs.", tableau: [["Personnes", "4", "6"], ["Œufs", "8", "?"]], question: "Combien d'œufs pour 6 personnes ?", tableauCorrection: [["Personnes", "4", "6"], ["Œufs", "8", "12"]], reponse: "12", unite: "œufs"},
+                {type: 'texte', situation: "Pour 5 personnes, il faut 250 g de sucre. Pour combien de personnes avec 400 g ?", question: "Nombre de personnes ?", tableauCorrection: [["Personnes", "5", "8"], ["Sucre (g)", "250", "400"]], reponse: "8", unite: "personnes"},
+                {type: 'tableau', situation: "Pour 8 personnes, il faut 400 g de chocolat.", tableau: [["Personnes", "8", "12"], ["Chocolat (g)", "400", "?"]], question: "Quantité pour 12 personnes ?", tableauCorrection: [["Personnes", "8", "12"], ["Chocolat (g)", "400", "600"]], reponse: "600", unite: "g"},
+                {type: 'texte', situation: "Pour 3 personnes, il faut 150 g de beurre. Quelle quantité pour 7 personnes ?", question: "Quantité en g ?", tableauCorrection: [["Personnes", "3", "7"], ["Beurre (g)", "150", "350"]], reponse: "350", unite: "g"},
+                {type: 'tableau', situation: "Pour 10 personnes, il faut 500 g de fromage.", tableau: [["Personnes", "10", "?"], ["Fromage (g)", "500", "800"]], question: "Pour combien de personnes avec 800 g ?", tableauCorrection: [["Personnes", "10", "16"], ["Fromage (g)", "500", "800"]], reponse: "16", unite: "personnes"},
+                {type: 'texte', situation: "Pour 2 personnes, il faut 120 g de pâtes. Quelle quantité pour 5 personnes ?", question: "Quantité en g ?", tableauCorrection: [["Personnes", "2", "5"], ["Pâtes (g)", "120", "300"]], reponse: "300", unite: "g"},
+                {type: 'tableau', situation: "Pour 6 personnes, il faut 180 g de crème.", tableau: [["Personnes", "6", "9"], ["Crème (g)", "180", "?"]], question: "Quantité pour 9 personnes ?", tableauCorrection: [["Personnes", "6", "9"], ["Crème (g)", "180", "270"]], reponse: "270", unite: "g"},
+                {type: 'texte', situation: "Pour 4 personnes, il faut 200 g de riz. Pour combien de personnes avec 350 g ?", question: "Nombre de personnes ?", tableauCorrection: [["Personnes", "4", "7"], ["Riz (g)", "200", "350"]], reponse: "7", unite: "personnes"},
+                {type: 'texte', situation: "Pour 12 personnes, il faut 480 g de farine. Quelle quantité pour 8 personnes ?", question: "Quantité en g ?", tableauCorrection: [["Personnes", "12", "8"], ["Farine (g)", "480", "320"]], reponse: "320", unite: "g"},
+                
+                // GROUPE 3 : VITESSE ET DISTANCE (20 questions)
+                {type: 'tableau', situation: "En 2 heures, un train parcourt 240 km.", tableau: [["Temps (h)", "2", "5"], ["Distance (km)", "240", "?"]], question: "Distance en 5 heures ?", tableauCorrection: [["Temps (h)", "2", "5"], ["Distance (km)", "240", "600"]], reponse: "600", unite: "km"},
+                {type: 'texte', situation: "Un cycliste parcourt 45 km en 3 heures. Quelle distance en 5 heures ?", question: "Distance en km ?", tableauCorrection: [["Temps (h)", "3", "5"], ["Distance (km)", "45", "75"]], reponse: "75", unite: "km"},
+                {type: 'tableau', situation: "Une voiture parcourt 350 km en 5 heures.", tableau: [["Distance (km)", "350", "490"], ["Temps (h)", "5", "?"]], question: "Temps pour 490 km ?", tableauCorrection: [["Distance (km)", "350", "490"], ["Temps (h)", "5", "7"]], reponse: "7", unite: "h"},
+                {type: 'texte', situation: "Un piéton marche 12 km en 4 heures. Quelle distance en 7 heures ?", question: "Distance en km ?", tableauCorrection: [["Temps (h)", "4", "7"], ["Distance (km)", "12", "21"]], reponse: "21", unite: "km"},
+                {type: 'tableau', situation: "Un bus parcourt 180 km en 3 heures.", tableau: [["Temps (h)", "3", "8"], ["Distance (km)", "180", "?"]], question: "Distance en 8 heures ?", tableauCorrection: [["Temps (h)", "3", "8"], ["Distance (km)", "180", "480"]], reponse: "480", unite: "km"},
+                {type: 'texte', situation: "Une moto parcourt 420 km en 6 heures. Combien de temps pour 560 km ?", question: "Temps en heures ?", tableauCorrection: [["Distance (km)", "420", "560"], ["Temps (h)", "6", "8"]], reponse: "8", unite: "h"},
+                {type: 'tableau', situation: "Un avion parcourt 900 km en 2 heures.", tableau: [["Distance (km)", "900", "?"], ["Temps (h)", "2", "5"]], question: "Distance en 5 heures ?", tableauCorrection: [["Distance (km)", "900", "2250"], ["Temps (h)", "2", "5"]], reponse: "2250", unite: "km"},
+                {type: 'texte', situation: "Un coureur parcourt 20 km en 2 heures. Quelle distance en 6 heures ?", question: "Distance en km ?", tableauCorrection: [["Temps (h)", "2", "6"], ["Distance (km)", "20", "60"]], reponse: "60", unite: "km"},
+                {type: 'tableau', situation: "Un bateau parcourt 150 km en 5 heures.", tableau: [["Temps (h)", "5", "?"], ["Distance (km)", "150", "210"]], question: "Temps pour 210 km ?", tableauCorrection: [["Temps (h)", "5", "7"], ["Distance (km)", "150", "210"]], reponse: "7", unite: "h"},
+                {type: 'texte', situation: "Un TGV parcourt 600 km en 4 heures. Quelle distance en 7 heures ?", question: "Distance en km ?", tableauCorrection: [["Temps (h)", "4", "7"], ["Distance (km)", "600", "1050"]], reponse: "1050", unite: "km"},
+                
+                // GROUPE 4 : CONSOMMATION ESSENCE (15 questions)
+                {type: 'texte', situation: "Une voiture consomme 5 litres pour 100 km. Combien pour 300 km ?", question: "Consommation en L ?", tableauCorrection: [["Distance (km)", "100", "300"], ["Essence (L)", "5", "15"]], reponse: "15", unite: "L"},
+                {type: 'texte', situation: "Avec 8 litres, on parcourt 120 km. Quelle distance avec 12 litres ?", question: "Distance en km ?", tableauCorrection: [["Essence (L)", "8", "12"], ["Distance (km)", "120", "180"]], reponse: "180", unite: "km"},
+                {type: 'tableau', situation: "Une moto consomme 4 litres pour 80 km.", tableau: [["Distance (km)", "80", "200"], ["Essence (L)", "4", "?"]], question: "Consommation pour 200 km ?", tableauCorrection: [["Distance (km)", "80", "200"], ["Essence (L)", "4", "10"]], reponse: "10", unite: "L"},
+                {type: 'texte', situation: "Avec 10 litres, un scooter parcourt 250 km. Quelle distance avec 16 litres ?", question: "Distance en km ?", tableauCorrection: [["Essence (L)", "10", "16"], ["Distance (km)", "250", "400"]], reponse: "400", unite: "km"},
+                {type: 'tableau', situation: "Un camion consomme 20 litres pour 100 km.", tableau: [["Distance (km)", "100", "?"], ["Essence (L)", "20", "35"]], question: "Distance avec 35 litres ?", tableauCorrection: [["Distance (km)", "100", "175"], ["Essence (L)", "20", "35"]], reponse: "175", unite: "km"},
+                {type: 'texte', situation: "Une voiture consomme 6 litres pour 150 km. Combien pour 250 km ?", question: "Consommation en L ?", tableauCorrection: [["Distance (km)", "150", "250"], ["Essence (L)", "6", "10"]], reponse: "10", unite: "L"},
+                {type: 'tableau', situation: "Avec 15 litres, on parcourt 225 km.", tableau: [["Essence (L)", "15", "25"], ["Distance (km)", "225", "?"]], question: "Distance avec 25 litres ?", tableauCorrection: [["Essence (L)", "15", "25"], ["Distance (km)", "225", "375"]], reponse: "375", unite: "km"},
+                {type: 'texte', situation: "Un bus consomme 30 litres pour 200 km. Combien pour 350 km ?", question: "Consommation en L ?", tableauCorrection: [["Distance (km)", "200", "350"], ["Essence (L)", "30", "52,5"]], reponse: "52,5", unite: "L"},
+                {type: 'texte', situation: "Avec 18 litres, une voiture parcourt 270 km. Quelle distance avec 28 litres ?", question: "Distance en km ?", tableauCorrection: [["Essence (L)", "18", "28"], ["Distance (km)", "270", "420"]], reponse: "420", unite: "km"},
+                {type: 'tableau', situation: "Une voiture consomme 7 litres pour 140 km.", tableau: [["Distance (km)", "140", "?"], ["Essence (L)", "7", "12"]], question: "Distance avec 12 litres ?", tableauCorrection: [["Distance (km)", "140", "240"], ["Essence (L)", "7", "12"]], reponse: "240", unite: "km"},
+                
+                // GROUPE 5 : TRAVAUX ET MATÉRIAUX (15 questions)
+                {type: 'tableau', situation: "Pour carreler 10 m², on utilise 40 carreaux.", tableau: [["Surface (m²)", "10", "?"], ["Carreaux", "40", "60"]], question: "Surface avec 60 carreaux ?", tableauCorrection: [["Surface (m²)", "10", "15"], ["Carreaux", "40", "60"]], reponse: "15", unite: "m²"},
+                {type: 'texte', situation: "Avec 3 litres de peinture, on peint 12 m². Combien de litres pour 20 m² ?", question: "Quantité en L ?", tableauCorrection: [["Peinture (L)", "3", "5"], ["Surface (m²)", "12", "20"]], reponse: "5", unite: "L"},
+                {type: 'tableau', situation: "Pour construire un mur de 8 m, il faut 200 briques.", tableau: [["Longueur (m)", "8", "12"], ["Briques", "200", "?"]], question: "Briques pour 12 m ?", tableauCorrection: [["Longueur (m)", "8", "12"], ["Briques", "200", "300"]], reponse: "300", unite: "briques"},
+                {type: 'texte', situation: "Pour tapisser 15 m², il faut 6 rouleaux. Combien pour 25 m² ?", question: "Nombre de rouleaux ?", tableauCorrection: [["Surface (m²)", "15", "25"], ["Rouleaux", "6", "10"]], reponse: "10", unite: "rouleaux"},
+                {type: 'tableau', situation: "Avec 4 sacs de ciment, on coule 8 m² de dalle.", tableau: [["Ciment (sacs)", "4", "7"], ["Surface (m²)", "8", "?"]], question: "Surface avec 7 sacs ?", tableauCorrection: [["Ciment (sacs)", "4", "7"], ["Surface (m²)", "8", "14"]], reponse: "14", unite: "m²"},
+                {type: 'texte', situation: "Pour clôturer 20 m, il faut 80 planches. Combien pour 35 m ?", question: "Nombre de planches ?", tableauCorrection: [["Longueur (m)", "20", "35"], ["Planches", "80", "140"]], reponse: "140", unite: "planches"},
+                {type: 'tableau', situation: "Pour 12 m² de parquet, il faut 60 lames.", tableau: [["Surface (m²)", "12", "?"], ["Lames", "60", "85"]], question: "Surface avec 85 lames ?", tableauCorrection: [["Surface (m²)", "12", "17"], ["Lames", "60", "85"]], reponse: "17", unite: "m²"},
+                {type: 'texte', situation: "Avec 5 kg de plâtre, on enduit 10 m². Combien de kg pour 18 m² ?", question: "Quantité en kg ?", tableauCorrection: [["Plâtre (kg)", "5", "9"], ["Surface (m²)", "10", "18"]], reponse: "9", unite: "kg"},
+                {type: 'texte', situation: "Pour carreler 18 m², on utilise 72 carreaux. Combien pour 25 m² ?", question: "Nombre de carreaux ?", tableauCorrection: [["Surface (m²)", "18", "25"], ["Carreaux", "72", "100"]], reponse: "100", unite: "carreaux"},
+                {type: 'tableau', situation: "Avec 8 litres de vernis, on traite 32 m².", tableau: [["Vernis (L)", "8", "13"], ["Surface (m²)", "32", "?"]], question: "Surface avec 13 litres ?", tableauCorrection: [["Vernis (L)", "8", "13"], ["Surface (m²)", "32", "52"]], reponse: "52", unite: "m²"},
+                
+                // GROUPE 6 : PHOTOCOPIES (10 questions)
+                {type: 'texte', situation: "Une photocopieuse fait 120 copies en 3 minutes. Combien en 7 minutes ?", question: "Nombre de copies ?", tableauCorrection: [["Temps (min)", "3", "7"], ["Copies", "120", "280"]], reponse: "280", unite: "copies"},
+                {type: 'texte', situation: "Une imprimante imprime 150 pages en 5 minutes. Combien de temps pour 240 pages ?", question: "Temps en minutes ?", tableauCorrection: [["Temps (min)", "5", "8"], ["Pages", "150", "240"]], reponse: "8", unite: "min"},
+                {type: 'tableau', situation: "En 4 minutes, on scanne 80 documents.", tableau: [["Temps (min)", "4", "9"], ["Documents", "80", "?"]], question: "Documents en 9 minutes ?", tableauCorrection: [["Temps (min)", "4", "9"], ["Documents", "80", "180"]], reponse: "180", unite: "documents"},
+                {type: 'texte', situation: "Une imprimante fait 200 pages en 8 minutes. Combien en 12 minutes ?", question: "Nombre de pages ?", tableauCorrection: [["Temps (min)", "8", "12"], ["Pages", "200", "300"]], reponse: "300", unite: "pages"},
+                {type: 'tableau', situation: "On photocopie 160 pages en 4 minutes.", tableau: [["Pages", "160", "280"], ["Temps (min)", "4", "?"]], question: "Temps pour 280 pages ?", tableauCorrection: [["Pages", "160", "280"], ["Temps (min)", "4", "7"]], reponse: "7", unite: "min"},
+                {type: 'texte', situation: "Un scanner traite 90 documents en 6 minutes. Combien en 10 minutes ?", question: "Nombre de documents ?", tableauCorrection: [["Temps (min)", "6", "10"], ["Documents", "90", "150"]], reponse: "150", unite: "documents"},
+                {type: 'texte', situation: "Une imprimante imprime 180 pages en 6 minutes. Combien de temps pour 270 pages ?", question: "Temps en minutes ?", tableauCorrection: [["Temps (min)", "6", "9"], ["Pages", "180", "270"]], reponse: "9", unite: "min"},
+                {type: 'tableau', situation: "En 5 minutes, on photocopie 100 feuilles.", tableau: [["Temps (min)", "5", "13"], ["Feuilles", "100", "?"]], question: "Feuilles en 13 minutes ?", tableauCorrection: [["Temps (min)", "5", "13"], ["Feuilles", "100", "260"]], reponse: "260", unite: "feuilles"},
+                {type: 'texte', situation: "Une imprimante fait 210 pages en 7 minutes. Combien en 11 minutes ?", question: "Nombre de pages ?", tableauCorrection: [["Temps (min)", "7", "11"], ["Pages", "210", "330"]], reponse: "330", unite: "pages"},
+                {type: 'tableau', situation: "On scanne 140 documents en 7 minutes.", tableau: [["Documents", "140", "220"], ["Temps (min)", "7", "?"]], question: "Temps pour 220 documents ?", tableauCorrection: [["Documents", "140", "220"], ["Temps (min)", "7", "11"]], reponse: "11", unite: "min"},
+                
+                // GROUPE 7 : CONVERSIONS (10 questions)
+                {type: 'tableau', situation: "On peut échanger 4 euros contre 5 dollars.", tableau: [["Euros (€)", "4", "12"], ["Dollars ($)", "5", "?"]], question: "Dollars pour 12 € ?", tableauCorrection: [["Euros (€)", "4", "12"], ["Dollars ($)", "5", "15"]], reponse: "15", unite: "$"},
+                {type: 'texte', situation: "On échange 6 billes rouges contre 8 billes bleues. Combien de bleues pour 15 rouges ?", question: "Nombre de billes bleues ?", tableauCorrection: [["Billes rouges", "6", "15"], ["Billes bleues", "8", "20"]], reponse: "20", unite: "billes"},
+                {type: 'texte', situation: "5 kg de fruits coûtent 15 points. Combien de points pour 9 kg ?", question: "Nombre de points ?", tableauCorrection: [["Fruits (kg)", "5", "9"], ["Points", "15", "27"]], reponse: "27", unite: "points"},
+                {type: 'tableau', situation: "On échange 8 cartes contre 12 jetons.", tableau: [["Cartes", "8", "?"], ["Jetons", "12", "21"]], question: "Cartes pour 21 jetons ?", tableauCorrection: [["Cartes", "8", "14"], ["Jetons", "12", "21"]], reponse: "14", unite: "cartes"},
+                {type: 'texte', situation: "3 euros valent 4,50 francs suisses. Combien de francs pour 7 euros ?", question: "Nombre de francs ?", tableauCorrection: [["Euros (€)", "3", "7"], ["Francs (CHF)", "4,5", "10,5"]], reponse: "10,5", unite: "francs"},
+                {type: 'tableau', situation: "10 timbres valent 15 points.", tableau: [["Timbres", "10", "18"], ["Points", "15", "?"]], question: "Points pour 18 timbres ?", tableauCorrection: [["Timbres", "10", "18"], ["Points", "15", "27"]], reponse: "27", unite: "points"},
+                {type: 'texte', situation: "On échange 12 capsules contre 18 vignettes. Combien de capsules pour 27 vignettes ?", question: "Nombre de capsules ?", tableauCorrection: [["Capsules", "12", "18"], ["Vignettes", "18", "27"]], reponse: "18", unite: "capsules"},
+                {type: 'texte', situation: "7 livres sterling valent 8,40 euros. Combien d'euros pour 12 livres ?", question: "Nombre d'euros ?", tableauCorrection: [["Livres (£)", "7", "12"], ["Euros (€)", "8,4", "14,4"]], reponse: "14,4", unite: "euros"},
+                {type: 'tableau', situation: "On échange 5 pièces d'or contre 20 pièces d'argent.", tableau: [["Or", "5", "?"], ["Argent", "20", "36"]], question: "Pièces d'or pour 36 d'argent ?", tableauCorrection: [["Or", "5", "9"], ["Argent", "20", "36"]], reponse: "9", unite: "pièces"},
+                {type: 'texte', situation: "9 tickets donnent 27 points. Combien de points pour 15 tickets ?", question: "Nombre de points ?", tableauCorrection: [["Tickets", "9", "15"], ["Points", "27", "45"]], reponse: "45", unite: "points"}
+            ];
+        }
+
+        function calculerCoefficient(tableau, reponse) {
+            var val1_1 = parseFloat(tableau[0][1].replace(',', '.'));
+            var val1_2 = parseFloat(tableau[0][2].replace(',', '.'));
+            var val2_1 = parseFloat(tableau[1][1].replace(',', '.'));
+            var val2_2 = parseFloat(tableau[1][2].replace(',', '.'));
+            
+            var nomLigne1 = tableau[0][0].split('(')[0].trim();
+            var nomLigne2 = tableau[1][0].split('(')[0].trim();
+            var reponseNum = parseFloat(reponse.replace(',', '.'));
+            
+            // Déterminer quelle valeur est la réponse cherchée
+            var reponseLigne1 = (Math.abs(val1_2 - reponseNum) < 0.01); // La réponse est en ligne 1 (val1_2)
+            
+            if (reponseLigne1) {
+                // La réponse est val1_2, donc on connaît val1_1, val2_1, val2_2
+                // Méthode 1: coefficient pour passer de ligne 2 à ligne 1
+                var coef1 = val1_1 / val2_1;
+                var frac1HTML = afficherFraction(val1_1, val2_1);
+                var frac1NonSimplifiee = afficherFractionNonSimplifiee(val1_1, val2_1);
+                
+                // Méthode 2: coefficient pour passer de ligne 1 à ligne 2 (inverse)
+                var coef2 = val2_1 / val1_1;
+                var frac2HTML = afficherFraction(val2_1, val1_1);
+                var frac2NonSimplifiee = afficherFractionNonSimplifiee(val2_1, val1_1);
+                
+                // Description coefficient 1 - FRACTION NON SIMPLIFIÉE puis simplifiée ou décimale
+                var desc1 = '• On passe de ' + nomLigne2 + ' à ' + nomLigne1 + ' en multipliant par ' + frac1NonSimplifiee;
+                if (frac1NonSimplifiee !== frac1HTML || coef1 === Math.floor(coef1)) {
+                    desc1 += ' = ';
+                    if (frac1NonSimplifiee !== frac1HTML && frac1HTML.indexOf('fraction') !== -1) {
+                        // Si c'est une fraction simplifiée, l'afficher
+                        desc1 += frac1HTML;
+                    }
+                    if (coef1 === Math.floor(coef1) && coef1 !== 1) {
+                        desc1 += (frac1NonSimplifiee !== frac1HTML && frac1HTML.indexOf('fraction') !== -1 ? ' = ' : '') + coef1.toString();
+                    } else if (coef1 !== Math.floor(coef1) && (frac1NonSimplifiee === frac1HTML || frac1HTML.indexOf('fraction') === -1)) {
+                        // Si pas entier et pas simplifiable, afficher décimal
+                        desc1 += coef1.toFixed(2).replace('.', ',');
+                    }
+                }
+                
+                // Description coefficient 2 - FRACTION NON SIMPLIFIÉE puis simplifiée ou décimale
+                var desc2 = '• On passe de ' + nomLigne1 + ' à ' + nomLigne2 + ' en multipliant par ' + frac2NonSimplifiee;
+                if (frac2NonSimplifiee !== frac2HTML || coef2 === Math.floor(coef2)) {
+                    desc2 += ' = ';
+                    if (frac2NonSimplifiee !== frac2HTML && frac2HTML.indexOf('fraction') !== -1) {
+                        // Si c'est une fraction simplifiée, l'afficher
+                        desc2 += frac2HTML;
+                    }
+                    if (coef2 === Math.floor(coef2) && coef2 !== 1) {
+                        desc2 += (frac2NonSimplifiee !== frac2HTML && frac2HTML.indexOf('fraction') !== -1 ? ' = ' : '') + coef2.toString();
+                    } else if (coef2 !== Math.floor(coef2) && (frac2NonSimplifiee === frac2HTML || frac2HTML.indexOf('fraction') === -1)) {
+                        // Si pas entier et pas simplifiable, afficher décimal
+                        desc2 += coef2.toFixed(2).replace('.', ',');
+                    }
+                }
+                
+                // Calcul 1: val2_2 × coef1 = val1_2 (MULTIPLICATION)
+                var coefDisplay1 = (coef1 === Math.floor(coef1)) ? coef1.toString() : frac1HTML;
+                var calcul1 = '• ' + val2_2.toString().replace('.', ',') + ' × ' + coefDisplay1 + ' = ' + val1_2.toString().replace('.', ',') + ' ' + nomLigne1;
+                
+                // Calcul 2: val2_2 ÷ coef2 = val1_2 (DIVISION car coef2 est l'inverse)
+                var coefDisplay2 = (coef2 === Math.floor(coef2)) ? coef2.toString() : frac2HTML;
+                var calcul2 = '• ' + val2_2.toString().replace('.', ',') + ' ÷ ' + coefDisplay2 + ' = ' + val1_2.toString().replace('.', ',') + ' ' + nomLigne1;
+                
+                return {
+                    desc1: desc1,
+                    desc2: desc2,
+                    calcul1: calcul1,
+                    calcul2: calcul2
+                };
+                
+            } else {
+                // La réponse est val2_2, donc on connaît val1_1, val1_2, val2_1
+                // Méthode 1: coefficient pour passer de ligne 1 à ligne 2
+                var coef1 = val2_1 / val1_1;
+                var frac1HTML = afficherFraction(val2_1, val1_1);
+                var frac1NonSimplifiee = afficherFractionNonSimplifiee(val2_1, val1_1);
+                
+                // Méthode 2: coefficient pour passer de ligne 2 à ligne 1 (inverse)
+                var coef2 = val1_1 / val2_1;
+                var frac2HTML = afficherFraction(val1_1, val2_1);
+                var frac2NonSimplifiee = afficherFractionNonSimplifiee(val1_1, val2_1);
+                
+                // Description coefficient 1 - FRACTION NON SIMPLIFIÉE puis simplifiée ou décimale
+                var desc1 = '• On passe de ' + nomLigne1 + ' à ' + nomLigne2 + ' en multipliant par ' + frac1NonSimplifiee;
+                if (frac1NonSimplifiee !== frac1HTML || coef1 === Math.floor(coef1)) {
+                    desc1 += ' = ';
+                    if (frac1NonSimplifiee !== frac1HTML && frac1HTML.indexOf('fraction') !== -1) {
+                        // Si c'est une fraction simplifiée, l'afficher
+                        desc1 += frac1HTML;
+                    }
+                    if (coef1 === Math.floor(coef1) && coef1 !== 1) {
+                        desc1 += (frac1NonSimplifiee !== frac1HTML && frac1HTML.indexOf('fraction') !== -1 ? ' = ' : '') + coef1.toString();
+                    } else if (coef1 !== Math.floor(coef1) && (frac1NonSimplifiee === frac1HTML || frac1HTML.indexOf('fraction') === -1)) {
+                        // Si pas entier et pas simplifiable, afficher décimal
+                        desc1 += coef1.toFixed(2).replace('.', ',');
+                    }
+                }
+                
+                // Description coefficient 2 - FRACTION NON SIMPLIFIÉE puis simplifiée ou décimale
+                var desc2 = '• On passe de ' + nomLigne2 + ' à ' + nomLigne1 + ' en multipliant par ' + frac2NonSimplifiee;
+                if (frac2NonSimplifiee !== frac2HTML || coef2 === Math.floor(coef2)) {
+                    desc2 += ' = ';
+                    if (frac2NonSimplifiee !== frac2HTML && frac2HTML.indexOf('fraction') !== -1) {
+                        // Si c'est une fraction simplifiée, l'afficher
+                        desc2 += frac2HTML;
+                    }
+                    if (coef2 === Math.floor(coef2) && coef2 !== 1) {
+                        desc2 += (frac2NonSimplifiee !== frac2HTML && frac2HTML.indexOf('fraction') !== -1 ? ' = ' : '') + coef2.toString();
+                    } else if (coef2 !== Math.floor(coef2) && (frac2NonSimplifiee === frac2HTML || frac2HTML.indexOf('fraction') === -1)) {
+                        // Si pas entier et pas simplifiable, afficher décimal
+                        desc2 += coef2.toFixed(2).replace('.', ',');
+                    }
+                }
+                
+                // Calcul 1: val1_2 × coef1 = val2_2 (MULTIPLICATION)
+                var coefDisplay1 = (coef1 === Math.floor(coef1)) ? coef1.toString() : frac1HTML;
+                var calcul1 = '• ' + val1_2.toString().replace('.', ',') + ' × ' + coefDisplay1 + ' = ' + val2_2.toString().replace('.', ',') + ' ' + nomLigne2;
+                
+                // Calcul 2: val1_2 ÷ coef2 = val2_2 (DIVISION car coef2 est l'inverse)
+                var coefDisplay2 = (coef2 === Math.floor(coef2)) ? coef2.toString() : frac2HTML;
+                var calcul2 = '• ' + val1_2.toString().replace('.', ',') + ' ÷ ' + coefDisplay2 + ' = ' + val2_2.toString().replace('.', ',') + ' ' + nomLigne2;
+                
+                return {
+                    desc1: desc1,
+                    desc2: desc2,
+                    calcul1: calcul1,
+                    calcul2: calcul2
+                };
+            }
+        }
+
+        function genererQuestions() {
+            initialiserBanqueQuestions();
+            
+            // Mélanger la banque
+            var banqueMelangee = banqueQuestions.slice();
+            for (var i = banqueMelangee.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = banqueMelangee[i];
+                banqueMelangee[i] = banqueMelangee[j];
+                banqueMelangee[j] = temp;
+            }
+            
+            // Prendre 10 questions
+            questions = banqueMelangee.slice(0, 10);
+        }
+
+        function afficherQuestion() {
+            var q = questions[currentQuestion];
+            document.getElementById('question-number').textContent = (currentQuestion + 1) + '/10';
+            document.getElementById('score').textContent = score;
+            document.getElementById('progress').style.width = ((currentQuestion + 1) / 10) * 100 + '%';
+            
+            var html = '<div class="question-body">';
+            html += '<div class="situation-text">' + q.situation + '</div>';
+            
+            if (q.type === 'tableau') {
+                html += '<div class="table-container"><table>';
+                for (var i = 0; i < q.tableau.length; i++) {
+                    html += '<tr>';
+                    for (var j = 0; j < q.tableau[i].length; j++) {
+                        var cellule = q.tableau[i][j];
+                        if (j === 0) {
+                            html += '<th>' + cellule + '</th>';
+                        } else if (cellule === '?') {
+                            html += '<td><span class="unknown">?</span></td>';
+                        } else {
+                            html += '<td>' + cellule + '</td>';
+                        }
+                    }
+                    html += '</tr>';
+                }
+                html += '</table></div>';
+            }
+            
+            html += '<div class="question-text">' + q.question + '</div>';
+            
+            html += '<div class="input-container" style="display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap;">';
+            html += '<input type="text" id="user-input" placeholder="Ta réponse" style="width: 150px; padding: 16px; font-size: 20px; text-align: center; border: 2px solid #ddd; border-radius: 12px; font-weight: bold;">';
+            html += '<button onclick="handleSubmit()" id="submit-btn" class="btn btn-primary">Valider</button>';
+            html += '</div>';
+            
+            html += '<div id="feedback-zone"></div>';
+            html += '</div>';
+            
+            document.getElementById('question-card').innerHTML = html;
+            
+            document.getElementById('user-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !isAnswered) handleSubmit();
+            });
+            
+            document.getElementById('user-input').focus();
+        }
+
+        function handleSubmit() {
+            if (isAnswered) return;
+            
+            var input = document.getElementById('user-input');
+            var userAnswer = input.value.trim().replace(',', '.');
+            
+            if (userAnswer === '') return;
+            
+            isAnswered = true;
+            input.disabled = true;
+            document.getElementById('submit-btn').disabled = true;
+            
+            var q = questions[currentQuestion];
+            var correctAnswer = q.reponse.replace(',', '.');
+            var isCorrect = parseFloat(userAnswer) === parseFloat(correctAnswer);
+            
+            if (isCorrect) score++;
+            
+            var coefInfo = calculerCoefficient(q.tableauCorrection, q.reponse);
+            
+            var feedbackHtml = '<div class="explanation show">';
+            if (isCorrect) {
+                feedbackHtml += '<div class="explanation-title" style="color: #48bb78;">✓ Correct !</div>';
+            } else {
+                feedbackHtml += '<div class="explanation-title" style="color: #ff5e62;">✗ Incorrect</div>';
+            }
+            feedbackHtml += '<p><strong>Bonne réponse :</strong> ' + q.reponse + ' ' + q.unite + '</p>';
+            
+            var val1_1 = parseFloat(q.tableauCorrection[0][1].replace(',', '.'));
+            var val1_2 = parseFloat(q.tableauCorrection[0][2].replace(',', '.'));
+            var val2_1 = parseFloat(q.tableauCorrection[1][1].replace(',', '.'));
+            var val2_2 = parseFloat(q.tableauCorrection[1][2].replace(',', '.'));
+            var reponseNum = parseFloat(q.reponse.replace(',', '.'));
+            
+            var nomLigne1 = q.tableauCorrection[0][0].split('(')[0].trim();
+            var nomLigne2 = q.tableauCorrection[1][0].split('(')[0].trim();
+            
+            // Déterminer quelle valeur est la réponse
+            var reponseLigne1 = (Math.abs(val1_2 - reponseNum) < 0.01); // La réponse est en ligne 1 (val1_2)
+            
+            var coef1, coef2, frac1HTML, frac2HTML, frac1NonSimplifiee, frac2NonSimplifiee;
+            var valeurConnue1, valeurConnue2, calcul1Str, calcul2Str;
+            
+            if (reponseLigne1) {
+                // La réponse est val1_2, donc on connaît val1_1, val2_1, val2_2
+                coef1 = val1_1 / val2_1;  // Pour passer de ligne 2 à ligne 1
+                coef2 = val2_1 / val1_1;  // Inverse
+                
+                frac1HTML = afficherFraction(val1_1, val2_1);
+                frac2HTML = afficherFraction(val2_1, val1_1);
+                frac1NonSimplifiee = afficherFractionNonSimplifiee(val1_1, val2_1);
+                frac2NonSimplifiee = afficherFractionNonSimplifiee(val2_1, val1_1);
+                
+                valeurConnue1 = val2_2;  // On part de val2_2 (connu)
+                valeurConnue2 = val2_2;  // Même chose
+                
+                // Calcul 1: val2_2 × coef1 = val1_2
+                var coef1DisplayCalc;
+                if (coef1 === Math.floor(coef1)) {
+                    coef1DisplayCalc = coef1.toString();
+                } else if (estDecimalFini(coef1)) {
+                    coef1DisplayCalc = coef1.toString().replace('.', ',');
+                } else {
+                    coef1DisplayCalc = frac1HTML;
+                }
+                calcul1Str = '• ' + val2_2.toString().replace('.', ',') + ' × ' + coef1DisplayCalc + ' = ' + val1_2.toString().replace('.', ',');
+                
+                // Calcul 2: val2_2 ÷ coef2 = val1_2
+                var coef2DisplayCalc;
+                if (coef2 === Math.floor(coef2)) {
+                    coef2DisplayCalc = coef2.toString();
+                } else if (estDecimalFini(coef2)) {
+                    coef2DisplayCalc = coef2.toString().replace('.', ',');
+                } else {
+                    coef2DisplayCalc = frac2HTML;
+                }
+                calcul2Str = '• ' + val2_2.toString().replace('.', ',') + ' ÷ ' + coef2DisplayCalc + ' = ' + val1_2.toString().replace('.', ',');
+                
+            } else {
+                // La réponse est val2_2, donc on connaît val1_1, val1_2, val2_1
+                coef1 = val2_1 / val1_1;  // Pour passer de ligne 1 à ligne 2
+                coef2 = val1_1 / val2_1;  // Inverse
+                
+                frac1HTML = afficherFraction(val2_1, val1_1);
+                frac2HTML = afficherFraction(val1_1, val2_1);
+                frac1NonSimplifiee = afficherFractionNonSimplifiee(val2_1, val1_1);
+                frac2NonSimplifiee = afficherFractionNonSimplifiee(val1_1, val2_1);
+                
+                valeurConnue1 = val1_2;  // On part de val1_2 (connu)
+                valeurConnue2 = val1_2;  // Même chose
+                
+                // Calcul 1: val1_2 × coef1 = val2_2
+                var coef1DisplayCalc;
+                if (coef1 === Math.floor(coef1)) {
+                    coef1DisplayCalc = coef1.toString();
+                } else if (estDecimalFini(coef1)) {
+                    coef1DisplayCalc = coef1.toString().replace('.', ',');
+                } else {
+                    coef1DisplayCalc = frac1HTML;
+                }
+                calcul1Str = '• ' + val1_2.toString().replace('.', ',') + ' × ' + coef1DisplayCalc + ' = ' + val2_2.toString().replace('.', ',');
+                
+                // Calcul 2: val1_2 ÷ coef2 = val2_2
+                var coef2DisplayCalc;
+                if (coef2 === Math.floor(coef2)) {
+                    coef2DisplayCalc = coef2.toString();
+                } else if (estDecimalFini(coef2)) {
+                    coef2DisplayCalc = coef2.toString().replace('.', ',');
+                } else {
+                    coef2DisplayCalc = frac2HTML;
+                }
+                calcul2Str = '• ' + val1_2.toString().replace('.', ',') + ' ÷ ' + coef2DisplayCalc + ' = ' + val2_2.toString().replace('.', ',');
+            }
+            
+            // Fonction pour vérifier si un nombre est décimal fini (max 10 décimales)
+            function estDecimalFini(num) {
+                var str = num.toString();
+                if (str.indexOf('.') === -1) return true;
+                var decimales = str.split('.')[1];
+                return decimales && decimales.length <= 10;
+            }
+            
+            var coef1Display, coef2Display;
+            if (coef1 === Math.floor(coef1)) {
+                coef1Display = '×' + coef1.toString();
+            } else if (estDecimalFini(coef1)) {
+                coef1Display = '×' + coef1.toString().replace('.', ',');
+            } else {
+                coef1Display = '×' + frac1HTML;
+            }
+            
+            if (coef2 === Math.floor(coef2)) {
+                coef2Display = '×' + coef2.toString();
+            } else if (estDecimalFini(coef2)) {
+                coef2Display = '×' + coef2.toString().replace('.', ',');
+            } else {
+                coef2Display = '×' + frac2HTML;
+            }
+            
+            // PREMIÈRE FAÇON
+            feedbackHtml += '<div style="background-color: #f0f8ff; padding: 20px; margin: 20px 0; border-radius: 8px; border: 2px solid #2ecc71;">';
+            feedbackHtml += '<h3 style="color: #2ecc71; margin-top: 0;">Première façon</h3>';
+            
+            // Calcul du coefficient 1
+            feedbackHtml += '<div class="calculation-step"><strong>Calcul du coefficient :</strong><br>';
+            if (reponseLigne1) {
+                feedbackHtml += '• On passe de ' + nomLigne2 + ' à ' + nomLigne1 + ' en multipliant par ' + frac1NonSimplifiee;
+            } else {
+                feedbackHtml += '• On passe de ' + nomLigne1 + ' à ' + nomLigne2 + ' en multipliant par ' + frac1NonSimplifiee;
+            }
+            if (frac1NonSimplifiee !== frac1HTML || coef1 === Math.floor(coef1)) {
+                feedbackHtml += ' = ';
+                if (frac1NonSimplifiee !== frac1HTML && frac1HTML.indexOf('fraction') !== -1) {
+                    feedbackHtml += frac1HTML;
+                    if (coef1 === Math.floor(coef1) && coef1 !== 1) {
+                        feedbackHtml += ' = ' + coef1.toString();
+                    } else if (coef1 !== Math.floor(coef1) && estDecimalFini(coef1)) {
+                        feedbackHtml += ' = ' + coef1.toString().replace('.', ',');
+                    }
+                } else if (coef1 === Math.floor(coef1) && coef1 !== 1) {
+                    feedbackHtml += coef1.toString();
+                } else if (coef1 !== Math.floor(coef1) && estDecimalFini(coef1)) {
+                    feedbackHtml += coef1.toString().replace('.', ',');
+                }
+            }
+            feedbackHtml += '</div>';
+            
+            // Tableau avec flèche verte
+            feedbackHtml += '<div style="display: flex; justify-content: center; margin: 20px 0;">';
+            feedbackHtml += '<div class="tableau-avec-fleche">';
+            feedbackHtml += '<table>';
+            for (var i = 0; i < q.tableauCorrection.length; i++) {
+                feedbackHtml += '<tr>';
+                for (var j = 0; j < q.tableauCorrection[i].length; j++) {
+                    var cellule = q.tableauCorrection[i][j];
+                    var celluleNum = parseFloat(cellule.replace(',', '.'));
+                    
+                    if (j === 0) {
+                        feedbackHtml += '<th>' + cellule + '</th>';
+                    } else if (Math.abs(celluleNum - reponseNum) < 0.01) {
+                        feedbackHtml += '<td style="background-color: #90EE90; font-weight: bold;">' + cellule + '</td>';
+                    } else {
+                        feedbackHtml += '<td>' + cellule + '</td>';
+                    }
+                }
+                feedbackHtml += '</tr>';
+            }
+            feedbackHtml += '</table>';
+            
+            // Flèche verte descendante
+            feedbackHtml += '<div class="fleche-coefficient">';
+            feedbackHtml += '<svg viewBox="0 0 150 120" xmlns="http://www.w3.org/2000/svg">';
+            feedbackHtml += '<defs>';
+            feedbackHtml += '<marker id="arrowhead-down" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">';
+            feedbackHtml += '<polygon points="0 0, 10 5, 0 10" fill="#2ecc71" />';
+            feedbackHtml += '</marker>';
+            feedbackHtml += '</defs>';
+            feedbackHtml += '<path d="M 40 15 Q 80 60, 40 105" stroke="#2ecc71" stroke-width="3" fill="none" marker-end="url(#arrowhead-down)" />';
+            feedbackHtml += '</svg>';
+            feedbackHtml += '<div class="coefficient" style="top: 50%; transform: translateY(-50%); color: #2ecc71; border-color: #2ecc71;">' + coef1Display + '</div>';
+            feedbackHtml += '</div>';
+            feedbackHtml += '</div>';
+            feedbackHtml += '</div>';
+            
+            // Calcul de la valeur 1
+            feedbackHtml += '<div class="calculation-step"><strong>Calcul de la valeur :</strong><br>';
+            feedbackHtml += calcul1Str;
+            feedbackHtml += '</div>';
+            
+            feedbackHtml += '</div>';
+            
+            // DEUXIÈME FAÇON
+            feedbackHtml += '<div style="background-color: #fff5f5; padding: 20px; margin: 20px 0; border-radius: 8px; border: 2px solid #e74c3c;">';
+            feedbackHtml += '<h3 style="color: #e74c3c; margin-top: 0;">Deuxième façon</h3>';
+            
+            // Calcul du coefficient 2
+            feedbackHtml += '<div class="calculation-step"><strong>Calcul du coefficient :</strong><br>';
+            if (reponseLigne1) {
+                feedbackHtml += '• On passe de ' + nomLigne1 + ' à ' + nomLigne2 + ' en multipliant par ' + frac2NonSimplifiee;
+            } else {
+                feedbackHtml += '• On passe de ' + nomLigne2 + ' à ' + nomLigne1 + ' en multipliant par ' + frac2NonSimplifiee;
+            }
+            if (frac2NonSimplifiee !== frac2HTML || coef2 === Math.floor(coef2)) {
+                feedbackHtml += ' = ';
+                if (frac2NonSimplifiee !== frac2HTML && frac2HTML.indexOf('fraction') !== -1) {
+                    feedbackHtml += frac2HTML;
+                    if (coef2 === Math.floor(coef2) && coef2 !== 1) {
+                        feedbackHtml += ' = ' + coef2.toString();
+                    } else if (coef2 !== Math.floor(coef2) && estDecimalFini(coef2)) {
+                        feedbackHtml += ' = ' + coef2.toString().replace('.', ',');
+                    }
+                } else if (coef2 === Math.floor(coef2) && coef2 !== 1) {
+                    feedbackHtml += coef2.toString();
+                } else if (coef2 !== Math.floor(coef2) && estDecimalFini(coef2)) {
+                    feedbackHtml += coef2.toString().replace('.', ',');
+                }
+            }
+            feedbackHtml += '</div>';
+            
+            // Tableau avec flèche rouge
+            feedbackHtml += '<div style="display: flex; justify-content: center; margin: 20px 0;">';
+            feedbackHtml += '<div class="tableau-avec-fleche">';
+            feedbackHtml += '<table>';
+            for (var i = 0; i < q.tableauCorrection.length; i++) {
+                feedbackHtml += '<tr>';
+                for (var j = 0; j < q.tableauCorrection[i].length; j++) {
+                    var cellule = q.tableauCorrection[i][j];
+                    var celluleNum = parseFloat(cellule.replace(',', '.'));
+                    
+                    if (j === 0) {
+                        feedbackHtml += '<th>' + cellule + '</th>';
+                    } else if (Math.abs(celluleNum - reponseNum) < 0.01) {
+                        feedbackHtml += '<td style="background-color: #90EE90; font-weight: bold;">' + cellule + '</td>';
+                    } else {
+                        feedbackHtml += '<td>' + cellule + '</td>';
+                    }
+                }
+                feedbackHtml += '</tr>';
+            }
+            feedbackHtml += '</table>';
+            
+            // Flèche rouge montante
+            feedbackHtml += '<div class="fleche-coefficient">';
+            feedbackHtml += '<svg viewBox="0 0 150 120" xmlns="http://www.w3.org/2000/svg">';
+            feedbackHtml += '<defs>';
+            feedbackHtml += '<marker id="arrowhead-up" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">';
+            feedbackHtml += '<polygon points="0 0, 10 5, 0 10" fill="#e74c3c" />';
+            feedbackHtml += '</marker>';
+            feedbackHtml += '</defs>';
+            feedbackHtml += '<path d="M 40 105 Q 80 60, 40 15" stroke="#e74c3c" stroke-width="3" fill="none" marker-end="url(#arrowhead-up)" />';
+            feedbackHtml += '</svg>';
+            feedbackHtml += '<div class="coefficient" style="top: 50%; transform: translateY(-50%); color: #e74c3c; border-color: #e74c3c;">' + coef2Display + '</div>';
+            feedbackHtml += '</div>';
+            feedbackHtml += '</div>';
+            feedbackHtml += '</div>';
+            
+            // Calcul de la valeur 2
+            feedbackHtml += '<div class="calculation-step"><strong>Calcul de la valeur :</strong><br>';
+            feedbackHtml += calcul2Str;
+            feedbackHtml += '</div>';
+            
+            feedbackHtml += '</div>';
+            
+            feedbackHtml += '<div class="button-group">';
+            feedbackHtml += '<button onclick="nextQuestion()" class="btn btn-primary">Question suivante →</button>';
+            feedbackHtml += '</div>';
+            
+            document.getElementById('feedback-zone').innerHTML = feedbackHtml;
+        }
+
+        function nextQuestion() {
+            isAnswered = false;
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                afficherQuestion();
+            } else {
+                afficherResultats();
+            }
+        }
+
+        function afficherResultats() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('result-container').classList.add('show');
+            
+            document.getElementById('final-score').textContent = score + '/10';
+            document.getElementById('correct-count').textContent = score;
+            document.getElementById('incorrect-count').textContent = (10 - score);
+            
+            var scoreBox = document.getElementById('results-score-box');
+            var message = '';
+            
+            if (score === 10) {
+                message = '🎉 Parfait ! Tu maîtrises la quatrième proportionnelle !';
+                scoreBox.className = 'results-score';
+            } else if (score >= 7) {
+                message = '👍 Très bien ! Continue comme ça !';
+                scoreBox.className = 'results-score';
+            } else if (score >= 5) {
+                message = '😊 Pas mal ! Encore un peu d\'entraînement !';
+                scoreBox.className = 'results-score medium';
+            } else {
+                message = '💪 Continue à t\'entraîner, tu vas y arriver !';
+                scoreBox.className = 'results-score low';
+            }
+            
+            document.getElementById('result-message').textContent = message;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            isAnswered = false;
+            genererQuestions();
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('result-container').classList.remove('show');
+            afficherQuestion();
+        }
+
+        genererQuestions();
+        afficherQuestion();
+    </script>
+</body>
+</html>

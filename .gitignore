@@ -1,0 +1,10 @@
+6°/25Para_Perp.pdf
+
+# Node modules
+node_modules/
+
+# Generated PDFs
+pdfs/
+
+# Package lock
+package-lock.json

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz - Encadrer et Intercaler</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:15px}
+    .container{background:white;border-radius:24px;box-shadow:0 25px 70px rgba(0,0,0,0.35);padding:30px 20px;max-width:900px;width:100%;animation:fadeIn 0.5s ease}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #f0f0f0;flex-wrap:wrap;gap:10px}
+    .question-number{font-size:14px;font-weight:700;color:#666;letter-spacing:0.5px}
+    .score{font-size:16px;font-weight:700;color:#667eea;background:#f0f4ff;padding:6px 14px;border-radius:20px}
+    .progress-bar{width:100%;height:8px;background:#e8e8e8;border-radius:20px;overflow:hidden;margin-bottom:25px;box-shadow:inset 0 2px 4px rgba(0,0,0,0.1)}
+    .progress-fill{height:100%;background:linear-gradient(90deg,#667eea 0%,#764ba2 100%);transition:width 0.4s ease;border-radius:20px}
+    .question{font-size:20px;font-weight:700;color:#2d3748;text-align:center;margin-bottom:25px;line-height:1.5;padding:0 10px}
+    .nombre-principal{font-size:32px;color:#667eea;font-weight:800;margin:15px 0;text-shadow:0 2px 4px rgba(102,126,234,0.2)}
+    .options{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:20px}
+    .option-btn{padding:18px;font-size:16px;font-weight:600;border:3px solid #e2e8f0;border-radius:14px;background:white;cursor:pointer;transition:all 0.3s ease;box-shadow:0 2px 8px rgba(0,0,0,0.05);word-wrap:break-word}
+    .option-btn:hover:not(:disabled){border-color:#667eea;background:#f7fafc;transform:translateY(-2px);box-shadow:0 4px 12px rgba(102,126,234,0.2)}
+    .option-btn:disabled{cursor:not-allowed}
+    .option-btn.correct{border-color:#10b981;background:#d1fae5;color:#065f46;animation:pulse 0.5s ease}
+    .option-btn.incorrect{border-color:#ef4444;background:#fee2e2;color:#991b1b;animation:shake 0.5s ease}
+    .option-btn.disabled{opacity:0.4}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+    .input-container{display:flex;gap:10px;margin-bottom:20px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .input-field{width:140px;padding:14px;font-size:18px;text-align:center;border:3px solid #e2e8f0;border-radius:14px;outline:none;transition:all 0.3s ease;box-shadow:0 2px 8px rgba(0,0,0,0.05);font-weight:600}
+    .input-field:focus{border-color:#667eea;box-shadow:0 0 0 4px rgba(102,126,234,0.1)}
+    .separator{font-size:24px;font-weight:800;color:#667eea}
+    .submit-btn{padding:14px 40px;font-size:16px;font-weight:700;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:14px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(102,126,234,0.3);text-transform:uppercase;letter-spacing:0.5px}
+    .submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
+    .submit-btn:active:not(:disabled){transform:translateY(0)}
+    .submit-btn:disabled{opacity:0.6;cursor:not-allowed}
+    .feedback{padding:18px;border-radius:14px;text-align:center;font-weight:600;font-size:15px;margin-top:15px;animation:slideIn 0.4s ease;word-wrap:break-word}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+    .feedback.correct{background:#d1fae5;color:#065f46;border:3px solid #10b981}
+    .feedback.incorrect{background:#fee2e2;color:#991b1b;border:3px solid #ef4444}
+    .next-btn{padding:12px 35px;font-size:15px;font-weight:700;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:14px;cursor:pointer;transition:all 0.3s ease;margin-top:15px;box-shadow:0 4px 15px rgba(102,126,234,0.3)}
+    .next-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
+    .result-container{text-align:center;padding:0 10px}
+    .result-title{font-size:28px;font-weight:800;color:#2d3748;margin-bottom:25px}
+    .result-score{font-size:56px;font-weight:800;color:#667eea;margin-bottom:12px;text-shadow:0 4px 8px rgba(102,126,234,0.2)}
+    .result-message{font-size:20px;color:#666;margin-bottom:35px;font-weight:600}
+    .restart-btn{padding:14px 40px;font-size:16px;font-weight:700;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:14px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(102,126,234,0.3);margin:8px}
+    .restart-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
+    .home-btn{background:linear-gradient(135deg,#10b981 0%,#059669 100%);box-shadow:0 4px 15px rgba(16,185,129,0.3)}
+    .home-btn:hover{box-shadow:0 6px 20px rgba(16,185,129,0.4)}
+    .hidden{display:none}
+    
+    @media (min-width: 600px) {
+      .container{padding:50px}
+      .question{font-size:26px;margin-bottom:35px}
+      .nombre-principal{font-size:40px;margin:20px 0}
+      .options{grid-template-columns:1fr 1fr;gap:18px}
+      .option-btn{padding:24px;font-size:19px}
+      .input-field{width:170px;padding:18px;font-size:22px}
+      .separator{font-size:28px}
+      .submit-btn{padding:18px 50px;font-size:18px}
+      .feedback{padding:25px;font-size:19px;margin-top:20px}
+      .next-btn{padding:15px 45px;font-size:17px;margin-top:20px}
+      .result-title{font-size:38px;margin-bottom:35px}
+      .result-score{font-size:72px;margin-bottom:15px}
+      .result-message{font-size:26px;margin-bottom:45px}
+      .restart-btn{padding:18px 50px;font-size:19px;margin:10px}
+      .question-number{font-size:16px}
+      .score{font-size:18px;padding:8px 16px}
+      .header{margin-bottom:25px;padding-bottom:15px}
+      .progress-bar{height:10px;margin-bottom:35px}
+    }
+  </style>
+</head>
+<body>
+<a href="classe-6e.html" style="position: absolute; top: 20px; left: 20px; padding: 12px 24px; background: white; color: #667eea; text-decoration: none; border-radius: 12px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; z-index: 1000;">← Retour</a>
+<div class="container">
+  <div id="quiz-container">
+    <div class="header">
+      <span class="question-number" id="question-number">Question 1/10</span>
+      <span class="score" id="score">Score: 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <h3 class="question" id="question"></h3>
+    <div id="options-container"></div>
+  </div>
+  <div id="result-container" class="result-container hidden">
+    <h2 class="result-title">🎊 Résultats 🎊</h2>
+    <div class="result-score" id="final-score"></div>
+    <p class="result-message" id="result-message"></p>
+    <button class="restart-btn" onclick="resetQuiz()">🔄 Nouveau Quiz</button>
+    <button class="restart-btn home-btn" onclick="window.location.href='index.html'">🏠 Retour à l'Index</button>
+  </div>
+</div>
+
+<script>
+let questions = [];
+let currentQuestion = 0;
+let score = 0;
+let isAnswered = false;
+
+function normaliser(n) {
+  return n.toString().trim().replace(/ /g, "").replace(",", ".");
+}
+
+function formaterNombre(n) {
+  const strNum = n.toString();
+  const p = strNum.includes(".") ? strNum.split(".") : strNum.split(",");
+  const e = p[0];
+  const d = p[1] || "";
+  let ef = "";
+  for (let i = e.length - 1, c = 0; i >= 0; i--, c++) {
+    if (c > 0 && c % 3 === 0) ef = " " + ef;
+    ef = e[i] + ef;
+  }
+  return d ? ef + "," + d : ef;
+}
+
+function genererNombreDecimal() {
+  const e = Math.floor(Math.random() * 9000) + 100;
+  const t = Math.floor(Math.random() * 3) + 2;
+  let n = "";
+  for (let i = 0; i < t; i++) n += Math.floor(Math.random() * 10);
+  return e + "." + n;
+}
+
+function encadrer(e, t) {
+  const r = parseFloat(normaliser(e));
+  const n = Math.pow(10, t);
+  const valMultipliee = r * n;
+  const valArrondie = Math.round(valMultipliee);
+  const step = 1;
+  let inf, sup;
+  if (Math.abs(valMultipliee - valArrondie) < 1e-10) {
+    inf = (valArrondie - step) / n;
+    sup = (valArrondie + step) / n;
+  } else {
+    inf = Math.floor(valMultipliee) / n;
+    sup = Math.ceil(valMultipliee) / n;
+  }
+  return {
+    inf: inf.toFixed(t).replace(".", ","),
+    sup: sup.toFixed(t).replace(".", ",")
+  };
+}
+
+function genererQuestions() {
+  questions = [];
+  const precisions = [
+    { nom: "unité", val: 0 },
+    { nom: "dixième", val: 1 },
+    { nom: "centième", val: 2 },
+    { nom: "millième", val: 3 }
+  ];
+  
+  for (let i = 0; i < 10; i++) {
+    const nombre = genererNombreDecimal();
+    const precision = precisions[Math.floor(Math.random() * precisions.length)];
+    const typeQuestion = Math.random() < 0.5 ? "encadrer" : "intercaler";
+    const typeReponse = Math.random() < 0.5 ? "qcm" : "saisie";
+    const encadrement = encadrer(nombre, precision.val);
+    
+    if (typeQuestion === "encadrer") {
+      if (typeReponse === "qcm") {
+        const bonneReponse = `${encadrement.inf} < ${formaterNombre(nombre)} < ${encadrement.sup}`;
+        const options = [bonneReponse];
+        const baseInf = parseFloat(normaliser(encadrement.inf));
+        const step = 1 / Math.pow(10, precision.val);
+        
+        while (options.length < 4) {
+          const offset = (Math.floor(Math.random() * 5) - 2) * step;
+          const newInf = (baseInf + offset).toFixed(precision.val);
+          const newSup = (baseInf + offset + step).toFixed(precision.val);
+          const fausseReponse = `${newInf.replace(".", ",")} < ${formaterNombre(nombre)} < ${newSup.replace(".", ",")}`;
+          if (!options.includes(fausseReponse) && fausseReponse !== bonneReponse && parseFloat(newInf) < parseFloat(newSup)) {
+            options.push(fausseReponse);
+          }
+        }
+        
+        options.sort(() => Math.random() - 0.5);
+        questions.push({
+          type: "qcm",
+          questionType: "encadrer",
+          question: `Encadre ${formaterNombre(nombre)} au ${precision.nom} près`,
+          nombre: formaterNombre(nombre),
+          options: options,
+          reponse: bonneReponse
+        });
+      } else {
+        questions.push({
+          type: "saisie",
+          questionType: "encadrer",
+          question: `Encadre ${formaterNombre(nombre)} au ${precision.nom} près`,
+          nombre: formaterNombre(nombre),
+          reponse: encadrement
+        });
+      }
+    } else {
+      if (typeReponse === "qcm") {
+        const bonneReponse = formaterNombre(nombre);
+        const options = [bonneReponse];
+        const borneInf = parseFloat(normaliser(encadrement.inf));
+        const borneSup = parseFloat(normaliser(encadrement.sup));
+        
+        let tentatives = 0;
+        while (options.length < 4 && tentatives < 50) {
+          tentatives++;
+          const offset = (Math.random() * 0.2 - 0.1);
+          let candidat;
+          if (Math.random() < 0.5) {
+            candidat = (borneInf - Math.abs(offset)).toFixed(precision.val + 2);
+          } else {
+            candidat = (borneSup + Math.abs(offset)).toFixed(precision.val + 2);
+          }
+          const candidatNum = parseFloat(candidat);
+          const candidatFormate = formaterNombre(candidat.replace(".", ","));
+          
+          if (!options.includes(candidatFormate) && (candidatNum < borneInf || candidatNum > borneSup)) {
+            options.push(candidatFormate);
+          }
+        }
+        
+        while (options.length < 4) {
+          const faux = (borneInf - (options.length * 0.01)).toFixed(precision.val + 2);
+          options.push(formaterNombre(faux.replace(".", ",")));
+        }
+        
+        options.sort(() => Math.random() - 0.5);
+        questions.push({
+          type: "qcm",
+          questionType: "intercaler",
+          question: `Quel nombre est compris entre ${encadrement.inf} et ${encadrement.sup} ?`,
+          options: options,
+          reponse: bonneReponse
+        });
+      } else {
+        questions.push({
+          type: "saisie",
+          questionType: "intercaler",
+          question: `Donne un nombre compris entre ${encadrement.inf} et ${encadrement.sup}`,
+          reponse: {
+            inf: parseFloat(normaliser(encadrement.inf)),
+            sup: parseFloat(normaliser(encadrement.sup)),
+            exemple: formaterNombre(nombre)
+          }
+        });
+      }
+    }
+  }
+}
+
+function afficherQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById("question-number").textContent = `Question ${currentQuestion + 1}/10`;
+  document.getElementById("score").textContent = `Score: ${score}`;
+  document.getElementById("progress").style.width = ((currentQuestion + 1) / 10) * 100 + "%";
+  document.getElementById("question").textContent = q.question;
+  
+  const container = document.getElementById("options-container");
+  container.innerHTML = "";
+  
+  if (q.type === "qcm") {
+    const optionsDiv = document.createElement("div");
+    optionsDiv.className = "options";
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt;
+      btn.onclick = () => handleQCMAnswer(opt, btn);
+      optionsDiv.appendChild(btn);
+    });
+    container.appendChild(optionsDiv);
+  } else if (q.questionType === "encadrer") {
+    const inputDiv = document.createElement("div");
+    inputDiv.className = "input-container";
+    
+    const inputInf = document.createElement("input");
+    inputInf.className = "input-field";
+    inputInf.placeholder = "Inférieur";
+    inputInf.id = "input-inf";
+    
+    const sep1 = document.createElement("span");
+    sep1.className = "separator";
+    sep1.textContent = "<";
+    
+    const nombreSpan = document.createElement("span");
+    nombreSpan.className = "nombre-principal";
+    nombreSpan.textContent = q.nombre;
+    
+    const sep2 = document.createElement("span");
+    sep2.className = "separator";
+    sep2.textContent = "<";
+    
+    const inputSup = document.createElement("input");
+    inputSup.className = "input-field";
+    inputSup.placeholder = "Supérieur";
+    inputSup.id = "input-sup";
+    
+    inputDiv.append(inputInf, sep1, nombreSpan, sep2, inputSup);
+    container.appendChild(inputDiv);
+    
+    const submitBtn = document.createElement("button");
+    submitBtn.className = "submit-btn";
+    submitBtn.textContent = "✓ Valider";
+    submitBtn.id = "submit-btn";
+    submitBtn.onclick = handleEncadrerSubmit;
+    container.appendChild(submitBtn);
+    
+    inputInf.addEventListener("keypress", e => {
+      if (e.key === "Enter") inputSup.focus();
+    });
+    inputSup.addEventListener("keypress", e => {
+      if (e.key === "Enter") handleEncadrerSubmit();
+    });
+  } else {
+    const inputDiv = document.createElement("div");
+    inputDiv.className = "input-container";
+    
+    const input = document.createElement("input");
+    input.className = "input-field";
+    input.placeholder = "Ta réponse";
+    input.id = "user-input";
+    inputDiv.appendChild(input);
+    container.appendChild(inputDiv);
+    
+    const submitBtn = document.createElement("button");
+    submitBtn.className = "submit-btn";
+    submitBtn.textContent = "✓ Valider";
+    submitBtn.id = "submit-btn";
+    submitBtn.onclick = handleIntercalerSubmit;
+    container.appendChild(submitBtn);
+    
+    input.addEventListener("keypress", e => {
+      if (e.key === "Enter") handleIntercalerSubmit();
+    });
+  }
+}
+
+function handleQCMAnswer(reponse, btn) {
+  if (isAnswered) return;
+  isAnswered = true;
+  
+  const correct = reponse === questions[currentQuestion].reponse;
+  if (correct) score++;
+  
+  document.querySelectorAll(".option-btn").forEach(b => {
+    b.disabled = true;
+    if (b.textContent === questions[currentQuestion].reponse) {
+      b.classList.add("correct");
+    } else if (b === btn && !correct) {
+      b.classList.add("incorrect");
+    } else if (b !== btn) {
+      b.classList.add("disabled");
+    }
+  });
+  
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "next-btn";
+  nextBtn.textContent = "Question suivante → (Entrée)";
+  nextBtn.onclick = nextQuestion;
+  document.getElementById("options-container").appendChild(nextBtn);
+  
+  document.addEventListener("keypress", function handler(e) {
+    if (e.key === "Enter") {
+      nextQuestion();
+      document.removeEventListener("keypress", handler);
+    }
+  });
+}
+
+function handleEncadrerSubmit() {
+  if (isAnswered) return;
+  
+  const q = questions[currentQuestion];
+  const valInf = document.getElementById("input-inf").value.trim();
+  const valSup = document.getElementById("input-sup").value.trim();
+  
+  if (!valInf || !valSup) return;
+  
+  isAnswered = true;
+  const correct = normaliser(valInf) === normaliser(q.reponse.inf) && normaliser(valSup) === normaliser(q.reponse.sup);
+  if (correct) score++;
+  
+  const feedback = document.createElement("div");
+  feedback.className = "feedback " + (correct ? "correct" : "incorrect");
+  feedback.textContent = correct 
+    ? `✓ Excellent ! ${q.reponse.inf} < ${q.nombre} < ${q.reponse.sup}`
+    : `✗ Presque ! La bonne réponse est : ${q.reponse.inf} < ${q.nombre} < ${q.reponse.sup}`;
+  document.getElementById("options-container").appendChild(feedback);
+  
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "next-btn";
+  nextBtn.textContent = "Question suivante → (Entrée)";
+  nextBtn.onclick = nextQuestion;
+  document.getElementById("options-container").appendChild(nextBtn);
+  
+  document.getElementById("submit-btn").disabled = true;
+  
+  document.addEventListener("keypress", function handler(e) {
+    if (e.key === "Enter") {
+      nextQuestion();
+      document.removeEventListener("keypress", handler);
+    }
+  });
+}
+
+function handleIntercalerSubmit() {
+  if (isAnswered) return;
+  
+  const q = questions[currentQuestion];
+  const valeur = parseFloat(normaliser(document.getElementById("user-input").value));
+  
+  if (isNaN(valeur)) return;
+  
+  isAnswered = true;
+  const correct = valeur > q.reponse.inf && valeur < q.reponse.sup;
+  if (correct) score++;
+  
+  const feedback = document.createElement("div");
+  feedback.className = "feedback " + (correct ? "correct" : "incorrect");
+  feedback.textContent = correct
+    ? `✓ Bravo ! ${valeur.toString().replace(".", ",")} est bien compris entre ${q.reponse.inf.toString().replace(".", ",")} et ${q.reponse.sup.toString().replace(".", ",")}`
+    : `✗ Non ! Un exemple valide : ${q.reponse.exemple}`;
+  document.getElementById("options-container").appendChild(feedback);
+  
+  const nextBtn = document.createElement("button");
+  nextBtn.className = "next-btn";
+  nextBtn.textContent = "Question suivante → (Entrée)";
+  nextBtn.onclick = nextQuestion;
+  document.getElementById("options-container").appendChild(nextBtn);
+  
+  document.getElementById("submit-btn").disabled = true;
+  
+  document.addEventListener("keypress", function handler(e) {
+    if (e.key === "Enter") {
+      nextQuestion();
+      document.removeEventListener("keypress", handler);
+    }
+  });
+}
+
+function nextQuestion() {
+  isAnswered = false;
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+    afficherQuestion();
+  } else {
+    afficherResultats();
+  }
+}
+
+function afficherResultats() {
+  document.getElementById("quiz-container").classList.add("hidden");
+  document.getElementById("result-container").classList.remove("hidden");
+  document.getElementById("final-score").textContent = `${score}/10`;
+  
+  let message = "";
+  if (score === 10) {
+    message = "🎉 Parfait ! Tu es un champion !";
+  } else if (score >= 7) {
+    message = "👍 Très bien ! Continue comme ça !";
+  } else if (score >= 5) {
+    message = "😊 Pas mal ! Encore un effort !";
+  } else {
+    message = "💪 Continue à t'entraîner, tu vas y arriver !";
+  }
+  document.getElementById("result-message").textContent = message;
+}
+
+function resetQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  isAnswered = false;
+  genererQuestions();
+  document.getElementById("quiz-container").classList.remove("hidden");
+  document.getElementById("result-container").classList.add("hidden");
+  afficherQuestion();
+}
+
+genererQuestions();
+afficherQuestion();
+</script>
+</body>
+</html>

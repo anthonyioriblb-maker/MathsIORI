@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Fiches de Visite - Multi-élèves</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #4472C4;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: #4472C4;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .info-box strong {
+            color: #1976D2;
+        }
+        
+        .form-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #4472C4;
+        }
+        
+        .form-section h2 {
+            color: #4472C4;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="tel"]:focus {
+            outline: none;
+            border-color: #4472C4;
+        }
+        
+        .horaires-grid {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .horaires-grid label {
+            margin: 0;
+            padding: 10px;
+            background: #e8f4f8;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 13px;
+        }
+        
+        .horaires-grid input {
+            padding: 8px;
+            font-size: 13px;
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+        }
+        
+        .eleve-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .eleve-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .eleve-card:hover {
+            border-color: #4472C4;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .eleve-info {
+            flex-grow: 1;
+        }
+        
+        .eleve-info h3 {
+            color: #4472C4;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .eleve-info p {
+            color: #666;
+            font-size: 13px;
+            margin: 2px 0;
+        }
+        
+        .eleve-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        /* Style pour la fiche imprimable */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                max-width: 100%;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .fiche-preview {
+                display: block !important;
+                border: none;
+                padding: 0;
+            }
+        }
+        
+        .fiche-preview {
+            display: none;
+            padding: 10px 15px;
+            background: white;
+        }
+        
+        .fiche-preview.active {
+            display: block;
+        }
+        
+        .fiche-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+        
+        .fiche-info {
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .fiche-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 12px;
+        }
+        
+        .fiche-table th,
+        .fiche-table td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .fiche-table th {
+            background: #e8e8e8;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        
+        .fiche-table td:first-child {
+            font-weight: bold;
+            background: #f5f5f5;
+            text-align: left;
+            padding-left: 15px;
+            font-size: 12px;
+        }
+        
+        .fiche-section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 20px 0 15px 0;
+            line-height: 1.5;
+        }
+        
+        .observations-lines {
+            margin-top: 15px;
+        }
+        
+        .observations-lines div {
+            border-bottom: 1px solid #333;
+            height: 35px;
+            margin-bottom: 8px;
+        }
+        
+        @media print {
+            .fiche-preview {
+                padding: 10px 15px;
+            }
+            
+            .fiche-title {
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+            
+            .fiche-info {
+                font-size: 12px;
+                margin-bottom: 10px;
+                line-height: 1.6;
+            }
+            
+            .fiche-table {
+                font-size: 11px;
+                margin: 10px 0;
+            }
+            
+            .fiche-table th {
+                font-size: 11px;
+                padding: 6px;
+            }
+            
+            .fiche-table td:first-child {
+                font-size: 11px;
+                padding-left: 10px;
+            }
+            
+            .fiche-table td {
+                padding: 6px;
+            }
+            
+            .fiche-section-title {
+                font-size: 12px;
+                margin: 15px 0 10px 0;
+            }
+            
+            .fiche-table th,
+            .fiche-table td {
+                border: 1px solid #000;
+            }
+            
+            .observations-lines div {
+                height: 28px;
+                margin-bottom: 5px;
+                border-bottom: 1px solid #333;
+            }
+        }
+        
+        .page-break {
+            page-break-after: always;
+            break-after: page;
+        }
+        
+        .fiche-individuelle {
+            padding: 15px;
+            background: white;
+        }
+        
+        @media print {
+            .fiche-individuelle {
+                padding: 0;
+            }
+        }
+        
+        .stats {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4472C4;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="no-print">
+            <h1>📋 Générateur de Fiches de Visite</h1>
+            <p class="subtitle">Gérez vos élèves et générez leurs fiches en un clic</p>
+            
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('liste')">📚 Mes Élèves</button>
+                <button class="tab" onclick="switchTab('ajout')">➕ Ajouter un élève</button>
+                <button class="tab" onclick="switchTab('importer')">📥 Importer/Exporter</button>
+            </div>
+            
+            <!-- ONGLET: Liste des élèves -->
+            <div id="tab-liste" class="tab-content active">
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="stat-total">0</div>
+                        <div class="stat-label">Élèves enregistrés</div>
+                    </div>
+                </div>
+                
+                <div class="btn-container" style="margin-bottom: 20px;">
+                    <button class="btn" onclick="imprimerToutesFiches()">🖨️ Imprimer toutes les fiches</button>
+                    <button class="btn btn-danger" onclick="razRapide()">🔄 RAZ (Tout supprimer)</button>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Rechercher un élève..." onkeyup="filterEleves()">
+                </div>
+                
+                <div id="elevesList"></div>
+            </div>
+            
+            <!-- ONGLET: Ajout d'élève -->
+            <div id="tab-ajout" class="tab-content">
+                <div class="info-box">
+                    <strong>💡 Astuce :</strong> Remplissez le formulaire et cliquez sur "Enregistrer l'élève". 
+                    Les données sont sauvegardées dans votre navigateur (même après fermeture).
+                </div>
+                
+                <form id="ficheForm" onsubmit="return saveEleve(event)">
+                    <div class="form-section">
+                        <h2>📝 Informations de l'élève et du stage</h2>
+                        
+                        <div class="form-group">
+                            <label for="nomEleve">Nom et Prénom de l'élève *</label>
+                            <input type="text" id="nomEleve" required placeholder="Ex: DUPONT Marie">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lieuStage">Lieu de stage (adresse complète) *</label>
+                            <input type="text" id="lieuStage" required placeholder="Ex: Boulangerie Leclerc, 12 rue principale, 52400 Bourbonne-les-Bains">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telephone">Téléphone *</label>
+                            <input type="tel" id="telephone" required placeholder="Ex: 0325901234">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tuteur">Nom et Prénom du tuteur *</label>
+                            <input type="text" id="tuteur" required placeholder="Ex: M. LECLERC Jean">
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>🕐 Horaires de la semaine</h2>
+                        <p style="font-size: 13px; color: #666; margin-bottom: 15px;">
+                            Format: "8h-12h" ou "14h-18h" (laissez vide si pas d'horaires)
+                        </p>
+                        
+                        <div class="horaires-grid">
+                            <label>Jour</label>
+                            <label>Matin</label>
+                            <label>Après-midi</label>
+                            
+                            <label>Lundi</label>
+                            <input type="text" id="lundiMatin" placeholder="8h-12h">
+                            <input type="text" id="lundiAprem" placeholder="14h-18h">
+                            
+                            <label>Mardi</label>
+                            <input type="text" id="mardiMatin" placeholder="8h-12h">
+                            <input type="text" id="mardiAprem" placeholder="14h-18h">
+                            
+                            <label>Mercredi</label>
+                            <input type="text" id="mercrediMatin" placeholder="8h-12h">
+                            <input type="text" id="mercrediAprem" placeholder="">
+                            
+                            <label>Jeudi</label>
+                            <input type="text" id="jeudiMatin" placeholder="8h-12h">
+                            <input type="text" id="jeudiAprem" placeholder="14h-18h">
+                            
+                            <label>Vendredi</label>
+                            <input type="text" id="vendrediMatin" placeholder="8h-12h">
+                            <input type="text" id="vendrediAprem" placeholder="14h-18h">
+                            
+                            <label>Samedi</label>
+                            <input type="text" id="samediMatin" placeholder="">
+                            <input type="text" id="samediAprem" placeholder="">
+                        </div>
+                    </div>
+                    
+                    <div class="btn-container">
+                        <button type="submit" class="btn btn-success">💾 Enregistrer l'élève</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Réinitialiser</button>
+                        <button type="button" class="btn btn-danger" onclick="cancelEdit()" id="btnAnnuler" style="display: none;">❌ Annuler</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- ONGLET: Import/Export -->
+            <div id="tab-importer" class="tab-content">
+                <div class="info-box">
+                    <strong>💾 Sauvegarde automatique :</strong> Vos données sont enregistrées automatiquement dans votre navigateur.
+                    Vous pouvez aussi exporter/importer pour sauvegarder sur votre ordinateur.
+                </div>
+                
+                <div class="info-box" style="background: #fff3cd; border-left-color: #ffc107;">
+                    <strong>🔄 Remise à zéro (RAZ) :</strong> Utilisez le bouton RAZ dans l'onglet "Mes Élèves" pour supprimer tous les élèves d'un coup.
+                    Utile en début d'année scolaire pour repartir de zéro. <strong>Pensez à exporter avant !</strong>
+                </div>
+                
+                <div class="form-section">
+                    <h2>📤 Exporter les données</h2>
+                    <p style="margin-bottom: 15px; color: #666;">Téléchargez toutes vos données dans un fichier JSON pour les sauvegarder ou les transférer.</p>
+                    <button class="btn" onclick="exportData()">📥 Télécharger mes données</button>
+                </div>
+                
+                <div class="form-section">
+                    <h2>📥 Importer des données</h2>
+                    <p style="margin-bottom: 15px; color: #666;">Chargez un fichier JSON précédemment exporté.</p>
+                    <input type="file" id="importFile" accept=".json" style="margin-bottom: 15px;">
+                    <button class="btn" onclick="importData()">📤 Charger le fichier</button>
+                </div>
+                
+                <div class="form-section">
+                    <h2>⚠️ Danger Zone</h2>
+                    <p style="margin-bottom: 15px; color: #dc3545;">Attention : cette action est irréversible !</p>
+                    <button class="btn btn-danger" onclick="deleteAllData()">🗑️ Supprimer toutes les données</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CONTENEUR POUR IMPRIMER TOUTES LES FICHES -->
+        <div id="toutesLesFiches" class="fiche-preview" style="display: none;">
+            <!-- Les fiches seront générées ici dynamiquement -->
+        </div>
+        
+        <!-- FICHE IMPRIMABLE -->
+        <div id="fichePreview" class="fiche-preview">
+            <div style="text-align: right; font-size: 23px; font-weight: bold; margin-bottom: 40px;">
+                Élève : <span id="preview-eleve-haut"></span>
+            </div>
+            
+            <div class="fiche-title">
+                Informations concernant la séquence en milieu professionnel
+            </div>
+            
+            <div class="fiche-info"><strong>Lieu de stage :</strong> <span id="preview-lieu"></span></div>
+            <div style="height: 18px;"></div>
+            <div class="fiche-info"><strong>Téléphone :</strong> <span id="preview-tel"></span></div>
+            <div style="height: 18px;"></div>
+            <div class="fiche-info"><strong>Tuteur :</strong> <span id="preview-tuteur"></span></div>
+            
+            <div style="height: 30px;"></div>
+            
+            <div class="fiche-info" style="font-weight: bold; font-size: 24px;">Horaires :</div>
+            <table class="fiche-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%">Jour</th>
+                        <th>Matin</th>
+                        <th>Après-midi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Lundi</td><td id="preview-lundiM"></td><td id="preview-lundiA"></td></tr>
+                    <tr><td>Mardi</td><td id="preview-mardiM"></td><td id="preview-mardiA"></td></tr>
+                    <tr><td>Mercredi</td><td id="preview-mercrediM"></td><td id="preview-mercrediA"></td></tr>
+                    <tr><td>Jeudi</td><td id="preview-jeudiM"></td><td id="preview-jeudiA"></td></tr>
+                    <tr><td>Vendredi</td><td id="preview-vendrediM"></td><td id="preview-vendrediA"></td></tr>
+                    <tr><td>Samedi</td><td id="preview-samediM"></td><td id="preview-samediA"></td></tr>
+                </tbody>
+            </table>
+            
+            <div class="fiche-section-title">
+                Appréciation établie par l'enseignant chargé du suivi de la séquence en milieu professionnel
+            </div>
+            
+            <div class="fiche-info">Appréciation établie par : ............................................................................</div>
+            <div style="height: 20px;"></div>
+            <div class="fiche-info">Concernant l'élève <strong><span id="preview-eleve"></span></strong> de la classe de 3èmeB</div>
+            
+            <div style="height: 35px;"></div>
+            
+            <div class="fiche-info" style="font-weight: bold; font-size: 24px;">Observations du professeur au moment de la visite :</div>
+            
+            <div style="height: 18px;"></div>
+            
+            <table class="fiche-table">
+                <thead>
+                    <tr>
+                        <th style="width: 45%">Critères</th>
+                        <th>Très bien</th>
+                        <th>Bien</th>
+                        <th>Moyen</th>
+                        <th>Insuff.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: left;">Ponctualité (Retards ou absences)</td>
+                        <td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Capacités d'adaptation</td>
+                        <td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Motivation</td>
+                        <td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Initiatives personnelles</td>
+                        <td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Qualité du travail effectué</td>
+                        <td></td><td></td><td></td><td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Comportement et savoir-être</td>
+                        <td></td><td></td><td></td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="height: 20px;"></div>
+            <div class="fiche-info" style="font-weight: bold; font-size: 22px;">Commentaires :</div>
+            <div class="observations-lines">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <div class="no-print btn-container" style="margin-top: 30px;">
+                <button onclick="window.print()" class="btn">🖨️ Imprimer / PDF</button>
+                <button onclick="closeFiche()" class="btn btn-secondary">◀️ Retour</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Gestion du LocalStorage
+        const STORAGE_KEY = 'fiches_stage_eleves';
+        
+        function getEleves() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            if (data) {
+                return JSON.parse(data);
+            }
+            
+            // Données initiales : les 18 élèves de 3èmeB
+            const elevesInitiaux = [
+  {"id": 1000, "nomEleve": "CARRÉ Enzo", "lieuStage": "Lenoir Transport 1  RUE PIERRE GILLES DE GENNES, 52100 BETTANCOURT-LA-FERREE", "telephone": "0325565700", "tuteur": "LENOIR Alexis", "lundiMatin": "8h-12h", "lundiAprem": "14h-17h", "mardiMatin": "8h-12h", "mardiAprem": "14h-17h", "mercrediMatin": "8h-12h", "mercrediAprem": "14h-17h", "jeudiMatin": "8h-12h", "jeudiAprem": "14h-17h", "vendrediMatin": "8h-12h", "vendrediAprem": "14h-17h", "samediMatin": "", "samediAprem": ""},
+  {"id": 2000, "nomEleve": "CLEMENT Matteo", "lieuStage": "Sercice départemental d'Incendie et de Secours, 29 rue du vieux moulin, 52000 Chaumont", "telephone": "0325302520", "tuteur": "COLLIN Stéphane", "lundiMatin": "8h-12h", "lundiAprem": "13h30-16h30", "mardiMatin": "8h-12h", "mardiAprem": "13h30-16h30", "mercrediMatin": "8h-12h", "mercrediAprem": "13h30-16h30", "jeudiMatin": "8h-12h", "jeudiAprem": "13h30-16h30", "vendrediMatin": "8h-12h", "vendrediAprem": "13h30-16h30", "samediMatin": "", "samediAprem": ""},
+  {"id": 3000, "nomEleve": "CONTI Johan", "lieuStage": "CERENN Zone Industrielle Route de Joinville, 52700 Rimaucourt", "telephone": "0620031871", "tuteur": "POWLAS Ludovic", "lundiMatin": "8h-12h", "lundiAprem": "13h30-16h30", "mardiMatin": "8h-12h", "mardiAprem": "13h30-16h30", "mercrediMatin": "8h-12h", "mercrediAprem": "13h30-16h30", "jeudiMatin": "8h-12h", "jeudiAprem": "13h30-16h30", "vendrediMatin": "8h-12h", "vendrediAprem": "13h30-16h30", "samediMatin": "", "samediAprem": ""},
+  {"id": 4000, "nomEleve": "DE JONGE Beaudine", "lieuStage": "Maison DUMONT (Chambre d'hôtes) 24 rue DUMONT, 52400 Melay", "telephone": "031628428457", "tuteur": "DE JONGE BM", "lundiMatin": "8h-11h30", "lundiAprem": "14h-17h", "mardiMatin": "8h-11h30", "mardiAprem": "14h-17h", "mercrediMatin": "8h-11h30", "mercrediAprem": "14h-17h", "jeudiMatin": "8h-11h30", "jeudiAprem": "14h-17h", "vendrediMatin": "8h-11h30", "vendrediAprem": "14h-17h", "samediMatin": "9h-11h30", "samediAprem": ""},
+  {"id": 5000, "nomEleve": "GARNIER Pauline", "lieuStage": "La loco des boutchous, place de la gare, 52400 Bourbonne les Bains", "telephone": "0325903791", "tuteur": "CREVOISIER Catherine", "lundiMatin": "11h-15h", "lundiAprem": "15h30-18h", "mardiMatin": "11h-15h", "mardiAprem": "15h30-18h", "mercrediMatin": "10h-14h", "mercrediAprem": "14h30-17h", "jeudiMatin": "7h15-11h15", "jeudiAprem": "11h45-14h45", "vendrediMatin": "7h15-11h15", "vendrediAprem": "11h45-14h45", "samediMatin": "", "samediAprem": ""},
+  {"id": 6000, "nomEleve": "GROSSI Sara", "lieuStage": "GAEC THOUVENOT, 44 rue de l'église, 88320 Isches", "telephone": "0602231010", "tuteur": "THOUVENOT Didier", "lundiMatin": "10h-12h", "lundiAprem": "14h-16h30", "mardiMatin": "7h-11h30", "mardiAprem": "17h-19h", "mercrediMatin": "10h-12h", "mercrediAprem": "14h-16h30", "jeudiMatin": "7h-11h30", "jeudiAprem": "17h-19h", "vendrediMatin": "10h-12h", "vendrediAprem": "14h-16h30", "samediMatin": "", "samediAprem": ""},
+  {"id": 7000, "nomEleve": "LAMBOURS Sullyvanne", "lieuStage": "Garage MARTINET, place de l'église, 52400 Varennes sur Amance", "telephone": "0325907866", "tuteur": "M. MARTINET", "lundiMatin": "", "lundiAprem": "", "mardiMatin": "9h-12h", "mardiAprem": "14h-18h", "mercrediMatin": "9h-12h", "mercrediAprem": "14h-18h", "jeudiMatin": "9h-12h", "jeudiAprem": "14h-18h", "vendrediMatin": "9h-12h", "vendrediAprem": "14h-18h", "samediMatin": "9h-12h", "samediAprem": "14h-18h"},
+  {"id": 8000, "nomEleve": "LEPAGE Teddy", "lieuStage": "ChocolaThé, 2 rue des bains, 52400 Bourbonne les Bains", "telephone": "0660624480", "tuteur": "LESBRE Stéphanie", "lundiMatin": "", "lundiAprem": "", "mardiMatin": "11h-13h", "mardiAprem": "13h30-17h30", "mercrediMatin": "11h-13h", "mercrediAprem": "13h30-17h30", "jeudiMatin": "11h-13h", "jeudiAprem": "13h30-17h30", "vendrediMatin": "11h-13h", "vendrediAprem": "13h30-17h30", "samediMatin": "", "samediAprem": ""},
+  {"id": 9000, "nomEleve": "LOTSCHER Jessica", "lieuStage": "Vétérinaire les Papattes, place de la libération, 52400 Bourbonne les Bains", "telephone": "0325900030", "tuteur": "LEGRAIN Coralie", "lundiMatin": "9h-12h", "lundiAprem": "14h30-18h", "mardiMatin": "9h-12h", "mardiAprem": "14h30-18h", "mercrediMatin": "", "mercrediAprem": "", "jeudiMatin": "9h-12h", "jeudiAprem": "14h30-18h", "vendrediMatin": "9h-12h", "vendrediAprem": "14h30-18h", "samediMatin": "", "samediAprem": ""},
+  {"id": 10000, "nomEleve": "LOTSCHER Mylana", "lieuStage": "Ecole maternelle, 52400 Bourbonne les Bains", "telephone": "0325901779", "tuteur": "JOURD'HEUIL Lucile", "lundiMatin": "8h45-12h", "lundiAprem": "13h45-16h30", "mardiMatin": "8h45-12h", "mardiAprem": "13h45-16h30", "mercrediMatin": "", "mercrediAprem": "", "jeudiMatin": "8h45-12h", "jeudiAprem": "13h45-16h30", "vendrediMatin": "8h45-12h", "vendrediAprem": "13h45-16h30", "samediMatin": "", "samediAprem": ""},
+  {"id": 11000, "nomEleve": "PASQUA Théo", "lieuStage": "Bénédicte Coiffure, 49 Grande rue, 52400 Bourbonne les Bains", "telephone": "0325900826", "tuteur": "ROUSSEL Bénédicte", "lundiMatin": "", "lundiAprem": "", "mardiMatin": "9h-12h", "mardiAprem": "13h30-17h30", "mercrediMatin": "", "mercrediAprem": "", "jeudiMatin": "9h-12h", "jeudiAprem": "13h30-17h30", "vendrediMatin": "9h-12h", "vendrediAprem": "13h30-17h30", "samediMatin": "9h-12h", "samediAprem": "13h-16h"},
+  {"id": 12000, "nomEleve": "PERRIN--GOTTFROIS Charles", "lieuStage": "JARDILAND , 52200 Langres", "telephone": "0325870145", "tuteur": "NOIROT", "lundiMatin": "9h30-12h", "lundiAprem": "14h-18h30", "mardiMatin": "9h30-12h", "mardiAprem": "14h-18h30", "mercrediMatin": "9h30-12h", "mercrediAprem": "14h-18h30", "jeudiMatin": "9h30-12h", "jeudiAprem": "14h-18h30", "vendrediMatin": "9h30-12h", "vendrediAprem": "14h-18h30", "samediMatin": "", "samediAprem": ""},
+  {"id": 13000, "nomEleve": "POISSE Lény", "lieuStage": "GAEC DES HOULETTES, 2 route de Coiffy, 52400 Bourbonne les Bains", "telephone": "0670132107", "tuteur": "CLERC Stéphanie", "lundiMatin": "9h-12h", "lundiAprem": "13h30-17h30", "mardiMatin": "9h-12h", "mardiAprem": "13h30-17h30", "mercrediMatin": "9h-12h", "mercrediAprem": "13h30-17h30", "jeudiMatin": "9h-12h", "jeudiAprem": "13h30-17h30", "vendrediMatin": "9h-12h", "vendrediAprem": "13h30-17h30", "samediMatin": "", "samediAprem": ""},
+  {"id": 14000, "nomEleve": "SCHWINDEN Emy", "lieuStage": "Entreprise canin de le plaine des Vosges, Chemin des Riaux, Zone de torrières, 88300 Neufchateau", "telephone": "0631186183", "tuteur": "BRASSEUR Lorine", "lundiMatin": "8h-12h", "lundiAprem": "14h-17h", "mardiMatin": "8h-12h", "mardiAprem": "14h-17h", "mercrediMatin": "8h-12h", "mercrediAprem": "14h-17h", "jeudiMatin": "8h-12h", "jeudiAprem": "14h-17h", "vendrediMatin": "8h-12h", "vendrediAprem": "14h-17h", "samediMatin": "", "samediAprem": ""},
+  {"id": 15000, "nomEleve": "THIRIET Théo", "lieuStage": "Aux petites douceurs, 18 grande rue, 52400 Bourbonne les Bains", "telephone": "0325900649", "tuteur": "RICHARD Rèmy", "lundiMatin": "6h-10h30", "lundiAprem": "11h-13h", "mardiMatin": "", "mardiAprem": "", "mercrediMatin": "6h-10h30", "mercrediAprem": "11h-13h", "jeudiMatin": "6h-10h30", "jeudiAprem": "11h-13h", "vendrediMatin": "6h-10h30", "vendrediAprem": "11h-13h", "samediMatin": "6h-10h30", "samediAprem": "11h-13h"},
+  {"id": 16000, "nomEleve": "ULMANN Alexia", "lieuStage": "INTERMARCHE, centre commercial des Franchises, 52200 Langres", "telephone": "0325876666", "tuteur": "DUBOUREAU Didier", "lundiMatin": "6h-10h", "lundiAprem": "10h30-12h", "mardiMatin": "6h-10h", "mardiAprem": "10h30-12h", "mercrediMatin": "6h-10h", "mercrediAprem": "10h30-12h", "jeudiMatin": "6h-10h", "jeudiAprem": "10h30-12h", "vendrediMatin": "6h-10h", "vendrediAprem": "10h30-12h", "samediMatin": "6h-9h", "samediAprem": "9h30-11h"},
+  {"id": 17000, "nomEleve": "VADOT PHILIPPE Jade", "lieuStage": "Ecole maternelle, 52400 Bourbonne les Bains", "telephone": "0325901779", "tuteur": "NAPPEZ Sylvie", "lundiMatin": "8h45-12h", "lundiAprem": "13h45-16h30", "mardiMatin": "8h45-12h", "mardiAprem": "13h45-16h30", "mercrediMatin": "", "mercrediAprem": "", "jeudiMatin": "8h45-12h", "jeudiAprem": "13h45-16h30", "vendrediMatin": "8h45-12h", "vendrediAprem": "13h45-16h30", "samediMatin": "", "samediAprem": ""},
+  {"id": 18000, "nomEleve": "VINCENT Noémie", "lieuStage": "GAEC des Barraques, Fromagerie REMILLET, 1 rue Claude Girault, 52500 GENEVRIERES", "telephone": "0325887176", "tuteur": "KAPP Cédric", "lundiMatin": "6h-10h30", "lundiAprem": "11h-13h", "mardiMatin": "6h-10h30", "mardiAprem": "11h-13h", "mercrediMatin": "6h-10h30", "mercrediAprem": "11h-13h", "jeudiMatin": "6h-10h30", "jeudiAprem": "11h-13h", "vendrediMatin": "6h-10h30", "vendrediAprem": "11h-13h", "samediMatin": "", "samediAprem": ""}
+];
+            
+            // Sauvegarder les données initiales
+            saveEleves(elevesInitiaux);
+            return elevesInitiaux;
+        }
+        
+        function saveEleves(eleves) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(eleves));
+            updateStats();
+            displayEleves();
+        }
+        
+        function saveEleve(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('ficheForm');
+            const editId = form.dataset.editId;
+            
+            // Normaliser le numéro de téléphone (garder le 0 devant)
+            let telephone = document.getElementById('telephone').value.trim();
+            // Si le numéro commence par un chiffre mais pas par 0, ajouter 0
+            if (telephone && /^\d/.test(telephone) && !telephone.startsWith('0')) {
+                telephone = '0' + telephone;
+            }
+            
+            const eleveData = {
+                nomEleve: document.getElementById('nomEleve').value,
+                lieuStage: document.getElementById('lieuStage').value,
+                telephone: telephone,
+                tuteur: document.getElementById('tuteur').value,
+                lundiMatin: document.getElementById('lundiMatin').value,
+                lundiAprem: document.getElementById('lundiAprem').value,
+                mardiMatin: document.getElementById('mardiMatin').value,
+                mardiAprem: document.getElementById('mardiAprem').value,
+                mercrediMatin: document.getElementById('mercrediMatin').value,
+                mercrediAprem: document.getElementById('mercrediAprem').value,
+                jeudiMatin: document.getElementById('jeudiMatin').value,
+                jeudiAprem: document.getElementById('jeudiAprem').value,
+                vendrediMatin: document.getElementById('vendrediMatin').value,
+                vendrediAprem: document.getElementById('vendrediAprem').value,
+                samediMatin: document.getElementById('samediMatin').value,
+                samediAprem: document.getElementById('samediAprem').value,
+            };
+            
+            const eleves = getEleves();
+            
+            if (editId) {
+                // Mode modification
+                const index = eleves.findIndex(e => e.id === parseInt(editId));
+                if (index !== -1) {
+                    eleves[index] = { ...eleves[index], ...eleveData };
+                    alert('✅ Modifications enregistrées avec succès !');
+                }
+                delete form.dataset.editId;
+            } else {
+                // Mode ajout
+                const eleve = {
+                    id: Date.now(),
+                    ...eleveData
+                };
+                eleves.push(eleve);
+                alert('✅ Élève enregistré avec succès !');
+            }
+            
+            saveEleves(eleves);
+            resetForm();
+            switchTab('liste');
+            
+            return false;
+        }
+        
+        function resetForm() {
+            const form = document.getElementById('ficheForm');
+            form.reset();
+            delete form.dataset.editId;
+            
+            // Réinitialiser le bouton
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '💾 Enregistrer l\'élève';
+            submitBtn.className = 'btn btn-success';
+            
+            // Cacher le bouton Annuler
+            document.getElementById('btnAnnuler').style.display = 'none';
+        }
+        
+        function cancelEdit() {
+            if (confirm('Annuler les modifications ?')) {
+                resetForm();
+                switchTab('liste');
+            }
+        }
+        
+        function displayEleves() {
+            const eleves = getEleves();
+            const container = document.getElementById('elevesList');
+            
+            if (eleves.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📚</div>
+                        <h3>Aucun élève enregistré</h3>
+                        <p>Cliquez sur "Ajouter un élève" pour commencer</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = eleves.map(eleve => `
+                <div class="eleve-card" data-nom="${eleve.nomEleve.toLowerCase()}">
+                    <div class="eleve-info">
+                        <h3>${eleve.nomEleve}</h3>
+                        <p>📍 ${eleve.lieuStage}</p>
+                        <p>📞 ${eleve.telephone} | 👤 ${eleve.tuteur}</p>
+                    </div>
+                    <div class="eleve-actions">
+                        <button class="btn btn-small" onclick="generateFiche(${eleve.id})">📄 Fiche</button>
+                        <button class="btn btn-small btn-secondary" onclick="editEleve(${eleve.id})">✏️</button>
+                        <button class="btn btn-small btn-danger" onclick="deleteEleve(${eleve.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function generateFiche(id) {
+            const eleves = getEleves();
+            const eleve = eleves.find(e => e.id === id);
+            if (!eleve) return;
+            
+            // Remplir l'aperçu
+            document.getElementById('preview-lieu').textContent = eleve.lieuStage;
+            document.getElementById('preview-tel').textContent = eleve.telephone;
+            document.getElementById('preview-tuteur').textContent = eleve.tuteur;
+            document.getElementById('preview-eleve').textContent = eleve.nomEleve;
+            document.getElementById('preview-eleve-haut').textContent = eleve.nomEleve;
+            
+            document.getElementById('preview-lundiM').textContent = eleve.lundiMatin || '';
+            document.getElementById('preview-lundiA').textContent = eleve.lundiAprem || '';
+            document.getElementById('preview-mardiM').textContent = eleve.mardiMatin || '';
+            document.getElementById('preview-mardiA').textContent = eleve.mardiAprem || '';
+            document.getElementById('preview-mercrediM').textContent = eleve.mercrediMatin || '';
+            document.getElementById('preview-mercrediA').textContent = eleve.mercrediAprem || '';
+            document.getElementById('preview-jeudiM').textContent = eleve.jeudiMatin || '';
+            document.getElementById('preview-jeudiA').textContent = eleve.jeudiAprem || '';
+            document.getElementById('preview-vendrediM').textContent = eleve.vendrediMatin || '';
+            document.getElementById('preview-vendrediA').textContent = eleve.vendrediAprem || '';
+            document.getElementById('preview-samediM').textContent = eleve.samediMatin || '';
+            document.getElementById('preview-samediA').textContent = eleve.samediAprem || '';
+            
+            // Afficher la fiche
+            document.querySelector('.no-print').style.display = 'none';
+            document.getElementById('fichePreview').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        
+        function closeFiche() {
+            document.querySelector('.no-print').style.display = 'block';
+            document.getElementById('fichePreview').classList.remove('active');
+        }
+        
+        function deleteEleve(id) {
+            if (!confirm('Voulez-vous vraiment supprimer cet élève ?')) return;
+            
+            const eleves = getEleves();
+            const filtered = eleves.filter(e => e.id !== id);
+            saveEleves(filtered);
+        }
+        
+        function editEleve(id) {
+            const eleves = getEleves();
+            const eleve = eleves.find(e => e.id === id);
+            if (!eleve) return;
+            
+            // Remplir le formulaire
+            document.getElementById('nomEleve').value = eleve.nomEleve;
+            document.getElementById('lieuStage').value = eleve.lieuStage;
+            document.getElementById('telephone').value = eleve.telephone;
+            document.getElementById('tuteur').value = eleve.tuteur;
+            document.getElementById('lundiMatin').value = eleve.lundiMatin;
+            document.getElementById('lundiAprem').value = eleve.lundiAprem;
+            document.getElementById('mardiMatin').value = eleve.mardiMatin;
+            document.getElementById('mardiAprem').value = eleve.mardiAprem;
+            document.getElementById('mercrediMatin').value = eleve.mercrediMatin;
+            document.getElementById('mercrediAprem').value = eleve.mercrediAprem;
+            document.getElementById('jeudiMatin').value = eleve.jeudiMatin;
+            document.getElementById('jeudiAprem').value = eleve.jeudiAprem;
+            document.getElementById('vendrediMatin').value = eleve.vendrediMatin;
+            document.getElementById('vendrediAprem').value = eleve.vendrediAprem;
+            document.getElementById('samediMatin').value = eleve.samediMatin;
+            document.getElementById('samediAprem').value = eleve.samediAprem;
+            
+            // Stocker l'ID en cours de modification
+            document.getElementById('ficheForm').dataset.editId = id;
+            
+            // Changer le texte du bouton
+            const submitBtn = document.querySelector('#ficheForm button[type="submit"]');
+            submitBtn.innerHTML = '💾 Sauvegarder les modifications';
+            submitBtn.className = 'btn btn-success';
+            
+            // Afficher le bouton Annuler
+            document.getElementById('btnAnnuler').style.display = 'inline-block';
+            
+            switchTab('ajout');
+            
+            // Scroll vers le haut
+            window.scrollTo(0, 0);
+        }
+        
+        function switchTab(tabName) {
+            // Masquer tous les onglets
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Afficher l'onglet sélectionné
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function updateStats() {
+            const eleves = getEleves();
+            document.getElementById('stat-total').textContent = eleves.length;
+        }
+        
+        function filterEleves() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.eleve-card');
+            
+            cards.forEach(card => {
+                const nom = card.dataset.nom;
+                if (nom.includes(search)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        function exportData() {
+            const eleves = getEleves();
+            const dataStr = JSON.stringify(eleves, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'mes_eleves_stage_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            
+            alert('✅ Fichier téléchargé !');
+        }
+        
+        function importData() {
+            const file = document.getElementById('importFile').files[0];
+            if (!file) {
+                alert('Veuillez sélectionner un fichier');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const eleves = JSON.parse(e.target.result);
+                    saveEleves(eleves);
+                    alert('✅ Données importées avec succès !');
+                    switchTab('liste');
+                } catch (error) {
+                    alert('❌ Erreur lors de l\'import du fichier');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        function deleteAllData() {
+            if (!confirm('⚠️ ATTENTION : Toutes les données seront supprimées définitivement. Continuer ?')) return;
+            if (!confirm('Êtes-vous vraiment sûr ? Cette action est irréversible !')) return;
+            
+            localStorage.removeItem(STORAGE_KEY);
+            updateStats();
+            displayEleves();
+            alert('✅ Toutes les données ont été supprimées');
+        }
+        
+        function razRapide() {
+            const eleves = getEleves();
+            
+            if (eleves.length === 0) {
+                alert('ℹ️ Aucune donnée à supprimer.');
+                return;
+            }
+            
+            const message = `⚠️ REMISE À ZÉRO\n\nVous allez supprimer ${eleves.length} élève(s).\n\n⚠️ Cette action est IRRÉVERSIBLE !\n\nConseils :\n- Exportez vos données avant (onglet Import/Export)\n- Utilisez cette fonction en début d'année scolaire\n\nContinuer ?`;
+            
+            if (!confirm(message)) return;
+            
+            // Demande de confirmation supplémentaire
+            const confirmation = prompt('Tapez "SUPPRIMER" en majuscules pour confirmer :');
+            
+            if (confirmation === 'SUPPRIMER') {
+                localStorage.removeItem(STORAGE_KEY);
+                updateStats();
+                displayEleves();
+                alert('✅ Remise à zéro effectuée. Toutes les données ont été supprimées.');
+            } else {
+                alert('❌ Action annulée. Aucune donnée n\'a été supprimée.');
+            }
+        }
+        
+        function creerFicheHTML(eleve) {
+            return `
+                <div class="fiche-individuelle page-break">
+                    <div style="text-align: right; font-size: 23px; font-weight: bold; margin-bottom: 40px;">
+                        Élève : ${eleve.nomEleve}
+                    </div>
+                    
+                    <div class="fiche-title">
+                        Informations concernant la séquence en milieu professionnel
+                    </div>
+                    
+                    <div class="fiche-info"><strong>Lieu de stage :</strong> ${eleve.lieuStage}</div>
+                    <div style="height: 18px;"></div>
+                    <div class="fiche-info"><strong>Téléphone :</strong> ${eleve.telephone}</div>
+                    <div style="height: 18px;"></div>
+                    <div class="fiche-info"><strong>Tuteur :</strong> ${eleve.tuteur}</div>
+                    
+                    <div style="height: 30px;"></div>
+                    
+                    <div class="fiche-info" style="font-weight: bold; font-size: 24px;">Horaires :</div>
+                    <table class="fiche-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Jour</th>
+                                <th>Matin</th>
+                                <th>Après-midi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Lundi</td><td>${eleve.lundiMatin || ''}</td><td>${eleve.lundiAprem || ''}</td></tr>
+                            <tr><td>Mardi</td><td>${eleve.mardiMatin || ''}</td><td>${eleve.mardiAprem || ''}</td></tr>
+                            <tr><td>Mercredi</td><td>${eleve.mercrediMatin || ''}</td><td>${eleve.mercrediAprem || ''}</td></tr>
+                            <tr><td>Jeudi</td><td>${eleve.jeudiMatin || ''}</td><td>${eleve.jeudiAprem || ''}</td></tr>
+                            <tr><td>Vendredi</td><td>${eleve.vendrediMatin || ''}</td><td>${eleve.vendrediAprem || ''}</td></tr>
+                            <tr><td>Samedi</td><td>${eleve.samediMatin || ''}</td><td>${eleve.samediAprem || ''}</td></tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="fiche-section-title">
+                        Appréciation établie par l'enseignant chargé du suivi de la séquence en milieu professionnel
+                    </div>
+                    
+                    <div class="fiche-info">Appréciation établie par : ............................................................................</div>
+                    <div style="height: 20px;"></div>
+                    <div class="fiche-info">Concernant l'élève <strong>${eleve.nomEleve}</strong> de la classe de 3èmeB</div>
+                    
+                    <div style="height: 35px;"></div>
+                    
+                    <div class="fiche-info" style="font-weight: bold; font-size: 24px;">Observations du professeur au moment de la visite :</div>
+                    
+                    <div style="height: 18px;"></div>
+                    
+                    <table class="fiche-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 45%">Critères</th>
+                                <th>Très bien</th>
+                                <th>Bien</th>
+                                <th>Moyen</th>
+                                <th>Insuff.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left;">Ponctualité (Retards ou absences)</td>
+                                <td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">Capacités d'adaptation</td>
+                                <td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">Motivation</td>
+                                <td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">Initiatives personnelles</td>
+                                <td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">Qualité du travail effectué</td>
+                                <td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">Comportement et savoir-être</td>
+                                <td></td><td></td><td></td><td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div style="height: 20px;"></div>
+                    <div class="fiche-info" style="font-weight: bold; font-size: 22px;">Commentaires :</div>
+                    <div class="observations-lines">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function imprimerToutesFiches() {
+            const eleves = getEleves();
+            
+            if (eleves.length === 0) {
+                alert('❌ Aucun élève enregistré. Ajoutez des élèves avant d\'imprimer.');
+                return;
+            }
+            
+            if (!confirm(`Vous allez imprimer ${eleves.length} fiches. Continuer ?`)) {
+                return;
+            }
+            
+            // Générer toutes les fiches
+            const container = document.getElementById('toutesLesFiches');
+            container.innerHTML = eleves.map(eleve => creerFicheHTML(eleve)).join('');
+            
+            // Masquer le contenu principal et afficher les fiches
+            document.querySelector('.no-print').style.display = 'none';
+            container.style.display = 'block';
+            
+            // Imprimer
+            window.print();
+            
+            // Restaurer après l'impression
+            setTimeout(() => {
+                document.querySelector('.no-print').style.display = 'block';
+                container.style.display = 'none';
+                container.innerHTML = '';
+            }, 100);
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            displayEleves();
+            updateStats();
+        });
+    </script>
+</body>
+</html>

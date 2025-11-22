@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathématiques - Collège</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .math-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            font-size: 48px;
+            color: white;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .formula {
+            position: absolute;
+            white-space: nowrap;
+        }
+
+        @keyframes floatDiagonal1 {
+            from { transform: translate(-100%, -100%) rotate(0deg); }
+            to { transform: translate(100vw, 100vh) rotate(360deg); }
+        }
+
+        @keyframes floatDiagonal2 {
+            from { transform: translate(100vw, -100%) rotate(0deg); }
+            to { transform: translate(-100%, 100vh) rotate(-360deg); }
+        }
+
+        @keyframes floatVertical {
+            from { transform: translateY(-100%) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(180deg); }
+        }
+
+        @keyframes floatHorizontal {
+            from { transform: translateX(-100%) rotate(0deg); }
+            to { transform: translateX(100vw) rotate(-180deg); }
+        }
+
+        @keyframes floatCurve {
+            0% { transform: translate(-100%, 50vh) rotate(0deg); }
+            50% { transform: translate(50vw, -50%) rotate(180deg); }
+            100% { transform: translate(100vw, 50vh) rotate(360deg); }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 40px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease-in;
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2em;
+            margin-bottom: 50px;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        .link-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 769px) {
+            .link-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .link-item {
+            animation: slideUp 0.6s ease-out backwards;
+        }
+
+        .link-item:nth-child(1) { animation-delay: 0.2s; }
+        .link-item:nth-child(2) { animation-delay: 0.4s; }
+        .link-item:nth-child(3) { animation-delay: 0.6s; }
+        .link-item:nth-child(4) { animation-delay: 0.8s; }
+        .link-item:nth-child(5) { animation-delay: 1.0s; }
+
+        .link-item a {
+            display: block;
+            background: rgba(255,255,255,0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-item a:hover::before {
+            left: 100%;
+        }
+
+        .link-item a:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            background: white;
+        }
+
+        .link-item a::after {
+            content: attr(data-level);
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.4em;
+            color: rgba(102,126,234,0.5);
+            font-weight: normal;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            font-size: 0.8em;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .link-list {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .link-item a {
+                padding: 30px 20px;
+                font-size: 1.5em;
+            }
+        }
+
+        /* Visitor Counter Styles */
+        .visitor-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideInFromBottom 1s ease-out;
+        }
+
+        .visitor-counter-label {
+            font-size: 0.85em;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .visitor-counter-value {
+            font-size: 1.5em;
+            color: #764ba2;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #visitor-count {
+            color: #764ba2;
+            font-weight: bold;
+        }
+
+        #visitor-count:not(.loaded) {
+            animation: pulse 1.5s infinite;
+        }
+
+        #visitor-count.error {
+            color: #ccc;
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .visitor-counter {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 15px;
+            }
+
+            .visitor-counter-label {
+                font-size: 0.7em;
+            }
+
+            .visitor-counter-value {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="math-background" id="mathBg"></div>
+    
+    <div class="container">
+        <h1>📐 Mathématiques</h1>
+        <p class="subtitle">Choisissez votre niveau</p>
+        
+        <ul class="link-list">
+            <li class="link-item">
+                <a href="6°/classe-6e.html" data-level="Niveau 1">
+                    <span class="icon">🔢</span>6ème
+                </a>
+            </li>
+            <li class="link-item">
+                <a href="5°/classe-5e.html" data-level="Niveau 2">
+                    <span class="icon">📊</span>5ème
+                </a>
+            </li>
+            <li class="link-item">
+                <a href="4°/classe-4e.html" data-level="Niveau 3">
+                    <span class="icon">📐</span>4ème
+                </a>
+            </li>
+            <li class="link-item">
+                <a href="3°/classe-3e.html" data-level="Niveau 4">
+                    <span class="icon">∑</span>3ème
+                </a>
+            </li>
+            <li class="link-item">
+                <a href="scratch/classe-scratch.html" data-level="Programmation" style="background: linear-gradient(135deg, #FF6B35 0%, #FFD500 100%); color: white;">
+                    <span class="icon">🎨</span>Scratch
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Visitor Counter -->
+    <div class="visitor-counter">
+        <div class="visitor-counter-label">👥 Visiteurs</div>
+        <div class="visitor-counter-value">
+            <span id="visitor-count">...</span>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script src="firebase-config.js?v=20251120143124"></script>
+
+    <!-- Visitor Counter -->
+    <script src="visitor-counter.js?v=20251120143124"></script>
+    <script>
+        const formulas = [
+            'π = 3.14159...',
+            'a² + b² = c²',
+            'E = mc²',
+            '∑ ∫ √ ∞',
+            'x² + y² = r²',
+            'sin² + cos² = 1',
+            'A = πr²',
+            'V = 4/3πr³',
+            '(a+b)² = a² + 2ab + b²',
+            'log(ab) = log(a) + log(b)'
+        ];
+
+        const mathBg = document.getElementById('mathBg');
+        const animations = ['floatDiagonal1', 'floatDiagonal2', 'floatVertical', 'floatHorizontal', 'floatCurve'];
+        
+        for (let i = 0; i < 20; i++) {
+            const formula = document.createElement('div');
+            formula.className = 'formula';
+            formula.textContent = formulas[Math.floor(Math.random() * formulas.length)];
+            
+            // Position de départ aléatoire
+            formula.style.left = Math.random() * 100 + '%';
+            formula.style.top = Math.random() * 100 + '%';
+            
+            // Animation aléatoire
+            const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+            formula.style.animation = `${randomAnimation} ${15 + Math.random() * 15}s infinite linear`;
+            formula.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Taille aléatoire
+            formula.style.fontSize = (0.8 + Math.random() * 0.6) + 'em';
+            formula.style.opacity = 0.3 + Math.random() * 0.4;
+            
+            mathBg.appendChild(formula);
+        }
+    </script>
+</body>
+</html>
