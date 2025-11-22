@@ -278,6 +278,10 @@
         <button class="exercise-btn" data-ex="6">6. Carrés emboîtés</button>
         <button class="exercise-btn" data-ex="7">7. Étoile</button>
         <button class="exercise-btn" data-ex="8">8. Rosace</button>
+        <button class="exercise-btn" data-ex="9">9. Spirale</button>
+        <button class="exercise-btn" data-ex="10">10. Maison</button>
+        <button class="exercise-btn" data-ex="11">11. Flocon</button>
+        <button class="exercise-btn" data-ex="12">12. Créatif</button>
     </div>
 
     <div class="main-container">
@@ -530,6 +534,118 @@ fin`,
                 draw: function(ctx, sprite, coords) {
                     drawRosace(ctx, sprite, coords);
                 }
+            },
+            9: {
+                title: "Exercice 9 : Spirale carrée",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Une spirale augmente progressivement la <strong>distance parcourue</strong></li>
+                        <li>On tourne de <strong>90°</strong> à chaque fois (angles droits)</li>
+                        <li>Variable <strong>distance</strong> qui augmente à chaque étape</li>
+                        <li>Exemple : 10 pas, puis 20 pas, puis 30 pas, etc.</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+mettre [distance v] à (10)
+stylo en position d'écriture
+répéter (20) fois
+  avancer de (distance) pas
+  tourner droite de (90) degrés
+  ajouter (5) à [distance v]
+fin`,
+                tip: "La spirale se forme car on augmente la distance à chaque itération !",
+                draw: function(ctx, sprite, coords) {
+                    drawSpiral(ctx, sprite, coords);
+                }
+            },
+            10: {
+                title: "Exercice 10 : Maison",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Combinaison de plusieurs figures : <strong>carré + triangle + rectangle</strong></li>
+                        <li>Carré pour la base (100 pas)</li>
+                        <li>Triangle pour le toit</li>
+                        <li>Utilisation de <strong>aller à x: y:</strong> pour se repositionner</li>
+                        <li>Utilisation de <strong>relever/baisser le stylo</strong> entre les figures</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (4) fois
+  avancer de (100) pas
+  tourner droite de (90) degrés
+fin
+relever le stylo
+aller à x: (0) y: (100)
+s'orienter à (90)
+stylo en position d'écriture
+répéter (3) fois
+  avancer de (100) pas
+  tourner droite de (120) degrés
+fin`,
+                tip: "Pense à relever le stylo pour te déplacer sans tracer !",
+                draw: function(ctx, sprite, coords) {
+                    drawHouse(ctx, sprite, coords);
+                }
+            },
+            11: {
+                title: "Exercice 11 : Flocon de neige",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Un flocon a <strong>6 branches</strong> symétriques</li>
+                        <li>Angle entre chaque branche : <strong>360° ÷ 6 = 60°</strong></li>
+                        <li>Pour chaque branche : avancer, reculer au centre, tourner</li>
+                        <li>Utilisation de <strong>aller à x: 0 y: 0</strong> pour revenir au centre</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+s'orienter à (0)
+répéter (6) fois
+  stylo en position d'écriture
+  avancer de (80) pas
+  relever le stylo
+  aller à x: (0) y: (0)
+  tourner droite de (60) degrés
+fin`,
+                tip: "Reviens au centre après chaque branche pour créer la symétrie !",
+                draw: function(ctx, sprite, coords) {
+                    drawSnowflake(ctx, sprite, coords);
+                }
+            },
+            12: {
+                title: "Exercice 12 : Création libre",
+                explanation: `
+                    <h3>🎨 Explication</h3>
+                    <ul>
+                        <li>Cet exercice est <strong>libre et créatif</strong> !</li>
+                        <li>Utilise au moins <strong>2 boucles imbriquées</strong></li>
+                        <li>Utilise au moins <strong>1 variable</strong></li>
+                        <li>Combine plusieurs polygones ou crée des motifs répétés</li>
+                        <li>Exemple : une rosace d'étoiles, un damier, etc.</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+mettre [taille v] à (20)
+stylo en position d'écriture
+répéter (8) fois
+  répéter (6) fois
+    avancer de (taille) pas
+    tourner droite de (60) degrés
+  fin
+  ajouter (10) à [taille v]
+  tourner droite de (45) degrés
+fin`,
+                tip: "Laisse libre cours à ton imagination pour créer un motif unique !",
+                draw: function(ctx, sprite, coords) {
+                    drawFreeCreation(ctx, sprite, coords);
+                }
             }
         };
 
@@ -685,6 +801,125 @@ fin`,
                 globalDir += 30;
                 sprite.style.transform = `rotate(${globalDir}deg)`;
             }
+        }
+
+        async function drawSpiral(ctx, sprite, coords) {
+            clearCanvas(ctx);
+            let x = 0, y = 0, dir = 0;
+            let distance = 10;
+
+            ctx.strokeStyle = '#0FBD8C';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+
+            for (let i = 0; i < 20; i++) {
+                await sleep(150);
+                const rad = dir * Math.PI / 180;
+                const newX = x + distance * Math.cos(rad);
+                const newY = y + distance * Math.sin(rad);
+
+                ctx.lineTo(200 + newX, 200 - newY);
+                ctx.stroke();
+
+                x = newX;
+                y = newY;
+                dir = (dir + 90) % 360;
+                distance += 5;
+
+                sprite.style.left = (200 + x - 15) + 'px';
+                sprite.style.top = (200 - y - 15) + 'px';
+                sprite.style.transform = `rotate(${dir}deg)`;
+                coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
+        }
+
+        async function drawHouse(ctx, sprite, coords) {
+            clearCanvas(ctx);
+
+            // Dessiner le carré (base)
+            ctx.strokeStyle = '#4C97FF';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(150, 250, 100, 100);
+
+            // Dessiner le triangle (toit)
+            ctx.fillStyle = '#FF6B35';
+            ctx.beginPath();
+            ctx.moveTo(150, 250);
+            ctx.lineTo(200, 200);
+            ctx.lineTo(250, 250);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            sprite.style.left = '185px';
+            sprite.style.top = '185px';
+            sprite.style.transform = 'rotate(0deg)';
+            coords.textContent = 'Maison dessinée !';
+        }
+
+        async function drawSnowflake(ctx, sprite, coords) {
+            clearCanvas(ctx);
+
+            ctx.strokeStyle = '#5CB1D6';
+            ctx.lineWidth = 3;
+
+            for (let i = 0; i < 6; i++) {
+                const angle = (i * 60) * Math.PI / 180;
+                const endX = 80 * Math.cos(angle);
+                const endY = 80 * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(200, 200);
+                ctx.lineTo(200 + endX, 200 - endY);
+                ctx.stroke();
+
+                await sleep(200);
+
+                sprite.style.left = (200 + endX - 15) + 'px';
+                sprite.style.top = (200 - endY - 15) + 'px';
+                sprite.style.transform = `rotate(${i * 60}deg)`;
+            }
+
+            coords.textContent = 'Flocon de neige !';
+        }
+
+        async function drawFreeCreation(ctx, sprite, coords) {
+            clearCanvas(ctx);
+            let taille = 20;
+            let globalDir = 0;
+
+            ctx.strokeStyle = '#9966FF';
+            ctx.lineWidth = 2;
+
+            for (let r = 0; r < 8; r++) {
+                let x = 0, y = 0;
+                let dir = globalDir;
+
+                ctx.beginPath();
+                ctx.moveTo(200, 200);
+
+                // Dessiner un hexagone
+                for (let i = 0; i < 6; i++) {
+                    await sleep(30);
+                    const rad = dir * Math.PI / 180;
+                    const newX = x + taille * Math.cos(rad);
+                    const newY = y + taille * Math.sin(rad);
+
+                    ctx.lineTo(200 + newX, 200 - newY);
+                    ctx.stroke();
+
+                    x = newX;
+                    y = newY;
+                    dir = (dir + 60) % 360;
+                }
+
+                taille += 10;
+                globalDir += 45;
+                sprite.style.transform = `rotate(${globalDir}deg)`;
+            }
+
+            coords.textContent = 'Création libre !';
         }
 
         function sleep(ms) {
