@@ -836,26 +836,70 @@ fin`,
 
         async function drawHouse(ctx, sprite, coords) {
             clearCanvas(ctx);
+            let x = 0, y = 0, dir = 0;
 
-            // Dessiner le carré (base)
             ctx.strokeStyle = '#4C97FF';
             ctx.lineWidth = 3;
-            ctx.strokeRect(150, 250, 100, 100);
+
+            // Dessiner le carré (base)
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+
+            for (let i = 0; i < 4; i++) {
+                await sleep(300);
+                const rad = dir * Math.PI / 180;
+                const newX = x + 100 * Math.cos(rad);
+                const newY = y + 100 * Math.sin(rad);
+
+                ctx.lineTo(200 + newX, 200 - newY);
+                ctx.stroke();
+
+                x = newX;
+                y = newY;
+                dir = (dir + 90) % 360;
+
+                sprite.style.left = (200 + x - 15) + 'px';
+                sprite.style.top = (200 - y - 15) + 'px';
+                sprite.style.transform = `rotate(${dir}deg)`;
+                coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
+
+            // Relever le stylo et aller à (0, 100)
+            await sleep(300);
+            x = 0;
+            y = 100;
+            sprite.style.left = (200 + x - 15) + 'px';
+            sprite.style.top = (200 - y - 15) + 'px';
+            coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+
+            // S'orienter à 90° (vers le haut)
+            dir = 90;
+            sprite.style.transform = `rotate(${dir}deg)`;
 
             // Dessiner le triangle (toit)
-            ctx.fillStyle = '#FF6B35';
+            await sleep(300);
+            ctx.strokeStyle = '#FF6B35';
             ctx.beginPath();
-            ctx.moveTo(150, 250);
-            ctx.lineTo(200, 200);
-            ctx.lineTo(250, 250);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
+            ctx.moveTo(200 + x, 200 - y);
 
-            sprite.style.left = '185px';
-            sprite.style.top = '185px';
-            sprite.style.transform = 'rotate(0deg)';
-            coords.textContent = 'Maison dessinée !';
+            for (let i = 0; i < 3; i++) {
+                await sleep(300);
+                const rad = dir * Math.PI / 180;
+                const newX = x + 100 * Math.cos(rad);
+                const newY = y + 100 * Math.sin(rad);
+
+                ctx.lineTo(200 + newX, 200 - newY);
+                ctx.stroke();
+
+                x = newX;
+                y = newY;
+                dir = (dir + 120) % 360;
+
+                sprite.style.left = (200 + x - 15) + 'px';
+                sprite.style.top = (200 - y - 15) + 'px';
+                sprite.style.transform = `rotate(${dir}deg)`;
+                coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
         }
 
         async function drawSnowflake(ctx, sprite, coords) {
