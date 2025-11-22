@@ -182,15 +182,48 @@
         .scratch-block.data { background: linear-gradient(180deg, #FF8C1A 0%, #FF8000 100%); }
         .scratch-block.sensing { background: linear-gradient(180deg, #4CBFE6 0%, #2E8EB8 100%); }
 
+        /* Bloc répéter en forme de C */
+        .scratch-block.control-c {
+            display: block;
+            padding: 8px 15px 6px 15px;
+            margin-bottom: 0;
+        }
+
         .scratch-value {
             background: white;
             color: #575E75;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
             display: inline-block;
             margin: 0 3px;
             font-weight: 600;
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            min-width: 25px;
+            text-align: center;
+        }
+
+        /* Variable (ovale orange) */
+        .scratch-variable {
+            background: linear-gradient(180deg, #FF8C1A 0%, #FF8000 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 14px;
+            display: inline-block;
+            margin: 0 3px;
+            font-weight: 600;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Opérateur (ovale vert) */
+        .scratch-operator {
+            background: linear-gradient(180deg, #40BF4A 0%, #389438 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 0 3px;
+            font-weight: 600;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
         }
 
         .scratch-stack {
@@ -200,12 +233,26 @@
             width: fit-content;
         }
 
+        /* Blocs imbriqués - forme en C */
         .scratch-nested {
-            margin-left: 35px;
-            padding: 8px 0 8px 15px;
-            border-left: 4px solid rgba(255, 171, 25, 0.5);
-            border-bottom: 4px solid rgba(255, 171, 25, 0.5);
-            border-radius: 0 0 0 8px;
+            margin-left: 20px;
+            padding: 10px 15px 10px 20px;
+            border-left: 5px solid #FFAB19;
+            border-bottom: 5px solid #FFAB19;
+            border-radius: 0 0 0 10px;
+            margin-top: 2px;
+            margin-bottom: 5px;
+            background: transparent;
+        }
+
+        .scratch-nested::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: -5px;
+            width: 25px;
+            height: 5px;
+            background: #FFAB19;
         }
 
         .canvas-panel {
@@ -373,9 +420,8 @@
                         <div class="scratch-block events">quand ⚑ cliqué</div>
                         <div class="scratch-block pen">effacer tout</div>
                         <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control">répéter <span class="scratch-value">4</span> fois</div>
-                        <div class="scratch-nested">
-                            <div class="scratch-stack">
+                        <div class="scratch-block control-c">répéter <span class="scratch-value">4</span> fois
+                            <div class="scratch-nested">
                                 <div class="scratch-block motion">avancer de <span class="scratch-value">100</span> pas</div>
                                 <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
                             </div>
@@ -402,9 +448,8 @@
                         <div class="scratch-block events">quand ⚑ cliqué</div>
                         <div class="scratch-block pen">effacer tout</div>
                         <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control">répéter <span class="scratch-value">3</span> fois</div>
-                        <div class="scratch-nested">
-                            <div class="scratch-stack">
+                        <div class="scratch-block control-c">répéter <span class="scratch-value">3</span> fois
+                            <div class="scratch-nested">
                                 <div class="scratch-block motion">avancer de <span class="scratch-value">120</span> pas</div>
                                 <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">120</span> degrés</div>
                             </div>
@@ -431,9 +476,8 @@
                         <div class="scratch-block events">quand ⚑ cliqué</div>
                         <div class="scratch-block pen">effacer tout</div>
                         <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control">répéter <span class="scratch-value">2</span> fois</div>
-                        <div class="scratch-nested">
-                            <div class="scratch-stack">
+                        <div class="scratch-block control-c">répéter <span class="scratch-value">2</span> fois
+                            <div class="scratch-nested">
                                 <div class="scratch-block motion">avancer de <span class="scratch-value">150</span> pas</div>
                                 <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
                                 <div class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</div>
@@ -462,9 +506,8 @@
                         <div class="scratch-block events">quand ⚑ cliqué</div>
                         <div class="scratch-block pen">effacer tout</div>
                         <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control">répéter <span class="scratch-value">6</span> fois</div>
-                        <div class="scratch-nested">
-                            <div class="scratch-stack">
+                        <div class="scratch-block control-c">répéter <span class="scratch-value">6</span> fois
+                            <div class="scratch-nested">
                                 <div class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</div>
                                 <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">60</span> degrés</div>
                             </div>
@@ -492,14 +535,13 @@
                         <div class="scratch-block events">quand ⚑ cliqué</div>
                         <div class="scratch-block pen">effacer tout</div>
                         <div class="scratch-block sensing">demander "Combien de côtés ?" et attendre</div>
-                        <div class="scratch-block data">mettre <span class="scratch-value">côtés</span> à <span class="scratch-value">réponse</span></div>
-                        <div class="scratch-block data">mettre <span class="scratch-value">angle</span> à <span class="scratch-value">360 / côtés</span></div>
+                        <div class="scratch-block data">mettre <span class="scratch-variable">côtés</span> à <span class="scratch-variable">réponse</span></div>
+                        <div class="scratch-block data">mettre <span class="scratch-variable">angle</span> à <span class="scratch-operator"><span class="scratch-value">360</span> / <span class="scratch-variable">côtés</span></span></div>
                         <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control">répéter <span class="scratch-value">côtés</span> fois</div>
-                        <div class="scratch-nested">
-                            <div class="scratch-stack">
+                        <div class="scratch-block control-c">répéter <span class="scratch-variable">côtés</span> fois
+                            <div class="scratch-nested">
                                 <div class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</div>
-                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">angle</span> degrés</div>
+                                <div class="scratch-block motion">tourner ↻ de <span class="scratch-variable">angle</span> degrés</div>
                             </div>
                         </div>
                     </div>
@@ -524,19 +566,17 @@
                     <div class="scratch-stack">
                         <div class="scratch-block events">quand ⚑ cliqué</div>
                         <div class="scratch-block pen">effacer tout</div>
-                        <div class="scratch-block data">mettre <span class="scratch-value">taille</span> à <span class="scratch-value">50</span></div>
-                        <div class="scratch-block control">répéter <span class="scratch-value">4</span> fois</div>
-                        <div class="scratch-nested">
-                            <div class="scratch-stack">
+                        <div class="scratch-block data">mettre <span class="scratch-variable">taille</span> à <span class="scratch-value">50</span></div>
+                        <div class="scratch-block control-c">répéter <span class="scratch-value">4</span> fois
+                            <div class="scratch-nested">
                                 <div class="scratch-block pen">stylo en position d'écriture</div>
-                                <div class="scratch-block control">répéter <span class="scratch-value">4</span> fois</div>
-                                <div class="scratch-nested">
-                                    <div class="scratch-stack">
-                                        <div class="scratch-block motion">avancer de <span class="scratch-value">taille</span> pas</div>
+                                <div class="scratch-block control-c">répéter <span class="scratch-value">4</span> fois
+                                    <div class="scratch-nested">
+                                        <div class="scratch-block motion">avancer de <span class="scratch-variable">taille</span> pas</div>
                                         <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
                                     </div>
                                 </div>
-                                <div class="scratch-block data">ajouter <span class="scratch-value">30</span> à <span class="scratch-value">taille</span></div>
+                                <div class="scratch-block data">ajouter <span class="scratch-value">30</span> à <span class="scratch-variable">taille</span></div>
                                 <div class="scratch-block pen">relever le stylo</div>
                                 <div class="scratch-block motion">aller à x: <span class="scratch-value">0</span> y: <span class="scratch-value">0</span></div>
                             </div>
@@ -563,9 +603,8 @@
                         <div class="scratch-block events">quand ⚑ cliqué</div>
                         <div class="scratch-block pen">effacer tout</div>
                         <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control">répéter <span class="scratch-value">5</span> fois</div>
-                        <div class="scratch-nested">
-                            <div class="scratch-stack">
+                        <div class="scratch-block control-c">répéter <span class="scratch-value">5</span> fois
+                            <div class="scratch-nested">
                                 <div class="scratch-block motion">avancer de <span class="scratch-value">100</span> pas</div>
                                 <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">144</span> degrés</div>
                             </div>
@@ -593,12 +632,10 @@
                         <div class="scratch-block events">quand ⚑ cliqué</div>
                         <div class="scratch-block pen">effacer tout</div>
                         <div class="scratch-block pen">stylo en position d'écriture</div>
-                        <div class="scratch-block control">répéter <span class="scratch-value">12</span> fois</div>
-                        <div class="scratch-nested">
-                            <div class="scratch-stack">
-                                <div class="scratch-block control">répéter <span class="scratch-value">4</span> fois</div>
-                                <div class="scratch-nested">
-                                    <div class="scratch-stack">
+                        <div class="scratch-block control-c">répéter <span class="scratch-value">12</span> fois
+                            <div class="scratch-nested">
+                                <div class="scratch-block control-c">répéter <span class="scratch-value">4</span> fois
+                                    <div class="scratch-nested">
                                         <div class="scratch-block motion">avancer de <span class="scratch-value">50</span> pas</div>
                                         <div class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</div>
                                     </div>
