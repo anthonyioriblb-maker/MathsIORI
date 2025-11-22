@@ -139,7 +139,8 @@
             background: #E8F5E9;
             border-top: 2px solid #40BF4A;
             padding: 15px;
-            max-height: 200px;
+            min-height: 150px;
+            max-height: 250px;
             overflow-y: auto;
         }
 
@@ -549,11 +550,11 @@
 
         Blockly.Blocks['set_variable'] = {
             init: function() {
-                this.appendValueInput("VALUE")
-                    .setCheck("Number")
+                this.appendDummyInput()
                     .appendField("mettre")
                     .appendField(new Blockly.FieldTextInput("variable"), "VAR")
-                    .appendField("à");
+                    .appendField("à")
+                    .appendField(new Blockly.FieldNumber(0), "VALUE");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setColour("#FF8C1A");
@@ -563,11 +564,11 @@
 
         Blockly.Blocks['change_variable'] = {
             init: function() {
-                this.appendValueInput("VALUE")
-                    .setCheck("Number")
-                    .appendField("ajouter")
+                this.appendDummyInput()
+                    .appendField("ajouter à")
                     .appendField(new Blockly.FieldTextInput("variable"), "VAR")
-                    .appendField("de");
+                    .appendField("la valeur")
+                    .appendField(new Blockly.FieldNumber(1), "VALUE");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setColour("#FF8C1A");
@@ -790,14 +791,13 @@
 
                 case 'set_variable':
                     const varName = block.getFieldValue('VAR');
-                    const valueBlock = block.getInputTargetBlock('VALUE');
-                    variables[varName] = valueBlock ? await evaluateValue(valueBlock) : 0;
+                    const value = parseFloat(block.getFieldValue('VALUE'));
+                    variables[varName] = value;
                     break;
 
                 case 'change_variable':
                     const changeVar = block.getFieldValue('VAR');
-                    const changeBlock = block.getInputTargetBlock('VALUE');
-                    const changeValue = changeBlock ? await evaluateValue(changeBlock) : 0;
+                    const changeValue = parseFloat(block.getFieldValue('VALUE'));
                     variables[changeVar] = (variables[changeVar] || 0) + changeValue;
                     break;
 
