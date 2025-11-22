@@ -696,7 +696,10 @@ fin`,
             // Afficher les blocs Scratch avec scratchblocks
             const blocksContainer = document.getElementById('scratchBlocks');
             blocksContainer.innerHTML = `<pre class="blocks">${ex.scratchCode}</pre>`;
-            scratchblocks.renderMatching('pre.blocks', { languages: ['fr'] });
+            scratchblocks.renderMatching('pre.blocks', {
+                languages: ['fr'],
+                style: 'scratch3'
+            });
 
             document.getElementById('tipBox').innerHTML = `<h4>💡 Astuce</h4><p>${ex.tip}</p>`;
             clearCanvas(ctx);
