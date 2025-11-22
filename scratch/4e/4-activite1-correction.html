@@ -441,8 +441,17 @@ répéter (côtés) fois
   tourner droite de (angle) degrés
 fin`,
                 tip: "Avec des variables, un seul programme peut dessiner n'importe quel polygone !",
-                draw: function(ctx, sprite, coords) {
-                    drawPolygon(ctx, sprite, coords, 80, 72, 5);
+                draw: async function(ctx, sprite, coords) {
+                    // Poser les questions comme dans Scratch
+                    const cotes = prompt("Combien de côtés ?") || "5";
+                    const nbCotes = parseInt(cotes);
+
+                    const longueur = prompt("Quelle longueur ?") || "80";
+                    const longueurVal = parseInt(longueur);
+
+                    const angle = 360 / nbCotes;
+
+                    await drawPolygon(ctx, sprite, coords, longueurVal, angle, nbCotes);
                 }
             },
             6: {
@@ -718,11 +727,11 @@ fin`,
             });
         });
 
-        document.getElementById('runBtn').addEventListener('click', function() {
+        document.getElementById('runBtn').addEventListener('click', async function() {
             const activeBtn = document.querySelector('.exercise-btn.active');
             const exNum = parseInt(activeBtn.dataset.ex);
             const ex = exercises[exNum];
-            ex.draw(ctx, sprite, coords);
+            await ex.draw(ctx, sprite, coords);
         });
 
         // Initialisation
