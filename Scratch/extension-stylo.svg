@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250">
+  <!-- Background -->
+  <rect width="400" height="250" fill="#f0f0f0" rx="10"/>
+
+  <!-- Extension tile -->
+  <g transform="translate(100, 50)">
+    <!-- Tile background -->
+    <rect width="200" height="150" fill="white" stroke="#ccc" stroke-width="2" rx="8"/>
+
+    <!-- Pen icon -->
+    <g transform="translate(100, 50)">
+      <!-- Pen body -->
+      <rect x="-15" y="-40" width="30" height="60" fill="#0FBD8C" rx="3"/>
+
+      <!-- Pen tip -->
+      <polygon points="0,20 -15,30 15,30" fill="#333"/>
+
+      <!-- Pen clip -->
+      <rect x="15" y="-30" width="8" height="35" fill="#40BF4A" rx="2"/>
+
+      <!-- Highlight -->
+      <rect x="-10" y="-35" width="8" height="20" fill="#5FFFC7" opacity="0.5" rx="2"/>
+    </g>
+
+    <!-- Extension name -->
+    <text x="100" y="110" text-anchor="middle" font-size="20" font-weight="bold" fill="#0FBD8C">Stylo</text>
+    <text x="100" y="133" text-anchor="middle" font-size="14" fill="#666">Pen</text>
+  </g>
+
+  <!-- Arrow pointing to it -->
+  <path d="M 50 200 L 150 180" stroke="#FF6B35" stroke-width="4" fill="none" marker-end="url(#arrowhead2)"/>
+
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#FF6B35"/>
+    </marker>
+  </defs>
+
+  <!-- Instruction text -->
+  <text x="20" y="210" font-size="16" fill="#FF6B35" font-weight="bold">Choisir cette extension</text>
+</svg>

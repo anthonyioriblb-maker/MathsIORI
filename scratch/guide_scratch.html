@@ -275,7 +275,7 @@
         <h2>L'interface Scratch</h2>
 
         <div class="interface-container">
-            <img src="interface.png" alt="Interface Scratch" width="80%">
+            <img src="interface.svg" alt="Interface Scratch" width="100%" style="max-width: 1200px;">
 
             <div class="interface-legend">
                 <div class="legend-item">
@@ -427,12 +427,12 @@
         <div class="extension-steps">
             <div>
                 <h3>Étape 1 : Cliquer sur l'icône en bas à gauche</h3>
-                <img src="ajouter extension.png" alt="Bouton ajouter extension">
+                <img src="ajouter-extension.svg" alt="Bouton ajouter extension" style="max-width: 400px; width: 100%;">
             </div>
 
             <div>
                 <h3>Étape 2 : Choisir l'extension Stylo</h3>
-                <img src="extension stylo.png" alt="Extension stylo">
+                <img src="extension-stylo.svg" alt="Extension stylo" style="max-width: 400px; width: 100%;">
             </div>
         </div>
 
@@ -477,6 +477,79 @@
 
         <div class="note">
             💡 "Tourner" ajoute des degrés, "s'orienter à" fixe une direction précise.
+        </div>
+    </div>
+
+    <!-- SECTION 5: Angle de rotation pour les polygones -->
+    <div class="section">
+        <h2>5. 📐 Comprendre l'angle de rotation (pour dessiner des polygones)</h2>
+
+        <div class="important">
+            ⚠️ <strong>Attention :</strong> L'angle qu'on utilise dans Scratch n'est PAS l'angle intérieur du polygone !
+        </div>
+
+        <h3 style="margin-top: 15px;">Exemple avec un triangle équilatéral :</h3>
+
+        <svg width="600" height="300" style="display: block; margin: 20px auto; background: white; border: 2px solid #4C97FF; border-radius: 8px;">
+            <!-- Triangle équilatéral -->
+            <line x1="300" y1="220" x2="450" y2="140" stroke="#333" stroke-width="3"/>
+            <line x1="450" y1="140" x2="350" y2="60" stroke="#333" stroke-width="3"/>
+            <line x1="350" y1="60" x2="300" y2="220" stroke="#333" stroke-width="3"/>
+
+            <!-- Sommet en haut à droite avec prolongation -->
+            <circle cx="450" cy="140" r="5" fill="#FF6B35"/>
+
+            <!-- Direction d'arrivée (ligne pointillée rouge) - depuis le bas gauche -->
+            <line x1="300" y1="220" x2="470" y2="155" stroke="#FF6B35" stroke-width="2" stroke-dasharray="5,5"/>
+
+            <!-- Direction de départ (ligne pointillée verte) - vers le haut -->
+            <line x1="450" y1="140" x2="390" y2="40" stroke="#40BF4A" stroke-width="2" stroke-dasharray="5,5"/>
+
+            <!-- Arc pour montrer l'angle de rotation de 120° -->
+            <path d="M 465 150 A 40 40 0 0 1 430 110" fill="none" stroke="#4C97FF" stroke-width="2"/>
+
+            <!-- Flèche du lutin arrivant -->
+            <polygon points="455,150 448,157 462,157" fill="#FF6B35"/>
+
+            <!-- Flèche du lutin partant -->
+            <polygon points="415,90 422,97 408,97" fill="#40BF4A"/>
+
+            <!-- Texte angle 120° -->
+            <text x="465" y="130" font-size="16" font-weight="bold" fill="#4C97FF">120°</text>
+
+            <!-- Légende -->
+            <text x="150" y="250" font-size="14" fill="#FF6B35">━━ Direction d'arrivée</text>
+            <text x="150" y="270" font-size="14" fill="#40BF4A">━━ Direction de départ</text>
+            <text x="150" y="290" font-size="14" fill="#4C97FF">⌒ Angle de rotation Scratch</text>
+        </svg>
+
+        <div style="background: #E3F2FD; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <p style="margin: 5px 0; font-size: 11px;"><strong>🔵 Le lutin arrive</strong> par le bas gauche (flèche rouge)</p>
+            <p style="margin: 5px 0; font-size: 11px;"><strong>🟢 Le lutin repart</strong> vers le haut (flèche verte)</p>
+            <p style="margin: 5px 0; font-size: 11px;"><strong>🔷 Angle de rotation = 120°</strong> (angle bleu entre les deux directions)</p>
+        </div>
+
+        <h3 style="margin-top: 15px;">📊 Formule pour calculer l'angle de rotation :</h3>
+
+        <div style="background: white; border: 3px solid #4C97FF; padding: 20px; border-radius: 8px; margin: 15px 0; text-align: center;">
+            <p style="font-size: 18px; font-weight: bold; color: #4C97FF; margin: 10px 0;">
+                Angle de rotation Scratch = 360° ÷ nombre de côtés
+            </p>
+        </div>
+
+        <div style="background: #FFF3E0; padding: 15px; border-radius: 8px; border-left: 4px solid #FFD500;">
+            <p style="margin: 5px 0; font-size: 11px;"><strong>💡 Exemples :</strong></p>
+            <ul style="margin: 5px 0; padding-left: 20px; font-size: 11px;">
+                <li><strong>Triangle</strong> : 360° ÷ 3 = <strong>120°</strong></li>
+                <li><strong>Carré</strong> : 360° ÷ 4 = <strong>90°</strong></li>
+                <li><strong>Pentagone</strong> : 360° ÷ 5 = <strong>72°</strong></li>
+                <li><strong>Hexagone</strong> : 360° ÷ 6 = <strong>60°</strong></li>
+            </ul>
+        </div>
+
+        <div class="note" style="margin-top: 15px;">
+            <strong>⚠️ Note importante :</strong> Cet angle est différent de l'angle extérieur en mathématiques.
+            C'est l'angle de rotation que doit faire le lutin pour continuer son chemin !
         </div>
     </div>
 
