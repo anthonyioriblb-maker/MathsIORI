@@ -7,7 +7,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scratch 4ème</title>
-    <link rel="stylesheet" href="../classe-page.css?v=20251120143124">
+    <script>
+        // Charger le CSS avec timestamp pour forcer rechargement
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '../classe-page.css?v=' + Date.now();
+        document.head.appendChild(link);
+    </script>
     <style>
         :root {
             --main-gradient: linear-gradient(135deg, #FF6B35 0%, #FFD500 100%);
@@ -47,15 +53,20 @@
                 },
                 activite: {
                     actif: true,
-                    fichier: "4e/4-activite1.html"
+                    fichier: "4e/4-activite1.html?v=" + Date.now()
                 },
                 correction: {
                     actif: true,
-                    fichier: "4e/4-activite1-correction.html"
+                    fichier: "4e/4-activite1-correction.html?v=" + Date.now()
                 }
             }
         };
     </script>
-    <script src="../classe-page.js?v=20251120143124"></script>
+    <script>
+        // Charger le script avec timestamp pour forcer rechargement
+        const script = document.createElement('script');
+        script.src = '../classe-page.js?v=' + Date.now();
+        document.body.appendChild(script);
+    </script>
 </body>
 </html>

@@ -226,5 +226,18 @@
 
         <a href="../index.html" class="home-button">← Retour à l'accueil</a>
     </div>
+
+    <script>
+        // Ajouter timestamps à tous les liens pour forcer rechargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const timestamp = Date.now();
+            document.querySelectorAll('a:not(.coming-soon)').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href !== '#' && !href.startsWith('../') && href.includes('.html')) {
+                    link.href = href + '?v=' + timestamp;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
