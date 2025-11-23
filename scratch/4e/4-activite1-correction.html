@@ -1,790 +1,1022 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aides et Corrections - Exercices Scratch Figures (4ème)</title>
+    <title>Corrections Scratch 4ème - Figures géométriques</title>
+
+    <!-- Scratchblocks CSS -->
+    <link rel="stylesheet" href="../lib/scratchblocks.css">
+
     <style>
-        @media print {
-            body {
-                margin: 0.4cm;
-            }
-            .page-break {
-                page-break-after: always;
-            }
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            line-height: 1.4;
-            font-size: 14px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #E5F0FF;
+            overflow-x: hidden;
         }
 
-        h1 {
-            color: #FF6B35;
-            border-bottom: 3px solid #FF6B35;
-            padding-bottom: 10px;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            color: #4C97FF;
-            font-size: 1.8em;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #4C97FF;
-            padding-left: 15px;
-        }
-
-        h3 {
-            color: #333;
-            font-size: 1.3em;
-            margin-top: 15px;
-            margin-bottom: 10px;
-        }
-
-        .exercise {
-            background: #f9f9f9;
-            border: 2px solid #4C97FF;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .exercise-header {
+        .header {
+            background: linear-gradient(135deg, #40BF4A 0%, #0FBD8C 100%);
+            color: white;
+            padding: 20px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3px;
         }
 
-        .exercise-number {
-            background: #4C97FF;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
+        .header h1 {
+            font-size: 28px;
             font-weight: bold;
-            font-size: 10px;
         }
 
-        .difficulty {
-            padding: 2px 6px;
+        .correction-badge {
+            background: rgba(255,255,255,0.3);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .exercise-nav {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            align-items: center;
+        }
+
+        .exercise-nav span {
+            font-weight: bold;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .exercise-btn {
+            padding: 10px 20px;
+            border: 2px solid #40BF4A;
+            background: white;
+            color: #40BF4A;
             border-radius: 8px;
-            font-size: 8px;
+            cursor: pointer;
             font-weight: bold;
+            font-size: 14px;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
 
-        .difficulty.facile {
+        .exercise-btn:hover {
+            background: #E8F5E9;
+            transform: translateY(-2px);
+        }
+
+        .exercise-btn.active {
             background: #40BF4A;
             color: white;
+            box-shadow: 0 4px 8px rgba(64, 191, 74, 0.4);
         }
 
-        .difficulty.moyen {
-            background: #FFD500;
-            color: #333;
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 480px;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
-        .difficulty.difficile {
-            background: #FF6B35;
-            color: white;
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .hint {
-            background: #FFF9E6;
-            border-left: 2px solid #FFD500;
-            padding: 4px;
-            margin: 4px 0;
-            font-size: 8px;
-        }
-
-        .solution {
-            background: #E6F7FF;
-            border-left: 2px solid #4C97FF;
-            padding: 4px;
-            margin: 4px 0;
-            font-size: 8px;
-        }
-
-        .scratch-block {
-            padding: 6px 10px 6px 18px;
-            border-radius: 4px;
-            display: inline-block;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 7px;
-            font-weight: 500;
-            color: white;
-            line-height: 1.5;
-            margin: 1px;
-            position: relative;
-        }
-
-        /* Encoche en haut du bloc (notch) */
-        .scratch-code .scratch-block:not(.events)::before {
-            content: '';
-            position: absolute;
-            left: 8px;
-            top: -2px;
-            width: 12px;
-            height: 4px;
-            background: inherit;
-            border-radius: 2px 2px 0 0;
-            opacity: 0.8;
-        }
-
-        /* Creux en bas du bloc (pour emboîter le bloc suivant) */
-        .scratch-code .scratch-block:not(.events):not(.control)::after {
-            content: '';
-            position: absolute;
-            left: 8px;
-            bottom: -2px;
-            width: 12px;
-            height: 3px;
-            background: #F9F9F9;
-            border-radius: 0 0 2px 2px;
-        }
-
-        /* Bloc événement (chapeau) - forme arrondie en haut */
-        .scratch-code .scratch-block.events {
-            border-radius: 12px 12px 4px 4px;
-            padding-left: 10px;
-        }
-
-        .scratch-code .scratch-block.events::before {
-            display: none;
-        }
-
-        .scratch-value {
+        .solution-panel {
             background: white;
-            color: #575E75;
-            padding: 3px 6px;
-            border-radius: 8px;
-            display: inline-block;
-            margin: 0 2px;
-            font-weight: 600;
-            min-width: 20px;
-            text-align: center;
-            box-shadow: inset 0 0.5px 0 rgba(0, 0, 0, 0.1), inset 0 -0.5px 0 rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 25px;
         }
 
-        /* Couleurs des blocs Scratch */
-        .scratch-block.motion {
-            background: linear-gradient(180deg, #4C97FF 0%, #4280D7 100%);
-        }
-        .scratch-block.control {
-            background: linear-gradient(180deg, #FFAB19 0%, #EC9C13 100%);
-        }
-        .scratch-block.pen {
-            background: linear-gradient(180deg, #0FBD8C 0%, #0DA57A 100%);
-        }
-        .scratch-block.events {
-            background: linear-gradient(180deg, #FFD500 0%, #DCBE00 100%);
-            color: #333;
-        }
-        .scratch-block.data {
-            background: linear-gradient(180deg, #FF8C1A 0%, #FF8000 100%);
-        }
-        .scratch-block.sensing {
-            background: linear-gradient(180deg, #4CBFE6 0%, #2E8EB8 100%);
-        }
-        .scratch-block.operators {
-            background: linear-gradient(180deg, #40BF4A 0%, #389438 100%);
+        .solution-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #40BF4A;
         }
 
-        /* Container pour les blocs Scratch */
-        .scratch-code {
+        .solution-title h2 {
+            color: #2E7D32;
+            font-size: 24px;
+        }
+
+        .solution-title .check {
+            font-size: 32px;
+        }
+
+        .explanation-box {
+            background: #E8F5E9;
+            border-left: 4px solid #40BF4A;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .explanation-box h3 {
+            color: #2E7D32;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .explanation-box ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+
+        .explanation-box li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .scratch-blocks-container {
             background: #F9F9F9;
             border: 2px solid #D0D0D0;
             border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .scratch-blocks-title {
+            color: #4C97FF;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .canvas-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             padding: 20px;
-            margin: 15px 0;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
         }
 
-        .scratch-code .scratch-block {
-            display: block;
-            margin: 3px 0;
-            width: fit-content;
-            font-size: 12px;
-            padding: 8px 12px;
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.05);
+        .canvas-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        /* Bloc de contrôle (avec forme en C) */
-        .scratch-code .scratch-block.control {
+        .canvas-header h3 {
+            color: #4C97FF;
+            font-size: 20px;
+        }
+
+        .btn-run {
+            background: #40BF4A;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .btn-run:hover {
+            background: #389438;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .stage-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
             position: relative;
-            padding-bottom: 6px;
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 0 !important;
-            display: inline-block;
-            min-width: 120px;
         }
 
-        /* Blocs imbriqués - contenu de la boucle */
-        .scratch-nested {
-            position: relative;
-            margin: 0;
-            padding: 8px 0 8px 20px;
-            margin-left: 18px;
-            border-left: 4px solid;
-            border-bottom: 4px solid;
-            border-color: #FFAB19;
-            border-radius: 0 0 0 8px;
-            background: transparent;
+        #canvas {
+            border: 2px solid #D0D0D0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .sprite {
+            position: absolute;
+            font-size: 30px;
+            transform-origin: center;
+            transition: all 0.05s linear;
+            pointer-events: none;
+        }
+
+        .coords {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #666;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .tip-box {
+            background: #FFF9E6;
+            border-left: 4px solid #FFD500;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .tip-box h4 {
+            color: #CC9900;
             margin-bottom: 8px;
         }
 
-        /* Petite encoche sortante en bas à droite */
-        .scratch-nested::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            bottom: -4px;
-            width: 12px;
-            height: 4px;
-            background: #F9F9F9;
-            border-radius: 0 0 2px 2px;
-        }
-
-        .scratch-nested .scratch-block {
-            margin: 6px 0;
-        }
-
-        .scratch-nested .scratch-block:first-child {
-            margin-top: 2px;
-        }
-
-        .scratch-nested .scratch-block:last-child {
-            margin-bottom: 2px;
-        }
-
-        /* Double imbrication - boucle dans une boucle */
-        .scratch-nested .scratch-nested {
-            border-color: #4C97FF;
-            margin-left: 18px;
-        }
-
-        .scratch-nested .scratch-nested .scratch-block.control {
-            background: linear-gradient(180deg, #4C97FF 0%, #4280D7 100%);
-        }
-
-        .concept {
-            background: #E8F5E9;
-            border-left: 2px solid #40BF4A;
-            padding: 4px;
-            margin: 4px 0;
-            font-size: 8px;
-        }
-
-        .concept strong {
-            color: #2E7D32;
-        }
-
-        ul {
-            margin: 3px 0;
-            padding-left: 15px;
-        }
-
-        li {
-            margin: 2px 0;
-        }
-
-        .math-formula {
-            background: white;
-            border: 1px dashed #999;
-            padding: 3px;
-            margin: 3px 0;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 9px;
+        /* Style pour les blocs Scratchblocks */
+        pre.blocks {
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
 <body>
-    <h1>📐 Aides et Corrections - Figures géométriques</h1>
-    <p style="font-size: 9px; color: #666; margin-bottom: 4px;">Niveau 4ème - Solutions détaillées</p>
+    <div class="header">
+        <h1>✅ Corrections Scratch 4ème - Figures géométriques</h1>
+        <div class="correction-badge">SOLUTIONS</div>
+    </div>
 
-    <!-- ========== NIVEAU 1 ========== -->
-    <h2>📘 Niveau 1 : Figures simples</h2>
+    <div class="exercise-nav">
+        <span>Exercices :</span>
+        <button class="exercise-btn active" data-ex="1">1. Carré</button>
+        <button class="exercise-btn" data-ex="2">2. Triangle</button>
+        <button class="exercise-btn" data-ex="3">3. Rectangle</button>
+        <button class="exercise-btn" data-ex="4">4. Hexagone</button>
+        <button class="exercise-btn" data-ex="5">5. Polygone</button>
+        <button class="exercise-btn" data-ex="6">6. Carrés emboîtés</button>
+        <button class="exercise-btn" data-ex="7">7. Étoile</button>
+        <button class="exercise-btn" data-ex="8">8. Rosace</button>
+        <button class="exercise-btn" data-ex="9">9. Spirale</button>
+        <button class="exercise-btn" data-ex="10">10. Maison</button>
+        <button class="exercise-btn" data-ex="11">11. Flocon</button>
+        <button class="exercise-btn" data-ex="12">12. Créatif</button>
+    </div>
 
-    <!-- Exercice 1 : Carré -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 1</div>
-            <div class="difficulty facile">⭐ Facile</div>
+    <div class="main-container">
+        <div class="solution-panel">
+            <div class="solution-title">
+                <span class="check">✅</span>
+                <h2 id="exerciseTitle">Exercice 1 : Carré</h2>
+            </div>
+
+            <div class="explanation-box" id="explanation">
+                <h3>📐 Explication mathématique</h3>
+                <ul>
+                    <li>Un carré a <strong>4 côtés égaux</strong></li>
+                    <li>Angle de rotation : <strong>360° ÷ 4 = 90°</strong></li>
+                    <li>On répète 4 fois : avancer de 100 pas, tourner de 90°</li>
+                </ul>
+            </div>
+
+            <div class="scratch-blocks-container">
+                <div class="scratch-blocks-title">🧩 Programme Scratch</div>
+                <div id="scratchBlocks"></div>
+            </div>
+
+            <div class="tip-box" id="tipBox">
+                <h4>💡 Astuce</h4>
+                <p>N'oublie pas de mettre le bloc "stylo en position d'écriture" avant la boucle, sinon le lutin ne dessinera rien !</p>
+            </div>
         </div>
-        <h3>Dessiner un carré de côté 100</h3>
 
-        <div class="hint">
-            💡 <strong>Indices :</strong>
-            <ul>
-                <li>Un carré a 4 côtés égaux et 4 sommets</li>
-                <li>À chaque sommet, on tourne de 90° (angle de rotation du lutin)</li>
-                <li>Utilise une boucle <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span></li>
-                <li>N'oublie pas : <span class="scratch-block pen">stylo en position d'écriture</span></li>
-            </ul>
-        </div>
-
-        <div class="concept">
-            <strong>📐 Mathématiques :</strong> Dans un carré, l'angle de rotation du lutin à chaque sommet = 360° ÷ 4 = 90°
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block motion">avancer de <span class="scratch-value">100</span> pas</span>
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span>
-                </div>
+        <div class="canvas-panel">
+            <div class="canvas-header">
+                <h3>🖼️ Résultat</h3>
+                <button class="btn-run" id="runBtn">▶ Voir le résultat</button>
+            </div>
+            <div class="stage-wrapper">
+                <canvas id="canvas" width="400" height="400"></canvas>
+                <div class="sprite" id="sprite">🐱</div>
+                <div class="coords" id="coords">x: 0, y: 0</div>
             </div>
         </div>
     </div>
 
-    <!-- Exercice 2 : Triangle équilatéral -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 2</div>
-            <div class="difficulty facile">⭐ Facile</div>
-        </div>
-        <h3>Dessiner un triangle équilatéral de côté 120</h3>
+    <!-- Scratchblocks JS (local) -->
+    <script src="../lib/scratchblocks.min.js"></script>
+    <script src="../lib/translations-all.js"></script>
 
-        <div class="hint">
-            💡 <strong>Indices :</strong>
-            <ul>
-                <li>Un triangle équilatéral a 3 côtés égaux et 3 sommets</li>
-                <li>Nombre de côtés = 3</li>
-                <li>L'angle de rotation du lutin = 360° ÷ 3 = 120°</li>
-                <li>Utilise <span class="scratch-block control">répéter <span class="scratch-value">3</span> fois</span></li>
-            </ul>
-        </div>
-
-        <div class="concept">
-            <strong>📐 Explication mathématique :</strong><br>
-            • Nombre de côtés d'un triangle = 3<br>
-            • Angle de rotation du lutin = 360° ÷ 3 = <strong>120°</strong><br>
-            • C'est l'angle que doit tourner le lutin à chaque sommet pour continuer son chemin
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block control">répéter <span class="scratch-value">3</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block motion">avancer de <span class="scratch-value">120</span> pas</span>
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">120</span> degrés</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Exercice 3 : Rectangle -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 3</div>
-            <div class="difficulty facile">⭐ Facile</div>
-        </div>
-        <h3>Dessiner un rectangle (longueur 150, largeur 80)</h3>
-
-        <div class="hint">
-            💡 <strong>Indices :</strong>
-            <ul>
-                <li>Un rectangle a 2 longueurs et 2 largeurs (4 sommets)</li>
-                <li>On tourne toujours de 90° aux sommets</li>
-                <li>Utilise <span class="scratch-block control">répéter <span class="scratch-value">2</span> fois</span> pour les 2 paires de côtés</li>
-            </ul>
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block control">répéter <span class="scratch-value">2</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block motion">avancer de <span class="scratch-value">150</span> pas</span>
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span>
-                    <span class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</span>
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Exercice 4 : Hexagone -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 4</div>
-            <div class="difficulty moyen">⭐⭐ Moyen</div>
-        </div>
-        <h3>Dessiner un hexagone régulier de côté 80</h3>
-
-        <div class="hint">
-            💡 <strong>Calcul à faire :</strong>
-            <ul>
-                <li>Nombre de côtés : <strong>6</strong></li>
-                <li>Nombre de sommets : <strong>6</strong></li>
-                <li>Angle de rotation du lutin : 360° ÷ 6 = <strong>60°</strong></li>
-            </ul>
-        </div>
-
-        <div class="math-formula">
-            Angle de rotation du lutin = 360° ÷ 6 = 60°
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block control">répéter <span class="scratch-value">6</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</span>
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">60</span> degrés</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page-break"></div>
-
-    <!-- ========== NIVEAU 2 ========== -->
-    <h2>📗 Niveau 2 : Polygones réguliers avec variables</h2>
-
-    <!-- Exercice 5 : Polygone paramétré -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 5</div>
-            <div class="difficulty moyen">⭐⭐ Moyen</div>
-        </div>
-        <h3>Polygone régulier paramétré</h3>
-
-        <div class="hint">
-            💡 <strong>Méthode :</strong>
-            <ol>
-                <li>Crée deux variables : <span class="scratch-block data">côtés</span> et <span class="scratch-block data">longueur</span></li>
-                <li>Demande au début : "Combien de côtés ?" → stocke dans <span class="scratch-block data">côtés</span></li>
-                <li>Demande : "Quelle longueur ?" → stocke dans <span class="scratch-block data">longueur</span></li>
-                <li>Calcule l'angle : <span class="scratch-block data">mettre angle à</span> <span class="scratch-block operators"><span class="scratch-value">360</span> / côtés</span></li>
-                <li>Répète <span class="scratch-block data">côtés</span> fois : avancer + tourner de <span class="scratch-block data">angle</span></li>
-            </ol>
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block sensing">demander Combien de côtés ? et attendre</span>
-                <span class="scratch-block data">mettre côtés à <span class="scratch-value">réponse</span></span>
-                <span class="scratch-block sensing">demander Quelle longueur ? et attendre</span>
-                <span class="scratch-block data">mettre longueur à <span class="scratch-value">réponse</span></span>
-                <span class="scratch-block data">mettre angle à</span> <span class="scratch-block operators"><span class="scratch-value">360</span> / côtés</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block control">répéter côtés fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block motion">avancer de longueur pas</span>
-                    <span class="scratch-block motion">tourner ↻ de angle degrés</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Exercice 6 : Série de carrés -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 6</div>
-            <div class="difficulty moyen">⭐⭐ Moyen</div>
-        </div>
-        <h3>Série de carrés emboîtés</h3>
-
-        <div class="hint">
-            💡 <strong>Méthode :</strong>
-            <ul>
-                <li>Crée une variable <span class="scratch-block data">taille</span> qui commence à 50</li>
-                <li>Répète 4 fois :
+    <script>
+        const exercises = {
+            1: {
+                title: "Exercice 1 : Carré",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
                     <ul>
-                        <li>Dessine un carré de côté <span class="scratch-block data">taille</span></li>
-                        <li>Ajoute 30 à <span class="scratch-block data">taille</span></li>
-                        <li>Repositionne le lutin au centre : <span class="scratch-block motion">aller à x: <span class="scratch-value">0</span> y: <span class="scratch-value">0</span></span></li>
+                        <li>Un carré a <strong>4 côtés égaux</strong></li>
+                        <li>Angle de rotation : <strong>360° ÷ 4 = 90°</strong></li>
+                        <li>On répète 4 fois : avancer de 100 pas, tourner de 90°</li>
                     </ul>
-                </li>
-            </ul>
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block data">mettre taille à <span class="scratch-value">50</span></span>
-                <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block pen">stylo en position d'écriture</span>
-                    <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span> (carré)
-                    <div class="scratch-nested">
-                        <span class="scratch-block motion">avancer de taille pas</span>
-                        <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span>
-                    </div>
-                    <span class="scratch-block data">ajouter <span class="scratch-value">30</span> à taille</span>
-                    <span class="scratch-block pen">relever le stylo</span>
-                    <span class="scratch-block motion">aller à x: <span class="scratch-value">0</span> y: <span class="scratch-value">0</span></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page-break"></div>
-
-    <!-- ========== NIVEAU 3 ========== -->
-    <h2>📕 Niveau 3 : Figures complexes</h2>
-
-    <!-- Exercice 7 : Étoile -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 7</div>
-            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
-        </div>
-        <h3>Étoile à 5 branches</h3>
-
-        <div class="hint">
-            💡 <strong>Méthode :</strong>
-            <ul>
-                <li>Pour une étoile à 5 branches, on trace 5 segments</li>
-                <li>Mais on tourne de 144° (et non 72°) à chaque fois</li>
-                <li>Formule : angle = 360° ÷ 5 × 2 = 144°</li>
-            </ul>
-        </div>
-
-        <div class="math-formula">
-            Pour une étoile à N branches : angle = 360° × 2 ÷ N<br>
-            Pour N = 5 : angle = 720° ÷ 5 = 144°
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block control">répéter <span class="scratch-value">5</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block motion">avancer de <span class="scratch-value">100</span> pas</span>
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">144</span> degrés</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Exercice 8 : Rosace -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 8</div>
-            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
-        </div>
-        <h3>Rosace de 12 carrés</h3>
-
-        <div class="hint">
-            💡 <strong>Méthode :</strong>
-            <ul>
-                <li>Répète 12 fois :
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (4) fois
+  avancer de (100) pas
+  tourner droite de (90) degrés
+fin`,
+                tip: "N'oublie pas de mettre le bloc \"stylo en position d'écriture\" avant la boucle, sinon le lutin ne dessinera rien !",
+                draw: function(ctx, sprite, coords) {
+                    drawPolygon(ctx, sprite, coords, 100, 90, 4);
+                }
+            },
+            2: {
+                title: "Exercice 2 : Triangle équilatéral",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
                     <ul>
-                        <li>Dessine un carré (avec une boucle interne de 4)</li>
-                        <li>Tourne de 30° (360° ÷ 12)</li>
+                        <li>Un triangle équilatéral a <strong>3 côtés égaux</strong></li>
+                        <li>Angle de rotation : <strong>360° ÷ 3 = 120°</strong></li>
+                        <li>On répète 3 fois : avancer de 120 pas, tourner de 120°</li>
                     </ul>
-                </li>
-                <li>Tu auras donc <strong>2 boucles imbriquées</strong></li>
-            </ul>
-        </div>
-
-        <div class="concept">
-            <strong>🔄 Boucles imbriquées :</strong><br>
-            Boucle extérieure (12 fois) → Boucle intérieure (4 fois pour le carré)
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block control">répéter <span class="scratch-value">12</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block control">répéter <span class="scratch-value">4</span> fois</span>
-                    <div class="scratch-nested">
-                        <span class="scratch-block motion">avancer de <span class="scratch-value">50</span> pas</span>
-                        <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span>
-                    </div>
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">30</span> degrés</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Exercice 9 : Spirale -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 9</div>
-            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
-        </div>
-        <h3>Spirale carrée</h3>
-
-        <div class="hint">
-            💡 <strong>Méthode :</strong>
-            <ul>
-                <li>Crée une variable <span class="scratch-block data">distance</span> = 10</li>
-                <li>Répète 40 fois :
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (3) fois
+  avancer de (120) pas
+  tourner droite de (120) degrés
+fin`,
+                tip: "Pour un triangle équilatéral, on tourne de 120° et non de 60° ! C'est l'angle extérieur qui compte.",
+                draw: function(ctx, sprite, coords) {
+                    drawPolygon(ctx, sprite, coords, 120, 120, 3);
+                }
+            },
+            3: {
+                title: "Exercice 3 : Rectangle",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
                     <ul>
-                        <li>Avance de <span class="scratch-block data">distance</span> pas</li>
-                        <li>Tourne de 90°</li>
-                        <li>Ajoute 5 à <span class="scratch-block data">distance</span></li>
+                        <li>Un rectangle a <strong>2 longueurs et 2 largeurs</strong></li>
+                        <li>Angle à chaque coin : <strong>90°</strong></li>
+                        <li>On répète 2 fois : longueur, tourner 90°, largeur, tourner 90°</li>
                     </ul>
-                </li>
-            </ul>
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block data">mettre distance à <span class="scratch-value">10</span></span>
-                <span class="scratch-block control">répéter <span class="scratch-value">40</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block motion">avancer de distance pas</span>
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">90</span> degrés</span>
-                    <span class="scratch-block data">ajouter <span class="scratch-value">5</span> à distance</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page-break"></div>
-
-    <!-- ========== NIVEAU 4 ========== -->
-    <h2>🏆 Niveau 4 : Défis</h2>
-
-    <!-- Exercice 10 : Maison -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 10</div>
-            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
-        </div>
-        <h3>Dessiner une maison</h3>
-
-        <div class="hint">
-            💡 <strong>Éléments à combiner :</strong>
-            <ul>
-                <li>Un carré pour la base (côté 100)</li>
-                <li>Un triangle pour le toit (se positionner au sommet du carré)</li>
-                <li>Un rectangle pour la porte (se déplacer sans dessiner)</li>
-                <li>Des carrés pour les fenêtres</li>
-            </ul>
-        </div>
-
-        <div class="concept">
-            <strong>🎨 Astuce clé :</strong> Utilise <span class="scratch-block pen">relever le stylo</span> pour te déplacer sans dessiner entre chaque forme, puis <span class="scratch-block pen">stylo en position d'écriture</span> pour recommencer à dessiner.
-        </div>
-
-        <div class="solution">
-            ✅ <strong>Méthode :</strong><br>
-            1. Dessine le carré de base<br>
-            2. Relève le stylo, positionne-toi pour le toit<br>
-            3. Abaisse le stylo, dessine le triangle<br>
-            4. Répète pour la porte et les fenêtres
-        </div>
-    </div>
-
-    <!-- Exercice 11 : Flocon -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 11</div>
-            <div class="difficulty difficile">⭐⭐⭐ Difficile</div>
-        </div>
-        <h3>Flocon de neige</h3>
-
-        <div class="hint">
-            💡 <strong>Méthode :</strong>
-            <ul>
-                <li>6 branches → angle entre chaque branche : 360° ÷ 6 = 60°</li>
-                <li>Répète 6 fois :
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (2) fois
+  avancer de (150) pas
+  tourner droite de (90) degrés
+  avancer de (80) pas
+  tourner droite de (90) degrés
+fin`,
+                tip: "On met 4 blocs dans la boucle \"répéter 2 fois\" pour tracer les 2 paires de côtés.",
+                draw: function(ctx, sprite, coords) {
+                    drawRectangle(ctx, sprite, coords);
+                }
+            },
+            4: {
+                title: "Exercice 4 : Hexagone régulier",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
                     <ul>
-                        <li>Avance de 80 (dessine la branche)</li>
-                        <li>Recule de 80 (reviens au centre)</li>
-                        <li>Tourne de 60°</li>
+                        <li>Un hexagone a <strong>6 côtés égaux</strong></li>
+                        <li>Angle de rotation : <strong>360° ÷ 6 = 60°</strong></li>
+                        <li>On répète 6 fois : avancer de 80 pas, tourner de 60°</li>
                     </ul>
-                </li>
-            </ul>
-        </div>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (6) fois
+  avancer de (80) pas
+  tourner droite de (60) degrés
+fin`,
+                tip: "Formule générale : Angle = 360° ÷ nombre de côtés",
+                draw: function(ctx, sprite, coords) {
+                    drawPolygon(ctx, sprite, coords, 80, 60, 6);
+                }
+            },
+            5: {
+                title: "Exercice 5 : Polygone paramétré",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>On utilise des <strong>variables</strong> pour rendre le programme flexible</li>
+                        <li>Variable <strong>côtés</strong> : nombre de côtés du polygone</li>
+                        <li>Variable <strong>longueur</strong> : longueur des côtés</li>
+                        <li>Variable <strong>angle</strong> : calculée avec 360 ÷ côtés</li>
+                        <li>Exemple montré : pentagone (5 côtés, 80 pas, 72°)</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+demander [Combien de côtés ?] et attendre
+mettre [côtés v] à (réponse)
+demander [Quelle longueur ?] et attendre
+mettre [longueur v] à (réponse)
+mettre [angle v] à ((360) / (côtés))
+stylo en position d'écriture
+répéter (côtés) fois
+  avancer de (longueur) pas
+  tourner droite de (angle) degrés
+fin`,
+                tip: "Avec des variables, un seul programme peut dessiner n'importe quel polygone !",
+                draw: async function(ctx, sprite, coords) {
+                    // Poser les questions comme dans Scratch
+                    const cotes = prompt("Combien de côtés ?") || "5";
+                    const nbCotes = parseInt(cotes);
 
-        <div class="solution">
-            ✅ <strong>Programme :</strong>
-            <div class="scratch-code">
-                <span class="scratch-block events">quand ⚑ cliqué</span>
-                <span class="scratch-block pen">effacer tout</span>
-                <span class="scratch-block pen">stylo en position d'écriture</span>
-                <span class="scratch-block control">répéter <span class="scratch-value">6</span> fois</span>
-                <div class="scratch-nested">
-                    <span class="scratch-block motion">avancer de <span class="scratch-value">80</span> pas</span>
-                    <span class="scratch-block motion">avancer de <span class="scratch-value">-80</span> pas</span> (reculer)
-                    <span class="scratch-block motion">tourner ↻ de <span class="scratch-value">60</span> degrés</span>
-                </div>
-            </div>
-        </div>
-    </div>
+                    const longueur = prompt("Quelle longueur ?") || "80";
+                    const longueurVal = parseInt(longueur);
 
-    <!-- Exercice 12 : Création libre -->
-    <div class="exercise">
-        <div class="exercise-header">
-            <div class="exercise-number">Exercice 12</div>
-            <div class="difficulty moyen">🎨 Créatif</div>
-        </div>
-        <h3>Création libre</h3>
+                    const angle = 360 / nbCotes;
 
-        <div class="concept">
-            <strong>💡 Idées de motifs :</strong>
-            <ul>
-                <li>Rosace d'hexagones (comme exercice 8 mais avec des hexagones)</li>
-                <li>Spirale colorée (change la couleur du stylo dans la boucle)</li>
-                <li>Motif de cercles concentriques (polygones à 36 côtés)</li>
-                <li>Fractale simple (étoiles de plus en plus petites)</li>
-            </ul>
-        </div>
+                    await drawPolygon(ctx, sprite, coords, longueurVal, angle, nbCotes);
+                }
+            },
+            6: {
+                title: "Exercice 6 : Carrés emboîtés",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Variable <strong>taille</strong> qui augmente à chaque carré</li>
+                        <li>Boucle extérieure : <strong>4 carrés</strong></li>
+                        <li>Boucle intérieure : <strong>dessiner un carré</strong></li>
+                        <li>On revient au centre entre chaque carré</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+mettre [taille v] à (50)
+répéter (4) fois
+  stylo en position d'écriture
+  répéter (4) fois
+    avancer de (taille) pas
+    tourner droite de (90) degrés
+  fin
+  ajouter (30) à [taille v]
+  relever le stylo
+  aller à x: (0) y: (0)
+fin`,
+                tip: "Boucles imbriquées : une boucle DANS une autre boucle !",
+                draw: function(ctx, sprite, coords) {
+                    drawNestedSquares(ctx, sprite, coords);
+                }
+            },
+            7: {
+                title: "Exercice 7 : Étoile à 5 branches",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Pour une étoile à 5 branches, on <strong>saute un sommet</strong> à chaque fois</li>
+                        <li>On fait donc <strong>2 tours complets</strong> pour tracer l'étoile</li>
+                        <li>Formule : <strong>360° × 2 ÷ 5 = 144°</strong></li>
+                        <li>On répète 5 fois : avancer de 100 pas, tourner de 144°</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (5) fois
+  avancer de (100) pas
+  tourner droite de (144) degrés
+fin`,
+                tip: "L'angle d'une étoile est différent d'un polygone régulier !",
+                draw: function(ctx, sprite, coords) {
+                    drawPolygon(ctx, sprite, coords, 100, 144, 5);
+                }
+            },
+            8: {
+                title: "Exercice 8 : Rosace de 12 carrés",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Boucle extérieure : <strong>12 fois</strong> (nombre de carrés)</li>
+                        <li>Boucle intérieure : <strong>4 fois</strong> (dessiner un carré)</li>
+                        <li>On tourne de <strong>30°</strong> entre chaque carré (360° ÷ 12)</li>
+                        <li>Deux boucles imbriquées créent ce beau motif !</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (12) fois
+  répéter (4) fois
+    avancer de (50) pas
+    tourner droite de (90) degrés
+  fin
+  tourner droite de (30) degrés
+fin`,
+                tip: "C'est l'exercice le plus complexe avec deux boucles imbriquées !",
+                draw: function(ctx, sprite, coords) {
+                    drawRosace(ctx, sprite, coords);
+                }
+            },
+            9: {
+                title: "Exercice 9 : Spirale carrée",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Une spirale augmente progressivement la <strong>distance parcourue</strong></li>
+                        <li>On tourne de <strong>90°</strong> à chaque fois (angles droits)</li>
+                        <li>Variable <strong>distance</strong> qui commence à 10 et augmente de 5 à chaque étape</li>
+                        <li>Séquence : 10 pas, puis 15 pas, puis 20 pas, puis 25 pas, etc.</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+mettre [distance v] à (10)
+stylo en position d'écriture
+répéter (20) fois
+  avancer de (distance) pas
+  tourner droite de (90) degrés
+  ajouter (5) à [distance v]
+fin`,
+                tip: "La spirale se forme car on augmente la distance à chaque itération !",
+                draw: function(ctx, sprite, coords) {
+                    drawSpiral(ctx, sprite, coords);
+                }
+            },
+            10: {
+                title: "Exercice 10 : Maison",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Combinaison de plusieurs figures : <strong>carré + triangle</strong></li>
+                        <li>Carré pour la base (100 pas de côté)</li>
+                        <li>Triangle équilatéral pour le toit (100 pas de côté, angle 120°)</li>
+                        <li>Utilisation de <strong>aller à x: y:</strong> pour se repositionner</li>
+                        <li>Utilisation de <strong>relever le stylo</strong> pour se déplacer sans tracer</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+stylo en position d'écriture
+répéter (4) fois
+  avancer de (100) pas
+  tourner droite de (90) degrés
+fin
+relever le stylo
+aller à x: (0) y: (100)
+s'orienter à (90)
+stylo en position d'écriture
+répéter (3) fois
+  avancer de (100) pas
+  tourner droite de (120) degrés
+fin`,
+                tip: "Pense à relever le stylo pour te déplacer sans tracer !",
+                draw: function(ctx, sprite, coords) {
+                    drawHouse(ctx, sprite, coords);
+                }
+            },
+            11: {
+                title: "Exercice 11 : Flocon de neige",
+                explanation: `
+                    <h3>📐 Explication mathématique</h3>
+                    <ul>
+                        <li>Un flocon a <strong>6 branches</strong> symétriques</li>
+                        <li>Angle entre chaque branche : <strong>360° ÷ 6 = 60°</strong></li>
+                        <li>Pour chaque branche : avancer, reculer au centre, tourner</li>
+                        <li>Utilisation de <strong>aller à x: 0 y: 0</strong> pour revenir au centre</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+s'orienter à (0)
+répéter (6) fois
+  stylo en position d'écriture
+  avancer de (80) pas
+  relever le stylo
+  aller à x: (0) y: (0)
+  tourner droite de (60) degrés
+fin`,
+                tip: "Reviens au centre après chaque branche pour créer la symétrie !",
+                draw: function(ctx, sprite, coords) {
+                    drawSnowflake(ctx, sprite, coords);
+                }
+            },
+            12: {
+                title: "Exercice 12 : Création libre",
+                explanation: `
+                    <h3>🎨 Explication</h3>
+                    <ul>
+                        <li>Cet exercice est <strong>libre et créatif</strong> !</li>
+                        <li>Utilise au moins <strong>2 boucles imbriquées</strong></li>
+                        <li>Utilise au moins <strong>1 variable</strong></li>
+                        <li>Combine plusieurs polygones ou crée des motifs répétés</li>
+                        <li>Exemple : une rosace d'étoiles, un damier, etc.</li>
+                    </ul>
+                `,
+                scratchCode: `quand @greenFlag est cliqué
+effacer tout
+mettre [taille v] à (20)
+stylo en position d'écriture
+répéter (8) fois
+  répéter (6) fois
+    avancer de (taille) pas
+    tourner droite de (60) degrés
+  fin
+  ajouter (10) à [taille v]
+  tourner droite de (45) degrés
+fin`,
+                tip: "Laisse libre cours à ton imagination pour créer un motif unique !",
+                draw: function(ctx, sprite, coords) {
+                    drawFreeCreation(ctx, sprite, coords);
+                }
+            }
+        };
 
-        <div class="hint">
-            🎯 <strong>Rappel contraintes :</strong>
-            <ul>
-                <li>Au moins 2 boucles imbriquées</li>
-                <li>Au moins 1 variable</li>
-                <li>Utilise <span class="scratch-block pen">mettre la couleur du stylo à</span> pour varier les couleurs</li>
-            </ul>
-        </div>
-    </div>
+        // Fonctions de dessin
+        function clearCanvas(ctx) {
+            ctx.clearRect(0, 0, 400, 400);
+            // Grille
+            ctx.strokeStyle = '#E0E0E0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 400; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, 400);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(400, i);
+                ctx.stroke();
+            }
+            // Axes
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(200, 0);
+            ctx.lineTo(200, 400);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, 200);
+            ctx.lineTo(400, 200);
+            ctx.stroke();
+        }
 
-    <div style="margin-top: 40px; text-align: center;">
-        <a href="../classe-scratch-4e.html" style="display: inline-block; background: linear-gradient(135deg, #FF6B35 0%, #FFD500 100%); color: white; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-            ← Retour aux exercices 4ème
-        </a>
-    </div>
+        async function drawPolygon(ctx, sprite, coords, length, angle, sides) {
+            clearCanvas(ctx);
+            let x = 0, y = 0, dir = 0;
 
+            ctx.strokeStyle = '#4C97FF';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+
+            for (let i = 0; i < sides; i++) {
+                await sleep(300);
+                const rad = dir * Math.PI / 180;
+                const newX = x + length * Math.cos(rad);
+                const newY = y + length * Math.sin(rad);
+
+                ctx.lineTo(200 + newX, 200 - newY);
+                ctx.stroke();
+
+                x = newX;
+                y = newY;
+                dir = (dir + angle) % 360;
+
+                sprite.style.left = (200 + x - 15) + 'px';
+                sprite.style.top = (200 - y - 15) + 'px';
+                sprite.style.transform = `rotate(${dir}deg)`;
+                coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
+        }
+
+        async function drawRectangle(ctx, sprite, coords) {
+            clearCanvas(ctx);
+            let x = 0, y = 0, dir = 0;
+            const dimensions = [150, 80, 150, 80];
+
+            ctx.strokeStyle = '#4C97FF';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+
+            for (let i = 0; i < 4; i++) {
+                await sleep(300);
+                const length = dimensions[i];
+                const rad = dir * Math.PI / 180;
+                const newX = x + length * Math.cos(rad);
+                const newY = y + length * Math.sin(rad);
+
+                ctx.lineTo(200 + newX, 200 - newY);
+                ctx.stroke();
+
+                x = newX;
+                y = newY;
+                dir = (dir + 90) % 360;
+
+                sprite.style.left = (200 + x - 15) + 'px';
+                sprite.style.top = (200 - y - 15) + 'px';
+                sprite.style.transform = `rotate(${dir}deg)`;
+                coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
+        }
+
+        async function drawNestedSquares(ctx, sprite, coords) {
+            clearCanvas(ctx);
+            let taille = 50;
+
+            ctx.strokeStyle = '#4C97FF';
+            ctx.lineWidth = 2;
+
+            for (let s = 0; s < 4; s++) {
+                let x = 0, y = 0, dir = 0;
+                ctx.beginPath();
+                ctx.moveTo(200, 200);
+
+                for (let i = 0; i < 4; i++) {
+                    await sleep(200);
+                    const rad = dir * Math.PI / 180;
+                    const newX = x + taille * Math.cos(rad);
+                    const newY = y + taille * Math.sin(rad);
+
+                    ctx.lineTo(200 + newX, 200 - newY);
+                    ctx.stroke();
+
+                    x = newX;
+                    y = newY;
+                    dir = (dir + 90) % 360;
+
+                    sprite.style.left = (200 + x - 15) + 'px';
+                    sprite.style.top = (200 - y - 15) + 'px';
+                }
+                taille += 30;
+            }
+        }
+
+        async function drawRosace(ctx, sprite, coords) {
+            clearCanvas(ctx);
+            let globalDir = 0;
+
+            ctx.strokeStyle = '#4C97FF';
+            ctx.lineWidth = 2;
+
+            for (let r = 0; r < 12; r++) {
+                let x = 0, y = 0;
+                let dir = globalDir;
+
+                ctx.beginPath();
+                ctx.moveTo(200, 200);
+
+                for (let i = 0; i < 4; i++) {
+                    await sleep(50);
+                    const rad = dir * Math.PI / 180;
+                    const newX = x + 50 * Math.cos(rad);
+                    const newY = y + 50 * Math.sin(rad);
+
+                    ctx.lineTo(200 + newX, 200 - newY);
+                    ctx.stroke();
+
+                    x = newX;
+                    y = newY;
+                    dir = (dir + 90) % 360;
+                }
+
+                globalDir += 30;
+                sprite.style.transform = `rotate(${globalDir}deg)`;
+            }
+        }
+
+        async function drawSpiral(ctx, sprite, coords) {
+            clearCanvas(ctx);
+            let x = 0, y = 0, dir = 0;
+            let distance = 10;
+
+            ctx.strokeStyle = '#0FBD8C';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+
+            for (let i = 0; i < 20; i++) {
+                await sleep(150);
+                const rad = dir * Math.PI / 180;
+                const newX = x + distance * Math.cos(rad);
+                const newY = y + distance * Math.sin(rad);
+
+                ctx.lineTo(200 + newX, 200 - newY);
+                ctx.stroke();
+
+                x = newX;
+                y = newY;
+                dir = (dir + 90) % 360;
+                distance += 5;
+
+                sprite.style.left = (200 + x - 15) + 'px';
+                sprite.style.top = (200 - y - 15) + 'px';
+                sprite.style.transform = `rotate(${dir}deg)`;
+                coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
+        }
+
+        async function drawHouse(ctx, sprite, coords) {
+            clearCanvas(ctx);
+            let x = 0, y = 0, dir = 0;
+
+            ctx.strokeStyle = '#4C97FF';
+            ctx.lineWidth = 3;
+
+            // Dessiner le carré (base)
+            ctx.beginPath();
+            ctx.moveTo(200, 200);
+
+            for (let i = 0; i < 4; i++) {
+                await sleep(300);
+                const rad = dir * Math.PI / 180;
+                const newX = x + 100 * Math.cos(rad);
+                const newY = y + 100 * Math.sin(rad);
+
+                ctx.lineTo(200 + newX, 200 - newY);
+                ctx.stroke();
+
+                x = newX;
+                y = newY;
+                dir = (dir + 90) % 360;
+
+                sprite.style.left = (200 + x - 15) + 'px';
+                sprite.style.top = (200 - y - 15) + 'px';
+                sprite.style.transform = `rotate(${dir}deg)`;
+                coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
+
+            // Relever le stylo et aller à (0, 100)
+            await sleep(300);
+            x = 0;
+            y = 100;
+            sprite.style.left = (200 + x - 15) + 'px';
+            sprite.style.top = (200 - y - 15) + 'px';
+            coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+
+            // S'orienter à 90° (vers le haut)
+            dir = 90;
+            sprite.style.transform = `rotate(${dir}deg)`;
+
+            // Dessiner le triangle (toit)
+            await sleep(300);
+            ctx.strokeStyle = '#FF6B35';
+            ctx.beginPath();
+            ctx.moveTo(200 + x, 200 - y);
+
+            for (let i = 0; i < 3; i++) {
+                await sleep(300);
+                const rad = dir * Math.PI / 180;
+                const newX = x + 100 * Math.cos(rad);
+                const newY = y + 100 * Math.sin(rad);
+
+                ctx.lineTo(200 + newX, 200 - newY);
+                ctx.stroke();
+
+                x = newX;
+                y = newY;
+                dir = (dir + 120) % 360;
+
+                sprite.style.left = (200 + x - 15) + 'px';
+                sprite.style.top = (200 - y - 15) + 'px';
+                sprite.style.transform = `rotate(${dir}deg)`;
+                coords.textContent = `x: ${Math.round(x)}, y: ${Math.round(y)}`;
+            }
+        }
+
+        async function drawSnowflake(ctx, sprite, coords) {
+            clearCanvas(ctx);
+
+            ctx.strokeStyle = '#5CB1D6';
+            ctx.lineWidth = 3;
+
+            for (let i = 0; i < 6; i++) {
+                const angle = (i * 60) * Math.PI / 180;
+                const endX = 80 * Math.cos(angle);
+                const endY = 80 * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(200, 200);
+                ctx.lineTo(200 + endX, 200 - endY);
+                ctx.stroke();
+
+                await sleep(200);
+
+                sprite.style.left = (200 + endX - 15) + 'px';
+                sprite.style.top = (200 - endY - 15) + 'px';
+                sprite.style.transform = `rotate(${i * 60}deg)`;
+            }
+
+            coords.textContent = 'Flocon de neige !';
+        }
+
+        async function drawFreeCreation(ctx, sprite, coords) {
+            clearCanvas(ctx);
+            let taille = 20;
+            let globalDir = 0;
+
+            ctx.strokeStyle = '#9966FF';
+            ctx.lineWidth = 2;
+
+            for (let r = 0; r < 8; r++) {
+                let x = 0, y = 0;
+                let dir = globalDir;
+
+                ctx.beginPath();
+                ctx.moveTo(200, 200);
+
+                // Dessiner un hexagone
+                for (let i = 0; i < 6; i++) {
+                    await sleep(30);
+                    const rad = dir * Math.PI / 180;
+                    const newX = x + taille * Math.cos(rad);
+                    const newY = y + taille * Math.sin(rad);
+
+                    ctx.lineTo(200 + newX, 200 - newY);
+                    ctx.stroke();
+
+                    x = newX;
+                    y = newY;
+                    dir = (dir + 60) % 360;
+                }
+
+                taille += 10;
+                globalDir += 45;
+                sprite.style.transform = `rotate(${globalDir}deg)`;
+            }
+
+            coords.textContent = 'Création libre !';
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Gestion de la navigation
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const sprite = document.getElementById('sprite');
+        const coords = document.getElementById('coords');
+
+        function loadExercise(num) {
+            const ex = exercises[num];
+            document.getElementById('exerciseTitle').textContent = ex.title;
+            document.getElementById('explanation').innerHTML = ex.explanation;
+
+            // Afficher les blocs Scratch avec scratchblocks
+            const blocksContainer = document.getElementById('scratchBlocks');
+            blocksContainer.innerHTML = `<pre class="blocks">${ex.scratchCode}</pre>`;
+            scratchblocks.renderMatching('pre.blocks', {
+                languages: ['fr'],
+                style: 'scratch3'
+            });
+
+            document.getElementById('tipBox').innerHTML = `<h4>💡 Astuce</h4><p>${ex.tip}</p>`;
+            clearCanvas(ctx);
+            sprite.style.left = '185px';
+            sprite.style.top = '185px';
+            sprite.style.transform = 'rotate(0deg)';
+            coords.textContent = 'x: 0, y: 0';
+        }
+
+        document.querySelectorAll('.exercise-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.exercise-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const exNum = parseInt(this.dataset.ex);
+                loadExercise(exNum);
+            });
+        });
+
+        document.getElementById('runBtn').addEventListener('click', async function() {
+            const activeBtn = document.querySelector('.exercise-btn.active');
+            const exNum = parseInt(activeBtn.dataset.ex);
+            const ex = exercises[exNum];
+            await ex.draw(ctx, sprite, coords);
+        });
+
+        // Initialisation
+        clearCanvas(ctx);
+        loadExercise(1);
+    </script>
 </body>
 </html>

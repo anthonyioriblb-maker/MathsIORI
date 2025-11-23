@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercices Scratch 4ème - Interface Interactive</title>
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #E5F0FF;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4C97FF 0%, #9966FF 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .btn-run {
+            background: #40BF4A;
+            color: white;
+        }
+
+        .btn-run:hover {
+            background: #389438;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .btn-stop {
+            background: #FF6B35;
+            color: white;
+        }
+
+        .btn-stop:hover {
+            background: #E55A2A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .btn-clear {
+            background: white;
+            color: #4C97FF;
+        }
+
+        .btn-clear:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100vh - 70px);
+        }
+
+        .workspace-panel {
+            flex: 1;
+            background: white;
+            position: relative;
+            border-right: 2px solid #D0D0D0;
+        }
+
+        #blocklyDiv {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .stage-panel {
+            width: 480px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stage-header {
+            background: #F2F2F2;
+            padding: 10px 15px;
+            border-bottom: 1px solid #D0D0D0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stage-header h2 {
+            font-size: 16px;
+            color: #575E75;
+        }
+
+        .stage-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            padding: 20px;
+        }
+
+        #stage {
+            border: 1px solid #D0D0D0;
+            background: white;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-info {
+            background: #E8F5E9;
+            border-top: 2px solid #40BF4A;
+            padding: 15px;
+            min-height: 150px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .exercise-info h3 {
+            color: #2E7D32;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .exercise-info p {
+            font-size: 12px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .exercise-info ul {
+            margin: 8px 0;
+            padding-left: 20px;
+            font-size: 12px;
+        }
+
+        .exercise-info li {
+            margin: 4px 0;
+        }
+
+        .sprite {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            font-size: 24px;
+            transform-origin: center;
+            transition: none;
+        }
+
+        .coordinates {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 10px;
+            color: #888;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .exercise-selector {
+            background: white;
+            padding: 10px 15px;
+            border-bottom: 1px solid #D0D0D0;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-btn {
+            padding: 6px 12px;
+            border: 2px solid #4C97FF;
+            background: white;
+            color: #4C97FF;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .exercise-btn:hover {
+            background: #E5F0FF;
+        }
+
+        .exercise-btn.active {
+            background: #4C97FF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 Scratch 4ème - Figures géométriques</h1>
+        <div class="header-buttons">
+            <button class="btn btn-run" id="runBtn">▶ Exécuter</button>
+            <button class="btn btn-stop" id="stopBtn">⏹ Stop</button>
+            <button class="btn btn-clear" id="clearBtn">🗑️ Effacer</button>
+        </div>
+    </div>
+
+    <div class="exercise-selector">
+        <button class="exercise-btn active" data-exercise="1">Ex 1: Carré</button>
+        <button class="exercise-btn" data-exercise="2">Ex 2: Triangle</button>
+        <button class="exercise-btn" data-exercise="3">Ex 3: Rectangle</button>
+        <button class="exercise-btn" data-exercise="4">Ex 4: Hexagone</button>
+        <button class="exercise-btn" data-exercise="5">Ex 5: Polygone paramétré</button>
+        <button class="exercise-btn" data-exercise="6">Ex 6: Carrés emboîtés</button>
+        <button class="exercise-btn" data-exercise="7">Ex 7: Étoile</button>
+        <button class="exercise-btn" data-exercise="8">Ex 8: Rosace</button>
+        <button class="exercise-btn" data-exercise="9">Ex 9: Spirale</button>
+        <button class="exercise-btn" data-exercise="10">Ex 10: Maison</button>
+        <button class="exercise-btn" data-exercise="11">Ex 11: Flocon</button>
+        <button class="exercise-btn" data-exercise="12">Ex 12: Créatif</button>
+    </div>
+
+    <div class="main-container">
+        <div class="workspace-panel">
+            <div id="blocklyDiv"></div>
+        </div>
+
+        <div class="stage-panel">
+            <div class="stage-header">
+                <h2>🖼️ Scène</h2>
+            </div>
+            <div class="stage-container">
+                <div style="position: relative;">
+                    <canvas id="stage" width="360" height="360"></canvas>
+                    <div class="sprite" id="sprite">🐱</div>
+                    <div class="coordinates" id="coords">x: 0, y: 0</div>
+                </div>
+            </div>
+            <div class="exercise-info" id="exerciseInfo">
+                <h3>📐 Exercice 1 : Dessiner un carré</h3>
+                <p><strong>Objectif :</strong> Tracer un carré de côté 100.</p>
+                <ul>
+                    <li>Combien de côtés ? <strong>4</strong></li>
+                    <li>Angle de rotation ? <strong>90°</strong></li>
+                    <li>Utilise une boucle "répéter 4 fois"</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration Blockly avec blocs Scratch-like
+        const toolbox = {
+            "kind": "categoryToolbox",
+            "contents": [
+                {
+                    "kind": "category",
+                    "name": "Événements",
+                    "colour": "#FFD500",
+                    "contents": [
+                        {
+                            "kind": "block",
+                            "type": "when_flag_clicked"
+                        }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Mouvement",
+                    "colour": "#4C97FF",
+                    "contents": [
+                        {
+                            "kind": "block",
+                            "type": "move_steps"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "turn_right"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "turn_left"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "goto_xy"
+                        }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Stylo",
+                    "colour": "#0FBD8C",
+                    "contents": [
+                        {
+                            "kind": "block",
+                            "type": "pen_down"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "pen_up"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "pen_clear"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "pen_color"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "pen_size"
+                        }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Contrôle",
+                    "colour": "#FFAB19",
+                    "contents": [
+                        {
+                            "kind": "block",
+                            "type": "repeat"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "wait"
+                        }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Variables",
+                    "colour": "#FF8C1A",
+                    "contents": [
+                        {
+                            "kind": "block",
+                            "type": "set_variable"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "change_variable"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "get_variable"
+                        }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Opérateurs",
+                    "colour": "#40BF4A",
+                    "contents": [
+                        {
+                            "kind": "block",
+                            "type": "math_number"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "math_arithmetic"
+                        }
+                    ]
+                },
+                {
+                    "kind": "category",
+                    "name": "Capteurs",
+                    "colour": "#4CBFE6",
+                    "contents": [
+                        {
+                            "kind": "block",
+                            "type": "ask_and_wait"
+                        },
+                        {
+                            "kind": "block",
+                            "type": "answer"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Définition des blocs personnalisés Scratch-like
+        Blockly.Blocks['when_flag_clicked'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("quand ⚑ cliqué");
+                this.setNextStatement(true, null);
+                this.setColour("#FFD500");
+                this.setTooltip("Démarre le programme quand on clique sur le drapeau");
+            }
+        };
+
+        Blockly.Blocks['move_steps'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("avancer de")
+                    .appendField(new Blockly.FieldNumber(100, 0), "STEPS")
+                    .appendField("pas");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#4C97FF");
+                this.setTooltip("Avance le lutin de X pas");
+            }
+        };
+
+        Blockly.Blocks['turn_right'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("tourner ↻ de")
+                    .appendField(new Blockly.FieldNumber(90, 0, 360), "DEGREES")
+                    .appendField("degrés");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#4C97FF");
+                this.setTooltip("Tourne le lutin vers la droite");
+            }
+        };
+
+        Blockly.Blocks['turn_left'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("tourner ↺ de")
+                    .appendField(new Blockly.FieldNumber(90, 0, 360), "DEGREES")
+                    .appendField("degrés");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#4C97FF");
+                this.setTooltip("Tourne le lutin vers la gauche");
+            }
+        };
+
+        Blockly.Blocks['goto_xy'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("aller à x:")
+                    .appendField(new Blockly.FieldNumber(0, -180, 180), "X")
+                    .appendField("y:")
+                    .appendField(new Blockly.FieldNumber(0, -180, 180), "Y");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#4C97FF");
+                this.setTooltip("Déplace le lutin à une position précise");
+            }
+        };
+
+        Blockly.Blocks['pen_down'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("stylo en position d'écriture");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#0FBD8C");
+                this.setTooltip("Baisse le stylo pour dessiner");
+            }
+        };
+
+        Blockly.Blocks['pen_up'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("relever le stylo");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#0FBD8C");
+                this.setTooltip("Lève le stylo pour ne plus dessiner");
+            }
+        };
+
+        Blockly.Blocks['pen_clear'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("effacer tout");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#0FBD8C");
+                this.setTooltip("Efface tous les dessins");
+            }
+        };
+
+        Blockly.Blocks['pen_color'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("mettre la couleur du stylo à")
+                    .appendField(new Blockly.FieldColour("#ff0000"), "COLOR");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#0FBD8C");
+                this.setTooltip("Change la couleur du stylo");
+            }
+        };
+
+        Blockly.Blocks['pen_size'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("mettre la taille du stylo à")
+                    .appendField(new Blockly.FieldNumber(2, 1, 20), "SIZE");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#0FBD8C");
+                this.setTooltip("Change la taille du stylo");
+            }
+        };
+
+        Blockly.Blocks['repeat'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("répéter")
+                    .appendField(new Blockly.FieldNumber(4, 1), "TIMES")
+                    .appendField("fois");
+                this.appendStatementInput("DO")
+                    .setCheck(null);
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#FFAB19");
+                this.setTooltip("Répète les blocs à l'intérieur");
+            }
+        };
+
+        Blockly.Blocks['wait'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("attendre")
+                    .appendField(new Blockly.FieldNumber(0.1, 0), "SECONDS")
+                    .appendField("secondes");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#FFAB19");
+                this.setTooltip("Attend X secondes");
+            }
+        };
+
+        Blockly.Blocks['set_variable'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("mettre")
+                    .appendField(new Blockly.FieldTextInput("variable"), "VAR")
+                    .appendField("à")
+                    .appendField(new Blockly.FieldNumber(0), "VALUE");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#FF8C1A");
+                this.setTooltip("Définit la valeur d'une variable");
+            }
+        };
+
+        Blockly.Blocks['change_variable'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("ajouter à")
+                    .appendField(new Blockly.FieldTextInput("variable"), "VAR")
+                    .appendField("la valeur")
+                    .appendField(new Blockly.FieldNumber(1), "VALUE");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#FF8C1A");
+                this.setTooltip("Ajoute une valeur à une variable");
+            }
+        };
+
+        Blockly.Blocks['get_variable'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField(new Blockly.FieldTextInput("variable"), "VAR");
+                this.setOutput(true, "Number");
+                this.setColour("#FF8C1A");
+                this.setTooltip("Récupère la valeur d'une variable");
+            }
+        };
+
+        Blockly.Blocks['ask_and_wait'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("demander")
+                    .appendField(new Blockly.FieldTextInput("Quel est ton nom ?"), "QUESTION")
+                    .appendField("et attendre");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour("#4CBFE6");
+                this.setTooltip("Pose une question et attend la réponse");
+            }
+        };
+
+        Blockly.Blocks['answer'] = {
+            init: function() {
+                this.appendDummyInput()
+                    .appendField("réponse");
+                this.setOutput(true, null);
+                this.setColour("#4CBFE6");
+                this.setTooltip("La dernière réponse donnée");
+            }
+        };
+
+        // Initialisation de Blockly
+        const workspace = Blockly.inject('blocklyDiv', {
+            toolbox: toolbox,
+            scrollbars: true,
+            trashcan: true,
+            zoom: {
+                controls: true,
+                wheel: true,
+                startScale: 0.9,
+                maxScale: 3,
+                minScale: 0.3,
+                scaleSpeed: 1.2
+            },
+            grid: {
+                spacing: 20,
+                length: 3,
+                colour: '#ccc',
+                snap: true
+            }
+        });
+
+        // Moteur d'exécution
+        const canvas = document.getElementById('stage');
+        const ctx = canvas.getContext('2d');
+        const sprite = document.getElementById('sprite');
+        const coords = document.getElementById('coords');
+
+        let turtle = {
+            x: 0,
+            y: 0,
+            angle: 0,
+            penDown: false,
+            penColor: '#000000',
+            penSize: 2
+        };
+
+        let variables = {};
+        let lastAnswer = '';
+        let isRunning = false;
+
+        function resetTurtle() {
+            turtle = {
+                x: 0,
+                y: 0,
+                angle: 0,
+                penDown: false,
+                penColor: '#000000',
+                penSize: 2
+            };
+            variables = {};
+            updateSprite();
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Grille
+            ctx.strokeStyle = '#E0E0E0';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= canvas.width; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i <= canvas.height; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+            // Centre
+            ctx.strokeStyle = '#999';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+        }
+
+        function toCanvasX(x) {
+            return canvas.width / 2 + x;
+        }
+
+        function toCanvasY(y) {
+            return canvas.height / 2 - y;
+        }
+
+        function updateSprite() {
+            sprite.style.left = (toCanvasX(turtle.x) - 15) + 'px';
+            sprite.style.top = (toCanvasY(turtle.y) - 15) + 'px';
+            sprite.style.transform = `rotate(${turtle.angle}deg)`;
+            coords.textContent = `x: ${Math.round(turtle.x)}, y: ${Math.round(turtle.y)}`;
+        }
+
+        async function executeBlock(block) {
+            if (!block || !isRunning) return;
+
+            const type = block.type;
+
+            switch(type) {
+                case 'when_flag_clicked':
+                    break;
+
+                case 'move_steps':
+                    const steps = block.getFieldValue('STEPS');
+                    const rad = (turtle.angle - 90) * Math.PI / 180;
+                    const newX = turtle.x + steps * Math.cos(rad);
+                    const newY = turtle.y + steps * Math.sin(rad);
+
+                    if (turtle.penDown) {
+                        ctx.strokeStyle = turtle.penColor;
+                        ctx.lineWidth = turtle.penSize;
+                        ctx.beginPath();
+                        ctx.moveTo(toCanvasX(turtle.x), toCanvasY(turtle.y));
+                        ctx.lineTo(toCanvasX(newX), toCanvasY(newY));
+                        ctx.stroke();
+                    }
+
+                    turtle.x = newX;
+                    turtle.y = newY;
+                    updateSprite();
+                    break;
+
+                case 'turn_right':
+                    const degreesRight = parseFloat(block.getFieldValue('DEGREES'));
+                    turtle.angle = (turtle.angle + degreesRight) % 360;
+                    updateSprite();
+                    break;
+
+                case 'turn_left':
+                    const degreesLeft = parseFloat(block.getFieldValue('DEGREES'));
+                    turtle.angle = (turtle.angle - degreesLeft + 360) % 360;
+                    updateSprite();
+                    break;
+
+                case 'goto_xy':
+                    const gotoX = parseFloat(block.getFieldValue('X'));
+                    const gotoY = parseFloat(block.getFieldValue('Y'));
+                    turtle.x = gotoX;
+                    turtle.y = gotoY;
+                    updateSprite();
+                    break;
+
+                case 'pen_down':
+                    turtle.penDown = true;
+                    break;
+
+                case 'pen_up':
+                    turtle.penDown = false;
+                    break;
+
+                case 'pen_clear':
+                    clearCanvas();
+                    break;
+
+                case 'pen_color':
+                    turtle.penColor = block.getFieldValue('COLOR');
+                    break;
+
+                case 'pen_size':
+                    turtle.penSize = parseFloat(block.getFieldValue('SIZE'));
+                    break;
+
+                case 'repeat':
+                    const times = parseInt(block.getFieldValue('TIMES'));
+                    const doBlock = block.getInputTargetBlock('DO');
+                    for (let i = 0; i < times && isRunning; i++) {
+                        await executeBlock(doBlock);
+                    }
+                    break;
+
+                case 'wait':
+                    const seconds = parseFloat(block.getFieldValue('SECONDS'));
+                    await new Promise(resolve => setTimeout(resolve, seconds * 1000));
+                    break;
+
+                case 'set_variable':
+                    const varName = block.getFieldValue('VAR');
+                    const value = parseFloat(block.getFieldValue('VALUE'));
+                    variables[varName] = value;
+                    break;
+
+                case 'change_variable':
+                    const changeVar = block.getFieldValue('VAR');
+                    const changeValue = parseFloat(block.getFieldValue('VALUE'));
+                    variables[changeVar] = (variables[changeVar] || 0) + changeValue;
+                    break;
+
+                case 'ask_and_wait':
+                    const question = block.getFieldValue('QUESTION');
+                    lastAnswer = prompt(question) || '';
+                    break;
+
+                case 'math_number':
+                    // Géré dans evaluateValue
+                    break;
+
+                case 'math_arithmetic':
+                    // Géré dans evaluateValue
+                    break;
+            }
+
+            // Exécuter le bloc suivant
+            const nextBlock = block.getNextBlock();
+            if (nextBlock && isRunning) {
+                await executeBlock(nextBlock);
+            }
+        }
+
+        async function evaluateValue(block) {
+            if (!block) return 0;
+
+            switch(block.type) {
+                case 'math_number':
+                    return parseFloat(block.getFieldValue('NUM'));
+
+                case 'get_variable':
+                    const varName = block.getFieldValue('VAR');
+                    return variables[varName] || 0;
+
+                case 'answer':
+                    return parseFloat(lastAnswer) || 0;
+
+                case 'math_arithmetic':
+                    const op = block.getFieldValue('OP');
+                    const a = await evaluateValue(block.getInputTargetBlock('A'));
+                    const b = await evaluateValue(block.getInputTargetBlock('B'));
+                    switch(op) {
+                        case 'ADD': return a + b;
+                        case 'MINUS': return a - b;
+                        case 'MULTIPLY': return a * b;
+                        case 'DIVIDE': return b !== 0 ? a / b : 0;
+                        case 'POWER': return Math.pow(a, b);
+                        default: return 0;
+                    }
+
+                default:
+                    return 0;
+            }
+        }
+
+        async function runCode() {
+            if (isRunning) return;
+
+            isRunning = true;
+            resetTurtle();
+            clearCanvas();
+
+            const topBlocks = workspace.getTopBlocks(false);
+            const startBlock = topBlocks.find(block => block.type === 'when_flag_clicked');
+
+            if (startBlock) {
+                const firstBlock = startBlock.getNextBlock();
+                if (firstBlock) {
+                    await executeBlock(firstBlock);
+                }
+            } else {
+                alert('Ajoute un bloc "quand ⚑ cliqué" pour démarrer !');
+            }
+
+            isRunning = false;
+        }
+
+        function stopCode() {
+            isRunning = false;
+        }
+
+        // Événements
+        document.getElementById('runBtn').addEventListener('click', runCode);
+        document.getElementById('stopBtn').addEventListener('click', stopCode);
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            clearCanvas();
+            resetTurtle();
+        });
+
+        // Sélecteur d'exercices
+        const exercises = {
+            1: {
+                title: "📐 Exercice 1 : Dessiner un carré",
+                description: "Tracer un carré de côté 100.",
+                hints: ["Combien de côtés ? 4", "Angle de rotation ? 90°", "Utilise une boucle 'répéter 4 fois'"]
+            },
+            2: {
+                title: "📐 Exercice 2 : Triangle équilatéral",
+                description: "Tracer un triangle équilatéral de côté 120.",
+                hints: ["3 côtés égaux", "Angle de rotation : 360° ÷ 3 = 120°", "Répéter 3 fois"]
+            },
+            3: {
+                title: "📐 Exercice 3 : Rectangle",
+                description: "Tracer un rectangle (longueur 150, largeur 80).",
+                hints: ["2 longueurs et 2 largeurs", "Angle : 90°", "Répéter 2 fois les 2 côtés différents"]
+            },
+            4: {
+                title: "📐 Exercice 4 : Hexagone",
+                description: "Tracer un hexagone régulier de côté 80.",
+                hints: ["6 côtés", "Angle : 360° ÷ 6 = 60°", "Répéter 6 fois"]
+            },
+            5: {
+                title: "📐 Exercice 5 : Polygone paramétré",
+                description: "Créer un polygone avec variables (nombre de côtés et longueur).",
+                hints: ["Créer 2 variables : côtés et longueur", "Demander les valeurs", "Calculer l'angle : 360 ÷ côtés"]
+            },
+            6: {
+                title: "📐 Exercice 6 : Carrés emboîtés",
+                description: "Dessiner 4 carrés de tailles croissantes.",
+                hints: ["Variable taille = 50", "Répéter 4 fois : carré, ajouter 30 à taille", "Revenir au centre entre chaque"]
+            },
+            7: {
+                title: "⭐ Exercice 7 : Étoile à 5 branches",
+                description: "Tracer une étoile à 5 branches.",
+                hints: ["5 segments", "Angle : 360° × 2 ÷ 5 = 144°", "Répéter 5 fois"]
+            },
+            8: {
+                title: "🌸 Exercice 8 : Rosace",
+                description: "Dessiner 12 carrés en rosace.",
+                hints: ["Boucle extérieure : 12 fois", "Boucle intérieure : carré (4 fois)", "Tourner de 30° entre chaque carré"]
+            },
+            9: {
+                title: "🌀 Exercice 9 : Spirale carrée",
+                description: "Créer une spirale en augmentant progressivement la longueur.",
+                hints: ["Variable distance = 10", "Répéter 20 fois", "Augmenter distance de 5 à chaque fois", "Tourner de 90°"]
+            },
+            10: {
+                title: "🏠 Exercice 10 : Maison",
+                description: "Combiner plusieurs figures pour dessiner une maison.",
+                hints: ["Carré pour la base (100 pas)", "Triangle pour le toit", "Utiliser 'aller à x: y:' pour repositionner", "Relever/baisser le stylo entre les figures"]
+            },
+            11: {
+                title: "❄️ Exercice 11 : Flocon de neige",
+                description: "Créer un motif en forme de flocon avec 6 branches.",
+                hints: ["6 branches symétriques", "Angle entre chaque branche : 60°", "Avancer de 80, revenir au centre (0,0)", "Tourner de 60° et répéter"]
+            },
+            12: {
+                title: "🎨 Exercice 12 : Création libre",
+                description: "Invente ton propre motif géométrique !",
+                hints: ["Utiliser au moins 2 boucles imbriquées", "Utiliser au moins 1 variable", "Combiner plusieurs polygones ou créer des motifs répétés"]
+            }
+        };
+
+        document.querySelectorAll('.exercise-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.exercise-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const exNum = this.dataset.exercise;
+                const ex = exercises[exNum];
+
+                document.getElementById('exerciseInfo').innerHTML = `
+                    <h3>${ex.title}</h3>
+                    <p><strong>Objectif :</strong> ${ex.description}</p>
+                    <ul>
+                        ${ex.hints.map(hint => `<li>${hint}</li>`).join('')}
+                    </ul>
+                `;
+            });
+        });
+
+        // Initialisation
+        clearCanvas();
+        resetTurtle();
+    </script>
+</body>
+</html>
