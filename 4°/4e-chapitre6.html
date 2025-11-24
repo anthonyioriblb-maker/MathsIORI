@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Statistiques et probabilité</title>
+    <link rel="stylesheet" href="../styles.css?v=20251120143124">
+</head>
+<body>
+    <a href="classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre 6 : Statistiques et probabilité</h1>
+
+    <h2>I. Définitions</h2>
+
+    <div class="definition">
+        <span style="color: red;">La fréquence</span> d'une valeur est le quotient de l'effectif de cette valeur par l'effectif total.
+    <br>
+        <span style="color: red;">La moyenne</span> d'une série statistique est obtenue en divisant la somme des valeurs du caractère par l'effectif total.
+    <br>
+        <span style="color: red;">La médiane</span> est la valeur partageant une série statistique dont <span class="highlight-blue">les valeurs sont rangées par ordre croissant</span> (ou décroissant) en deux groupes de même effectif.
+    <br>
+        <span style="color: red;">L'étendue</span> d'une série statistique est la différence entre la plus grande et la plus petite des valeurs.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong><br><br>
+        Un professeur de SVT demande aux 29 élèves d'une classe de 6<sup>ème</sup> de faire germer des graines de blé chez eux.
+        Le professeur donne un protocole expérimental à suivre :<br>
+        <ul>
+            <li>mettre en culture sur du coton dans une boîte placée dans une pièce éclairée, de température entre 20 et 25° C.</li>
+            <li>arroser une fois par jour</li>
+            <li>Il est possible de couvrir les graines avec un film transparent pour éviter l'évaporation de l'eau.</li>
+        </ul>
+        Le tableau ci-dessous donne les tailles des plantules (petites plantes) des 29 élèves à 10 jours après la mise en germination.<br><br>
+
+        <table style="margin: auto; border-collapse: collapse; text-align: center;">
+            <tr>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Taille en cm</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">0</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">8</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">12</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">14</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">16</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">17</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">18</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">19</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">20</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">21</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">22</th>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Total</th>
+            </tr>
+            <tr>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Effectif</th>
+                <td style="border: 2px solid #333; padding: 10px;">1</td>
+                <td style="border: 2px solid #333; padding: 10px;">2</td>
+                <td style="border: 2px solid #333; padding: 10px;">2</td>
+                <td style="border: 2px solid #333; padding: 10px;">4</td>
+                <td style="border: 2px solid #333; padding: 10px;">2</td>
+                <td style="border: 2px solid #333; padding: 10px;">2</td>
+                <td style="border: 2px solid #333; padding: 10px;">3</td>
+                <td style="border: 2px solid #333; padding: 10px;">3</td>
+                <td style="border: 2px solid #333; padding: 10px;">4</td>
+                <td style="border: 2px solid #333; padding: 10px;">4</td>
+                <td style="border: 2px solid #333; padding: 10px;">2</td>
+                <td style="border: 2px solid #333; padding: 10px; background-color: #d4f4dd; font-weight: bold; color: #2c5f2d;">29</td>
+            </tr>
+            <tr>
+                <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Fréquence</th>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">1</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">2</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">2</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">4</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">2</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">2</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">3</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">3</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">4</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">4</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px;">
+                    <span class="fraction"><span class="numerateur" style="color: #3498db;">2</span><span class="denominateur" style="color: #2ecc71;">29</span></span>
+                </td>
+                <td style="border: 2px solid #333; padding: 10px; background-color: #d4f4dd; font-weight: bold; color: #2c5f2d;">1</td>
+            </tr>
+        </table>
+
+        <br><br>
+        <strong>1) Calculer la moyenne, la médiane et l'étendue de cette série.</strong><br><br>
+
+        <div class="calcul-detail">
+<em>Moyenne :</em><br>
+Moyenne = <span class="fraction"><span class="numerateur">0 × 1 + 8 × 2 + 12 × 2 + ⋯ + 20 × 4 + 21 × 4 + 22 × 2</span><span class="denominateur">29</span></span> = <span class="fraction"><span class="numerateur">481</span><span class="denominateur">29</span></span> ≈ 16,59<br><br>
+
+<em>Étendue :</em><br>
+Étendue = 22 − 0 = 22<br><br>
+
+<em>Médiane :</em><br>
+L'effectif total est de 29.<br>
+<span class="fraction"><span class="numerateur">29</span><span class="denominateur">2</span></span> = 14,5<br>
+La médiane est donc la 15<sup>ème</sup> valeur, c'est donc <strong>18</strong>.
+        </div>
+
+        <strong>2) Interpréter ces résultats.</strong><br><br>
+        <ul>
+            <li>Si toutes les plantules devaient avoir la même taille, elles mesureraient toutes <strong>16,59 cm</strong>.</li>
+            <li>Il y a autant de plantules mesurant plus de 18 cm que de plantules qui mesurent moins de 18 cm.</li>
+            <li>Il y a un écart de 22 cm entre la plus petite et la plus grande plantule.</li>
+        </ul>
+
+        <strong>3) Compléter la ligne des fréquences</strong><br>
+        <p>Chaque fréquence se calcule en divisant l'effectif correspondant par l'effectif total (29).</p>
+    </div>
+
+    <h2>II. Utiliser un tableur</h2>
+
+    <div class="remarque">
+        <strong>Le tableur fonctionne sur le même principe qu'une calculatrice</strong>, il possède les opérations de base :<br><br>
+        <table style="margin: auto;">
+            <tr>
+                <td><strong>+</strong> pour additionner</td>
+                <td><strong>*</strong> pour multiplier</td>
+                <td><strong>^</strong> pour les puissances</td>
+            </tr>
+            <tr>
+                <td><strong>−</strong> pour soustraire</td>
+                <td><strong>/</strong> pour diviser</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong><br><br>
+        Pour calculer 4 × 5 + 3 − <span class="fraction"><span class="numerateur">9</span><span class="denominateur">8</span></span> + 7<sup>3</sup>, on se place dans une cellule vide et dans la barre de formule on écrit <strong>=4*5+3-9/8+7^3</strong>.
+    </div>
+
+    <div class="remarque">
+        <strong>Remarques fondamentales :</strong>
+        <ul>
+            <li>Si on oublie le signe égal, le tableur ne fait pas le calcul, il ne fera qu'afficher l'opération.</li>
+            <li>La virgule pour le tableur n'est pas le point de la calculatrice mais bien la virgule !</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 :</strong><br><br>
+        Supposons que nous voulions additionner les valeurs disponibles dans deux cellules comme B2 et B5, en affichant cette somme dans la cellule C3.<br><br>
+        Pour cela, il suffit de se placer dans la cellule C3 et de saisir la formule <strong>"=B2+B5"</strong> comme le montre l'image suivante :<br><br>
+
+        <img src="4-62.png" alt="Exemple tableur addition B2+B5" width="40%">
+        <br><br>
+
+        Dans le cas où les valeurs à additionner sont nombreuses, par exemple les valeurs de la cellule B2 à la cellule B7, il est plus simple d'utiliser la formule <strong>"=SOMME(B2:B7)"</strong> comme l'indique l'image suivante :<br><br>
+
+        <img src="4-63.png" alt="Exemple tableur fonction SOMME" width="40%">
+    </div>
+
+    <div class="example">
+        <strong>Exemple 3 :</strong><br><br>
+        Pour calculer une moyenne arithmétique, il existe la fonction <strong>MOYENNE</strong> qui permet de calculer la moyenne d'une série de valeurs se trouvant dans une plage de cellules.<br><br>
+        Dans l'exemple suivant, il s'agit de calculer la moyenne de la série, la formule est <strong>"=MOYENNE(B2:I2)"</strong>.<br><br>
+
+        <img src="4-64.png" alt="Exemple tableur fonction MOYENNE" width="60%">
+    </div>
+
+    <div class="example">
+        <strong>Exemple 4 :</strong><br><br>
+        Pour obtenir la valeur minimum ou la valeur maximum d'une série on utilise les fonctions <strong>MIN</strong> et <strong>MAX</strong>.<br><br>
+        Dans l'exemple suivant, il s'agit de calculer la valeur minimale et maximale de la série, les formules sont <strong>"=MIN(B2:I2)"</strong> et <strong>"=MAX(B2:I2)"</strong>.<br><br>
+
+        <img src="4-65.png" alt="Exemple tableur fonctions MIN et MAX" width="60%">
+    </div>
+
+    <h2>III. Probabilité</h2>
+
+    <div class="definition">
+        On dit d'une expérience qu'elle est <span style="color: red;">aléatoire</span> lorsqu'elle vérifie trois conditions :
+        <ul>
+            <li>On connaît tous les résultats possibles de l'expérience ;</li>
+            <li>Le résultat n'est pas prévisible ;</li>
+            <li>On peut reproduire plusieurs fois l'expérience dans les mêmes conditions.</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> On lance un dé et on regarde la face visible lorsque le dé s'arrête de rouler.
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Chacun des résultats possibles d'une expérience est une <span style="color: red;">issue</span> de l'expérience.<br><br>
+        Dans l'exemple précédent, l'expérience a 6 issues : 1 ; 2 ; 3 ; 4 ; 5 ; 6.
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> La <span style="color: red;">probabilité</span> d'un événement est un nombre qui traduit la « chance » qu'un événement se réalise. Ce nombre est compris entre 0 et 1 et peut s'écrire :
+        <ul>
+            <li>Avec une fraction, par exemple : <span class="fraction"><span class="numerateur">1</span><span class="denominateur">8</span></span></li>
+            <li>Avec un pourcentage, par exemple : 12,5%</li>
+            <li>Avec un nombre décimal, par exemple : 0,125</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Si on lance un dé à six faces, on a 1 chance sur 6 d'obtenir "3". Si on note F l'événement "obtenir un 3", on dit que la probabilité de l'événement F est <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>, on la note p(F) = <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>.
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Définitions :</span>
+        <ul>
+            <li>Un événement dont la probabilité est égale à <span style="color: red;">0</span> est un <strong style="color: red;">évènement impossible</strong>.</li>
+            <li>Un événement dont la probabilité est égale à <span style="color: red;">1</span> est un <strong style="color: red;">évènement certain</strong>.</li>
+        </ul>
+    </div>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Quand les issues d'une expérience aléatoire ont toutes la même probabilité (situation équiprobable) alors la probabilité d'un événement est :<br><br>
+        <div style="text-align: center; font-size: 1.1em;">
+            <span class="fraction">
+                <span class="numerateur">nombre de résultats favorables à l'événement</span>
+                <span class="denominateur">nombre de résultats possibles</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong><br><br>
+        <img src="4-66.png" alt="Roue avec secteurs de couleurs" style="float: right; width: 200px; margin-left: 20px;">
+        On fait tourner une roue marquée sur ses secteurs de couleurs différentes et on regarde le secteur marqué par la flèche.<br><br>
+
+        <strong>Calculer la probabilité de l'évènement A : "Obtenir jaune"</strong><br><br>
+
+        Si on tourne cette roue, chaque secteur à la même probabilité de sortir.<br>
+        Il y a 3 secteurs jaunes sur 8 secteurs, donc <strong>p(A) = <span class="fraction"><span class="numerateur">3</span><span class="denominateur">8</span></span></strong>.
+        <div style="clear: both;"></div>
+    </div>
+
+    <h2>IV. Lien entre probabilité et fréquence</h2>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Si on répète un très grand nombre de fois la même expérience aléatoire, la fréquence d'un évènement est proche de la probabilité de cet évènement.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> En reprenant l'exemple de la roue :<br><br>
+
+        <div class="calcul-detail">
+<strong> Pour 30 répétitions :</strong> <img src="4-67.png" alt="Pour 30 répétitions" width="10%"> <br>
+Fréquence d'apparition de la couleur jaune : <span class="fraction"><span class="numerateur">11</span><span class="denominateur">30</span></span> ≈ 0,3667   (3/8 = 0,375)<br><br>
+
+<strong> Pour 122 800 répétitions :</strong> <img src="4-68.png" alt="Pour 122800 répétitions" width="10%"> <br>
+Fréquence d'apparition de la couleur jaune : <span class="fraction"><span class="numerateur">45766</span><span class="denominateur">122800</span></span> ≈ 0,3727   (3/8 = 0,375)<br><br>
+
+<strong> Pour 393 511 répétitions :</strong> <img src="4-69.png" alt="Pour 393511 répétitions" width="10%"> <br>
+Fréquence d'apparition de la couleur jaune : <span class="fraction"><span class="numerateur">147259</span><span class="denominateur">393511</span></span> ≈ 0,37422   (3/8 = 0,375)
+        </div>
+
+        <p>On observe que plus le nombre de répétitions est grand, plus la fréquence se rapproche de la probabilité théorique.</p>
+    </div>
+
+</body>
+</html>
