@@ -654,6 +654,9 @@
         </div>
     </div>
 
+    <!-- Bibliothèque Scratchblocks pour le rendu des blocs (chargée AVANT le script principal) -->
+    <script src="../scratch/lib/scratchblocks.min.js"></script>
+
     <script>
         // Utilitaires pour générer des nombres aléatoires
         function randInt(min, max) {
@@ -3261,11 +3264,18 @@ set [périmètre v] to (((longueur) + (largeur)) * (2))`;
             document.getElementById('questionsCount').textContent = questionsGenerated;
             document.getElementById('printButtons').classList.add('active');
 
-            // Rendre tous les blocs Scratch avec scratchblocks
-            scratchblocks.renderMatching('pre.blocks', {
-                languages: ['fr'],
-                style: 'scratch3'
-            });
+            // Rendre tous les blocs Scratch avec scratchblocks après un court délai
+            // pour s'assurer que le DOM est bien mis à jour
+            setTimeout(() => {
+                if (typeof scratchblocks !== 'undefined') {
+                    scratchblocks.renderMatching('pre.blocks', {
+                        languages: ['fr'],
+                        style: 'scratch3'
+                    });
+                } else {
+                    console.error('scratchblocks n\'est pas chargé');
+                }
+            }, 100);
         }
 
         function toggleAnswers() {
@@ -3420,9 +3430,6 @@ set [périmètre v] to (((longueur) + (largeur)) * (2))`;
         // Initialiser au chargement
         window.onload = initThemes;
     </script>
-
-    <!-- Bibliothèque Scratchblocks pour le rendu des blocs -->
-    <script src="../scratch/lib/scratchblocks.min.js"></script>
 
     <!-- Indicateur de version pour vérifier le cache -->
     <!-- FIX CACHE : Pas de marqueurs de conflit Git ! -->
