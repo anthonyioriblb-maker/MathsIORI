@@ -724,9 +724,14 @@
 
         // Fonction pour générer des blocs Scratch avec la bibliothèque scratchblocks
         function generateScratchBlocks(code) {
+            // Échapper les caractères HTML pour éviter les problèmes
+            const escapedCode = code.replace(/&/g, '&amp;')
+                                    .replace(/</g, '&lt;')
+                                    .replace(/>/g, '&gt;');
+
             // Retourner simplement le code dans un élément pre avec la classe blocks
             // Le rendu sera fait après l'insertion dans le DOM
-            return `<pre class="blocks" style="margin: 15px auto; max-width: 700px;">${code}</pre>`;
+            return `<pre class="blocks" style="margin: 15px auto; max-width: 700px;">${escapedCode}</pre>`;
         }
 
         // Fonction pour générer un tableau HTML de proportionnalité
