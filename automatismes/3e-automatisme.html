@@ -727,14 +727,37 @@
 
         // Fonction pour générer des blocs Scratch avec la bibliothèque scratchblocks
         function generateScratchBlocks(code) {
-            // Échapper les caractères HTML pour éviter les problèmes
-            const escapedCode = code.replace(/&/g, '&amp;')
-                                    .replace(/</g, '&lt;')
-                                    .replace(/>/g, '&gt;');
+            // Créer un ID unique pour ce bloc
+            const blockId = 'scratch-block-' + Math.random().toString(36).substr(2, 9);
 
-            // Retourner simplement le code dans un élément pre avec la classe blocks
-            // Le rendu sera fait après l'insertion dans le DOM
-            return `<pre class="blocks" style="margin: 15px auto; max-width: 700px;">${escapedCode}</pre>`;
+            // Retourner un div avec un ID unique qui contiendra le bloc
+            // On utilisera textContent pour éviter les problèmes avec < et >
+            return `<div id="${blockId}" data-scratch-code="${btoa(unescape(encodeURIComponent(code)))}" style="margin: 15px auto; max-width: 700px;"></div>`;
+        }
+
+        // Fonction pour rendre tous les blocs Scratch après insertion dans le DOM
+        function renderAllScratchBlocks() {
+            // Trouver tous les divs avec data-scratch-code
+            document.querySelectorAll('[data-scratch-code]').forEach(container => {
+                const encodedCode = container.getAttribute('data-scratch-code');
+                const code = decodeURIComponent(escape(atob(encodedCode)));
+
+                // Créer un élément pre avec textContent (pas innerHTML) pour éviter problèmes HTML
+                const pre = document.createElement('pre');
+                pre.className = 'blocks';
+                pre.textContent = code;
+                container.appendChild(pre);
+            });
+
+            // Rendre tous les blocs avec scratchblocks
+            if (typeof scratchblocks !== 'undefined') {
+                scratchblocks.renderMatching('pre.blocks', {
+                    languages: ['fr'],
+                    style: 'scratch3'
+                });
+            } else {
+                console.error('scratchblocks n\'est pas chargé');
+            }
         }
 
         // Fonction pour générer un tableau HTML de proportionnalité
@@ -3265,16 +3288,8 @@ set [périmètre v] to (((longueur) + (largeur)) * (2))`;
             document.getElementById('printButtons').classList.add('active');
 
             // Rendre tous les blocs Scratch avec scratchblocks après un court délai
-            // pour s'assurer que le DOM est bien mis à jour
             setTimeout(() => {
-                if (typeof scratchblocks !== 'undefined') {
-                    scratchblocks.renderMatching('pre.blocks', {
-                        languages: ['fr'],
-                        style: 'scratch3'
-                    });
-                } else {
-                    console.error('scratchblocks n\'est pas chargé');
-                }
+                renderAllScratchBlocks();
             }, 100);
         }
 
