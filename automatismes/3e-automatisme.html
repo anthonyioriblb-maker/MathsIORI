@@ -724,37 +724,14 @@
 
         // Fonction pour générer des blocs Scratch avec la bibliothèque scratchblocks
         function generateScratchBlocks(code) {
-            const blockId = 'scratch-' + Math.random().toString(36).substr(2, 9);
+            // Échapper les caractères HTML pour éviter les problèmes
+            const escapedCode = code.replace(/&/g, '&amp;')
+                                    .replace(/</g, '&lt;')
+                                    .replace(/>/g, '&gt;');
 
-            // Créer un conteneur pour le code Scratch
-            const container = document.createElement('div');
-            container.style.margin = '15px auto';
-            container.style.maxWidth = '700px';
-            container.id = blockId;
-
-            // Créer un élément pre avec la classe blocks
-            const pre = document.createElement('pre');
-            pre.className = 'blocks';
-            pre.textContent = code;
-            container.appendChild(pre);
-
-            // Ajouter temporairement au DOM pour le rendu
-            document.body.appendChild(container);
-
-            // Rendre les blocs Scratch
-            scratchblocks.renderMatching('pre.blocks', {
-                languages: ['fr'],
-                style: 'scratch3'
-            });
-
-            // Récupérer le HTML rendu
-            const renderedHtml = container.innerHTML;
-
-            // Retirer du DOM
-            document.body.removeChild(container);
-
-            // Retourner le HTML dans un div
-            return `<div style="margin: 15px auto; max-width: 700px;">${renderedHtml}</div>`;
+            // Retourner simplement le code dans un élément pre avec la classe blocks
+            // Le rendu sera fait après l'insertion dans le DOM
+            return `<pre class="blocks" style="margin: 15px auto; max-width: 700px;">${escapedCode}</pre>`;
         }
 
         // Fonction pour générer un tableau HTML de proportionnalité
@@ -3284,8 +3261,11 @@ set [périmètre v] to (((longueur) + (largeur)) * (2))`;
             document.getElementById('questionsCount').textContent = questionsGenerated;
             document.getElementById('printButtons').classList.add('active');
 
-            // Plus besoin de scratchblocks - rendu HTML/CSS pur en français !
-            console.log('✓ Blocs Scratch générés en HTML/CSS français natif');
+            // Rendre tous les blocs Scratch avec scratchblocks
+            scratchblocks.renderMatching('pre.blocks', {
+                languages: ['fr'],
+                style: 'scratch3'
+            });
         }
 
         function toggleAnswers() {
