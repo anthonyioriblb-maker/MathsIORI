@@ -8,7 +8,10 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Générateur de Questions - Automatismes DNB</title>
-    <!-- Rendu Scratch en HTML/CSS pur - Pas besoin de bibliothèque externe ! -->
+
+    <!-- Scratchblocks pour le rendu des blocs Scratch -->
+    <link rel="stylesheet" href="../scratch/lib/scratchblocks.css">
+
     <style>
         * {
             margin: 0;
@@ -719,204 +722,39 @@
             return `<span class="fraction"><span class="numerator">${numerator}</span><span class="denominator">${denominator}</span></span>`;
         }
 
-        // Fonction pour générer des blocs Scratch visuels en HTML/CSS pur
+        // Fonction pour générer des blocs Scratch avec la bibliothèque scratchblocks
         function generateScratchBlocks(code) {
             const blockId = 'scratch-' + Math.random().toString(36).substr(2, 9);
 
-            // Traduire le code anglais en français si nécessaire
-            code = code.replace(/set /g, 'mettre ')
-                       .replace(/ to /g, ' à ')
-                       .replace(/change /g, 'ajouter ')
-                       .replace(/ by /g, ' de ')
-                       .replace(/if </g, 'si <')
-                       .replace(/> then/g, '> alors')
-                       .replace(/else/g, 'sinon')
-                       .replace(/end/g, 'fin')
-                       .replace(/repeat /g, 'répéter ')
-                       .replace(/say /g, 'dire ')
-                       .replace(/for /g, 'pendant ')
-                       .replace(/ secs/g, ' secondes')
-                       .replace(/move /g, 'avancer de ')
-                       .replace(/ steps/g, ' pas')
-                       .replace(/turn right /g, 'tourner à droite de ')
-                       .replace(/turn left /g, 'tourner à gauche de ')
-                       .replace(/ degrees/g, ' degrés')
-                       .replace(/pen down/g, 'stylo baissé')
-                       .replace(/join /g, 'regrouper ');
+            // Créer un conteneur pour le code Scratch
+            const container = document.createElement('div');
+            container.style.margin = '15px auto';
+            container.style.maxWidth = '700px';
+            container.id = blockId;
 
-            let html = `<div id="${blockId}" style="font-family: 'Helvetica Neue', Arial, sans-serif; margin: 15px auto; max-width: 700px; font-size: 13px;">`;
+            // Créer un élément pre avec la classe blocks
+            const pre = document.createElement('pre');
+            pre.className = 'blocks';
+            pre.textContent = code;
+            container.appendChild(pre);
 
-            const lines = code.split('\n');
-            let indentLevel = 0;
+            // Ajouter temporairement au DOM pour le rendu
+            document.body.appendChild(container);
 
-            for (let line of lines) {
-                line = line.trim();
-                if (!line) continue;
+            // Rendre les blocs Scratch
+            scratchblocks.renderMatching('pre.blocks', {
+                languages: ['fr'],
+                style: 'scratch3'
+            });
 
-                // Sauvegarder la ligne originale AVANT tout traitement
-                const originalLine = line;
+            // Récupérer le HTML rendu
+            const renderedHtml = container.innerHTML;
 
-                // Gérer l'indentation
-                if (originalLine === 'fin' || originalLine === 'sinon') {
-                    indentLevel = Math.max(0, indentLevel - 1);
-                }
+            // Retirer du DOM
+            document.body.removeChild(container);
 
-                const indent = indentLevel * 20;
-
-                // Déterminer le type de bloc et sa couleur
-                let bgColor = '#9966FF'; // Violet par défaut (contrôle)
-                let blockStyle = 'block';
-
-                if (originalLine.startsWith('mettre') || originalLine.startsWith('ajouter')) {
-                    bgColor = '#FF8C1A'; // Orange (variables)
-                } else if (originalLine.startsWith('dire')) {
-                    bgColor = '#9966FF'; // Violet (apparence)
-                } else if (originalLine.startsWith('avancer') || originalLine.startsWith('tourner')) {
-                    bgColor = '#4C97FF'; // Bleu (mouvement)
-                } else if (originalLine.startsWith('stylo')) {
-                    bgColor = '#0FBD8C'; // Vert (stylo)
-                } else if (originalLine === 'sinon' || originalLine === 'fin') {
-                    blockStyle = 'cap';
-                }
-
-                // ÉTAPE 1 : Remplacer avec des placeholders pour éviter les conflits
-                const placeholders = [];
-                let placeholderIndex = 0;
-
-                // Mettre les ? en rouge
-                line = line.replace(/\?/g, () => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    placeholders[placeholderIndex] = '<span style="color: red; font-weight: bold; font-size: 1.4em;">?</span>';
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // Mettre les comparaisons en vert (AVANT les autres pour éviter confusion avec <, >)
-                line = line.replace(/<([^>]+)>/g, (match, content) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    placeholders[placeholderIndex] = `<span style="background: #59C059; color: white; padding: 2px 8px; border-radius: 12px;">${content}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // Mettre les expressions mathématiques complexes en vert (AVANT tout le reste)
-                // Exemples : ((côté) * (?)), ((longueur) + (largeur)) * 2, (x) mod (y)
-
-                // D'ABORD : ((X) OP (Y)) OP N - expressions avec opérateur après
-                line = line.replace(/\(\([^)]+\)\s*[\+\-\*\/]\s*\([^)]+\)\)\s*[\+\-\*\/]\s*[\d\?]+/g, (match) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    let formatted = match;
-                    // ORDRE IMPORTANT : Opérateurs EN PREMIER pour éviter de casser les spans HTML
-                    formatted = formatted.replace(/([+\-*\/])/g, ' <strong>$1</strong> ');
-                    // Variables en orange
-                    formatted = formatted.replace(/\(([a-zéèêàâùôîç]+)\)/gi, '<span style="background: #FF8C1A; color: white; padding: 2px 6px; border-radius: 10px; font-weight: 500;">$1</span>');
-                    // Nombres en blanc
-                    formatted = formatted.replace(/\((\d+)\)/g, '<span style="background: white; color: #575E75; padding: 2px 6px; border-radius: 10px; font-weight: 500;">$1</span>');
-                    formatted = formatted.replace(/(\d+)/g, '<span style="background: white; color: #575E75; padding: 2px 6px; border-radius: 10px; font-weight: 500;">$1</span>');
-                    // ? en rouge
-                    formatted = formatted.replace(/\?/g, '<span style="color: red; font-weight: bold; font-size: 1.2em;">?</span>');
-                    placeholders[placeholderIndex] = `<span style="background: #59C059; color: white; padding: 4px 10px; border-radius: 10px;">${formatted}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // ENSUITE : (X) mod (Y) - opérateur modulo
-                line = line.replace(/\([^)]+\)\s+mod\s+\([^)]+\)/gi, (match) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    let formatted = match;
-                    // mod en gras
-                    formatted = formatted.replace(/\bmod\b/gi, ' <strong>mod</strong> ');
-                    // Variables en orange
-                    formatted = formatted.replace(/\(([a-zéèêàâùôîç]+)\)/gi, '<span style="background: #FF8C1A; color: white; padding: 2px 6px; border-radius: 10px; font-weight: 500;">$1</span>');
-                    // Nombres en blanc
-                    formatted = formatted.replace(/\((\d+)\)/g, '<span style="background: white; color: #575E75; padding: 2px 6px; border-radius: 10px; font-weight: 500;">$1</span>');
-                    // ? en rouge
-                    formatted = formatted.replace(/\?/g, '<span style="color: red; font-weight: bold; font-size: 1.2em;">?</span>');
-                    placeholders[placeholderIndex] = `<span style="background: #59C059; color: white; padding: 4px 10px; border-radius: 10px;">${formatted}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // ENFIN : ((X) OP (Y)) - expression simple
-                line = line.replace(/\(\([^)]+\)\s*[\+\-\*\/]\s*\([^)]+\)\)/g, (match) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    let formatted = match;
-                    // ORDRE IMPORTANT : Opérateurs EN PREMIER
-                    formatted = formatted.replace(/([+\-*\/])/g, ' <strong>$1</strong> ');
-                    // Variables en orange
-                    formatted = formatted.replace(/\(([a-zéèêàâùôîç]+)\)/gi, '<span style="background: #FF8C1A; color: white; padding: 2px 6px; border-radius: 10px; font-weight: 500;">$1</span>');
-                    // Nombres en blanc
-                    formatted = formatted.replace(/\((\d+)\)/g, '<span style="background: white; color: #575E75; padding: 2px 6px; border-radius: 10px; font-weight: 500;">$1</span>');
-                    // ? en rouge
-                    formatted = formatted.replace(/\?/g, '<span style="color: red; font-weight: bold; font-size: 1.2em;">?</span>');
-                    placeholders[placeholderIndex] = `<span style="background: #59C059; color: white; padding: 4px 10px; border-radius: 10px;">${formatted}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // Mettre les variables Scratch [var v] en orange
-                line = line.replace(/\[([^\]]+) v\]/g, (match, varName) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    placeholders[placeholderIndex] = `<span style="background: #FF8C1A; color: white; padding: 2px 6px; border-radius: 10px; font-weight: 500;">${varName}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // Mettre les variables simples (nomVar) en orange si ce sont des lettres
-                line = line.replace(/\(([a-zéèêàâùôîç]+)\)/gi, (match, varName) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    placeholders[placeholderIndex] = `<span style="background: #FF8C1A; color: white; padding: 2px 6px; border-radius: 10px; font-weight: 500;">${varName}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // Mettre les textes entre crochets en violet
-                line = line.replace(/\[([^\]]+)\]/g, (match, text) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    placeholders[placeholderIndex] = `<span style="background: #9966FF; color: white; padding: 2px 6px; border-radius: 10px;">${text}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // Mettre les nombres simples en blanc
-                line = line.replace(/\((\d+)\)/g, (match, number) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    placeholders[placeholderIndex] = `<span style="background: white; color: #575E75; padding: 2px 8px; border-radius: 10px; font-weight: 500;">${number}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // Mettre les expressions mod en vert
-                line = line.replace(/\([^)]+\)\s+mod\s+\([^)]+\)/g, (match) => {
-                    const placeholder = `__PLACEHOLDER_${placeholderIndex}__`;
-                    placeholders[placeholderIndex] = `<span style="background: #59C059; color: white; padding: 2px 8px; border-radius: 10px;">${match}</span>`;
-                    placeholderIndex++;
-                    return placeholder;
-                });
-
-                // ÉTAPE 2 : Restaurer tous les placeholders
-                for (let i = 0; i < placeholderIndex; i++) {
-                    line = line.replace(`__PLACEHOLDER_${i}__`, placeholders[i]);
-                }
-
-                if (blockStyle === 'cap') {
-                    html += `<div style="margin-left: ${indent}px; padding: 8px 12px; background: ${bgColor}; color: white; border-radius: 4px; margin-bottom: 2px; font-weight: 500; width: fit-content; min-width: 60px;">${line}</div>`;
-                } else {
-                    html += `<div style="margin-left: ${indent}px; padding: 10px 12px; background: ${bgColor}; color: white; border-radius: 4px; margin-bottom: 2px; font-weight: 500; width: fit-content; min-width: 150px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">${line}</div>`;
-                }
-
-                // Augmenter l'indentation après certains blocs (utiliser originalLine)
-                if (originalLine.includes('si ') || originalLine.includes('répéter') || originalLine.includes('sinon')) {
-                    indentLevel++;
-                }
-
-                if (originalLine === 'fin') {
-                    indentLevel = Math.max(0, indentLevel - 1);
-                }
-            }
-
-            html += '</div>';
-            return html;
+            // Retourner le HTML dans un div
+            return `<div style="margin: 15px auto; max-width: 700px;">${renderedHtml}</div>`;
         }
 
         // Fonction pour générer un tableau HTML de proportionnalité
@@ -3602,6 +3440,9 @@ set [périmètre v] to (((longueur) + (largeur)) * (2))`;
         // Initialiser au chargement
         window.onload = initThemes;
     </script>
+
+    <!-- Bibliothèque Scratchblocks pour le rendu des blocs -->
+    <script src="../scratch/lib/scratchblocks.min.js"></script>
 
     <!-- Indicateur de version pour vérifier le cache -->
     <!-- FIX CACHE : Pas de marqueurs de conflit Git ! -->
