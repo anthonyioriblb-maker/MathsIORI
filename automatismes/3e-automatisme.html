@@ -2794,7 +2794,7 @@
                                 const add = randInt(3, 7);
                                 const result = x + add;
                                 const scratchCode = `mettre [x v] à (${x})
-ajouter à [x v] (${add})`;
+ajouter (${add}) à [x v]`;
                                 return {
                                     question: `Que vaut la variable x à la fin du programme ?<br>${generateScratchBlocks(scratchCode)}`,
                                     answer: `x = ${x} + ${add} = ${result}`
@@ -2845,7 +2845,7 @@ fin`;
                                 const isPair = x % 2 === 0;
                                 const result = isPair ? "pair" : "impair";
                                 const scratchCode = `mettre [x v] à (${x})
-si <((x) mod (2)) = (0)> alors
+si <((x) modulo (2)) = (0)> alors
   dire [pair] pendant (2) secondes
 sinon
   dire [impair] pendant (2) secondes
@@ -2869,8 +2869,8 @@ fin`;
                                 const repeat = randInt(4, 8);
                                 const result = x + repeat;
                                 const scratchCode = `mettre [x v] à (${x})
-repeat (${repeat})
-  ajouter à [x v] (1)
+répéter (${repeat}) fois
+  ajouter (1) à [x v]
 fin`;
                                 return {
                                     question: `Quelle est la valeur finale de x ?<br>${generateScratchBlocks(scratchCode)}`,
@@ -2884,8 +2884,8 @@ fin`;
                                 const add = randInt(2, 4);
                                 const result = x + (repeat * add);
                                 const scratchCode = `mettre [x v] à (${x})
-repeat (${repeat})
-  ajouter à [x v] (${add})
+répéter (${repeat}) fois
+  ajouter (${add}) à [x v]
 fin`;
                                 return {
                                     question: `Que vaut x à la fin ?<br>${generateScratchBlocks(scratchCode)}`,
@@ -3005,10 +3005,10 @@ fin`;
                             () => {
                                 // Dessiner un carré - compléter le programme
                                 const cote = randInt(50, 150);
-                                const scratchCode = `pen down
-repeat (4)
-  move (${cote}) steps
-  turn right (?) degrees
+                                const scratchCode = `stylo en position d'écriture
+répéter (4) fois
+  avancer de (${cote}) pas
+  tourner droite de (?) degrés
 fin`;
                                 return {
                                     question: `Compléter ce programme Scratch pour dessiner un carré de côté ${cote} :<br>${generateScratchBlocks(scratchCode)}`,
@@ -3018,10 +3018,10 @@ fin`;
                             () => {
                                 // Dessiner un triangle équilatéral
                                 const cote = randInt(60, 120);
-                                const scratchCode = `pen down
-repeat (3)
-  move (${cote}) steps
-  turn right (?) degrees
+                                const scratchCode = `stylo en position d'écriture
+répéter (3) fois
+  avancer de (${cote}) pas
+  tourner droite de (?) degrés
 fin`;
                                 return {
                                     question: `Compléter ce programme pour dessiner un triangle équilatéral :<br>${generateScratchBlocks(scratchCode)}`,
@@ -3095,10 +3095,10 @@ mettre [aire v] à ((côté) * (côté))`;
                             },
                             () => {
                                 // Dessiner une étoile à 5 branches
-                                const scratchCode = `pen down
-repeat (5)
-  move (100) steps
-  turn right (?) degrees
+                                const scratchCode = `stylo en position d'écriture
+répéter (5) fois
+  avancer de (100) pas
+  tourner droite de (?) degrés
 fin`;
                                 return {
                                     question: `Pour dessiner une étoile à 5 branches, on doit tourner de combien de degrés à chaque pointe ?<br>${generateScratchBlocks(scratchCode)}`,
@@ -3421,7 +3421,7 @@ mettre [périmètre v] à (((longueur) + (largeur)) * (2))`;
     <!-- Indicateur de version pour vérifier le cache -->
     <!-- FIX CACHE : Pas de marqueurs de conflit Git ! -->
     <div style="position: fixed; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 3px 8px; border-radius: 5px; font-size: 11px; z-index: 9999;">
-        v2024-11-25-FRANCAIS-COMPLET
+        v2024-11-25-SYNTAXE-CORRECTE
     </div>
 </body>
 </html>
