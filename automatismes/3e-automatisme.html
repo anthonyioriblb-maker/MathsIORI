@@ -10,7 +10,7 @@
     <title>Générateur de Questions - Automatismes DNB</title>
 
     <!-- Scratchblocks pour le rendu des blocs Scratch -->
-    <link rel="stylesheet" href="../scratch/lib/scratchblocks.css">
+    <link rel="stylesheet" href="../scratch/lib/scratchblocks.css?v=20241125v2">
 
     <style>
         * {
@@ -655,7 +655,7 @@
     </div>
 
     <!-- Bibliothèque Scratchblocks pour le rendu des blocs (chargée AVANT le script principal) -->
-    <script src="../scratch/lib/scratchblocks.min.js"></script>
+    <script src="../scratch/lib/scratchblocks.min.js?v=20241125v2"></script>
 
     <script>
         // Utilitaires pour générer des nombres aléatoires
@@ -725,16 +725,9 @@
             return `<span class="fraction"><span class="numerator">${numerator}</span><span class="denominator">${denominator}</span></span>`;
         }
 
-        // Fonction pour générer des blocs Scratch avec la bibliothèque scratchblocks
+        // Fonction pour générer des blocs Scratch - EXACTEMENT comme scratch/4e/4-activite1-correction.html
         function generateScratchBlocks(code) {
-            // Échapper les caractères HTML pour éviter les problèmes
-            const escapedCode = code.replace(/&/g, '&amp;')
-                                    .replace(/</g, '&lt;')
-                                    .replace(/>/g, '&gt;');
-
-            // Retourner simplement le code dans un élément pre avec la classe blocks
-            // Le rendu sera fait après l'insertion dans le DOM
-            return `<pre class="blocks" style="margin: 15px auto; max-width: 700px;">${escapedCode}</pre>`;
+            return `<pre class="blocks">${code}</pre>`;
         }
 
         // Fonction pour générer un tableau HTML de proportionnalité
@@ -3264,18 +3257,11 @@ set [périmètre v] to (((longueur) + (largeur)) * (2))`;
             document.getElementById('questionsCount').textContent = questionsGenerated;
             document.getElementById('printButtons').classList.add('active');
 
-            // Rendre tous les blocs Scratch avec scratchblocks après un court délai
-            // pour s'assurer que le DOM est bien mis à jour
-            setTimeout(() => {
-                if (typeof scratchblocks !== 'undefined') {
-                    scratchblocks.renderMatching('pre.blocks', {
-                        languages: ['fr'],
-                        style: 'scratch3'
-                    });
-                } else {
-                    console.error('scratchblocks n\'est pas chargé');
-                }
-            }, 100);
+            // Rendre tous les blocs Scratch - EXACTEMENT comme dans scratch/4e/4-activite1-correction.html
+            scratchblocks.renderMatching('pre.blocks', {
+                languages: ['fr'],
+                style: 'scratch3'
+            });
         }
 
         function toggleAnswers() {
@@ -3434,7 +3420,7 @@ set [périmètre v] to (((longueur) + (largeur)) * (2))`;
     <!-- Indicateur de version pour vérifier le cache -->
     <!-- FIX CACHE : Pas de marqueurs de conflit Git ! -->
     <div style="position: fixed; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 3px 8px; border-radius: 5px; font-size: 11px; z-index: 9999;">
-        v2024-11-20-02h45-CLEAN
+        v2024-11-25-SIMPLE-FIX-V2
     </div>
 </body>
 </html>
