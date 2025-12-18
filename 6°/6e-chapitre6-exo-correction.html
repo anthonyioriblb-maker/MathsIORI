@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correction - Comparaison de fractions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2E75B5;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2E75B5;
+            border-bottom: 2px solid #2E75B5;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .methode {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-left: 4px solid #2E75B5;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .calcul {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+        .reponse {
+            margin-left: 20px;
+            font-weight: bold;
+            color: #2E75B5;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* Vraies fractions avec barre horizontale */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 1em;
+            margin: 0 3px;
+        }
+        .fraction .numerator {
+            border-bottom: 1px solid black;
+            padding: 0 5px 2px 5px;
+        }
+        .fraction .denominator {
+            padding: 2px 5px 0 5px;
+        }
+        
+        /* Système de colonnes */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .exercise-item {
+            margin-bottom: 25px;
+            break-inside: avoid;
+        }
+        
+        ol {
+            counter-reset: item;
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ol > li {
+            counter-increment: item;
+            margin-bottom: 20px;
+        }
+        ol > li:before {
+            content: counter(item, lower-alpha) ") ";
+            font-weight: bold;
+        }
+        
+        @media print {
+            body {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Correction - Comparaison de fractions</h1>
+    <div class="subtitle">Niveau 6ème</div>
+
+    <h2>Exercice 1 : Mettre au même dénominateur</h2>
+    <div class="methode">
+        <strong>Méthode :</strong> Pour mettre deux fractions au même dénominateur, on cherche un multiple commun des deux dénominateurs (le plus simple est de multiplier les deux dénominateurs entre eux).
+    </div>
+
+    <div class="two-columns">
+        <div class="exercise-item">
+            <div class="question">
+                a) <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> et 
+                <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
+            </div>
+            <div class="calcul">Dénominateur commun : 3 × 4 = 12</div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> = 
+                <span class="fraction"><span class="numerator">2×4</span><span class="denominator">3×4</span></span> = 
+                <span class="fraction"><span class="numerator">8</span><span class="denominator">12</span></span>
+            </div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span> = 
+                <span class="fraction"><span class="numerator">1×3</span><span class="denominator">4×3</span></span> = 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">12</span></span>
+            </div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">8</span><span class="denominator">12</span></span> et 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">12</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                b) <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span> et 
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">7</span></span>
+            </div>
+            <div class="calcul">Dénominateur commun : 5 × 7 = 35</div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span> = 
+                <span class="fraction"><span class="numerator">3×7</span><span class="denominator">5×7</span></span> = 
+                <span class="fraction"><span class="numerator">21</span><span class="denominator">35</span></span>
+            </div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">7</span></span> = 
+                <span class="fraction"><span class="numerator">2×5</span><span class="denominator">7×5</span></span> = 
+                <span class="fraction"><span class="numerator">10</span><span class="denominator">35</span></span>
+            </div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">21</span><span class="denominator">35</span></span> et 
+                <span class="fraction"><span class="numerator">10</span><span class="denominator">35</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            c) <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> et 
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 6 × 4 = 24</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> = 
+                    <span class="fraction"><span class="numerator">5×4</span><span class="denominator">6×4</span></span> = 
+                    <span class="fraction"><span class="numerator">20</span><span class="denominator">24</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> = 
+                    <span class="fraction"><span class="numerator">3×6</span><span class="denominator">4×6</span></span> = 
+                    <span class="fraction"><span class="numerator">18</span><span class="denominator">24</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">20</span><span class="denominator">24</span></span> et 
+                    <span class="fraction"><span class="numerator">18</span><span class="denominator">24</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">On peut aussi utiliser 12 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> = 
+                    <span class="fraction"><span class="numerator">5×2</span><span class="denominator">6×2</span></span> = 
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">12</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> = 
+                    <span class="fraction"><span class="numerator">3×3</span><span class="denominator">4×3</span></span> = 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">12</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">12</span></span> et 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">12</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            d) <span class="fraction"><span class="numerator">4</span><span class="denominator">9</span></span> et 
+            <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 9 × 12 = 108</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">9</span></span> = 
+                    <span class="fraction"><span class="numerator">4×12</span><span class="denominator">9×12</span></span> = 
+                    <span class="fraction"><span class="numerator">48</span><span class="denominator">108</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> = 
+                    <span class="fraction"><span class="numerator">5×9</span><span class="denominator">12×9</span></span> = 
+                    <span class="fraction"><span class="numerator">45</span><span class="denominator">108</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">48</span><span class="denominator">108</span></span> et 
+                    <span class="fraction"><span class="numerator">45</span><span class="denominator">108</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">On peut aussi utiliser 36 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">9</span></span> = 
+                    <span class="fraction"><span class="numerator">4×4</span><span class="denominator">9×4</span></span> = 
+                    <span class="fraction"><span class="numerator">16</span><span class="denominator">36</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> = 
+                    <span class="fraction"><span class="numerator">5×3</span><span class="denominator">12×3</span></span> = 
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">36</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">16</span><span class="denominator">36</span></span> et 
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">36</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            e) <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> et 
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 10 × 8 = 80</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> = 
+                    <span class="fraction"><span class="numerator">7×8</span><span class="denominator">10×8</span></span> = 
+                    <span class="fraction"><span class="numerator">56</span><span class="denominator">80</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> = 
+                    <span class="fraction"><span class="numerator">3×10</span><span class="denominator">8×10</span></span> = 
+                    <span class="fraction"><span class="numerator">30</span><span class="denominator">80</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">56</span><span class="denominator">80</span></span> et 
+                    <span class="fraction"><span class="numerator">30</span><span class="denominator">80</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">On peut aussi utiliser 40 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> = 
+                    <span class="fraction"><span class="numerator">7×4</span><span class="denominator">10×4</span></span> = 
+                    <span class="fraction"><span class="numerator">28</span><span class="denominator">40</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> = 
+                    <span class="fraction"><span class="numerator">3×5</span><span class="denominator">8×5</span></span> = 
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">40</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">28</span><span class="denominator">40</span></span> et 
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">40</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            f) <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span> et 
+            <span class="fraction"><span class="numerator">5</span><span class="denominator">9</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 6 × 9 = 54</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span> = 
+                    <span class="fraction"><span class="numerator">2×9</span><span class="denominator">6×9</span></span> = 
+                    <span class="fraction"><span class="numerator">18</span><span class="denominator">54</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">9</span></span> = 
+                    <span class="fraction"><span class="numerator">5×6</span><span class="denominator">9×6</span></span> = 
+                    <span class="fraction"><span class="numerator">30</span><span class="denominator">54</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">18</span><span class="denominator">54</span></span> et 
+                    <span class="fraction"><span class="numerator">30</span><span class="denominator">54</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">On peut aussi utiliser 18 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span> = 
+                    <span class="fraction"><span class="numerator">2×3</span><span class="denominator">6×3</span></span> = 
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">18</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">9</span></span> = 
+                    <span class="fraction"><span class="numerator">5×2</span><span class="denominator">9×2</span></span> = 
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">18</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">18</span></span> et 
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">18</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            g) <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> et 
+            <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 4 × 8 = 32</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> = 
+                    <span class="fraction"><span class="numerator">3×8</span><span class="denominator">4×8</span></span> = 
+                    <span class="fraction"><span class="numerator">24</span><span class="denominator">32</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span> = 
+                    <span class="fraction"><span class="numerator">7×4</span><span class="denominator">8×4</span></span> = 
+                    <span class="fraction"><span class="numerator">28</span><span class="denominator">32</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">24</span><span class="denominator">32</span></span> et 
+                    <span class="fraction"><span class="numerator">28</span><span class="denominator">32</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">On peut aussi utiliser 8 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> = 
+                    <span class="fraction"><span class="numerator">3×2</span><span class="denominator">4×2</span></span> = 
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">8</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span> reste 
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">8</span></span> et 
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            h) <span class="fraction"><span class="numerator">5</span><span class="denominator">10</span></span> et 
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">15</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 10 × 15 = 150</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">10</span></span> = 
+                    <span class="fraction"><span class="numerator">5×15</span><span class="denominator">10×15</span></span> = 
+                    <span class="fraction"><span class="numerator">75</span><span class="denominator">150</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">15</span></span> = 
+                    <span class="fraction"><span class="numerator">3×10</span><span class="denominator">15×10</span></span> = 
+                    <span class="fraction"><span class="numerator">30</span><span class="denominator">150</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">75</span><span class="denominator">150</span></span> et 
+                    <span class="fraction"><span class="numerator">30</span><span class="denominator">150</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">On peut aussi utiliser 30 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">10</span></span> = 
+                    <span class="fraction"><span class="numerator">5×3</span><span class="denominator">10×3</span></span> = 
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">30</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">15</span></span> = 
+                    <span class="fraction"><span class="numerator">3×2</span><span class="denominator">15×2</span></span> = 
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">30</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">30</span></span> et 
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">30</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            i) <span class="fraction"><span class="numerator">7</span><span class="denominator">12</span></span> et 
+            <span class="fraction"><span class="numerator">5</span><span class="denominator">18</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 12 × 18 = 216</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">12</span></span> = 
+                    <span class="fraction"><span class="numerator">7×18</span><span class="denominator">12×18</span></span> = 
+                    <span class="fraction"><span class="numerator">126</span><span class="denominator">216</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">18</span></span> = 
+                    <span class="fraction"><span class="numerator">5×12</span><span class="denominator">18×12</span></span> = 
+                    <span class="fraction"><span class="numerator">60</span><span class="denominator">216</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">126</span><span class="denominator">216</span></span> et 
+                    <span class="fraction"><span class="numerator">60</span><span class="denominator">216</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">On peut aussi utiliser 36 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">12</span></span> = 
+                    <span class="fraction"><span class="numerator">7×3</span><span class="denominator">12×3</span></span> = 
+                    <span class="fraction"><span class="numerator">21</span><span class="denominator">36</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">18</span></span> = 
+                    <span class="fraction"><span class="numerator">5×2</span><span class="denominator">18×2</span></span> = 
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">36</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">21</span><span class="denominator">36</span></span> et 
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">36</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            j) <span class="fraction"><span class="numerator">4</span><span class="denominator">15</span></span> et 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 15 × 5 = 75</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">15</span></span> = 
+                    <span class="fraction"><span class="numerator">4×5</span><span class="denominator">15×5</span></span> = 
+                    <span class="fraction"><span class="numerator">20</span><span class="denominator">75</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> = 
+                    <span class="fraction"><span class="numerator">2×15</span><span class="denominator">5×15</span></span> = 
+                    <span class="fraction"><span class="numerator">30</span><span class="denominator">75</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">20</span><span class="denominator">75</span></span> et 
+                    <span class="fraction"><span class="numerator">30</span><span class="denominator">75</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">On peut aussi utiliser 15 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">15</span></span> reste 
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">15</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> = 
+                    <span class="fraction"><span class="numerator">2×3</span><span class="denominator">5×3</span></span> = 
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">15</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">15</span></span> et 
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">15</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 2 : Comparer des fractions</h2>
+    <div class="methode">
+        <strong>Méthode :</strong> On met les fractions au même dénominateur, puis on compare les numérateurs.
+    </div>
+
+    <div class="two-columns">
+        <div class="exercise-item">
+            <div class="question">
+                a) <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> ... 
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+            </div>
+            <div class="calcul">Dénominateur commun : 4 × 3 = 12</div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> = 
+                <span class="fraction"><span class="numerator">3×3</span><span class="denominator">4×3</span></span> = 
+                <span class="fraction"><span class="numerator">9</span><span class="denominator">12</span></span>
+            </div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> = 
+                <span class="fraction"><span class="numerator">2×4</span><span class="denominator">3×4</span></span> = 
+                <span class="fraction"><span class="numerator">8</span><span class="denominator">12</span></span>
+            </div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">9</span><span class="denominator">12</span></span> > 
+                <span class="fraction"><span class="numerator">8</span><span class="denominator">12</span></span>
+            </div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> > 
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                c) <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> ... 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+            </div>
+            <div class="calcul">Dénominateur commun : 5 × 8 = 40</div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> = 
+                <span class="fraction"><span class="numerator">2×8</span><span class="denominator">5×8</span></span> = 
+                <span class="fraction"><span class="numerator">16</span><span class="denominator">40</span></span>
+            </div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> = 
+                <span class="fraction"><span class="numerator">3×5</span><span class="denominator">8×5</span></span> = 
+                <span class="fraction"><span class="numerator">15</span><span class="denominator">40</span></span>
+            </div>
+            <div class="calcul">
+                <span class="fraction"><span class="numerator">16</span><span class="denominator">40</span></span> > 
+                <span class="fraction"><span class="numerator">15</span><span class="denominator">40</span></span>
+            </div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> > 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            b) <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> ... 
+            <span class="fraction"><span class="numerator">7</span><span class="denominator">9</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 6 × 9 = 54</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> = 
+                    <span class="fraction"><span class="numerator">5×9</span><span class="denominator">6×9</span></span> = 
+                    <span class="fraction"><span class="numerator">45</span><span class="denominator">54</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">9</span></span> = 
+                    <span class="fraction"><span class="numerator">7×6</span><span class="denominator">9×6</span></span> = 
+                    <span class="fraction"><span class="numerator">42</span><span class="denominator">54</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">45</span><span class="denominator">54</span></span> > 
+                    <span class="fraction"><span class="numerator">42</span><span class="denominator">54</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> > 
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">9</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">Avec 18 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> = 
+                    <span class="fraction"><span class="numerator">5×3</span><span class="denominator">6×3</span></span> = 
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">18</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">9</span></span> = 
+                    <span class="fraction"><span class="numerator">7×2</span><span class="denominator">9×2</span></span> = 
+                    <span class="fraction"><span class="numerator">14</span><span class="denominator">18</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">18</span></span> > 
+                    <span class="fraction"><span class="numerator">14</span><span class="denominator">18</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> > 
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">9</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            d) <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> ... 
+            <span class="fraction"><span class="numerator">11</span><span class="denominator">15</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 10 × 15 = 150</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> = 
+                    <span class="fraction"><span class="numerator">7×15</span><span class="denominator">10×15</span></span> = 
+                    <span class="fraction"><span class="numerator">105</span><span class="denominator">150</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">11</span><span class="denominator">15</span></span> = 
+                    <span class="fraction"><span class="numerator">11×10</span><span class="denominator">15×10</span></span> = 
+                    <span class="fraction"><span class="numerator">110</span><span class="denominator">150</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">105</span><span class="denominator">150</span></span> &lt; 
+                    <span class="fraction"><span class="numerator">110</span><span class="denominator">150</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> &lt; 
+                    <span class="fraction"><span class="numerator">11</span><span class="denominator">15</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">Avec 30 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> = 
+                    <span class="fraction"><span class="numerator">7×3</span><span class="denominator">10×3</span></span> = 
+                    <span class="fraction"><span class="numerator">21</span><span class="denominator">30</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">11</span><span class="denominator">15</span></span> = 
+                    <span class="fraction"><span class="numerator">11×2</span><span class="denominator">15×2</span></span> = 
+                    <span class="fraction"><span class="numerator">22</span><span class="denominator">30</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">21</span><span class="denominator">30</span></span> &lt; 
+                    <span class="fraction"><span class="numerator">22</span><span class="denominator">30</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> &lt; 
+                    <span class="fraction"><span class="numerator">11</span><span class="denominator">15</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            e) <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> ... 
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 12 × 8 = 96</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> = 
+                    <span class="fraction"><span class="numerator">5×8</span><span class="denominator">12×8</span></span> = 
+                    <span class="fraction"><span class="numerator">40</span><span class="denominator">96</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> = 
+                    <span class="fraction"><span class="numerator">3×12</span><span class="denominator">8×12</span></span> = 
+                    <span class="fraction"><span class="numerator">36</span><span class="denominator">96</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">40</span><span class="denominator">96</span></span> > 
+                    <span class="fraction"><span class="numerator">36</span><span class="denominator">96</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> > 
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">Avec 24 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> = 
+                    <span class="fraction"><span class="numerator">5×2</span><span class="denominator">12×2</span></span> = 
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">24</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> = 
+                    <span class="fraction"><span class="numerator">3×3</span><span class="denominator">8×3</span></span> = 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">24</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">24</span></span> > 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">24</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> > 
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            f) <span class="fraction"><span class="numerator">4</span><span class="denominator">7</span></span> ... 
+            <span class="fraction"><span class="numerator">9</span><span class="denominator">14</span></span>
+        </div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">Dénominateur commun : 7 × 14 = 98</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">7</span></span> = 
+                    <span class="fraction"><span class="numerator">4×14</span><span class="denominator">7×14</span></span> = 
+                    <span class="fraction"><span class="numerator">56</span><span class="denominator">98</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">14</span></span> = 
+                    <span class="fraction"><span class="numerator">9×7</span><span class="denominator">14×7</span></span> = 
+                    <span class="fraction"><span class="numerator">63</span><span class="denominator">98</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">56</span><span class="denominator">98</span></span> &lt; 
+                    <span class="fraction"><span class="numerator">63</span><span class="denominator">98</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">7</span></span> &lt; 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">14</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul" style="font-style: italic; color: #666;">Avec 14 :</div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">7</span></span> = 
+                    <span class="fraction"><span class="numerator">4×2</span><span class="denominator">7×2</span></span> = 
+                    <span class="fraction"><span class="numerator">8</span><span class="denominator">14</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">14</span></span> reste 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">14</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">8</span><span class="denominator">14</span></span> &lt; 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">14</span></span>
+                </div>
+                <div class="reponse">
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">7</span></span> &lt; 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">14</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 3 : Comparer avec 1</h2>
+    <div class="methode">
+        <strong>Méthode :</strong> Une fraction est égale à 1 si le numérateur = dénominateur, supérieure à 1 si numérateur > dénominateur, inférieure à 1 si numérateur &lt; dénominateur.
+    </div>
+
+    <div class="two-columns">
+        <div class="exercise-item">
+            <div class="question">
+                a) <span class="fraction"><span class="numerator">5</span><span class="denominator">7</span></span> ... 1
+            </div>
+            <div class="calcul">5 &lt; 7 donc</div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">5</span><span class="denominator">7</span></span> &lt; 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                b) <span class="fraction"><span class="numerator">9</span><span class="denominator">9</span></span> ... 1
+            </div>
+            <div class="calcul">9 = 9 donc</div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">9</span><span class="denominator">9</span></span> = 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                c) <span class="fraction"><span class="numerator">11</span><span class="denominator">8</span></span> ... 1
+            </div>
+            <div class="calcul">11 > 8 donc</div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">11</span><span class="denominator">8</span></span> > 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                d) <span class="fraction"><span class="numerator">3</span><span class="denominator">10</span></span> ... 1
+            </div>
+            <div class="calcul">3 &lt; 10 donc</div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">10</span></span> &lt; 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                e) <span class="fraction"><span class="numerator">15</span><span class="denominator">12</span></span> ... 1
+            </div>
+            <div class="calcul">15 > 12 donc</div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">15</span><span class="denominator">12</span></span> > 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                f) <span class="fraction"><span class="numerator">7</span><span class="denominator">7</span></span> ... 1
+            </div>
+            <div class="calcul">7 = 7 donc</div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">7</span><span class="denominator">7</span></span> = 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                g) <span class="fraction"><span class="numerator">4</span><span class="denominator">11</span></span> ... 1
+            </div>
+            <div class="calcul">4 &lt; 11 donc</div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">4</span><span class="denominator">11</span></span> &lt; 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                h) <span class="fraction"><span class="numerator">20</span><span class="denominator">13</span></span> ... 1
+            </div>
+            <div class="calcul">20 > 13 donc</div>
+            <div class="reponse">
+                <span class="fraction"><span class="numerator">20</span><span class="denominator">13</span></span> > 1
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 4 : Encadrer par deux entiers consécutifs</h2>
+    <div class="methode">
+        <strong>Méthode :</strong> On cherche deux multiples consécutifs du dénominateur qui encadrent le numérateur.
+    </div>
+
+    <div class="two-columns">
+        <div class="exercise-item">
+            <div class="question">a) 
+                <span class="fraction"><span class="numerator">11</span><span class="denominator">3</span></span>
+            </div>
+            <div class="calcul">3 × 3 = 9 et 3 × 4 = 12</div>
+            <div class="calcul">9 &lt; 11 &lt; 12</div>
+            <div class="reponse">
+                3 &lt; <span class="fraction"><span class="numerator">11</span><span class="denominator">3</span></span> &lt; 4
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">b) 
+                <span class="fraction"><span class="numerator">17</span><span class="denominator">5</span></span>
+            </div>
+            <div class="calcul">5 × 3 = 15 et 5 × 4 = 20</div>
+            <div class="calcul">15 &lt; 17 &lt; 20</div>
+            <div class="reponse">
+                3 &lt; <span class="fraction"><span class="numerator">17</span><span class="denominator">5</span></span> &lt; 4
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">c) 
+                <span class="fraction"><span class="numerator">23</span><span class="denominator">4</span></span>
+            </div>
+            <div class="calcul">4 × 5 = 20 et 4 × 6 = 24</div>
+            <div class="calcul">20 &lt; 23 &lt; 24</div>
+            <div class="reponse">
+                5 &lt; <span class="fraction"><span class="numerator">23</span><span class="denominator">4</span></span> &lt; 6
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">d) 
+                <span class="fraction"><span class="numerator">29</span><span class="denominator">7</span></span>
+            </div>
+            <div class="calcul">7 × 4 = 28 et 7 × 5 = 35</div>
+            <div class="calcul">28 &lt; 29 &lt; 35</div>
+            <div class="reponse">
+                4 &lt; <span class="fraction"><span class="numerator">29</span><span class="denominator">7</span></span> &lt; 5
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">e) 
+                <span class="fraction"><span class="numerator">35</span><span class="denominator">6</span></span>
+            </div>
+            <div class="calcul">6 × 5 = 30 et 6 × 6 = 36</div>
+            <div class="calcul">30 &lt; 35 &lt; 36</div>
+            <div class="reponse">
+                5 &lt; <span class="fraction"><span class="numerator">35</span><span class="denominator">6</span></span> &lt; 6
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">f) 
+                <span class="fraction"><span class="numerator">41</span><span class="denominator">8</span></span>
+            </div>
+            <div class="calcul">8 × 5 = 40 et 8 × 6 = 48</div>
+            <div class="calcul">40 &lt; 41 &lt; 48</div>
+            <div class="reponse">
+                5 &lt; <span class="fraction"><span class="numerator">41</span><span class="denominator">8</span></span> &lt; 6
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">g) 
+                <span class="fraction"><span class="numerator">19</span><span class="denominator">4</span></span>
+            </div>
+            <div class="calcul">4 × 4 = 16 et 4 × 5 = 20</div>
+            <div class="calcul">16 &lt; 19 &lt; 20</div>
+            <div class="reponse">
+                4 &lt; <span class="fraction"><span class="numerator">19</span><span class="denominator">4</span></span> &lt; 5
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">h) 
+                <span class="fraction"><span class="numerator">27</span><span class="denominator">5</span></span>
+            </div>
+            <div class="calcul">5 × 5 = 25 et 5 × 6 = 30</div>
+            <div class="calcul">25 &lt; 27 &lt; 30</div>
+            <div class="reponse">
+                5 &lt; <span class="fraction"><span class="numerator">27</span><span class="denominator">5</span></span> &lt; 6
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">i) 
+                <span class="fraction"><span class="numerator">31</span><span class="denominator">6</span></span>
+            </div>
+            <div class="calcul">6 × 5 = 30 et 6 × 6 = 36</div>
+            <div class="calcul">30 &lt; 31 &lt; 36</div>
+            <div class="reponse">
+                5 &lt; <span class="fraction"><span class="numerator">31</span><span class="denominator">6</span></span> &lt; 6
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">j) 
+                <span class="fraction"><span class="numerator">43</span><span class="denominator">8</span></span>
+            </div>
+            <div class="calcul">8 × 5 = 40 et 8 × 6 = 48</div>
+            <div class="calcul">40 &lt; 43 &lt; 48</div>
+            <div class="reponse">
+                5 &lt; <span class="fraction"><span class="numerator">43</span><span class="denominator">8</span></span> &lt; 6
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">k) 
+                <span class="fraction"><span class="numerator">37</span><span class="denominator">9</span></span>
+            </div>
+            <div class="calcul">9 × 4 = 36 et 9 × 5 = 45</div>
+            <div class="calcul">36 &lt; 37 &lt; 45</div>
+            <div class="reponse">
+                4 &lt; <span class="fraction"><span class="numerator">37</span><span class="denominator">9</span></span> &lt; 5
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">l) 
+                <span class="fraction"><span class="numerator">52</span><span class="denominator">7</span></span>
+            </div>
+            <div class="calcul">7 × 7 = 49 et 7 × 8 = 56</div>
+            <div class="calcul">49 &lt; 52 &lt; 56</div>
+            <div class="reponse">
+                7 &lt; <span class="fraction"><span class="numerator">52</span><span class="denominator">7</span></span> &lt; 8
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 5 : Ranger dans l'ordre croissant</h2>
+    <div class="methode">
+        <strong>Méthode :</strong> On met toutes les fractions au même dénominateur, puis on range les numérateurs dans l'ordre croissant.
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            a) <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span> ; 
+            <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> ; 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> ; 
+            <span class="fraction"><span class="numerator">9</span><span class="denominator">10</span></span>
+        </div>
+        <div class="calcul">Dénominateur commun : 10</div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span> = 
+                    <span class="fraction"><span class="numerator">3×2</span><span class="denominator">5×2</span></span> = 
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">10</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> reste 
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> = 
+                    <span class="fraction"><span class="numerator">2×2</span><span class="denominator">5×2</span></span> = 
+                    <span class="fraction"><span class="numerator">4</span><span class="denominator">10</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">10</span></span> reste 
+                    <span class="fraction"><span class="numerator">9</span><span class="denominator">10</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="calcul">
+            Ordre : <span class="fraction"><span class="numerator">4</span><span class="denominator">10</span></span> &lt; 
+            <span class="fraction"><span class="numerator">6</span><span class="denominator">10</span></span> &lt; 
+            <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> &lt; 
+            <span class="fraction"><span class="numerator">9</span><span class="denominator">10</span></span>
+        </div>
+        <div class="reponse">
+            Réponse : <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> &lt; 
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span> &lt; 
+            <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> &lt; 
+            <span class="fraction"><span class="numerator">9</span><span class="denominator">10</span></span>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">
+            b) <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> ; 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> ; 
+            <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> ; 
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
+        </div>
+        <div class="calcul">Dénominateur commun : 12</div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> = 
+                    <span class="fraction"><span class="numerator">5×2</span><span class="denominator">6×2</span></span> = 
+                    <span class="fraction"><span class="numerator">10</span><span class="denominator">12</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> = 
+                    <span class="fraction"><span class="numerator">2×4</span><span class="denominator">3×4</span></span> = 
+                    <span class="fraction"><span class="numerator">8</span><span class="denominator">12</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> reste 
+                    <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span>
+                </div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span> = 
+                    <span class="fraction"><span class="numerator">1×6</span><span class="denominator">2×6</span></span> = 
+                    <span class="fraction"><span class="numerator">6</span><span class="denominator">12</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="calcul">
+            Ordre : <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> &lt; 
+            <span class="fraction"><span class="numerator">6</span><span class="denominator">12</span></span> &lt; 
+            <span class="fraction"><span class="numerator">8</span><span class="denominator">12</span></span> &lt; 
+            <span class="fraction"><span class="numerator">10</span><span class="denominator">12</span></span>
+        </div>
+        <div class="reponse">
+            Réponse : <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> &lt; 
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span> &lt; 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> &lt; 
+            <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span>
+        </div>
+    </div>
+
+    <h2>Exercice 6 : Problème</h2>
+    <div class="methode">
+        Jules a mangé <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> d'une pizza et Sarah a mangé <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> d'une pizza identique.
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">a) Qui a mangé le plus de pizza ?</div>
+        <div class="calcul">On compare 
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> et 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> en les mettant au même dénominateur :
+        </div>
+        <div class="calcul">Dénominateur commun : 8 × 5 = 40</div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> = 
+                    <span class="fraction"><span class="numerator">3×5</span><span class="denominator">8×5</span></span> = 
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">40</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> = 
+                    <span class="fraction"><span class="numerator">2×8</span><span class="denominator">5×8</span></span> = 
+                    <span class="fraction"><span class="numerator">16</span><span class="denominator">40</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="calcul">
+            <span class="fraction"><span class="numerator">16</span><span class="denominator">40</span></span> > 
+            <span class="fraction"><span class="numerator">15</span><span class="denominator">40</span></span> donc 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> > 
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+        </div>
+        <div class="reponse">Réponse : Sarah a mangé le plus de pizza.</div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+        <div class="question">b) Quelle fraction de pizza ont-ils mangé à eux deux ?</div>
+        <div class="calcul">On additionne les deux fractions :</div>
+        <div class="calcul">Dénominateur commun : 8 × 5 = 40</div>
+        <div class="two-columns">
+            <div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> = 
+                    <span class="fraction"><span class="numerator">3×5</span><span class="denominator">8×5</span></span> = 
+                    <span class="fraction"><span class="numerator">15</span><span class="denominator">40</span></span>
+                </div>
+            </div>
+            <div>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> = 
+                    <span class="fraction"><span class="numerator">2×8</span><span class="denominator">5×8</span></span> = 
+                    <span class="fraction"><span class="numerator">16</span><span class="denominator">40</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="calcul">
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> + 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> = 
+            <span class="fraction"><span class="numerator">15</span><span class="denominator">40</span></span> + 
+            <span class="fraction"><span class="numerator">16</span><span class="denominator">40</span></span> = 
+            <span class="fraction"><span class="numerator">15+16</span><span class="denominator">40</span></span> = 
+            <span class="fraction"><span class="numerator">31</span><span class="denominator">40</span></span>
+        </div>
+        <div class="reponse">
+            Réponse : Ils ont mangé <span class="fraction"><span class="numerator">31</span><span class="denominator">40</span></span> de pizza à eux deux.
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparaison de fractions - Exercices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2E75B5;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+        h2 {
+            color: #2E75B5;
+            border-bottom: 2px solid #2E75B5;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        /* Vraies fractions avec barre horizontale */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 1em;
+            margin: 0 3px;
+        }
+        .fraction .numerator {
+            border-bottom: 1px solid black;
+            padding: 0 5px 2px 5px;
+        }
+        .fraction .denominator {
+            padding: 2px 5px 0 5px;
+        }
+        
+        /* Système de colonnes */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .exercise-item {
+            margin-bottom: 5px;
+            break-inside: avoid;
+        }
+        
+        @media print {
+            body {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Comparaison de fractions</h1>
+    <div class="subtitle">Niveau 6ème</div>
+
+    <h2>Exercice 1 : Mettre au même dénominateur</h2>
+
+    <div class="two-columns">
+        <div class="exercise-item">
+            <div class="question">
+                a) <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> et 
+                <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                b) <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span> et 
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">7</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                c) <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> et 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                d) <span class="fraction"><span class="numerator">4</span><span class="denominator">9</span></span> et 
+                <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                e) <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> et 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                f) <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span> et 
+                <span class="fraction"><span class="numerator">5</span><span class="denominator">9</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                g) <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> et 
+                <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                h) <span class="fraction"><span class="numerator">5</span><span class="denominator">10</span></span> et 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">15</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                i) <span class="fraction"><span class="numerator">7</span><span class="denominator">12</span></span> et 
+                <span class="fraction"><span class="numerator">5</span><span class="denominator">18</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                j) <span class="fraction"><span class="numerator">4</span><span class="denominator">15</span></span> et 
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span>
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 2 : Comparer des fractions</h2>
+
+    <div class="two-columns">
+        <div class="exercise-item">
+            <div class="question">
+                a) <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> ... 
+                <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                b) <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> ... 
+                <span class="fraction"><span class="numerator">7</span><span class="denominator">9</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                c) <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> ... 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                d) <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> ... 
+                <span class="fraction"><span class="numerator">11</span><span class="denominator">15</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                e) <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> ... 
+                <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                f) <span class="fraction"><span class="numerator">4</span><span class="denominator">7</span></span> ... 
+                <span class="fraction"><span class="numerator">9</span><span class="denominator">14</span></span>
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 3 : Comparer avec 1</h2>
+
+    <div class="two-columns">
+        <div class="exercise-item">
+            <div class="question">
+                a) <span class="fraction"><span class="numerator">5</span><span class="denominator">7</span></span> ... 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                b) <span class="fraction"><span class="numerator">9</span><span class="denominator">9</span></span> ... 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                c) <span class="fraction"><span class="numerator">11</span><span class="denominator">8</span></span> ... 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                d) <span class="fraction"><span class="numerator">3</span><span class="denominator">10</span></span> ... 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                e) <span class="fraction"><span class="numerator">15</span><span class="denominator">12</span></span> ... 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                f) <span class="fraction"><span class="numerator">7</span><span class="denominator">7</span></span> ... 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                g) <span class="fraction"><span class="numerator">4</span><span class="denominator">11</span></span> ... 1
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                h) <span class="fraction"><span class="numerator">20</span><span class="denominator">13</span></span> ... 1
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 4 : Encadrer par deux entiers consécutifs</h2>
+
+    <div class="two-columns">
+        <div class="exercise-item">
+            <div class="question">
+                a) <span class="fraction"><span class="numerator">11</span><span class="denominator">3</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                b) <span class="fraction"><span class="numerator">17</span><span class="denominator">5</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                c) <span class="fraction"><span class="numerator">23</span><span class="denominator">4</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                d) <span class="fraction"><span class="numerator">29</span><span class="denominator">7</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                e) <span class="fraction"><span class="numerator">35</span><span class="denominator">6</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                f) <span class="fraction"><span class="numerator">41</span><span class="denominator">8</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                g) <span class="fraction"><span class="numerator">19</span><span class="denominator">4</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                h) <span class="fraction"><span class="numerator">27</span><span class="denominator">5</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                i) <span class="fraction"><span class="numerator">31</span><span class="denominator">6</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                j) <span class="fraction"><span class="numerator">43</span><span class="denominator">8</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                k) <span class="fraction"><span class="numerator">37</span><span class="denominator">9</span></span>
+            </div>
+        </div>
+
+        <div class="exercise-item">
+            <div class="question">
+                l) <span class="fraction"><span class="numerator">52</span><span class="denominator">7</span></span>
+            </div>
+        </div>
+    </div>
+
+    <h2>Exercice 5 : Ranger dans l'ordre croissant</h2>
+
+    <div style="margin-bottom: 10px;">
+        <div class="question">
+            a) <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span> ; 
+            <span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span> ; 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> ; 
+            <span class="fraction"><span class="numerator">9</span><span class="denominator">10</span></span>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <div class="question">
+            b) <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> ; 
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span> ; 
+            <span class="fraction"><span class="numerator">5</span><span class="denominator">12</span></span> ; 
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
+        </div>
+    </div>
+
+    <h2>Exercice 6 : Problème</h2>
+    
+    <div style="margin-bottom: 15px;">
+        Jules a mangé <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> d'une pizza et Sarah a mangé <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> d'une pizza identique.
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <div class="question">a) Qui a mangé le plus de pizza ?</div>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <div class="question">b) Quelle fraction de pizza ont-ils mangé à eux deux ?</div>
+    </div>
+
+</body>
+</html>
