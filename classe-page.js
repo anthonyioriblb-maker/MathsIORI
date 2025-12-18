@@ -21,13 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    Object.keys(configChapitres).forEach((key, index) => {
+    // Filtrer uniquement les chapitres disponibles
+    const chapitresDisponibles = Object.keys(configChapitres).filter(key => configChapitres[key].disponible);
+
+    chapitresDisponibles.forEach((key, index) => {
         const chapitre = configChapitres[key];
         const chapitreNum = index + 1;
 
         // Créer l'élément du chapitre
         const card = document.createElement('div');
-        card.className = 'chapter-card' + (chapitre.disponible ? '' : ' coming-soon');
+        card.className = 'chapter-card';
 
         // Bouton cours (ne pas afficher si inactif et fichier vide)
         let coursBtn = '';
@@ -96,9 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         card.innerHTML = `
             <div class="chapter-number">${chapitreNum}</div>
-            <div class="badge ${chapitre.disponible ? 'available' : ''}">
-                ${chapitre.disponible ? 'Disponible maintenant ✨' : 'Bientôt disponible 🚀'}
-            </div>
             <div class="chapter-header">
                 <div class="chapter-title">
                     <span class="emoji">${chapitre.emoji}</span>${chapitre.titre}
