@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Résolution d'équations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .equation-display {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .steps-container {
+            margin: 20px 0;
+        }
+
+        .step-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 8px 0;
+            font-size: 22px;
+        }
+
+        .step-line input {
+            flex: 1;
+            max-width: 350px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .step-line input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .step-line input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .step-line input.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .final-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .final-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 22px;
+        }
+
+        .final-line input {
+            width: 120px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .final-line input[type="text"] {
+            width: 150px;
+        }
+
+        .final-line input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .final-line input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .final-line input.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .fraction-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .fraction-input input {
+            width: 80px;
+        }
+
+        .fraction-line {
+            width: 80px;
+            height: 2px;
+            background: #333;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-verify {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-verify:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-new {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-new:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-hint {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-hint:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+            display: block;
+        }
+
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #17a2b8;
+            display: block;
+        }
+
+        .math {
+            font-style: italic;
+        }
+
+        .score {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .score-value {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .equation-display {
+                font-size: 22px;
+                padding: 15px;
+            }
+            
+            .step-line, .final-line {
+                font-size: 20px;
+            }
+
+            .step-line input {
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz : Résolution d'équations</h1>
+        <div class="subtitle">Résolvez l'équation en complétant les lignes</div>
+        
+        <div class="score">
+            Réussites : <span class="score-value" id="scoreDisplay">0</span>
+        </div>
+
+        <div class="equation-display" id="equationDisplay"></div>
+
+        <div class="steps-container" id="stepsContainer"></div>
+
+        <div class="buttons">
+            <button class="btn-verify" onclick="verifyAnswer()">Vérifier</button>
+            <button class="btn-hint" onclick="showHint()">Indice</button>
+            <button class="btn-new" onclick="newEquation()">Nouvelle équation</button>
+        </div>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        let currentEquation = {};
+        let score = 0;
+        let hintUsed = false;
+
+        function pgcd(a, b) {
+            a = Math.abs(a);
+            b = Math.abs(b);
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        function simplifyFraction(num, den) {
+            if (den === 0) return null;
+            let gcd = pgcd(num, den);
+            num = num / gcd;
+            den = den / gcd;
+            if (den < 0) {
+                num = -num;
+                den = -den;
+            }
+            return { num, den };
+        }
+
+        function hasFiniteDecimal(num, den) {
+            // Un décimal fini si le dénominateur simplifié ne contient que des facteurs 2 et 5
+            let d = Math.abs(den);
+            while (d % 2 === 0) d /= 2;
+            while (d % 5 === 0) d /= 5;
+            return d === 1;
+        }
+
+        function generateEquation() {
+            let a, b, c, d;
+            let leftType, rightType;
+            
+            // 40% équation simple, 60% équation complète
+            if (Math.random() > 0.6) {
+                // Équation simple : différentes formes possibles
+                a = Math.floor(Math.random() * 8) + 2; // 2 à 9
+                if (Math.random() > 0.7) a = -a; // Parfois négatif
+                
+                b = Math.floor(Math.random() * 19) - 9; // -9 à 9
+                // Éviter b = 0 pour avoir toujours au moins 2 étapes
+                while (b === 0) b = Math.floor(Math.random() * 19) - 9;
+                
+                c = 0;
+                d = Math.floor(Math.random() * 21) - 10; // -10 à 10
+                
+                // Choisir un type pour le membre de gauche
+                leftType = Math.floor(Math.random() * 4);
+                rightType = 0; // Juste d
+            } else {
+                // Équation complète : ax + b = cx + d
+                do {
+                    a = Math.floor(Math.random() * 8) + 2; // 2 à 9
+                    c = Math.floor(Math.random() * 8) + 1; // 1 à 8
+                    
+                    // Varier les signes
+                    if (Math.random() > 0.6) c = -c;
+                    if (Math.random() > 0.8) a = -a;
+                } while (a === c);
+                
+                b = Math.floor(Math.random() * 19) - 9; // -9 à 9
+                d = Math.floor(Math.random() * 19) - 9; // -9 à 9
+                
+                // Éviter les cas où b et d sont tous les deux 0
+                if (b === 0 && d === 0) {
+                    b = Math.floor(Math.random() * 10) + 1;
+                }
+                
+                // Choisir des types pour les deux membres
+                leftType = Math.floor(Math.random() * 4);
+                rightType = Math.floor(Math.random() * 4);
+            }
+            
+            let numerator = d - b;
+            let denominator = a - c;
+            
+            let solution = { num: numerator, den: denominator };
+            let simplified = simplifyFraction(numerator, denominator);
+            
+            return {
+                a, b, c, d,
+                leftType, rightType,
+                solution,
+                simplified,
+                needsSimplification: Math.abs(pgcd(numerator, denominator)) > 1 && denominator !== 1
+            };
+        }
+
+        function displayTerm(coef, showX = true) {
+            let result = '';
+            if (coef === 1 && showX) result = '';
+            else if (coef === -1 && showX) result = '−';
+            else if (coef < 0) result = '−' + Math.abs(coef);
+            else result = '' + coef;
+            return result + (showX ? '<span class="math">x</span>' : '');
+        }
+
+        function displaySide(coef, constant, sideType) {
+            let result = '';
+            
+            switch(sideType) {
+                case 0: // ax + b ou ax - b (forme standard)
+                    result = displayTerm(coef);
+                    if (constant >= 0) result += ' + ' + constant;
+                    else result += ' − ' + Math.abs(constant);
+                    break;
+                    
+                case 1: // b + ax (constante en premier)
+                    if (constant >= 0) {
+                        result = constant + ' + ' + displayTerm(coef);
+                    } else {
+                        result = '−' + Math.abs(constant) + ' + ' + displayTerm(coef);
+                    }
+                    break;
+                    
+                case 2: // ax - b avec espace ou -ax + b
+                    if (coef >= 0) {
+                        result = displayTerm(coef);
+                        if (constant >= 0) result += ' + ' + constant;
+                        else result += ' − ' + Math.abs(constant);
+                    } else {
+                        result = displayTerm(coef);
+                        if (constant >= 0) result += ' + ' + constant;
+                        else result += ' − ' + Math.abs(constant);
+                    }
+                    break;
+                    
+                case 3: // Variation : constante puis x avec différents signes
+                    if (constant !== 0 && Math.abs(constant) < 10) {
+                        // Mettre la constante en premier
+                        if (constant >= 0) {
+                            result = constant + ' + ' + displayTerm(coef);
+                        } else {
+                            if (coef >= 0) {
+                                result = displayTerm(coef) + ' − ' + Math.abs(constant);
+                            } else {
+                                result = '−' + Math.abs(constant) + ' ' + displayTerm(coef);
+                            }
+                        }
+                    } else {
+                        // Forme standard
+                        result = displayTerm(coef);
+                        if (constant >= 0) result += ' + ' + constant;
+                        else result += ' − ' + Math.abs(constant);
+                    }
+                    break;
+            }
+            
+            return result;
+        }
+
+        function displayEquation(eq) {
+            let leftSide, rightSide;
+            
+            if (eq.c === 0) {
+                // Équation simple
+                leftSide = displaySide(eq.a, eq.b, eq.leftType);
+                rightSide = '' + eq.d;
+            } else {
+                // Équation complète
+                leftSide = displaySide(eq.a, eq.b, eq.leftType);
+                rightSide = displaySide(eq.c, eq.d, eq.rightType);
+            }
+            
+            return leftSide + ' = ' + rightSide;
+        }
+
+        function createSteps(eq) {
+            const container = document.getElementById('stepsContainer');
+            container.innerHTML = '';
+            
+            // Déterminer le nombre de lignes nécessaires
+            let numLines;
+            if (eq.c === 0) {
+                // Équation simple type ax + b = d (2 lignes avant ax = b)
+                numLines = 2;
+            } else {
+                // Équation avec x des deux côtés (4 lignes avant ax = b)
+                numLines = 4;
+            }
+            
+            // Créer les lignes vides
+            for (let i = 1; i <= numLines; i++) {
+                const line = document.createElement('div');
+                line.className = 'step-line';
+                line.innerHTML = `
+                    <input type="text" id="line${i}" placeholder="...">
+                    <span>=</span>
+                    <input type="text" id="line${i}_right" placeholder="...">
+                `;
+                container.appendChild(line);
+            }
+            
+            // Stocker le nombre de lignes pour la vérification
+            eq.numLines = numLines;
+            
+            // Section finale
+            const finalSection = document.createElement('div');
+            finalSection.className = 'final-section';
+            
+            // Ligne x = ... (toujours en fraction ou entier)
+            const xLine = document.createElement('div');
+            xLine.className = 'final-line';
+            
+            if (eq.solution.den === 1) {
+                // Solution entière simple - une seule ligne
+                xLine.innerHTML = `
+                    <span class="math">x</span> <span>=</span>
+                    <input type="number" id="solutionValue" placeholder="...">
+                `;
+                finalSection.appendChild(xLine);
+            } else {
+                // Solution fractionnaire - toujours demander la fraction d'abord
+                xLine.innerHTML = `
+                    <span class="math">x</span> <span>=</span>
+                    <div class="fraction-input">
+                        <input type="number" id="solutionNum" placeholder="...">
+                        <div class="fraction-line"></div>
+                        <input type="number" id="solutionDen" placeholder="...">
+                    </div>
+                `;
+                finalSection.appendChild(xLine);
+                
+                // Déterminer si on demande une deuxième ligne
+                const canBeDecimal = hasFiniteDecimal(eq.simplified.num, eq.simplified.den);
+                
+                if (canBeDecimal) {
+                    // Cas 1 : Peut être écrit en décimal → demander la version décimale
+                    const decLine = document.createElement('div');
+                    decLine.className = 'final-line';
+                    decLine.innerHTML = `
+                        <span class="math">x</span> <span>=</span>
+                        <input type="text" id="decimalValue" placeholder="valeur décimale">
+                    `;
+                    finalSection.appendChild(decLine);
+                    eq.askDecimal = true;
+                } else if (eq.needsSimplification) {
+                    // Cas 2 : Pas décimal mais simplifiable → demander la fraction simplifiée
+                    const simpLine = document.createElement('div');
+                    simpLine.className = 'final-line';
+                    simpLine.innerHTML = `
+                        <span class="math">x</span> <span>=</span>
+                        <div class="fraction-input">
+                            <input type="number" id="simplifiedNum" placeholder="...">
+                            <div class="fraction-line"></div>
+                            <input type="number" id="simplifiedDen" placeholder="...">
+                        </div>
+                    `;
+                    finalSection.appendChild(simpLine);
+                    eq.askSimplified = true;
+                }
+                // Cas 3 : Déjà simplifiée et pas décimale → pas de deuxième ligne
+            }
+            
+            container.appendChild(finalSection);
+        }
+
+        function normalizeEquation(text) {
+            text = text.replace(/\s+/g, '').toLowerCase();
+            text = text.replace(/−/g, '-').replace(/×/g, '*');
+            return text;
+        }
+
+        function parseLeftSide(left) {
+            let coefX = 0;
+            let constant = 0;
+            
+            // Normaliser : ajouter + au début si aucun signe
+            if (left[0] !== '+' && left[0] !== '-') {
+                left = '+' + left;
+            }
+            
+            // Chercher tous les termes en x avec leurs signes
+            let xMatches = left.match(/[+-]\d*x/g);
+            if (xMatches) {
+                for (let match of xMatches) {
+                    let coefStr = match.replace('x', '');
+                    if (coefStr === '+' || coefStr === '') coefX += 1;
+                    else if (coefStr === '-') coefX -= 1;
+                    else coefX += parseInt(coefStr);
+                }
+            }
+            
+            // Retirer tous les termes en x pour trouver les constantes
+            let remaining = left.replace(/[+-]\d*x/g, '');
+            
+            // Parser toutes les constantes avec leurs signes
+            if (remaining) {
+                // Trouver tous les nombres avec leurs signes
+                let numbers = remaining.match(/[+-]\d+/g);
+                if (numbers) {
+                    for (let num of numbers) {
+                        constant += parseInt(num);
+                    }
+                }
+            }
+            
+            return { coefX, constant };
+        }
+        
+        function parseRightSide(right) {
+            // Pour le membre de droite, on peut avoir juste des nombres ou aussi des x
+            return parseLeftSide(right);
+        }
+
+        function verifyAnswer() {
+            const eq = currentEquation;
+            let allCorrect = true;
+            const numLines = eq.numLines;
+            
+            if (numLines === 2) {
+                // Équation simple : ax + b = d
+                // On accepte une plus grande flexibilité dans les étapes
+                
+                const line1Left = normalizeEquation(document.getElementById('line1').value);
+                const line1Right = normalizeEquation(document.getElementById('line1_right').value);
+                const line1ParsedLeft = parseLeftSide(line1Left);
+                const line1ParsedRight = parseRightSide(line1Right);
+                
+                // Vérifier dans les 4 sens possibles
+                const line1ValidNormal = (
+                    line1ParsedLeft.coefX === eq.a && 
+                    (Math.abs(line1ParsedLeft.constant - eq.b) <= 1 || line1ParsedLeft.constant === 0) &&
+                    line1ParsedRight.coefX === 0
+                );
+                
+                const line1ValidInverse = (
+                    line1ParsedRight.coefX === eq.a && 
+                    (Math.abs(line1ParsedRight.constant - eq.b) <= 1 || line1ParsedRight.constant === 0) &&
+                    line1ParsedLeft.coefX === 0
+                );
+                
+                const line1ValidOpposite = (
+                    line1ParsedLeft.coefX === -eq.a && 
+                    (Math.abs(line1ParsedLeft.constant + eq.b) <= 1 || line1ParsedLeft.constant === 0) &&
+                    line1ParsedRight.coefX === 0
+                );
+                
+                const line1ValidInverseOpposite = (
+                    line1ParsedRight.coefX === -eq.a && 
+                    (Math.abs(line1ParsedRight.constant + eq.b) <= 1 || line1ParsedRight.constant === 0) &&
+                    line1ParsedLeft.coefX === 0
+                );
+                
+                if (line1ValidNormal || line1ValidInverse || line1ValidOpposite || line1ValidInverseOpposite) {
+                    document.getElementById('line1').className = 'correct';
+                    document.getElementById('line1_right').className = 'correct';
+                } else {
+                    document.getElementById('line1').className = 'incorrect';
+                    document.getElementById('line1_right').className = 'incorrect';
+                    allCorrect = false;
+                }
+                
+                const line2Left = normalizeEquation(document.getElementById('line2').value);
+                const line2Right = normalizeEquation(document.getElementById('line2_right').value);
+                const line2ParsedLeft = parseLeftSide(line2Left);
+                const line2ParsedRight = parseRightSide(line2Right);
+                
+                const line2RightValue = line2ParsedRight.coefX === 0 ? line2ParsedRight.constant : null;
+                const line2LeftValue = line2ParsedLeft.coefX === 0 ? line2ParsedLeft.constant : null;
+                
+                // Ligne 2 doit être ax = (d - b) dans un des 4 sens
+                const line2ValidNormal = line2ParsedLeft.coefX === eq.a && 
+                                         line2ParsedLeft.constant === 0 && 
+                                         line2RightValue === eq.d - eq.b;
+                
+                const line2ValidInverse = line2ParsedRight.coefX === eq.a && 
+                                          line2ParsedRight.constant === 0 && 
+                                          line2LeftValue === eq.d - eq.b;
+                
+                const line2ValidOpposite = line2ParsedLeft.coefX === -eq.a && 
+                                           line2ParsedLeft.constant === 0 && 
+                                           line2RightValue === -(eq.d - eq.b);
+                
+                const line2ValidInverseOpposite = line2ParsedRight.coefX === -eq.a && 
+                                                  line2ParsedRight.constant === 0 && 
+                                                  line2LeftValue === -(eq.d - eq.b);
+                
+                if (line2ValidNormal || line2ValidInverse || line2ValidOpposite || line2ValidInverseOpposite) {
+                    document.getElementById('line2').className = 'correct';
+                    document.getElementById('line2_right').className = 'correct';
+                } else {
+                    document.getElementById('line2').className = 'incorrect';
+                    document.getElementById('line2_right').className = 'incorrect';
+                    allCorrect = false;
+                }
+                
+            } else {
+                // Vérifier la ligne 4 (forme ax = b) obligatoirement
+                const line4Left = normalizeEquation(document.getElementById('line4').value);
+                const line4Right = normalizeEquation(document.getElementById('line4_right').value);
+                const line4ParsedLeft = parseLeftSide(line4Left);
+                const line4ParsedRight = parseRightSide(line4Right);
+                
+                // Calculer les valeurs constantes
+                const line4RightValue = line4ParsedRight.coefX === 0 ? line4ParsedRight.constant : null;
+                const line4LeftValue = line4ParsedLeft.coefX === 0 ? line4ParsedLeft.constant : null;
+                
+                // Vérifier dans les 4 sens possibles
+                const line4ValidNormal = line4ParsedLeft.coefX === (eq.a - eq.c) && 
+                                         line4ParsedLeft.constant === 0 && 
+                                         line4RightValue === (eq.d - eq.b);
+                
+                const line4ValidInverse = line4ParsedRight.coefX === (eq.a - eq.c) && 
+                                          line4ParsedRight.constant === 0 && 
+                                          line4LeftValue === (eq.d - eq.b);
+                
+                const line4ValidOpposite = line4ParsedLeft.coefX === -(eq.a - eq.c) && 
+                                           line4ParsedLeft.constant === 0 && 
+                                           line4RightValue === -(eq.d - eq.b);
+                
+                const line4ValidInverseOpposite = line4ParsedRight.coefX === -(eq.a - eq.c) && 
+                                                  line4ParsedRight.constant === 0 && 
+                                                  line4LeftValue === -(eq.d - eq.b);
+                
+                if (line4ValidNormal || line4ValidInverse || line4ValidOpposite || line4ValidInverseOpposite) {
+                    document.getElementById('line4').className = 'correct';
+                    document.getElementById('line4_right').className = 'correct';
+                } else {
+                    document.getElementById('line4').className = 'incorrect';
+                    document.getElementById('line4_right').className = 'incorrect';
+                    allCorrect = false;
+                }
+                
+                // Vérifier les 3 premières lignes de manière flexible
+                // On accepte toute progression logique vers la ligne 4
+                for (let i = 1; i <= 3; i++) {
+                    const leftInput = document.getElementById(`line${i}`);
+                    const rightInput = document.getElementById(`line${i}_right`);
+                    
+                    const leftText = normalizeEquation(leftInput.value);
+                    const rightText = normalizeEquation(rightInput.value);
+                    
+                    if (!leftText || !rightText) {
+                        leftInput.className = 'incorrect';
+                        rightInput.className = 'incorrect';
+                        allCorrect = false;
+                        continue;
+                    }
+                    
+                    const leftParsed = parseLeftSide(leftText);
+                    const rightParsed = parseRightSide(rightText);
+                    
+                    // Vérifier que c'est une progression valide (dans tous les sens)
+                    let isValid = false;
+                    
+                    // Sens normal : coefficient de x à gauche
+                    if (leftParsed.coefX === eq.a || leftParsed.coefX === (eq.a - eq.c)) {
+                        isValid = true;
+                    }
+                    
+                    // Sens inversé : coefficient de x à droite
+                    if (rightParsed.coefX === eq.a || rightParsed.coefX === (eq.a - eq.c)) {
+                        isValid = true;
+                    }
+                    
+                    // Sens opposé : coefficient de x négatif à gauche
+                    if (leftParsed.coefX === -eq.a || leftParsed.coefX === -(eq.a - eq.c)) {
+                        isValid = true;
+                    }
+                    
+                    // Sens inversé + opposé : coefficient de x négatif à droite
+                    if (rightParsed.coefX === -eq.a || rightParsed.coefX === -(eq.a - eq.c)) {
+                        isValid = true;
+                    }
+                    
+                    if (isValid) {
+                        leftInput.className = 'correct';
+                        rightInput.className = 'correct';
+                    } else {
+                        leftInput.className = 'incorrect';
+                        rightInput.className = 'incorrect';
+                        allCorrect = false;
+                    }
+                }
+            }
+            
+            // Vérifier la solution
+            if (eq.solution.den === 1) {
+                // Solution entière - une seule ligne
+                const solValue = parseInt(document.getElementById('solutionValue').value);
+                if (solValue === eq.solution.num) {
+                    document.getElementById('solutionValue').className = 'correct';
+                } else {
+                    document.getElementById('solutionValue').className = 'incorrect';
+                    allCorrect = false;
+                }
+            } else {
+                // Solution fractionnaire - vérifier la fraction brute
+                const solNum = parseInt(document.getElementById('solutionNum').value);
+                const solDen = parseInt(document.getElementById('solutionDen').value);
+                
+                if (solNum === eq.solution.num && solDen === eq.solution.den) {
+                    document.getElementById('solutionNum').className = 'correct';
+                    document.getElementById('solutionDen').className = 'correct';
+                } else {
+                    document.getElementById('solutionNum').className = 'incorrect';
+                    document.getElementById('solutionDen').className = 'incorrect';
+                    allCorrect = false;
+                }
+                
+                // Vérifier la deuxième ligne si elle existe
+                if (eq.askDecimal) {
+                    // Vérifier la valeur décimale
+                    const decInput = document.getElementById('decimalValue');
+                    if (decInput) {
+                        const decValue = parseFloat(decInput.value.replace(',', '.'));
+                        const expectedValue = eq.simplified.num / eq.simplified.den;
+                        
+                        if (!isNaN(decValue) && Math.abs(decValue - expectedValue) < 0.001) {
+                            decInput.className = 'correct';
+                        } else {
+                            decInput.className = 'incorrect';
+                            allCorrect = false;
+                        }
+                    }
+                } else if (eq.askSimplified) {
+                    // Vérifier la fraction simplifiée
+                    const simpNum = parseInt(document.getElementById('simplifiedNum').value);
+                    const simpDen = parseInt(document.getElementById('simplifiedDen').value);
+                    
+                    if (simpNum === eq.simplified.num && simpDen === eq.simplified.den) {
+                        document.getElementById('simplifiedNum').className = 'correct';
+                        document.getElementById('simplifiedDen').className = 'correct';
+                    } else {
+                        document.getElementById('simplifiedNum').className = 'incorrect';
+                        document.getElementById('simplifiedDen').className = 'incorrect';
+                        allCorrect = false;
+                    }
+                }
+                // Sinon pas de deuxième ligne à vérifier
+            }
+            
+            // Message
+            const messageDiv = document.getElementById('message');
+            if (allCorrect) {
+                if (!hintUsed) {
+                    score++;
+                    document.getElementById('scoreDisplay').textContent = score;
+                }
+                messageDiv.className = 'message success';
+                messageDiv.textContent = '🎉 Excellent ! Toutes les étapes sont correctes !';
+            } else {
+                messageDiv.className = 'message error';
+                messageDiv.textContent = '❌ Il y a des erreurs. Vérifiez les cases en rouge.';
+            }
+            
+            hintUsed = false;
+        }
+
+        function showHint() {
+            const eq = currentEquation;
+            const messageDiv = document.getElementById('message');
+            
+            let hint = `💡 Indice : <br><br>`;
+            
+            if (eq.c === 0) {
+                // Équation simple
+                hint += `Équation simple (sans <span class="math">x</span> à droite) :<br>`;
+                hint += `1. Soustraire ${eq.b >= 0 ? eq.b : '(' + eq.b + ')'} des deux côtés<br>`;
+                hint += `2. Obtenir ${eq.a}x = ${eq.d - eq.b}<br>`;
+                hint += `3. x = ${eq.d - eq.b} ÷ ${eq.a}`;
+                
+                if (eq.solution.den !== 1) {
+                    hint += ` = ${eq.solution.num}/${eq.solution.den}`;
+                    
+                    const canBeDecimal = hasFiniteDecimal(eq.simplified.num, eq.simplified.den);
+                    
+                    if (canBeDecimal) {
+                        const decValue = (eq.simplified.num / eq.simplified.den);
+                        hint += `<br>4. Écrire en décimal : x = ${decValue}`;
+                    } else if (eq.needsSimplification) {
+                        const gcd = pgcd(eq.solution.num, eq.solution.den);
+                        hint += `<br>4. Simplifier (diviser par ${gcd}) : x = ${eq.simplified.num}/${eq.simplified.den}`;
+                    }
+                    // Sinon pas de 4e étape (déjà simplifiée et pas décimale)
+                }
+            } else {
+                // Équation complète
+                hint += `Étapes suggérées :<br>`;
+                hint += `1. Soustraire ${eq.c >= 0 ? eq.c + 'x' : '(' + eq.c + 'x)'} des deux côtés<br>`;
+                hint += `2. Réduire l'expression<br>`;
+                hint += `3. Soustraire ${eq.b >= 0 ? eq.b : '(' + eq.b + ')'} des deux côtés<br>`;
+                hint += `4. Réduire pour obtenir ${eq.a - eq.c}x = ${eq.d - eq.b}<br>`;
+                hint += `5. x = ${eq.d - eq.b} ÷ ${eq.a - eq.c}`;
+                
+                if (eq.solution.den !== 1) {
+                    hint += ` = ${eq.solution.num}/${eq.solution.den}`;
+                    
+                    const canBeDecimal = hasFiniteDecimal(eq.simplified.num, eq.simplified.den);
+                    
+                    if (canBeDecimal) {
+                        const decValue = (eq.simplified.num / eq.simplified.den);
+                        hint += `<br>6. Écrire en décimal : x = ${decValue}`;
+                    } else if (eq.needsSimplification) {
+                        const gcd = pgcd(eq.solution.num, eq.solution.den);
+                        hint += `<br>6. Simplifier (diviser par ${gcd}) : x = ${eq.simplified.num}/${eq.simplified.den}`;
+                    }
+                    // Sinon pas de 6e étape (déjà simplifiée et pas décimale)
+                }
+            }
+            
+            messageDiv.className = 'message info';
+            messageDiv.innerHTML = hint;
+            hintUsed = true;
+        }
+
+        function newEquation() {
+            currentEquation = generateEquation();
+            document.getElementById('equationDisplay').innerHTML = displayEquation(currentEquation);
+            createSteps(currentEquation);
+            document.getElementById('message').className = 'message';
+            document.getElementById('message').textContent = '';
+            hintUsed = false;
+        }
+
+        window.onload = function() {
+            newEquation();
+        };
+    </script>
+</body>
+</html>
