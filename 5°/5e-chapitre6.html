@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Calcul littéral 1</title>
+    <link rel="stylesheet" href="../styles.css?v=20251223">
+    <style>
+        .programme-calcul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .etape-calcul {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+            padding: 10px 20px;
+            border-radius: 8px;
+            min-width: 100px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .fleche-calcul {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 0.9em;
+            padding: 5px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <a href="classe-5e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Calcul littéral 1</h1>
+    
+    <h2>Expression littérale</h2>
+    
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Une <span style="color: red;">expression littérale</span> est un calcul qui utilise des lettres. 
+        Il sert par exemple à :
+        <ul>
+            <li>établir une formule ;</li>
+            <li>trouver un nombre inconnu ;</li>
+            <li>prouver un résultat.</li>
+        </ul>
+    </div>
+    
+    <div class="example">
+        <strong>Exemples :</strong>
+        <ul>
+            <li>L'aire d'un carré de côté <span class="math">c</span> est <span class="math">c</span> × <span class="math">c</span> et son périmètre est 4 × <span class="math">c</span>.</li>
+            <li>L'aire d'un rectangle de longueur <span class="math">L</span> et de largeur <span class="math">l</span> est <span class="math">L</span> × <span class="math">l</span>.</li>
+            <li>Le périmètre d'un triangle de côtés <span class="math">a</span>, <span class="math">b</span> et <span class="math">c</span> est <span class="math">a</span> + <span class="math">b</span> + <span class="math">c</span>.</li>
+        </ul>
+    </div>
+    
+    <div class="example">
+        <strong>Programme de calcul :</strong><br>
+        On considère le programme de calcul :
+        <ul>
+            <li>Choisir un nombre</li>
+            <li>Ajouter 5</li>
+            <li>Multiplier le tout par 3</li>
+        </ul>
+        <br>
+        1) Qu'obtient-on en choisissant 3 au départ ?<br>
+        2) Qu'obtient-on en choisissant <span class="math">x</span> au départ ?
+
+        <div style="display: flex; gap: 80px; justify-content: center; margin: 20px 0;">
+            <div>
+                1) 
+                <div style="display: flex; align-items: center; margin-top: 15px;">
+                    <div class="programme-calcul">
+                        <div class="etape-calcul">3</div>
+                        <div class="fleche-calcul">↓ Ajouter 5</div>
+                        <div class="etape-calcul">8</div>
+                        <div class="fleche-calcul">↓ Multiplier par 3</div>
+                        <div class="etape-calcul">24</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                2) 
+                <div style="display: flex; align-items: center; margin-top: 15px;">
+                    <div class="programme-calcul">
+                        <div class="etape-calcul"><span class="math">x</span></div>
+                        <div class="fleche-calcul">↓ Ajouter 5</div>
+                        <div class="etape-calcul"><span class="math">x</span> + 5</div>
+                        <div class="fleche-calcul">↓ Multiplier par 3</div>
+                        <div class="etape-calcul">3×(<span class="math">x</span> + 5)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Simplification d'écriture</h2>
+    
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Le signe de multiplication peut être supprimé devant une lettre ou devant une parenthèse.
+    </div>
+    
+    <div class="example">
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item">
+                3 × <span class="math">a</span> s'écrit 3<span class="math">a</span>
+            </div>
+            <div class="exemple-item">
+                <span class="math">a</span> × <span class="math">b</span> s'écrit <span class="math">ab</span>
+            </div>
+            <div class="exemple-item">
+                5 × (<span class="math">x</span> − 2) s'écrit 5(<span class="math">x</span> − 2)
+            </div>
+            <div class="exemple-item">
+                4 + 8 × <span class="math">t</span> s'écrit 4 + 8<span class="math">t</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="remarque">
+        <strong>⚠️ Attention :</strong> <span class="math">a</span> × 5 s'écrit 5<span class="math">a</span> et pas <span class="math">a</span>5.
+    </div>
+    
+    <h3>Puissances</h3>
+    
+    <div class="important">
+        <span style="color: red;">Propriété :</span><br>
+        • Le produit <span class="math">a</span> × <span class="math">a</span> peut s'écrire <span class="math">a</span>² (<span class="math">a</span>² se lit : a au carré).<br>
+        • Le produit <span class="math">b</span> × <span class="math">b</span> × <span class="math">b</span> peut s'écrire <span class="math">b</span>³ (<span class="math">b</span>³ se lit : b au cube).
+    </div>
+    
+    <div class="example">
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item">
+                <span class="math">x</span> × <span class="math">x</span> = <span class="math">x</span>²
+            </div>
+            <div class="exemple-item">
+                <span class="math">y</span> × <span class="math">y</span> × <span class="math">y</span> = <span class="math">y</span>³
+            </div>
+            <div class="exemple-item">
+                2 × <span class="math">a</span> × <span class="math">a</span> = 2<span class="math">a</span>²
+            </div>
+            <div class="exemple-item">
+                <span class="math">t</span> × <span class="math">t</span> × <span class="math">t</span> × 5 = 5<span class="math">t</span>³
+            </div>
+        </div>
+    </div>
+    
+    <h2>Substitution</h2>
+    
+    <div class="definition">
+        <span style="color: red;">Définition :</span> <span style="color: red;">Substituer</span>, c'est attribuer un nombre à une lettre et effectuer le calcul.
+    </div>
+    
+    <div class="remarque">
+        <strong>Remarque :</strong> Lorsque l'on remplace la lettre par sa valeur, il faut penser à remettre les signes × sous-entendus.
+    </div>
+    
+   <div class="example">
+    <div class="exemples-colonnes">
+        <div class="exemple-item">
+            <strong>Exemple 1 :</strong><br>
+            Calculer <span class="math">A</span> = 4<span class="math">x</span>² + 3<span class="math">x</span> − 1 pour <span class="math">x</span> = 2.<br><br>
+            
+            <div class="calcul-detail">
+                <span class="math">A</span> = 4<span class="math">x</span>² + 3<span class="math">x</span> − 1<br>
+                <span class="math">A</span> = 4 × 2 × 2 + 3 × 2 − 1<br>
+                <span class="math">A</span> = 16 + 6 − 1<br>
+                <span class="math">A</span> = 21
+            </div>
+        </div>
+        
+        <div class="exemple-item">
+            <strong>Exemple 2 :</strong><br>
+            Calculer <span class="math">B</span> = 5<span class="math">a</span> + 2<span class="math">a</span>² pour <span class="math">a</span> = 3.<br><br>
+            
+            <div class="calcul-detail">
+                <span class="math">B</span> = 5<span class="math">a</span> + 2<span class="math">a</span>²<br>
+                <span class="math">B</span> = 5 × 3 + 2 × 3 × 3<br>
+                <span class="math">B</span> = 15 + 18<br>
+                <span class="math">B</span> = 33
+            </div>
+        </div>
+        
+        <div class="exemple-item">
+            <strong>Exemple 3 :</strong><br>
+            Calculer <span class="math">C</span> = <span class="math">xy</span> + <span class="math">y</span>² pour <span class="math">x</span> = 4 et <span class="math">y</span> = 5.<br><br>
+            
+            <div class="calcul-detail">
+                <span class="math">C</span> = <span class="math">xy</span> + <span class="math">y</span>²<br>
+                <span class="math">C</span> = 4 × 5 + 5 × 5<br>
+                <span class="math">C</span> = 20 + 25<br>
+                <span class="math">C</span> = 45
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <h2>Tester une égalité</h2>
+    
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Une <span style="color: red;">égalité</span> est constituée de deux expressions séparées par un signe =.
+    </div>
+    
+    <div style="text-align: center; margin: 20px 0; font-size: 1.3em;">
+        <span style="text-decoration: underline;">4<span class="math">x</span> − 2</span> = <span style="text-decoration: underline;">5<span class="math">x</span> − 1</span><br>
+        <span style="font-size: 0.8em;">membre de gauche&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;membre de droite</span>
+    </div>
+    
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Une égalité est vraie si le membre de droite est toujours égal au membre de gauche.
+    </div>
+    
+    <div class="example">
+        <strong>Exemple :</strong><br>
+        Les expressions <span class="math">A</span> = 5 + 3<span class="math">x</span> et <span class="math">B</span> = 8<span class="math">x</span> sont-elles égales ?<br><br>
+        
+        Si <span class="math">x</span> = 1 alors :
+        <div class="calcul-detail">
+            <span class="math">A</span> = 5 + 3 × 1 = 5 + 3 = 8<br>
+            <span class="math">B</span> = 8 × 1 = 8
+        </div>
+        Les deux expressions sont égales pour <span class="math">x</span> = 1, mais cela ne suffit pas à dire que A = B tout le temps.<br><br>
+        
+        Si <span class="math">x</span> = 2 alors :
+        <div class="calcul-detail">
+            <span class="math">A</span> = 5 + 3 × 2 = 5 + 6 = 11<br>
+            <span class="math">B</span> = 8 × 2 = 16
+        </div>
+        Les deux expressions ne sont pas égales pour <span class="math">x</span> = 2, donc A et B ne sont pas égales.
+    </div>
+    
+    <div class="remarque">
+        <strong>💡 Conclusion :</strong> Pour montrer qu'une égalité n'est pas vraie, il suffit de trouver un <span style="color: red;">contre-exemple</span> (une valeur pour laquelle l'égalité est fausse).
+    </div>
+    
+    <h2>Distributivité simple</h2>
+    
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Quels que soient les nombres <span class="math">a</span>, <span class="math">b</span> et <span class="math">k</span>, on a :<br><br>
+        <span style="color: red;"><span class="math">k</span></span>(<span style="color: blue;"><span class="math">a</span></span> + <span style="color: green;"><span class="math">b</span></span>) = <span style="color: red;"><span class="math">k</span></span> × <span style="color: blue;"><span class="math">a</span></span> + <span style="color: red;"><span class="math">k</span></span> × <span style="color: green;"><span class="math">b</span></span> = <span style="color: red;"><span class="math">k</span></span><span style="color: blue;"><span class="math">a</span></span> + <span style="color: red;"><span class="math">k</span></span><span style="color: green;"><span class="math">b</span></span><br><br>
+        <span style="color: red;"><span class="math">k</span></span>(<span style="color: blue;"><span class="math">a</span></span> − <span style="color: green;"><span class="math">b</span></span>) = <span style="color: red;"><span class="math">k</span></span> × <span style="color: blue;"><span class="math">a</span></span> − <span style="color: red;"><span class="math">k</span></span> × <span style="color: green;"><span class="math">b</span></span> = <span style="color: red;"><span class="math">k</span></span><span style="color: blue;"><span class="math">a</span></span> − <span style="color: red;"><span class="math">k</span></span><span style="color: green;"><span class="math">b</span></span>
+    </div>
+    
+    <div class="example">
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item">
+                Développer 5(<span class="math">x</span> + 1)<br>
+                = 5 × <span class="math">x</span> + 5 × 1<br>
+                = 5<span class="math">x</span> + 5
+            </div>
+            <div class="exemple-item">
+                Développer 4(<span class="math">y</span> − 7)<br>
+                = 4 × <span class="math">y</span> − 4 × 7<br>
+                = 4<span class="math">y</span> − 28
+            </div>
+            <div class="exemple-item">
+                Développer 3(2<span class="math">x</span> − <span class="math">t</span>)<br>
+                = 3 × 2<span class="math">x</span> − 3 × <span class="math">t</span><br>
+                = 6<span class="math">x</span> − 3<span class="math">t</span>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Réduire une expression littérale</h2>
+    
+    <div class="important">
+        <span style="color: red;">Propriété :</span> On peut additionner ou soustraire des termes qui ont la même partie littérale.
+    </div>
+    
+    <div class="example">
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item">
+                3<span class="math">a</span> + 5<span class="math">a</span> = 8<span class="math">a</span>
+            </div>
+            <div class="exemple-item">
+                7<span class="math">x</span> − 2<span class="math">x</span> = 5<span class="math">x</span>
+            </div>
+            <div class="exemple-item">
+                4<span class="math">t</span> + 3 + 6<span class="math">t</span> = 10<span class="math">t</span> + 3
+            </div>
+            <div class="exemple-item">
+                2<span class="math">y</span> + 5 − <span class="math">y</span> + 3 = <span class="math">y</span> + 8
+            </div>
+        </div>
+    </div>
+    
+    <div class="remarque">
+        <strong>⚠️ Attention :</strong> On ne peut pas réduire 3<span class="math">a</span> + 2<span class="math">b</span> car les parties littérales sont différentes !
+    </div>
+    
+    <div class="example">
+        <strong>Exercice d'application :</strong><br>
+        Réduire les expressions suivantes :
+        <div class="exemples-colonnes">
+            <div class="exemple-item">
+                <span class="math">E</span> = 5<span class="math">x</span> + 3<span class="math">x</span> − 2<span class="math">x</span> = 6<span class="math">x</span>
+            </div>
+            <div class="exemple-item">
+                <span class="math">F</span> = 4<span class="math">a</span> + 7 − <span class="math">a</span> + 2 = 3<span class="math">a</span> + 9
+            </div>
+            <div class="exemple-item">
+                <span class="math">G</span> = 8<span class="math">y</span> − 3<span class="math">y</span> + 5 = 5<span class="math">y</span> + 5
+            </div>
+        </div>
+    </div>
+    
+    <h2>Utiliser les lettres pour démontrer</h2>
+    
+    <div class="definition">
+        <span style="color: red;">Méthode :</span> On peut utiliser une lettre pour vérifier qu'une propriété est vraie pour tous les nombres.
+    </div>
+    
+    <div class="example">
+        <strong>Exemple :</strong><br>
+       Voici un programme de calcul:.<br><br>
+        
+            <ul>
+                <li>Choisir un nombre</li>
+                <li>Ajouter 3</li>
+                <li>Multiplier par 2</li>
+                <li>Enlever 6</li>
+            </ul>
+            Montrer que le résultat est toujours le double du nombre de départ.<br><br>
+
+            Vérification:
+            <div style="display: flex; justify-content: center; margin: 20px 0;">
+                <div class="programme-calcul">
+                    <div class="etape-calcul"><span class="math">n</span></div>
+                    <div class="fleche-calcul">↓ Ajouter 3</div>
+                    <div class="etape-calcul"><span class="math">n</span> + 3</div>
+                    <div class="fleche-calcul">↓ Multiplier par 2</div>
+                    <div class="etape-calcul">2(<span class="math">n</span> + 3) = 2<span class="math">n</span> + 6</div>
+                    <div class="fleche-calcul">↓ Enlever 6</div>
+                    <div class="etape-calcul">2<span class="math">n</span> + 6 − 6 = 2<span class="math">n</span></div>
+                </div>
+        
+            
+        </div>
+        Conclusion : Le résultat est 2<span class="math">n</span>, c'est le double du nombre de départ.
+    </div>
+
+</body>
+</html>
