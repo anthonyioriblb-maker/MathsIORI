@@ -2603,15 +2603,17 @@ A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
                                 // Paire théorie + pratique pour triangle
                                 const b = randInt(4, 12);
                                 const h = randInt(3, 10);
-                                const a = (b * h) / 2;
+                                const produit = b * h;
+                                const a = produit / 2;
+                                const aireStr = (produit % 2 === 0) ? `${a}` : formatFraction(produit, 2);
                                 return [
                                     {
                                         question: "Quelle est la formule de l'aire d'un triangle ?",
-                                        answer: "Aire = (base × hauteur) ÷ 2"
+                                        answer: `Aire = ${formatFraction("base × hauteur", 2)}`
                                     },
                                     {
                                         question: `Calculer l'aire d'un triangle de base ${b} cm et hauteur ${h} cm`,
-                                        answer: `Aire = (${b} cm × ${h} cm) ÷ 2 = ${toFrenchNumber(a)} cm²`
+                                        answer: `Aire = ${formatFraction(`${b} cm × ${h} cm`, 2)} = ${formatFraction(produit, 2)} = ${aireStr} cm²`
                                     }
                                 ];
                             },
@@ -2636,6 +2638,17 @@ A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
                                 return {
                                     question: `Calculer l'aire d'un carré de côté ${c} cm`,
                                     answer: `Aire = ${c} cm × ${c} cm = ${a} cm²`
+                                };
+                            },
+                            () => {
+                                // Triangle avec résultat fractionnaire
+                                const b = randInt(5, 11);
+                                const h = randInt(3, 9);
+                                const produit = b * h;
+                                const aireStr = (produit % 2 === 0) ? `${produit / 2}` : formatFraction(produit, 2);
+                                return {
+                                    question: `Un triangle a une base de ${b} cm et une hauteur de ${h} cm. Quelle est son aire ?`,
+                                    answer: `Aire = ${formatFraction(`${b} × ${h}`, 2)} = ${formatFraction(produit, 2)} = ${aireStr} cm²`
                                 };
                             }
                         ];
@@ -2744,41 +2757,54 @@ A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
                                 const a = randInt(3, 8);
                                 const b = randInt(4, 10);
                                 const c = Math.sqrt(a * a + b * b);
+                                
                                 return {
-                                    question: `Dans un triangle rectangle, les côtés de l'angle droit mesurent ${a} cm et ${b} cm. Calculer l'hypoténuse`,
-                                    answer: `${toFrenchNumber(c.toFixed(2))} cm`
+                                    question: `<strong>Triangle ABC rectangle en A</strong><br>AB = ${b} cm et AC = ${a} cm<br>Calculer BC.`,
+                                    answer: `BC² = AB² + AC² = ${b}² + ${a}² = ${b*b} + ${a*a} = ${a*a + b*b}<br>BC = √${a*a + b*b} ≈ ${toFrenchNumber(c.toFixed(2))} cm`
                                 };
                             },
                             () => {
-                                // Paire théorie + pratique
+                                const a = randInt(3, 8);
+                                const c = randInt(a + 2, 12);
+                                const b = Math.sqrt(c * c - a * a);
+                                
+                                return {
+                                    question: `<strong>Triangle ABC rectangle en A</strong><br>BC = ${c} cm et AC = ${a} cm<br>Calculer AB.`,
+                                    answer: `AB² = BC² - AC² = ${c}² - ${a}² = ${c*c} - ${a*a} = ${c*c - a*a}<br>AB = √${c*c - a*a} ≈ ${toFrenchNumber(b.toFixed(2))} cm`
+                                };
+                            },
+                            () => {
                                 const a = randInt(3, 6);
                                 const b = randInt(4, 8);
                                 const c = Math.sqrt(a * a + b * b);
+                                
                                 return [
                                     {
                                         question: "Énoncer le théorème de Pythagore",
                                         answer: "Dans un triangle rectangle, le carré de l'hypoténuse est égal à la somme des carrés des deux autres côtés"
                                     },
                                     {
-                                        question: `Application : Dans un triangle rectangle ABC, AB = ${a} cm et AC = ${b} cm. Calculer BC`,
-                                        answer: `BC<sup>2</sup> = AB<sup>2</sup> + AC<sup>2</sup> = ${a}<sup>2</sup> + ${b}<sup>2</sup> = ${a*a} + ${b*b} = ${a*a + b*b}, donc BC = ${toFrenchNumber(c.toFixed(2))} cm`
+                                        question: `<strong>Triangle ABC rectangle en A</strong><br>AB = ${b} cm et AC = ${a} cm<br>Calculer BC.`,
+                                        answer: `BC² = AB² + AC² = ${b}² + ${a}² = ${b*b} + ${a*a} = ${a*a + b*b}<br>BC = √${a*a + b*b} ≈ ${toFrenchNumber(c.toFixed(2))} cm`
                                     }
                                 ];
                             },
                             () => {
                                 const pythTriples = [[3,4,5], [5,12,13], [8,15,17], [7,24,25]];
                                 const [a, b, c] = randChoice(pythTriples);
+                                
                                 return {
-                                    question: `Un triangle a des côtés de ${a} cm, ${b} cm et ${c} cm. Est-il rectangle ?`,
-                                    answer: `Oui, car ${a}<sup>2</sup> + ${b}<sup>2</sup> = ${a*a} + ${b*b} = ${a*a + b*b} = ${c}<sup>2</sup> = ${c*c}`
+                                    question: `<strong>Triangle ABC</strong><br>AB = ${b} cm, AC = ${a} cm, BC = ${c} cm<br>Le triangle est-il rectangle ?`,
+                                    answer: `${a}² + ${b}² = ${a*a} + ${b*b} = ${a*a + b*b}<br>${c}² = ${c*c}<br>Donc ${a}² + ${b}² = ${c}²<br><strong>Le triangle est rectangle en A</strong>`
                                 };
                             },
                             () => {
                                 const c = randInt(5, 10);
                                 const diag = c * Math.sqrt(2);
+                                
                                 return {
-                                    question: `Calculer la diagonale d'un carré de côté ${c} cm (arrondir au dixième)`,
-                                    answer: `${toFrenchNumber(diag.toFixed(1))} cm`
+                                    question: `<strong>Carré de côté ${c} cm</strong><br>Calculer la diagonale (arrondir au dixième).`,
+                                    answer: `d² = ${c}² + ${c}² = ${c*c} + ${c*c} = ${2*c*c}<br>d = √${2*c*c} ≈ ${toFrenchNumber(diag.toFixed(1))} cm`
                                 };
                             }
                         ];
@@ -2788,33 +2814,70 @@ A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
                 {
                     desc: "Théorème de Thalès",
                     generator: () => {
-                        const AB = randInt(4, 8);
-                        const AC = randInt(6, 12);
-                        const AM = randInt(2, 4);
                         const questions = [
                             () => {
+                                // Calculer AN seulement
+                                const AB = randInt(6, 12);
+                                const AM = randInt(2, 5);
+                                const AC = randInt(8, 14);
+                                const ratio = AM / AB;
+                                const AN = ratio * AC;
+                                
+                                return {
+                                    question: `<strong>Triangle ABC</strong><br>M ∈ [AB], N ∈ [AC] et (MN) // (BC)<br>AB = ${AB} cm, AM = ${AM} cm, AC = ${AC} cm<br>Calculer AN.`,
+                                    answer: `${formatFraction("AM", "AB")} = ${formatFraction("AN", "AC")} = ${formatFraction("MN", "BC")}<br>${formatFraction(AM, AB)} = ${formatFraction("AN", AC)} = ${formatFraction("MN", "BC")}<br>AN = ${formatFraction(`${AM} × ${AC}`, AB)} = ${toFrenchNumber(AN.toFixed(2))} cm`
+                                };
+                            },
+                            () => {
+                                // Calculer MN seulement
+                                const AB = randInt(8, 12);
+                                const AM = randInt(3, 6);
+                                const BC = randInt(6, 10);
+                                const ratio = AM / AB;
+                                const MN = ratio * BC;
+                                
+                                return {
+                                    question: `<strong>Triangle ABC</strong><br>M ∈ [AB], N ∈ [AC] et (MN) // (BC)<br>AB = ${AB} cm, AM = ${AM} cm, BC = ${BC} cm<br>Calculer MN.`,
+                                    answer: `${formatFraction("AM", "AB")} = ${formatFraction("AN", "AC")} = ${formatFraction("MN", "BC")}<br>${formatFraction(AM, AB)} = ${formatFraction("AN", "AC")} = ${formatFraction("MN", BC)}<br>MN = ${formatFraction(`${AM} × ${BC}`, AB)} = ${toFrenchNumber(MN.toFixed(2))} cm`
+                                };
+                            },
+                            () => {
+                                // Calculer AN et MN (on a toutes les valeurs)
+                                const AB = randInt(6, 10);
+                                const AM = randInt(3, 5);
+                                const AC = randInt(8, 12);
+                                const BC = randInt(6, 10);
+                                const ratio = AM / AB;
+                                const AN = ratio * AC;
+                                const MN = ratio * BC;
+                                
+                                return {
+                                    question: `<strong>Triangle ABC</strong><br>M ∈ [AB], N ∈ [AC] et (MN) // (BC)<br>AB = ${AB} cm, AM = ${AM} cm, AC = ${AC} cm, BC = ${BC} cm<br>Calculer AN et MN.`,
+                                    answer: `${formatFraction("AM", "AB")} = ${formatFraction("AN", "AC")} = ${formatFraction("MN", "BC")}<br>${formatFraction(AM, AB)} = ${formatFraction("AN", AC)} = ${formatFraction("MN", BC)}<br>AN = ${toFrenchNumber(AN.toFixed(2))} cm et MN = ${toFrenchNumber(MN.toFixed(2))} cm`
+                                };
+                            },
+                            () => {
                                 // Paire théorie + pratique
-                                const a = randInt(6, 10);
-                                const b = randInt(3, 5);
-                                const c = randInt(8, 12);
+                                const AB = randInt(6, 10);
+                                const AM = randInt(3, 5);
+                                const AC = randInt(8, 12);
+                                const ratio = AM / AB;
+                                const AN = ratio * AC;
+                                
                                 return [
                                     {
                                         question: "Énoncer le théorème de Thalès",
                                         answer: "Si deux droites sont parallèles, alors les rapports des côtés correspondants sont égaux"
                                     },
                                     {
-                                        question: `Application : Dans des triangles en position de Thalès, AB = ${a} cm, AM = ${b} cm, AC = ${c} cm. Si MN // BC, écrire l'égalité de Thalès`,
-                                        answer: `${formatFraction("AM", "AB")} = ${formatFraction("AN", "AC")} = ${formatFraction("MN", "BC")} soit ${formatFraction(b, a)} = ${formatFraction("AN", c)} = ${formatFraction("MN", "BC")}`
+                                        question: `<strong>Triangle ABC</strong><br>M ∈ [AB], N ∈ [AC] et (MN) // (BC)<br>AB = ${AB} cm, AM = ${AM} cm, AC = ${AC} cm<br>Calculer AN.`,
+                                        answer: `${formatFraction("AM", "AB")} = ${formatFraction("AN", "AC")} = ${formatFraction("MN", "BC")}<br>${formatFraction(AM, AB)} = ${formatFraction("AN", AC)} = ${formatFraction("MN", "BC")}<br>AN = ${toFrenchNumber(AN.toFixed(2))} cm`
                                     }
                                 ];
                             },
                             () => ({
                                 question: "Dans quelle configuration peut-on utiliser le théorème de Thalès ?",
                                 answer: "Configuration papillon (2 droites parallèles coupées par 2 sécantes) ou configuration triangle (droite parallèle à un côté)"
-                            }),
-                            () => ({
-                                question: `Dans des triangles en position de Thalès, AB = ${AB}, AC = ${AC}, AM = ${AM}. Si MN // BC, écrire l'égalité de Thalès`,
-                                answer: `${formatFraction("AM", "AB")} = ${formatFraction("AN", "AC")} = ${formatFraction("MN", "BC")}`
                             }),
                             () => ({
                                 question: "Citer les conditions d'application du théorème de Thalès",
