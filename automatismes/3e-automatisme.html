@@ -23,7 +23,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
 
         .container {
@@ -38,50 +38,108 @@
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 2em;
+            margin-bottom: 5px;
         }
 
         .header p {
-            font-size: 1.1em;
+            font-size: 1em;
             opacity: 0.9;
         }
 
         .content {
-            padding: 30px;
+            padding: 20px;
         }
 
         .theme-selection {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .theme-selection h2 {
             color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.5em;
+            margin-bottom: 12px;
+            font-size: 1.3em;
         }
 
         .themes-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .theme-category {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+        }
+
+        .theme-category-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .theme-category-header:hover {
+            opacity: 0.8;
+        }
+
+        .theme-category-icon {
+            font-size: 1.3em;
+        }
+
+        .theme-category-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #667eea;
+            flex: 1;
+        }
+
+        .theme-category-toggle {
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+
+        .sous-themes-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .sous-theme-group {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #764ba2;
+        }
+
+        .sous-theme-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 6px;
+            font-size: 0.9em;
         }
 
         .theme-checkbox {
             display: flex;
             align-items: center;
-            padding: 15px;
+            padding: 6px 10px;
             background: #f8f9fa;
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            margin-bottom: 4px;
         }
 
         .theme-checkbox:hover {
@@ -90,9 +148,9 @@
         }
 
         .theme-checkbox input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
             cursor: pointer;
         }
 
@@ -100,6 +158,7 @@
             cursor: pointer;
             font-weight: 500;
             color: #333;
+            font-size: 0.95em;
         }
 
         .theme-checkbox input[type="checkbox"]:checked + label {
@@ -108,16 +167,16 @@
 
         .buttons {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .btn {
-            padding: 15px 30px;
-            font-size: 1.1em;
+            padding: 12px 24px;
+            font-size: 1em;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
@@ -241,33 +300,33 @@
         }
 
         .select-all-btn {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .question-count-section {
-            margin: 25px 0;
-            padding: 20px;
+            margin: 15px 0;
+            padding: 12px;
             background: #f8f9fa;
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .question-count-section label {
             font-weight: 600;
             color: #667eea;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .question-count-section input[type="number"] {
-            width: 80px;
-            padding: 10px;
-            font-size: 1.1em;
+            width: 70px;
+            padding: 8px;
+            font-size: 1em;
             border: 2px solid #667eea;
-            border-radius: 8px;
+            border-radius: 6px;
             text-align: center;
             font-weight: bold;
         }
@@ -313,7 +372,7 @@
         @media print {
             @page {
                 size: A4;
-                margin: 1cm;
+                margin: 0.5cm;
             }
 
             * {
@@ -325,7 +384,7 @@
                 background: white;
                 margin: 0;
                 padding: 0;
-                font-size: 11pt;
+                font-size: 10pt;
             }
 
             .container {
@@ -352,82 +411,82 @@
 
             .question-item {
                 page-break-inside: avoid;
-                margin-bottom: 8px;
-                padding: 6px 8px;
+                margin-bottom: 5px;
+                padding: 4px 6px;
                 background: #fafafa !important;
                 border-left: 2px solid #667eea !important;
-                border-radius: 4px;
+                border-radius: 3px;
             }
 
             .question-number {
-                font-size: 9pt;
-                padding: 2px 8px;
-                margin-bottom: 4px;
+                font-size: 8pt;
+                padding: 1px 6px;
+                margin-bottom: 2px;
             }
 
             .theme-badge {
-                font-size: 8pt !important;
-                padding: 2px 6px !important;
-                margin-left: 6px !important;
+                font-size: 7pt !important;
+                padding: 1px 4px !important;
+                margin-left: 4px !important;
             }
 
             .question-text {
-                font-size: 11pt !important;
-                margin: 6px 0 !important;
-                line-height: 1.3 !important;
+                font-size: 10pt !important;
+                margin: 4px 0 !important;
+                line-height: 1.2 !important;
             }
 
             /* Réduire la taille des SVG pour l'impression */
             .question-item svg.number-line {
-                width: 350px !important;
-                height: 50px !important;
-                margin: 5px auto !important;
+                width: 300px !important;
+                height: 40px !important;
+                margin: 3px auto !important;
             }
 
             .question-item svg.graph {
-                width: 300px !important;
-                height: 220px !important;
-                margin: 5px auto !important;
+                width: 250px !important;
+                height: 180px !important;
+                margin: 3px auto !important;
             }
 
             .question-item svg text {
-                font-size: 9px !important;
+                font-size: 8px !important;
             }
 
             .question-item svg line {
-                stroke-width: 1px !important;
+                stroke-width: 0.8px !important;
             }
 
             .question-item svg circle {
-                r: 3 !important;
+                r: 2.5 !important;
             }
 
             .question-item svg path {
-                stroke-width: 1.5px !important;
+                stroke-width: 1.2px !important;
             }
 
             /* Réduire la taille des fractions */
             .fraction {
-                font-size: 0.9em !important;
+                font-size: 0.85em !important;
             }
 
             /* Optimiser les tableaux pour l'impression */
             .question-item table {
-                font-size: 10pt !important;
-                margin: 8px auto !important;
+                font-size: 9pt !important;
+                margin: 4px auto !important;
             }
 
             .question-item table td {
-                padding: 4px 8px !important;
+                padding: 3px 6px !important;
                 border: 1.5px solid #667eea !important;
             }
 
             .correction-space {
-                min-height: 40px;
+                min-height: 35px;
                 border-top: 1px dashed #ccc;
-                margin-top: 6px;
-                padding-top: 6px;
-                font-size: 10pt;
+                margin-top: 4px;
+                padding-top: 4px;
+                font-size: 9pt;
             }
 
             .correction-space::before {
@@ -437,18 +496,30 @@
             }
 
             .answer-section {
-                font-size: 10pt !important;
-                padding: 6px !important;
-                margin-top: 6px !important;
+                font-size: 9pt !important;
+                padding: 4px !important;
+                margin-top: 4px !important;
             }
 
             .answer-section strong {
-                font-size: 10pt !important;
+                font-size: 9pt !important;
             }
 
             .answer-text {
-                margin-top: 4px !important;
-                font-size: 10pt !important;
+                margin-top: 3px !important;
+                font-size: 9pt !important;
+            }
+
+            /* Optimiser les blocs Scratch pour l'impression */
+            .question-item pre.blocks {
+                font-size: 9pt !important;
+                margin: 4px 0 !important;
+                padding: 4px !important;
+            }
+
+            .question-item pre.blocks svg {
+                max-width: 100% !important;
+                height: auto !important;
             }
         }
 
@@ -916,6 +987,72 @@
             return svg;
         }
 
+        // STRUCTURE HIÉRARCHIQUE DES THÈMES - CONFORME AU PROGRAMME DNB 2026
+        const themesHierarchie = {
+            "NOMBRES ET CALCULS": {
+                icon: "🔢",
+                sousThemes: {
+                    "Fractions et nombres décimaux": [
+                        "Écriture décimale des fractions simples",
+                        "Comparer et calculer avec des nombres décimaux",
+                        "Tiers, quart, cinquième d'un nombre"
+                    ],
+                    "Nombres relatifs": ["Nombres relatifs"],
+                    "Puissances et racines": ["Carrés des nombres de 1 à 12", "Notation scientifique"],
+                    "Arithmétique": ["Critères de divisibilité", "Décomposition en facteurs premiers et PGCD"],
+                    "Pourcentages": ["Pourcentages - conversions", "Pourcentages - augmentation et diminution"],
+                    "Calcul littéral": [
+                        "Expressions autour d'un nombre entier",
+                        "Développer et réduire des expressions littérales",
+                        "Calculer la valeur d'une expression algébrique",
+                        "Développer et factoriser"
+                    ],
+                    "Équations": ["Résoudre des équations simples"],
+                    "QCM": ["QCM - Calculs et opérations"]
+                }
+            },
+            "ESPACE ET GÉOMÉTRIE": {
+                icon: "📐",
+                sousThemes: {
+                    "Repérage": ["Repère orthogonal", "Droite graduée - lecture d'abscisse"],
+                    "Figures planes - Propriétés": ["Exploiter le codage d'une figure", "Angles", "Somme des angles d'un triangle"],
+                    "Figures planes - Mesures": ["Périmètres", "Aires"],
+                    "Solides": ["Volumes"],
+                    "Théorèmes": ["Théorème de Pythagore", "Théorème de Thalès"],
+                    "Trigonométrie": ["Trigonométrie - Cosinus", "Trigonométrie - Sinus et Tangente"],
+                    "Transformations": ["Symétries", "Translations"]
+                }
+            },
+            "GRANDEURS ET MESURES": {
+                icon: "📏",
+                sousThemes: {
+                    "Conversions et calculs": ["Conversions d'unités"]
+                }
+            },
+            "ORGANISATION ET GESTION DE DONNÉES": {
+                icon: "📊",
+                sousThemes: {
+                    "Statistiques": ["Moyenne", "Médiane", "Effectif total et diagrammes", "Lire tableaux et graphiques"],
+                    "Probabilités": ["Probabilités simples", "Fréquence"]
+                }
+            },
+            "PROPORTIONNALITÉ ET FONCTIONS": {
+                icon: "📈",
+                sousThemes: {
+                    "Proportionnalité": ["Reconnaître une situation de proportionnalité", "Résoudre un problème de proportionnalité"],
+                    "Fonctions": ["Reconnaître fonctions linéaire, affine, constante - par formule", "Reconnaître fonctions linéaire, affine, constante - par graphique", "Exploiter un graphique", "Calculer une image par une fonction", "Calcul d'antécédent"],
+                    "Pourcentages": ["Pourcentages - calcul mental", "Pourcentages - augmentation et diminution"]
+                }
+            },
+            "ALGORITHMIQUE ET PROGRAMMATION": {
+                icon: "💻",
+                sousThemes: {
+                    "Programmes de calcul": ["Programmes de calcul"],
+                    "Scratch": ["Géométrie avec Scratch"]
+                }
+            }
+        };
+
         // Générateurs de questions avec valeurs aléatoires
         // Les générateurs peuvent retourner :
         // - Un objet {question, answer} pour une question simple
@@ -936,6 +1073,98 @@
                             question: `Donner l'écriture décimale de ${formatFraction(f.n, f.d)}`,
                             answer: result
                         };
+                    }
+                },
+                {
+                    desc: "Calcul mental - multiplications et divisions",
+                    generator: () => {
+                        const ops = [
+                            // Tables de multiplication simples
+                            () => {
+                                const a = randInt(2, 12);
+                                const b = randInt(2, 12);
+                                return {
+                                    question: `Calculer : ${a} × ${b}`,
+                                    answer: `${a * b}`
+                                };
+                            },
+                            // Multiplier par 10, 100, 1000
+                            () => {
+                                const a = randInt(2, 99);
+                                const mult = randChoice([10, 100, 1000]);
+                                return {
+                                    question: `Calculer : ${a} × ${mult}`,
+                                    answer: `${a * mult}`
+                                };
+                            },
+                            // Diviser par 10, 100
+                            () => {
+                                const mult = randChoice([10, 100]);
+                                const a = randInt(2, 20) * mult;
+                                return {
+                                    question: `Calculer : ${a} ÷ ${mult}`,
+                                    answer: `${a / mult}`
+                                };
+                            },
+                            // Doubles simples
+                            () => {
+                                const a = randChoice([5, 10, 15, 20, 25, 30, 40, 50]);
+                                return {
+                                    question: `Calculer le double de ${a}`,
+                                    answer: `${a * 2}`
+                                };
+                            },
+                            // Moitiés simples
+                            () => {
+                                const a = randChoice([10, 20, 30, 40, 50, 60, 80, 100]);
+                                return {
+                                    question: `Calculer la moitié de ${a}`,
+                                    answer: `${a / 2}`
+                                };
+                            },
+                            // Additions simples avec 100
+                            () => {
+                                const a = randInt(10, 90);
+                                return {
+                                    question: `Calculer : 100 - ${a}`,
+                                    answer: `${100 - a}`
+                                };
+                            },
+                            // Multiplier par 5
+                            () => {
+                                const a = randChoice([4, 6, 8, 10, 12, 14, 16, 20]);
+                                return {
+                                    question: `Calculer : ${a} × 5`,
+                                    answer: `${a * 5}`
+                                };
+                            },
+                            // Diviser par 5
+                            () => {
+                                const a = randChoice([20, 25, 30, 35, 40, 45, 50]);
+                                return {
+                                    question: `Calculer : ${a} ÷ 5`,
+                                    answer: `${a / 5}`
+                                };
+                            },
+                            // Carré de nombres simples
+                            () => {
+                                const a = randChoice([5, 10, 12, 15, 20, 25]);
+                                return {
+                                    question: `Calculer : ${a}²`,
+                                    answer: `${a * a}`
+                                };
+                            },
+                            // Additions/soustractions mentales
+                            () => {
+                                const a = randInt(10, 50);
+                                const b = randInt(5, 30);
+                                return {
+                                    question: `Calculer : ${a} + ${b}`,
+                                    answer: `${a + b}`
+                                };
+                            }
+                        ];
+                        return randChoice(ops)();
                     }
                 },
                 {
@@ -1316,6 +1545,96 @@
                     }
                 },
                 {
+                    desc: "Tiers, quart, cinquième d'un nombre",
+                    generator: () => {
+                        const ops = [
+                            () => {
+                                const n = randInt(6, 30);
+                                const result = n / 3;
+                                return {
+                                    question: `Quel est le tiers de ${n} ?`,
+                                    answer: `${n} ÷ 3 = ${toFrenchNumber(result)}`
+                                };
+                            },
+                            () => {
+                                const n = randInt(8, 40);
+                                const result = n / 4;
+                                return {
+                                    question: `Quel est le quart de ${n} ?`,
+                                    answer: `${n} ÷ 4 = ${toFrenchNumber(result)}`
+                                };
+                            },
+                            () => {
+                                const n = randInt(10, 50);
+                                const result = n / 5;
+                                return {
+                                    question: `Quel est le cinquième de ${n} ?`,
+                                    answer: `${n} ÷ 5 = ${toFrenchNumber(result)}`
+                                };
+                            },
+                            () => {
+                                const n = randInt(12, 60);
+                                const result = n / 6;
+                                return {
+                                    question: `Calculer ${formatFraction(n, 6)}`,
+                                    answer: `${n} ÷ 6 = ${toFrenchNumber(result)}`
+                                };
+                            }
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
+                    desc: "Décomposition en facteurs premiers et PGCD",
+                    generator: () => {
+                        const ops = [
+                            () => {
+                                // Nombres simples à décomposer
+                                const decomps = [
+                                    {n: 12, d: "2² × 3"},
+                                    {n: 18, d: "2 × 3²"},
+                                    {n: 20, d: "2² × 5"},
+                                    {n: 24, d: "2³ × 3"},
+                                    {n: 30, d: "2 × 3 × 5"},
+                                    {n: 36, d: "2² × 3²"},
+                                    {n: 40, d: "2³ × 5"},
+                                    {n: 45, d: "3² × 5"},
+                                    {n: 48, d: "2⁴ × 3"},
+                                    {n: 50, d: "2 × 5²"},
+                                    {n: 60, d: "2² × 3 × 5"},
+                                    {n: 72, d: "2³ × 3²"},
+                                    {n: 75, d: "3 × 5²"},
+                                    {n: 77, d: "7 × 11"},
+                                    {n: 84, d: "2² × 3 × 7"},
+                                    {n: 90, d: "2 × 3² × 5"},
+                                    {n: 91, d: "7 × 13"}
+                                ];
+                                const chosen = randChoice(decomps);
+                                return {
+                                    question: `Décomposer ${chosen.n} en produit de facteurs premiers`,
+                                    answer: `${chosen.n} = ${chosen.d}`
+                                };
+                            },
+                            () => {
+                                // PGCD à partir de décompositions
+                                const pairs = [
+                                    {a: 12, b: 18, pgcd: 6, expl: "12 = 2² × 3 et 18 = 2 × 3², donc PGCD = 2 × 3 = 6"},
+                                    {a: 24, b: 36, pgcd: 12, expl: "24 = 2³ × 3 et 36 = 2² × 3², donc PGCD = 2² × 3 = 12"},
+                                    {a: 30, b: 45, pgcd: 15, expl: "30 = 2 × 3 × 5 et 45 = 3² × 5, donc PGCD = 3 × 5 = 15"},
+                                    {a: 48, b: 72, pgcd: 24, expl: "48 = 2⁴ × 3 et 72 = 2³ × 3², donc PGCD = 2³ × 3 = 24"},
+                                    {a: 91, b: 77, pgcd: 7, expl: "91 = 7 × 13 et 77 = 7 × 11, donc PGCD = 7"}
+                                ];
+                                const chosen = randChoice(pairs);
+                                return {
+                                    question: `Calculer le PGCD de ${chosen.a} et ${chosen.b}`,
+                                    answer: `PGCD(${chosen.a} ; ${chosen.b}) = ${chosen.pgcd}<br><em>${chosen.expl}</em>`
+                                };
+                            }
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
                     desc: "Critères de divisibilité",
                     generator: () => {
                         const div = randChoice([2, 3, 5, 9]);
@@ -1504,13 +1823,109 @@
                                     question: `Résoudre : ${a}x + ${b} = ${c}`,
                                     answer: `x = ${toFrenchNumber(x)}`
                                 };
+                            },
+                            // QCM style DNB Sujet A Q7
+                            () => {
+                                const a = randInt(3, 6);
+                                const b = randInt(2, 8);
+                                const c = randInt(15, 30);
+                                const correct = (c + b) / a;
+                                const wrong1 = c / a + b;
+                                const wrong2 = (c - a) + b;
+                                const wrong3 = c * a + b;
+                                
+                                return {
+                                    question: `Pour résoudre l'équation ${a}x - ${b} = ${c}, on effectue le calcul :<br>
+A. x = ${formatFraction(c, a)} + ${b} &nbsp;&nbsp;&nbsp; B. x = (${c} - ${a}) + ${b}<br>
+C. x = ${c} × ${a} + ${b} &nbsp;&nbsp;&nbsp; D. x = ${formatFraction(`${c} + ${b}`, a)}`,
+                                    answer: `D. x = ${formatFraction(`${c} + ${b}`, a)} = ${formatFraction(c + b, a)} = ${toFrenchNumber(correct)}<br><em>Méthode : ajouter ${b} aux deux côtés, puis diviser par ${a}</em>`
+                                };
+                            },
+                            () => {
+                                const a = randInt(2, 5);
+                                const b = randInt(3, 9);
+                                const c = randInt(20, 40);
+                                const correct = (c - b) / a;
+                                const wrong1 = c / a - b;
+                                const wrong2 = (c + b) / a;
+                                const wrong3 = c - b / a;
+                                
+                                return {
+                                    question: `Résoudre : ${a}x + ${b} = ${c}. Quelle est la solution ?<br>
+A. x = ${toFrenchNumber(wrong1)} &nbsp;&nbsp; B. x = ${toFrenchNumber(wrong2)} &nbsp;&nbsp; C. x = ${toFrenchNumber(correct)} &nbsp;&nbsp; D. x = ${toFrenchNumber(wrong3)}`,
+                                    answer: `C. x = ${toFrenchNumber(correct)}<br>Méthode : ${a}x = ${c} - ${b} = ${c - b}, donc x = ${formatFraction(c - b, a)} = ${toFrenchNumber(correct)}`
+                                };
                             }
                         ];
                         return randChoice(ops)();
                     }
                 },
                 {
-                    desc: "Droite graduée",
+                    desc: "QCM - Calculs et opérations",
+                    generator: () => {
+                        const ops = [
+                            // QCM moyenne (style DNB Sujet A Q2)
+                            () => {
+                                const notes = [randInt(8, 12), randInt(10, 14), randInt(11, 15), randInt(11, 15)];
+                                const sum = notes.reduce((a, b) => a + b, 0);
+                                const correct = sum / notes.length;
+                                const wrong1 = correct - 0.5;
+                                const wrong2 = correct + 0.5;
+                                const wrong3 = notes[notes.length - 1];
+                                
+                                return {
+                                    question: `Voici une série de quatre notes : ${notes.join(', ')}. Quelle est la moyenne de cette série ?<br>
+A. ${toFrenchNumber(wrong1)} &nbsp;&nbsp; B. ${toFrenchNumber(correct)} &nbsp;&nbsp; C. ${toFrenchNumber(wrong2)} &nbsp;&nbsp; D. ${wrong3}`,
+                                    answer: `B. ${toFrenchNumber(correct)}<br>Calcul : (${notes.join(' + ')}) ÷ 4 = ${sum} ÷ 4 = ${toFrenchNumber(correct)}`
+                                };
+                            },
+                            // QCM pourcentage
+                            () => {
+                                const total = randChoice([400, 600, 800, 1000]);
+                                const pct = randChoice([20, 25, 30]);
+                                const correct = total * pct / 100;
+                                const wrong1 = total - correct;
+                                const wrong2 = correct + 50;
+                                const wrong3 = correct - 50;
+                                
+                                return {
+                                    question: `Dans un collège de ${total} élèves, ${pct}% des élèves portent des lunettes. Combien d'élèves portent des lunettes ?<br>
+A. ${wrong3} &nbsp;&nbsp; B. ${correct} &nbsp;&nbsp; C. ${wrong2} &nbsp;&nbsp; D. ${wrong1}`,
+                                    answer: `B. ${correct}<br>Calcul : ${total} × ${formatFraction(pct, 100)} = ${total} × ${toFrenchNumber(pct/100)} = ${correct}`
+                                };
+                            },
+                            // QCM vitesse/distance/temps (style DNB Sujet A Q5)
+                            () => {
+                                const vitesse = 90;
+                                const distance = 45;
+                                const correct = 30; // 30 min
+                                
+                                return {
+                                    question: `Une voiture roule à 90 km/h. Combien de temps met-elle pour parcourir 45 km ?<br>
+A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
+                                    answer: `B. 30 min<br>Calcul : 45 ÷ 90 = 0,5 h = 30 minutes`
+                                };
+                            },
+                            () => {
+                                const vitesse = randChoice([60, 80, 100, 120]);
+                                const distance = vitesse / 2; // demi-heure de trajet
+                                const correct = 30;
+                                const wrong1 = 15;
+                                const wrong2 = 45;
+                                const wrong3 = 60;
+                                
+                                return {
+                                    question: `Une voiture roule à ${vitesse} km/h. Combien de temps met-elle pour parcourir ${toFrenchNumber(distance)} km ?<br>
+A. ${wrong1} min &nbsp;&nbsp; B. ${correct} min &nbsp;&nbsp; C. ${wrong2} min &nbsp;&nbsp; D. ${wrong3} min`,
+                                    answer: `B. ${correct} min<br>Calcul : ${toFrenchNumber(distance)} ÷ ${vitesse} = 0,5 h = 30 minutes`
+                                };
+                            }
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
+                    desc: "Droite graduée - lecture d'abscisse",
                     generator: () => {
                         const ops = [
                             () => {
@@ -1527,6 +1942,25 @@
                                 };
                             },
                             () => {
+                                // Fraction simple - QCM style DNB
+                                const denoms = [2, 4];
+                                const b = randChoice(denoms);
+                                const a = randInt(1, b * 2 - 1);
+                                const decimal = a / b;
+                                
+                                const allOptions = [
+                                    formatFraction(a, b),
+                                    formatFraction(a + 1, b),
+                                    formatFraction(a - 1, b),
+                                    formatFraction(a, b + 1)
+                                ].filter((v, i, arr) => arr.indexOf(v) === i);
+
+                                return {
+                                    question: `Sur cette droite graduée, l'abscisse du point E est :<br>${generateNumberLine(0, 2, 1/b, decimal, true)}<br>A. ${allOptions[0]} &nbsp;&nbsp; B. ${allOptions[1]} &nbsp;&nbsp; C. ${allOptions[2]} &nbsp;&nbsp; D. ${allOptions[3]}`,
+                                    answer: `${formatFraction(a, b)} (soit ${toFrenchNumber(decimal)})`
+                                };
+                            },
+                            () => {
                                 // Fraction
                                 const b = randChoice([2, 4, 5]); // Dénominateur
                                 const min = 0;
@@ -1538,6 +1972,23 @@
                                 return {
                                     question: `Placer le point d'abscisse ${formatFraction(a, b)} sur une droite graduée :<br>${generateNumberLine(min, max, step, decimal, false)}`,
                                     answer: `Point placé à ${toFrenchNumber(decimal)} (soit ${formatFraction(a, b)}) :<br>${generateNumberLine(min, max, step, decimal, true)}`
+                                };
+                            },
+                            () => {
+                                // Lecture directe avec fractions - style sujet B Q4
+                                const options = [
+                                    {frac: formatFraction(5, 4), dec: 1.25},
+                                    {frac: formatFraction(3, 2), dec: 1.5},
+                                    {frac: formatFraction(7, 4), dec: 1.75},
+                                    {frac: formatFraction(5, 2), dec: 2.5}
+                                ];
+                                const correct = randChoice(options);
+                                const wrongOpts = options.filter(o => o !== correct).slice(0, 3);
+                                const allOpts = [correct, ...wrongOpts].sort(() => Math.random() - 0.5);
+                                
+                                return {
+                                    question: `Sur cette droite graduée, l'abscisse du point E est :<br>${generateNumberLine(0, 3, 0.25, correct.dec, true)}<br>A. ${allOpts[0].frac} &nbsp;&nbsp; B. ${allOpts[1].frac} &nbsp;&nbsp; C. ${allOpts[2].frac} &nbsp;&nbsp; D. ${allOpts[3].frac}`,
+                                    answer: `${correct.frac} (valeur décimale : ${toFrenchNumber(correct.dec)})`
                                 };
                             }
                         ];
@@ -1728,7 +2179,31 @@
                             () => ({
                                 question: "Dans un triangle équilatéral, quelle est la mesure de chaque angle ?",
                                 answer: "60°"
-                            })
+                            }),
+                            // QCM style DNB Sujet B Q5
+                            () => {
+                                const angleA = randInt(25, 45);
+                                const angleC = 90 - angleA;
+                                const wrong1 = angleA;
+                                const wrong2 = 90;
+                                const wrong3 = 180 - angleA;
+                                
+                                return {
+                                    question: `Dans le triangle ABC, rectangle en B, on sait que l'angle A = ${angleA}°. Calculer l'angle C.<br>
+A. ${wrong1}° &nbsp;&nbsp; B. ${angleC}° &nbsp;&nbsp; C. ${wrong2}° &nbsp;&nbsp; D. ${wrong3}°`,
+                                    answer: `B. ${angleC}°<br>Dans un triangle rectangle, la somme des deux angles aigus est 90°, donc C = 90° - ${angleA}° = ${angleC}°`
+                                };
+                            },
+                            () => {
+                                const angleA = 35;
+                                const angleC = 55;
+                                
+                                return {
+                                    question: `Dans le triangle ABC, rectangle en B, on sait que Â = 35°. Calculer Ĉ.<br>
+A. 35° &nbsp;&nbsp; B. 45° &nbsp;&nbsp; C. 55° &nbsp;&nbsp; D. 90°`,
+                                    answer: `C. 55°<br>Dans un triangle rectangle : Â + Ĉ = 90°, donc Ĉ = 90° - 35° = 55°`
+                                };
+                            }
                         ];
                         return randChoice(ops)();
                     }
@@ -1892,8 +2367,112 @@
                                 const min = randInt(60, 300);
                                 const result = min / 60;
                                 return {
-                                    question: `Convertir ${min} min en heures`,
+                                    question: `Un film dure ${min} min. Quelle est sa durée en heures ?`,
                                     answer: `${min} min ÷ 60 = ${toFrenchNumber(result)} h`
+                                };
+                            },
+                            () => {
+                                const h = randDecimal(1, 5);
+                                const min = h * 60;
+                                return {
+                                    question: `Convertir ${toFrenchNumber(h)} h en minutes`,
+                                    answer: `${toFrenchNumber(h)} h × 60 = ${toFrenchNumber(min)} min`
+                                };
+                            },
+                            () => {
+                                const sec = randInt(120, 600);
+                                const min = sec / 60;
+                                return {
+                                    question: `Convertir ${sec} secondes en minutes`,
+                                    answer: `${sec} s ÷ 60 = ${toFrenchNumber(min)} min`
+                                };
+                            },
+                            // VITESSE - DISTANCE - TEMPS (calcul mental)
+                            () => {
+                                // Distance = Vitesse × Temps (nombres ronds)
+                                const vitesse = randChoice([50, 60, 80, 100]);
+                                const temps = randChoice([1, 2, 3]);
+                                const distance = vitesse * temps;
+                                return {
+                                    question: `Une voiture roule à ${vitesse} km/h pendant ${temps} h. Quelle distance parcourt-elle ?`,
+                                    answer: `Distance = ${vitesse} km/h × ${temps} h = ${distance} km`
+                                };
+                            },
+                            () => {
+                                // Temps = Distance ÷ Vitesse (avec 30 min)
+                                const vitesse = randChoice([60, 80, 100, 120]);
+                                const distance = vitesse / 2; // 30 minutes
+                                return {
+                                    question: `Une voiture roule à ${vitesse} km/h. Combien de temps met-elle pour parcourir ${distance} km ?`,
+                                    answer: `${distance} ÷ ${vitesse} = 0,5 h = 30 min`
+                                };
+                            },
+                            () => {
+                                // Temps = Distance ÷ Vitesse (1 heure)
+                                const vitesse = randChoice([60, 80, 90, 100, 120]);
+                                const distance = vitesse;
+                                return {
+                                    question: `À ${vitesse} km/h, combien de temps pour parcourir ${distance} km ?`,
+                                    answer: `${distance} ÷ ${vitesse} = 1 h`
+                                };
+                            },
+                            () => {
+                                // Temps = Distance ÷ Vitesse (2 heures)
+                                const vitesse = randChoice([50, 60, 70, 80]);
+                                const distance = vitesse * 2;
+                                return {
+                                    question: `À ${vitesse} km/h, combien de temps pour faire ${distance} km ?`,
+                                    answer: `${distance} ÷ ${vitesse} = 2 h`
+                                };
+                            },
+                            () => {
+                                // Vitesse = Distance ÷ Temps
+                                const temps = randChoice([2, 3, 4]);
+                                const vitesse = randChoice([60, 80, 100]);
+                                const distance = vitesse * temps;
+                                return {
+                                    question: `Un cycliste parcourt ${distance} km en ${temps} h. Quelle est sa vitesse moyenne ?`,
+                                    answer: `Vitesse = ${distance} km ÷ ${temps} h = ${vitesse} km/h`
+                                };
+                            },
+                            () => {
+                                // 15 minutes = 1/4 d'heure
+                                const vitesse = randChoice([60, 80, 100, 120]);
+                                const distance = vitesse / 4;
+                                return {
+                                    question: `À ${vitesse} km/h, quelle distance en 15 minutes ?`,
+                                    answer: `15 min = ${formatFraction("1", "4")} h, donc ${vitesse} ÷ 4 = ${distance} km`
+                                };
+                            },
+                            () => {
+                                // Question mentale simple
+                                return {
+                                    question: `Une voiture roule à 50 km/h pendant 2 h. Quelle distance parcourt-elle ?`,
+                                    answer: `50 km/h × 2 h = 100 km`
+                                };
+                            },
+                            () => {
+                                // Question mentale simple
+                                return {
+                                    question: `Combien de temps pour faire 180 km à 60 km/h ?`,
+                                    answer: `180 ÷ 60 = 3 h`
+                                };
+                            },
+                            () => {
+                                // Question mentale simple
+                                return {
+                                    question: `À quelle vitesse roule-t-on si on fait 150 km en 3 h ?`,
+                                    answer: `150 ÷ 3 = 50 km/h`
+                                };
+                            },
+                            () => {
+                                // QCM calcul mental
+                                const vitesse = 90;
+                                const distance = 45;
+                                return {
+                                    question: `Une voiture roule à 90 km/h. Combien de temps pour parcourir 45 km ?<br>
+A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
+                                    answer: `B. 30 min<br>45 ÷ 90 = 0,5 h = 30 min`
                                 };
                             },
                             () => {
@@ -2277,6 +2856,30 @@
                                     question: `Dans un triangle rectangle, le côté adjacent mesure ${adj} cm et l'hypoténuse ${hyp} cm. Calculer le cosinus de l'angle`,
                                     answer: `cos = ${formatFraction(adj + " cm", hyp + " cm")} = ${formatFraction(adj, hyp)} ≈ ${toFrenchNumber(cos.toFixed(3))}`
                                 };
+                            },
+                            // QCM style DNB Sujet B Q6
+                            () => {
+                                const options = [
+                                    {text: formatFraction("AB", "BC"), correct: true, label: "côté adjacent ÷ hypoténuse"},
+                                    {text: formatFraction("AB", "AC"), correct: false, label: "côté adjacent ÷ côté opposé"},
+                                    {text: formatFraction("AC", "BC"), correct: false, label: "côté opposé ÷ hypoténuse"},
+                                    {text: formatFraction("BC", "AB"), correct: false, label: "hypoténuse ÷ côté adjacent"}
+                                ];
+                                const shuffled = options.sort(() => Math.random() - 0.5);
+                                const correctAnswer = options.find(o => o.correct);
+                                
+                                return {
+                                    question: `Dans le triangle ABC, rectangle en A, quel calcul doit-on effectuer pour déterminer le cosinus de l'angle ABC ?<br>
+A. ${shuffled[0].text} &nbsp;&nbsp; B. ${shuffled[1].text} &nbsp;&nbsp; C. ${shuffled[2].text} &nbsp;&nbsp; D. ${shuffled[3].text}`,
+                                    answer: `${correctAnswer.text} (${correctAnswer.label})<br><em>cos(ABC) = ${formatFraction("côté adjacent à ABC", "hypoténuse")} = ${formatFraction("AB", "BC")}</em>`
+                                };
+                            },
+                            () => {
+                                return {
+                                    question: `Dans le triangle ABC, rectangle en A, quel calcul doit-on effectuer pour déterminer le cosinus de l'angle ABC ?<br>
+A. ${formatFraction("AC", "BC")} &nbsp;&nbsp; B. ${formatFraction("AB", "BC")} &nbsp;&nbsp; C. ${formatFraction("AB", "AC")} &nbsp;&nbsp; D. ${formatFraction("BC", "AB")}`,
+                                    answer: `B. ${formatFraction("AB", "BC")}<br><em>cos(ABC) = ${formatFraction("côté adjacent", "hypoténuse")} = ${formatFraction("AB", "BC")}</em>`
+                                };
                             }
                         ];
                         return randChoice(ops)();
@@ -2558,6 +3161,16 @@
                                 };
                             },
                             () => {
+                                // Série NON ordonnée - comme dans sujet B
+                                const serie = Array.from({length: 5}, () => randInt(6, 19));
+                                const serieSorted = [...serie].sort((a,b) => a-b);
+                                const median = serieSorted[2];
+                                return {
+                                    question: `Quelle est la médiane de cette série de notes : ${serie.join(' ; ')} ?`,
+                                    answer: `On ordonne d'abord : ${serieSorted.join(' < ')}<br>Médiane = ${median} (valeur centrale, 3ᵉ valeur sur 5)`
+                                };
+                            },
+                            () => {
                                 // Paire théorie + pratique
                                 const serie = Array.from({length: 5}, () => randInt(5, 18)).sort((a,b) => a-b);
                                 const median = serie[2];
@@ -2578,6 +3191,40 @@
                                 return {
                                     question: `Quelle est la médiane de : ${serie.join(', ')} ?`,
                                     answer: `${formatFraction("(" + serie[1] + " + " + serie[2] + ")", 2)} = ${formatFraction(serie[1] + serie[2], 2)} = ${toFrenchNumber(median)}`
+                                };
+                            }
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
+                    desc: "Effectif total et diagrammes",
+                    generator: () => {
+                        const ops = [
+                            () => {
+                                // Calculer effectif total à partir d'un diagramme
+                                const effectifs = [
+                                    randInt(25, 45),
+                                    randInt(25, 40),
+                                    randInt(20, 35),
+                                    randInt(15, 30),
+                                    randInt(10, 25)
+                                ];
+                                const total = effectifs.reduce((a, b) => a + b, 0);
+                                return {
+                                    question: `Un diagramme en barres indique les effectifs suivants : ${effectifs.join(', ')}. Quel est l'effectif total ?`,
+                                    answer: `${effectifs.join(' + ')} = ${total}`
+                                };
+                            },
+                            () => {
+                                // Question style DNB sur pourcentage d'un diagramme
+                                const effectifs = [randInt(30, 50), randInt(25, 40), randInt(20, 35), randInt(15, 30)];
+                                const total = effectifs.reduce((a, b) => a + b, 0);
+                                const seuil = randInt(effectifs[2] + effectifs[3] - 5, effectifs[2] + effectifs[3] + 5);
+                                const pct = (seuil / total * 100).toFixed(1);
+                                return {
+                                    question: `Dans un collège de ${total} élèves, ${seuil} font du vélo. Quel est le pourcentage d'élèves qui font du vélo ?`,
+                                    answer: `${formatFraction(seuil, total)} × 100 = ${toFrenchNumber(pct)}%`
                                 };
                             }
                         ];
@@ -2640,6 +3287,166 @@
                     }
                 },
                 {
+                    desc: "Reconnaître fonctions linéaire, affine, constante - par formule",
+                    generator: () => {
+                        const ops = [
+                            // Reconnaître fonction linéaire
+                            () => {
+                                const a = randInt(2, 8);
+                                return {
+                                    question: `La fonction f(x) = ${a}x est-elle linéaire, affine ou constante ?`,
+                                    answer: `Linéaire<br><em>Forme f(x) = ax avec a ≠ 0, la courbe passe par l'origine</em>`
+                                };
+                            },
+                            () => {
+                                const a = randInt(-8, -2);
+                                return {
+                                    question: `Quelle est la nature de la fonction f(x) = ${a}x ?`,
+                                    answer: `Fonction linéaire<br><em>Forme f(x) = ax, elle représente une situation de proportionnalité</em>`
+                                };
+                            },
+                            // Reconnaître fonction affine
+                            () => {
+                                const a = randInt(2, 8);
+                                const b = randInt(1, 10);
+                                return {
+                                    question: `La fonction f(x) = ${a}x + ${b} est-elle linéaire, affine ou constante ?`,
+                                    answer: `Affine (non linéaire)<br><em>Forme f(x) = ax + b avec a ≠ 0 et b ≠ 0</em>`
+                                };
+                            },
+                            () => {
+                                const a = randInt(2, 6);
+                                const b = randInt(-10, -1);
+                                return {
+                                    question: `Quelle est la nature de la fonction f(x) = ${a}x ${b} ?`,
+                                    answer: `Fonction affine (non linéaire)<br><em>Forme f(x) = ax + b avec b ≠ 0, la courbe ne passe pas par l'origine</em>`
+                                };
+                            },
+                            // Reconnaître fonction constante
+                            () => {
+                                const b = randInt(1, 15);
+                                return {
+                                    question: `La fonction f(x) = ${b} est-elle linéaire, affine ou constante ?`,
+                                    answer: `Constante<br><em>Forme f(x) = b, la représentation graphique est une droite horizontale</em>`
+                                };
+                            },
+                            () => {
+                                const b = randInt(-15, -1);
+                                return {
+                                    question: `Quelle est la nature de la fonction f(x) = ${b} ?`,
+                                    answer: `Fonction constante<br><em>La fonction prend toujours la même valeur quel que soit x</em>`
+                                };
+                            },
+                            // QCM reconnaissance
+                            () => {
+                                const a = randInt(3, 7);
+                                return {
+                                    question: `La fonction f(x) = ${a}x est :<br>
+A. Constante &nbsp;&nbsp; B. Linéaire &nbsp;&nbsp; C. Affine non linéaire &nbsp;&nbsp; D. Aucune des trois`,
+                                    answer: `B. Linéaire<br>Forme f(x) = ax, elle représente une proportionnalité`
+                                };
+                            },
+                            () => {
+                                const a = randInt(2, 5);
+                                const b = randInt(3, 9);
+                                return {
+                                    question: `La fonction f(x) = ${a}x + ${b} est :<br>
+A. Constante &nbsp;&nbsp; B. Linéaire &nbsp;&nbsp; C. Affine non linéaire &nbsp;&nbsp; D. Aucune des trois`,
+                                    answer: `C. Affine non linéaire<br>Forme f(x) = ax + b avec a ≠ 0 et b ≠ 0`
+                                };
+                            },
+                            // Définitions théoriques
+                            () => ({
+                                question: "Quelle est la forme d'une fonction linéaire ?",
+                                answer: "f(x) = ax avec a ≠ 0<br><em>Sa représentation graphique est une droite passant par l'origine</em>"
+                            }),
+                            () => ({
+                                question: "Quelle est la forme d'une fonction affine ?",
+                                answer: "f(x) = ax + b avec a ≠ 0<br><em>Si b = 0, la fonction est linéaire ; si b ≠ 0, elle est affine non linéaire</em>"
+                            }),
+                            () => ({
+                                question: "Quelle est la forme d'une fonction constante ?",
+                                answer: "f(x) = b<br><em>Sa représentation graphique est une droite horizontale</em>"
+                            }),
+                            () => ({
+                                question: "Une fonction linéaire représente-t-elle une situation de proportionnalité ?",
+                                answer: "Oui<br><em>f(x) = ax signifie que y est proportionnel à x avec coefficient a</em>"
+                            })
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
+                    desc: "Reconnaître fonctions linéaire, affine, constante - par graphique",
+                    generator: () => {
+                        const ops = [
+                            // Droite passant par l'origine
+                            () => ({
+                                question: "Une droite passe par l'origine du repère (0 ; 0). Quelle est la nature de la fonction représentée ?",
+                                answer: "Fonction linéaire<br><em>Une droite passant par l'origine représente toujours une fonction linéaire f(x) = ax</em>"
+                            }),
+                            () => ({
+                                question: "Sur un graphique, la droite représentant une fonction passe par le point (0 ; 0). Que peut-on en déduire ?",
+                                answer: "C'est une fonction linéaire (de la forme f(x) = ax)"
+                            }),
+                            // Droite ne passant pas par l'origine
+                            () => ({
+                                question: "Une droite ne passe pas par l'origine et n'est pas horizontale. Quelle fonction représente-t-elle ?",
+                                answer: "Fonction affine non linéaire<br><em>Forme f(x) = ax + b avec a ≠ 0 et b ≠ 0</em>"
+                            }),
+                            () => {
+                                const b = randInt(2, 8);
+                                return {
+                                    question: `Une droite coupe l'axe des ordonnées au point (0 ; ${b}) et n'est pas horizontale. Quelle fonction ?`,
+                                    answer: `Fonction affine non linéaire<br><em>L'ordonnée à l'origine est ${b}, donc f(x) = ax + ${b} avec a ≠ 0</em>`
+                                };
+                            },
+                            // Droite horizontale
+                            () => ({
+                                question: "Une droite est horizontale sur un graphique. Quelle fonction représente-t-elle ?",
+                                answer: "Fonction constante<br><em>Forme f(x) = b, tous les points ont la même ordonnée</em>"
+                            }),
+                            () => {
+                                const b = randInt(1, 10);
+                                return {
+                                    question: `Une droite horizontale passe par tous les points d'ordonnée ${b}. Quelle fonction ?`,
+                                    answer: `Fonction constante f(x) = ${b}<br><em>Pour tout x, f(x) = ${b}</em>`
+                                };
+                            },
+                            // QCM avec description graphique
+                            () => ({
+                                question: `Une droite passe par les points (0 ; 0) et (2 ; 6). La fonction est :<br>
+A. Constante &nbsp;&nbsp; B. Linéaire &nbsp;&nbsp; C. Affine non linéaire &nbsp;&nbsp; D. Aucune`,
+                                answer: `B. Linéaire<br>Elle passe par l'origine, donc f(x) = ax avec a = 3`
+                            }),
+                            () => ({
+                                question: `Une droite passe par (0 ; 3) et (2 ; 7). La fonction est :<br>
+A. Constante &nbsp;&nbsp; B. Linéaire &nbsp;&nbsp; C. Affine non linéaire &nbsp;&nbsp; D. Aucune`,
+                                answer: `C. Affine non linéaire<br>Elle ne passe pas par l'origine, donc f(x) = ax + b avec b = 3`
+                            }),
+                            () => ({
+                                question: `Une droite passe par (1 ; 5) et (3 ; 5). La fonction est :<br>
+A. Constante &nbsp;&nbsp; B. Linéaire &nbsp;&nbsp; C. Affine non linéaire &nbsp;&nbsp; D. Aucune`,
+                                answer: `A. Constante<br>Droite horizontale, tous les points ont ordonnée 5, donc f(x) = 5`
+                            }),
+                            // Caractéristiques graphiques
+                            () => ({
+                                question: "Comment reconnaître graphiquement une fonction linéaire ?",
+                                answer: "Sa représentation est une droite passant par l'origine (0 ; 0)"
+                            }),
+                            () => ({
+                                question: "Comment reconnaître graphiquement une fonction constante ?",
+                                answer: "Sa représentation est une droite horizontale (parallèle à l'axe des abscisses)"
+                            }),
+                            () => ({
+                                question: "Quelle est l'ordonnée à l'origine d'une fonction linéaire ?",
+                                answer: "0 (zéro)<br><em>Une fonction linéaire passe toujours par (0 ; 0)</em>"
+                            })
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
                     desc: "Résoudre un problème de proportionnalité",
                     generator: () => {
                         const ops = [
@@ -2682,6 +3489,95 @@
                                     answer: `${d}<br>Calcul : coefficient = ${b}÷${a} = ${coef}, donc ${c} × ${coef} = ${d}<br>${answerTable}`
                                 };
                             }
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
+                    desc: "Pourcentages - calcul mental",
+                    generator: () => {
+                        const ops = [
+                            // 10% facile
+                            () => {
+                                const nombre = randChoice([20, 30, 40, 50, 60, 80, 100, 120]);
+                                const result = nombre * 0.1;
+                                return {
+                                    question: `Calculer 10% de ${nombre}`,
+                                    answer: `${nombre} ÷ 10 = ${result}`
+                                };
+                            },
+                            // 50% facile
+                            () => {
+                                const nombre = randChoice([20, 40, 60, 80, 100, 120, 160, 200]);
+                                const result = nombre / 2;
+                                return {
+                                    question: `Calculer 50% de ${nombre}`,
+                                    answer: `${nombre} ÷ 2 = ${result}`
+                                };
+                            },
+                            // 25% facile
+                            () => {
+                                const nombre = randChoice([20, 40, 60, 80, 100, 120, 200]);
+                                const result = nombre / 4;
+                                return {
+                                    question: `Calculer 25% de ${nombre}`,
+                                    answer: `${nombre} ÷ 4 = ${result}`
+                                };
+                            },
+                            // 20% facile
+                            () => {
+                                const nombre = randChoice([20, 40, 50, 60, 80, 100]);
+                                const result = nombre / 5;
+                                return {
+                                    question: `Calculer 20% de ${nombre}`,
+                                    answer: `${nombre} ÷ 5 = ${result}`
+                                };
+                            },
+                            // 1% facile
+                            () => {
+                                const nombre = randChoice([100, 200, 300, 500]);
+                                const result = nombre / 100;
+                                return {
+                                    question: `Calculer 1% de ${nombre}`,
+                                    answer: `${nombre} ÷ 100 = ${result}`
+                                };
+                            },
+                            // Augmenter de 10%
+                            () => {
+                                const prix = randChoice([10, 20, 30, 40, 50]);
+                                const result = prix * 1.1;
+                                return {
+                                    question: `Augmenter ${prix}€ de 10%`,
+                                    answer: `${prix} + ${prix / 10} = ${result}€`
+                                };
+                            },
+                            // Augmenter de 50%
+                            () => {
+                                const prix = randChoice([10, 20, 40, 60, 80]);
+                                const result = prix * 1.5;
+                                return {
+                                    question: `Augmenter ${prix}€ de 50%`,
+                                    answer: `${prix} + ${prix / 2} = ${result}€`
+                                };
+                            },
+                            // Réduction de 50%
+                            () => {
+                                const prix = randChoice([20, 40, 60, 80, 100]);
+                                const result = prix / 2;
+                                return {
+                                    question: `Appliquer une réduction de 50% sur ${prix}€`,
+                                    answer: `${prix} ÷ 2 = ${result}€`
+                                };
+                            },
+                            // Questions très simples
+                            () => ({
+                                question: `Calculer 10% de 50`,
+                                answer: `50 ÷ 10 = 5`
+                            }),
+                            () => ({
+                                question: `Calculer 25% de 100`,
+                                answer: `100 ÷ 4 = 25`
+                            })
                         ];
                         return randChoice(ops)();
                     }
@@ -2768,6 +3664,198 @@
                                 question: "Comment identifier un maximum sur un graphique ?",
                                 answer: "Le maximum est le point le plus haut de la courbe (ordonnée la plus grande)"
                             })
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
+                    desc: "Calculer une image par une fonction",
+                    generator: () => {
+                        const ops = [
+                            // Fonction linéaire
+                            () => {
+                                const a = randInt(2, 8);
+                                const x = randInt(2, 10);
+                                const y = a * x;
+                                return {
+                                    question: `La fonction f est définie par f(x) = ${a}x. Calculer f(${x})`,
+                                    answer: `f(${x}) = ${a} × ${x} = ${y}`
+                                };
+                            },
+                            () => {
+                                const a = randInt(-8, -2);
+                                const x = randInt(2, 8);
+                                const y = a * x;
+                                return {
+                                    question: `Pour f(x) = ${a}x, calculer l'image de ${x}`,
+                                    answer: `f(${x}) = ${a} × ${x} = ${y}`
+                                };
+                            },
+                            // Fonction affine
+                            () => {
+                                const a = randInt(2, 6);
+                                const b = randInt(1, 10);
+                                const x = randInt(2, 8);
+                                const y = a * x + b;
+                                return {
+                                    question: `La fonction f est définie par f(x) = ${a}x + ${b}. Calculer f(${x})`,
+                                    answer: `f(${x}) = ${a} × ${x} + ${b} = ${a * x} + ${b} = ${y}`
+                                };
+                            },
+                            () => {
+                                const a = randInt(2, 5);
+                                const b = randInt(-10, -1);
+                                const x = randInt(3, 10);
+                                const y = a * x + b;
+                                return {
+                                    question: `Pour f(x) = ${a}x ${b}, calculer l'image de ${x}`,
+                                    answer: `f(${x}) = ${a} × ${x} ${b} = ${a * x} ${b} = ${y}`
+                                };
+                            },
+                            // Fonction constante
+                            () => {
+                                const b = randInt(1, 15);
+                                const x = randInt(2, 20);
+                                return {
+                                    question: `La fonction f est définie par f(x) = ${b}. Calculer f(${x})`,
+                                    answer: `f(${x}) = ${b}<br><em>Une fonction constante donne toujours la même valeur</em>`
+                                };
+                            },
+                            // Avec notation f: x ↦
+                            () => {
+                                const a = randInt(3, 7);
+                                const b = randInt(2, 9);
+                                const x = randInt(2, 8);
+                                const y = a * x + b;
+                                return {
+                                    question: `Soit la fonction f : x ↦ ${a}x + ${b}. Calculer f(${x})`,
+                                    answer: `f(${x}) = ${a} × ${x} + ${b} = ${y}`
+                                };
+                            },
+                            // Fonction au carré
+                            () => {
+                                const x = randInt(2, 8);
+                                const y = x * x;
+                                return {
+                                    question: `Pour f(x) = x², calculer f(${x})`,
+                                    answer: `f(${x}) = ${x}² = ${y}`
+                                };
+                            },
+                            () => {
+                                const a = randInt(2, 5);
+                                const x = randInt(2, 6);
+                                const y = a * x * x;
+                                return {
+                                    question: `Pour f(x) = ${a}x², calculer l'image de ${x}`,
+                                    answer: `f(${x}) = ${a} × ${x}² = ${a} × ${x * x} = ${y}`
+                                };
+                            },
+                            // Vocabulaire
+                            () => {
+                                const x = randInt(3, 10);
+                                return {
+                                    question: `Que représente f(${x}) dans la notation d'une fonction ?`,
+                                    answer: `L'image de ${x} par la fonction f (la valeur de sortie quand on entre ${x})`
+                                };
+                            },
+                            () => ({
+                                question: "Comment calcule-t-on l'image d'un nombre par une fonction ?",
+                                answer: "On remplace x par le nombre dans la formule de la fonction et on calcule"
+                            })
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
+                    desc: "Calcul d'antécédent",
+                    generator: () => {
+                        const ops = [
+                            // Fonction linéaire simple
+                            () => {
+                                const a = randInt(2, 8);
+                                const y = randInt(10, 40);
+                                const x = y / a;
+                                return {
+                                    question: `Pour f(x) = ${a}x, quel nombre a pour image ${y} ?`,
+                                    answer: `On cherche x tel que ${a}x = ${y}<br>x = ${y} ÷ ${a} = ${toFrenchNumber(x)}<br><em>L'antécédent de ${y} est ${toFrenchNumber(x)}</em>`
+                                };
+                            },
+                            () => {
+                                const a = randInt(3, 7);
+                                const x = randInt(2, 10);
+                                const y = a * x;
+                                return {
+                                    question: `Soit f(x) = ${a}x. Trouver l'antécédent de ${y}`,
+                                    answer: `On résout ${a}x = ${y}<br>x = ${y} ÷ ${a} = ${x}`
+                                };
+                            },
+                            // Fonction affine simple
+                            () => {
+                                const a = randInt(2, 5);
+                                const b = randInt(1, 8);
+                                const x = randInt(3, 10);
+                                const y = a * x + b;
+                                return {
+                                    question: `Pour f(x) = ${a}x + ${b}, quel nombre a pour image ${y} ?`,
+                                    answer: `On résout ${a}x + ${b} = ${y}<br>${a}x = ${y} - ${b} = ${y - b}<br>x = ${y - b} ÷ ${a} = ${x}`
+                                };
+                            },
+                            () => {
+                                const a = randInt(2, 4);
+                                const b = randInt(2, 6);
+                                const x = randInt(4, 12);
+                                const y = a * x + b;
+                                return {
+                                    question: `Soit f(x) = ${a}x + ${b}. Trouver l'antécédent de ${y}`,
+                                    answer: `${a}x + ${b} = ${y}<br>${a}x = ${y - b}<br>x = ${toFrenchNumber((y - b) / a)}`
+                                };
+                            },
+                            // Fonction constante (pas d'antécédent ou tous les nombres)
+                            () => {
+                                const b = randInt(5, 15);
+                                const wrongValue = randInt(1, 4);
+                                return {
+                                    question: `Pour f(x) = ${b}, quel est l'antécédent de ${wrongValue} ?`,
+                                    answer: `Il n'existe pas d'antécédent<br><em>La fonction ne prend que la valeur ${b}, jamais ${wrongValue}</em>`
+                                };
+                            },
+                            () => {
+                                const b = randInt(5, 15);
+                                return {
+                                    question: `Pour f(x) = ${b}, quel est l'antécédent de ${b} ?`,
+                                    answer: `Tous les nombres réels<br><em>Chaque valeur de x donne f(x) = ${b}</em>`
+                                };
+                            },
+                            // Vocabulaire
+                            () => ({
+                                question: "Qu'est-ce qu'un antécédent ?",
+                                answer: "Un antécédent d'un nombre y est une valeur x telle que f(x) = y"
+                            }),
+                            () => ({
+                                question: "Comment cherche-t-on un antécédent de y par la fonction f ?",
+                                answer: "On résout l'équation f(x) = y"
+                            }),
+                            () => {
+                                const y = randInt(10, 30);
+                                return {
+                                    question: `Si f(5) = ${y}, que peut-on dire de 5 et ${y} ?`,
+                                    answer: `5 est un antécédent de ${y}, et ${y} est l'image de 5`
+                                };
+                            },
+                            // QCM
+                            () => {
+                                const a = randInt(3, 6);
+                                const x = randInt(4, 8);
+                                const y = a * x;
+                                const wrong1 = y / 2;
+                                const wrong2 = y - a;
+                                const wrong3 = y + a;
+                                return {
+                                    question: `Pour f(x) = ${a}x, l'antécédent de ${y} est :<br>
+A. ${wrong1} &nbsp;&nbsp; B. ${x} &nbsp;&nbsp; C. ${wrong2} &nbsp;&nbsp; D. ${wrong3}`,
+                                    answer: `B. ${x}<br>On résout ${a}x = ${y}, donc x = ${y} ÷ ${a} = ${x}`
+                                };
+                            }
                         ];
                         return randChoice(ops)();
                     }
@@ -2860,6 +3948,116 @@ fin`;
                     }
                 },
                 {
+                    desc: "Programmes de calcul",
+                    generator: () => {
+                        const ops = [
+                            // Programme très facile : juste multiplier
+                            () => {
+                                const x = randInt(3, 10);
+                                const mult = randInt(2, 5);
+                                const result = x * mult;
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Multiplier par ${mult}</li></ul>Pour x = ${x}, quel est le résultat ?`,
+                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Multiplier par ${mult} : ${x} × ${mult} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
+                                };
+                            },
+                            // Programme très facile : juste ajouter
+                            () => {
+                                const x = randInt(3, 10);
+                                const add = randInt(5, 15);
+                                const result = x + add;
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Ajouter ${add}</li></ul>Pour x = ${x}, quel est le résultat ?`,
+                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Ajouter ${add} : ${x} + ${add} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
+                                };
+                            },
+                            // Programme très facile : juste le carré
+                            () => {
+                                const x = randInt(2, 8);
+                                const result = x * x;
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Élever au carré</li></ul>Pour x = ${x}, quel est le résultat ?`,
+                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Élever au carré : ${x}² = ${result}</li></ul><strong>Résultat : ${result}</strong>`
+                                };
+                            },
+                            // Programme simple : multiplier par a, ajouter b
+                            () => {
+                                const x = randInt(3, 10);
+                                const mult = randInt(2, 5);
+                                const add = randInt(3, 8);
+                                const step1 = x * mult;
+                                const result = step1 + add;
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Multiplier par ${mult}</li><li>Ajouter ${add}</li></ul>Pour x = ${x}, quel est le résultat ?`,
+                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Multiplier par ${mult} : ${x} × ${mult} = ${step1}</li><li>Ajouter ${add} : ${step1} + ${add} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
+                                };
+                            },
+                            // Programme avec nombre de départ : multiplier par a, ajouter le nombre de départ
+                            () => {
+                                const x = randInt(3, 10);
+                                const mult = randInt(2, 5);
+                                const step1 = x * mult;
+                                const result = step1 + x;
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Multiplier par ${mult}</li><li>Ajouter le nombre de départ</li></ul>Pour x = ${x}, quel est le résultat ?`,
+                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Multiplier par ${mult} : ${x} × ${mult} = ${step1}</li><li>Ajouter le nombre de départ : ${step1} + ${x} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
+                                };
+                            },
+                            // Programme avec carré : multiplier par a, ajouter le carré du nombre
+                            () => {
+                                const x = randInt(2, 6);
+                                const mult = randInt(2, 4);
+                                const step1 = x * mult;
+                                const step2 = x * x;
+                                const result = step1 + step2;
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Multiplier par ${mult}</li><li>Ajouter le carré du nombre de départ</li></ul>Pour x = ${x}, quel est le résultat ?`,
+                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Multiplier par ${mult} : ${x} × ${mult} = ${step1}</li><li>Carré du nombre de départ : ${x}² = ${step2}</li><li>Ajouter le carré : ${step1} + ${step2} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
+                                };
+                            },
+                            // Programme plus complexe : au carré, multiplier par a, soustraire le nombre de départ
+                            () => {
+                                const x = randInt(2, 6);
+                                const mult = randInt(2, 4);
+                                const step1 = x * x;
+                                const step2 = step1 * mult;
+                                const result = step2 - x;
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Élever au carré</li><li>Multiplier par ${mult}</li><li>Soustraire le nombre de départ</li></ul>Pour x = ${x}, quel est le résultat ?`,
+                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Élever au carré : ${x}² = ${step1}</li><li>Multiplier par ${mult} : ${step1} × ${mult} = ${step2}</li><li>Soustraire le nombre de départ : ${step2} - ${x} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
+                                };
+                            },
+                            // Expression littérale : demander l'expression finale
+                            () => {
+                                const mult = randInt(2, 5);
+                                const add = randInt(3, 8);
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre x</li><li>Multiplier par ${mult}</li><li>Ajouter ${add}</li></ul>Quelle est l'expression finale en fonction de x ?`,
+                                    answer: `${mult}x + ${add}`
+                                };
+                            },
+                            // Expression littérale avec nombre de départ
+                            () => {
+                                const mult = randInt(2, 5);
+                                const coef = mult + 1;
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre x</li><li>Multiplier par ${mult}</li><li>Ajouter le nombre de départ</li></ul>Quelle est l'expression finale en fonction de x ?`,
+                                    answer: `${mult}x + x = ${coef}x`
+                                };
+                            },
+                            // Expression littérale avec carré
+                            () => {
+                                const mult = randInt(2, 4);
+                                return {
+                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre x</li><li>Multiplier par ${mult}</li><li>Ajouter le carré du nombre de départ</li></ul>Quelle est l'expression finale en fonction de x ?`,
+                                    answer: `${mult}x + x<sup>2</sup>`
+                                };
+                            }
+                        ];
+                        return randChoice(ops)();
+                    }
+                },
+                {
                     desc: "Boucles et répétitions",
                     generator: () => {
                         const ops = [
@@ -2890,108 +4088,6 @@ fin`;
                                 return {
                                     question: `Que vaut x à la fin ?<br>${generateScratchBlocks(scratchCode)}`,
                                     answer: `x = ${x} + (${repeat} × ${add}) = ${x} + ${repeat * add} = ${result}`
-                                };
-                            },
-                            () => {
-                                // Programme très facile : juste multiplier
-                                const x = randInt(3, 10);
-                                const mult = randInt(2, 5);
-                                const result = x * mult;
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Multiplier par ${mult}</li></ul>Pour x = ${x}, quel est le résultat ?`,
-                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Multiplier par ${mult} : ${x} × ${mult} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
-                                };
-                            },
-                            () => {
-                                // Programme très facile : juste ajouter
-                                const x = randInt(3, 10);
-                                const add = randInt(5, 15);
-                                const result = x + add;
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Ajouter ${add}</li></ul>Pour x = ${x}, quel est le résultat ?`,
-                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Ajouter ${add} : ${x} + ${add} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
-                                };
-                            },
-                            () => {
-                                // Programme très facile : juste le carré
-                                const x = randInt(2, 8);
-                                const result = x * x;
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Élever au carré</li></ul>Pour x = ${x}, quel est le résultat ?`,
-                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Élever au carré : ${x}² = ${result}</li></ul><strong>Résultat : ${result}</strong>`
-                                };
-                            },
-                            () => {
-                                // Programme simple : multiplier par a, ajouter b
-                                const x = randInt(3, 10);
-                                const mult = randInt(2, 5);
-                                const add = randInt(3, 8);
-                                const step1 = x * mult;
-                                const result = step1 + add;
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Multiplier par ${mult}</li><li>Ajouter ${add}</li></ul>Pour x = ${x}, quel est le résultat ?`,
-                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Multiplier par ${mult} : ${x} × ${mult} = ${step1}</li><li>Ajouter ${add} : ${step1} + ${add} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
-                                };
-                            },
-                            () => {
-                                // Programme avec nombre de départ : multiplier par a, ajouter le nombre de départ
-                                const x = randInt(3, 10);
-                                const mult = randInt(2, 5);
-                                const step1 = x * mult;
-                                const result = step1 + x;
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Multiplier par ${mult}</li><li>Ajouter le nombre de départ</li></ul>Pour x = ${x}, quel est le résultat ?`,
-                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Multiplier par ${mult} : ${x} × ${mult} = ${step1}</li><li>Ajouter le nombre de départ : ${step1} + ${x} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
-                                };
-                            },
-                            () => {
-                                // Programme avec carré : multiplier par a, ajouter le carré du nombre
-                                const x = randInt(2, 6);
-                                const mult = randInt(2, 4);
-                                const step1 = x * mult;
-                                const step2 = x * x;
-                                const result = step1 + step2;
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Multiplier par ${mult}</li><li>Ajouter le carré du nombre de départ</li></ul>Pour x = ${x}, quel est le résultat ?`,
-                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Multiplier par ${mult} : ${x} × ${mult} = ${step1}</li><li>Carré du nombre de départ : ${x}² = ${step2}</li><li>Ajouter le carré : ${step1} + ${step2} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
-                                };
-                            },
-                            () => {
-                                // Programme plus complexe : au carré, multiplier par a, soustraire le nombre de départ
-                                const x = randInt(2, 6);
-                                const mult = randInt(2, 4);
-                                const step1 = x * x;
-                                const step2 = step1 * mult;
-                                const result = step2 - x;
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre</li><li>Élever au carré</li><li>Multiplier par ${mult}</li><li>Soustraire le nombre de départ</li></ul>Pour x = ${x}, quel est le résultat ?`,
-                                    answer: `<ul style="margin: 10px 0; padding-left: 25px;"><li>Nombre choisi : ${x}</li><li>Élever au carré : ${x}² = ${step1}</li><li>Multiplier par ${mult} : ${step1} × ${mult} = ${step2}</li><li>Soustraire le nombre de départ : ${step2} - ${x} = ${result}</li></ul><strong>Résultat : ${result}</strong>`
-                                };
-                            },
-                            () => {
-                                // Expression littérale : demander l'expression finale
-                                const mult = randInt(2, 5);
-                                const add = randInt(3, 8);
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre x</li><li>Multiplier par ${mult}</li><li>Ajouter ${add}</li></ul>Quelle est l'expression finale en fonction de x ?`,
-                                    answer: `${mult}x + ${add}`
-                                };
-                            },
-                            () => {
-                                // Expression littérale avec nombre de départ
-                                const mult = randInt(2, 5);
-                                const coef = mult + 1;
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre x</li><li>Multiplier par ${mult}</li><li>Ajouter le nombre de départ</li></ul>Quelle est l'expression finale en fonction de x ?`,
-                                    answer: `${mult}x + x = ${coef}x`
-                                };
-                            },
-                            () => {
-                                // Expression littérale avec carré
-                                const mult = randInt(2, 4);
-                                return {
-                                    question: `Programme :<ul style="margin: 10px 0; padding-left: 25px;"><li>Choisir un nombre x</li><li>Multiplier par ${mult}</li><li>Ajouter le carré du nombre de départ</li></ul>Quelle est l'expression finale en fonction de x ?`,
-                                    answer: `${mult}x + x<sup>2</sup>`
                                 };
                             }
                         ];
@@ -3127,18 +4223,83 @@ mettre [périmètre v] à (((longueur) + (largeur)) * (2))`;
 
         let questionsGenerated = 0;
 
-        // Initialiser l'interface
+        // Initialiser l'interface avec la structure hiérarchique
         function initThemes() {
             const grid = document.getElementById('themesGrid');
-            Object.keys(automatismes).forEach((theme, index) => {
-                const div = document.createElement('div');
-                div.className = 'theme-checkbox';
-                div.innerHTML = `
-                    <input type="checkbox" id="theme${index}" value="${theme}" checked>
-                    <label for="theme${index}">${theme}</label>
+            let checkboxId = 0;
+            
+            // Parcourir chaque catégorie principale
+            Object.entries(themesHierarchie).forEach(([categorie, data]) => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'theme-category';
+                
+                // En-tête de catégorie
+                const headerHTML = `
+                    <div class="theme-category-header" onclick="toggleCategory(this)">
+                        <span class="theme-category-icon">${data.icon}</span>
+                        <span class="theme-category-title">${categorie}</span>
+                        <span class="theme-category-toggle">▼</span>
+                    </div>
                 `;
-                grid.appendChild(div);
+                
+                categoryDiv.innerHTML = headerHTML;
+                
+                // Container pour les sous-thèmes
+                const sousThemesContainer = document.createElement('div');
+                sousThemesContainer.className = 'sous-themes-container';
+                
+                // Parcourir chaque sous-thème
+                Object.entries(data.sousThemes).forEach(([sousTheme, descriptions]) => {
+                    const sousThemeDiv = document.createElement('div');
+                    sousThemeDiv.className = 'sous-theme-group';
+                    
+                    let sousThemeHTML = `<div class="sous-theme-title">${sousTheme}</div>`;
+                    
+                    // Ajouter chaque description (checkbox)
+                    descriptions.forEach(desc => {
+                        // Vérifier si cette description existe dans automatismes
+                        const exists = checkDescriptionExists(desc);
+                        if (exists) {
+                            sousThemeHTML += `
+                                <div class="theme-checkbox">
+                                    <input type="checkbox" id="theme${checkboxId}" value="${desc}" checked>
+                                    <label for="theme${checkboxId}">${desc}</label>
+                                </div>
+                            `;
+                            checkboxId++;
+                        }
+                    });
+                    
+                    sousThemeDiv.innerHTML = sousThemeHTML;
+                    sousThemesContainer.appendChild(sousThemeDiv);
+                });
+                
+                categoryDiv.appendChild(sousThemesContainer);
+                grid.appendChild(categoryDiv);
             });
+        }
+
+        // Vérifier si une description existe dans les automatismes
+        function checkDescriptionExists(descToFind) {
+            for (const theme in automatismes) {
+                const found = automatismes[theme].find(auto => auto.desc === descToFind);
+                if (found) return true;
+            }
+            return false;
+        }
+
+        // Fonction pour replier/déplier une catégorie
+        function toggleCategory(header) {
+            const container = header.nextElementSibling;
+            const toggle = header.querySelector('.theme-category-toggle');
+            
+            if (container.style.display === 'none') {
+                container.style.display = 'grid';
+                toggle.textContent = '▼';
+            } else {
+                container.style.display = 'none';
+                toggle.textContent = '▶';
+            }
         }
 
         function selectAllThemes() {
@@ -3169,11 +4330,11 @@ mettre [périmètre v] à (((longueur) + (largeur)) * (2))`;
         }
 
         function generateQuestions() {
-            const selectedThemes = Array.from(document.querySelectorAll('.theme-checkbox input[type="checkbox"]:checked'))
+            const selectedDescriptions = Array.from(document.querySelectorAll('.theme-checkbox input[type="checkbox"]:checked'))
                 .map(cb => cb.value);
 
-            if (selectedThemes.length === 0) {
-                alert('Veuillez sélectionner au moins un thème !');
+            if (selectedDescriptions.length === 0) {
+                alert('Veuillez sélectionner au moins un type de question !');
                 return;
             }
 
@@ -3186,6 +4347,24 @@ mettre [périmètre v] à (((longueur) + (largeur)) * (2))`;
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
 
+            // Créer un pool de générateurs basé sur les descriptions sélectionnées
+            const generatorPool = [];
+            for (const theme in automatismes) {
+                automatismes[theme].forEach(auto => {
+                    if (selectedDescriptions.includes(auto.desc)) {
+                        generatorPool.push({
+                            desc: auto.desc,
+                            generator: auto.generator
+                        });
+                    }
+                });
+            }
+
+            if (generatorPool.length === 0) {
+                alert('Aucun générateur trouvé pour les sélections !');
+                return;
+            }
+
             // Ensemble pour stocker les questions déjà générées et éviter les doublons
             const generatedQuestions = new Set();
             const maxAttempts = 1000; // Limite pour éviter une boucle infinie
@@ -3196,19 +4375,15 @@ mettre [périmètre v] à (((longueur) + (largeur)) * (2))`;
             while (totalQuestionsAdded < count) {
                 let questionsArray = null;
                 let attempts = 0;
-                let randomTheme = '';
+                let selectedAuto = null;
 
                 // Générer une ou plusieurs questions uniques (paire théorie-pratique possible)
                 do {
-                    // Choisir un thème aléatoire parmi les sélectionnés
-                    randomTheme = selectedThemes[Math.floor(Math.random() * selectedThemes.length)];
-                    const themeData = automatismes[randomTheme];
-
-                    // Choisir un automatisme aléatoire dans ce thème
-                    const randomAuto = themeData[Math.floor(Math.random() * themeData.length)];
+                    // Choisir un automatisme aléatoire dans le pool
+                    selectedAuto = generatorPool[Math.floor(Math.random() * generatorPool.length)];
 
                     // Générer la ou les questions avec le générateur
-                    const rawOutput = randomAuto.generator();
+                    const rawOutput = selectedAuto.generator();
                     questionsArray = normalizeGeneratorOutput(rawOutput);
                     attempts++;
 
@@ -3236,7 +4411,7 @@ mettre [périmètre v] à (((longueur) + (largeur)) * (2))`;
                     questionDiv.className = 'question-item';
                     questionDiv.innerHTML = `
                         <span class="question-number">Question ${questionNumber}</span>
-                        <span class="theme-badge">${randomTheme}</span>
+                        <span class="theme-badge">${selectedAuto.desc}</span>
                         <div class="question-text">${questionData.question}</div>
                         <div class="answer-section">
                             <strong>✓ Correction :</strong>
@@ -3419,9 +4594,8 @@ mettre [périmètre v] à (((longueur) + (largeur)) * (2))`;
     </script>
 
     <!-- Indicateur de version pour vérifier le cache -->
-    <!-- FIX CACHE : Pas de marqueurs de conflit Git ! -->
     <div style="position: fixed; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 3px 8px; border-radius: 5px; font-size: 11px; z-index: 9999;">
-        v2024-11-25-SYNTAXE-CORRECTE
+        v2024-12-08-SOUS-THEMES-DNB
     </div>
 </body>
 </html>
