@@ -169,18 +169,21 @@ h1 {
 
 @keyframes eventPulse {
     0%, 100% {
+        transform: scale(1);
         box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
     }
     50% {
+        transform: scale(1.05);
         box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
     }
 }
 
 .action-button.evenement:hover {
     background: linear-gradient(135deg, #ff5252 0%, #feb946 100%);
+    animation: eventPulse 2s infinite;
 }
 
-.action-button:not(.disabled):hover {
+.action-button:not(.disabled):not(.evenement):hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     background: rgba(255,255,255,1);
