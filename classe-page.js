@@ -97,6 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
             quizBtn = `<span class="action-button quiz disabled">🎯 Quiz</span>`;
         }
 
+        // Bouton événement
+        let evenementBtn = '';
+        if (chapitre.evenement && chapitre.evenement.actif) {
+            evenementBtn = `<a href="${chapitre.evenement.fichier}" class="action-button evenement">📅 ${chapitre.evenement.titre}</a>`;
+        }
+
         card.innerHTML = `
             <div class="chapter-number">${chapitreNum}</div>
             <div class="chapter-header">
@@ -109,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${coursBtn}
                 ${exercicesBtn}
                 ${quizBtn}
+                ${evenementBtn}
             </div>
         `;
 

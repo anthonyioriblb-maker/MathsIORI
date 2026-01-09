@@ -160,11 +160,10 @@
                 },
                 evenement: {
                     actif: true,
-                    titre: "📅 Prochain devoir",
-                    description: "Sujet type pour réviser",
-                    fichier: "devoir_stat_proba.html",
-                    badge: "Entraînement"
-                }
+                    titre: "Ds lundi ou mardi",
+                    fichier: "devoir_stat_proba.html"
+                },
+                
             },
             chapitre7: {
                 disponible: true,
@@ -601,74 +600,5 @@
         };
     </script>
     <script src="../classe-page.js?v=20251120143124"></script>
-    <script>
-        // Script pour gérer les événements
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                // Parcourir tous les chapitres pour trouver les événements
-                Object.keys(configChapitres).forEach(function(chapKey) {
-                    const chapitre = configChapitres[chapKey];
-                    if (chapitre.disponible && chapitre.evenement && chapitre.evenement.actif) {
-                        const chapitreElement = document.querySelector(`[data-chapter="${chapKey}"]`);
-                        if (chapitreElement) {
-                            const contentDiv = chapitreElement.querySelector('.chapter-content');
-                            if (contentDiv) {
-                                // Créer l'encadré événement
-                                const eventDiv = document.createElement('div');
-                                eventDiv.className = 'event-box';
-                                eventDiv.style.cssText = `
-                                    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
-                                    border: 2px solid #ff6b6b;
-                                    border-radius: 10px;
-                                    padding: 10px;
-                                    margin: 10px 0;
-                                    color: white;
-                                    font-weight: bold;
-                                    cursor: pointer;
-                                    transition: transform 0.2s, box-shadow 0.2s;
-                                    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
-                                `;
-                                
-                                eventDiv.innerHTML = `
-                                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                                        <div>
-                                            <div style="font-size: 1.1em; margin-bottom: 3px;">
-                                                ${chapitre.evenement.titre}
-                                            </div>
-                                            <div style="font-size: 0.9em; opacity: 0.95;">
-                                                ${chapitre.evenement.description}
-                                            </div>
-                                        </div>
-                                        <div style="background: white; color: #ff6b6b; padding: 5px 10px; border-radius: 20px; font-size: 0.85em;">
-                                            ${chapitre.evenement.badge}
-                                        </div>
-                                    </div>
-                                `;
-                                
-                                // Ajouter l'effet hover
-                                eventDiv.addEventListener('mouseenter', function() {
-                                    this.style.transform = 'translateY(-3px)';
-                                    this.style.boxShadow = '0 8px 16px rgba(255, 107, 107, 0.5)';
-                                });
-                                
-                                eventDiv.addEventListener('mouseleave', function() {
-                                    this.style.transform = 'translateY(0)';
-                                    this.style.boxShadow = '0 4px 8px rgba(255, 107, 107, 0.3)';
-                                });
-                                
-                                // Ajouter le clic pour ouvrir le fichier
-                                eventDiv.addEventListener('click', function() {
-                                    window.open(chapitre.evenement.fichier, '_blank');
-                                });
-                                
-                                // Insérer après les boutons existants
-                                contentDiv.appendChild(eventDiv);
-                            }
-                        }
-                    }
-                });
-            }, 100);
-        });
-    </script>
 </body>
 </html>
