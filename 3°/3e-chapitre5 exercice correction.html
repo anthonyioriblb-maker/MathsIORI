@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrections - Problèmes de mise en équation</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Calibri', Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .exercice {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+        }
+        .exercice-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .exercice p {
+            margin: 5px 0;
+        }
+        .equation {
+            margin: 8px 0;
+            text-align: center;
+        }
+        .reponse {
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 10px;
+        }
+        @media print {
+            body { max-width: 100%; }
+            .exercice { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Corrections détaillées - Problèmes de mise en équation</h1>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 1 :</div>
+        <p>Soit \(x\) l'argent que possède celui qui en a le plus.</p>
+        <p>Le second a \(10,50 - x\) euros.</p>
+        <p style="margin-top:8px;">Si le premier a 1,50 euros de plus il a \(x + 1,50\)</p>
+        <p>Dans ce cas il a 3 fois plus que le second donc :</p>
+        <div class="equation">$$x + 1,50 = 3 \times (10,50 - x)$$</div>
+        <div class="equation">$$x + 1,50 = 3 \times 10,50 - 3 \times x$$</div>
+        <div class="equation">$$x + 1,50 = 31,50 - 3x$$</div>
+        <div class="equation">$$x + 3x = 31,50 - 1,50$$</div>
+        <div class="equation">$$4x = 30$$</div>
+        <div class="equation">$$x = \frac{30}{4}$$</div>
+        <div class="equation">$$x = 7,50$$</div>
+        <p class="reponse">Le premier a 7,50 € et le second 3 €.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 2 :</div>
+        <p>Soit \(x\) le nombre d'années pour que l'âge de la mère soit égal à la somme de l'âge de ses enfants.</p>
+        <p>À ce moment elle aura \(43 + x\) ans.</p>
+        <p>Ses enfants auront \(5 + x\), \(10 + x\) et \(12 + x\) ans.</p>
+        <p style="margin-top:8px;">Alors :</p>
+        <div class="equation">$$43 + x = 5 + x + 10 + x + 12 + x$$</div>
+        <div class="equation">$$43 + x = 27 + 3x$$</div>
+        <div class="equation">$$x - 3x = 27 - 43$$</div>
+        <div class="equation">$$-2x = -16$$</div>
+        <div class="equation">$$x = -\frac{16}{-2}$$</div>
+        <div class="equation">$$x = 8$$</div>
+        <p class="reponse">C'est dans 8 ans que l'âge de la mère sera égal à la somme des âges de ses enfants.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 3 :</div>
+        <p>Soit \(x\) le nombre d'années pour que l'âge du père soit égal au triple de son fils.</p>
+        <p>À ce moment le père a \(34 + x\) années et le fils \(8 + x\) années.</p>
+        <p style="margin-top:8px;">Alors :</p>
+        <div class="equation">$$34 + x = 3 \times (8 + x)$$</div>
+        <div class="equation">$$34 + x = 3 \times 8 + 3 \times x$$</div>
+        <div class="equation">$$34 + x = 24 + 3x$$</div>
+        <div class="equation">$$x - 3x = 24 - 34$$</div>
+        <div class="equation">$$-2x = -10$$</div>
+        <div class="equation">$$x = \frac{-10}{-2}$$</div>
+        <div class="equation">$$x = 5$$</div>
+        <p class="reponse">C'est dans 5 ans que l'âge du père sera le triple de l'âge de son fils.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 4 :</div>
+        <p>Soit \(x\) le nombre d'enfants.</p>
+        <p>Si chacun donne 3,50 €, ils ont au total \(3,50x\) euros et il manque 6 € pour acheter le ballon.</p>
+        <p>Le ballon coûte donc \(3,50x + 6\) euros.</p>
+        <p style="margin-top:8px;">Si chacun donne 4 €, ils ont \(4x\) euros et il reste 10 € de trop.</p>
+        <p>Le ballon coûte donc \(4x - 10\) euros.</p>
+        <p style="margin-top:8px;">Ces deux expressions représentent le même prix, donc :</p>
+        <div class="equation">$$3,50x + 6 = 4x - 10$$</div>
+        <div class="equation">$$6 + 10 = 4x - 3,50x$$</div>
+        <div class="equation">$$16 = 0,50x$$</div>
+        <div class="equation">$$x = \frac{16}{0,50} = 32$$</div>
+        <p style="margin-top:8px;">Le prix du ballon est : \(3,50 \times 32 + 6 = 112 + 6 = 118\) €</p>
+        <p class="reponse">Il y a 32 enfants et le ballon coûte 118 €.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 5 :</div>
+        <p>Soit \(x\) le nombre de sachets.</p>
+        <p>Avec 12 timbres par sachet, il a \(12x\) timbres dans les sachets et 16 qui ne sont pas rangés.</p>
+        <p>Le nombre total de timbres est donc \(12x + 16\).</p>
+        <p style="margin-top:8px;">S'il met 15 timbres par sachet (3 de plus), il lui manque 5 timbres pour compléter le dernier.</p>
+        <p>Il a donc \(15x - 5\) timbres au total.</p>
+        <p style="margin-top:8px;">Ces deux expressions représentent le même nombre de timbres :</p>
+        <div class="equation">$$12x + 16 = 15x - 5$$</div>
+        <div class="equation">$$16 + 5 = 15x - 12x$$</div>
+        <div class="equation">$$21 = 3x$$</div>
+        <div class="equation">$$x = 7$$</div>
+        <p style="margin-top:8px;">Le nombre de timbres est : \(12 \times 7 + 16 = 84 + 16 = 100\)</p>
+        <p class="reponse">Il y a 7 sachets et 100 timbres.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 6 :</div>
+        <p>Soit \(x\) le nombre total de personnes présentes au banquet.</p>
+        <p>Initialement prévu : chacune des \(x\) personnes paie 40 €, soit un coût total de \(40x\) euros.</p>
+        <p style="margin-top:8px;">Finalement : 3 personnes ne paient pas, donc \(x - 3\) personnes paient 47,50 € chacune.</p>
+        <p>Le coût total est \(47,50(x - 3)\) euros.</p>
+        <p style="margin-top:8px;">Le coût du banquet est le même dans les deux cas :</p>
+        <div class="equation">$$40x = 47,50(x - 3)$$</div>
+        <div class="equation">$$40x = 47,50 \times x - 47,50 \times 3$$</div>
+        <div class="equation">$$40x = 47,50x - 142,50$$</div>
+        <div class="equation">$$142,50 = 47,50x - 40x$$</div>
+        <div class="equation">$$142,50 = 7,50x$$</div>
+        <div class="equation">$$x = \frac{142,50}{7,50} = 19$$</div>
+        <p style="margin-top:8px;">Le coût global du banquet est : \(40 \times 19 = 760\) €</p>
+        <p class="reponse">Il y avait 19 personnes présentes et le coût du banquet était de 760 €.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 7 :</div>
+        <p>Soit \(x\) l'âge du premier enfant.</p>
+        <p>L'âge du troisième est la moitié de celui du premier : \(\frac{x}{2}\)</p>
+        <p>Le deuxième a 2 ans de moins que le premier : \(x - 2\)</p>
+        <p style="margin-top:8px;">La somme des trois âges est 33 ans :</p>
+        <div class="equation">$$x + (x - 2) + \frac{x}{2} = 33$$</div>
+        <div class="equation">$$2x - 2 + \frac{x}{2} = 33$$</div>
+        <p>Multiplions par 2 pour éliminer la fraction :</p>
+        <div class="equation">$$4x - 4 + x = 66$$</div>
+        <div class="equation">$$5x - 4 = 66$$</div>
+        <div class="equation">$$5x = 66 + 4$$</div>
+        <div class="equation">$$5x = 70$$</div>
+        <div class="equation">$$x = \frac{70}{5}$$</div>
+        <div class="equation">$$x = 14$$</div>
+        <p style="margin-top:8px;">Les âges sont donc :</p>
+        <p>• Premier enfant : 14 ans</p>
+        <p>• Deuxième enfant : \(14 - 2 = 12\) ans</p>
+        <p>• Troisième enfant : \(\frac{14}{2} = 7\) ans</p>
+        <p class="reponse">Les trois enfants ont 14 ans, 12 ans et 7 ans.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 8 :</div>
+        <p>Soit \(x\) le nombre de pages lues le premier jour.</p>
+        <p>• Jour 1 : \(x\) pages</p>
+        <p>• Jour 2 : \(x + 20\) pages</p>
+        <p>• Jour 3 : \(x + 40\) pages</p>
+        <p>• Jour 4 : \(x + 60\) pages</p>
+        <p style="margin-top:8px;">Au total, elle lit 300 pages :</p>
+        <div class="equation">$$x + (x + 20) + (x + 40) + (x + 60) = 300$$</div>
+        <div class="equation">$$x + x + 20 + x + 40 + x + 60 = 300$$</div>
+        <div class="equation">$$4x + 120 = 300$$</div>
+        <div class="equation">$$4x = 180$$</div>
+        <div class="equation">$$x = 45$$</div>
+        <p class="reponse">Elle a lu 45 pages le premier jour.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 9 :</div>
+        <p>Soit \(x\) le nombre de pages lues le premier jour (par chacun).</p>
+        <p style="margin-top:8px;"><strong>Pour Nicolas :</strong></p>
+        <p>• Jour 1 : \(x\) pages</p>
+        <p>• Jour 2 : \(x + 26\) pages</p>
+        <p>• Jour 3 : \(x + 52\) pages</p>
+        <p>• Jour 4 : \(x + 78\) pages</p>
+        <p>• Jour 5 : \(x + 104\) pages</p>
+        <p>Total Nicolas : \(5x + 260\) pages</p>
+        <p style="margin-top:8px;"><strong>Pour Aurélien :</strong></p>
+        <p>• Jour 1 : \(x\) pages</p>
+        <p>• Jour 2 : \(2x\) pages</p>
+        <p>• Jour 3 : \(4x\) pages</p>
+        <p>• Jour 4 : \(8x\) pages</p>
+        <p>• Jour 5 : \(16x\) pages</p>
+        <p>Total Aurélien : \(31x\) pages</p>
+        <p style="margin-top:8px;">Ils lisent le même livre :</p>
+        <div class="equation">$$5x + 260 = 31x$$</div>
+        <div class="equation">$$260 = 26x$$</div>
+        <div class="equation">$$x = 10$$</div>
+        <p style="margin-top:8px;">Le nombre de pages du livre est : \(31 \times 10 = 310\) pages</p>
+        <p class="reponse">Le premier jour, ils ont lu 10 pages chacun. Le livre contient 310 pages.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 10 :</div>
+        <p>Soit \(t\) le temps en minutes.</p>
+        <p>Après \(t\) minutes :</p>
+        <p>• Bassin 1 : \(210 + 7t\) litres</p>
+        <p>• Bassin 2 : \(100 + 8t\) litres</p>
+        <p style="margin-top:8px;">On cherche quand le bassin 2 contient les \(\frac{4}{7}\) du contenu du bassin 1 :</p>
+        <div class="equation">$$100 + 8t = \frac{4}{7}(210 + 7t)$$</div>
+        <p>Multiplions par 7 :</p>
+        <div class="equation">$$700 + 56t = 4(210 + 7t)$$</div>
+        <div class="equation">$$700 + 56t = 4 \times 210 + 4 \times 7t$$</div>
+        <div class="equation">$$700 + 56t = 840 + 28t$$</div>
+        <div class="equation">$$56t - 28t = 840 - 700$$</div>
+        <div class="equation">$$28t = 140$$</div>
+        <div class="equation">$$t = 5$$</div>
+        <p class="reponse">Au bout de 5 minutes, le bassin 2 contiendra les 4/7 du contenu du bassin 1.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 11 :</div>
+        <p>Soit \(x\) le nombre d'exemplaires imprimés de chaque livre.</p>
+        <p>• Livre 1 : \(x - 1300\) exemplaires vendus à 36 € → recette : \(36(x - 1300)\)</p>
+        <p>• Livre 2 : \(x - 980\) exemplaires vendus à 30 € → recette : \(30(x - 980)\)</p>
+        <p>• Livre 3 : \(x - 640\) exemplaires vendus à 45 € → recette : \(45(x - 640)\)</p>
+        <p style="margin-top:8px;">La recette totale est 450 000 € :</p>
+        <div class="equation">$$36(x - 1300) + 30(x - 980) + 45(x - 640) = 450000$$</div>
+        <div class="equation">$$36 \times x - 36 \times 1300 + 30 \times x - 30 \times 980 + 45 \times x - 45 \times 640 = 450000$$</div>
+        <div class="equation">$$36x - 46800 + 30x - 29400 + 45x - 28800 = 450000$$</div>
+        <div class="equation">$$111x - 105000 = 450000$$</div>
+        <div class="equation">$$111x = 555000$$</div>
+        <div class="equation">$$x = 5000$$</div>
+        <p class="reponse">Il a été imprimé 5 000 exemplaires de chaque livre.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 12 :</div>
+        <p>Soit \(L\) la longueur et \(\ell\) la largeur du terrain.</p>
+        <p>Le périmètre est 414 m :</p>
+        <div class="equation">$$2L + 2\ell = 414$$</div>
+        <div class="equation">$$L + \ell = 207 \quad (1)$$</div>
+        <p style="margin-top:8px;">Si la longueur augmente d'un tiers : \(L + \frac{L}{3} = \frac{4L}{3}\)</p>
+        <p>Si la largeur diminue d'un tiers : \(\ell - \frac{\ell}{3} = \frac{2\ell}{3}\)</p>
+        <p>Le nouveau périmètre est \(414 + 26 = 440\) m :</p>
+        <div class="equation">$$2 \times \frac{4L}{3} + 2 \times \frac{2\ell}{3} = 440$$</div>
+        <div class="equation">$$\frac{8L}{3} + \frac{4\ell}{3} = 440$$</div>
+        <p>Multiplions par 3 :</p>
+        <div class="equation">$$8L + 4\ell = 1320$$</div>
+        <div class="equation">$$2L + \ell = 330 \quad (2)$$</div>
+        <p style="margin-top:8px;">Soustrayons l'équation (1) de l'équation (2) :</p>
+        <div class="equation">$$(2L + \ell) - (L + \ell) = 330 - 207$$</div>
+        <div class="equation">$$2L + \ell - L - \ell = 123$$</div>
+        <div class="equation">$$L = 123$$</div>
+        <p style="margin-top:8px;">On remplace dans l'équation (1) :</p>
+        <div class="equation">$$123 + \ell = 207$$</div>
+        <div class="equation">$$\ell = 84$$</div>
+        <p class="reponse">Le terrain mesure 123 m de longueur et 84 m de largeur.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 13 :</div>
+        <p>Soit \(d\) la distance entre A et C (en km).</p>
+        <p>La distance entre C et B est donc \(600 - d\) km.</p>
+        <p style="margin-top:8px;"><strong>Prix si la commande vient de A :</strong></p>
+        <p>Prix du charbon : \(2 \times 288 = 576\) €</p>
+        <p>Transport : \(2 \times 0,75 \times d = 1,50d\) €</p>
+        <p>Prix total de A : \(576 + 1,50d\) €</p>
+        <p style="margin-top:8px;"><strong>Prix si la commande vient de B :</strong></p>
+        <p>Prix du charbon : \(2 \times 261 = 522\) €</p>
+        <p>Transport : \(2 \times 0,75 \times (600 - d) = 1,50(600 - d)\) €</p>
+        <p>Prix total de B : \(522 + 1,50(600 - d)\) €</p>
+        <p style="margin-top:8px;">Les prix sont égaux :</p>
+        <div class="equation">$$576 + 1,50d = 522 + 1,50(600 - d)$$</div>
+        <div class="equation">$$576 + 1,50d = 522 + 1,50 \times 600 - 1,50 \times d$$</div>
+        <div class="equation">$$576 + 1,50d = 522 + 900 - 1,50d$$</div>
+        <div class="equation">$$576 + 1,50d = 1422 - 1,50d$$</div>
+        <div class="equation">$$3d = 846$$</div>
+        <div class="equation">$$d = 282$$</div>
+        <p class="reponse">C est située à 282 km de A.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 14 :</div>
+        <p>Soit \(x\) le volume d'eau (en litres) dans le bidon.</p>
+        <p>Le volume de lait pur est donc \(50 - x\) litres.</p>
+        <p style="margin-top:8px;">La masse de l'eau est \(x\) kg (masse volumique = 1 kg/L).</p>
+        <p>La masse du lait pur est \(1,033(50 - x)\) kg.</p>
+        <p style="margin-top:8px;">La masse totale est 51,485 kg :</p>
+        <div class="equation">$$x + 1,033(50 - x) = 51,485$$</div>
+        <div class="equation">$$x + 1,033 \times 50 - 1,033 \times x = 51,485$$</div>
+        <div class="equation">$$x + 51,650 - 1,033x = 51,485$$</div>
+        <div class="equation">$$-0,033x = -0,165$$</div>
+        <div class="equation">$$x = 5$$</div>
+        <p class="reponse">Le bidon contient 5 litres d'eau.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 15 :</div>
+        <p>Soit \(t\) le temps (en heures) avant que les trains se croisent.</p>
+        <p>• Train de Tours : parcourt \(80t\) km</p>
+        <p>• Train de Paris : parcourt \(90t\) km</p>
+        <p style="margin-top:8px;">La somme des distances parcourues égale la distance totale :</p>
+        <div class="equation">$$80t + 90t = 238$$</div>
+        <div class="equation">$$170t = 238$$</div>
+        <div class="equation">$$t = 1,4 \text{ h} = 1 \text{ h } 24 \text{ min}$$</div>
+        <p style="margin-top:8px;">Distance depuis Paris : \(90 \times 1,4 = 126\) km</p>
+        <p class="reponse">Ils se croisent après 1 h 24 min, à 126 km de Paris.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 16 :</div>
+        <p>Soit \(t\) le temps (en heures) de conduite du camion de Trifouilly.</p>
+        <p>Le camion de Villevieille roule pendant \(t + 0,5\) heures (il part 30 min avant).</p>
+        <p style="margin-top:8px;">• Camion de Trifouilly : parcourt \(80t\) km</p>
+        <p>• Camion de Villevieille : parcourt \(100(t + 0,5)\) km</p>
+        <p style="margin-top:8px;">La somme des distances égale 320 km :</p>
+        <div class="equation">$$80t + 100(t + 0,5) = 320$$</div>
+        <div class="equation">$$80t + 100 \times t + 100 \times 0,5 = 320$$</div>
+        <div class="equation">$$80t + 100t + 50 = 320$$</div>
+        <div class="equation">$$180t = 270$$</div>
+        <div class="equation">$$t = 1,5 \text{ h} = 1 \text{ h } 30 \text{ min}$$</div>
+        <p style="margin-top:8px;">Le camion de Villevieille a roulé : \(1,5 + 0,5 = 2\) heures</p>
+        <p>Distance depuis Trifouilly : \(80 \times 1,5 = 120\) km</p>
+        <p class="reponse">Ils se croisent après 2 h (temps total depuis le départ du 1er), à 120 km de Trifouilly.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 17 :</div>
+        <p>Vitesses en km/min : \(v_1 = \frac{6,6}{60} = 0,11\) km/min et \(v_2 = \frac{7,2}{60} = 0,12\) km/min</p>
+        <p>Soit \(t\) le temps de marche effectif du second (en minutes).</p>
+        <p>Le premier marche pendant \(t + 3\) minutes (le second s'arrête 3 min).</p>
+        <p style="margin-top:8px;">La somme des distances égale 7 km :</p>
+        <div class="equation">$$0,11(t + 3) + 0,12t = 7$$</div>
+        <div class="equation">$$0,11 \times t + 0,11 \times 3 + 0,12t = 7$$</div>
+        <div class="equation">$$0,11t + 0,33 + 0,12t = 7$$</div>
+        <div class="equation">$$0,23t = 6,67$$</div>
+        <div class="equation">$$t = 29 \text{ min}$$</div>
+        <p style="margin-top:8px;">Temps total écoulé : \(29 + 3 = 32\) minutes</p>
+        <p class="reponse">Ils se croisent après 32 minutes.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 18 :</div>
+        <p>Vitesses en km/min : cycliste = \(\frac{30}{60} = 0,5\) km/min, piéton = \(\frac{6}{60} = 0,1\) km/min</p>
+        <p>Soit \(d\) l'avance du piéton en km.</p>
+        <p>Après 20 minutes, le cycliste a parcouru \(0,5 \times 20 = 10\) km</p>
+        <p>Le piéton a parcouru \(0,1 \times 20 = 2\) km depuis son point de départ</p>
+        <p style="margin-top:8px;">Le cycliste rejoint le piéton, donc ils ont parcouru la même distance totale depuis le point de départ du piéton :</p>
+        <div class="equation">$$d + 2 = 10$$</div>
+        <div class="equation">$$d = 8 \text{ km}$$</div>
+        <p class="reponse">Le piéton avait 8 km d'avance au départ.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 19 :</div>
+        <p>Soit \(t\) le temps de poursuite en heures.</p>
+        <p>• Automobiliste : parcourt \(110t\) km depuis que le motard a démarré</p>
+        <p>• Motard : parcourt \(130t\) km</p>
+        <p style="margin-top:8px;">Le motard rattrape l'automobiliste qui avait 2,5 km d'avance :</p>
+        <div class="equation">$$130t = 110t + 2,5$$</div>
+        <div class="equation">$$20t = 2,5$$</div>
+        <div class="equation">$$t = 0,125 \text{ h} = 7,5 \text{ min}$$</div>
+        <p class="reponse">La poursuite dure 7,5 minutes (ou 7 min 30 s).</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 20 :</div>
+        <p>Vitesses en km/min : cycliste = \(\frac{42}{60} = 0,7\) km/min, piéton = \(\frac{6}{60} = 0,1\) km/min</p>
+        <p>Soit \(t\) le temps de marche effectif du piéton (en minutes).</p>
+        <p>Le cycliste roule pendant \(t - 4\) minutes (le piéton s'arrête 4 min).</p>
+        <p style="margin-top:8px;">Le cycliste rattrape le piéton :</p>
+        <div class="equation">$$0,7(t - 4) = 0,1t + 11,8$$</div>
+        <div class="equation">$$0,7 \times t - 0,7 \times 4 = 0,1t + 11,8$$</div>
+        <div class="equation">$$0,7t - 2,8 = 0,1t + 11,8$$</div>
+        <div class="equation">$$0,6t = 14,6$$</div>
+        <div class="equation">$$t \approx 24,33 \text{ min}$$</div>
+        <p style="margin-top:8px;">Temps total de la poursuite : \(24,33 - 4 = 20,33\) min ≈ 20 min 20 s</p>
+        <p>Distance parcourue par le piéton : \(0,1 \times 24,33 = 2,433\) km</p>
+        <p class="reponse">La poursuite dure environ 20 min 20 s. Le piéton aura parcouru environ 2,43 km.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 21 :</div>
+        <p>Soit \(d\) la distance (en km) où elle descend du tramway.</p>
+        <p>• Temps en tramway : \(\frac{d}{30}\) heures</p>
+        <p>• Temps à pied pour revenir : \(\frac{d}{6}\) heures</p>
+        <p style="margin-top:8px;">Le temps total est 2 heures :</p>
+        <div class="equation">$$\frac{d}{30} + \frac{d}{6} = 2$$</div>
+        <p>Multiplions par 30 :</p>
+        <div class="equation">$$d + 5d = 60$$</div>
+        <div class="equation">$$6d = 60$$</div>
+        <div class="equation">$$d = 10 \text{ km}$$</div>
+        <p style="margin-top:8px;">Temps en tramway : \(\frac{10}{30} = \frac{1}{3}\) h = 20 min</p>
+        <p class="reponse">Elle doit descendre à 10 km de son point de départ, après 20 minutes de trajet.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 22 :</div>
+        <p>3 h 40 min = \(\frac{11}{3}\) h et 10 min = \(\frac{1}{6}\) h</p>
+        <p>Soit \(v\) la vitesse du piéton en km/h.</p>
+        <p>Vitesse de la voiture : \(\frac{40v}{3}\) km/h</p>
+        <p style="margin-top:8px;">• Distance à pied : \(v \times \frac{11}{3} = \frac{11v}{3}\) km</p>
+        <p>• Distance en voiture : \(\frac{40v}{3} \times \frac{1}{6} = \frac{40v}{18} = \frac{20v}{9}\) km</p>
+        <p style="margin-top:8px;">Distance totale = 26,5 km :</p>
+        <div class="equation">$$\frac{11v}{3} + \frac{20v}{9} = 26,5$$</div>
+        <p>Multiplions par 9 :</p>
+        <div class="equation">$$33v + 20v = 238,5$$</div>
+        <div class="equation">$$53v = 238,5$$</div>
+        <div class="equation">$$v = 4,5 \text{ km/h}$$</div>
+        <p style="margin-top:8px;">Vitesse de la voiture : \(\frac{40 \times 4,5}{3} = 60\) km/h</p>
+        <p>Distance à pied : \(\frac{11 \times 4,5}{3} = 16,5\) km</p>
+        <p>Distance en voiture : \(26,5 - 16,5 = 10\) km</p>
+        <p class="reponse">Le piéton marchait à 4,5 km/h, la voiture roulait à 60 km/h. Distances : 16,5 km à pied et 10 km en voiture.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 23 :</div>
+        <p>Soit \(v\) la vitesse pendant les 6 premières heures (en km/h).</p>
+        <p>Vitesse pendant les 14 heures suivantes : \(v + 18\) km/h</p>
+        <p style="margin-top:8px;">Distance totale = 2452 km :</p>
+        <div class="equation">$$6v + 14(v + 18) = 2452$$</div>
+        <div class="equation">$$6v + 14 \times v + 14 \times 18 = 2452$$</div>
+        <div class="equation">$$6v + 14v + 252 = 2452$$</div>
+        <div class="equation">$$20v = 2200$$</div>
+        <div class="equation">$$v = 110 \text{ km/h}$$</div>
+        <p style="margin-top:8px;">Deuxième vitesse : \(110 + 18 = 128\) km/h</p>
+        <p>Distance à 110 km/h : \(6 \times 110 = 660\) km</p>
+        <p>Distance à 128 km/h : \(14 \times 128 = 1792\) km</p>
+        <p class="reponse">Les vitesses étaient 110 km/h puis 128 km/h. Distances : 660 km et 1792 km.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 24 :</div>
+        <p>Durée du trajet : 11 h 30 - 7 h = 4,5 heures</p>
+        <p>Soit \(d\) la distance totale de A à B.</p>
+        <p>• Distance à 84 km/h : \(\frac{3d}{5}\) (les 3/5 du trajet)</p>
+        <p>• Distance à 70 km/h : \(\frac{2d}{5}\) (les 2/5 du trajet)</p>
+        <p style="margin-top:8px;">Temps total = 4,5 h :</p>
+        <div class="equation">$$\frac{3d/5}{84} + \frac{2d/5}{70} = 4,5$$</div>
+        <div class="equation">$$\frac{3d}{420} + \frac{2d}{350} = 4,5$$</div>
+        <p>Multiplions par 2100 :</p>
+        <div class="equation">$$15d + 12d = 9450$$</div>
+        <div class="equation">$$27d = 9450$$</div>
+        <div class="equation">$$d = 350 \text{ km}$$</div>
+        <p style="margin-top:8px;">Distance à 84 km/h : \(\frac{3 \times 350}{5} = 210\) km</p>
+        <p>Distance à 70 km/h : \(\frac{2 \times 350}{5} = 140\) km</p>
+        <p class="reponse">Distance de A à B : 350 km. Parcourues : 210 km à 84 km/h et 140 km à 70 km/h.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 25 :</div>
+        <p>Soit \(v\) la vitesse propre du bateau (en km/h).</p>
+        <p>• Descente (A→B) : vitesse = \(v + 3\) km/h</p>
+        <p>• Montée (B→A) : vitesse = \(v - 3\) km/h</p>
+        <p style="margin-top:8px;">• Temps A→B : \(t_1 = \frac{25,2}{v + 3}\)</p>
+        <p>• Temps B→A : \(t_2 = \frac{25,2}{v - 3}\)</p>
+        <p style="margin-top:8px;">Le temps A→B est les 3/4 du temps B→A :</p>
+        <div class="equation">$$\frac{25,2}{v + 3} = \frac{3}{4} \times \frac{25,2}{v - 3}$$</div>
+        <div class="equation">$$\frac{1}{v + 3} = \frac{3}{4(v - 3)}$$</div>
+        <div class="equation">$$4(v - 3) = 3(v + 3)$$</div>
+        <div class="equation">$$4v - 12 = 3v + 9$$</div>
+        <div class="equation">$$v = 21 \text{ km/h}$$</div>
+        <p style="margin-top:8px;">Temps A→B : \(\frac{25,2}{24} = 1,05\) h = 1 h 3 min</p>
+        <p>Temps B→A : \(\frac{25,2}{18} = 1,4\) h = 1 h 24 min</p>
+        <p>Temps total avec courant : 2 h 27 min</p>
+        <p>Temps sans courant : \(2 \times \frac{25,2}{21} = 2,4\) h = 2 h 24 min</p>
+        <p>Retard dû au courant : 3 min</p>
+        <p class="reponse">La vitesse propre du bateau est 21 km/h. Le retard dû au courant est de 3 minutes.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-title">Exercice 26 :</div>
+        <p>Soit \(v\) la vitesse du piéton (en km/h).</p>
+        <p>Vitesse du cycliste : \(5v\) km/h</p>
+        <p>Le piéton part de A, le cycliste de B (36 km plus loin).</p>
+        <p style="margin-top:8px;"><strong>1) Où se rejoignent-ils ?</strong></p>
+        <p>Soit \(t\) le temps avant qu'ils se rejoignent.</p>
+        <p>Le piéton a parcouru \(vt\) km depuis A.</p>
+        <p>Le cycliste a parcouru \(5vt\) km depuis B.</p>
+        <p>Ils se rejoignent quand : \(vt + 5vt = 36\)</p>
+        <div class="equation">$$6vt = 36$$</div>
+        <div class="equation">$$vt = 6$$</div>
+        <p class="reponse">Le cycliste rattrape le piéton à 6 km de A.</p>
+        <p style="margin-top:8px;"><strong>2) Position du cycliste quand il avait 10 km de retard</strong></p>
+        <p>Le cycliste a 10 km de retard signifie que le piéton est à 10 km devant lui.</p>
+        <p>Soit \(d_p\) la distance du piéton depuis A et \(d_c\) celle du cycliste depuis B.</p>
+        <p>On a : \(d_p - d_c = 10\) (équation 1)</p>
+        <p>Comme ils mettent le même temps : \(\frac{d_p}{v} = \frac{d_c}{5v}\)</p>
+        <p>Donc : \(d_p = 5d_c\) (équation 2)</p>
+        <p style="margin-top:8px;">De l'équation 2, on a : \(d_p = 5d_c\)</p>
+        <p>On remplace \(d_p\) par \(5d_c\) dans l'équation 1 :</p>
+        <div class="equation">$$5d_c - d_c = 10$$</div>
+        <div class="equation">$$4d_c = 10$$</div>
+        <div class="equation">$$d_c = 2,5 \text{ km}$$</div>
+        <p>Le cycliste est à \(36 + 2,5 = 38,5\) km de A.</p>
+        <p class="reponse">Quand il avait 10 km de retard, le cycliste était à 38,5 km de A.</p>
+    </div>
+
+</body>
+</html>

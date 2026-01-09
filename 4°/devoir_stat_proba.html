@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devoir : Statistiques – Probabilité</title>
+    <style>
+        @page {
+            margin: 1cm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 100%;
+            margin: 0;
+            padding: 0.5cm;
+            line-height: 1.3;
+            font-size: 11pt;
+        }
+        h1 {
+            text-align: center;
+            border: 2px solid black;
+            padding: 5px;
+            margin: 0 0 8px 0;
+            font-size: 1.2em;
+        }
+        h2 {
+            margin: 10px 0 5px 0;
+            font-size: 1em;
+        }
+        p {
+            margin: 3px 0;
+        }
+        .serie {
+            margin: 5px 0;
+            font-family: 'Courier New', monospace;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 6px 0;
+            width: 100%;
+            font-size: 0.95em;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 4px;
+            text-align: center;
+        }
+        th {
+            background-color: #d3d3d3;
+        }
+        .question {
+            margin: 5px 0 5px 20px;
+        }
+        .sous-question {
+            margin: 3px 0 3px 40px;
+        }
+        .proba-line {
+            margin: 6px 0;
+            display: flex;
+            justify-content: space-around;
+        }
+        .bonus {
+            margin-top: 12px;
+            font-style: italic;
+        }
+        .info-box {
+            border: 1px solid black;
+            padding: 5px;
+            margin: 6px 0;
+        }
+        .cartes-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 2px;
+            margin: 6px 0;
+            max-width: 100%;
+        }
+        .carte {
+            border: 1px solid #333;
+            padding: 3px;
+            text-align: center;
+            font-size: 0.75em;
+            background: white;
+        }
+        .trefle { color: black; }
+        .pique { color: black; }
+        .coeur { color: red; }
+        .carreau { color: red; }
+        @media print {
+            body {
+                padding: 0.5cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Devoir : Statistiques – probabilité</h1>
+
+    <h2>Exercice 1 : 3 pts</h2>
+    <p>Lors d'un stage de basket, on a mesuré les adolescents. Les tailles sont données en cm.</p>
+    <p>On obtient la série suivante :</p>
+    <p class="serie">165 ; 175 ; 187 ; 165 ; 170 ; 181 ; 174 ; 184 ; 171 ; 166 ; 178 ; 177 ; 176 ; 174 ; 176.</p>
+    <p class="question">1) Calculer la taille moyenne de ces sportifs.</p>
+    <p class="question">2) Quelle est la taille médiane de ces sportifs ?</p>
+    <p class="question">3) Quelle est l'étendue de cette série ?</p>
+
+    <h2>Exercice 2 : 5 pts</h2>
+    <p>Une machine doit couper des morceaux de bois de 2,20 m de long. Voici les résultats obtenus lors d'un contrôle pour savoir si les morceaux sont de la bonne longueur.</p>
+    
+    <table>
+        <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>E</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Longueur trop courte</td>
+            <td>Bonne longueur</td>
+            <td>Longueur trop longue</td>
+            <td>Total</td>
+        </tr>
+        <tr>
+            <td>Nombre de morceaux</td>
+            <td>590</td>
+            <td>13 560</td>
+            <td>850</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Fréquences</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <p class="question">1) Quelle formule faut-il inscrire dans la cellule E2 ?</p>
+    <p class="question">2) Remplir la ligne des fréquences (arrondir au millième).</p>
+    <p>On choisit au hasard un morceau à la sortie de la machine.</p>
+    <p class="question">3) On considère les évènements suivants :</p>
+    <p style="margin-left: 40px;">C : «Le morceau est trop court»</p>
+    <p style="margin-left: 40px;">B : «Le morceau est de la bonne longueur»</p>
+    <p style="margin-left: 40px;">L : «Le morceau est trop long».</p>
+    <p style="margin-left: 20px;">Déterminer :</p>
+    <div class="proba-line">
+        <span>p(C) = </span>
+        <span>p(B) = </span>
+        <span>p(L) = </span>
+    </div>
+
+    <h2>Exercice 3 : 4 pts</h2>
+    <p>À bord d'un bateau de croisière de passage à Tahiti, il y a 4 000 personnes, dont aucun enfant.</p>
+    <p>Chaque personne à bord du bateau est soit un touriste, soit un membre de l'équipage.</p>
+    <p>Voici le tableau qui donne la composition des personnes à bord de ce bateau.</p>
+
+    <table>
+        <tr>
+            <th></th>
+            <th>Hommes</th>
+            <th>Femmes</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td><strong>Touristes</strong></td>
+            <td>1 400</td>
+            <td>1 700</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>Membres de l'équipage</strong></td>
+            <td>440</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><strong>Total</strong></td>
+            <td></td>
+            <td></td>
+            <td>4 000</td>
+        </tr>
+    </table>
+
+    <p class="question">1. Compléter le tableau ci-dessus.</p>
+    <p class="question">2. On choisit, à bord du bateau, une personne au hasard.</p>
+    <p class="sous-question">a. Peut-on dire qu'il y a plus d'une chance sur deux que ce soit un homme ? Justifier.</p>
+    <p class="sous-question">b. Quelle est la probabilité que cette personne fasse partie des touristes ?</p>
+    <p class="sous-question">c. Quelle est la probabilité que cette personne ne soit pas un homme membre de l'équipage ?</p>
+
+    <h2>Exercice 4 : 4 pts</h2>
+    <p>Une urne contient des boules indiscernables au toucher : cinq blanches, numérotées de 1 à 5 ; huit noires, numérotées de 1 à 8 et dix grises, numérotées de 1 à 10. On tire une boule au hasard.</p>
+    <p>On considère les événements suivants :</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0;">
+        <div>
+            <p style="margin: 3px 0;">A : « tirer une boule blanche »</p>
+            <p style="margin: 3px 0;">B : « tirer une boule noire »</p>
+        </div>
+        <div>
+            <p style="margin: 3px 0;">C : « tirer une boule qui porte le numéro 4 »</p>
+            <p style="margin: 3px 0;">D : « tirer une boule qui porte le numéro 9 »</p>
+        </div>
+    </div>
+    <p style="margin-top: 8px;">Calculer la probabilité de chacun de ces événements :</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0;">
+        <div>
+            <p style="margin: 3px 0;">p(A) = </p>
+            <p style="margin: 20px 0 3px 0;">p(B) = </p>
+        </div>
+        <div>
+            <p style="margin: 3px 0;">p(C) = </p>
+            <p style="margin: 20px 0 3px 0;">p(D) = </p>
+        </div>
+    </div>
+
+    <h2>Exercice 5 : 4 pts</h2>
+    <p>On rappelle qu'un jeu de 32 cartes est composé des cartes 7, 8, 9, 10, valet, dame, roi et as, déclinées en quatre couleurs : trèfle, pique, cœur et carreau.</p>
+    
+    <div class="cartes-grid">
+        <div class="carte trefle">7♣</div>
+        <div class="carte trefle">8♣</div>
+        <div class="carte trefle">9♣</div>
+        <div class="carte trefle">10♣</div>
+        <div class="carte trefle">V♣</div>
+        <div class="carte trefle">D♣</div>
+        <div class="carte trefle">R♣</div>
+        <div class="carte trefle">A♣</div>
+        <div class="carte pique">7♠</div>
+        <div class="carte pique">8♠</div>
+        <div class="carte pique">9♠</div>
+        <div class="carte pique">10♠</div>
+        <div class="carte pique">V♠</div>
+        <div class="carte pique">D♠</div>
+        <div class="carte pique">R♠</div>
+        <div class="carte pique">A♠</div>
+        <div class="carte coeur">7♥</div>
+        <div class="carte coeur">8♥</div>
+        <div class="carte coeur">9♥</div>
+        <div class="carte coeur">10♥</div>
+        <div class="carte coeur">V♥</div>
+        <div class="carte coeur">D♥</div>
+        <div class="carte coeur">R♥</div>
+        <div class="carte coeur">A♥</div>
+        <div class="carte carreau">7♦</div>
+        <div class="carte carreau">8♦</div>
+        <div class="carte carreau">9♦</div>
+        <div class="carte carreau">10♦</div>
+        <div class="carte carreau">V♦</div>
+        <div class="carte carreau">D♦</div>
+        <div class="carte carreau">R♦</div>
+        <div class="carte carreau">A♦</div>
+    </div>
+
+    <p>On tire au hasard une carte du jeu et on définit les événements suivants :</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0;">
+        <div>
+            <p style="margin: 3px 0;">A : « obtenir un as »</p>
+            <p style="margin: 3px 0;">B : « obtenir un trèfle »</p>
+        </div>
+        <div>
+            <p style="margin: 3px 0;">C : « obtenir un 7 ou un cœur »</p>
+            <p style="margin: 3px 0;">D : « ne pas obtenir un pique »</p>
+        </div>
+    </div>
+    <p>Calculer la probabilité de chacun de ces événements :</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0;">
+        <div>
+            <p style="margin: 3px 0;">p(A) = </p>
+            <p style="margin: 20px 0 3px 0;">p(B) = </p>
+        </div>
+        <div>
+            <p style="margin: 3px 0;">p(C) = </p>
+            <p style="margin: 20px 0 3px 0;">p(D) = </p>
+        </div>
+    </div>
+
+    <h2 class="bonus">Bonus :</h2>
+    <p class="question">1) Un groupe de 6 personnes monte dans un ascenseur, la moyenne de leur poids est de 65 kg. Trois personnes arrivent, la moyenne de leur poids est de 84 kg. L'ascenseur affiche un maximum de 650 kg. Les 9 personnes peuvent-elles prendre l'ascenseur en même temps ?</p>
+    
+    <p class="question">2)</p>
+    <div class="info-box">
+        <p style="text-align: center; margin: 3px 0;"><strong>Les informations suivantes concernent les salaires des hommes et des femmes d'une même entreprise :</strong></p>
+        <p style="text-align: center; margin: 3px 0;"><strong>Salaires des femmes :</strong></p>
+        <p style="text-align: center; margin: 3px 0;">1 200 € ; 1 230 € ; 1 250 € ; 1 310 € ; 1 370 € ; 1 400 € ; 1 440 € ; 1 500 € ; 1 700 € ; 2 100 €</p>
+    </div>
+
+    <div class="info-box">
+        <p style="text-align: center; margin: 3px 0;"><strong>Salaires des hommes :</strong></p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 5px 0;">
+            <div>
+                <p style="text-align: center; margin: 3px 0;">Effectif total : 20</p>
+                <p style="text-align: center; margin: 3px 0;">Moyenne : 1 769 €</p>
+            </div>
+            <div>
+                <p style="text-align: center; margin: 3px 0;">Étendue : 2 400 €</p>
+                <p style="text-align: center; margin: 3px 0;">Médiane : 2 000 €</p>
+            </div>
+        </div>
+        <p style="text-align: center; margin: 3px 0;">Les salaires des hommes sont tous différents</p>
+    </div>
+
+    <p style="margin-top: 10px;">Dans cette entreprise, combien de personnes gagnent plus de 2000 € ?</p>
+
+</body>
+</html>

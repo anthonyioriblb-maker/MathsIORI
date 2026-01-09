@@ -18,6 +18,15 @@
            padding-bottom: 2px;
            vertical-align: bottom;
        }
+        .blank-lineF {
+           border-bottom: 1px solid #999;
+           display: inline-block;
+           min-width: 100px;
+           margin: 0 5px;
+           padding-top: 18px;
+           padding-bottom: 2px;
+           vertical-align: bottom;
+       }
        .blank-line-long {
            border-bottom: 1px solid #999;
            display: inline-block;
@@ -50,6 +59,73 @@
        table td {
            min-height: 30px;
            padding: 12px;
+       }
+       
+       /* FORCER les bordures noires des tableaux - priorité maximale */
+       table, 
+       table.table,
+       body table {
+           border-collapse: collapse !important;
+           border: 3px solid #000 !important;
+           border-color: #000 !important;
+       }
+       
+       table th,
+       table td,
+       body table th,
+       body table td {
+           border: 3px solid #000 !important;
+           border-color: #000 !important;
+       }
+       
+       /* Styles pour l'impression - bordures noires renforcées */
+       @media print {
+           body {
+               margin: 0.5cm 0.5cm !important;
+               padding: 0 !important;
+               max-width: 100% !important;
+               width: 100% !important;
+               font-size: 10pt;
+               line-height: 1.3;
+           }
+           
+           h1, h2, h3, h4 {
+               page-break-after: avoid;
+           }
+           
+           .definition, .example, .method, .important, .remarque, .exercice {
+               page-break-inside: avoid;
+           }
+           
+           table {
+               page-break-inside: avoid;
+           }
+           
+           table, 
+           table.table,
+           body table {
+               border-collapse: collapse !important;
+               border: 3px solid #000 !important;
+               border-color: #000 !important;
+           }
+           
+           table th,
+           body table th {
+               border: 3px solid #000 !important;
+               border-color: #000 !important;
+               -webkit-print-color-adjust: exact !important;
+               print-color-adjust: exact !important;
+               color-adjust: exact !important;
+           }
+           
+           table td,
+           body table td {
+               border: 3px solid #000 !important;
+               border-color: #000 !important;
+               -webkit-print-color-adjust: exact !important;
+               print-color-adjust: exact !important;
+               color-adjust: exact !important;
+           }
        }
    </style>
 </head>
@@ -84,7 +160,7 @@
 
         <div class="calculation-space">
             <p>Calculer les quotients :</p>
-            <p><span class="fraction"><span class="numerateur">3</span><span class="denominateur">2</span></span> = <span class="blank-line"></span> ; <span class="fraction"><span class="numerateur">7,5</span><span class="denominateur">5</span></span> = <span class="blank-line"></span> ; <span class="fraction"><span class="numerateur">12</span><span class="denominateur">8</span></span> = <span class="blank-line"></span></p>
+            <p><span class="fraction"><span class="numerateur">3</span><span class="denominateur">2</span></span> = <span class="blank-lineF"></span> ; <span class="fraction"><span class="numerateur">7,5</span><span class="denominateur">5</span></span> = <span class="blank-lineF"></span> ; <span class="fraction"><span class="numerateur">12</span><span class="denominateur">8</span></span> = <span class="blank-lineF"></span></p>
         </div>
 
         <p>Les quotients sont <span class="blank-line"></span>.</p>
@@ -111,7 +187,7 @@
 
         <div class="calculation-space">
             <p>Calculer les quotients :</p>
-            <p><span class="fraction"><span class="numerateur">110</span><span class="denominateur">5</span></span> = <span class="blank-line"></span> ; <span class="fraction"><span class="numerateur">140</span><span class="denominateur">10</span></span> = <span class="blank-line"></span></p>
+            <p><span class="fraction"><span class="numerateur">110</span><span class="denominateur">5</span></span> = <span class="blank-lineF"></span> ; <span class="fraction"><span class="numerateur">140</span><span class="denominateur">10</span></span> = <span class="blank-lineF"></span></p>
         </div>
 
         <p>Les quotients <span class="blank-line-long"></span>.</p>
@@ -220,7 +296,7 @@
     <h3>Les pourcentages</h3>
 
     <div class="important">
-        <span style="color: red;">Propriété :</span> Appliquer <span class="math">x</span> % à un nombre, c'est <span class="blank-line-long"></span> ce nombre par <span class="blank-line"></span>.
+        <span style="color: red;">Propriété :</span> Appliquer <span class="math">x</span> % à un nombre, c'est <span class="blank-line"></span> ce nombre par <span class="blank-line"></span>.
     </div>
 
     <h4>a) Appliquer un pourcentage :</h4>
