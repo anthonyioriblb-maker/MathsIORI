@@ -428,7 +428,7 @@
                 return {
                     situation: `🚗 Un ${data.service} facture ${data.base} € de prise en charge + ${formatNumber(data.perUnit)} € par ${data.unit}.`,
                     isProportional: false,
-                    explanation: `Non ! ${createFraction(val1, 1)} = ${r1} ; ${createFraction(val2, 2)} = ${r2}. Les rapports sont différents donc ce n'est pas proportionnel !`
+                    explanation: `Non ! Pour 1 ${data.unit} : ${data.base} + ${formatNumber(data.perUnit)} = ${formatNumber(val1)} ; pour 2 ${data.unit} : ${data.base} + 2 × ${formatNumber(data.perUnit)} = ${formatNumber(val2)}. Donc ${createFraction(val1, 1)} = ${r1} ; ${createFraction(val2, 2)} = ${r2}. Les rapports sont différents donc ce n'est pas proportionnel !`
                 };
             } else if (data.type === 'abonnement') {
                 const r1 = formatNumber(data.price / 5);
