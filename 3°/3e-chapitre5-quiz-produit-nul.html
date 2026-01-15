@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Équations produit nul</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .equation-display {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .property-section {
+            margin: 15px 0;
+        }
+
+        .property-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .property-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .property-input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .property-input.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .columns-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+            margin: 20px 0;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .separators-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .steps-container {
+            margin: 20px 0;
+        }
+
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .equation-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            flex-wrap: wrap;
+        }
+
+        .equation-line input {
+            width: 200px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .equation-line input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .equation-line input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .equation-line input.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .add-step-btn {
+            background: #6c757d;
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .add-step-btn:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-validate {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-validate:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-hint {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-hint:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-next {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .hint {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #856404;
+        }
+
+        .hint-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .frac .num {
+            display: block;
+            border-bottom: 1px solid #333;
+            padding: 0 3px;
+        }
+
+        .frac .den {
+            display: block;
+            padding: 0 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Quiz : Équations produit nul</h1>
+        <p class="subtitle">Résous les équations de type (ax + b)(cx + d) = 0</p>
+
+        <div class="score-container">
+            <div class="score-item">
+                <div class="score-label">Réussites</div>
+                <div class="score-value" id="score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Question actuelle</div>
+                <div class="score-value" id="current">1</div>
+            </div>
+        </div>
+
+        <div class="equation-display" id="equationDisplay"></div>
+
+        <div class="property-section">
+            <input type="text" class="property-input" id="propertyInput" 
+                   placeholder="Propriété">
+        </div>
+
+        <div class="columns-container">
+            <div class="column">
+                <div class="steps-container" id="stepsContainer1"></div>
+                <button class="add-step-btn" id="btnAddStep1">➕ Ajouter une ligne</button>
+            </div>
+            
+            <div class="separators-container" id="separatorsContainer"></div>
+            
+            <div class="column">
+                <div class="steps-container" id="stepsContainer2"></div>
+                <button class="add-step-btn" id="btnAddStep2">➕ Ajouter une ligne</button>
+            </div>
+        </div>
+
+        <div id="messageDiv" class="message" style="display: none;"></div>
+        <div id="hintDiv" class="hint" style="display: none;"></div>
+
+        <div class="buttons">
+            <button class="btn-validate" id="btnValidate">Valider</button>
+            <button class="btn-hint" id="btnHint">Indice</button>
+            <button class="btn-next" id="btnNext" style="display: none;">Question suivante</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let currentQuestion = 1;
+        let currentEquation = null;
+        let hintUsed = false;
+        let currentLineCount1 = 0;
+        let currentLineCount2 = 0;
+        const maxLines = 5;
+
+        function gcd(a, b) {
+            a = Math.abs(a);
+            b = Math.abs(b);
+            while (b !== 0) {
+                let t = b;
+                b = a % b;
+                a = t;
+            }
+            return a;
+        }
+
+        function simplifyFraction(num, den) {
+            if (den === 0) return { num: 0, den: 1 };
+            const g = gcd(num, den);
+            num = num / g;
+            den = den / g;
+            if (den < 0) {
+                num = -num;
+                den = -den;
+            }
+            return { num, den };
+        }
+
+        function generateEquation() {
+            // Choisir aléatoirement entre 3 types d'équations
+            const type = Math.random();
+            
+            if (type < 0.33) {
+                // Type 1: k(ax + b) = 0 où k est une constante non nulle
+                const k = Math.floor(Math.random() * 7) + 2; // 2 à 8
+                const a = Math.floor(Math.random() * 6) + 2;
+                const b = Math.floor(Math.random() * 20) - 10;
+                
+                const sol = simplifyFraction(-b, a);
+                
+                return {
+                    display: `${k}(${a}x ${b >= 0 ? '+' : ''} ${b}) = 0`,
+                    solution1: sol,
+                    solution2: null,
+                    singleSolution: true,
+                    constantFactor: k
+                };
+            } else if (type < 0.66) {
+                // Type 2: (ax + b) × k = 0 où k est une constante non nulle
+                const a = Math.floor(Math.random() * 6) + 2;
+                const b = Math.floor(Math.random() * 20) - 10;
+                const k = Math.floor(Math.random() * 7) + 2; // 2 à 8
+                
+                const sol = simplifyFraction(-b, a);
+                
+                return {
+                    display: `(${a}x ${b >= 0 ? '+' : ''} ${b}) × ${k} = 0`,
+                    solution1: sol,
+                    solution2: null,
+                    singleSolution: true,
+                    constantFactor: k
+                };
+            } else {
+                // Type 3: (ax + b)(cx + d) = 0 (le type original)
+                const a = Math.floor(Math.random() * 6) + 2;
+                const b = Math.floor(Math.random() * 20) - 10;
+                const c = Math.floor(Math.random() * 6) + 2;
+                const d = Math.floor(Math.random() * 20) - 10;
+
+                const sol1 = simplifyFraction(-b, a);
+                const sol2 = simplifyFraction(-d, c);
+
+                return {
+                    display: `(${a}x ${b >= 0 ? '+' : ''} ${b})(${c}x ${d >= 0 ? '+' : ''} ${d}) = 0`,
+                    solution1: sol1,
+                    solution2: sol2,
+                    singleSolution: false,
+                    constantFactor: null
+                };
+            }
+        }
+
+        function createSteps() {
+            document.getElementById('stepsContainer1').innerHTML = '';
+            document.getElementById('stepsContainer2').innerHTML = '';
+            currentLineCount1 = 0;
+            currentLineCount2 = 0;
+            addLine(1);
+            addLine(2);
+            updateSeparators();
+        }
+
+        function addLine(column) {
+            const container = document.getElementById(`stepsContainer${column}`);
+            const currentCount = column === 1 ? currentLineCount1 : currentLineCount2;
+            
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'step';
+
+            const line = document.createElement('div');
+            line.className = 'equation-line';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = `line${column}_${currentCount}`;
+            input.placeholder = '... = ...';
+            
+            line.appendChild(input);
+            stepDiv.appendChild(line);
+            container.appendChild(stepDiv);
+            
+            if (column === 1) currentLineCount1++;
+            else currentLineCount2++;
+            
+            updateSeparators();
+        }
+
+        function updateSeparators() {
+            const separatorsContainer = document.getElementById('separatorsContainer');
+            
+            separatorsContainer.innerHTML = '';
+            
+            // Nombre de "ou" = nombre de lignes dans la colonne 2
+            for (let i = 0; i < currentLineCount2; i++) {
+                // Créer un wrapper simple avec le même margin que step
+                const wrapper = document.createElement('div');
+                wrapper.style.margin = '5px 0';
+                wrapper.style.paddingTop = '32px'; // Centrer le "ou"
+                wrapper.style.textAlign = 'center';
+                
+                const ouSpan = document.createElement('span');
+                ouSpan.style.fontSize = '20px';
+                ouSpan.style.fontWeight = 'bold';
+                ouSpan.style.color = '#667eea';
+                ouSpan.textContent = 'ou';
+                
+                wrapper.appendChild(ouSpan);
+                separatorsContainer.appendChild(wrapper);
+            }
+        }
+
+        function addIntermediateStep(column) {
+            const currentCount = column === 1 ? currentLineCount1 : currentLineCount2;
+            
+            if (currentCount >= maxLines) {
+                showMessage('Maximum de 5 lignes atteint pour cette colonne.', 'error');
+                setTimeout(() => {
+                    document.getElementById('messageDiv').style.display = 'none';
+                }, 2000);
+                return;
+            }
+            addLine(column);
+        }
+
+        function checkProperty(input) {
+            const text = input.toLowerCase().trim();
+            const keywords = ['produit', 'nul', 'facteurs'];
+            return keywords.every(word => text.includes(word));
+        }
+
+        function checkConstantFactorColumn(columnInputs, constantFactor) {
+            // Trouver la dernière ligne remplie
+            let lastFilledIndex = -1;
+            for (let i = columnInputs.length - 1; i >= 0; i--) {
+                if (columnInputs[i].value.trim()) {
+                    lastFilledIndex = i;
+                    break;
+                }
+            }
+
+            if (lastFilledIndex === -1) {
+                return false;
+            }
+
+            const lastInput = columnInputs[lastFilledIndex].value.toLowerCase().trim().replace(/\s+/g, '');
+            
+            // Vérifier si contient "impossible" ou "pas de solution" ou "aucune solution"
+            if (lastInput.includes('impossible') || 
+                lastInput.includes('pasdesolution') || 
+                lastInput.includes('aucunesolution') ||
+                lastInput.includes('aucune')) {
+                
+                // Vérifier si une ligne précédente contient k=0
+                for (let i = 0; i < lastFilledIndex; i++) {
+                    const input = columnInputs[i].value.trim().replace(/\s+/g, '');
+                    if (input === `${constantFactor}=0` || input === `0=${constantFactor}`) {
+                        return true;
+                    }
+                }
+                
+                // Accepter aussi si tout est sur la même ligne
+                if (lastInput.includes(`${constantFactor}=0`) || lastInput.includes(`0=${constantFactor}`)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkSolutionInColumn(columnInputs, expectedSolution) {
+            // Trouver la dernière ligne remplie
+            let lastFilledIndex = -1;
+            for (let i = columnInputs.length - 1; i >= 0; i--) {
+                if (columnInputs[i].value.trim()) {
+                    lastFilledIndex = i;
+                    break;
+                }
+            }
+
+            if (lastFilledIndex === -1) {
+                return { found: false, simplified: false };
+            }
+
+            const input = columnInputs[lastFilledIndex].value.trim().replace(/\s+/g, '');
+            
+            // Format fraction
+            const fracMatch = input.match(/^x=([+-]?\d+)\/(\d+)$/);
+            if (fracMatch) {
+                const num = parseInt(fracMatch[1]);
+                const den = parseInt(fracMatch[2]);
+                const simplified = simplifyFraction(num, den);
+                
+                if (simplified.num === expectedSolution.num && simplified.den === expectedSolution.den) {
+                    const wasSimplified = (num === simplified.num && den === simplified.den);
+                    return { found: true, simplified: wasSimplified, index: lastFilledIndex };
+                }
+            }
+
+            // Format décimal
+            const decMatch = input.match(/^x=([+-]?\d+\.?\d*)$/);
+            if (decMatch) {
+                const value = parseFloat(decMatch[1]);
+                const expectedValue = expectedSolution.num / expectedSolution.den;
+                if (Math.abs(value - expectedValue) < 0.001) {
+                    return { found: true, simplified: true, index: lastFilledIndex };
+                }
+            }
+
+            // Format entier
+            const intMatch = input.match(/^x=([+-]?\d+)$/);
+            if (intMatch) {
+                const value = parseInt(intMatch[1]);
+                if (value === expectedSolution.num && expectedSolution.den === 1) {
+                    return { found: true, simplified: true, index: lastFilledIndex };
+                }
+            }
+
+            return { found: false, simplified: false };
+        }
+
+        function validate() {
+            // Vérifier la propriété (mais ne pas bloquer si incorrecte)
+            const propertyInput = document.getElementById('propertyInput');
+            const propertyCorrect = checkProperty(propertyInput.value);
+            
+            if (propertyCorrect) {
+                propertyInput.className = 'property-input correct';
+            } else {
+                propertyInput.className = 'property-input incorrect';
+            }
+
+            // Récupérer les inputs des deux colonnes
+            const inputs1 = [];
+            for (let i = 0; i < currentLineCount1; i++) {
+                const input = document.getElementById(`line1_${i}`);
+                if (input) inputs1.push(input);
+            }
+
+            const inputs2 = [];
+            for (let i = 0; i < currentLineCount2; i++) {
+                const input = document.getElementById(`line2_${i}`);
+                if (input) inputs2.push(input);
+            }
+
+            // Vérifier la colonne 1
+            const result1 = checkSolutionInColumn(inputs1, currentEquation.solution1);
+            
+            if (currentEquation.singleSolution) {
+                // Équation avec facteur constant : vérifier colonne 1 avec solution ET colonne 2 avec "impossible"
+                if (!result1.found) {
+                    showMessage('❌ La solution de la première équation n\'est pas correcte.', 'error');
+                    return;
+                }
+                
+                if (!checkConstantFactorColumn(inputs2, currentEquation.constantFactor)) {
+                    showMessage(`❌ Pour la deuxième équation, écris "${currentEquation.constantFactor} = 0" puis "impossible" ou "pas de solution".`, 'error');
+                    return;
+                }
+                
+                // Marquer toutes les lignes comme correctes
+                inputs1.forEach(input => {
+                    if (input.value.trim()) input.className = 'correct';
+                });
+                inputs2.forEach(input => {
+                    if (input.value.trim()) input.className = 'correct';
+                });
+
+                // Vérifier si tout est correct (propriété + solutions)
+                if (propertyCorrect) {
+                    score++;
+                    document.getElementById('score').textContent = score;
+                }
+                
+                let message = '';
+                if (propertyCorrect && result1.simplified) {
+                    message = '🎉 Bravo ! C\'est correct !';
+                } else if (!propertyCorrect && result1.simplified) {
+                    message = '✅ Les solutions sont justes mais la propriété est incorrecte.';
+                } else if (propertyCorrect && !result1.simplified) {
+                    const sol1 = currentEquation.solution1;
+                    let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                    message = `✅ C'est juste ! Mais tu peux simplifier : x = ${s1}`;
+                } else {
+                    const sol1 = currentEquation.solution1;
+                    let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                    message = `✅ Les solutions sont justes (tu peux simplifier : x = ${s1}) mais la propriété est incorrecte.`;
+                }
+                showMessage(message, propertyCorrect ? 'success' : 'error');
+            } else {
+                // Deux solutions attendues (équation classique)
+                const result2 = checkSolutionInColumn(inputs2, currentEquation.solution2);
+
+                if (!result1.found || !result2.found) {
+                    showMessage('❌ Les solutions ne sont pas correctes. Réessaie !', 'error');
+                    return;
+                }
+
+                // Marquer toutes les lignes comme correctes
+                inputs1.forEach(input => {
+                    if (input.value.trim()) input.className = 'correct';
+                });
+                inputs2.forEach(input => {
+                    if (input.value.trim()) input.className = 'correct';
+                });
+
+                // Vérifier si tout est correct (propriété + solutions)
+                if (propertyCorrect) {
+                    score++;
+                    document.getElementById('score').textContent = score;
+                }
+                
+                let message = '';
+                if (propertyCorrect && result1.simplified && result2.simplified) {
+                    message = '🎉 Bravo ! C\'est correct !';
+                } else if (!propertyCorrect && result1.simplified && result2.simplified) {
+                    message = '✅ Les solutions sont justes mais la propriété est incorrecte.';
+                } else if (propertyCorrect && (!result1.simplified || !result2.simplified)) {
+                    const sol1 = currentEquation.solution1;
+                    const sol2 = currentEquation.solution2;
+                    let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                    let s2 = sol2.den === 1 ? sol2.num : `${sol2.num}/${sol2.den}`;
+                    message = `✅ C'est juste ! Mais tu peux simplifier : x = ${s1} ou x = ${s2}`;
+                } else {
+                    const sol1 = currentEquation.solution1;
+                    const sol2 = currentEquation.solution2;
+                    let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                    let s2 = sol2.den === 1 ? sol2.num : `${sol2.num}/${sol2.den}`;
+                    message = `✅ Les solutions sont justes (tu peux simplifier : x = ${s1} ou x = ${s2}) mais la propriété est incorrecte.`;
+                }
+                showMessage(message, propertyCorrect ? 'success' : 'error');
+            }
+            
+            document.getElementById('btnValidate').style.display = 'none';
+            document.getElementById('btnHint').style.display = 'none';
+            document.getElementById('btnAddStep1').style.display = 'none';
+            document.getElementById('btnAddStep2').style.display = 'none';
+            document.getElementById('btnNext').style.display = 'inline-block';
+        }
+
+        function showHint() {
+            const eq = currentEquation;
+            const hintDiv = document.getElementById('hintDiv');
+            
+            let hint = '<div class="hint-title">💡 Indice :</div>';
+            
+            if (eq.singleSolution) {
+                hint += `Cette équation n'a qu'une seule solution car le facteur constant (${eq.constantFactor}) ne peut pas être nul.<br>`;
+                hint += `Colonne 1 : x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}<br>`;
+                hint += `Colonne 2 : ${eq.constantFactor} = 0 puis "impossible"`;
+            } else {
+                hint += `Les deux solutions sont :<br>`;
+                hint += `x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}<br>`;
+                hint += `x = ${eq.solution2.den === 1 ? eq.solution2.num : eq.solution2.num + '/' + eq.solution2.den}`;
+            }
+            
+            hintDiv.innerHTML = hint;
+            hintDiv.style.display = 'block';
+            hintUsed = true;
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('messageDiv');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            document.getElementById('current').textContent = currentQuestion;
+            
+            currentEquation = generateEquation();
+            document.getElementById('equationDisplay').textContent = currentEquation.display;
+            
+            document.getElementById('propertyInput').value = '';
+            document.getElementById('propertyInput').className = 'property-input';
+            
+            createSteps();
+
+            document.getElementById('messageDiv').style.display = 'none';
+            document.getElementById('hintDiv').style.display = 'none';
+            document.getElementById('btnValidate').style.display = 'inline-block';
+            document.getElementById('btnHint').style.display = 'inline-block';
+            document.getElementById('btnAddStep1').style.display = 'inline-block';
+            document.getElementById('btnAddStep2').style.display = 'inline-block';
+            document.getElementById('btnNext').style.display = 'none';
+            hintUsed = false;
+        }
+
+        document.getElementById('btnValidate').addEventListener('click', validate);
+        document.getElementById('btnHint').addEventListener('click', showHint);
+        document.getElementById('btnNext').addEventListener('click', nextQuestion);
+        document.getElementById('btnAddStep1').addEventListener('click', () => addIntermediateStep(1));
+        document.getElementById('btnAddStep2').addEventListener('click', () => addIntermediateStep(2));
+
+        currentEquation = generateEquation();
+        document.getElementById('equationDisplay').textContent = currentEquation.display;
+        createSteps();
+    </script>
+</body>
+</html>
