@@ -376,6 +376,7 @@
             
             if (type < 0.33) {
                 // Type 1: k(ax + b) = 0 où k est une constante non nulle
+                // Ordre : k en premier, puis (ax + b)
                 const k = Math.floor(Math.random() * 7) + 2; // 2 à 8
                 const a = Math.floor(Math.random() * 6) + 2;
                 const b = Math.floor(Math.random() * 20) - 10;
@@ -387,10 +388,12 @@
                     solution1: sol,
                     solution2: null,
                     singleSolution: true,
-                    constantFactor: k
+                    constantFactor: k,
+                    constantFirst: true // Le facteur constant est en premier
                 };
             } else if (type < 0.66) {
                 // Type 2: (ax + b) × k = 0 où k est une constante non nulle
+                // Ordre : (ax + b) en premier, puis k
                 const a = Math.floor(Math.random() * 6) + 2;
                 const b = Math.floor(Math.random() * 20) - 10;
                 const k = Math.floor(Math.random() * 7) + 2; // 2 à 8
@@ -402,7 +405,8 @@
                     solution1: sol,
                     solution2: null,
                     singleSolution: true,
-                    constantFactor: k
+                    constantFactor: k,
+                    constantFirst: false // Le facteur constant est en deuxième
                 };
             } else {
                 // Type 3: (ax + b)(cx + d) = 0 (le type original)
@@ -419,7 +423,8 @@
                     solution1: sol1,
                     solution2: sol2,
                     singleSolution: false,
-                    constantFactor: null
+                    constantFactor: null,
+                    constantFirst: false
                 };
             }
         }
@@ -593,7 +598,7 @@
         }
 
         function validate() {
-            // Vérifier la propriété (mais ne pas bloquer si incorrecte)
+            // Vérifier la propriété
             const propertyInput = document.getElementById('propertyInput');
             const propertyCorrect = checkProperty(propertyInput.value);
             
@@ -616,99 +621,142 @@
                 if (input) inputs2.push(input);
             }
 
-            // Vérifier la colonne 1
-            const result1 = checkSolutionInColumn(inputs1, currentEquation.solution1);
+            let allCorrect = false;
             
             if (currentEquation.singleSolution) {
-                // Équation avec facteur constant : vérifier colonne 1 avec solution ET colonne 2 avec "impossible"
-                if (!result1.found) {
-                    showMessage('❌ La solution de la première équation n\'est pas correcte.', 'error');
-                    return;
+                // Équation avec facteur constant
+                // Vérifier dans l'ordre de l'équation
+                
+                let solutionColumn, constantColumn;
+                let solutionInputs, constantInputs;
+                let solutionLabel, constantLabel;
+                
+                if (currentEquation.constantFirst) {
+                    // k(ax+b) = 0 : colonne 1 = k=0 impossible, colonne 2 = solution
+                    constantColumn = 1;
+                    constantInputs = inputs1;
+                    constantLabel = 'la colonne 1';
+                    solutionColumn = 2;
+                    solutionInputs = inputs2;
+                    solutionLabel = 'la colonne 2';
+                } else {
+                    // (ax+b)×k = 0 : colonne 1 = solution, colonne 2 = k=0 impossible
+                    solutionColumn = 1;
+                    solutionInputs = inputs1;
+                    solutionLabel = 'la colonne 1';
+                    constantColumn = 2;
+                    constantInputs = inputs2;
+                    constantLabel = 'la colonne 2';
                 }
                 
-                if (!checkConstantFactorColumn(inputs2, currentEquation.constantFactor)) {
-                    showMessage(`❌ Pour la deuxième équation, écris "${currentEquation.constantFactor} = 0" puis "impossible" ou "pas de solution".`, 'error');
-                    return;
+                const resultSolution = checkSolutionInColumn(solutionInputs, currentEquation.solution1);
+                const resultConstant = checkConstantFactorColumn(constantInputs, currentEquation.constantFactor);
+                
+                // Marquer les colonnes
+                if (resultSolution.found) {
+                    solutionInputs.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                } else {
+                    solutionInputs.forEach(input => {
+                        if (input.value.trim()) input.className = 'incorrect';
+                    });
                 }
                 
-                // Marquer toutes les lignes comme correctes
-                inputs1.forEach(input => {
-                    if (input.value.trim()) input.className = 'correct';
-                });
-                inputs2.forEach(input => {
-                    if (input.value.trim()) input.className = 'correct';
-                });
-
-                // Vérifier si tout est correct (propriété + solutions)
-                if (propertyCorrect) {
+                if (resultConstant) {
+                    constantInputs.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                } else {
+                    constantInputs.forEach(input => {
+                        if (input.value.trim()) input.className = 'incorrect';
+                    });
+                }
+                
+                // Tout est correct ?
+                allCorrect = propertyCorrect && resultSolution.found && resultConstant;
+                
+                if (allCorrect) {
                     score++;
                     document.getElementById('score').textContent = score;
+                    
+                    if (resultSolution.simplified) {
+                        showMessage('🎉 Bravo ! Tout est correct !', 'success');
+                    } else {
+                        const sol1 = currentEquation.solution1;
+                        let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                        showMessage(`✅ C'est juste ! Mais tu peux simplifier : x = ${s1}`, 'success');
+                    }
+                } else {
+                    let errors = [];
+                    if (!propertyCorrect) errors.push('la propriété');
+                    if (!resultSolution.found) errors.push(`${solutionLabel} (solution)`);
+                    if (!resultConstant) errors.push(`${constantLabel} (écris "${currentEquation.constantFactor} = 0" puis "impossible")`);
+                    showMessage(`❌ Erreur dans : ${errors.join(', ')}. Tu peux corriger et revalider.`, 'error');
                 }
                 
-                let message = '';
-                if (propertyCorrect && result1.simplified) {
-                    message = '🎉 Bravo ! C\'est correct !';
-                } else if (!propertyCorrect && result1.simplified) {
-                    message = '✅ Les solutions sont justes mais la propriété est incorrecte.';
-                } else if (propertyCorrect && !result1.simplified) {
-                    const sol1 = currentEquation.solution1;
-                    let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
-                    message = `✅ C'est juste ! Mais tu peux simplifier : x = ${s1}`;
-                } else {
-                    const sol1 = currentEquation.solution1;
-                    let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
-                    message = `✅ Les solutions sont justes (tu peux simplifier : x = ${s1}) mais la propriété est incorrecte.`;
-                }
-                showMessage(message, propertyCorrect ? 'success' : 'error');
             } else {
-                // Deux solutions attendues (équation classique)
+                // Équation classique avec deux solutions
+                // Colonne 1 = première solution, Colonne 2 = deuxième solution
+                
+                const result1 = checkSolutionInColumn(inputs1, currentEquation.solution1);
                 const result2 = checkSolutionInColumn(inputs2, currentEquation.solution2);
-
-                if (!result1.found || !result2.found) {
-                    showMessage('❌ Les solutions ne sont pas correctes. Réessaie !', 'error');
-                    return;
-                }
-
-                // Marquer toutes les lignes comme correctes
-                inputs1.forEach(input => {
-                    if (input.value.trim()) input.className = 'correct';
-                });
-                inputs2.forEach(input => {
-                    if (input.value.trim()) input.className = 'correct';
-                });
-
-                // Vérifier si tout est correct (propriété + solutions)
-                if (propertyCorrect) {
-                    score++;
-                    document.getElementById('score').textContent = score;
+                
+                // Marquer la colonne 1
+                if (result1.found) {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                } else {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'incorrect';
+                    });
                 }
                 
-                let message = '';
-                if (propertyCorrect && result1.simplified && result2.simplified) {
-                    message = '🎉 Bravo ! C\'est correct !';
-                } else if (!propertyCorrect && result1.simplified && result2.simplified) {
-                    message = '✅ Les solutions sont justes mais la propriété est incorrecte.';
-                } else if (propertyCorrect && (!result1.simplified || !result2.simplified)) {
-                    const sol1 = currentEquation.solution1;
-                    const sol2 = currentEquation.solution2;
-                    let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
-                    let s2 = sol2.den === 1 ? sol2.num : `${sol2.num}/${sol2.den}`;
-                    message = `✅ C'est juste ! Mais tu peux simplifier : x = ${s1} ou x = ${s2}`;
+                // Marquer la colonne 2
+                if (result2.found) {
+                    inputs2.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
                 } else {
-                    const sol1 = currentEquation.solution1;
-                    const sol2 = currentEquation.solution2;
-                    let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
-                    let s2 = sol2.den === 1 ? sol2.num : `${sol2.num}/${sol2.den}`;
-                    message = `✅ Les solutions sont justes (tu peux simplifier : x = ${s1} ou x = ${s2}) mais la propriété est incorrecte.`;
+                    inputs2.forEach(input => {
+                        if (input.value.trim()) input.className = 'incorrect';
+                    });
                 }
-                showMessage(message, propertyCorrect ? 'success' : 'error');
+                
+                // Tout est correct ?
+                allCorrect = propertyCorrect && result1.found && result2.found;
+                
+                if (allCorrect) {
+                    score++;
+                    document.getElementById('score').textContent = score;
+                    
+                    if (result1.simplified && result2.simplified) {
+                        showMessage('🎉 Bravo ! Tout est correct !', 'success');
+                    } else {
+                        const sol1 = currentEquation.solution1;
+                        const sol2 = currentEquation.solution2;
+                        let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                        let s2 = sol2.den === 1 ? sol2.num : `${sol2.num}/${sol2.den}`;
+                        showMessage(`✅ C'est juste ! Mais tu peux simplifier : x = ${s1} ou x = ${s2}`, 'success');
+                    }
+                } else {
+                    let errors = [];
+                    if (!propertyCorrect) errors.push('la propriété');
+                    if (!result1.found) errors.push('la colonne 1');
+                    if (!result2.found) errors.push('la colonne 2');
+                    showMessage(`❌ Erreur dans : ${errors.join(', ')}. Tu peux corriger et revalider.`, 'error');
+                }
             }
             
-            document.getElementById('btnValidate').style.display = 'none';
-            document.getElementById('btnHint').style.display = 'none';
-            document.getElementById('btnAddStep1').style.display = 'none';
-            document.getElementById('btnAddStep2').style.display = 'none';
-            document.getElementById('btnNext').style.display = 'inline-block';
+            // Cacher les boutons seulement si tout est correct
+            if (allCorrect) {
+                document.getElementById('btnValidate').style.display = 'none';
+                document.getElementById('btnHint').style.display = 'none';
+                document.getElementById('btnAddStep1').style.display = 'none';
+                document.getElementById('btnAddStep2').style.display = 'none';
+                document.getElementById('btnNext').style.display = 'inline-block';
+            }
         }
 
         function showHint() {
@@ -719,12 +767,20 @@
             
             if (eq.singleSolution) {
                 hint += `Cette équation n'a qu'une seule solution car le facteur constant (${eq.constantFactor}) ne peut pas être nul.<br>`;
-                hint += `Colonne 1 : x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}<br>`;
-                hint += `Colonne 2 : ${eq.constantFactor} = 0 puis "impossible"`;
+                
+                if (eq.constantFirst) {
+                    // k(ax+b) = 0
+                    hint += `Colonne 1 : ${eq.constantFactor} = 0 puis "impossible"<br>`;
+                    hint += `Colonne 2 : x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}`;
+                } else {
+                    // (ax+b)×k = 0
+                    hint += `Colonne 1 : x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}<br>`;
+                    hint += `Colonne 2 : ${eq.constantFactor} = 0 puis "impossible"`;
+                }
             } else {
                 hint += `Les deux solutions sont :<br>`;
-                hint += `x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}<br>`;
-                hint += `x = ${eq.solution2.den === 1 ? eq.solution2.num : eq.solution2.num + '/' + eq.solution2.den}`;
+                hint += `Colonne 1 : x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}<br>`;
+                hint += `Colonne 2 : x = ${eq.solution2.den === 1 ? eq.solution2.num : eq.solution2.num + '/' + eq.solution2.den}`;
             }
             
             hintDiv.innerHTML = hint;
