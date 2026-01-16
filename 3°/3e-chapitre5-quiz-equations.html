@@ -181,6 +181,17 @@
             box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
         }
 
+        .btn-skip {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-skip:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
         .btn-next {
             background: #28a745;
             color: white;
@@ -272,7 +283,8 @@
 
         <div class="buttons">
             <button class="btn-validate" id="btnValidate">Valider</button>
-            <button class="btn-hint" id="btnHint">Indice</button>
+            <button class="btn-hint" id="btnHint" style="display: none;">Indice</button>
+            <button class="btn-skip" id="btnSkip">Passer</button>
             <button class="btn-next" id="btnNext" style="display: none;">Question suivante</button>
         </div>
     </div>
@@ -282,6 +294,8 @@
         let currentQuestion = 1;
         let currentEquation = null;
         let hintUsed = false;
+        let questionValidated = false;
+        let hasError = false;
 
         function gcd(a, b) {
             a = Math.abs(a);
@@ -622,6 +636,11 @@
         }
 
         function validate() {
+            // Ne pas permettre de revalider si déjà correct
+            if (questionValidated) {
+                return;
+            }
+            
             const inputs = [];
             
             // Récupérer toutes les lignes créées
@@ -658,28 +677,75 @@
                     }
                 }
 
-                score++;
-                document.getElementById('score').textContent = score;
-                
-                if (result.simplified) {
-                    // Solution correcte et simplifiée
-                    showMessage('🎉 Bravo ! C\'est correct !', 'success');
+                // Point uniquement si pas d'erreur avant
+                if (!hasError) {
+                    score++;
+                    document.getElementById('score').textContent = score;
+                    
+                    if (result.simplified) {
+                        // Solution correcte et simplifiée
+                        showMessage('🎉 Bravo ! C\'est correct !', 'success');
+                    } else {
+                        // Solution correcte mais non simplifiée
+                        const sol = currentEquation.solution;
+                        let simplifiedText = sol.den === 1 ? sol.num : `${sol.num}/${sol.den}`;
+                        showMessage(`✅ C'est juste ! Mais tu peux simplifier : x = ${simplifiedText}`, 'success');
+                    }
                 } else {
-                    // Solution correcte mais non simplifiée
-                    const sol = currentEquation.solution;
-                    let simplifiedText = sol.den === 1 ? sol.num : `${sol.num}/${sol.den}`;
-                    showMessage(`✅ C'est juste ! Mais tu peux simplifier : x = ${simplifiedText}`, 'success');
+                    if (result.simplified) {
+                        showMessage('✅ C\'est correct ! (pas de point car il y a eu une erreur)', 'success');
+                    } else {
+                        const sol = currentEquation.solution;
+                        let simplifiedText = sol.den === 1 ? sol.num : `${sol.num}/${sol.den}`;
+                        showMessage(`✅ C'est correct (pas de point) ! Mais tu peux simplifier : x = ${simplifiedText}`, 'success');
+                    }
                 }
                 
                 // Dans tous les cas, permettre de passer à la suite
+                questionValidated = true;
                 document.getElementById('btnValidate').style.display = 'none';
                 document.getElementById('btnHint').style.display = 'none';
+                document.getElementById('btnSkip').style.display = 'none';
                 document.getElementById('btnAddStep').style.display = 'none';
                 document.getElementById('btnNext').style.display = 'inline-block';
             } else {
+                hasError = true;
+                document.getElementById('btnHint').style.display = 'inline-block';
                 lastInput.className = 'incorrect';
                 showMessage('❌ La solution finale n\'est pas correcte. Réessaie !', 'error');
             }
+        }
+
+        function showCorrection() {
+            const hintDiv = document.getElementById('hintDiv');
+            const sol = currentEquation.solution;
+            
+            let correction = '<div class="hint-title">📝 Correction :</div>';
+            correction += `La solution de cette équation est : x = `;
+            
+            if (sol.den === 1) {
+                correction += sol.num;
+            } else {
+                correction += `<span class="frac"><span class="num">${sol.num}</span><span class="den">${sol.den}</span></span>`;
+            }
+            
+            hintDiv.innerHTML = correction;
+            hintDiv.style.display = 'block';
+            hintDiv.style.background = '#fff3cd';
+            hintDiv.style.borderColor = '#ffeaa7';
+            
+            // Marquer la question comme passée (pas de point)
+            questionValidated = true;
+            hasError = true;
+            
+            // Cacher les boutons et afficher "Question suivante"
+            document.getElementById('btnValidate').style.display = 'none';
+            document.getElementById('btnHint').style.display = 'none';
+            document.getElementById('btnSkip').style.display = 'none';
+            document.getElementById('btnAddStep').style.display = 'none';
+            document.getElementById('btnNext').style.display = 'inline-block';
+            
+            showMessage('➡️ Correction affichée. Clique sur "Question suivante" pour continuer.', 'error');
         }
 
         function showHint() {
@@ -715,10 +781,15 @@
             document.getElementById('equationDisplay').textContent = currentEquation.display;
             createSteps(currentEquation);
 
+            // Réinitialiser les états
+            questionValidated = false;
+            hasError = false;
+
             document.getElementById('messageDiv').style.display = 'none';
             document.getElementById('hintDiv').style.display = 'none';
             document.getElementById('btnValidate').style.display = 'inline-block';
-            document.getElementById('btnHint').style.display = 'inline-block';
+            document.getElementById('btnHint').style.display = 'none'; // Cacher l'indice au début
+            document.getElementById('btnSkip').style.display = 'inline-block';
             document.getElementById('btnAddStep').style.display = 'inline-block';
             document.getElementById('btnNext').style.display = 'none';
             hintUsed = false;
@@ -726,6 +797,7 @@
 
         document.getElementById('btnValidate').addEventListener('click', validate);
         document.getElementById('btnHint').addEventListener('click', showHint);
+        document.getElementById('btnSkip').addEventListener('click', showCorrection);
         document.getElementById('btnNext').addEventListener('click', nextQuestion);
         document.getElementById('btnAddStep').addEventListener('click', addIntermediateStep);
 
