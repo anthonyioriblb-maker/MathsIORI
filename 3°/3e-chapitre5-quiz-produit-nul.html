@@ -228,6 +228,17 @@
             box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
         }
 
+        .btn-skip {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-skip:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
         .btn-next {
             background: #28a745;
             color: white;
@@ -333,7 +344,8 @@
 
         <div class="buttons">
             <button class="btn-validate" id="btnValidate">Valider</button>
-            <button class="btn-hint" id="btnHint">Indice</button>
+            <button class="btn-hint" id="btnHint" style="display: none;">Indice</button>
+            <button class="btn-skip" id="btnSkip">Passer</button>
             <button class="btn-next" id="btnNext" style="display: none;">Question suivante</button>
         </div>
     </div>
@@ -346,6 +358,8 @@
         let currentLineCount1 = 0;
         let currentLineCount2 = 0;
         const maxLines = 5;
+        let questionValidated = false;
+        let hasError = false;
 
         function gcd(a, b) {
             a = Math.abs(a);
@@ -598,6 +612,11 @@
         }
 
         function validate() {
+            // Ne pas permettre de revalider si déjà correct
+            if (questionValidated) {
+                return;
+            }
+            
             // Vérifier la propriété
             const propertyInput = document.getElementById('propertyInput');
             const propertyCorrect = checkProperty(propertyInput.value);
@@ -677,17 +696,30 @@
                 allCorrect = propertyCorrect && resultSolution.found && resultConstant;
                 
                 if (allCorrect) {
-                    score++;
-                    document.getElementById('score').textContent = score;
-                    
-                    if (resultSolution.simplified) {
-                        showMessage('🎉 Bravo ! Tout est correct !', 'success');
+                    // Point uniquement si pas d'erreur avant
+                    if (!hasError) {
+                        score++;
+                        document.getElementById('score').textContent = score;
+                        
+                        if (resultSolution.simplified) {
+                            showMessage('🎉 Bravo ! Tout est correct !', 'success');
+                        } else {
+                            const sol1 = currentEquation.solution1;
+                            let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                            showMessage(`✅ C'est juste ! Mais tu peux simplifier : x = ${s1}`, 'success');
+                        }
                     } else {
-                        const sol1 = currentEquation.solution1;
-                        let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
-                        showMessage(`✅ C'est juste ! Mais tu peux simplifier : x = ${s1}`, 'success');
+                        if (resultSolution.simplified) {
+                            showMessage('✅ C\'est correct ! (pas de point car il y a eu une erreur)', 'success');
+                        } else {
+                            const sol1 = currentEquation.solution1;
+                            let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                            showMessage(`✅ C'est correct (pas de point) ! Mais tu peux simplifier : x = ${s1}`, 'success');
+                        }
                     }
                 } else {
+                    hasError = true;
+                    document.getElementById('btnHint').style.display = 'inline-block';
                     let errors = [];
                     if (!propertyCorrect) errors.push('la propriété');
                     if (!resultSolution.found) errors.push(`${solutionLabel} (solution)`);
@@ -728,19 +760,34 @@
                 allCorrect = propertyCorrect && result1.found && result2.found;
                 
                 if (allCorrect) {
-                    score++;
-                    document.getElementById('score').textContent = score;
-                    
-                    if (result1.simplified && result2.simplified) {
-                        showMessage('🎉 Bravo ! Tout est correct !', 'success');
+                    // Point uniquement si pas d'erreur avant
+                    if (!hasError) {
+                        score++;
+                        document.getElementById('score').textContent = score;
+                        
+                        if (result1.simplified && result2.simplified) {
+                            showMessage('🎉 Bravo ! Tout est correct !', 'success');
+                        } else {
+                            const sol1 = currentEquation.solution1;
+                            const sol2 = currentEquation.solution2;
+                            let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                            let s2 = sol2.den === 1 ? sol2.num : `${sol2.num}/${sol2.den}`;
+                            showMessage(`✅ C'est juste ! Mais tu peux simplifier : x = ${s1} ou x = ${s2}`, 'success');
+                        }
                     } else {
-                        const sol1 = currentEquation.solution1;
-                        const sol2 = currentEquation.solution2;
-                        let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
-                        let s2 = sol2.den === 1 ? sol2.num : `${sol2.num}/${sol2.den}`;
-                        showMessage(`✅ C'est juste ! Mais tu peux simplifier : x = ${s1} ou x = ${s2}`, 'success');
+                        if (result1.simplified && result2.simplified) {
+                            showMessage('✅ C\'est correct ! (pas de point car il y a eu une erreur)', 'success');
+                        } else {
+                            const sol1 = currentEquation.solution1;
+                            const sol2 = currentEquation.solution2;
+                            let s1 = sol1.den === 1 ? sol1.num : `${sol1.num}/${sol1.den}`;
+                            let s2 = sol2.den === 1 ? sol2.num : `${sol2.num}/${sol2.den}`;
+                            showMessage(`✅ C'est correct (pas de point) ! Mais tu peux simplifier : x = ${s1} ou x = ${s2}`, 'success');
+                        }
                     }
                 } else {
+                    hasError = true;
+                    document.getElementById('btnHint').style.display = 'inline-block';
                     let errors = [];
                     if (!propertyCorrect) errors.push('la propriété');
                     if (!result1.found) errors.push('la colonne 1');
@@ -751,12 +798,59 @@
             
             // Cacher les boutons seulement si tout est correct
             if (allCorrect) {
+                questionValidated = true;
                 document.getElementById('btnValidate').style.display = 'none';
                 document.getElementById('btnHint').style.display = 'none';
+                document.getElementById('btnSkip').style.display = 'none';
                 document.getElementById('btnAddStep1').style.display = 'none';
                 document.getElementById('btnAddStep2').style.display = 'none';
                 document.getElementById('btnNext').style.display = 'inline-block';
             }
+        }
+
+        function showCorrection() {
+            const eq = currentEquation;
+            const hintDiv = document.getElementById('hintDiv');
+            
+            let correction = '<div class="hint-title">📝 Correction :</div>';
+            correction += '<strong>Propriété :</strong> Un produit est nul si et seulement si au moins un de ses facteurs est nul.<br><br>';
+            
+            if (eq.singleSolution) {
+                correction += `Cette équation n'a qu'une seule solution car le facteur constant (${eq.constantFactor}) ne peut pas être nul.<br><br>`;
+                
+                if (eq.constantFirst) {
+                    // k(ax+b) = 0
+                    correction += `<strong>Colonne 1 :</strong> ${eq.constantFactor} = 0 puis "impossible"<br>`;
+                    correction += `<strong>Colonne 2 :</strong> x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}`;
+                } else {
+                    // (ax+b)×k = 0
+                    correction += `<strong>Colonne 1 :</strong> x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}<br>`;
+                    correction += `<strong>Colonne 2 :</strong> ${eq.constantFactor} = 0 puis "impossible"`;
+                }
+            } else {
+                correction += `Les deux solutions sont :<br>`;
+                correction += `<strong>Colonne 1 :</strong> x = ${eq.solution1.den === 1 ? eq.solution1.num : eq.solution1.num + '/' + eq.solution1.den}<br>`;
+                correction += `<strong>Colonne 2 :</strong> x = ${eq.solution2.den === 1 ? eq.solution2.num : eq.solution2.num + '/' + eq.solution2.den}`;
+            }
+            
+            hintDiv.innerHTML = correction;
+            hintDiv.style.display = 'block';
+            hintDiv.style.background = '#fff3cd';
+            hintDiv.style.borderColor = '#ffeaa7';
+            
+            // Marquer la question comme passée (pas de point)
+            questionValidated = true;
+            hasError = true;
+            
+            // Cacher les boutons et afficher "Question suivante"
+            document.getElementById('btnValidate').style.display = 'none';
+            document.getElementById('btnHint').style.display = 'none';
+            document.getElementById('btnSkip').style.display = 'none';
+            document.getElementById('btnAddStep1').style.display = 'none';
+            document.getElementById('btnAddStep2').style.display = 'none';
+            document.getElementById('btnNext').style.display = 'inline-block';
+            
+            showMessage('➡️ Correction affichée. Clique sur "Question suivante" pour continuer.', 'error');
         }
 
         function showHint() {
@@ -805,12 +899,17 @@
             document.getElementById('propertyInput').value = '';
             document.getElementById('propertyInput').className = 'property-input';
             
+            // Réinitialiser les états
+            questionValidated = false;
+            hasError = false;
+            
             createSteps();
 
             document.getElementById('messageDiv').style.display = 'none';
             document.getElementById('hintDiv').style.display = 'none';
             document.getElementById('btnValidate').style.display = 'inline-block';
-            document.getElementById('btnHint').style.display = 'inline-block';
+            document.getElementById('btnHint').style.display = 'none'; // Cacher l'indice au début
+            document.getElementById('btnSkip').style.display = 'inline-block';
             document.getElementById('btnAddStep1').style.display = 'inline-block';
             document.getElementById('btnAddStep2').style.display = 'inline-block';
             document.getElementById('btnNext').style.display = 'none';
@@ -819,6 +918,7 @@
 
         document.getElementById('btnValidate').addEventListener('click', validate);
         document.getElementById('btnHint').addEventListener('click', showHint);
+        document.getElementById('btnSkip').addEventListener('click', showCorrection);
         document.getElementById('btnNext').addEventListener('click', nextQuestion);
         document.getElementById('btnAddStep1').addEventListener('click', () => addIntermediateStep(1));
         document.getElementById('btnAddStep2').addEventListener('click', () => addIntermediateStep(2));
