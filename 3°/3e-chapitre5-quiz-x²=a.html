@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Équations x² = a</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .equation-display {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .sqrt-button-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .sqrt-button {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .sqrt-button:hover {
+            background: #218838;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .sqrt-button:active {
+            transform: translateY(0);
+        }
+
+        .columns-container {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+            margin: 20px 0;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .separators-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .steps-container {
+            margin: 20px 0;
+        }
+
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .equation-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            flex-wrap: wrap;
+        }
+
+        .equation-line input {
+            width: 200px;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .equation-line input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .equation-line input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .equation-line input.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .add-step-btn {
+            background: #6c757d;
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .add-step-btn:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .message {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hint {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            color: #856404;
+        }
+
+        .hint-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔢 Quiz : Équations x² = a</h1>
+        <div class="subtitle">Résous les équations du type x² = a<br>
+        <small>Utilise le bouton √ ci-dessous • Virgule uniquement (3,25)</small></div>
+
+        <div class="score-container">
+            <div class="score-item">
+                <div class="score-label">Question</div>
+                <div class="score-value"><span id="current">1</span></div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Score</div>
+                <div class="score-value" id="score">0</div>
+            </div>
+        </div>
+
+        <div class="equation-display" id="equationDisplay"></div>
+
+        <div class="sqrt-button-container">
+            <button class="sqrt-button" id="btnSqrt" title="Insérer le symbole racine carrée">√</button>
+        </div>
+
+        <div class="columns-container" id="columnsContainer">
+        </div>
+
+        <div id="messageDiv" class="message" style="display: none;"></div>
+        <div id="hintDiv" class="hint" style="display: none;"></div>
+
+        <div class="buttons">
+            <button id="btnValidate">Valider</button>
+            <button id="btnHint" style="display: none;">Indice</button>
+            <button id="btnSkip">Passer</button>
+            <button id="btnNext" style="display: none;">Question suivante</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let currentQuestion = 1;
+        let currentEquation = null;
+        let hintUsed = false;
+        let currentLineCount1 = 0;
+        let currentLineCount2 = 0;
+        const maxLines = 5;
+        let lastFocusedInput = null;
+        let questionValidated = false; // Pour empêcher de valider plusieurs fois
+        let hasError = false; // Pour suivre si une erreur a été faite
+
+        // Suivre le dernier input avec le focus
+        document.addEventListener('focusin', function(e) {
+            if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
+                lastFocusedInput = e.target;
+            }
+        });
+
+        function insertSqrt() {
+            if (lastFocusedInput) {
+                const cursorPos = lastFocusedInput.selectionStart;
+                const textBefore = lastFocusedInput.value.substring(0, cursorPos);
+                const textAfter = lastFocusedInput.value.substring(cursorPos);
+                lastFocusedInput.value = textBefore + '√' + textAfter;
+                lastFocusedInput.focus();
+                lastFocusedInput.setSelectionRange(cursorPos + 1, cursorPos + 1);
+            } else {
+                // Si aucun input n'a le focus, chercher le premier input disponible
+                const firstInput = document.querySelector('.equation-line input');
+                if (firstInput) {
+                    firstInput.value += '√';
+                    firstInput.focus();
+                    lastFocusedInput = firstInput;
+                }
+            }
+        }
+
+        function generateEquation() {
+            const type = Math.random();
+            
+            if (type < 0.33) {
+                // Cas 1: a < 0, pas de solution
+                const a = -(Math.floor(Math.random() * 20) + 1); // -20 à -1
+                return {
+                    display: `x² = ${a}`,
+                    a: a,
+                    noSolution: true,
+                    solution1: null,
+                    solution2: null
+                };
+            } else if (type < 0.50) {
+                // Cas 2: a = 0, une seule solution
+                return {
+                    display: `x² = 0`,
+                    a: 0,
+                    oneSolution: true,
+                    solution1: 0,
+                    solution2: null
+                };
+            } else {
+                // Cas 3: a > 0, deux solutions
+                let a;
+                let isPerfectSquare = false;
+                
+                const subType = Math.random();
+                
+                if (subType < 0.4) {
+                    // Carré parfait entier
+                    const root = Math.floor(Math.random() * 10) + 1; // 1 à 10
+                    a = root * root;
+                    isPerfectSquare = true;
+                } else if (subType < 0.6) {
+                    // Carré de décimale (0,5 à 9,5 par pas de 0,25)
+                    const rootInt = Math.floor(Math.random() * 38) + 2; // 2 à 39
+                    const root = rootInt * 0.25; // 0,5 à 9,75
+                    a = Math.round(root * root * 10000) / 10000; // Arrondir pour éviter les erreurs de précision
+                    isPerfectSquare = true;
+                } else {
+                    // Nombre quelconque (non carré parfait)
+                    a = Math.floor(Math.random() * 50) + 1; // 1 à 50
+                    isPerfectSquare = false;
+                }
+                
+                const sqrtValue = Math.sqrt(a);
+                
+                return {
+                    display: `x² = ${a.toString().replace('.', ',')}`,
+                    a: a,
+                    twoSolutions: true,
+                    solution1: sqrtValue,
+                    solution2: -sqrtValue,
+                    isPerfectSquare: isPerfectSquare
+                };
+            }
+        }
+
+        function createSteps() {
+            const container = document.getElementById('columnsContainer');
+            container.innerHTML = '';
+            currentLineCount1 = 0;
+            currentLineCount2 = 0;
+            
+            if (currentEquation.oneSolution || currentEquation.noSolution) {
+                // Une seule colonne pour x² = 0 ou pas de solution
+                container.style.display = 'flex';
+                container.style.justifyContent = 'center';
+                
+                const col = document.createElement('div');
+                col.className = 'column';
+                col.innerHTML = `
+                    <div class="steps-container" id="stepsContainer1"></div>
+                    <button class="add-step-btn" id="btnAddStep1">➕ Ajouter une ligne</button>
+                `;
+                container.appendChild(col);
+                
+                document.getElementById('btnAddStep1').addEventListener('click', () => addIntermediateStep(1));
+                addLine(1);
+            } else {
+                // Deux colonnes pour les autres cas (deux solutions)
+                container.style.display = 'grid';
+                container.style.gridTemplateColumns = '1fr auto 1fr';
+                container.style.gap = '20px';
+                
+                const col1 = document.createElement('div');
+                col1.className = 'column';
+                col1.innerHTML = `
+                    <div class="steps-container" id="stepsContainer1"></div>
+                    <button class="add-step-btn" id="btnAddStep1">➕ Ajouter une ligne</button>
+                `;
+                
+                const separators = document.createElement('div');
+                separators.className = 'separators-container';
+                separators.id = 'separatorsContainer';
+                
+                const col2 = document.createElement('div');
+                col2.className = 'column';
+                col2.innerHTML = `
+                    <div class="steps-container" id="stepsContainer2"></div>
+                    <button class="add-step-btn" id="btnAddStep2">➕ Ajouter une ligne</button>
+                `;
+                
+                container.appendChild(col1);
+                container.appendChild(separators);
+                container.appendChild(col2);
+                
+                document.getElementById('btnAddStep1').addEventListener('click', () => addIntermediateStep(1));
+                document.getElementById('btnAddStep2').addEventListener('click', () => addIntermediateStep(2));
+                
+                addLine(1);
+                addLine(2);
+                updateSeparators();
+            }
+        }
+
+        function addLine(column) {
+            const container = document.getElementById(`stepsContainer${column}`);
+            const currentCount = column === 1 ? currentLineCount1 : currentLineCount2;
+            
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'step';
+
+            const line = document.createElement('div');
+            line.className = 'equation-line';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = `line${column}_${currentCount}`;
+            input.placeholder = '';
+            
+            line.appendChild(input);
+            stepDiv.appendChild(line);
+            container.appendChild(stepDiv);
+            
+            if (column === 1) currentLineCount1++;
+            else currentLineCount2++;
+            
+            updateSeparators();
+        }
+
+        function updateSeparators() {
+            const separatorsContainer = document.getElementById('separatorsContainer');
+            if (!separatorsContainer) return; // Pas de séparateurs pour une seule colonne
+            
+            separatorsContainer.innerHTML = '';
+            
+            // Nombre de "ou" = nombre de lignes dans la colonne 2
+            for (let i = 0; i < currentLineCount2; i++) {
+                const wrapper = document.createElement('div');
+                wrapper.style.margin = '5px 0';
+                wrapper.style.paddingTop = '32px';
+                wrapper.style.textAlign = 'center';
+                
+                const ouSpan = document.createElement('span');
+                ouSpan.style.fontSize = '20px';
+                ouSpan.style.fontWeight = 'bold';
+                ouSpan.style.color = '#667eea';
+                ouSpan.textContent = 'ou';
+                
+                wrapper.appendChild(ouSpan);
+                separatorsContainer.appendChild(wrapper);
+            }
+        }
+
+        function addIntermediateStep(column) {
+            const currentCount = column === 1 ? currentLineCount1 : currentLineCount2;
+            
+            if (currentCount >= maxLines) {
+                showMessage('Maximum de 5 lignes atteint pour cette colonne.', 'error');
+                setTimeout(() => {
+                    document.getElementById('messageDiv').style.display = 'none';
+                }, 2000);
+                return;
+            }
+            addLine(column);
+        }
+
+        function checkNoSolution(inputs) {
+            let lastFilledIndex = -1;
+            for (let i = inputs.length - 1; i >= 0; i--) {
+                if (inputs[i].value.trim()) {
+                    lastFilledIndex = i;
+                    break;
+                }
+            }
+
+            if (lastFilledIndex === -1) return false;
+
+            const lastInput = inputs[lastFilledIndex].value.toLowerCase().trim().replace(/\s+/g, '');
+            
+            return lastInput.includes('impossible') || 
+                   lastInput.includes('pasdesolution') || 
+                   lastInput.includes('aucunesolution') ||
+                   lastInput.includes('aucune');
+        }
+
+        function checkSolution(inputs, expectedValue) {
+            let lastFilledIndex = -1;
+            for (let i = inputs.length - 1; i >= 0; i--) {
+                if (inputs[i].value.trim()) {
+                    lastFilledIndex = i;
+                    break;
+                }
+            }
+
+            if (lastFilledIndex === -1) return { found: false, exact: false };
+
+            const input = inputs[lastFilledIndex].value.trim().replace(/\s+/g, '');
+            
+            // Format x = valeur décimale exacte (avec virgule uniquement)
+            let match = input.match(/^x=([+-]?\d+,?\d*)$/);
+            if (match) {
+                const valueStr = match[1].replace(',', '.'); // Convertir virgule en point pour parseFloat
+                const value = parseFloat(valueStr);
+                if (Math.abs(value - expectedValue) < 0.0001) {
+                    return { found: true, exact: true };
+                }
+            }
+
+            // Format x = √a ou x = -√a (avec le symbole √ uniquement)
+            match = input.match(/^x=([+-]?)√(\d+,?\d*)$/);
+            if (match) {
+                const sign = match[1] === '-' ? -1 : 1;
+                const radicandStr = match[2].replace(',', '.'); // Convertir virgule en point
+                const radicand = parseFloat(radicandStr);
+                const value = sign * Math.sqrt(radicand);
+                if (Math.abs(value - expectedValue) < 0.0001) {
+                    return { found: true, exact: false };
+                }
+            }
+
+            return { found: false, exact: false };
+        }
+
+        function validate() {
+            // Ne pas permettre de revalider si déjà correct
+            if (questionValidated) {
+                return;
+            }
+            
+            const inputs1 = [];
+            for (let i = 0; i < currentLineCount1; i++) {
+                const input = document.getElementById(`line1_${i}`);
+                if (input) inputs1.push(input);
+            }
+
+            const inputs2 = [];
+            for (let i = 0; i < currentLineCount2; i++) {
+                const input = document.getElementById(`line2_${i}`);
+                if (input) inputs2.push(input);
+            }
+
+            let allCorrect = false;
+
+            if (currentEquation.noSolution) {
+                // Pas de solution : une seule colonne avec "impossible"
+                const result1 = checkNoSolution(inputs1);
+                
+                if (result1) {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    allCorrect = true;
+                    
+                    // Point uniquement si pas d'erreur avant
+                    if (!hasError) {
+                        score++;
+                        document.getElementById('score').textContent = score;
+                        showMessage('🎉 Bravo ! C\'est correct !', 'success');
+                    } else {
+                        showMessage('✅ C\'est correct ! (pas de point car il y a eu une erreur)', 'success');
+                    }
+                } else {
+                    hasError = true; // Marquer qu'il y a eu une erreur
+                    document.getElementById('btnHint').style.display = 'inline-block'; // Afficher le bouton Indice
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'incorrect';
+                    });
+                    showMessage('❌ Écris "impossible" ou "pas de solution". Tu peux corriger et revalider.', 'error');
+                }
+                
+            } else if (currentEquation.oneSolution) {
+                // Une seule solution : x = 0 dans la colonne unique
+                const result1 = checkSolution(inputs1, 0);
+                
+                if (result1.found) {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    allCorrect = true;
+                    
+                    // Point uniquement si pas d'erreur avant
+                    if (!hasError) {
+                        score++;
+                        document.getElementById('score').textContent = score;
+                        showMessage('🎉 Bravo ! C\'est correct !', 'success');
+                    } else {
+                        showMessage('✅ C\'est correct ! (pas de point car il y a eu une erreur)', 'success');
+                    }
+                } else {
+                    hasError = true; // Marquer qu'il y a eu une erreur
+                    document.getElementById('btnHint').style.display = 'inline-block'; // Afficher le bouton Indice
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'incorrect';
+                    });
+                    showMessage('❌ La solution est x = 0. Tu peux corriger et revalider.', 'error');
+                }
+                
+            } else {
+                // Deux solutions différentes
+                const result1 = checkSolution(inputs1, currentEquation.solution1);
+                const result2 = checkSolution(inputs2, currentEquation.solution2);
+                
+                // Vérifier aussi dans l'autre sens (si inversé)
+                const result1Alt = checkSolution(inputs1, currentEquation.solution2);
+                const result2Alt = checkSolution(inputs2, currentEquation.solution1);
+                
+                const correctOrder = result1.found && result2.found;
+                const reversedOrder = result1Alt.found && result2Alt.found;
+                
+                if (correctOrder || reversedOrder) {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    inputs2.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    
+                    allCorrect = true;
+                    
+                    // Point uniquement si pas d'erreur avant
+                    if (!hasError) {
+                        score++;
+                        document.getElementById('score').textContent = score;
+                        showMessage('🎉 Bravo ! C\'est correct !', 'success');
+                    } else {
+                        showMessage('✅ C\'est correct ! (pas de point car il y a eu une erreur)', 'success');
+                    }
+                } else {
+                    hasError = true; // Marquer qu'il y a eu une erreur
+                    document.getElementById('btnHint').style.display = 'inline-block'; // Afficher le bouton Indice
+                    
+                    if (result1.found || result1Alt.found) {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                    } else {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                    }
+                    
+                    if (result2.found || result2Alt.found) {
+                        inputs2.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                    } else {
+                        inputs2.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                    }
+                    
+                    let errors = [];
+                    if (!result1.found && !result1Alt.found) errors.push('la colonne 1');
+                    if (!result2.found && !result2Alt.found) errors.push('la colonne 2');
+                    showMessage(`❌ Erreur dans : ${errors.join(', ')}. Tu peux corriger et revalider.`, 'error');
+                }
+            }
+            
+            if (allCorrect) {
+                questionValidated = true; // Marquer la question comme validée
+                document.getElementById('btnValidate').style.display = 'none';
+                document.getElementById('btnHint').style.display = 'none';
+                document.getElementById('btnSkip').style.display = 'none';
+                const btn1 = document.getElementById('btnAddStep1');
+                const btn2 = document.getElementById('btnAddStep2');
+                if (btn1) btn1.style.display = 'none';
+                if (btn2) btn2.style.display = 'none';
+                document.getElementById('btnNext').style.display = 'inline-block';
+            }
+        }
+
+        function showCorrection() {
+            const eq = currentEquation;
+            const hintDiv = document.getElementById('hintDiv');
+            
+            let correction = '<div class="hint-title">📝 Correction :</div>';
+            
+            if (eq.noSolution) {
+                correction += `x² = ${eq.a} n'a pas de solution car un carré est toujours positif ou nul.<br>`;
+                correction += `<strong>Réponse : Impossible (ou pas de solution)</strong>`;
+            } else if (eq.oneSolution) {
+                correction += `x² = 0 a une seule solution.<br>`;
+                correction += `<strong>Réponse : x = 0</strong>`;
+            } else {
+                const displayA = eq.a.toString().replace('.', ',');
+                if (eq.isPerfectSquare) {
+                    const sol1Display = eq.solution1.toString().replace('.', ',');
+                    const sol2Display = eq.solution2.toString().replace('.', ',');
+                    correction += `Les deux solutions de x² = ${displayA} sont :<br>`;
+                    correction += `<strong>x = ${sol1Display} ou x = ${sol2Display}</strong>`;
+                } else {
+                    correction += `Les deux solutions de x² = ${displayA} sont :<br>`;
+                    correction += `<strong>x = √${displayA} ou x = -√${displayA}</strong>`;
+                }
+            }
+            
+            hintDiv.innerHTML = correction;
+            hintDiv.style.display = 'block';
+            hintDiv.style.background = '#fff3cd';
+            hintDiv.style.borderColor = '#ffeaa7';
+            
+            // Marquer la question comme passée (pas de point)
+            questionValidated = true;
+            hasError = true;
+            
+            // Cacher les boutons et afficher "Question suivante"
+            document.getElementById('btnValidate').style.display = 'none';
+            document.getElementById('btnHint').style.display = 'none';
+            document.getElementById('btnSkip').style.display = 'none';
+            const btn1 = document.getElementById('btnAddStep1');
+            const btn2 = document.getElementById('btnAddStep2');
+            if (btn1) btn1.style.display = 'none';
+            if (btn2) btn2.style.display = 'none';
+            document.getElementById('btnNext').style.display = 'inline-block';
+            
+            showMessage('➡️ Correction affichée. Clique sur "Question suivante" pour continuer.', 'error');
+        }
+
+        function showHint() {
+            const eq = currentEquation;
+            const hintDiv = document.getElementById('hintDiv');
+            
+            let hint = '<div class="hint-title">💡 Indice :</div>';
+            
+            if (eq.noSolution) {
+                hint += `x² = ${eq.a} n'a pas de solution car un carré est toujours positif ou nul.<br>`;
+                hint += `Écris "impossible" ou "pas de solution".`;
+            } else if (eq.oneSolution) {
+                hint += `x² = 0 a une seule solution : x = 0`;
+            } else {
+                const displayA = eq.a.toString().replace('.', ',');
+                if (eq.isPerfectSquare) {
+                    const sol1Display = eq.solution1.toString().replace('.', ',');
+                    const sol2Display = eq.solution2.toString().replace('.', ',');
+                    hint += `Les deux solutions sont :<br>`;
+                    hint += `x = ${sol1Display} ou x = ${sol2Display}`;
+                } else {
+                    hint += `Les deux solutions sont :<br>`;
+                    hint += `x = √${displayA} ou x = -√${displayA}`;
+                }
+            }
+            
+            hintDiv.innerHTML = hint;
+            hintDiv.style.display = 'block';
+            hintUsed = true;
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('messageDiv');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            document.getElementById('current').textContent = currentQuestion;
+            
+            currentEquation = generateEquation();
+            document.getElementById('equationDisplay').textContent = currentEquation.display;
+            
+            // Réinitialiser les états
+            questionValidated = false;
+            hasError = false;
+            
+            createSteps();
+
+            document.getElementById('messageDiv').style.display = 'none';
+            document.getElementById('hintDiv').style.display = 'none';
+            document.getElementById('btnValidate').style.display = 'inline-block';
+            document.getElementById('btnHint').style.display = 'none'; // Cacher l'indice au début
+            document.getElementById('btnSkip').style.display = 'inline-block';
+            document.getElementById('btnNext').style.display = 'none';
+            hintUsed = false;
+        }
+
+        document.getElementById('btnValidate').addEventListener('click', validate);
+        document.getElementById('btnHint').addEventListener('click', showHint);
+        document.getElementById('btnSkip').addEventListener('click', showCorrection);
+        document.getElementById('btnNext').addEventListener('click', nextQuestion);
+        document.getElementById('btnSqrt').addEventListener('click', insertSqrt);
+
+        currentEquation = generateEquation();
+        document.getElementById('equationDisplay').textContent = currentEquation.display;
+        createSteps();
+    </script>
+</body>
+</html>
