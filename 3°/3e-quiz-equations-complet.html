@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Équations variées - 3ème</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .equation-display {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .instruction {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .property-section {
+            margin: 15px 0;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 2px solid #ffc107;
+        }
+
+        .property-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffc107;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .property-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .property-input.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .property-input.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .columns-container {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .common-section {
+            margin: 10px 0 20px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        .separators-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 10px;
+        }
+
+        .separator {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .steps-container {
+            margin: 10px 0;
+        }
+
+        .step {
+            margin: 8px 0;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        input[type="text"].correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        input[type="text"].incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .add-step-btn {
+            width: 100%;
+            padding: 8px;
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 5px;
+            color: #667eea;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .add-step-btn:hover {
+            background: #e9ecef;
+            transform: translateY(-1px);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-validate {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-validate:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-hint {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-hint:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-skip {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-skip:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .btn-sqrt {
+            background: #17a2b8;
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+
+        .btn-sqrt:hover {
+            background: #138496;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+        }
+
+        .btn-add-column {
+            background: #6f42c1;
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+            margin: 0 5px;
+        }
+
+        .btn-add-column:hover {
+            background: #5a32a3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(111, 66, 193, 0.3);
+        }
+
+        .btn-add-property {
+            background: #fd7e14;
+            color: white;
+            padding: 8px 20px;
+            font-size: 14px;
+            margin: 0 5px;
+        }
+
+        .btn-add-property:hover {
+            background: #e8680c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(253, 126, 20, 0.3);
+        }
+
+        .btn-next {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .hint {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #856404;
+        }
+
+        .hint-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .frac .num {
+            display: block;
+            border-bottom: 1px solid #333;
+            padding: 0 3px;
+        }
+
+        .frac .den {
+            display: block;
+            padding: 0 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Quiz : Résolution d'équations variées</h1>
+        <p class="subtitle">Tous types d'équations - 3ème</p>
+
+        <div class="score-container">
+            <div class="score-item">
+                <div class="score-label">Réussites</div>
+                <div class="score-value" id="score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">Question</div>
+                <div class="score-value"><span id="current">1</span>/20</div>
+            </div>
+        </div>
+
+        <div class="equation-display" id="equationDisplay"></div>
+        <div class="instruction" id="instruction"></div>
+
+        <div class="columns-container" id="columnsContainer"></div>
+
+        <div id="propertySection" class="property-section" style="display: none;">
+            <input type="text" class="property-input" id="propertyInput" 
+                   placeholder="Propriété utilisée">
+        </div>
+
+        <div style="text-align: center; margin: 10px 0;">
+            <button class="btn-sqrt" id="btnSqrt">√ Insérer √</button>
+            <button class="btn-add-column" id="btnAddColumn">➕ Ajouter 2ème colonne</button>
+            <button class="btn-add-property" id="btnAddProperty">📝 Ajouter propriété</button>
+        </div>
+
+        <div id="messageDiv" class="message" style="display: none;"></div>
+        <div id="hintDiv" class="hint" style="display: none;"></div>
+
+        <div class="buttons">
+            <button class="btn-validate" id="btnValidate">Valider</button>
+            <button class="btn-hint" id="btnHint" style="display: none;">Indice</button>
+            <button class="btn-skip" id="btnSkip">Passer</button>
+            <button class="btn-next" id="btnNext" style="display: none;">Question suivante</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let currentQuestion = 1;
+        const totalQuestions = 20;
+        let currentEquation = null;
+        let questionValidated = false;
+        let hasError = false;
+        let currentLineCount1 = 0;
+        let currentLineCount2 = 0;
+        let currentFactorizationLines = 0;
+        const maxLines = 6;
+
+        // Fonctions utilitaires
+        function gcd(a, b) {
+            a = Math.abs(a);
+            b = Math.abs(b);
+            while (b !== 0) {
+                let t = b;
+                b = a % b;
+                a = t;
+            }
+            return a;
+        }
+
+        function simplifyFraction(num, den) {
+            if (den === 0) return { num: 0, den: 1 };
+            const g = gcd(num, den);
+            num = num / g;
+            den = den / g;
+            if (den < 0) {
+                num = -num;
+                den = -den;
+            }
+            return { num, den };
+        }
+
+        function isPerfectSquareInteger(n) {
+            if (n < 0) return false;
+            if (n === 0 || n === 1) return true;
+            const sqrt = Math.sqrt(n);
+            return Math.abs(sqrt - Math.round(sqrt)) < 0.0001;
+        }
+
+        // Génération des équations
+        function generateEquation() {
+            const types = [
+                'simple',           // ax + b = c
+                'with_x_both',      // ax + b = cx + d
+                'square',           // x² = a
+                'product_null',     // (ax+b)(cx+d) = 0
+                'square_form',      // ax² + b = c
+                'expand_reduce',    // (x+a) + (x+b) = 0 ou (x+a)(x+b) = c ou ax² = bx(c+dx)
+                'factorize',        // x² + ax = 0 (facteur commun) ou x² - k² = 0 (a² - b²)
+                'perfect_square'    // (ax + b)² = 0
+            ];
+
+            const type = types[Math.floor(Math.random() * types.length)];
+            
+            if (type === 'simple') {
+                return generateSimpleEquation();
+            } else if (type === 'with_x_both') {
+                return generateXBothSides();
+            } else if (type === 'square') {
+                return generateSquareEquation();
+            } else if (type === 'product_null') {
+                return generateProductNull();
+            } else if (type === 'square_form') {
+                return generateSquareForm();
+            } else if (type === 'expand_reduce') {
+                return generateExpandReduce();
+            } else if (type === 'factorize') {
+                return generateFactorize();
+            } else {
+                return generatePerfectSquare();
+            }
+        }
+
+        // Type 1: ax + b = c
+        function generateSimpleEquation() {
+            const a = (Math.floor(Math.random() * 10) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            const b = Math.floor(Math.random() * 20) - 10;
+            const x_sol = Math.floor(Math.random() * 10) - 5;
+            const c = a * x_sol + b;
+
+            const solution = simplifyFraction(c - b, a);
+
+            return {
+                type: 'simple',
+                display: `${a}x ${b >= 0 ? '+' : ''} ${b} = ${c}`,
+                instruction: 'Résous l\'équation.',
+                needsProperty: false,
+                needsTwoColumns: false,
+                solution: solution
+            };
+        }
+
+        // Type 2: ax + b = cx + d
+        function generateXBothSides() {
+            const a = Math.floor(Math.random() * 8) + 2;
+            const c = Math.floor(Math.random() * 8) + 2;
+            if (a === c) return generateXBothSides(); // Éviter a = c
+            
+            const b = Math.floor(Math.random() * 15) - 7;
+            const d = Math.floor(Math.random() * 15) - 7;
+
+            const solution = simplifyFraction(d - b, a - c);
+
+            return {
+                type: 'with_x_both',
+                display: `${a}x ${b >= 0 ? '+' : ''} ${b} = ${c}x ${d >= 0 ? '+' : ''} ${d}`,
+                instruction: 'Résous l\'équation.',
+                needsProperty: false,
+                needsTwoColumns: false,
+                solution: solution
+            };
+        }
+
+        // Type 3: x² = a
+        function generateSquareEquation() {
+            const subType = Math.random();
+            
+            if (subType < 0.25) {
+                // Pas de solution
+                const a = -(Math.floor(Math.random() * 15) + 1);
+                return {
+                    type: 'square',
+                    display: `x² = ${a}`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: false,
+                    needsTwoColumns: true,
+                    noSolution: true,
+                    a: a
+                };
+            } else if (subType < 0.4) {
+                // x² = 0
+                return {
+                    type: 'square',
+                    display: `x² = 0`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: false,
+                    needsTwoColumns: true,
+                    oneSolution: true,
+                    solution1: 0,
+                    a: 0
+                };
+            } else {
+                // Deux solutions
+                let a, isPerfectSquare;
+                if (Math.random() < 0.5) {
+                    // Carré parfait
+                    const root = Math.floor(Math.random() * 10) + 1;
+                    a = root * root;
+                    isPerfectSquare = true;
+                } else {
+                    // Non carré parfait
+                    a = Math.floor(Math.random() * 50) + 2;
+                    isPerfectSquare = false;
+                }
+
+                return {
+                    type: 'square',
+                    display: `x² = ${a}`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: false,
+                    needsTwoColumns: true,
+                    twoSolutions: true,
+                    solution1: Math.sqrt(a),
+                    solution2: -Math.sqrt(a),
+                    isPerfectSquare: isPerfectSquare,
+                    a: a
+                };
+            }
+        }
+
+        // Type 4: (ax+b)(cx+d) = 0
+        function generateProductNull() {
+            const usesConstant = Math.random() < 0.3;
+            
+            if (usesConstant) {
+                // Avec facteur constant
+                const k = Math.floor(Math.random() * 7) + 2;
+                const a = Math.floor(Math.random() * 5) + 1;
+                const b = (Math.floor(Math.random() * 10) - 5);
+                const constantFirst = Math.random() < 0.5;
+
+                const solution = simplifyFraction(-b, a);
+
+                if (constantFirst) {
+                    return {
+                        type: 'product_null',
+                        display: `${k}(${a}x ${b >= 0 ? '+' : ''} ${b}) = 0`,
+                        instruction: 'Résous l\'équation.',
+                        needsProperty: true,
+                        needsTwoColumns: true,
+                        singleSolution: true,
+                        constantFactor: k,
+                        constantFirst: true,
+                        solution1: solution
+                    };
+                } else {
+                    return {
+                        type: 'product_null',
+                        display: `(${a}x ${b >= 0 ? '+' : ''} ${b}) × ${k} = 0`,
+                        instruction: 'Résous l\'équation.',
+                        needsProperty: true,
+                        needsTwoColumns: true,
+                        singleSolution: true,
+                        constantFactor: k,
+                        constantFirst: false,
+                        solution1: solution
+                    };
+                }
+            } else {
+                // Deux facteurs avec x
+                const a = Math.floor(Math.random() * 5) + 1;
+                const b = (Math.floor(Math.random() * 10) - 5);
+                const c = Math.floor(Math.random() * 5) + 1;
+                const d = (Math.floor(Math.random() * 10) - 5);
+
+                const solution1 = simplifyFraction(-b, a);
+                const solution2 = simplifyFraction(-d, c);
+
+                return {
+                    type: 'product_null',
+                    display: `(${a}x ${b >= 0 ? '+' : ''} ${b})(${c}x ${d >= 0 ? '+' : ''} ${d}) = 0`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: true,
+                    needsTwoColumns: true,
+                    singleSolution: false,
+                    solution1: solution1,
+                    solution2: solution2
+                };
+            }
+        }
+
+        // Type 5: ax² + b = c (se ramène à x² = ...)
+        function generateSquareForm() {
+            const a = Math.floor(Math.random() * 5) + 1;
+            const x_squared_value = Math.floor(Math.random() * 20) + 1;
+            const b = Math.floor(Math.random() * 15) - 7;
+            const c = a * x_squared_value + b;
+
+            const isPerfect = isPerfectSquareInteger(x_squared_value);
+            
+            return {
+                type: 'square_form',
+                display: `${a}x² ${b >= 0 ? '+' : ''} ${b} = ${c}`,
+                instruction: 'Résous l\'équation.',
+                needsProperty: false,
+                needsTwoColumns: true,
+                a_coef: a,
+                b: b,
+                c: c,
+                x_squared: x_squared_value,
+                solution1: Math.sqrt(x_squared_value),
+                solution2: -Math.sqrt(x_squared_value),
+                isPerfectSquare: isPerfect
+            };
+        }
+
+        // Type 6: Développer et réduire - cas variés
+        function generateExpandReduce() {
+            const subType = Math.random();
+            
+            if (subType < 0.25) {
+                // Type a: (x+a) + (x+b) = 0 (sans multiplication)
+                const a = Math.floor(Math.random() * 10) - 5;
+                const b = Math.floor(Math.random() * 10) - 5;
+                // x + a + x + b = 0 → 2x + (a+b) = 0 → x = -(a+b)/2
+                const solution = simplifyFraction(-(a + b), 2);
+                
+                return {
+                    type: 'expand_reduce',
+                    display: `(x ${a >= 0 ? '+' : ''} ${a}) + (x ${b >= 0 ? '+' : ''} ${b}) = 0`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: false,
+                    needsTwoColumns: false,
+                    subtype: 'sum',
+                    a_val: a,
+                    b_val: b,
+                    solution: solution
+                };
+            } else if (subType < 0.5) {
+                // Type e: (x+a)(x+b) = c
+                const a = Math.floor(Math.random() * 6) - 3;
+                const b = Math.floor(Math.random() * 6) - 3;
+                const c = Math.floor(Math.random() * 10) - 5;
+                
+                // (x+a)(x+b) = x² + (a+b)x + ab = c
+                // x² + (a+b)x + (ab-c) = 0
+                const p = a + b;
+                const q = a * b - c;
+                
+                // Solutions: racines de x² + px + q = 0
+                const delta = p * p - 4 * q;
+                
+                if (delta < 0) {
+                    return generateExpandReduce(); // Pas de solution, régénérer
+                }
+                
+                const sol1 = (-p + Math.sqrt(delta)) / 2;
+                const sol2 = (-p - Math.sqrt(delta)) / 2;
+                
+                return {
+                    type: 'expand_reduce',
+                    display: `(x ${a >= 0 ? '+' : ''} ${a})(x ${b >= 0 ? '+' : ''} ${b}) = ${c}`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: false,
+                    needsTwoColumns: delta > 0,
+                    subtype: 'product_expand',
+                    a_val: a,
+                    b_val: b,
+                    c: c,
+                    solution1: sol1,
+                    solution2: delta > 0 ? sol2 : null,
+                    oneSolution: delta === 0,
+                    twoSolutions: delta > 0
+                };
+            } else if (subType < 0.75) {
+                // Type d: 4x² - 5 = 2x(3 + 2x) → développer et réorganiser
+                const a = Math.floor(Math.random() * 4) + 2; // coefficient de x² à gauche
+                const b = Math.floor(Math.random() * 10) - 5; // constante à gauche
+                const c = Math.floor(Math.random() * 4) + 1; // coefficient devant x à droite
+                const d = Math.floor(Math.random() * 6) - 3; // terme constant dans la parenthèse
+                const e = Math.floor(Math.random() * 3) + 1; // coefficient de x dans la parenthèse
+                
+                // ax² + b = cx(d + ex)
+                // ax² + b = cdx + cex²
+                // ax² - cex² - cdx + b = 0
+                // (a - ce)x² - cdx + b = 0
+                
+                const A = a - c * e;
+                const B = -c * d;
+                const C = b;
+                
+                if (A === 0) return generateExpandReduce(); // Éviter les cas dégénérés
+                
+                const delta = B * B - 4 * A * C;
+                
+                if (delta < 0) {
+                    return generateExpandReduce(); // Pas de solution, régénérer
+                }
+                
+                const sol1 = (-B + Math.sqrt(delta)) / (2 * A);
+                const sol2 = (-B - Math.sqrt(delta)) / (2 * A);
+                
+                return {
+                    type: 'expand_reduce',
+                    display: `${a}x² ${b >= 0 ? '+' : ''} ${b} = ${c}x(${d} ${e >= 0 ? '+' : ''} ${e}x)`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: false,
+                    needsTwoColumns: delta > 0,
+                    subtype: 'both_sides',
+                    solution1: sol1,
+                    solution2: delta > 0 ? sol2 : null,
+                    oneSolution: delta === 0,
+                    twoSolutions: delta > 0
+                };
+            } else {
+                // Type avec (x+a)(x-a) = c → identité remarquable
+                const a = Math.floor(Math.random() * 8) + 1;
+                const x_squared_value = Math.floor(Math.random() * 20) + 1;
+                const c = x_squared_value - a * a;
+                
+                const isPerfect = isPerfectSquareInteger(x_squared_value);
+                
+                return {
+                    type: 'expand_reduce',
+                    display: `(x + ${a})(x - ${a}) = ${c}`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: false,
+                    needsTwoColumns: true,
+                    subtype: 'difference_squares',
+                    a_val: a,
+                    c: c,
+                    x_squared: x_squared_value,
+                    solution1: Math.sqrt(x_squared_value),
+                    solution2: -Math.sqrt(x_squared_value),
+                    isPerfectSquare: isPerfect,
+                    twoSolutions: true
+                };
+            }
+        }
+
+        // Type 7: Factorisation (facteur commun ou a² - b²)
+        function generateFactorize() {
+            const subType = Math.random();
+            
+            if (subType < 0.5) {
+                // Facteur commun : x² + ax = 0 → x(x + a) = 0
+                const a = Math.floor(Math.random() * 10) - 5;
+                if (a === 0) return generateFactorize(); // Éviter a = 0
+                
+                return {
+                    type: 'factorize',
+                    display: `x² ${a >= 0 ? '+' : ''} ${a}x = 0`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: true,
+                    needsTwoColumns: true,
+                    factorType: 'common',
+                    a: a,
+                    solution1: 0,
+                    solution2: -a
+                };
+            } else {
+                // Identité remarquable : x² - k² = 0 → (x - k)(x + k) = 0
+                const k = Math.floor(Math.random() * 10) + 1;
+                
+                return {
+                    type: 'factorize',
+                    display: `x² - ${k * k} = 0`,
+                    instruction: 'Résous l\'équation.',
+                    needsProperty: true,
+                    needsTwoColumns: true,
+                    factorType: 'difference_squares',
+                    k: k,
+                    solution1: k,
+                    solution2: -k
+                };
+            }
+        }
+
+        // Type 8: Carré parfait (ax + b)² = 0
+        function generatePerfectSquare() {
+            const a = Math.floor(Math.random() * 5) + 1; // 1 à 5
+            const b = Math.floor(Math.random() * 10) - 5; // -5 à 4
+            
+            // (ax + b)² = 0 → ax + b = 0 → x = -b/a
+            const solution = simplifyFraction(-b, a);
+            
+            return {
+                type: 'perfect_square',
+                display: `(${a}x ${b >= 0 ? '+' : ''} ${b})² = 0`,
+                instruction: 'Résous l\'équation.',
+                needsProperty: false,
+                needsTwoColumns: false,
+                a: a,
+                b: b,
+                solution: solution
+            };
+        }
+
+        // Créer l'interface
+        function createSteps() {
+            const container = document.getElementById('columnsContainer');
+            container.innerHTML = '';
+            currentLineCount1 = 0;
+            currentLineCount2 = 0;
+            currentFactorizationLines = 0;
+
+            // Pour TOUS les types : démarrer avec une seule colonne
+            // L'élève décide lui-même d'ajouter la 2ème colonne et/ou la propriété
+            const html = `
+                <div class="column">
+                    <div class="steps-container" id="stepsContainer1"></div>
+                    <button class="add-step-btn" id="btnAddStep1">➕ Ajouter une ligne</button>
+                </div>
+            `;
+            container.innerHTML = html;
+
+            addLine(1);
+
+            document.getElementById('btnAddStep1').addEventListener('click', () => addIntermediateStep(1));
+            
+            // Afficher les boutons d'ajout pour tous les types
+            document.getElementById('btnAddColumn').style.display = 'inline-block';
+            document.getElementById('btnAddProperty').style.display = 'inline-block';
+        }
+
+        function showSecondColumn() {
+            const container = document.getElementById('columnsContainer');
+            
+            // Vérifier si la 2ème colonne existe déjà
+            if (document.getElementById('stepsContainer2')) {
+                showMessage('La 2ème colonne est déjà affichée.', 'error');
+                setTimeout(() => {
+                    document.getElementById('messageDiv').style.display = 'none';
+                }, 2000);
+                return;
+            }
+            
+            // Sauvegarder le contenu de la colonne 1 (qui devient la partie commune)
+            const stepsContainer1 = document.getElementById('stepsContainer1');
+            
+            // Sauvegarder les valeurs des inputs
+            const inputValues = [];
+            const inputs = stepsContainer1.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => {
+                inputValues.push({
+                    id: input.id,
+                    value: input.value,
+                    className: input.className
+                });
+            });
+            
+            // Compter combien de lignes sont dans la partie commune
+            const commonLineCount = currentLineCount1;
+            
+            // Recréer l'interface avec section commune AU-DESSUS + 2 colonnes EN DESSOUS
+            const html = `
+                <div style="display: flex; flex-direction: column; width: 100%;">
+                    <div class="common-section">
+                        <div class="steps-container" id="commonStepsContainer"></div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 20px; margin: 20px 0;">
+                        <div class="column">
+                            <div class="steps-container" id="stepsContainer1"></div>
+                            <button class="add-step-btn" id="btnAddStep1">➕ Ajouter une ligne</button>
+                        </div>
+                        
+                        <div class="separators-container" id="separatorsContainer"></div>
+                        
+                        <div class="column">
+                            <div class="steps-container" id="stepsContainer2"></div>
+                            <button class="add-step-btn" id="btnAddStep2">➕ Ajouter une ligne</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+            
+            // Recréer les inputs dans la section commune avec leurs valeurs
+            const commonContainer = document.getElementById('commonStepsContainer');
+            inputValues.forEach(inputData => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'step';
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = inputData.id;
+                input.value = inputData.value;
+                input.className = inputData.className;
+                input.placeholder = '...';
+                stepDiv.appendChild(input);
+                commonContainer.appendChild(stepDiv);
+            });
+            
+            // Continuer la numérotation après les lignes communes
+            // Les nouvelles lignes auront les IDs suivants
+            currentLineCount1 = commonLineCount;
+            currentLineCount2 = commonLineCount;
+            
+            // Ajouter une première ligne à chaque colonne
+            addLine(1);
+            addLine(2);
+            updateSeparators();
+            
+            // Reconnecter les événements
+            document.getElementById('btnAddStep1').addEventListener('click', () => addIntermediateStep(1));
+            document.getElementById('btnAddStep2').addEventListener('click', () => addIntermediateStep(2));
+            
+            // Masquer le bouton "Ajouter 2ème colonne"
+            document.getElementById('btnAddColumn').style.display = 'none';
+        }
+
+        function showPropertySection() {
+            const propertySection = document.getElementById('propertySection');
+            
+            if (propertySection.style.display === 'block') {
+                showMessage('La propriété est déjà affichée.', 'error');
+                setTimeout(() => {
+                    document.getElementById('messageDiv').style.display = 'none';
+                }, 2000);
+                return;
+            }
+            
+            propertySection.style.display = 'block';
+            
+            // Masquer le bouton "Ajouter propriété"
+            document.getElementById('btnAddProperty').style.display = 'none';
+            
+            // Focus sur le champ propriété
+            document.getElementById('propertyInput').focus();
+        }
+
+        function addLine(column) {
+            const container = document.getElementById(`stepsContainer${column}`);
+            if (!container) return;
+
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'step';
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            if (column === 1) {
+                input.id = `line1_${currentLineCount1}`;
+                currentLineCount1++;
+            } else {
+                input.id = `line2_${currentLineCount2}`;
+                currentLineCount2++;
+            }
+            input.placeholder = '...';
+
+            stepDiv.appendChild(input);
+            container.appendChild(stepDiv);
+
+            if (currentEquation.needsTwoColumns) {
+                updateSeparators();
+            }
+        }
+
+        function addIntermediateStep(column) {
+            const count = column === 1 ? currentLineCount1 : currentLineCount2;
+            if (count >= maxLines) {
+                showMessage(`Maximum de ${maxLines} lignes atteint.`, 'error');
+                setTimeout(() => {
+                    document.getElementById('messageDiv').style.display = 'none';
+                }, 2000);
+                return;
+            }
+
+            addLine(column);
+        }
+
+        function updateSeparators() {
+            const container = document.getElementById('separatorsContainer');
+            if (!container) return;
+
+            // Compter les lignes dans chaque colonne (pas dans la section commune)
+            const stepsContainer1 = document.getElementById('stepsContainer1');
+            const stepsContainer2 = document.getElementById('stepsContainer2');
+            
+            const count1 = stepsContainer1 ? stepsContainer1.querySelectorAll('.step').length : 0;
+            const count2 = stepsContainer2 ? stepsContainer2.querySelectorAll('.step').length : 0;
+            
+            const maxCount = Math.max(count1, count2);
+            container.innerHTML = '';
+
+            for (let i = 0; i < maxCount; i++) {
+                const sep = document.createElement('div');
+                sep.className = 'separator';
+                sep.textContent = 'ou';
+                container.appendChild(sep);
+            }
+        }
+
+        function insertSqrt() {
+            const activeElement = document.activeElement;
+            if (activeElement && activeElement.tagName === 'INPUT') {
+                const start = activeElement.selectionStart;
+                const end = activeElement.selectionEnd;
+                const text = activeElement.value;
+                activeElement.value = text.substring(0, start) + '√' + text.substring(end);
+                activeElement.selectionStart = activeElement.selectionEnd = start + 1;
+                activeElement.focus();
+            }
+        }
+
+        // Vérifications selon le type
+        function checkProperty(input) {
+            const cleaned = input.toLowerCase().trim().replace(/\s+/g, '');
+            return cleaned.includes('produittest') || 
+                   cleaned.includes('produitestvide') ||
+                   cleaned.includes('produitnul') ||
+                   (cleaned.includes('produit') && cleaned.includes('nul')) ||
+                   (cleaned.includes('produit') && cleaned.includes('facteur'));
+        }
+
+        function checkNoSolution(inputs) {
+            let lastFilledIndex = -1;
+            for (let i = inputs.length - 1; i >= 0; i--) {
+                if (inputs[i].value.trim()) {
+                    lastFilledIndex = i;
+                    break;
+                }
+            }
+
+            if (lastFilledIndex === -1) return false;
+
+            const lastInput = inputs[lastFilledIndex].value.toLowerCase().trim().replace(/\s+/g, '');
+            
+            return lastInput.includes('impossible') || 
+                   lastInput.includes('pasdesolution') || 
+                   lastInput.includes('aucunesolution') ||
+                   lastInput.includes('aucune');
+        }
+
+        function checkSolutionSimple(inputs, expectedValue) {
+            // Pour équations du premier degré et x² = 0
+            let lastFilledIndex = -1;
+            for (let i = inputs.length - 1; i >= 0; i--) {
+                if (inputs[i].value.trim()) {
+                    lastFilledIndex = i;
+                    break;
+                }
+            }
+
+            if (lastFilledIndex === -1) return { found: false, exact: false };
+
+            const input = inputs[lastFilledIndex].value.trim().replace(/\s+/g, '');
+            
+            // Format x = valeur (avec virgule)
+            let match = input.match(/^x=([+-]?\d+,?\d*)$/);
+            if (match) {
+                const valueStr = match[1].replace(',', '.');
+                const value = parseFloat(valueStr);
+                
+                if (typeof expectedValue === 'number') {
+                    if (Math.abs(value - expectedValue) < 0.0001) {
+                        return { found: true, exact: true };
+                    }
+                } else {
+                    // expectedValue est une fraction
+                    const expectedNum = expectedValue.num / expectedValue.den;
+                    if (Math.abs(value - expectedNum) < 0.0001) {
+                        return { found: true, exact: true };
+                    }
+                }
+            }
+
+            // Format x = fraction
+            match = input.match(/^x=([+-]?\d+)\/(\d+)$/);
+            if (match) {
+                const num = parseInt(match[1]);
+                const den = parseInt(match[2]);
+                const simplified = simplifyFraction(num, den);
+                
+                if (typeof expectedValue === 'number') {
+                    const value = num / den;
+                    if (Math.abs(value - expectedValue) < 0.0001) {
+                        return { found: true, exact: true };
+                    }
+                } else {
+                    if (simplified.num === expectedValue.num && simplified.den === expectedValue.den) {
+                        return { found: true, exact: true };
+                    }
+                }
+            }
+
+            return { found: false, exact: false };
+        }
+
+        function checkSolutionSquare(inputs, expectedValue) {
+            // Pour x² = a
+            let lastFilledIndex = -1;
+            for (let i = inputs.length - 1; i >= 0; i--) {
+                if (inputs[i].value.trim()) {
+                    lastFilledIndex = i;
+                    break;
+                }
+            }
+
+            if (lastFilledIndex === -1) return { found: false, exact: false };
+
+            const input = inputs[lastFilledIndex].value.trim().replace(/\s+/g, '');
+            
+            // Format x = valeur décimale (avec virgule)
+            let match = input.match(/^x=([+-]?\d+,?\d*)$/);
+            if (match) {
+                const valueStr = match[1].replace(',', '.');
+                const value = parseFloat(valueStr);
+                if (Math.abs(value - expectedValue) < 0.0001) {
+                    return { found: true, exact: true };
+                }
+            }
+
+            // Format x = √a ou x = -√a
+            match = input.match(/^x=([+-]?)√(\d+,?\d*)$/);
+            if (match) {
+                const sign = match[1] === '-' ? -1 : 1;
+                const radicandStr = match[2].replace(',', '.');
+                const radicand = parseFloat(radicandStr);
+                
+                // Vérifier si c'est un carré parfait qu'on doit simplifier
+                const sqrtRadicand = Math.sqrt(radicand);
+                
+                if (isPerfectSquareInteger(radicand)) {
+                    return { found: false, exact: false }; // Refuser √1, √4, etc.
+                }
+                
+                const rounded = Math.round(sqrtRadicand * 100) / 100;
+                if (Math.abs(sqrtRadicand - rounded) < 0.0001) {
+                    return { found: false, exact: false }; // Carré parfait décimal
+                }
+                
+                const value = sign * Math.sqrt(radicand);
+                if (Math.abs(value - expectedValue) < 0.0001) {
+                    return { found: true, exact: false };
+                }
+            }
+
+            return { found: false, exact: false };
+        }
+
+        function checkConstantFactorColumn(inputs, constantFactor) {
+            let lastFilledIndex = -1;
+            for (let i = inputs.length - 1; i >= 0; i--) {
+                if (inputs[i].value.trim()) {
+                    lastFilledIndex = i;
+                    break;
+                }
+            }
+
+            if (lastFilledIndex === -1) return false;
+
+            // Vérifier toutes les lignes
+            for (let i = 0; i <= lastFilledIndex; i++) {
+                const line = inputs[i].value.toLowerCase().trim().replace(/\s+/g, '');
+                if (line.includes(constantFactor + '=0') || line.includes(constantFactor + 'égal0')) {
+                    // Vérifier aussi "impossible"
+                    if (line.includes('impossible') || line.includes('aucune') || line.includes('pasdesolution')) {
+                        return true;
+                    }
+                }
+            }
+
+            // Vérifier dernière ligne
+            const lastLine = inputs[lastFilledIndex].value.toLowerCase().trim().replace(/\s+/g, '');
+            return lastLine.includes('impossible') || lastLine.includes('aucune') || lastLine.includes('pasdesolution');
+        }
+
+        function validate() {
+            if (questionValidated) return;
+            
+            // Récupérer TOUS les inputs de colonne 1 (commune + colonne)
+            const allInputs1 = [];
+            let i = 0;
+            while (true) {
+                const input = document.getElementById(`line1_${i}`);
+                if (!input) break;
+                allInputs1.push(input);
+                i++;
+            }
+
+            // Récupérer TOUS les inputs de colonne 2
+            const allInputs2 = [];
+            i = 0;
+            while (true) {
+                const input = document.getElementById(`line2_${i}`);
+                if (!input) break;
+                allInputs2.push(input);
+                i++;
+            }
+            
+            // Séparer les inputs de la section commune et des colonnes
+            const commonContainer = document.getElementById('commonStepsContainer');
+            const commonInputs = commonContainer ? Array.from(commonContainer.querySelectorAll('input[type="text"]')) : [];
+            
+            const stepsContainer1 = document.getElementById('stepsContainer1');
+            const inputs1 = stepsContainer1 ? Array.from(stepsContainer1.querySelectorAll('input[type="text"]')) : allInputs1;
+            
+            const stepsContainer2 = document.getElementById('stepsContainer2');
+            const inputs2 = stepsContainer2 ? Array.from(stepsContainer2.querySelectorAll('input[type="text"]')) : [];
+
+            let allCorrect = false;
+            const eq = currentEquation;
+
+            // D'abord, colorer tous les inputs de la section commune en vert
+            commonInputs.forEach(input => {
+                if (input.value.trim()) {
+                    input.className = 'correct';
+                }
+            });
+
+            // Validation selon le type (utiliser allInputs1 et allInputs2 pour la validation complète)
+            if (eq.type === 'simple' || eq.type === 'with_x_both') {
+                // Une seule solution
+                const result = checkSolutionSimple(allInputs1, eq.solution);
+                
+                if (result.found) {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    allCorrect = true;
+                } else {
+                    hasError = true;
+                    document.getElementById('btnHint').style.display = 'inline-block';
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'incorrect';
+                    });
+                    showMessage('❌ La solution n\'est pas correcte. Réessaie !', 'error');
+                }
+            
+            } else if (eq.type === 'square') {
+                // Équations x² = a
+                if (eq.noSolution) {
+                    const result = checkNoSolution(allInputs1);
+                    if (result) {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        allCorrect = true;
+                    } else {
+                        hasError = true;
+                        document.getElementById('btnHint').style.display = 'inline-block';
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                        showMessage('❌ Écris "impossible" ou "pas de solution".', 'error');
+                    }
+                } else if (eq.oneSolution) {
+                    const result = checkSolutionSquare(allInputs1, 0);
+                    if (result.found) {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        allCorrect = true;
+                    } else {
+                        hasError = true;
+                        document.getElementById('btnHint').style.display = 'inline-block';
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                        showMessage('❌ La solution est x = 0.', 'error');
+                    }
+                } else {
+                    // Deux solutions
+                    const result1 = checkSolutionSquare(allInputs1, eq.solution1);
+                    const result2 = checkSolutionSquare(allInputs2, eq.solution2);
+                    const result1Alt = checkSolutionSquare(allInputs1, eq.solution2);
+                    const result2Alt = checkSolutionSquare(allInputs2, eq.solution1);
+
+                    if ((result1.found && result2.found) || (result1Alt.found && result2Alt.found)) {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        inputs2.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        allCorrect = true;
+                    } else {
+                        hasError = true;
+                        document.getElementById('btnHint').style.display = 'inline-block';
+                        
+                        if (result1.found || result1Alt.found) {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                        } else {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                        }
+                        
+                        if (result2.found || result2Alt.found) {
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                        } else {
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                        }
+                        
+                        showMessage('❌ Erreur dans une ou plusieurs colonnes.', 'error');
+                    }
+                }
+            } else if (eq.type === 'product_null') {
+                // Vérifier la propriété si elle est visible
+                const propertyInput = document.getElementById('propertyInput');
+                const propertySection = document.getElementById('propertySection');
+                let propertyCorrect = true;
+                
+                if (propertySection.style.display !== 'none' && propertyInput.value.trim()) {
+                    propertyCorrect = checkProperty(propertyInput.value);
+                    if (propertyCorrect) {
+                        propertyInput.className = 'property-input correct';
+                    } else {
+                        propertyInput.className = 'property-input incorrect';
+                    }
+                }
+
+                if (eq.singleSolution) {
+                    // Une solution + facteur constant
+                    let solutionInputs, constantInputs;
+                    
+                    if (eq.constantFirst) {
+                        constantInputs = inputs1;
+                        solutionInputs = inputs2;
+                    } else {
+                        solutionInputs = inputs1;
+                        constantInputs = inputs2;
+                    }
+                    
+                    const resultSolution = checkSolutionSimple(solutionInputs, eq.solution1);
+                    const resultConstant = checkConstantFactorColumn(constantInputs, eq.constantFactor);
+                    
+                    if (resultSolution.found) {
+                        solutionInputs.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                    } else {
+                        solutionInputs.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                    }
+                    
+                    if (resultConstant) {
+                        constantInputs.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                    } else {
+                        constantInputs.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                    }
+                    
+                    if (propertyCorrect && resultSolution.found && resultConstant) {
+                        allCorrect = true;
+                    } else {
+                        hasError = true;
+                        document.getElementById('btnHint').style.display = 'inline-block';
+                        showMessage('❌ Erreur dans la propriété ou les solutions.', 'error');
+                    }
+                } else {
+                    // Deux solutions
+                    const result1 = checkSolutionSimple(allInputs1, eq.solution1);
+                    const result2 = checkSolutionSimple(allInputs2, eq.solution2);
+                    const result1Alt = checkSolutionSimple(allInputs1, eq.solution2);
+                    const result2Alt = checkSolutionSimple(allInputs2, eq.solution1);
+
+                    if ((result1.found && result2.found) || (result1Alt.found && result2Alt.found)) {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        inputs2.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        
+                        if (propertyCorrect) {
+                            allCorrect = true;
+                        } else {
+                            hasError = true;
+                            document.getElementById('btnHint').style.display = 'inline-block';
+                            showMessage('❌ Solutions correctes mais propriété incorrecte.', 'error');
+                        }
+                    } else {
+                        hasError = true;
+                        document.getElementById('btnHint').style.display = 'inline-block';
+                        
+                        if (result1.found || result1Alt.found) {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                        } else {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                        }
+                        
+                        if (result2.found || result2Alt.found) {
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                        } else {
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                        }
+                        
+                        showMessage('❌ Erreur dans la propriété ou les solutions.', 'error');
+                    }
+                }
+            
+            } else if (eq.type === 'factorize') {
+                // Vérifier la propriété si elle est visible
+                const propertyInput = document.getElementById('propertyInput');
+                const propertySection = document.getElementById('propertySection');
+                let propertyCorrect = true;
+                
+                if (propertySection.style.display !== 'none' && propertyInput.value.trim()) {
+                    propertyCorrect = checkProperty(propertyInput.value);
+                    if (propertyCorrect) {
+                        propertyInput.className = 'property-input correct';
+                    } else {
+                        propertyInput.className = 'property-input incorrect';
+                    }
+                }
+                
+                // Vérifier les solutions
+                const result1 = checkSolutionSimple(allInputs1, eq.solution1);
+                const result2 = checkSolutionSimple(allInputs2, eq.solution2);
+                const result1Alt = checkSolutionSimple(allInputs1, eq.solution2);
+                const result2Alt = checkSolutionSimple(allInputs2, eq.solution1);
+
+                if ((result1.found && result2.found) || (result1Alt.found && result2Alt.found)) {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    inputs2.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    
+                    if (propertyCorrect) {
+                        allCorrect = true;
+                    } else {
+                        hasError = true;
+                        document.getElementById('btnHint').style.display = 'inline-block';
+                        showMessage('❌ Solutions correctes mais propriété incorrecte.', 'error');
+                    }
+                } else {
+                    hasError = true;
+                    document.getElementById('btnHint').style.display = 'inline-block';
+                        
+                        if (result1.found || result1Alt.found) {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                        } else {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                        }
+                        
+                        if (result2.found || result2Alt.found) {
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                        } else {
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                        }
+                        
+                        showMessage('❌ Erreur dans la propriété ou les solutions.', 'error');
+                    }
+                
+            } else if (eq.type === 'square_form') {
+                // ax² + b = c
+                const result1 = checkSolutionSquare(allInputs1, eq.solution1);
+                const result2 = checkSolutionSquare(allInputs2, eq.solution2);
+                const result1Alt = checkSolutionSquare(allInputs1, eq.solution2);
+                const result2Alt = checkSolutionSquare(allInputs2, eq.solution1);
+
+                if ((result1.found && result2.found) || (result1Alt.found && result2Alt.found)) {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    inputs2.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    allCorrect = true;
+                } else {
+                    hasError = true;
+                    document.getElementById('btnHint').style.display = 'inline-block';
+                    
+                    if (result1.found || result1Alt.found) {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                    } else {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                    }
+                    
+                    if (result2.found || result2Alt.found) {
+                        inputs2.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                    } else {
+                        inputs2.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                    }
+                    
+                    showMessage('❌ Erreur dans une ou plusieurs solutions.', 'error');
+                }
+                
+            } else if (eq.type === 'expand_reduce') {
+                // Différents sous-types de développement
+                if (eq.subtype === 'sum') {
+                    // (x+a) + (x+b) = 0 → une seule solution
+                    const result = checkSolutionSimple(allInputs1, eq.solution);
+                    
+                    if (result.found) {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        allCorrect = true;
+                    } else {
+                        hasError = true;
+                        document.getElementById('btnHint').style.display = 'inline-block';
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'incorrect';
+                        });
+                        showMessage('❌ La solution n\'est pas correcte.', 'error');
+                    }
+                } else if (eq.subtype === 'difference_squares') {
+                    // (x+a)(x-a) = c → deux solutions avec x²
+                    const result1 = checkSolutionSquare(allInputs1, eq.solution1);
+                    const result2 = checkSolutionSquare(allInputs2, eq.solution2);
+                    const result1Alt = checkSolutionSquare(allInputs1, eq.solution2);
+                    const result2Alt = checkSolutionSquare(allInputs2, eq.solution1);
+
+                    if ((result1.found && result2.found) || (result1Alt.found && result2Alt.found)) {
+                        inputs1.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        inputs2.forEach(input => {
+                            if (input.value.trim()) input.className = 'correct';
+                        });
+                        allCorrect = true;
+                    } else {
+                        hasError = true;
+                        document.getElementById('btnHint').style.display = 'inline-block';
+                        
+                        if (result1.found || result1Alt.found) {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                        } else {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                        }
+                        
+                        if (result2.found || result2Alt.found) {
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                        } else {
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                        }
+                        
+                        showMessage('❌ Erreur dans une ou plusieurs solutions.', 'error');
+                    }
+                } else {
+                    // product_expand ou both_sides → peuvent avoir 1 ou 2 solutions
+                    if (eq.oneSolution) {
+                        const result = checkSolutionSimple(allInputs1, eq.solution1);
+                        
+                        if (result.found) {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                            allCorrect = true;
+                        } else {
+                            hasError = true;
+                            document.getElementById('btnHint').style.display = 'inline-block';
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'incorrect';
+                            });
+                            showMessage('❌ La solution n\'est pas correcte.', 'error');
+                        }
+                    } else {
+                        const result1 = checkSolutionSimple(allInputs1, eq.solution1);
+                        const result2 = checkSolutionSimple(allInputs2, eq.solution2);
+                        const result1Alt = checkSolutionSimple(allInputs1, eq.solution2);
+                        const result2Alt = checkSolutionSimple(allInputs2, eq.solution1);
+
+                        if ((result1.found && result2.found) || (result1Alt.found && result2Alt.found)) {
+                            inputs1.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                            inputs2.forEach(input => {
+                                if (input.value.trim()) input.className = 'correct';
+                            });
+                            allCorrect = true;
+                        } else {
+                            hasError = true;
+                            document.getElementById('btnHint').style.display = 'inline-block';
+                            
+                            if (result1.found || result1Alt.found) {
+                                inputs1.forEach(input => {
+                                    if (input.value.trim()) input.className = 'correct';
+                                });
+                            } else {
+                                inputs1.forEach(input => {
+                                    if (input.value.trim()) input.className = 'incorrect';
+                                });
+                            }
+                            
+                            if (result2.found || result2Alt.found) {
+                                inputs2.forEach(input => {
+                                    if (input.value.trim()) input.className = 'correct';
+                                });
+                            } else {
+                                inputs2.forEach(input => {
+                                    if (input.value.trim()) input.className = 'incorrect';
+                                });
+                            }
+                            
+                            showMessage('❌ Erreur dans une ou plusieurs solutions.', 'error');
+                        }
+                    }
+                }
+            } else if (eq.type === 'perfect_square') {
+                // (ax + b)² = 0 → une seule solution
+                const result = checkSolutionSimple(allInputs1, eq.solution);
+                
+                if (result.found) {
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'correct';
+                    });
+                    allCorrect = true;
+                } else {
+                    hasError = true;
+                    document.getElementById('btnHint').style.display = 'inline-block';
+                    inputs1.forEach(input => {
+                        if (input.value.trim()) input.className = 'incorrect';
+                    });
+                    showMessage('❌ La solution n\'est pas correcte.', 'error');
+                }
+            }
+
+            // Si tout est correct
+            if (allCorrect) {
+                if (!hasError) {
+                    score++;
+                    document.getElementById('score').textContent = score;
+                    showMessage('🎉 Bravo ! C\'est correct !', 'success');
+                } else {
+                    showMessage('✅ C\'est correct ! (pas de point car il y a eu une erreur)', 'success');
+                }
+                
+                questionValidated = true;
+                document.getElementById('btnValidate').style.display = 'none';
+                document.getElementById('btnHint').style.display = 'none';
+                document.getElementById('btnSkip').style.display = 'none';
+                const btn1 = document.getElementById('btnAddStep1');
+                const btn2 = document.getElementById('btnAddStep2');
+                const btnFact = document.getElementById('btnAddFactorization');
+                if (btn1) btn1.style.display = 'none';
+                if (btn2) btn2.style.display = 'none';
+                if (btnFact) btnFact.style.display = 'none';
+                document.getElementById('btnNext').style.display = 'inline-block';
+            }
+        }
+
+        function showHint() {
+            const eq = currentEquation;
+            const hintDiv = document.getElementById('hintDiv');
+            
+            let hint = '<div class="hint-title">💡 Indice :</div>';
+            
+            if (eq.type === 'simple' || eq.type === 'with_x_both') {
+                const sol = eq.solution;
+                hint += `La solution est : x = ${sol.den === 1 ? sol.num : sol.num + '/' + sol.den}`;
+            } else if (eq.type === 'square') {
+                if (eq.noSolution) {
+                    hint += `x² = ${eq.a} n'a pas de solution car un carré est toujours positif ou nul.`;
+                } else if (eq.oneSolution) {
+                    hint += `x² = 0 a une seule solution : x = 0`;
+                } else {
+                    if (eq.isPerfectSquare) {
+                        hint += `Les solutions sont : x = ${Math.sqrt(eq.a)} ou x = ${-Math.sqrt(eq.a)}`;
+                    } else {
+                        hint += `Les solutions sont : x = √${eq.a} ou x = -√${eq.a}`;
+                    }
+                }
+            } else if (eq.type === 'product_null') {
+                hint += `Propriété : Un produit est nul si et seulement si au moins un de ses facteurs est nul.<br>`;
+                if (eq.singleSolution) {
+                    const sol = eq.solution1;
+                    hint += `Solution : x = ${sol.den === 1 ? sol.num : sol.num + '/' + sol.den}`;
+                } else {
+                    const sol1 = eq.solution1;
+                    const sol2 = eq.solution2;
+                    if (typeof sol1 === 'number' && typeof sol2 === 'number') {
+                        hint += `Solutions : x = ${sol1} ou x = ${sol2}`;
+                    } else {
+                        const s1 = typeof sol1 === 'number' ? sol1 : (sol1.den === 1 ? sol1.num : sol1.num + '/' + sol1.den);
+                        const s2 = typeof sol2 === 'number' ? sol2 : (sol2.den === 1 ? sol2.num : sol2.num + '/' + sol2.den);
+                        hint += `Solutions : x = ${s1} ou x = ${s2}`;
+                    }
+                }
+            } else if (eq.type === 'factorize') {
+                hint += `Propriété : Un produit est nul si et seulement si au moins un de ses facteurs est nul.<br>`;
+                if (eq.factorType === 'common') {
+                    hint += `Facteur commun : x² ${eq.a >= 0 ? '+' : ''} ${eq.a}x = x(x ${eq.a >= 0 ? '+' : ''} ${eq.a})<br>`;
+                } else {
+                    hint += `Identité a² - b² : x² - ${eq.k * eq.k} = (x - ${eq.k})(x + ${eq.k})<br>`;
+                }
+                hint += `Solutions : x = ${eq.solution1} ou x = ${eq.solution2}`;
+            } else if (eq.type === 'square_form') {
+                hint += `Transforme en x² = ${eq.x_squared}<br>`;
+                if (eq.isPerfectSquare) {
+                    hint += `Solutions : x = ${Math.sqrt(eq.x_squared)} ou x = ${-Math.sqrt(eq.x_squared)}`;
+                } else {
+                    hint += `Solutions : x = √${eq.x_squared} ou x = -√${eq.x_squared}`;
+                }
+            } else if (eq.type === 'expand_reduce') {
+                if (eq.subtype === 'sum') {
+                    const sol = eq.solution;
+                    const sum = eq.a_val + eq.b_val;
+                    hint += `Développe : 2x ${sum >= 0 ? '+' : ''} ${sum} = 0<br>`;
+                    hint += `Solution : x = ${sol.den === 1 ? sol.num : sol.num + '/' + sol.den}`;
+                } else if (eq.subtype === 'difference_squares') {
+                    hint += `Développe avec (a+b)(a-b) = a² - b² : x² - ${eq.a_val * eq.a_val} = ${eq.c}<br>`;
+                    hint += `Donc x² = ${eq.x_squared}<br>`;
+                    if (eq.isPerfectSquare) {
+                        hint += `Solutions : x = ${Math.sqrt(eq.x_squared)} ou x = ${-Math.sqrt(eq.x_squared)}`;
+                    } else {
+                        hint += `Solutions : x = √${eq.x_squared} ou x = -√${eq.x_squared}`;
+                    }
+                } else {
+                    if (eq.oneSolution) {
+                        hint += `Solution : x = ${typeof eq.solution1 === 'number' ? eq.solution1.toFixed(2) : eq.solution1}`;
+                    } else {
+                        hint += `Solutions : x = ${typeof eq.solution1 === 'number' ? eq.solution1.toFixed(2) : eq.solution1} ou x = ${typeof eq.solution2 === 'number' ? eq.solution2.toFixed(2) : eq.solution2}`;
+                    }
+                }
+            } else if (eq.type === 'perfect_square') {
+                const sol = eq.solution;
+                hint += `Si A² = 0 alors A = 0<br>`;
+                hint += `Donc ${eq.a}x ${eq.b >= 0 ? '+' : ''} ${eq.b} = 0<br>`;
+                hint += `Solution : x = ${sol.den === 1 ? sol.num : sol.num + '/' + sol.den}`;
+            }
+            
+            hintDiv.innerHTML = hint;
+            hintDiv.style.display = 'block';
+        }
+
+        function showCorrection() {
+            const eq = currentEquation;
+            const hintDiv = document.getElementById('hintDiv');
+            
+            let correction = '<div class="hint-title">📝 Correction :</div>';
+            
+            if (eq.needsProperty) {
+                correction += '<strong>Propriété :</strong> Un produit est nul si et seulement si au moins un de ses facteurs est nul.<br><br>';
+            }
+            
+            if (eq.type === 'simple' || eq.type === 'with_x_both') {
+                const sol = eq.solution;
+                correction += `<strong>Solution :</strong> x = ${sol.den === 1 ? sol.num : sol.num + '/' + sol.den}`;
+            } else if (eq.type === 'square') {
+                if (eq.noSolution) {
+                    correction += `x² = ${eq.a} n'a pas de solution car un carré est toujours positif ou nul.<br>`;
+                    correction += `<strong>Réponse :</strong> Impossible`;
+                } else if (eq.oneSolution) {
+                    correction += `<strong>Solution :</strong> x = 0`;
+                } else {
+                    if (eq.isPerfectSquare) {
+                        correction += `<strong>Solutions :</strong> x = ${Math.sqrt(eq.a)} ou x = ${-Math.sqrt(eq.a)}`;
+                    } else {
+                        correction += `<strong>Solutions :</strong> x = √${eq.a} ou x = -√${eq.a}`;
+                    }
+                }
+            } else if (eq.type === 'product_null') {
+                if (eq.singleSolution) {
+                    const sol = eq.solution1;
+                    correction += `<strong>Solution :</strong> x = ${sol.den === 1 ? sol.num : sol.num + '/' + sol.den}`;
+                } else {
+                    const sol1 = eq.solution1;
+                    const sol2 = eq.solution2;
+                    if (typeof sol1 === 'number' && typeof sol2 === 'number') {
+                        correction += `<strong>Solutions :</strong> x = ${sol1} ou x = ${sol2}`;
+                    } else {
+                        const s1 = typeof sol1 === 'number' ? sol1 : (sol1.den === 1 ? sol1.num : sol1.num + '/' + sol1.den);
+                        const s2 = typeof sol2 === 'number' ? sol2 : (sol2.den === 1 ? sol2.num : sol2.num + '/' + sol2.den);
+                        correction += `<strong>Solutions :</strong> x = ${s1} ou x = ${s2}`;
+                    }
+                }
+            } else if (eq.type === 'factorize') {
+                if (eq.factorType === 'common') {
+                    correction += `<strong>Factorisation :</strong> x² ${eq.a >= 0 ? '+' : ''} ${eq.a}x = x(x ${eq.a >= 0 ? '+' : ''} ${eq.a})<br>`;
+                } else {
+                    correction += `<strong>Factorisation :</strong> x² - ${eq.k * eq.k} = (x - ${eq.k})(x + ${eq.k})<br>`;
+                }
+                correction += `<strong>Solutions :</strong> x = ${eq.solution1} ou x = ${eq.solution2}`;
+            } else if (eq.type === 'square_form') {
+                correction += `Transforme en x² = ${eq.x_squared}<br>`;
+                if (eq.isPerfectSquare) {
+                    correction += `<strong>Solutions :</strong> x = ${Math.sqrt(eq.x_squared)} ou x = ${-Math.sqrt(eq.x_squared)}`;
+                } else {
+                    correction += `<strong>Solutions :</strong> x = √${eq.x_squared} ou x = -√${eq.x_squared}`;
+                }
+            } else if (eq.type === 'expand_reduce') {
+                if (eq.subtype === 'sum') {
+                    const sol = eq.solution;
+                    const sum = eq.a_val + eq.b_val;
+                    correction += `<strong>Développement :</strong> x ${eq.a_val >= 0 ? '+' : ''} ${eq.a_val} + x ${eq.b_val >= 0 ? '+' : ''} ${eq.b_val} = 0<br>`;
+                    correction += `2x ${sum >= 0 ? '+' : ''} ${sum} = 0<br>`;
+                    correction += `<strong>Solution :</strong> x = ${sol.den === 1 ? sol.num : sol.num + '/' + sol.den}`;
+                } else if (eq.subtype === 'difference_squares') {
+                    correction += `<strong>Développement :</strong> (x + ${eq.a_val})(x - ${eq.a_val}) = x² - ${eq.a_val * eq.a_val} = ${eq.c}<br>`;
+                    correction += `Donc x² = ${eq.x_squared}<br>`;
+                    if (eq.isPerfectSquare) {
+                        correction += `<strong>Solutions :</strong> x = ${Math.sqrt(eq.x_squared)} ou x = ${-Math.sqrt(eq.x_squared)}`;
+                    } else {
+                        correction += `<strong>Solutions :</strong> x = √${eq.x_squared} ou x = -√${eq.x_squared}`;
+                    }
+                } else {
+                    if (eq.oneSolution) {
+                        correction += `<strong>Solution :</strong> x = ${typeof eq.solution1 === 'number' ? eq.solution1.toFixed(2) : eq.solution1}`;
+                    } else {
+                        correction += `<strong>Solutions :</strong> x = ${typeof eq.solution1 === 'number' ? eq.solution1.toFixed(2) : eq.solution1} ou x = ${typeof eq.solution2 === 'number' ? eq.solution2.toFixed(2) : eq.solution2}`;
+                    }
+                }
+            } else if (eq.type === 'perfect_square') {
+                const sol = eq.solution;
+                correction += `<strong>Propriété :</strong> Si A² = 0 alors A = 0<br>`;
+                correction += `Donc ${eq.a}x ${eq.b >= 0 ? '+' : ''} ${eq.b} = 0<br>`;
+                correction += `<strong>Solution :</strong> x = ${sol.den === 1 ? sol.num : sol.num + '/' + sol.den}`;
+            }
+            
+            hintDiv.innerHTML = correction;
+            hintDiv.style.display = 'block';
+            hintDiv.style.background = '#fff3cd';
+            hintDiv.style.borderColor = '#ffeaa7';
+            
+            questionValidated = true;
+            hasError = true;
+            
+            document.getElementById('btnValidate').style.display = 'none';
+            document.getElementById('btnHint').style.display = 'none';
+            document.getElementById('btnSkip').style.display = 'none';
+            const btn1 = document.getElementById('btnAddStep1');
+            const btn2 = document.getElementById('btnAddStep2');
+            const btnFact = document.getElementById('btnAddFactorization');
+            if (btn1) btn1.style.display = 'none';
+            if (btn2) btn2.style.display = 'none';
+            if (btnFact) btnFact.style.display = 'none';
+            document.getElementById('btnNext').style.display = 'inline-block';
+            
+            showMessage('➡️ Correction affichée. Clique sur "Question suivante" pour continuer.', 'error');
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('messageDiv');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            msg.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            if (currentQuestion >= totalQuestions) {
+                showFinalScore();
+                return;
+            }
+
+            currentQuestion++;
+            document.getElementById('current').textContent = currentQuestion;
+            
+            currentEquation = generateEquation();
+            document.getElementById('equationDisplay').textContent = currentEquation.display;
+            document.getElementById('instruction').textContent = currentEquation.instruction;
+            
+            questionValidated = false;
+            hasError = false;
+            
+            createSteps();
+
+            document.getElementById('propertyInput').value = '';
+            document.getElementById('propertyInput').className = 'property-input';
+            
+            document.getElementById('messageDiv').style.display = 'none';
+            document.getElementById('hintDiv').style.display = 'none';
+            document.getElementById('btnValidate').style.display = 'inline-block';
+            document.getElementById('btnHint').style.display = 'none';
+            document.getElementById('btnSkip').style.display = 'inline-block';
+            document.getElementById('btnNext').style.display = 'none';
+            
+            // Réafficher les boutons d'ajout de lignes s'ils existent
+            const btn1 = document.getElementById('btnAddStep1');
+            const btn2 = document.getElementById('btnAddStep2');
+            const btnFact = document.getElementById('btnAddFactorization');
+            if (btn1) btn1.style.display = 'inline-block';
+            if (btn2) btn2.style.display = 'inline-block';
+            if (btnFact) btnFact.style.display = 'inline-block';
+        }
+
+        function showFinalScore() {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <h1>🎉 Quiz terminé !</h1>
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="font-size: 72px; color: #667eea; margin-bottom: 20px;">
+                        ${score}/${totalQuestions}
+                    </div>
+                    <p style="font-size: 24px; color: #666; margin-bottom: 30px;">
+                        ${score === totalQuestions ? 'Parfait ! 🌟' : 
+                          score >= totalQuestions * 0.8 ? 'Très bien ! 👏' :
+                          score >= totalQuestions * 0.6 ? 'Bien ! 👍' :
+                          'Continue à t\'entraîner ! 💪'}
+                    </p>
+                    <button class="btn-validate" onclick="location.reload()">Recommencer</button>
+                </div>
+            `;
+        }
+
+        // Événements
+        document.getElementById('btnValidate').addEventListener('click', validate);
+        document.getElementById('btnHint').addEventListener('click', showHint);
+        document.getElementById('btnSkip').addEventListener('click', showCorrection);
+        document.getElementById('btnNext').addEventListener('click', nextQuestion);
+        document.getElementById('btnSqrt').addEventListener('click', insertSqrt);
+        document.getElementById('btnAddColumn').addEventListener('click', showSecondColumn);
+        document.getElementById('btnAddProperty').addEventListener('click', showPropertySection);
+
+        // Démarrer
+        currentEquation = generateEquation();
+        document.getElementById('equationDisplay').textContent = currentEquation.display;
+        document.getElementById('instruction').textContent = currentEquation.instruction;
+        createSteps();
+    </script>
+</body>
+</html>

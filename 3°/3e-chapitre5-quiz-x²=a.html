@@ -523,6 +523,14 @@
                    lastInput.includes('aucune');
         }
 
+        function isPerfectSquareInteger(n) {
+            // Vérifie si n est un carré parfait entier
+            if (n < 0) return false;
+            if (n === 0 || n === 1) return true;
+            const sqrt = Math.sqrt(n);
+            return Math.abs(sqrt - Math.round(sqrt)) < 0.0001;
+        }
+
         function checkSolution(inputs, expectedValue) {
             let lastFilledIndex = -1;
             for (let i = inputs.length - 1; i >= 0; i--) {
@@ -552,6 +560,23 @@
                 const sign = match[1] === '-' ? -1 : 1;
                 const radicandStr = match[2].replace(',', '.'); // Convertir virgule en point
                 const radicand = parseFloat(radicandStr);
+                
+                // Vérifier si le radicande est un carré parfait entier ou décimal
+                const sqrtRadicand = Math.sqrt(radicand);
+                
+                // Si la racine carrée est un entier, c'est un carré parfait entier
+                if (isPerfectSquareInteger(radicand)) {
+                    return { found: false, exact: false }; // Refuser √1, √4, √9, etc.
+                }
+                
+                // Si la racine carrée est un décimal simple (jusqu'à 2 décimales)
+                // c'est probablement un carré parfait décimal qu'on doit simplifier
+                const rounded = Math.round(sqrtRadicand * 100) / 100; // Arrondir à 2 décimales
+                if (Math.abs(sqrtRadicand - rounded) < 0.0001) {
+                    // C'est un carré parfait décimal (comme √0,25 = 0,5)
+                    return { found: false, exact: false };
+                }
+                
                 const value = sign * Math.sqrt(radicand);
                 if (Math.abs(value - expectedValue) < 0.0001) {
                     return { found: true, exact: false };
