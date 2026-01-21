@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Cosinus dans le triangle rectangle</title>
+    <link rel="stylesheet" href="../styles.css?v=20251120143124">
+</head>
+<body>
+    <a href="classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre 8 : Cosinus dans le triangle rectangle</h1>
+
+    <h2>Rappels et vocabulaire</h2>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Dans un triangle rectangle, les deux angles aigus sont complémentaires (leur somme fait 90°).
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Vocabulaire :</span> Soit ABC un triangle rectangle en A
+        <ul>
+            <li>[BC] est <span style="color: red;">l'hypoténuse</span> du triangle ABC</li>
+            <li>[AB] est le <span style="color: red;">côté opposé</span> à l'angle <span class="angle">C</span> et le <span style="color: red;">côté adjacent</span> à l'angle <span class="angle">B</span>.</li>
+            <li>[AC] est le <span style="color: red;">côté opposé</span> à l'angle <span class="angle">B</span> et le <span style="color: red;">côté adjacent</span> à l'angle <span class="angle">C</span>.</li>
+        </ul>
+        <br>
+        <div style="text-align: center;">
+            <img src="4-80.png" alt="Triangle ABC rectangle en A avec vocabulaire" style="width: 300px;">
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>Ainsi :</strong><br><br>
+        <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap;">
+            <div style="text-align: center; margin: 10px;">
+                <strong>Pour l'angle <span class="angle">C</span></strong><br>
+                <img src="4-81.png" alt="Triangle ABC pour l'angle C" style="width: 500px;">
+            </div>
+            <div style="text-align: center; margin: 10px;">
+                <strong>Pour l'angle <span class="angle">B</span></strong><br>
+                <img src="4-82.png" alt="Triangle ABC pour l'angle B" style="width: 500px;">
+            </div>
+        </div>
+    </div>
+
+    <h2>Cosinus d'un angle aigu d'un triangle rectangle</h2>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Soit un triangle ABC rectangle en A. Le cosinus de l'angle <span class="angle">ABC</span> est le quotient de la longueur du côté adjacent à l'angle <span class="angle">ABC</span> par la longueur de l'hypoténuse :
+        <br><br>
+        <div style="text-align: center; font-size: 1.2em; background-color: #ffe6e6; padding: 15px; border: 2px solid red; margin: 10px 0;">
+            cos <span class="angle">ABC</span> = <span class="fraction"><span class="numerateur">côté adjacent à l'angle <span class="angle">ABC</span></span><span class="denominateur">hypoténuse du triangle ABC</span></span>
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Le cosinus d'un angle est donc inférieur à 1 (l'hypoténuse est plus grande que les deux autres côtés).
+    </div>
+
+    <h2>Cosinus et calculatrice</h2>
+
+    <div class="remarque">
+        <strong>Avant tout calcul, il faut se placer en mode degré sur la calculatrice.</strong>
+    </div>
+
+    <h3>Calculer la valeur d'un cosinus lorsque l'on connaît la valeur de l'angle</h3>
+
+    <div class="example">
+        <strong>Exemple :</strong> Pour calculer <em>Cos</em> 30°<br><br>
+        
+        À la calculatrice je dois taper :<br><br>
+        
+        Avec la Casio : <img src="4-83.png" alt="Touches Casio : cos 3 0 ) EXE" style="display: inline; height: 40px; vertical-align: middle;"><br><br>
+        
+        Avec la TI : <img src="4-84.png" alt="Touches TI : cos 3 0 ) enter" style="display: inline; height: 40px; vertical-align: middle;"><br><br>
+        
+        Ainsi <em>Cos</em> 30° = <span class="fraction"><span class="numerateur"><span class="sqrt">3</span></span><span class="denominateur">2</span></span> ≈ 0,87
+    </div>
+
+    <h3>Calculer la valeur d'un angle connaissant le cosinus</h3>
+
+    <div class="example">
+        <strong>Exemple :</strong> Pour calculer la mesure de l'angle <span class="angle">ABC</span> tel que <em>Cos</em> <span class="angle">ABC</span> = 0,75<br><br>
+        
+        À la calculatrice je dois taper :<br><br>
+        
+        Avec la Casio : <img src="4-85.png" alt="Touches Casio : SHIFT cos 0 . 7 5 ) EXE" style="display: inline; height: 65px; vertical-align: middle;"><br><br>
+        
+        Avec la TI : <img src="4-86.png" alt="Touches TI : 2nde cos 0 . 7 5 ) enter" style="display: inline; height: 40px; vertical-align: middle;"><br><br>
+        
+        Ainsi <span class="angle">ABC</span> ≈ 41,4°
+    </div>
+
+    <h2>Exemples d'utilisation</h2>
+
+    <h3>Calcul de la longueur du côté adjacent à un angle connu</h3>
+
+    <div class="example">
+        <strong>Énoncé :</strong><br>
+        On considère un triangle LEA rectangle en E tel que LA = 5 cm et <span class="angle">ELA</span> = 50°.<br>
+        Calculer la longueur du côté [LE] arrondie au millimètre.<br><br>
+
+        <div style="text-align: center;">
+            <img src="4-87.png" alt="Triangle LEA rectangle en E" style="width: 300px;">
+        </div>
+
+        <div class="calcul-detail">
+Le triangle LEA est rectangle en E donc :<br><br>
+
+cos <span class="angle">ELA</span> = <span class="fraction"><span class="numerateur">LE</span><span class="denominateur">LA</span></span><br><br>
+
+cos 50° = <span class="fraction"><span class="numerateur">LE</span><span class="denominateur">5</span></span><br><br>
+
+LE = cos 50° × 5<br><br>
+
+LE ≈ 3,2 cm
+        </div>
+    </div>
+
+    <h3>Calcul de la longueur de l'hypoténuse</h3>
+
+    <div class="example">
+        <strong>Énoncé :</strong><br>
+        On considère un triangle PAT rectangle en T tel que AT = 7 cm et <span class="angle">PAT</span> = 25°.<br>
+        Calculer la longueur du côté [PA] arrondie au millimètre.<br><br>
+
+        <div style="text-align: center;">
+            <img src="4-88.png" alt="Triangle PAT rectangle en T" style="width: 300px;">
+        </div>
+
+        <div class="calcul-detail">
+Le triangle PAT est rectangle en T donc :<br><br>
+
+cos <span class="angle">PAT</span> = <span class="fraction"><span class="numerateur">AT</span><span class="denominateur">AP</span></span><br><br>
+
+cos 25° = <span class="fraction"><span class="numerateur">7</span><span class="denominateur">AP</span></span><br><br>
+
+AP = <span class="fraction"><span class="numerateur">7</span><span class="denominateur">cos 25°</span></span><br><br>
+
+AP ≈ 7,7 cm
+        </div>
+    </div>
+
+    <h3>Calculer la mesure d'un angle</h3>
+
+    <div class="example">
+        <strong>Énoncé :</strong><br>
+        Soit FUN un triangle rectangle en U tel que NF = 6 cm et UN = 4 cm.<br>
+        Calculer la mesure de l'angle <span class="angle">UNF</span> arrondie au degré. Déduis-en la valeur approchée au degré près de la mesure de l'autre angle aigu du triangle.<br><br>
+
+        <div style="text-align: center;">
+            <img src="4-89.png" alt="Triangle FUN rectangle en U" style="width: 300px;">
+        </div>
+
+        <div class="calcul-detail">
+Le triangle FUN est rectangle en U donc :<br><br>
+
+cos <span class="angle">UNF</span> = <span class="fraction"><span class="numerateur">UN</span><span class="denominateur">NF</span></span><br><br>
+
+cos <span class="angle">UNF</span> = <span class="fraction"><span class="numerateur">4</span><span class="denominateur">6</span></span><br><br>
+
+À la calculatrice, <span class="angle">UNF</span> ≈ 48°<br><br>
+
+Ainsi, <span class="angle">UFN</span> = 90° − 48° = 42°
+        </div>
+    </div>
+
+</body>
+</html>
