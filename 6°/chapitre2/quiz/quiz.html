@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Bases de la géométrie (6e)</title>
+    <style>
+        /* === RESET ET BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* === HEADER === */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        /* === QUIZ INFO === */
+        .quiz-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .info-item {
+            text-align: center;
+        }
+        
+        .info-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        /* === QUESTIONS - MASQUAGE CRITIQUE === */
+        #questionsContainer > .question-container {
+            display: none !important;
+        }
+        
+        #questionsContainer > .question-container.active {
+            display: block !important;
+        }
+        
+        .question-header {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .question-body {
+            padding: 0 20px 20px;
+        }
+        
+        .question-text {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        /* === IMAGES DES QUESTIONS === */
+        .question-image {
+            margin: 20px 0;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .question-image svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .question-image img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* === OPTIONS === */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            background: #e8e9eb;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+        
+        .option.selected {
+            background: #e3e8ff;
+            border-color: #667eea;
+        }
+        
+        .option.disabled {
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        /* === EXPLANATION === */
+        .explanation {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+        }
+        
+        .explanation.show {
+            display: block;
+        }
+        
+        .explanation-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.6;
+        }
+        
+        /* === BOUTONS === */
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #5a6268;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* === RESULTATS === */
+        .results-container {
+            display: none;
+            text-align: center;
+        }
+        
+        .results-container.show {
+            display: block;
+        }
+        
+        .results-container h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+        
+        .results-score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .results-score.medium {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .results-score.low {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .score-big {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+        
+        .results-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        
+        .navigation {
+            margin-top: 20px;
+        }
+        
+        .nav-btn {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        /* === NOTATIONS MATHÉMATIQUES === */
+        .math {
+            font-family: 'Latin Modern Math', 'Times New Roman', serif;
+            font-style: italic;
+            font-weight: normal;
+            font-size: 1.15em;
+        }
+        
+        /* Angles avec chapeau */
+        .angle {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .angle::before {
+            content: '^';
+            position: absolute;
+            top: -0.5em;
+            left: 50%;
+            transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
+            font-size: 1.5em;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    <a href="../../classe-6e.html" style="position: absolute; top: 20px; left: 20px; padding: 12px 24px; background: white; color: #667eea; text-decoration: none; border-radius: 12px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; z-index: 1000;">← Retour</a>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🔷 Quiz de Mathématiques 🔷</h1>
+            <p class="subtitle">Bases de la géométrie - Niveau 6e</p>
+        </div>
+
+        <!-- QUIZ INFO -->
+        <div class="quiz-info">
+            <div class="info-item">
+                <div class="info-label">Questions</div>
+                <div class="info-value" id="totalQuestions">10</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Score</div>
+                <div class="info-value" id="currentScore">0</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Question actuelle</div>
+                <div class="info-value" id="currentQuestion">1</div>
+            </div>
+        </div>
+
+        <!-- QUESTIONS CONTAINER (généré dynamiquement) -->
+        <div id="questionsContainer"></div>
+
+        <!-- RESULTS -->
+        <div class="results-container">
+            <h2>🎉 Quiz Terminé ! 🎉</h2>
+            <div class="results-score" id="resultsScore">
+                <div>Ton score final</div>
+                <div class="score-big" id="finalScore">0/10</div>
+                <div class="score-message" id="scoreMessage"></div>
+            </div>
+            <div class="results-details">
+                <h3 class="text-center mb-20">Détails</h3>
+                <div class="detail-row">
+                    <span>Bonnes réponses :</span>
+                    <span id="correctAnswers">0</span>
+                </div>
+                <div class="detail-row">
+                    <span>Mauvaises réponses :</span>
+                    <span id="wrongAnswers">0</span>
+                </div>
+                <div class="detail-row">
+                    <span>Pourcentage de réussite :</span>
+                    <span id="percentage">0%</span>
+                </div>
+            </div>
+            <div class="navigation">
+                <button class="nav-btn" onclick="location.reload()">🔄 Recommencer avec de nouvelles questions</button>
+            </div>
+        </div>
+
+        <!-- BUTTON GROUP -->
+        <div class="button-group" id="buttonGroup">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" disabled>← Précédent</button>
+            <button class="btn btn-primary" id="validateBtn" onclick="validateAnswer()" disabled>Valider ✓</button>
+            <button class="btn btn-primary hidden" id="continueBtn" onclick="goToNextQuestion()">Continuer →</button>
+            <button class="btn btn-primary hidden" id="finishBtn" onclick="showResults()">Voir les résultats 🎯</button>
+        </div>
+    </div>
+
+    <script>
+        // BANQUE DE QUESTIONS (50 questions au total)
+        const questionBank = [
+            // Questions sur les notations : droites, segments et demi-droites
+            {
+                text: "Comment note-t-on une droite passant par les points A et B ?",
+                options: [
+                    { text: "[AB]", correct: false },
+                    { text: "(AB)", correct: true },
+                    { text: "[AB)", correct: false },
+                    { text: "AB", correct: false }
+                ],
+                explanation: "Une droite se note avec des parenthèses : (AB). Elle n'a ni début ni fin."
+            },
+            {
+                text: "Comment note-t-on un segment d'extrémités A et B ?",
+                options: [
+                    { text: "(AB)", correct: false },
+                    { text: "[AB]", correct: true },
+                    { text: "[AB)", correct: false },
+                    { text: "AB", correct: false }
+                ],
+                explanation: "Un segment se note avec des crochets : [AB]. C'est la portion de droite limitée entre A et B."
+            },
+            {
+                text: "Comment note-t-on la demi-droite d'origine A passant par B ?",
+                options: [
+                    { text: "(AB)", correct: false },
+                    { text: "[AB]", correct: false },
+                    { text: "[AB)", correct: true },
+                    { text: "[BA)", correct: false }
+                ],
+                explanation: "Une demi-droite se note [AB) avec un crochet du côté de l'origine A et une parenthèse de l'autre côté."
+            },
+            {
+                text: "Quelle est la différence entre [AB] et [BA] ?",
+                options: [
+                    { text: "Il n'y a aucune différence", correct: true },
+                    { text: "[AB] est plus long que [BA]", correct: false },
+                    { text: "L'origine est différente", correct: false },
+                    { text: "[AB] est une droite et [BA] un segment", correct: false }
+                ],
+                explanation: "Les deux notations désignent le même segment car un segment n'a pas de sens de parcours."
+            },
+            {
+                text: "Quelle est la différence entre [AB) et [BA) ?",
+                options: [
+                    { text: "Il n'y a aucune différence", correct: false },
+                    { text: "[AB) a pour origine A, [BA) a pour origine B", correct: true },
+                    { text: "Ce sont deux droites différentes", correct: false },
+                    { text: "[AB) est plus longue que [BA)", correct: false }
+                ],
+                explanation: "Pour une demi-droite, l'origine doit être indiquée en premier. [AB) part de A, [BA) part de B : ce sont deux demi-droites opposées !"
+            },
+            {
+                text: "Que représente (AB) ?",
+                options: [
+                    { text: "Un segment", correct: false },
+                    { text: "Une droite", correct: true },
+                    { text: "Une demi-droite", correct: false },
+                    { text: "La longueur entre A et B", correct: false }
+                ],
+                explanation: "Les parenthèses (AB) désignent une droite, qui est infinie des deux côtés."
+            },
+            {
+                text: "Comment note-t-on la longueur d'un segment [AB] ?",
+                options: [
+                    { text: "(AB)", correct: false },
+                    { text: "[AB]", correct: false },
+                    { text: "AB", correct: true },
+                    { text: "[AB)", correct: false }
+                ],
+                explanation: "La longueur d'un segment se note sans symbole : AB = 5 cm signifie que le segment [AB] mesure 5 cm."
+            },
+            {
+                text: "Quelle notation représente quelque chose qui a un début mais pas de fin ?",
+                options: [
+                    { text: "(AB)", correct: false },
+                    { text: "[AB]", correct: false },
+                    { text: "[AB)", correct: true },
+                    { text: "AB", correct: false }
+                ],
+                explanation: "Une demi-droite [AB) a une origine (A) mais continue à l'infini dans la direction de B."
+            },
+            {
+                text: "Si AB = 6 cm, que représente AB ?",
+                options: [
+                    { text: "Une droite de 6 cm", correct: false },
+                    { text: "La longueur du segment [AB]", correct: true },
+                    { text: "Une demi-droite de 6 cm", correct: false },
+                    { text: "Un point", correct: false }
+                ],
+                explanation: "AB (sans symbole) représente la longueur du segment [AB], ici 6 cm."
+            },
+            {
+                text: "Quelle est la bonne notation pour une droite ?",
+                options: [
+                    { text: "Avec des crochets [  ]", correct: false },
+                    { text: "Avec des parenthèses (  )", correct: true },
+                    { text: "Avec un crochet et une parenthèse [  )", correct: false },
+                    { text: "Sans symbole", correct: false }
+                ],
+                explanation: "Une droite se note toujours avec des parenthèses : (AB) ou (d)."
+            },
+
+            // Questions visuelles avec SVG
+            {
+                text: "Observe cette figure. Comment note-t-on ce qui est représenté ?",
+                image: `<svg width="300" height="100" style="display:block; margin:20px auto;">
+                    
+                    <line x1="20" y1="50" x2="280" y2="50" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 96.0 50.0 L 104.0 50.0 M 100.0 46.0 L 100.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">A</text>
+                    <path d="M 196.0 50.0 L 204.0 50.0 M 200.0 46.0 L 200.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="200" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                </svg>`,
+                options: [
+                    { text: "[AB]", correct: false },
+                    { text: "(AB)", correct: true },
+                    { text: "[AB)", correct: false },
+                    { text: "AB", correct: false }
+                ],
+                explanation: "Le trait qui dépasse des deux côtés des points montre que c'est une droite : (AB)."
+            },
+            {
+                text: "Observe cette figure. Comment note-t-on ce qui est représenté ?",
+                image: `<svg width="300" height="100" style="display:block; margin:20px auto;">
+                    <!-- Segment [MN] : s'arrête exactement à M et N -->
+                    <line x1="100" y1="50" x2="200" y2="50" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 96.0 50.0 L 104.0 50.0 M 100.0 46.0 L 100.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">M</text>
+                    <path d="M 196.0 50.0 L 204.0 50.0 M 200.0 46.0 L 200.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="200" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">N</text>
+                </svg>`,
+                options: [
+                    { text: "(MN)", correct: false },
+                    { text: "[MN]", correct: true },
+                    { text: "[MN)", correct: false },
+                    { text: "MN", correct: false }
+                ],
+                explanation: "C'est le segment [MN] : une portion de droite limitée qui commence en M et se termine en N. Le trait s'arrête exactement aux points M et N."
+            },
+            {
+                text: "Observe cette figure. Comment note-t-on ce qui est représenté ?",
+                image: `<svg width="300" height="100" style="display:block; margin:20px auto;">
+                    <!-- Demi-droite [CD) : commence à C et va vers la droite -->
+                    <line x1="80" y1="50" x2="270" y2="50" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 76.0 50.0 L 84.0 50.0 M 80.0 46.0 L 80.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="80" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">C</text>
+                    <path d="M 176.0 50.0 L 184.0 50.0 M 180.0 46.0 L 180.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="180" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">D</text>
+                </svg>`,
+                options: [
+                    { text: "(CD)", correct: false },
+                    { text: "[CD]", correct: false },
+                    { text: "[CD)", correct: true },
+                    { text: "[DC)", correct: false }
+                ],
+                explanation: "C'est une demi-droite [CD) : elle commence au point C (l'origine, toujours notée en premier) et continue à l'infini dans la direction de D. La partie avant C n'appartient PAS à [CD)."
+            },
+            {
+                text: "Sur cette figure, quelle notation est correcte pour la partie en vert ?",
+                image: `<svg width="350" height="120" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="60" x2="300" y2="60" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5"/>
+                    <line x1="120" y1="60" x2="230" y2="60" stroke="#059669" stroke-width="4"/>
+                    <path d="M 116.0 60.0 L 124.0 60.0 M 120.0 56.0 L 120.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="120" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">E</text>
+                    <path d="M 226.0 60.0 L 234.0 60.0 M 230.0 56.0 L 230.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="230" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">F</text>
+                    <path d="M 47.0 60.0 L 53.0 60.0 M 50.0 57.0 L 50.0 63.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M 297.0 60.0 L 303.0 60.0 M 300.0 57.0 L 300.0 63.0" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+                </svg>`,
+                options: [
+                    { text: "(EF)", correct: false },
+                    { text: "[EF]", correct: true },
+                    { text: "[EF)", correct: false },
+                    { text: "EF", correct: false }
+                ],
+                explanation: "La partie en vert représente le segment [EF], limité entre les points E et F."
+            },
+            {
+                text: "Quelle est la bonne notation pour cette demi-droite ?",
+                image: `<svg width="300" height="100" style="display:block; margin:20px auto;">
+                    <!-- Demi-droite [RS) : commence à R et va vers la droite -->
+                    <line x1="100" y1="50" x2="280" y2="50" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 96.0 50.0 L 104.0 50.0 M 100.0 46.0 L 100.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">R</text>
+                    <path d="M 196.0 50.0 L 204.0 50.0 M 200.0 46.0 L 200.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="200" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">S</text>
+                </svg>`,
+                options: [
+                    { text: "[RS)", correct: true },
+                    { text: "[SR)", correct: false },
+                    { text: "(RS)", correct: false },
+                    { text: "[RS]", correct: false }
+                ],
+                explanation: "C'est la demi-droite [RS) : elle commence au point R (l'origine) et continue à l'infini dans la direction de S. Attention : [RS) et [SR) sont deux demi-droites différentes !"
+            },
+            {
+                text: "Combien de segments différents peut-on nommer sur cette figure ?",
+                image: `<svg width="300" height="100" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="50" x2="250" y2="50" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 76.0 50.0 L 84.0 50.0 M 80.0 46.0 L 80.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="80" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">A</text>
+                    <path d="M 146.0 50.0 L 154.0 50.0 M 150.0 46.0 L 150.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="150" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                    <path d="M 216.0 50.0 L 224.0 50.0 M 220.0 46.0 L 220.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="220" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">C</text>
+                </svg>`,
+                options: [
+                    { text: "2 segments", correct: false },
+                    { text: "3 segments", correct: true },
+                    { text: "4 segments", correct: false },
+                    { text: "6 segments", correct: false }
+                ],
+                explanation: "On peut nommer 3 segments : [AB], [BC] et [AC]."
+            },
+            
+            // Questions visuelles d'appartenance (style jeuxmaths.fr)
+            {
+                text: "Observe la figure. Le point M appartient-il au segment [AB] ?",
+                image: `<svg width="350" height="120" style="display:block; margin:20px auto;">
+                    <line x1="80" y1="60" x2="270" y2="60" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5"/>
+                    <line x1="120" y1="60" x2="230" y2="60" stroke="#059669" stroke-width="4"/>
+                    <path d="M 116.0 60.0 L 124.0 60.0 M 120.0 56.0 L 120.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="120" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">A</text>
+                    <path d="M 226.0 60.0 L 234.0 60.0 M 230.0 56.0 L 230.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="230" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                    <path d="M 171.0 60.0 L 179.0 60.0 M 175.0 56.0 L 175.0 64.0" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                    <text x="175" y="85" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">M</text>
+                </svg>`,
+                options: [
+                    { text: "Oui, M ∈ [AB]", correct: true },
+                    { text: "Non, M ∉ [AB]", correct: false },
+                    { text: "Impossible à déterminer", correct: false },
+                    { text: "M est sur la droite mais pas le segment", correct: false }
+                ],
+                explanation: "Le point M est entre A et B sur le segment en vert, donc M ∈ [AB]."
+            },
+            {
+                text: "Observe la figure. Le point N appartient-il à la demi-droite [CD) ?",
+                image: `<svg width="350" height="120" style="display:block; margin:20px auto;">
+                    
+                    <line x1="100" y1="60" x2="280" y2="60" stroke="#7c3aed" stroke-width="3"/>
+                    <path d="M 96.0 60.0 L 104.0 60.0 M 100.0 56.0 L 100.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">C</text>
+                    <path d="M 186.0 60.0 L 194.0 60.0 M 190.0 56.0 L 190.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="190" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">D</text>
+                    <path d="M 76.0 60.0 L 84.0 60.0 M 80.0 56.0 L 80.0 64.0" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                    <text x="80" y="85" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">N</text>
+                </svg>`,
+                options: [
+                    { text: "Oui, N ∈ [CD)", correct: false },
+                    { text: "Non, N ∉ [CD)", correct: true },
+                    { text: "N est l'origine", correct: false },
+                    { text: "N est sur la droite (CD)", correct: false }
+                ],
+                explanation: "N est avant C, donc N n'appartient pas à la demi-droite [CD) qui commence en C. Donc N ∉ [CD)."
+            },
+            {
+                text: "Sur cette figure, complète : Le point P ___ à la droite (EF)",
+                image: `<svg width="350" height="150" style="display:block; margin:20px auto;">
+                    
+                    <line x1="50" y1="75" x2="300" y2="75" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 116.0 75.0 L 124.0 75.0 M 120.0 71.0 L 120.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="120" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">E</text>
+                    <path d="M 226.0 75.0 L 234.0 75.0 M 230.0 71.0 L 230.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="230" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">F</text>
+                    <path d="M 171.0 120.0 L 179.0 120.0 M 175.0 116.0 L 175.0 124.0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                    <text x="175" y="140" text-anchor="middle" font-size="16" font-weight="bold" fill="#059669">P</text>
+                </svg>`,
+                options: [
+                    { text: "appartient (P ∈ (EF))", correct: false },
+                    { text: "n'appartient pas (P ∉ (EF))", correct: true },
+                    { text: "est aligné avec E et F", correct: false },
+                    { text: "est le milieu de [EF]", correct: false }
+                ],
+                explanation: "Le point P est en dehors de la droite (EF), donc P ∉ (EF)."
+            },
+            {
+                text: "Sur cette figure, quel(s) point(s) appartiennent au segment [AB] ?",
+                image: `<svg width="350" height="150" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="75" x2="300" y2="75" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 96.0 75.0 L 104.0 75.0 M 100.0 71.0 L 100.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">A</text>
+                    <path d="M 246.0 75.0 L 254.0 75.0 M 250.0 71.0 L 250.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="250" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                    <path d="M 171.0 75.0 L 179.0 75.0 M 175.0 71.0 L 175.0 79.0" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                    <text x="175" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">M</text>
+                    <path d="M 66.0 75.0 L 74.0 75.0 M 70.0 71.0 L 70.0 79.0" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+                    <text x="70" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#7c3aed">N</text>
+                    <path d="M 276.0 75.0 L 284.0 75.0 M 280.0 71.0 L 280.0 79.0" stroke="#ea580c" stroke-width="2" stroke-linecap="round"/>
+                    <text x="280" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#ea580c">P</text>
+                </svg>`,
+                options: [
+                    { text: "Seulement M", correct: false },
+                    { text: "A, M et B", correct: true },
+                    { text: "Tous les points", correct: false },
+                    { text: "N et P seulement", correct: false }
+                ],
+                explanation: "Le segment [AB] comprend tous les points entre A et B, y compris les extrémités A et B. Donc A, M et B appartiennent au segment [AB]. N est avant A et P est après B."
+            },
+            {
+                text: "Sur cette figure, quel(s) point(s) appartiennent à la demi-droite [AB) ?",
+                image: `<svg width="350" height="150" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="75" x2="300" y2="75" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 96.0 75.0 L 104.0 75.0 M 100.0 71.0 L 100.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">A</text>
+                    <path d="M 246.0 75.0 L 254.0 75.0 M 250.0 71.0 L 250.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="250" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                    <path d="M 171.0 75.0 L 179.0 75.0 M 175.0 71.0 L 175.0 79.0" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                    <text x="175" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">M</text>
+                    <path d="M 66.0 75.0 L 74.0 75.0 M 70.0 71.0 L 70.0 79.0" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+                    <text x="70" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#7c3aed">N</text>
+                    <path d="M 276.0 75.0 L 284.0 75.0 M 280.0 71.0 L 280.0 79.0" stroke="#ea580c" stroke-width="2" stroke-linecap="round"/>
+                    <text x="280" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#ea580c">P</text>
+                </svg>`,
+                options: [
+                    { text: "A, M et B seulement", correct: false },
+                    { text: "A, M, B et P", correct: true },
+                    { text: "Tous les points", correct: false },
+                    { text: "Seulement A et B", correct: false }
+                ],
+                explanation: "La demi-droite [AB) commence en A et continue à l'infini vers la droite. Elle contient A, M, B et P. Le point N est avant A, donc N ∉ [AB)."
+            },
+            {
+                text: "Sur cette figure, quel(s) point(s) appartiennent à la demi-droite [BA) ?",
+                image: `<svg width="350" height="150" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="75" x2="300" y2="75" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 96.0 75.0 L 104.0 75.0 M 100.0 71.0 L 100.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">A</text>
+                    <path d="M 246.0 75.0 L 254.0 75.0 M 250.0 71.0 L 250.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="250" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                    <path d="M 171.0 75.0 L 179.0 75.0 M 175.0 71.0 L 175.0 79.0" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                    <text x="175" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">M</text>
+                    <path d="M 66.0 75.0 L 74.0 75.0 M 70.0 71.0 L 70.0 79.0" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+                    <text x="70" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#7c3aed">N</text>
+                    <path d="M 276.0 75.0 L 284.0 75.0 M 280.0 71.0 L 280.0 79.0" stroke="#ea580c" stroke-width="2" stroke-linecap="round"/>
+                    <text x="280" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#ea580c">P</text>
+                </svg>`,
+                options: [
+                    { text: "B, M et A seulement", correct: false },
+                    { text: "B, M, A et N", correct: true },
+                    { text: "Tous les points", correct: false },
+                    { text: "A, M, B et P", correct: false }
+                ],
+                explanation: "La demi-droite [BA) commence en B et continue à l'infini vers la gauche. Elle contient B, M, A et N. Le point P est après B (dans la direction opposée), donc P ∉ [BA)."
+            },
+            {
+                text: "Sur cette figure, quel(s) point(s) appartiennent à la droite (AB) ?",
+                image: `<svg width="350" height="150" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="75" x2="300" y2="75" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 96.0 75.0 L 104.0 75.0 M 100.0 71.0 L 100.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">A</text>
+                    <path d="M 246.0 75.0 L 254.0 75.0 M 250.0 71.0 L 250.0 79.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="250" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                    <path d="M 171.0 75.0 L 179.0 75.0 M 175.0 71.0 L 175.0 79.0" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                    <text x="175" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">M</text>
+                    <path d="M 66.0 75.0 L 74.0 75.0 M 70.0 71.0 L 70.0 79.0" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+                    <text x="70" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#7c3aed">N</text>
+                    <path d="M 276.0 75.0 L 284.0 75.0 M 280.0 71.0 L 280.0 79.0" stroke="#ea580c" stroke-width="2" stroke-linecap="round"/>
+                    <text x="280" y="95" text-anchor="middle" font-size="16" font-weight="bold" fill="#ea580c">P</text>
+                </svg>`,
+                options: [
+                    { text: "Seulement A et B", correct: false },
+                    { text: "A, M et B", correct: false },
+                    { text: "Tous les points (N, A, M, B, P)", correct: true },
+                    { text: "Aucun point", correct: false }
+                ],
+                explanation: "La droite (AB) est infinie dans les deux directions. Tous les points alignés sur cette droite lui appartiennent : N, A, M, B et P sont tous sur la droite (AB)."
+            },
+            {
+                text: "Sur cette figure avec trois points alignés, complète : C ___ [AB]",
+                image: `<svg width="350" height="100" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="50" x2="300" y2="50" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 96.0 50.0 L 104.0 50.0 M 100.0 46.0 L 100.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">A</text>
+                    <path d="M 196.0 50.0 L 204.0 50.0 M 200.0 46.0 L 200.0 54.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="200" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                    <path d="M 256.0 50.0 L 264.0 50.0 M 260.0 46.0 L 260.0 54.0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                    <text x="260" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#059669">C</text>
+                </svg>`,
+                options: [
+                    { text: "∈", correct: false },
+                    { text: "∉", correct: true },
+                    { text: "⊥", correct: false },
+                    { text: "//", correct: false }
+                ],
+                explanation: "C est après B, donc C n'est pas entre A et B. C ∉ [AB], mais C ∈ (AB) car alignés."
+            },
+            {
+                text: "Combien de points sur cette figure appartiennent à la demi-droite [EF) ?",
+                image: `<svg width="350" height="120" style="display:block; margin:20px auto;">
+                    <!-- Demi-droite [EF) : commence à E et va vers la droite -->
+                    <line x1="80" y1="60" x2="320" y2="60" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 76.0 60.0 L 84.0 60.0 M 80.0 56.0 L 80.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="80" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">E</text>
+                    <path d="M 146.0 60.0 L 154.0 60.0 M 150.0 56.0 L 150.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="150" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">F</text>
+                    <path d="M 196.0 60.0 L 204.0 60.0 M 200.0 56.0 L 200.0 64.0" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                    <text x="200" y="80" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">G</text>
+                    <path d="M 46.0 60.0 L 54.0 60.0 M 50.0 56.0 L 50.0 64.0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                    <text x="50" y="80" text-anchor="middle" font-size="16" font-weight="bold" fill="#059669">H</text>
+                </svg>`,
+                options: [
+                    { text: "2 points (E et F)", correct: false },
+                    { text: "3 points (E, F et G)", correct: true },
+                    { text: "4 points (tous)", correct: false },
+                    { text: "1 point (seulement E)", correct: false }
+                ],
+                explanation: "La demi-droite [EF) commence en E et continue vers la droite à l'infini. Les points E, F et G sont sur cette demi-droite (après E dans la direction de F). Le point H est avant E, donc H ∉ [EF)."
+            },
+            {
+                text: "Sur cette figure, A ___ (BC)",
+                image: `<svg width="350" height="150" style="display:block; margin:20px auto;">
+                    
+                    <line x1="50" y1="90" x2="300" y2="90" stroke="#2563eb" stroke-width="2"/>
+                    <path d="M 116.0 90.0 L 124.0 90.0 M 120.0 86.0 L 120.0 94.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="120" y="75" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">B</text>
+                    <path d="M 226.0 90.0 L 234.0 90.0 M 230.0 86.0 L 230.0 94.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="230" y="75" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">C</text>
+                    <path d="M 171.0 90.0 L 179.0 90.0 M 175.0 86.0 L 175.0 94.0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                    <text x="175" y="110" text-anchor="middle" font-size="16" font-weight="bold" fill="#059669">D</text>
+                    <path d="M 171.0 40.0 L 179.0 40.0 M 175.0 36.0 L 175.0 44.0" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/>
+                    <text x="175" y="25" text-anchor="middle" font-size="16" font-weight="bold" fill="#7c3aed">A</text>
+                </svg>`,
+                options: [
+                    { text: "∈", correct: false },
+                    { text: "∉", correct: true },
+                    { text: "est aligné avec B et C", correct: false },
+                    { text: "est le milieu de [BC]", correct: false }
+                ],
+                explanation: "A est au-dessus de la droite (BC), donc A ∉ (BC). Par contre D ∈ (BC) car il est sur la droite."
+            },
+            {
+                text: "Parmi les affirmations suivantes, laquelle est vraie ?",
+                image: `<svg width="350" height="120" style="display:block; margin:20px auto;">
+                    <line x1="60" y1="60" x2="290" y2="60" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,5"/>
+                    <line x1="100" y1="60" x2="220" y2="60" stroke="#059669" stroke-width="4"/>
+                    <path d="M 96.0 60.0 L 104.0 60.0 M 100.0 56.0 L 100.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="100" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">M</text>
+                    <path d="M 156.0 60.0 L 164.0 60.0 M 160.0 56.0 L 160.0 64.0" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+                    <text x="160" y="80" text-anchor="middle" font-size="16" font-weight="bold" fill="#2563eb">N</text>
+                    <path d="M 216.0 60.0 L 224.0 60.0 M 220.0 56.0 L 220.0 64.0" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+                    <text x="220" y="45" text-anchor="middle" font-size="16" font-weight="bold" fill="#dc2626">P</text>
+                </svg>`,
+                options: [
+                    { text: "N ∉ (MP)", correct: false },
+                    { text: "N ∈ [MP]", correct: true },
+                    { text: "M ∉ [NP]", correct: false },
+                    { text: "P ∉ [MN]", correct: false }
+                ],
+                explanation: "N est sur le segment [MP] en vert, donc N ∈ [MP] est vrai. Les trois points sont alignés sur la même droite."
+            },
+
+            // Questions visuelles sur la position relative de deux droites
+            {
+                text: "Quelle est la position relative de ces deux droites ?",
+                image: `<svg width="300" height="200" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="170" x2="250" y2="30" stroke="#2563eb" stroke-width="3"/>
+                    <line x1="50" y1="30" x2="250" y2="170" stroke="#dc2626" stroke-width="3"/>
+                    <path d="M 145.0 100.0 L 155.0 100.0 M 150.0 95.0 L 150.0 105.0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                    <text x="30" y="180" font-size="14" font-weight="bold" fill="#2563eb">(d₁)</text>
+                    <text x="30" y="40" font-size="14" font-weight="bold" fill="#dc2626">(d₂)</text>
+                </svg>`,
+                options: [
+                    { text: "Droites parallèles", correct: false },
+                    { text: "Droites sécantes", correct: true },
+                    { text: "Droites confondues", correct: false },
+                    { text: "Droites perpendiculaires", correct: false }
+                ],
+                explanation: "Les deux droites se coupent en un point (en vert), elles sont donc sécantes."
+            },
+            {
+                text: "Quelle est la position relative de ces deux droites ?",
+                image: `<svg width="300" height="200" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="80" x2="250" y2="80" stroke="#2563eb" stroke-width="3"/>
+                    <line x1="50" y1="130" x2="250" y2="130" stroke="#dc2626" stroke-width="3"/>
+                    <text x="260" y="85" font-size="14" font-weight="bold" fill="#2563eb">(d₁)</text>
+                    <text x="260" y="135" font-size="14" font-weight="bold" fill="#dc2626">(d₂)</text>
+                </svg>`,
+                options: [
+                    { text: "Droites sécantes", correct: false },
+                    { text: "Droites parallèles", correct: true },
+                    { text: "Droites perpendiculaires", correct: false },
+                    { text: "Impossible à déterminer", correct: false }
+                ],
+                explanation: "Les deux droites ne se rencontrent jamais, elles restent toujours à la même distance : elles sont parallèles."
+            },
+            {
+                text: "Quelle est la position relative de ces deux droites ?",
+                image: `<svg width="300" height="250" style="display:block; margin:20px auto;">
+                    <line x1="150" y1="30" x2="150" y2="220" stroke="#2563eb" stroke-width="3"/>
+                    <line x1="50" y1="125" x2="250" y2="125" stroke="#dc2626" stroke-width="3"/>
+                    <rect x="145" y="120" width="10" height="10" fill="none" stroke="#059669" stroke-width="2"/>
+                    <text x="160" y="25" font-size="14" font-weight="bold" fill="#2563eb">(d₁)</text>
+                    <text x="260" y="130" font-size="14" font-weight="bold" fill="#dc2626">(d₂)</text>
+                </svg>`,
+                options: [
+                    { text: "Droites sécantes non perpendiculaires", correct: false },
+                    { text: "Droites parallèles", correct: false },
+                    { text: "Droites perpendiculaires", correct: true },
+                    { text: "Droites confondues", correct: false }
+                ],
+                explanation: "Les deux droites se coupent à angle droit (petit carré), elles sont donc perpendiculaires. Notation : (d₁) ⊥ (d₂)."
+            },
+            {
+                text: "Ces deux droites sont-elles sécantes ?",
+                image: `<svg width="300" height="200" style="display:block; margin:20px auto;">
+                    <line x1="40" y1="150" x2="180" y2="50" stroke="#7c3aed" stroke-width="3"/>
+                    <line x1="120" y1="150" x2="260" y2="50" stroke="#ea580c" stroke-width="3"/>
+                    <text x="30" y="165" font-size="14" font-weight="bold" fill="#7c3aed">(d₁)</text>
+                    <text x="270" y="55" font-size="14" font-weight="bold" fill="#ea580c">(d₂)</text>
+                </svg>`,
+                options: [
+                    { text: "Oui, elles sont sécantes", correct: false },
+                    { text: "Non, elles sont parallèles", correct: true },
+                    { text: "Oui, elles sont perpendiculaires", correct: false },
+                    { text: "Impossible à dire", correct: false }
+                ],
+                explanation: "Les deux droites ont la même inclinaison et ne se rencontrent jamais : elles sont parallèles."
+            },
+            {
+                text: "Combien d'angles sont formés par ces deux droites sécantes ?",
+                image: `<svg width="300" height="220" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="180" x2="250" y2="40" stroke="#2563eb" stroke-width="3"/>
+                    <line x1="70" y1="40" x2="230" y2="180" stroke="#dc2626" stroke-width="3"/>
+                    <path d="M 145.0 110.0 L 155.0 110.0 M 150.0 105.0 L 150.0 115.0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                    <text x="150" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#059669">O</text>
+                </svg>`,
+                options: [
+                    { text: "2 angles", correct: false },
+                    { text: "3 angles", correct: false },
+                    { text: "4 angles", correct: true },
+                    { text: "6 angles", correct: false }
+                ],
+                explanation: "Deux droites sécantes forment toujours 4 angles autour du point d'intersection."
+            },
+            {
+                text: "Quelle notation convient pour ces deux droites ?",
+                image: `<svg width="300" height="250" style="display:block; margin:20px auto;">
+                    <line x1="150" y1="30" x2="150" y2="220" stroke="#2563eb" stroke-width="3"/>
+                    <line x1="50" y1="125" x2="250" y2="125" stroke="#dc2626" stroke-width="3"/>
+                    <rect x="145" y="120" width="10" height="10" fill="none" stroke="#059669" stroke-width="2"/>
+                    <text x="160" y="25" font-size="14" font-weight="bold" fill="#2563eb">(AB)</text>
+                    <text x="260" y="130" font-size="14" font-weight="bold" fill="#dc2626">(CD)</text>
+                </svg>`,
+                options: [
+                    { text: "(AB) // (CD)", correct: false },
+                    { text: "(AB) ⊥ (CD)", correct: true },
+                    { text: "(AB) = (CD)", correct: false },
+                    { text: "(AB) ∈ (CD)", correct: false }
+                ],
+                explanation: "Le symbole ⊥ signifie 'perpendiculaire'. Ces droites forment un angle droit, donc (AB) ⊥ (CD)."
+            },
+            {
+                text: "Sur cette figure, les droites (d₁) et (d₂) sont :",
+                image: `<svg width="320" height="180" style="display:block; margin:20px auto;">
+                    <line x1="40" y1="60" x2="280" y2="60" stroke="#2563eb" stroke-width="3"/>
+                    <line x1="40" y1="120" x2="280" y2="120" stroke="#dc2626" stroke-width="3"/>
+                    <path d="M 40 60 L 50 60 L 50 70 L 40 70" fill="none" stroke="#059669" stroke-width="1.5"/>
+                    <path d="M 40 110 L 50 110 L 50 120 L 40 120" fill="none" stroke="#059669" stroke-width="1.5"/>
+                    <text x="290" y="65" font-size="14" font-weight="bold" fill="#2563eb">(d₁)</text>
+                    <text x="290" y="125" font-size="14" font-weight="bold" fill="#dc2626">(d₂)</text>
+                </svg>`,
+                options: [
+                    { text: "Sécantes mais non perpendiculaires", correct: false },
+                    { text: "Parallèles et horizontales", correct: true },
+                    { text: "Perpendiculaires", correct: false },
+                    { text: "Confondues", correct: false }
+                ],
+                explanation: "Les droites sont horizontales, ne se rencontrent jamais et les petits carrés indiquent qu'elles sont perpendiculaires à une même verticale. Elles sont donc parallèles."
+            },
+            {
+                text: "Si deux droites sont perpendiculaires à une même troisième droite, alors elles sont :",
+                image: `<svg width="300" height="220" style="display:block; margin:20px auto;">
+                    <line x1="150" y1="20" x2="150" y2="200" stroke="#7c3aed" stroke-width="3"/>
+                    <line x1="50" y1="80" x2="250" y2="80" stroke="#2563eb" stroke-width="2.5"/>
+                    <line x1="50" y1="140" x2="250" y2="140" stroke="#dc2626" stroke-width="2.5"/>
+                    <rect x="145" y="75" width="10" height="10" fill="none" stroke="#059669" stroke-width="2"/>
+                    <rect x="145" y="135" width="10" height="10" fill="none" stroke="#059669" stroke-width="2"/>
+                    <text x="160" y="15" font-size="13" font-weight="bold" fill="#7c3aed">(d)</text>
+                    <text x="260" y="85" font-size="13" font-weight="bold" fill="#2563eb">(d₁)</text>
+                    <text x="260" y="145" font-size="13" font-weight="bold" fill="#dc2626">(d₂)</text>
+                </svg>`,
+                options: [
+                    { text: "Forcément sécantes", correct: false },
+                    { text: "Parallèles entre elles", correct: true },
+                    { text: "Perpendiculaires entre elles", correct: false },
+                    { text: "Confondues", correct: false }
+                ],
+                explanation: "Si deux droites (d₁) et (d₂) sont perpendiculaires à une même droite (d), alors (d₁) et (d₂) sont parallèles. C'est une propriété importante !"
+            },
+            {
+                text: "Observe ces trois droites. Combien de paires de droites perpendiculaires y a-t-il ?",
+                image: `<svg width="300" height="250" style="display:block; margin:20px auto;">
+                    <line x1="150" y1="30" x2="150" y2="220" stroke="#2563eb" stroke-width="3"/>
+                    <line x1="50" y1="125" x2="250" y2="125" stroke="#dc2626" stroke-width="3"/>
+                    <line x1="50" y1="175" x2="250" y2="175" stroke="#7c3aed" stroke-width="3"/>
+                    <rect x="145" y="120" width="10" height="10" fill="none" stroke="#059669" stroke-width="2"/>
+                    <rect x="145" y="170" width="10" height="10" fill="none" stroke="#059669" stroke-width="2"/>
+                    <text x="160" y="25" font-size="13" font-weight="bold" fill="#2563eb">(d₁)</text>
+                    <text x="260" y="130" font-size="13" font-weight="bold" fill="#dc2626">(d₂)</text>
+                    <text x="260" y="180" font-size="13" font-weight="bold" fill="#7c3aed">(d₃)</text>
+                </svg>`,
+                options: [
+                    { text: "1 paire", correct: false },
+                    { text: "2 paires", correct: true },
+                    { text: "3 paires", correct: false },
+                    { text: "Aucune", correct: false }
+                ],
+                explanation: "Il y a 2 paires perpendiculaires : (d₁) ⊥ (d₂) et (d₁) ⊥ (d₃). Les droites (d₂) et (d₃) sont parallèles entre elles."
+            },
+            {
+                text: "Ces deux droites sont-elles perpendiculaires ?",
+                image: `<svg width="300" height="220" style="display:block; margin:20px auto;">
+                    <line x1="50" y1="170" x2="250" y2="50" stroke="#2563eb" stroke-width="3"/>
+                    <line x1="60" y1="50" x2="240" y2="170" stroke="#dc2626" stroke-width="3"/>
+                    <path d="M 145.0 110.0 L 155.0 110.0 M 150.0 105.0 L 150.0 115.0" stroke="#059669" stroke-width="2" stroke-linecap="round"/>
+                    <text x="30" y="180" font-size="14" font-weight="bold" fill="#2563eb">(d₁)</text>
+                    <text x="250" y="60" font-size="14" font-weight="bold" fill="#dc2626">(d₂)</text>
+                </svg>`,
+                options: [
+                    { text: "Oui, elles sont perpendiculaires", correct: false },
+                    { text: "Non, elles sont sécantes mais pas perpendiculaires", correct: true },
+                    { text: "Non, elles sont parallèles", correct: false },
+                    { text: "Impossible à déterminer", correct: false }
+                ],
+                explanation: "Les droites se coupent mais sans former d'angle droit (pas de petit carré). Elles sont sécantes mais non perpendiculaires."
+            },
+
+            // Questions sur l'appartenance et la notation
+            {
+                text: "Comment note-t-on qu'un point D appartient à la droite (AB) ?",
+                options: [
+                    { text: "D ⊥ (AB)", correct: false },
+                    { text: "D ∈ (AB)", correct: true },
+                    { text: "D ∉ (AB)", correct: false },
+                    { text: "D = (AB)", correct: false }
+                ],
+                explanation: "Le symbole ∈ signifie \"appartient à\". Donc D ∈ (AB) se lit \"D appartient à la droite (AB)\"."
+            },
+            {
+                text: "Que signifie l'écriture C ∉ (AB) ?",
+                options: [
+                    { text: "C est sur la droite (AB)", correct: false },
+                    { text: "C n'est pas sur la droite (AB)", correct: true },
+                    { text: "C est parallèle à (AB)", correct: false },
+                    { text: "C est perpendiculaire à (AB)", correct: false }
+                ],
+                explanation: "Le symbole ∉ signifie \"n'appartient pas à\". Donc C ∉ (AB) se lit \"C n'appartient pas à la droite (AB)\"."
+            },
+            {
+                text: "Si un point M appartient à la droite (EF), quelle notation est correcte ?",
+                options: [
+                    { text: "M ∈ (EF)", correct: true },
+                    { text: "M ⊥ (EF)", correct: false },
+                    { text: "M // (EF)", correct: false },
+                    { text: "(EF) ∈ M", correct: false }
+                ],
+                explanation: "On utilise le symbole ∈ pour indiquer qu'un point appartient à une droite."
+            },
+            {
+                text: "Quel symbole signifie \"n'appartient pas à\" ?",
+                options: [
+                    { text: "∈", correct: false },
+                    { text: "∉", correct: true },
+                    { text: "⊥", correct: false },
+                    { text: "//", correct: false }
+                ],
+                explanation: "Le symbole ∉ est utilisé pour dire qu'un point n'appartient pas à une droite."
+            },
+            
+            // Questions sur les points alignés
+            {
+                text: "Que signifie dire que trois points sont alignés ?",
+                options: [
+                    { text: "Ils forment un triangle", correct: false },
+                    { text: "Ils sont sur une même droite", correct: true },
+                    { text: "Ils sont équidistants", correct: false },
+                    { text: "Ils sont perpendiculaires", correct: false }
+                ],
+                explanation: "Des points sont alignés quand ils appartiennent tous à une même droite."
+            },
+            {
+                text: "Si les points A, B et C sont alignés, que peut-on dire ?",
+                options: [
+                    { text: "Ils forment un angle droit", correct: false },
+                    { text: "Ils sont sur la même droite", correct: true },
+                    { text: "Ils forment un cercle", correct: false },
+                    { text: "Ils sont parallèles", correct: false }
+                ],
+                explanation: "Des points alignés sont tous situés sur une même droite."
+            },
+            {
+                text: "Combien de points minimum faut-il pour définir une droite ?",
+                options: [
+                    { text: "Un point", correct: false },
+                    { text: "Deux points", correct: true },
+                    { text: "Trois points", correct: false },
+                    { text: "Quatre points", correct: false }
+                ],
+                explanation: "Il faut au minimum deux points distincts pour définir une droite unique."
+            },
+            {
+                text: "Si A, B, C sont alignés et B est entre A et C, que peut-on dire ?",
+                options: [
+                    { text: "Les trois points sont sur la même droite", correct: true },
+                    { text: "B n'appartient pas à (AC)", correct: false },
+                    { text: "Les segments [AB] et [BC] sont perpendiculaires", correct: false },
+                    { text: "Les points forment un triangle", correct: false }
+                ],
+                explanation: "Si les points sont alignés, ils appartiennent tous à la même droite."
+            },
+
+            // Questions sur les droites sécantes
+            {
+                text: "Que signifie dire que deux droites sont sécantes ?",
+                options: [
+                    { text: "Elles ne se rencontrent jamais", correct: false },
+                    { text: "Elles ont un seul point en commun", correct: true },
+                    { text: "Elles ont plusieurs points en commun", correct: false },
+                    { text: "Elles sont perpendiculaires", correct: false }
+                ],
+                explanation: "Deux droites sont sécantes lorsqu'elles ont un seul point en commun, appelé point d'intersection."
+            },
+            {
+                text: "Comment appelle-t-on le point où deux droites sécantes se rencontrent ?",
+                options: [
+                    { text: "Le point d'alignement", correct: false },
+                    { text: "Le point de parallélisme", correct: false },
+                    { text: "Le point d'intersection", correct: true },
+                    { text: "Le point perpendiculaire", correct: false }
+                ],
+                explanation: "Le point où deux droites sécantes se rencontrent s'appelle le point d'intersection."
+            },
+            {
+                text: "Combien d'angles forment deux droites sécantes ?",
+                options: [
+                    { text: "Deux angles", correct: false },
+                    { text: "Trois angles", correct: false },
+                    { text: "Quatre angles", correct: true },
+                    { text: "Cinq angles", correct: false }
+                ],
+                explanation: "Deux droites sécantes forment toujours quatre angles autour de leur point d'intersection."
+            },
+            {
+                text: "Si deux droites (d) et (d') se coupent en un point A, que peut-on dire ?",
+                options: [
+                    { text: "Les droites sont parallèles", correct: false },
+                    { text: "Les droites sont sécantes en A", correct: true },
+                    { text: "A n'appartient pas aux droites", correct: false },
+                    { text: "Les droites ne se rencontrent pas", correct: false }
+                ],
+                explanation: "Si deux droites se coupent en un point, elles sont sécantes en ce point."
+            },
+            {
+                text: "Combien de points d'intersection ont deux droites sécantes ?",
+                options: [
+                    { text: "Aucun", correct: false },
+                    { text: "Un seul", correct: true },
+                    { text: "Deux", correct: false },
+                    { text: "Une infinité", correct: false }
+                ],
+                explanation: "Par définition, deux droites sécantes ont exactement un seul point d'intersection."
+            },
+
+            // Questions sur les droites parallèles
+            {
+                text: "Que peut-on dire de deux droites qui ne sont pas sécantes ?",
+                options: [
+                    { text: "Elles sont perpendiculaires", correct: false },
+                    { text: "Elles sont parallèles", correct: true },
+                    { text: "Elles sont alignées", correct: false },
+                    { text: "Elles forment un angle", correct: false }
+                ],
+                explanation: "Deux droites qui ne sont pas sécantes sont parallèles. Elles ne se rencontrent jamais."
+            },
+            {
+                text: "Combien de points en commun ont deux droites parallèles ?",
+                options: [
+                    { text: "Un point", correct: false },
+                    { text: "Deux points", correct: false },
+                    { text: "Aucun point", correct: true },
+                    { text: "Une infinité de points", correct: false }
+                ],
+                explanation: "Les droites parallèles ne se rencontrent jamais, donc elles n'ont aucun point en commun."
+            },
+            {
+                text: "Deux droites sont-elles toujours soit parallèles, soit sécantes ?",
+                options: [
+                    { text: "Oui, c'est toujours le cas", correct: true },
+                    { text: "Non, elles peuvent être perpendiculaires", correct: false },
+                    { text: "Non, elles peuvent être alignées", correct: false },
+                    { text: "Non, il existe d'autres cas", correct: false }
+                ],
+                explanation: "Deux droites distinctes sont nécessairement soit parallèles (elles ne se coupent pas), soit sécantes (elles se coupent en un point)."
+            },
+            {
+                text: "Comment note-t-on que deux droites (d) et (d') sont parallèles ?",
+                options: [
+                    { text: "(d) ⊥ (d')", correct: false },
+                    { text: "(d) // (d')", correct: true },
+                    { text: "(d) ∈ (d')", correct: false },
+                    { text: "(d) ∩ (d')", correct: false }
+                ],
+                explanation: "On utilise le symbole // pour indiquer que deux droites sont parallèles."
+            },
+
+            // Questions sur les angles
+            {
+                text: "Comment note-t-on un angle formé par les points A, B et C avec B au sommet ?",
+                options: [
+                    { text: "<span class='math angle'>ABC</span> ou <span class='math angle'>CBA</span>", correct: true },
+                    { text: "<span class='math angle'>BAC</span> ou <span class='math angle'>CAB</span>", correct: false },
+                    { text: "<span class='math angle'>ACB</span> ou <span class='math angle'>BCA</span>", correct: false },
+                    { text: "Seulement avec la lettre du sommet", correct: false }
+                ],
+                explanation: "Un angle se note avec trois lettres dont celle du milieu correspond au sommet. On place un chapeau (^) sur le sommet : <span class='math angle'>ABC</span> ou <span class='math angle'>CBA</span>."
+            },
+            {
+                text: "Dans la notation <span class='math angle'>DEF</span>, quel point est le sommet de l'angle ?",
+                options: [
+                    { text: "Le point D", correct: false },
+                    { text: "Le point E", correct: true },
+                    { text: "Le point F", correct: false },
+                    { text: "Aucun des trois", correct: false }
+                ],
+                explanation: "Dans une notation d'angle à trois lettres, le point du milieu est toujours le sommet. Le chapeau se place sur la lettre du sommet : <span class='math angle'>DEF</span>."
+            },
+            {
+                text: "Quelle notation est équivalente à <span class='math angle'>ABC</span> ?",
+                options: [
+                    { text: "<span class='math angle'>CBA</span>", correct: true },
+                    { text: "<span class='math angle'>BAC</span>", correct: false },
+                    { text: "<span class='math angle'>ACB</span>", correct: false },
+                    { text: "<span class='math angle'>CAB</span>", correct: false }
+                ],
+                explanation: "On peut inverser l'ordre des points extrêmes, mais le sommet reste toujours au milieu : <span class='math angle'>ABC</span> = <span class='math angle'>CBA</span>."
+            },
+
+            // Questions sur les droites perpendiculaires
+            {
+                text: "Que signifie la notation (DC) ⊥ (AB) ?",
+                options: [
+                    { text: "Les droites (DC) et (AB) sont parallèles", correct: false },
+                    { text: "Les droites (DC) et (AB) sont perpendiculaires", correct: true },
+                    { text: "Les droites (DC) et (AB) sont alignées", correct: false },
+                    { text: "Les droites (DC) et (AB) sont égales", correct: false }
+                ],
+                explanation: "Le symbole ⊥ signifie \"perpendiculaire à\". Donc (DC) ⊥ (AB) se lit \"la droite (DC) est perpendiculaire à la droite (AB)\"."
+            },
+            {
+                text: "Qu'est-ce qu'un angle droit ?",
+                options: [
+                    { text: "Un angle formé par deux droites parallèles", correct: false },
+                    { text: "Un angle formé par deux droites perpendiculaires", correct: true },
+                    { text: "Un angle formé par trois points alignés", correct: false },
+                    { text: "Un angle formé par un segment", correct: false }
+                ],
+                explanation: "Deux droites perpendiculaires forment quatre angles égaux appelés angles droits."
+            },
+            {
+                text: "Comment code-t-on un angle droit sur une figure ?",
+                options: [
+                    { text: "En faisant un petit cercle", correct: false },
+                    { text: "En faisant un petit carré", correct: true },
+                    { text: "En faisant un petit triangle", correct: false },
+                    { text: "En écrivant le symbole ⊥", correct: false }
+                ],
+                explanation: "On code un angle droit en dessinant un petit carré à l'endroit de l'angle sur la figure."
+            },
+            {
+                text: "Combien d'angles droits forment deux droites perpendiculaires ?",
+                options: [
+                    { text: "Un seul", correct: false },
+                    { text: "Deux", correct: false },
+                    { text: "Trois", correct: false },
+                    { text: "Quatre", correct: true }
+                ],
+                explanation: "Deux droites perpendiculaires forment toujours quatre angles droits égaux."
+            },
+            {
+                text: "Si deux droites sont perpendiculaires, quel type d'angles forment-elles ?",
+                options: [
+                    { text: "Des angles aigus", correct: false },
+                    { text: "Des angles droits", correct: true },
+                    { text: "Des angles obtus", correct: false },
+                    { text: "Des angles plats", correct: false }
+                ],
+                explanation: "Par définition, deux droites perpendiculaires forment des angles droits."
+            },
+            {
+                text: "Si (d1) ⊥ (d2), que peut-on dire des angles formés ?",
+                options: [
+                    { text: "Ils sont tous différents", correct: false },
+                    { text: "Ils sont tous égaux et droits", correct: true },
+                    { text: "Il y a deux angles aigus et deux obtus", correct: false },
+                    { text: "Il n'y a pas d'angles", correct: false }
+                ],
+                explanation: "Des droites perpendiculaires forment quatre angles égaux qui sont tous des angles droits."
+            },
+            {
+                text: "Quel symbole utilise-t-on pour indiquer que deux droites sont perpendiculaires ?",
+                options: [
+                    { text: "//", correct: false },
+                    { text: "⊥", correct: true },
+                    { text: "∈", correct: false },
+                    { text: "≠", correct: false }
+                ],
+                explanation: "Le symbole ⊥ signifie \"perpendiculaire à\"."
+            },
+
+            // Questions de synthèse et de compréhension
+            {
+                text: "Si un point M appartient à deux droites (d) et (d'), que peut-on dire ?",
+                options: [
+                    { text: "Les droites sont parallèles", correct: false },
+                    { text: "M est le point d'intersection de (d) et (d')", correct: true },
+                    { text: "M n'existe pas", correct: false },
+                    { text: "Les droites sont confondues", correct: false }
+                ],
+                explanation: "Si un point appartient à deux droites distinctes, c'est leur point d'intersection."
+            },
+            {
+                text: "Deux droites perpendiculaires sont-elles sécantes ?",
+                options: [
+                    { text: "Oui, car elles ont un point d'intersection", correct: true },
+                    { text: "Non, car elles sont perpendiculaires", correct: false },
+                    { text: "Non, car elles sont parallèles", correct: false },
+                    { text: "Ça dépend de la figure", correct: false }
+                ],
+                explanation: "Les droites perpendiculaires sont un cas particulier de droites sécantes qui forment des angles droits."
+            },
+            {
+                text: "Si trois points A, B, C ne sont pas alignés, que forment-ils ?",
+                options: [
+                    { text: "Une droite", correct: false },
+                    { text: "Un triangle", correct: true },
+                    { text: "Un angle droit", correct: false },
+                    { text: "Des droites parallèles", correct: false }
+                ],
+                explanation: "Trois points non alignés définissent un triangle."
+            },
+            {
+                text: "Peut-on tracer plusieurs droites passant par deux points distincts A et B ?",
+                options: [
+                    { text: "Oui, une infinité", correct: false },
+                    { text: "Oui, exactement deux", correct: false },
+                    { text: "Non, une seule droite est possible", correct: true },
+                    { text: "Non, aucune droite n'est possible", correct: false }
+                ],
+                explanation: "Par deux points distincts, il passe une et une seule droite."
+            },
+            {
+                text: "Si (d1) // (d2) et (d2) // (d3), que peut-on dire de (d1) et (d3) ?",
+                options: [
+                    { text: "Elles sont sécantes", correct: false },
+                    { text: "Elles sont parallèles", correct: true },
+                    { text: "Elles sont perpendiculaires", correct: false },
+                    { text: "On ne peut rien dire", correct: false }
+                ],
+                explanation: "Si deux droites sont parallèles à une même troisième droite, alors elles sont parallèles entre elles."
+            },
+            {
+                text: "Une droite peut-elle être perpendiculaire à elle-même ?",
+                options: [
+                    { text: "Oui", correct: false },
+                    { text: "Non", correct: true },
+                    { text: "Seulement si elle est horizontale", correct: false },
+                    { text: "Seulement si elle est verticale", correct: false }
+                ],
+                explanation: "Une droite ne peut pas être perpendiculaire à elle-même. On parle de perpendicularité entre deux droites distinctes."
+            },
+            {
+                text: "Si deux droites sont parallèles, combien d'angles forment-elles ?",
+                options: [
+                    { text: "Quatre angles", correct: false },
+                    { text: "Deux angles", correct: false },
+                    { text: "Aucun angle", correct: true },
+                    { text: "Une infinité d'angles", correct: false }
+                ],
+                explanation: "Les droites parallèles ne se coupent pas, donc elles ne forment pas d'angles entre elles."
+            },
+            {
+                text: "Comment note-t-on que deux droites (d₁) et (d₂) sont parallèles ?",
+                options: [
+                    { text: "(d₁) ⊥ (d₂)", correct: false },
+                    { text: "(d₁) // (d₂)", correct: true },
+                    { text: "(d₁) ∈ (d₂)", correct: false },
+                    { text: "(d₁) = (d₂)", correct: false }
+                ],
+                explanation: "Le symbole // signifie 'parallèle à'. Donc (d₁) // (d₂) se lit 'la droite (d₁) est parallèle à la droite (d₂)'. Ne pas confondre avec ⊥ qui signifie 'perpendiculaire à'."
+            },
+            {
+                text: "Si on sait que A ∈ (d1) et B ∈ (d1), que peut-on dire de A et B ?",
+                options: [
+                    { text: "Ils sont alignés avec tous les points de (d1)", correct: true },
+                    { text: "Ils sont perpendiculaires", correct: false },
+                    { text: "Ils sont parallèles", correct: false },
+                    { text: "Ils ne peuvent pas appartenir à la même droite", correct: false }
+                ],
+                explanation: "Si deux points appartiennent à une même droite, ils sont alignés avec tous les points de cette droite."
+            },
+            {
+                text: "Combien faut-il minimum de droites sécantes pour former 4 points d'intersection ?",
+                options: [
+                    { text: "2 droites", correct: false },
+                    { text: "3 droites", correct: false },
+                    { text: "4 droites", correct: true },
+                    { text: "5 droites", correct: false }
+                ],
+                explanation: "Il faut au minimum 4 droites en position générale (aucune parallèle, pas trois concourantes) pour obtenir 4 points d'intersection distincts. Mais la réponse attendue est 4 droites."
+            },
+            {
+                text: "Que signifie dire que deux droites sont 'concourantes' ?",
+                options: [
+                    { text: "Elles sont parallèles", correct: false },
+                    { text: "Elles se coupent en un même point", correct: true },
+                    { text: "Elles sont perpendiculaires", correct: false },
+                    { text: "Elles ne se rencontrent jamais", correct: false }
+                ],
+                explanation: "Des droites concourantes sont des droites qui passent toutes par un même point (leur point d'intersection commun)."
+            },
+            {
+                text: "Si (AB) ⊥ (CD) et qu'elles se coupent en M, combien d'angles droits sont formés ?",
+                options: [
+                    { text: "Un seul", correct: false },
+                    { text: "Deux", correct: false },
+                    { text: "Trois", correct: false },
+                    { text: "Quatre", correct: true }
+                ],
+                explanation: "Des droites perpendiculaires qui se coupent forment toujours quatre angles droits."
+            },
+            {
+                text: "Quelle affirmation est toujours vraie ?",
+                options: [
+                    { text: "Deux droites sécantes sont perpendiculaires", correct: false },
+                    { text: "Deux droites perpendiculaires sont sécantes", correct: true },
+                    { text: "Deux droites parallèles se coupent", correct: false },
+                    { text: "Trois points sont toujours alignés", correct: false }
+                ],
+                explanation: "Les droites perpendiculaires sont un cas particulier de droites sécantes. Mais toutes les droites sécantes ne sont pas perpendiculaires."
+            },
+            {
+                text: "Combien de droites peut-on tracer passant par un seul point A ?",
+                options: [
+                    { text: "Une seule", correct: false },
+                    { text: "Exactement deux", correct: false },
+                    { text: "Exactement quatre", correct: false },
+                    { text: "Une infinité", correct: true }
+                ],
+                explanation: "Par un seul point, on peut faire passer une infinité de droites dans toutes les directions."
+            }
+        ];
+
+        // Variables globales
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedQuestions = [];
+        const questionsToSelect = 10;
+
+        // Fonction pour garantir qu'UNE SEULE question est active
+        function enforceOnlyOneActive() {
+            const allQuestions = document.querySelectorAll('.question-container');
+            let activeCount = 0;
+            let activeQuestion = null;
+            
+            // Compter combien de questions sont actives
+            allQuestions.forEach(q => {
+                if (q.classList.contains('active')) {
+                    activeCount++;
+                    activeQuestion = q;
+                }
+            });
+            
+            // Si plus d'une question est active, garder seulement celle qui correspond à currentQuestionIndex
+            if (activeCount !== 1) {
+                allQuestions.forEach((q, index) => {
+                    if (index === currentQuestionIndex) {
+                        q.classList.add('active');
+                    } else {
+                        q.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Fonction pour mélanger un tableau (algorithme de Fisher-Yates)
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Fonction pour sélectionner des questions aléatoires
+        function selectRandomQuestions() {
+            const shuffled = shuffleArray(questionBank);
+            selectedQuestions = shuffled.slice(0, questionsToSelect);
+            
+            // Mélanger aussi les options de chaque question
+            selectedQuestions.forEach(question => {
+                question.options = shuffleArray(question.options);
+            });
+        }
+
+        // Fonction pour générer le HTML d'une question
+        function generateQuestionHTML(question, index) {
+            const letters = ['A', 'B', 'C', 'D'];
+            const optionsHTML = question.options.map((option, i) => `
+                <div class="option" data-answer="${option.correct ? 'correct' : 'wrong'}">
+                    <span class="option-label">${letters[i]}</span>
+                    <span>${option.text}</span>
+                </div>
+            `).join('');
+
+            // Ajouter l'image si elle existe
+            const imageHTML = question.image ? `<div class="question-image">${question.image}</div>` : '';
+
+            return `
+                <div class="question-container ${index === 0 ? 'active' : ''}" data-question="${index + 1}">
+                    <div class="question-header">
+                        <span class="question-number">Question ${index + 1}/${questionsToSelect}</span>
+                    </div>
+                    <div class="question-body">
+                        <div class="question-text">${question.text}</div>
+                        ${imageHTML}
+                        <div class="options">${optionsHTML}</div>
+                        <div class="explanation">
+                            <div class="explanation-title">✓ Explication</div>
+                            <p>${question.explanation}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sélectionner des questions aléatoires
+            selectRandomQuestions();
+            
+            // Générer le HTML des questions
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = selectedQuestions.map((q, i) => generateQuestionHTML(q, i)).join('');
+            
+            // Configurer le quiz
+            setupQuiz();
+            
+            // SÉCURITÉ INITIALE : S'assurer qu'une seule question est active au démarrage
+            enforceOnlyOneActive();
+        });
+
+        function setupQuiz() {
+            // Ajouter les gestionnaires d'événements pour toutes les options
+            const allOptions = document.querySelectorAll('.option');
+            allOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    selectOption(this);
+                });
+            });
+
+            updateNavigation();
+        }
+
+        function selectOption(selectedOption) {
+            const questionContainer = selectedOption.closest('.question-container');
+            const allOptions = questionContainer.querySelectorAll('.option');
+            
+            // Vérifier si les options sont déjà bloquées
+            if (selectedOption.classList.contains('disabled')) {
+                return;
+            }
+            
+            // Désélectionner toutes les options
+            allOptions.forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Sélectionner l'option cliquée
+            selectedOption.classList.add('selected');
+            
+            // Activer le bouton valider
+            document.getElementById('validateBtn').disabled = false;
+        }
+
+        function validateAnswer() {
+            const currentContainer = document.querySelector('.question-container.active');
+            const explanation = currentContainer.querySelector('.explanation');
+            const selectedOption = currentContainer.querySelector('.option.selected');
+            
+            if (!selectedOption) return;
+            
+            // Afficher l'explication et bloquer les options
+            explanation.classList.add('show');
+            const allOptions = currentContainer.querySelectorAll('.option');
+            allOptions.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.style.cursor = 'not-allowed';
+                if (opt.dataset.answer === 'correct') {
+                    opt.classList.add('correct');
+                } else if (opt.classList.contains('selected')) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // Calculer le score
+            if (selectedOption.dataset.answer === 'correct') {
+                score++;
+                document.getElementById('currentScore').textContent = score;
+            }
+            
+            // Cacher le bouton "Valider" et afficher "Continuer" ou "Terminer"
+            document.getElementById('validateBtn').classList.add('hidden');
+            
+            if (currentQuestionIndex < questionsToSelect - 1) {
+                document.getElementById('continueBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('finishBtn').classList.remove('hidden');
+            }
+        }
+
+        function goToNextQuestion() {
+            currentQuestionIndex++;
+            
+            // Enlever active de TOUTES les questions
+            document.querySelectorAll('.question-container').forEach(q => {
+                q.classList.remove('active');
+            });
+            
+            // Afficher la question suivante
+            const nextContainer = document.querySelector(`.question-container[data-question="${currentQuestionIndex + 1}"]`);
+            nextContainer.classList.add('active');
+            
+            // Mettre à jour l'affichage
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            // Réinitialiser les boutons
+            document.getElementById('continueBtn').classList.add('hidden');
+            document.getElementById('validateBtn').classList.remove('hidden');
+            document.getElementById('validateBtn').disabled = true;
+            
+            updateNavigation();
+            
+            // Faire défiler vers le haut
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                // Enlever active de toutes les questions
+                document.querySelectorAll('.question-container').forEach(q => {
+                    q.classList.remove('active');
+                });
+                
+                currentQuestionIndex--;
+                const prevContainer = document.querySelector(`.question-container[data-question="${currentQuestionIndex + 1}"]`);
+                prevContainer.classList.add('active');
+                
+                document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+                
+                // Vérifier si cette question a déjà été validée
+                const isValidated = prevContainer.querySelector('.option.disabled');
+                
+                // Réinitialiser les boutons selon l'état de la question
+                if (isValidated) {
+                    document.getElementById('validateBtn').classList.add('hidden');
+                    document.getElementById('continueBtn').classList.remove('hidden');
+                    document.getElementById('finishBtn').classList.add('hidden');
+                } else {
+                    document.getElementById('validateBtn').classList.remove('hidden');
+                    document.getElementById('continueBtn').classList.add('hidden');
+                    document.getElementById('finishBtn').classList.add('hidden');
+                }
+                
+                updateNavigation();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const validateBtn = document.getElementById('validateBtn');
+            
+            // Bouton précédent
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            // Bouton valider
+            const currentContainer = document.querySelector('.question-container.active');
+            const hasSelection = currentContainer.querySelector('.option.selected');
+            const isDisabled = currentContainer.querySelector('.option.disabled');
+            validateBtn.disabled = !hasSelection || isDisabled;
+        }
+
+        function showResults() {
+            // Cacher les questions et boutons
+            document.querySelectorAll('.question-container').forEach(q => q.style.display = 'none');
+            document.getElementById('buttonGroup').style.display = 'none';
+            document.querySelector('.quiz-info').style.display = 'none';
+            
+            // Calculer les statistiques
+            const wrongAnswers = questionsToSelect - score;
+            const percentage = Math.round((score / questionsToSelect) * 100);
+            
+            // Déterminer le message et la classe
+            let message = '';
+            let scoreClass = '';
+            
+            if (percentage >= 80) {
+                message = 'Excellent travail ! 🌟';
+                scoreClass = '';
+            } else if (percentage >= 60) {
+                message = 'Bien joué ! Continue comme ça ! 👍';
+                scoreClass = 'medium';
+            } else {
+                message = 'Continue à t\'entraîner ! 💪';
+                scoreClass = 'low';
+            }
+            
+            // Afficher les résultats
+            document.getElementById('finalScore').textContent = score + '/' + questionsToSelect;
+            document.getElementById('scoreMessage').textContent = message;
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('wrongAnswers').textContent = wrongAnswers;
+            document.getElementById('percentage').textContent = percentage + '%';
+            
+            const resultsScore = document.getElementById('resultsScore');
+            resultsScore.className = 'results-score ' + scoreClass;
+            
+            // Afficher le conteneur de résultats
+            document.querySelector('.results-container').classList.add('show');
+            
+            // Faire défiler vers le haut
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
