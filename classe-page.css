@@ -68,21 +68,35 @@ h1 {
     overflow: visible;
 }
 
-.chapter-card:nth-child(2) {
-    background: var(--chapter-gradient-2);
-}
-
-.chapter-card:nth-child(3) {
-    background: var(--chapter-gradient-3);
-}
-
-.chapter-card:nth-child(4) {
-    background: var(--chapter-gradient-4);
-}
-
-.chapter-card:nth-child(5) {
-    background: var(--chapter-gradient-5);
-}
+.chapter-card:nth-child(2) { background: var(--chapter-gradient-2); }
+.chapter-card:nth-child(3) { background: var(--chapter-gradient-3); }
+.chapter-card:nth-child(4) { background: var(--chapter-gradient-4); }
+.chapter-card:nth-child(5) { background: var(--chapter-gradient-5); }
+.chapter-card:nth-child(6) { background: var(--chapter-gradient-6); }
+.chapter-card:nth-child(7) { background: var(--chapter-gradient-7); }
+.chapter-card:nth-child(8) { background: var(--chapter-gradient-8); }
+.chapter-card:nth-child(9) { background: var(--chapter-gradient-9); }
+.chapter-card:nth-child(10) { background: var(--chapter-gradient-10); }
+.chapter-card:nth-child(11) { background: var(--chapter-gradient-11); }
+.chapter-card:nth-child(12) { background: var(--chapter-gradient-12); }
+.chapter-card:nth-child(13) { background: var(--chapter-gradient-13); }
+.chapter-card:nth-child(14) { background: var(--chapter-gradient-14); }
+.chapter-card:nth-child(15) { background: var(--chapter-gradient-15); }
+.chapter-card:nth-child(16) { background: var(--chapter-gradient-16); }
+.chapter-card:nth-child(17) { background: var(--chapter-gradient-17); }
+.chapter-card:nth-child(18) { background: var(--chapter-gradient-18); }
+.chapter-card:nth-child(19) { background: var(--chapter-gradient-19); }
+.chapter-card:nth-child(20) { background: var(--chapter-gradient-20); }
+.chapter-card:nth-child(21) { background: var(--chapter-gradient-21); }
+.chapter-card:nth-child(22) { background: var(--chapter-gradient-22); }
+.chapter-card:nth-child(23) { background: var(--chapter-gradient-23); }
+.chapter-card:nth-child(24) { background: var(--chapter-gradient-24); }
+.chapter-card:nth-child(25) { background: var(--chapter-gradient-25); }
+.chapter-card:nth-child(26) { background: var(--chapter-gradient-26); }
+.chapter-card:nth-child(27) { background: var(--chapter-gradient-27); }
+.chapter-card:nth-child(28) { background: var(--chapter-gradient-28); }
+.chapter-card:nth-child(29) { background: var(--chapter-gradient-29); }
+.chapter-card:nth-child(30) { background: var(--chapter-gradient-30); }
 
 .chapter-card.coming-soon {
     opacity: 0.7;
