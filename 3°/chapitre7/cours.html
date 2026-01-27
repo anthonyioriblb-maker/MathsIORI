@@ -293,138 +293,23 @@
     <div class="example">
         <strong>Exemple :</strong> Soit la courbe suivante, représentative d'une nouvelle fonction <span class="math">f</span>, telle que <span class="math">f</span>(<span class="math">x</span>) = 0,08<span class="math">x</span>² :<br><br>
         
+        <div style="text-align: center; margin: 20px 0;">
+            <button id="btnImageBlue" onclick="showImageBlue()" style="padding: 10px 20px; font-size: 16px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                Image de 9
+            </button>
+            <button id="btnImageGreen" onclick="showImageGreen()" style="padding: 10px 20px; font-size: 16px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                Image de 15
+            </button>
+            <button id="btnAntecedentRed" onclick="showAntecedentRed()" style="padding: 10px 20px; font-size: 16px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                Antécédent de 26
+            </button>
+            <button id="btnResetGraph" onclick="resetGraphAnimations()" style="padding: 10px 20px; font-size: 16px; background-color: #95a5a6; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                ↻ Réinitialiser
+            </button>
+        </div>
+        
         <style>
-            /* Animations flèche BLEUE (0-33%) */
-            @keyframes draw-blue-v {
-                0%, 5% { stroke-dashoffset: 100; }
-                5%, 10% { stroke-dashoffset: 100; }
-                10%, 14% { stroke-dashoffset: 0; }
-                14%, 100% { stroke-dashoffset: 0; }
-            }
-            @keyframes draw-blue-h {
-                0%, 16% { stroke-dashoffset: 310; }
-                16%, 20% { stroke-dashoffset: 310; }
-                20%, 29% { stroke-dashoffset: 0; }
-                29%, 100% { stroke-dashoffset: 0; }
-            }
-            @keyframes appear-arrow-blue-v {
-                0%, 13% { opacity: 0; }
-                14%, 100% { opacity: 1; }
-            }
-            @keyframes appear-arrow-blue-h {
-                0%, 28% { opacity: 0; }
-                29%, 100% { opacity: 1; }
-            }
-            @keyframes appear-cross-blue {
-                0%, 14% { opacity: 0; }
-                15%, 100% { opacity: 1; }
-            }
-            
-            /* Animations flèche VERTE (33-66%) */
-            @keyframes draw-green-v {
-                0%, 38% { stroke-dashoffset: 280; }
-                38%, 42% { stroke-dashoffset: 280; }
-                42%, 47% { stroke-dashoffset: 0; }
-                47%, 100% { stroke-dashoffset: 0; }
-            }
-            @keyframes draw-green-h {
-                0%, 49% { stroke-dashoffset: 510; }
-                49%, 53% { stroke-dashoffset: 510; }
-                53%, 62% { stroke-dashoffset: 0; }
-                62%, 100% { stroke-dashoffset: 0; }
-            }
-            @keyframes appear-arrow-green-v {
-                0%, 46% { opacity: 0; }
-                47%, 100% { opacity: 1; }
-            }
-            @keyframes appear-arrow-green-h {
-                0%, 61% { opacity: 0; }
-                62%, 100% { opacity: 1; }
-            }
-            @keyframes appear-cross-green {
-                0%, 47% { opacity: 0; }
-                48%, 100% { opacity: 1; }
-            }
-            
-            /* Animations flèche ROUGE (66-100%) */
-            @keyframes draw-red-h {
-                0%, 71% { stroke-dashoffset: 610; }
-                71%, 75% { stroke-dashoffset: 610; }
-                75%, 80% { stroke-dashoffset: 0; }
-                80%, 100% { stroke-dashoffset: 0; }
-            }
-            @keyframes draw-red-v {
-                0%, 82% { stroke-dashoffset: 395; }
-                82%, 86% { stroke-dashoffset: 395; }
-                86%, 95% { stroke-dashoffset: 0; }
-                95%, 100% { stroke-dashoffset: 0; }
-            }
-            @keyframes appear-arrow-red-h {
-                0%, 79% { opacity: 0; }
-                80%, 100% { opacity: 1; }
-            }
-            @keyframes appear-arrow-red-v {
-                0%, 94% { opacity: 0; }
-                95%, 100% { opacity: 1; }
-            }
-            @keyframes appear-cross-red {
-                0%, 80% { opacity: 0; }
-                81%, 100% { opacity: 1; }
-            }
-            
-            .arrow-blue-v { 
-                stroke-dasharray: 100;
-                animation: draw-blue-v 9s ease-in-out infinite;
-            }
-            .arrow-blue-h { 
-                stroke-dasharray: 310;
-                animation: draw-blue-h 9s ease-in-out infinite;
-            }
-            .arrowhead-blue-v {
-                animation: appear-arrow-blue-v 9s ease-in-out infinite;
-            }
-            .arrowhead-blue-h {
-                animation: appear-arrow-blue-h 9s ease-in-out infinite;
-            }
-            .cross-blue {
-                animation: appear-cross-blue 9s ease-in-out infinite;
-            }
-            
-            .arrow-green-v { 
-                stroke-dasharray: 280;
-                animation: draw-green-v 9s ease-in-out infinite;
-            }
-            .arrow-green-h { 
-                stroke-dasharray: 510;
-                animation: draw-green-h 9s ease-in-out infinite;
-            }
-            .arrowhead-green-v {
-                animation: appear-arrow-green-v 9s ease-in-out infinite;
-            }
-            .arrowhead-green-h {
-                animation: appear-arrow-green-h 9s ease-in-out infinite;
-            }
-            .cross-green {
-                animation: appear-cross-green 9s ease-in-out infinite;
-            }
-            
-            .arrow-red-h { 
-                stroke-dasharray: 610;
-                animation: draw-red-h 9s ease-in-out infinite;
-            }
-            .arrow-red-v { 
-                stroke-dasharray: 395;
-                animation: draw-red-v 9s ease-in-out infinite;
-            }
-            .arrowhead-red-h {
-                animation: appear-arrow-red-h 9s ease-in-out infinite;
-            }
-            .arrowhead-red-v {
-                animation: appear-arrow-red-v 9s ease-in-out infinite;
-            }
-            .cross-red {
-                animation: appear-cross-red 9s ease-in-out infinite;
-            }
+            /* Pas d'animation automatique - contrôle par boutons */
         </style>
         
         <svg width="800" height="500" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 20px auto; background: white; border: 1px solid #ddd;">
@@ -626,26 +511,20 @@
         Pour <span class="math">x</span> = 4 : <span class="math">f</span>(4) = 0,08 × 4² = 0,08 × 16 = 1,28<br><br>
         On peut ensuite tracer l'allure générale de la courbe :<br><br>
         
+        <div style="text-align: center; margin: 20px 0;">
+            <button id="btnShowPoints" onclick="showTablePoints()" style="padding: 10px 20px; font-size: 16px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                ✕ Placer les points
+            </button>
+            <button id="btnShowCurve" onclick="showTableCurve()" disabled style="padding: 10px 20px; font-size: 16px; background-color: #95a5a6; color: white; border: none; border-radius: 5px; cursor: not-allowed; font-weight: bold; margin-left: 10px;">
+                📈 Tracer la courbe
+            </button>
+            <button id="btnResetAnimation" onclick="resetTableAnimation()" style="padding: 10px 20px; font-size: 16px; background-color: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                ↻ Réinitialiser
+            </button>
+        </div>
+        
         <style>
-            @keyframes appear-table-cross-0 { 0%, 10% { opacity: 0; } 11%, 100% { opacity: 1; } }
-            @keyframes appear-table-cross-1 { 0%, 20% { opacity: 0; } 21%, 100% { opacity: 1; } }
-            @keyframes appear-table-cross-2 { 0%, 30% { opacity: 0; } 31%, 100% { opacity: 1; } }
-            @keyframes appear-table-cross-3 { 0%, 40% { opacity: 0; } 41%, 100% { opacity: 1; } }
-            @keyframes appear-table-cross-4 { 0%, 50% { opacity: 0; } 51%, 100% { opacity: 1; } }
-            @keyframes appear-table-cross-5 { 0%, 60% { opacity: 0; } 61%, 100% { opacity: 1; } }
-            @keyframes appear-table-cross-6 { 0%, 70% { opacity: 0; } 71%, 100% { opacity: 1; } }
-            @keyframes draw-table-curve {
-                0%, 72% { stroke-dashoffset: 1000; }
-                72%, 100% { stroke-dashoffset: 0; }
-            }
-            .table-cross-0 { animation: appear-table-cross-0 10s ease-in-out infinite; }
-            .table-cross-1 { animation: appear-table-cross-1 10s ease-in-out infinite; }
-            .table-cross-2 { animation: appear-table-cross-2 10s ease-in-out infinite; }
-            .table-cross-3 { animation: appear-table-cross-3 10s ease-in-out infinite; }
-            .table-cross-4 { animation: appear-table-cross-4 10s ease-in-out infinite; }
-            .table-cross-5 { animation: appear-table-cross-5 10s ease-in-out infinite; }
-            .table-cross-6 { animation: appear-table-cross-6 10s ease-in-out infinite; }
-            .table-curve { stroke-dasharray: 1000; animation: draw-table-curve 10s ease-in-out infinite; }
+            /* Pas d'animation automatique - contrôle par bouton */
         </style>
         
         <svg width="800" height="500" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 20px auto; background: white; border: 1px solid #ddd;">
@@ -800,9 +679,453 @@
                      L 658.55,103.44
                      L 673.77,84.96
                      L 689.00,66.00" 
-                  fill="none" stroke="#2c3e50" stroke-width="3" class="table-curve"/>
+                  fill="none" stroke="#2c3e50" stroke-width="3" class="table-curve" opacity="0"/>
         </svg>
     </div>
+
+    <script>
+        // ========================================
+        // ANIMATIONS DES FLÈCHES (IMAGES ET ANTÉCÉDENTS)
+        // ========================================
+        
+        // IMMÉDIATEMENT cacher toutes les flèches au chargement
+        (function() {
+            // Cacher flèche bleue
+            const arrowBlueV = document.querySelector('.arrow-blue-v');
+            const arrowBlueH = document.querySelector('.arrow-blue-h');
+            const arrowheadBlueV = document.querySelector('.arrowhead-blue-v');
+            const arrowheadBlueH = document.querySelector('.arrowhead-blue-h');
+            const crossBlue = document.querySelector('.cross-blue');
+            
+            if (arrowBlueV) {
+                arrowBlueV.style.strokeDasharray = '100';
+                arrowBlueV.style.strokeDashoffset = '100';
+            }
+            if (arrowBlueH) {
+                arrowBlueH.style.strokeDasharray = '310';
+                arrowBlueH.style.strokeDashoffset = '310';
+            }
+            if (arrowheadBlueV) arrowheadBlueV.style.opacity = '0';
+            if (arrowheadBlueH) arrowheadBlueH.style.opacity = '0';
+            if (crossBlue) crossBlue.style.opacity = '0';
+            
+            // Cacher flèche verte
+            const arrowGreenV = document.querySelector('.arrow-green-v');
+            const arrowGreenH = document.querySelector('.arrow-green-h');
+            const arrowheadGreenV = document.querySelector('.arrowhead-green-v');
+            const arrowheadGreenH = document.querySelector('.arrowhead-green-h');
+            const crossGreen = document.querySelector('.cross-green');
+            
+            if (arrowGreenV) {
+                arrowGreenV.style.strokeDasharray = '280';
+                arrowGreenV.style.strokeDashoffset = '280';
+            }
+            if (arrowGreenH) {
+                arrowGreenH.style.strokeDasharray = '510';
+                arrowGreenH.style.strokeDashoffset = '510';
+            }
+            if (arrowheadGreenV) arrowheadGreenV.style.opacity = '0';
+            if (arrowheadGreenH) arrowheadGreenH.style.opacity = '0';
+            if (crossGreen) crossGreen.style.opacity = '0';
+            
+            // Cacher flèche rouge
+            const arrowRedH = document.querySelector('.arrow-red-h');
+            const arrowRedV = document.querySelector('.arrow-red-v');
+            const arrowheadRedH = document.querySelector('.arrowhead-red-h');
+            const arrowheadRedV = document.querySelector('.arrowhead-red-v');
+            const crossRed = document.querySelector('.cross-red');
+            
+            if (arrowRedH) {
+                arrowRedH.style.strokeDasharray = '610';
+                arrowRedH.style.strokeDashoffset = '610';
+            }
+            if (arrowRedV) {
+                arrowRedV.style.strokeDasharray = '395';
+                arrowRedV.style.strokeDashoffset = '395';
+            }
+            if (arrowheadRedH) arrowheadRedH.style.opacity = '0';
+            if (arrowheadRedV) arrowheadRedV.style.opacity = '0';
+            if (crossRed) crossRed.style.opacity = '0';
+        })();
+        
+        // Fonction pour animer la flèche bleue (Image de 9)
+        function showImageBlue() {
+            const btn = document.getElementById('btnImageBlue');
+            if (btn) btn.disabled = true;
+            
+            const arrowV = document.querySelector('.arrow-blue-v');
+            const arrowH = document.querySelector('.arrow-blue-h');
+            const arrowheadV = document.querySelector('.arrowhead-blue-v');
+            const arrowheadH = document.querySelector('.arrowhead-blue-h');
+            const cross = document.querySelector('.cross-blue');
+            
+            // Animer flèche verticale
+            if (arrowV) {
+                arrowV.style.transition = 'stroke-dashoffset 0.8s ease-out';
+                arrowV.style.strokeDashoffset = '0';
+            }
+            
+            // Apparaître pointe verticale
+            setTimeout(() => {
+                if (arrowheadV) {
+                    arrowheadV.style.transition = 'opacity 0.3s';
+                    arrowheadV.style.opacity = '1';
+                }
+            }, 700);
+            
+            // Animer flèche horizontale
+            setTimeout(() => {
+                if (arrowH) {
+                    arrowH.style.transition = 'stroke-dashoffset 1s ease-out';
+                    arrowH.style.strokeDashoffset = '0';
+                }
+            }, 1000);
+            
+            // Apparaître pointe horizontale
+            setTimeout(() => {
+                if (arrowheadH) {
+                    arrowheadH.style.transition = 'opacity 0.3s';
+                    arrowheadH.style.opacity = '1';
+                }
+            }, 1900);
+            
+            // Apparaître croix
+            setTimeout(() => {
+                if (cross) {
+                    cross.style.transition = 'opacity 0.3s';
+                    cross.style.opacity = '1';
+                }
+            }, 800);
+        }
+        
+        // Fonction pour animer la flèche verte (Image de 15)
+        function showImageGreen() {
+            const btn = document.getElementById('btnImageGreen');
+            if (btn) btn.disabled = true;
+            
+            const arrowV = document.querySelector('.arrow-green-v');
+            const arrowH = document.querySelector('.arrow-green-h');
+            const arrowheadV = document.querySelector('.arrowhead-green-v');
+            const arrowheadH = document.querySelector('.arrowhead-green-h');
+            const cross = document.querySelector('.cross-green');
+            
+            // Animer flèche verticale
+            if (arrowV) {
+                arrowV.style.transition = 'stroke-dashoffset 0.8s ease-out';
+                arrowV.style.strokeDashoffset = '0';
+            }
+            
+            // Apparaître pointe verticale
+            setTimeout(() => {
+                if (arrowheadV) {
+                    arrowheadV.style.transition = 'opacity 0.3s';
+                    arrowheadV.style.opacity = '1';
+                }
+            }, 700);
+            
+            // Animer flèche horizontale
+            setTimeout(() => {
+                if (arrowH) {
+                    arrowH.style.transition = 'stroke-dashoffset 1.2s ease-out';
+                    arrowH.style.strokeDashoffset = '0';
+                }
+            }, 1000);
+            
+            // Apparaître pointe horizontale
+            setTimeout(() => {
+                if (arrowheadH) {
+                    arrowheadH.style.transition = 'opacity 0.3s';
+                    arrowheadH.style.opacity = '1';
+                }
+            }, 2100);
+            
+            // Apparaître croix
+            setTimeout(() => {
+                if (cross) {
+                    cross.style.transition = 'opacity 0.3s';
+                    cross.style.opacity = '1';
+                }
+            }, 800);
+        }
+        
+        // Fonction pour animer la flèche rouge (Antécédent de 26)
+        function showAntecedentRed() {
+            const btn = document.getElementById('btnAntecedentRed');
+            if (btn) btn.disabled = true;
+            
+            const arrowH = document.querySelector('.arrow-red-h');
+            const arrowV = document.querySelector('.arrow-red-v');
+            const arrowheadH = document.querySelector('.arrowhead-red-h');
+            const arrowheadV = document.querySelector('.arrowhead-red-v');
+            const cross = document.querySelector('.cross-red');
+            
+            // Animer flèche horizontale (en premier pour l'antécédent)
+            if (arrowH) {
+                arrowH.style.transition = 'stroke-dashoffset 1s ease-out';
+                arrowH.style.strokeDashoffset = '0';
+            }
+            
+            // Apparaître pointe horizontale
+            setTimeout(() => {
+                if (arrowheadH) {
+                    arrowheadH.style.transition = 'opacity 0.3s';
+                    arrowheadH.style.opacity = '1';
+                }
+            }, 900);
+            
+            // Animer flèche verticale
+            setTimeout(() => {
+                if (arrowV) {
+                    arrowV.style.transition = 'stroke-dashoffset 1.2s ease-out';
+                    arrowV.style.strokeDashoffset = '0';
+                }
+            }, 1200);
+            
+            // Apparaître pointe verticale
+            setTimeout(() => {
+                if (arrowheadV) {
+                    arrowheadV.style.transition = 'opacity 0.3s';
+                    arrowheadV.style.opacity = '1';
+                }
+            }, 2300);
+            
+            // Apparaître croix
+            setTimeout(() => {
+                if (cross) {
+                    cross.style.transition = 'opacity 0.3s';
+                    cross.style.opacity = '1';
+                }
+            }, 1000);
+        }
+        
+        // Fonction pour réinitialiser toutes les animations du graphique
+        function resetGraphAnimations() {
+            // Réactiver tous les boutons
+            const btnBlue = document.getElementById('btnImageBlue');
+            const btnGreen = document.getElementById('btnImageGreen');
+            const btnRed = document.getElementById('btnAntecedentRed');
+            
+            if (btnBlue) btnBlue.disabled = false;
+            if (btnGreen) btnGreen.disabled = false;
+            if (btnRed) btnRed.disabled = false;
+            
+            // Réinitialiser flèche bleue
+            const arrowBlueV = document.querySelector('.arrow-blue-v');
+            const arrowBlueH = document.querySelector('.arrow-blue-h');
+            const arrowheadBlueV = document.querySelector('.arrowhead-blue-v');
+            const arrowheadBlueH = document.querySelector('.arrowhead-blue-h');
+            const crossBlue = document.querySelector('.cross-blue');
+            
+            if (arrowBlueV) {
+                arrowBlueV.style.transition = 'none';
+                arrowBlueV.style.strokeDashoffset = '100';
+            }
+            if (arrowBlueH) {
+                arrowBlueH.style.transition = 'none';
+                arrowBlueH.style.strokeDashoffset = '310';
+            }
+            if (arrowheadBlueV) {
+                arrowheadBlueV.style.transition = 'none';
+                arrowheadBlueV.style.opacity = '0';
+            }
+            if (arrowheadBlueH) {
+                arrowheadBlueH.style.transition = 'none';
+                arrowheadBlueH.style.opacity = '0';
+            }
+            if (crossBlue) {
+                crossBlue.style.transition = 'none';
+                crossBlue.style.opacity = '0';
+            }
+            
+            // Réinitialiser flèche verte
+            const arrowGreenV = document.querySelector('.arrow-green-v');
+            const arrowGreenH = document.querySelector('.arrow-green-h');
+            const arrowheadGreenV = document.querySelector('.arrowhead-green-v');
+            const arrowheadGreenH = document.querySelector('.arrowhead-green-h');
+            const crossGreen = document.querySelector('.cross-green');
+            
+            if (arrowGreenV) {
+                arrowGreenV.style.transition = 'none';
+                arrowGreenV.style.strokeDashoffset = '280';
+            }
+            if (arrowGreenH) {
+                arrowGreenH.style.transition = 'none';
+                arrowGreenH.style.strokeDashoffset = '510';
+            }
+            if (arrowheadGreenV) {
+                arrowheadGreenV.style.transition = 'none';
+                arrowheadGreenV.style.opacity = '0';
+            }
+            if (arrowheadGreenH) {
+                arrowheadGreenH.style.transition = 'none';
+                arrowheadGreenH.style.opacity = '0';
+            }
+            if (crossGreen) {
+                crossGreen.style.transition = 'none';
+                crossGreen.style.opacity = '0';
+            }
+            
+            // Réinitialiser flèche rouge
+            const arrowRedH = document.querySelector('.arrow-red-h');
+            const arrowRedV = document.querySelector('.arrow-red-v');
+            const arrowheadRedH = document.querySelector('.arrowhead-red-h');
+            const arrowheadRedV = document.querySelector('.arrowhead-red-v');
+            const crossRed = document.querySelector('.cross-red');
+            
+            if (arrowRedH) {
+                arrowRedH.style.transition = 'none';
+                arrowRedH.style.strokeDashoffset = '610';
+            }
+            if (arrowRedV) {
+                arrowRedV.style.transition = 'none';
+                arrowRedV.style.strokeDashoffset = '395';
+            }
+            if (arrowheadRedH) {
+                arrowheadRedH.style.transition = 'none';
+                arrowheadRedH.style.opacity = '0';
+            }
+            if (arrowheadRedV) {
+                arrowheadRedV.style.transition = 'none';
+                arrowheadRedV.style.opacity = '0';
+            }
+            if (crossRed) {
+                crossRed.style.transition = 'none';
+                crossRed.style.opacity = '0';
+            }
+        }
+        
+        // ========================================
+        // ANIMATIONS DU TABLEAU DE VALEURS
+        // ========================================
+        
+        // Variables globales pour contrôler l'animation
+        let pointsShown = false;
+        let curveShown = false;
+        let animationInProgress = false;
+        
+        // IMMÉDIATEMENT cacher la courbe et les croix dès le chargement du script
+        (function() {
+            const curve = document.querySelector('.table-curve');
+            if (curve) {
+                curve.style.display = 'none';
+                curve.style.opacity = '0';
+            }
+            
+            // Cacher toutes les croix
+            for (let i = 0; i < 7; i++) {
+                const cross = document.querySelector(`.table-cross-${i}`);
+                if (cross) {
+                    cross.style.opacity = '0';
+                }
+            }
+        })();
+        
+        // Fonction pour afficher les points
+        function showTablePoints() {
+            if (pointsShown || animationInProgress) return;
+            
+            animationInProgress = true;
+            const btnPoints = document.getElementById('btnShowPoints');
+            if (btnPoints) btnPoints.disabled = true;
+            
+            const totalCrosses = 7;
+            const delayBetweenCrosses = 800;
+            
+            // Faire apparaître les croix une par une
+            for (let i = 0; i < totalCrosses; i++) {
+                setTimeout(() => {
+                    const cross = document.querySelector(`.table-cross-${i}`);
+                    if (cross) {
+                        cross.style.transition = 'opacity 0.5s ease-in';
+                        cross.style.opacity = '1';
+                        
+                        // FORCER la croix à rester visible
+                        setTimeout(() => {
+                            cross.style.transition = 'none';
+                            cross.style.opacity = '1';
+                        }, 600);
+                    }
+                    
+                    // Après la dernière croix, activer le bouton courbe
+                    if (i === totalCrosses - 1) {
+                        setTimeout(() => {
+                            pointsShown = true;
+                            animationInProgress = false;
+                            
+                            // Activer le bouton "Tracer la courbe"
+                            const btnCurve = document.getElementById('btnShowCurve');
+                            if (btnCurve) {
+                                btnCurve.disabled = false;
+                                btnCurve.style.backgroundColor = '#2ecc71';
+                                btnCurve.style.cursor = 'pointer';
+                            }
+                        }, 600);
+                    }
+                }, i * delayBetweenCrosses);
+            }
+        }
+        
+        // Fonction pour afficher la courbe
+        function showTableCurve() {
+            if (!pointsShown || curveShown || animationInProgress) return;
+            
+            animationInProgress = true;
+            const btnCurve = document.getElementById('btnShowCurve');
+            if (btnCurve) btnCurve.disabled = true;
+            
+            const curve = document.querySelector('.table-curve');
+            if (curve) {
+                curve.style.display = 'block';
+                setTimeout(() => {
+                    curve.style.transition = 'opacity 1.5s ease-in';
+                    curve.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        curve.style.transition = 'none';
+                        curve.style.opacity = '1';
+                        curveShown = true;
+                        animationInProgress = false;
+                    }, 1600);
+                }, 50);
+            }
+        }
+        
+        // Fonction pour réinitialiser
+        function resetTableAnimation() {
+            pointsShown = false;
+            curveShown = false;
+            animationInProgress = false;
+            
+            // Réactiver le bouton points
+            const btnPoints = document.getElementById('btnShowPoints');
+            if (btnPoints) btnPoints.disabled = false;
+            
+            // Désactiver le bouton courbe
+            const btnCurve = document.getElementById('btnShowCurve');
+            if (btnCurve) {
+                btnCurve.disabled = true;
+                btnCurve.style.backgroundColor = '#95a5a6';
+                btnCurve.style.cursor = 'not-allowed';
+            }
+            
+            // Cacher la courbe
+            const curve = document.querySelector('.table-curve');
+            if (curve) {
+                curve.style.transition = 'none';
+                curve.style.display = 'none';
+                curve.style.opacity = '0';
+            }
+            
+            // Cacher toutes les croix
+            for (let i = 0; i < 7; i++) {
+                const cross = document.querySelector(`.table-cross-${i}`);
+                if (cross) {
+                    cross.style.transition = 'none';
+                    cross.style.opacity = '0';
+                }
+            }
+        }
+    </script>
 
 </body>
 </html>
