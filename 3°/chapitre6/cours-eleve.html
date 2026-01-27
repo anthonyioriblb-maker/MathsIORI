@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Statistiques (Version Élève)</title>
+    <link rel="stylesheet" href="../../styles.css?v=20251120143124">
+    <style>
+       body {
+            font-size: 0.8em;
+        }
+        
+        .a-completer {
+            display: inline-block;
+            border-bottom: 1px solid black;
+            min-width: 150px;
+            min-height: 20px;
+            margin: 0 5px;
+        }
+        .espace-calcul {
+            border: 1px dashed #ccc;
+            min-height: 80px;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #fafafa;
+        }
+        table th, table td {
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+        table td:first-child, table th:first-child {
+            width: 1% !important;
+            white-space: nowrap !important;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+        
+        h3 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .definition, .example, .remarque {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+   
+    <h1>Chapitre 6 : Statistiques</h1>
+
+    <h2>Vocabulaire</h2>
+    
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Une <span class="a-completer" style="min-width: 300px;"></span> est une liste de valeurs obtenues en étudiant une <span class="a-completer" style="min-width: 200px;"></span> (des élèves, des plantes, des factures...).
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Pour chaque <span class="a-completer" style="min-width: 150px;"></span> de la population étudiée on peut observer un ou plusieurs <span class="a-completer" style="min-width: 150px;"></span> (tailles, masse, âge, prix, couleur...), c'est à dire une information.<br>
+        Un caractère peut être <span class="a-completer" style="min-width: 150px;"></span> (couleur, difficulté, goût...) ou <span class="a-completer" style="min-width: 150px;"></span> (quantité, nombre, prix...).
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> L'<span class="a-completer" style="min-width: 200px;"></span> d'une série désigne le nombre total d'individus étudiés.
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Dans un tableau de répartition on utilise le mot <span class="a-completer" style="min-width: 150px;"></span> pour le nombre d'individus concernés par une valeur du caractère.
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> La <span class="a-completer" style="min-width: 150px;"></span> d'une valeur du caractère étudié correspond au quotient de l'effectif de ce caractère sur l'effectif total.<br>
+        Fréquence = <span class="frac"><span class="num">Effectif de la valeur</span><span class="fracbar">/</span><span class="den">Effectif total</span></span>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong><br>
+        On a demandé à chaque élève de 4A combien ils ont d'animaux de compagnie.<br>
+        Voici les réponses obtenues : 2 ; 1 ; 0 ; 1 ; 4 ; 0 ; 3 ; 2 ; 3 ; 1 ; 5 ; 1 ; 2 ; 2 ; 3 ; 0 ; 1 ; 4 ; 1 ; 2 ; 4 ; 3 ; 0 ; 4 ; 1 <br>      
+        • La population étudiée, c'est : <span class="a-completer" style="min-width: 300px;"></span><br>
+        • Le caractère étudié est : <span class="a-completer" style="min-width: 500px;"></span><br>
+        • L'effectif total est de : <span class="a-completer" style="min-width: 100px;"></span><br>
+        • Les valeurs du caractère sont : <span class="a-completer" style="min-width: 250px;"></span><br>
+        
+        On peut organiser les données sous forme d'un tableau :
+        
+        <table style="width: 90%;">
+            <tr>
+                <th style="height: 25px;">Nombre d'animaux</th>
+                <th style="height: 25px;">0</th>
+                <th style="height: 25px;">1</th>
+                <th style="height: 25px;">2</th>
+                <th style="height: 25px;">3</th>
+                <th style="height: 25px;">4</th>
+                <th style="height: 25px;">5</th>
+            </tr>
+            <tr>
+                <td style="height: 30px;">Effectif</td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 :</strong><br>
+        On a demandé à chaque élève de 4B combien ils ont d'animaux de compagnie.<br>
+        Voici les réponses obtenues : 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 1 ; 1 ; 1 ; 1 ; 1 ; 1 ; 1 ; 2 ; 2 ; 2 ; 2 ; 2 ; 2 ; 3
+        
+        <table style="width: 80%;">
+            <tr>
+                <th style="height: 25px;">Nombre d'animaux</th>
+                <th style="height: 25px;">0</th>
+                <th style="height: 25px;">1</th>
+                <th style="height: 25px;">2</th>
+                <th style="height: 25px;">3</th>
+            </tr>
+            <tr>
+                <td style="height: 30px;">Effectif</td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Caractéristiques de position</h2>
+    
+    <h3>Moyenne d'une série statistique</h3>
+    
+    <div class="definition">
+        <span style="color: red;">Définition :</span> La <span class="a-completer" style="min-width: 150px;"></span> d'une série statistique est obtenue en divisant la somme des valeurs du caractère par l'effectif total.<br>
+        Moyenne = <span class="frac"><span class="num">Somme des valeurs</span><span class="fracbar">/</span><span class="den">Effectif total</span></span>
+    </div>
+
+    <div class="example">
+        <strong>Pour l'exemple 1 :</strong><br>
+        <div class="espace-calcul">
+            Moyenne = 
+        </div>
+        
+        Les élèves de 4A ont en moyenne <span class="a-completer" style="min-width: 80px;"></span> animaux de compagnie.
+    </div>
+
+    <div class="example">
+        <strong>Pour l'exemple 2 :</strong><br>
+        <div class="espace-calcul">
+            Moyenne = 
+        </div>
+        
+        Les élèves de 4B ont en moyenne <span class="a-completer" style="min-width: 80px;"></span> animal de compagnie.
+    </div>
+
+    <h3>Médiane d'une série statistique</h3>
+    
+    <div class="definition">
+        <span style="color: red;">Définition :</span> La <span class="a-completer" style="min-width: 150px;"></span> est une valeur qui partage une série ordonnée en deux groupes de même effectif.
+    </div>
+
+    <div class="remarque">
+        <strong>Méthode :</strong> Pour déterminer la médiane :<br>
+        • On ordonne les valeurs dans l'ordre croissant<br>
+        • On calcule la position : <span class="frac"><span class="num">Effectif total</span><span class="fracbar">/</span><span class="den">2</span></span><br>
+        • Si l'effectif total est impair, la médiane est la valeur qui suit (arrondi supérieur)<br>
+        • Si l'effectif total est pair, la médiane est la moyenne des deux valeurs centrales
+    </div>
+
+    <div class="example">
+        <strong>Pour l'exemple 1 :</strong><br>
+        Effectif total : 25 (impair)<br>
+        
+        Position de la médiane : <span class="a-completer" style="min-width: 150px;"></span> donc la médiane est la <span class="a-completer" style="min-width: 80px;"></span> valeur.<br>
+        
+<div class="espace-calcul">
+    Série ordonnée :
+     <div style="text-align: center;">
+    <span style="white-space: nowrap;">0 ; 0 ; 0 ; 0 ; 1 ; 1 ; 1 ; 1 ; 1 ; 1 ; 1; 2</span>
+    <span style="color: blue; font-weight: bold; padding: 0 50px;">| 2 |</span>
+    <span style="white-space: nowrap;">2 ; 2 ; 2 ; 3 ; 3 ; 3 ; 3 ; 4 ; 4 ; 4 ; 4 ; 5</span>
+</div><br><br><br>
+</div>
+La médiane est <span class="a-completer" style="min-width: 80px;"></span>.
+</div>
+
+
+    <div class="example">
+        <strong>Pour l'exemple 2 :</strong><br>
+        Effectif total : 22 (pair)<br>
+        
+        Position de la médiane : <span class="a-completer" style="min-width: 150px;"></span> donc la médiane est entre la <span class="a-completer" style="min-width: 80px;"></span> et la <span class="a-completer" style="min-width: 80px;"></span> valeur.<br>
+        
+        <div class="espace-calcul">
+            Série ordonnée :
+           
+           <div style="text-align: center;">
+    <span style="white-space: nowrap;">0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 0 ; 1 ; 1 ; <span style="color: orange; font-weight: bold;">1</span></span>
+    <span style="padding: 0 70px;"></span>
+    <span style="white-space: nowrap;"><span style="color: orange; font-weight: bold;">1</span> ; 1 ; 1 ; 1 ; 2 ; 2 ; 2 ; 2 ; 2 ; 2 ; 3</span>
+</div><br><br>
+
+        </div>
+        
+        La médiane est <span class="a-completer" style="min-width: 80px;"></span>.
+    </div>
+
+    <h2>Caractéristiques de dispersion</h2>
+    
+    <h3>Étendue d'une série statistique</h3>
+    
+    <div class="definition">
+        <span style="color: red;">Définition :</span> On appelle <span class="a-completer" style="min-width: 150px;"></span> d'une série statistique la différence entre la plus grande et la plus petite des valeurs.<br>
+        Étendue = Valeur maximale − Valeur minimale
+    </div>
+
+<div style="display: flex; gap: 20px;">
+    <div class="example" style="flex: 1;">
+        <strong>Pour l'exemple 1 :</strong><br>
+        Étendue = <span class="a-completer" style="min-width: 200px;"></span>
+    </div>
+
+    <div class="example" style="flex: 1;">
+        <strong>Pour l'exemple 2 :</strong><br>
+        Étendue = <span class="a-completer" style="min-width: 200px;"></span>
+    </div>
+</div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> L'étendue donne une idée de la dispersion des données. Plus l'étendue est grande, plus les données sont dispersées.
+    </div>
+
+    <h2>Médiane avec les effectifs cumulés croissants</h2>
+    
+    <div class="remarque">
+        <strong>Méthode :</strong> On peut utiliser les effectifs cumulés croissants pour déterminer plus facilement la médiane.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong>Une enquête est réalisée auprès de lycéens sur le nombre de leurs sorties au cinéma pendant le mois précédent. Elle donne le résultat suivant :
+        
+        <table style="width: 85%;">
+            <tr>
+                <th style="height: 20px;">Nombre de sorties</th>
+                <th style="height: 20px;">0</th>
+                <th style="height: 20px;">1</th>
+                <th style="height: 20px;">2</th>
+                <th style="height: 20px;">3</th>
+                <th style="height: 20px;">4</th>
+                <th style="height: 20px;">5</th>
+            </tr>
+            <tr>
+                <td style="height: 20px;">Effectif</td>
+                <td style="height: 20px;">43</td>
+                <td style="height: 20px;">98</td>
+                <td style="height: 20px;">125</td>
+                <td style="height: 20px;">112</td>
+                <td style="height: 20px;">87</td>
+                <td style="height: 20px;">75</td>
+            </tr>
+            <tr>
+                <td style="height: 30px;">Effectifs cumulés croissants</td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+                <td style="height: 30px;"></td>
+            </tr>
+        </table>
+        
+        L'effectif total est <span class="a-completer" style="min-width: 80px;"></span>.<br>
+        
+        Position de la médiane : <span class="a-completer" style="min-width: 150px;"></span> donc la médiane est entre la <span class="a-completer" style="min-width: 80px;"></span> et la <span class="a-completer" style="min-width: 80px;"></span> valeur.<br>
+        
+        <div class="espace-calcul">
+            D'après le tableau des effectifs cumulés croissants :
+        </div>
+        
+        <strong>La médiane est <span class="a-completer" style="min-width: 80px;"></span>.</strong>
+    </div>
+
+    <h2>Statistiques avec des classes</h2>
+    
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Lorsque les données sont très nombreuses, on peut les regrouper en <span class="a-completer" style="min-width: 150px;"></span> pour faciliter leur traitement.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong><br>
+        On interroge les élèves d'une classe sur leur taille en cm. Voici les résultats de l'enquête : 174 – 160 – 161 – 166 – 177 – 172 – 157 – 175 – 162 – 169 – 160 – 165 – 170 – 152 – 168 – 156 – 163 – 167 – 169 – 158 – 164 – 151 – 162 – 166 – 156 – 165 – 179<br>
+        
+        <strong>1)</strong> Calculer l'étendue de la série de tailles.<br>
+        
+        <strong>2)</strong> Regrouper les effectifs de cette série de tailles par classes de longueur 5 cm et présenter les résultats dans un tableau.<br>
+        
+        <strong>3)</strong> Calculer les fréquences de chaque classe en % arrondies à l'unité.<br>
+        
+        <strong>4)</strong> Calculer la moyenne de la série après avoir centré les classes.<br>
+        
+        <strong>5)</strong> Comparer le résultat précédent avec la moyenne exacte.
+
+<br><br><br>
+
+ <table style="width: 90%;">
+            <tr>
+                <th style="height: 35px;">Classe (en cm)</th>
+                <th style="height: 35px;"></th>
+                <th style="height: 35px;"></th>
+                <th style="height: 35px;"></th>
+                <th style="height: 35px;"></th>
+                <th style="height: 35px;"></th>
+                <th style="height: 35px;"></th>
+            </tr>
+            <tr>
+                <td style="height: 40px;">Centre de classe</td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+            </tr>
+            <tr>
+                <td style="height: 40px;">Effectif</td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+            </tr>
+            <tr>
+                <td style="height: 40px;">Fréquence (%)</td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+                <td style="height: 40px;"></td>
+            </tr>
+        </table>
+
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    </div>
+
+
+
+</body>
+</html>

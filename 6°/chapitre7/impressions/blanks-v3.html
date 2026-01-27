@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours à trous : Proportionnalité</title>
+   <link rel="stylesheet" href="../../../styles.css?v=20251120143124">
+   <style>
+       .blank-line {
+           border-bottom: 1px solid #999;
+           display: inline-block;
+           min-width: 200px;
+           margin: 0 5px;
+           padding-top: 18px;
+           padding-bottom: 2px;
+           vertical-align: bottom;
+       }
+        .blank-lineF {
+           border-bottom: 1px solid #999;
+           display: inline-block;
+           min-width: 100px;
+           margin: 0 5px;
+           padding-top: 18px;
+           padding-bottom: 2px;
+           vertical-align: bottom;
+       }
+       .blank-line-long {
+           border-bottom: 1px solid #999;
+           display: inline-block;
+           min-width: 400px;
+           margin: 0 5px;
+           padding-top: 18px;
+           padding-bottom: 2px;
+           vertical-align: bottom;
+       }
+       .blank-box {
+           border: 2px solid #333;
+           min-height: 80px;
+           margin: 15px 0;
+           padding: 10px;
+           background-color: #f9f9f9;
+       }
+       .blank-box-small {
+           border: 2px solid #333;
+           min-height: 40px;
+           margin: 10px 0;
+           padding: 10px;
+           background-color: #f9f9f9;
+       }
+       .calculation-space {
+           margin: 20px 0;
+           padding: 15px;
+           border: 1px dashed #666;
+           min-height: 60px;
+       }
+       table td {
+           min-height: 30px;
+           padding: 12px;
+       }
+       
+       /* FORCER les bordures noires des tableaux - priorité maximale */
+       table, 
+       table.table,
+       body table {
+           border-collapse: collapse !important;
+           border: 3px solid #000 !important;
+           border-color: #000 !important;
+       }
+       
+       table th,
+       table td,
+       body table th,
+       body table td {
+           border: 3px solid #000 !important;
+           border-color: #000 !important;
+       }
+       
+       /* Styles pour l'impression - bordures noires renforcées */
+       @media print {
+           body {
+               margin: 0.5cm 0.5cm !important;
+               padding: 0 !important;
+               max-width: 100% !important;
+               width: 100% !important;
+               font-size: 10pt;
+               line-height: 1.3;
+           }
+           
+           h1, h2, h3, h4 {
+               page-break-after: avoid;
+           }
+           
+           .definition, .example, .method, .important, .remarque, .exercice {
+               page-break-inside: avoid;
+           }
+           
+           table {
+               page-break-inside: avoid;
+           }
+           
+           table, 
+           table.table,
+           body table {
+               border-collapse: collapse !important;
+               border: 3px solid #000 !important;
+               border-color: #000 !important;
+           }
+           
+           table th,
+           body table th {
+               border: 3px solid #000 !important;
+               border-color: #000 !important;
+               -webkit-print-color-adjust: exact !important;
+               print-color-adjust: exact !important;
+               color-adjust: exact !important;
+           }
+           
+           table td,
+           body table td {
+               border: 3px solid #000 !important;
+               border-color: #000 !important;
+               -webkit-print-color-adjust: exact !important;
+               print-color-adjust: exact !important;
+               color-adjust: exact !important;
+           }
+       }
+   </style>
+</head>
+<body>
+
+    <h1>Chapitre 7: Proportionnalité</h1>
+
+    <h2>Situation de proportionnalité</h2>
+
+    <h3>Reconnaitre une situation de proportionnalité</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Deux grandeurs sont proportionnelles lorsque l'une s'obtient en <span class="blank-line"></span> (ou en <span class="blank-line"></span>) l'autre par un <span style="color: red;">même nombre <span class="blank-line"></span></span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong><br>
+        <table>
+            <tr>
+                <th>Nombre de croissants</th>
+                <td>2</td>
+                <td>5</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th>Prix (en €)</th>
+                <td>3</td>
+                <td>7,5</td>
+                <td>12</td>
+            </tr>
+        </table>
+
+        <div class="calculation-space">
+            <p>Calculer les quotients :</p>
+            <p><span class="fraction"><span class="numerateur">3</span><span class="denominateur">2</span></span> = <span class="blank-lineF"></span> ; <span class="fraction"><span class="numerateur">7,5</span><span class="denominateur">5</span></span> = <span class="blank-lineF"></span> ; <span class="fraction"><span class="numerateur">12</span><span class="denominateur">8</span></span> = <span class="blank-lineF"></span></p>
+        </div>
+
+        <p>Les quotients sont <span class="blank-line"></span>.</p>
+        <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie toujours par le même nombre : <span class="blank-line"></span>.</p>
+        <p>Dans ce cas les deux grandeurs sont <span class="blank-line"></span>.</p>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 (contre-exemple) :</strong><br>
+        <table>
+            <tr>
+                <th>Âge de Léo (en années)</th>
+                <td>5</td>
+                <td>10</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <th>Taille de Léo (en cm)</th>
+                <td>110</td>
+                <td>140</td>
+                <td>165</td>
+            </tr>
+        </table>
+
+        <div class="calculation-space">
+            <p>Calculer les quotients :</p>
+            <p><span class="fraction"><span class="numerateur">110</span><span class="denominateur">5</span></span> = <span class="blank-lineF"></span> ; <span class="fraction"><span class="numerateur">140</span><span class="denominateur">10</span></span> = <span class="blank-lineF"></span></p>
+        </div>
+
+        <p>Les quotients <span class="blank-line-long"></span>.</p>
+        <p>Dans ce cas les deux grandeurs <span class="blank-line-long"></span>.</p>
+    </div>
+
+    <h3>Compléter un tableau de proportionnalité</h3>
+
+    <div class="example">
+        <strong>Exemple :</strong> Paul achète 3 kg de pommes pour 6,9 €. Compléter le tableau suivant :<br>
+        <table>
+            <tr>
+                <th>Quantité de pommes (Kg)</th>
+                <td>3</td>
+                <td>4</td>
+                <td>7</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <th>Prix (en €)</th>
+                <td>6,9</td>
+                <td>?</td>
+                <td>?</td>
+                <td>?</td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>a) En trouvant le nombre pour passer de la première ligne à la deuxième ligne</h4>
+    <div class="method">
+        <table>
+            <tr>
+                <th>Quantité de pommes (Kg)</th>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <th>Prix (en €)</th>
+                <td>6,9</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <div class="calculation-space">
+            <p>Calculer le coefficient de proportionnalité :</p>
+            <p><span class="fraction"><span class="numerateur">6,9</span><span class="denominateur">3</span></span> = <span class="blank-line"></span></p>
+        </div>
+
+        <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par <span class="blank-line"></span>.</p>
+
+        <div class="calculation-space">
+            <p>Donc : 4 × <span class="blank-line"></span> = <span class="blank-line"></span></p>
+        </div>
+    </div>
+
+    <h4>b) En additionnant ou en soustrayant deux colonnes du tableau</h4>
+    <div class="method">
+        <p>Dans un tableau de proportionnalité on peut <span class="blank-line"></span> ou <span class="blank-line"></span> deux colonnes :</p>
+        <table>
+            <tr>
+                <th>Quantité de pommes (Kg)</th>
+                <td>3</td>
+                <td>4</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <th>Prix (en €)</th>
+                <td>6,9</td>
+                <td>9,2</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <div class="calculation-space">
+            <p>3 kg + 4 kg = <span class="blank-line"></span>, et 6,9 € + 9,2 € = <span class="blank-line"></span></p>
+        </div>
+    </div>
+
+    <h4>c) En multipliant ou en divisant une colonne par un nombre non nul</h4>
+    <div class="method">
+        <table>
+            <tr>
+                <th>Quantité de pommes (Kg)</th>
+                <td>3</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <th>Prix (en €)</th>
+                <td>6,9</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <div class="calculation-space">
+            <p><span class="fraction"><span class="numerateur">15</span><span class="denominateur">3</span></span> = <span class="blank-line"></span></p>
+            <p>Ainsi on passe de la première colonne à la deuxième colonne en multipliant par <span class="blank-line"></span>.</p>
+        </div>
+
+        <div class="calculation-space">
+            <p>Donc : 6,9 × <span class="blank-line"></span> = <span class="blank-line"></span></p>
+        </div>
+    </div>
+
+    <h2>Exemples d'utilisations de la proportionnalité</h2>
+
+    <h3>Les pourcentages</h3>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Appliquer <span class="math">x</span> % à un nombre, c'est <span class="blank-line"></span> ce nombre par <span class="blank-line"></span>.
+    </div>
+
+    <h4>a) Appliquer un pourcentage :</h4>
+    <div class="example">
+        <strong>Exemple :</strong> Dans un collège de 400 élèves, 15% des élèves jouent au volley. Combien d'élèves jouent au volley ?<br><br>
+
+        <div class="calculation-space">
+            <p>400 × <span class="fraction"><span class="numerateur">15</span><span class="denominateur">100</span></span> = 400 × <span class="blank-line"></span> = <span class="blank-line"></span></p>
+        </div>
+
+        <p>Il y a <span class="blank-line"></span> élèves qui jouent au volley dans ce collège.</p>
+
+        <p><strong>Ou bien avec un tableau :</strong></p>
+        <table>
+            <tr>
+                <th>Nombre d'élèves</th>
+                <td>100</td>
+                <td>400</td>
+            </tr>
+            <tr>
+                <th>Nombre d'élèves qui jouent au volley</th>
+                <td>15</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>b) Calculer un pourcentage :</h4>
+    <div class="example">
+        <strong>Exemple :</strong> Dans une classe de 30 élèves il y a 9 filles. Quel est le pourcentage de filles dans cette classe ?<br><br>
+
+        <p>Cela revient à déterminer le nombre de filles qu'il y aurait si la classe était composée de <span class="blank-line"></span> élèves.</p>
+
+        <table>
+            <tr>
+                <th>Nombre d'élèves</th>
+                <td>30</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <th>Nombre de filles</th>
+                <td>9</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <div class="calculation-space">
+            <p><span class="fraction"><span class="numerateur">9</span><span class="denominateur">30</span></span> = <span class="blank-line"></span></p>
+            <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par <span class="blank-line"></span>.</p>
+        </div>
+
+        <p>Dans cette classe, il y a <span class="blank-line"></span> % de filles.</p>
+    </div>
+
+    <h3>Échelles</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Sur une représentation à l'échelle, les mesures sur la représentation sont <span class="blank-line-long"></span> aux mesures réelles.
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque importante :</strong> Les mesures sont exprimées dans la <span class="blank-line"></span> unité.
+    </div>
+
+    <h4>a) Utilisation d'une échelle :</h4>
+    <div class="example">
+        <strong>Exemple :</strong>Sur une carte à l'échelle <span class="fraction"><span class="numerateur">1</span><span class="denominateur">50 000</span></span>, deux villes sont distantes de 12 cm.<br>
+        Quelle est la distance réelle entre ces deux villes ?<br><br>
+
+        <table>
+            <tr>
+                <th>Distance sur la carte en cm</th>
+                <td>1</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <th>Distance réelle en cm</th>
+                <td>50 000</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <div class="calculation-space">
+            <p><span class="fraction"><span class="numerateur">50 000</span><span class="denominateur">1</span></span> = <span class="blank-line"></span></p>
+            <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par <span class="blank-line"></span>.</p>
+        </div>
+
+        <p>La distance réelle est de <span class="blank-line"></span> cm soit <span class="blank-line"></span> km.</p>
+    </div>
+
+    <h4>b) Calculer une échelle :</h4>
+    <div class="example">
+        <strong>Exemple :</strong>Calculer l'échelle de ce dessin :<br>
+        <img src="../images/6-71.png" alt="Dessin d'un roller"><br>
+        Sur ce dessin, on mesure la longueur de la flèche, elle mesure 4 cm.<br>
+        On cherche combien 1 cm sur le dessin va représenter en réalité.<br><br>
+
+        <table>
+            <tr>
+                <th>Distance sur le dessin en cm</th>
+                <td>4</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <th>Distance réelle en cm</th>
+                <td>36</td>
+                <td></td>
+            </tr>
+        </table>
+
+        <div class="calculation-space">
+            <p><span class="fraction"><span class="numerateur">36</span><span class="denominateur">4</span></span> = <span class="blank-line"></span></p>
+            <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par <span class="blank-line"></span>.</p>
+        </div>
+
+        <p>L'échelle est <span class="fraction"><span class="numerateur">1</span><span class="denominateur"><span class="blank-line"></span></span></span>.</p>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Calculer une échelle revient à calculer le nombre représenté par la fraction :<span class="fraction"><span class="numerateur">distance sur la carte</span><span class="denominateur">distance réelle</span></span>, <strong>ces distances étant dans la même unité</strong>.
+    </div>
+
+    <div class="exercice">
+        <strong>Exercice 1 :</strong> Un élève achète 5 cahiers pour 8 €. Quel est le prix de 8 cahiers ? de 12 cahiers ?<br><br>
+
+        <strong>Exercice 2 :</strong> Dans un collège, 60 % des élèves sont demi-pensionnaires. Il y a 450 élèves dans le collège. Combien d'élèves sont demi-pensionnaires ?<br><br>
+
+        <strong>Exercice 3 :</strong> Sur une carte à l'échelle <span class="fraction"><span class="numerateur">1</span><span class="denominateur">25 000</span></span>, deux villes sont distantes de 8 cm. Quelle est la distance réelle en km ?
+    </div>
+
+</body>
+</html>

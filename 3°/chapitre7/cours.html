@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Notion de fonction</title>
+    <link rel="stylesheet" href="../../styles.css?v=20251120143124">
+</head>
+<body>
+    <a href="../classe-3e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre 7 : Notion de fonction</h1>
+
+    <div class="example">
+        Imaginons que nous décidions d'aller à la piscine et que l'on paie toujours à la fin de l'année.<br><br>
+        Si nous allons 1 fois à la piscine et que le prix de l'entrée est de 5€, nous paierons une fois 5€.<br><br>
+        Si nous allons 4 fois à la piscine, nous paierons 4 fois 5€ soit 20€.<br><br>
+        Si nous allons 10 fois à la piscine, nous paierons 50€.<br><br>
+        Seulement, nous ne savons pas encore combien de fois nous allons y aller pendant l'année. Disons que nous y allons <span class="math">x</span> fois.<br><br>
+        A la fin de l'année, nous paierons <span class="math">x</span> fois 5€, c'est à dire 5<span class="math">x</span> €.<br><br>
+        Nous avons donc ici, la <strong>fonction 5<span class="math">x</span></strong> qui nous donne le prix à payer en fonction du nombre de séance <span class="math">x</span>.
+    </div>
+
+    <h2>Définitions-vocabulaire</h2>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Une <span style="color: red;">fonction</span> est un processus qui à un nombre donné lui fait correspondre un et un seul autre nombre.
+    </div>
+
+    <style>
+        @keyframes rotate-gear {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .gear-left {
+            animation: rotate-gear 4s linear infinite;
+            transform-origin: 25px 30px;
+        }
+        .gear-right {
+            animation: rotate-gear 4s linear infinite reverse;
+            transform-origin: 85px 30px;
+        }
+    </style>
+
+    <div class="example">
+        <svg width="400" height="280" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 20px auto;">
+            <!-- Premier exemple : 0 -> 0 -->
+            <g transform="translate(50, 20)">
+                <!-- Nombre de départ -->
+                <rect x="0" y="10" width="60" height="40" fill="#e8f4fc" stroke="#3498db" stroke-width="2" rx="5"/>
+                <text x="30" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#3498db">0</text>
+                
+                <!-- Flèche entrée -->
+                <line x1="60" y1="30" x2="90" y2="30" stroke="#2ecc71" stroke-width="3" marker-end="url(#arrowgreen)"/>
+                
+                <!-- Machine/Fonction avec design amélioré -->
+                <g transform="translate(90, 0)">
+                    <!-- Corps principal de la machine -->
+                    <rect x="0" y="5" width="110" height="50" fill="#ffd700" stroke="#ff8c00" stroke-width="2" rx="5"/>
+                    <rect x="5" y="10" width="100" height="40" fill="#fff3cd" stroke="#ffc107" stroke-width="2" rx="3"/>
+                    
+                    <!-- Engrenage gauche animé -->
+                    <g class="gear-left">
+                        <circle cx="25" cy="30" r="8" fill="none" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="25" y1="22" x2="25" y2="38" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="17" y1="30" x2="33" y2="30" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="19.5" y1="24.5" x2="30.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="30.5" y1="24.5" x2="19.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <circle cx="25" cy="30" r="3" fill="#ff8c00"/>
+                    </g>
+                    
+                    <!-- Engrenage droit animé -->
+                    <g class="gear-right">
+                        <circle cx="85" cy="30" r="8" fill="none" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="85" y1="22" x2="85" y2="38" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="77" y1="30" x2="93" y2="30" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="79.5" y1="24.5" x2="90.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="90.5" y1="24.5" x2="79.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <circle cx="85" cy="30" r="3" fill="#ff8c00"/>
+                    </g>
+                    
+                    <!-- Texte fonction -->
+                    <text x="55" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#d68910">f</text>
+                    <text x="55" y="42" text-anchor="middle" font-size="14" font-weight="bold" fill="#d68910">× 5</text>
+                    
+                    <!-- Boulons -->
+                    <circle cx="10" cy="10" r="3" fill="#666"/>
+                    <circle cx="100" cy="10" r="3" fill="#666"/>
+                    <circle cx="10" cy="50" r="3" fill="#666"/>
+                    <circle cx="100" cy="50" r="3" fill="#666"/>
+                </g>
+                
+                <!-- Flèche sortie -->
+                <line x1="200" y1="30" x2="230" y2="30" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowred)"/>
+                
+                <!-- Nombre d'arrivée -->
+                <rect x="230" y="10" width="60" height="40" fill="#ffe6f0" stroke="#e74c3c" stroke-width="2" rx="5"/>
+                <text x="260" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#e74c3c">0</text>
+            </g>
+            
+            <!-- Deuxième exemple : 5 -> 25 -->
+            <g transform="translate(50, 100)">
+                <!-- Nombre de départ -->
+                <rect x="0" y="10" width="60" height="40" fill="#e8f4fc" stroke="#3498db" stroke-width="2" rx="5"/>
+                <text x="30" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#3498db">5</text>
+                
+                <!-- Flèche entrée -->
+                <line x1="60" y1="30" x2="90" y2="30" stroke="#2ecc71" stroke-width="3" marker-end="url(#arrowgreen)"/>
+                
+                <!-- Machine/Fonction avec design amélioré -->
+                <g transform="translate(90, 0)">
+                    <!-- Corps principal de la machine -->
+                    <rect x="0" y="5" width="110" height="50" fill="#ffd700" stroke="#ff8c00" stroke-width="2" rx="5"/>
+                    <rect x="5" y="10" width="100" height="40" fill="#fff3cd" stroke="#ffc107" stroke-width="2" rx="3"/>
+                    
+                    <!-- Engrenage gauche animé -->
+                    <g class="gear-left">
+                        <circle cx="25" cy="30" r="8" fill="none" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="25" y1="22" x2="25" y2="38" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="17" y1="30" x2="33" y2="30" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="19.5" y1="24.5" x2="30.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="30.5" y1="24.5" x2="19.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <circle cx="25" cy="30" r="3" fill="#ff8c00"/>
+                    </g>
+                    
+                    <!-- Engrenage droit animé -->
+                    <g class="gear-right">
+                        <circle cx="85" cy="30" r="8" fill="none" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="85" y1="22" x2="85" y2="38" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="77" y1="30" x2="93" y2="30" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="79.5" y1="24.5" x2="90.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="90.5" y1="24.5" x2="79.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <circle cx="85" cy="30" r="3" fill="#ff8c00"/>
+                    </g>
+                    
+                    <!-- Texte fonction -->
+                    <text x="55" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#d68910">f</text>
+                    <text x="55" y="42" text-anchor="middle" font-size="14" font-weight="bold" fill="#d68910">× 5</text>
+                    
+                    <!-- Boulons -->
+                    <circle cx="10" cy="10" r="3" fill="#666"/>
+                    <circle cx="100" cy="10" r="3" fill="#666"/>
+                    <circle cx="10" cy="50" r="3" fill="#666"/>
+                    <circle cx="100" cy="50" r="3" fill="#666"/>
+                </g>
+                
+                <!-- Flèche sortie -->
+                <line x1="200" y1="30" x2="230" y2="30" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowred)"/>
+                
+                <!-- Nombre d'arrivée -->
+                <rect x="230" y="10" width="60" height="40" fill="#ffe6f0" stroke="#e74c3c" stroke-width="2" rx="5"/>
+                <text x="260" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#e74c3c">25</text>
+            </g>
+            
+            <!-- Troisième exemple : 14 -> 70 -->
+            <g transform="translate(50, 180)">
+                <!-- Nombre de départ -->
+                <rect x="0" y="10" width="60" height="40" fill="#e8f4fc" stroke="#3498db" stroke-width="2" rx="5"/>
+                <text x="30" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#3498db">14</text>
+                
+                <!-- Flèche entrée -->
+                <line x1="60" y1="30" x2="90" y2="30" stroke="#2ecc71" stroke-width="3" marker-end="url(#arrowgreen)"/>
+                
+                <!-- Machine/Fonction avec design amélioré -->
+                <g transform="translate(90, 0)">
+                    <!-- Corps principal de la machine -->
+                    <rect x="0" y="5" width="110" height="50" fill="#ffd700" stroke="#ff8c00" stroke-width="2" rx="5"/>
+                    <rect x="5" y="10" width="100" height="40" fill="#fff3cd" stroke="#ffc107" stroke-width="2" rx="3"/>
+                    
+                    <!-- Engrenage gauche animé -->
+                    <g class="gear-left">
+                        <circle cx="25" cy="30" r="8" fill="none" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="25" y1="22" x2="25" y2="38" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="17" y1="30" x2="33" y2="30" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="19.5" y1="24.5" x2="30.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="30.5" y1="24.5" x2="19.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <circle cx="25" cy="30" r="3" fill="#ff8c00"/>
+                    </g>
+                    
+                    <!-- Engrenage droit animé -->
+                    <g class="gear-right">
+                        <circle cx="85" cy="30" r="8" fill="none" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="85" y1="22" x2="85" y2="38" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="77" y1="30" x2="93" y2="30" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="79.5" y1="24.5" x2="90.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <line x1="90.5" y1="24.5" x2="79.5" y2="35.5" stroke="#ff8c00" stroke-width="2"/>
+                        <circle cx="85" cy="30" r="3" fill="#ff8c00"/>
+                    </g>
+                    
+                    <!-- Texte fonction -->
+                    <text x="55" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#d68910">f</text>
+                    <text x="55" y="42" text-anchor="middle" font-size="14" font-weight="bold" fill="#d68910">× 5</text>
+                    
+                    <!-- Boulons -->
+                    <circle cx="10" cy="10" r="3" fill="#666"/>
+                    <circle cx="100" cy="10" r="3" fill="#666"/>
+                    <circle cx="10" cy="50" r="3" fill="#666"/>
+                    <circle cx="100" cy="50" r="3" fill="#666"/>
+                </g>
+                
+                <!-- Flèche sortie -->
+                <line x1="200" y1="30" x2="230" y2="30" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrowred)"/>
+                
+                <!-- Nombre d'arrivée -->
+                <rect x="230" y="10" width="60" height="40" fill="#ffe6f0" stroke="#e74c3c" stroke-width="2" rx="5"/>
+                <text x="260" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#e74c3c">70</text>
+            </g>
+            
+            <!-- Définitions des flèches -->
+            <defs>
+                <marker id="arrowgreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#2ecc71"/>
+                </marker>
+                <marker id="arrowred" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c"/>
+                </marker>
+            </defs>
+            
+            <!-- Légendes -->
+            <text x="80" y="270" text-anchor="middle" font-size="12" fill="#3498db" font-weight="bold">Nombre de départ</text>
+            <text x="310" y="270" text-anchor="middle" font-size="12" fill="#e74c3c" font-weight="bold">Nombre à l'arrivée</text>
+        </svg>
+    </div>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> On dit que<br><br>
+        • 25 est <span style="color: red;">l'image</span> de 5 par la fonction.<br><br>
+        • 14 est <span style="color: red;">un antécédent</span> de 70 par la fonction
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Tout nombre ne possède qu'<strong>une seule image</strong> par une fonction.<br><br>
+        Ce n'est pas le cas d'un antécédent d'un nombre par une fonction (il peut en avoir aucun, un ou plusieurs).
+    </div>
+
+    <h2>Détermination d'une fonction</h2>
+
+    <div class="remarque">
+        Une fonction peut être définie de plusieurs façons :
+    </div>
+
+    <h3>Par une formule</h3>
+
+    <h4>a) Notation</h4>
+
+    <div class="remarque">
+        Lorsqu'une fonction est définie par une formule, on peut calculer précisément les valeurs à l'arrivée.<br><br>
+        On note généralement la fonction par une lettre.<br><br>
+        Il existe deux notations différentes.
+    </div>
+
+    <div class="example">
+        <strong>Pour notre exemple on a :</strong><br><br>
+        <span class="math">f</span> : <span class="math">x</span> ⟼ 5<span class="math">x</span><br><br>
+        Qui se lit « fonction <span class="math">f</span> qui à un nombre <span class="math">x</span> associe le nombre 5<span class="math">x</span> ».<br><br>
+        Ou bien :<br><br>
+        <span class="math">f</span>(<span class="math">x</span>) = 5<span class="math">x</span>
+    </div>
+
+    <h4>b) Calcul d'images et d'antécédents</h4>
+
+    <div class="example">
+        <strong>A partir de l'exemple précédent, calculons les images de 2, 7 et 10 :</strong><br><br>
+        Image de 2 : <span class="math">f</span>(2) = 5 × 2 = 10<br><br>
+        Image de 7 : <span class="math">f</span>(7) = 5 × 7 = 35<br><br>
+        Image de 10 : <span class="math">f</span>(10) = 5 × 10 = 50
+    </div>
+
+    <div class="example">
+        <strong>A partir de l'exemple précédent, calculons les éventuels antécédents de 75 :</strong><br><br>
+        Il faut trouver les nombres de départ (s'ils existent) qui donnent 75.<br><br>
+        Pour cela, on va résoudre une équation :<br><br>
+        On cherche <span class="math">x</span> tel que :<br><br>
+        <div class="calcul-detail">
+            <span class="math">f</span>(<span class="math">x</span>) = 75<br>
+            5<span class="math">x</span> = 75<br>
+            <span class="math">x</span> = <span class="fraction"><span class="numerateur">75</span><span class="denominateur">5</span></span><br>
+            <span class="math">x</span> = 15
+        </div>
+        La solution est 15 (on paie 75 € si on a été 15 fois à la piscine dans l'année).
+    </div>
+
+    <h3>Par un graphique</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Un repère étant choisi, on appelle <span style="color: red;">représentation graphique</span> d'une fonction <span class="math">f</span>, l'ensemble des points M de coordonnées (<span class="math">x</span> ; <span class="math">f</span>(<span class="math">x</span>)).<br><br>
+        On dit aussi que <span class="math">y</span> = <span class="math">f</span>(<span class="math">x</span>) est une <span style="color: red;">équation de la représentation graphique</span> de <span class="math">f</span> dans ce repère.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Soit la courbe suivante, représentative d'une nouvelle fonction <span class="math">f</span>, telle que <span class="math">f</span>(<span class="math">x</span>) = 0,08<span class="math">x</span>² :<br><br>
+        
+        <style>
+            /* Animations flèche BLEUE (0-33%) */
+            @keyframes draw-blue-v {
+                0%, 5% { stroke-dashoffset: 100; }
+                5%, 10% { stroke-dashoffset: 100; }
+                10%, 14% { stroke-dashoffset: 0; }
+                14%, 100% { stroke-dashoffset: 0; }
+            }
+            @keyframes draw-blue-h {
+                0%, 16% { stroke-dashoffset: 310; }
+                16%, 20% { stroke-dashoffset: 310; }
+                20%, 29% { stroke-dashoffset: 0; }
+                29%, 100% { stroke-dashoffset: 0; }
+            }
+            @keyframes appear-arrow-blue-v {
+                0%, 13% { opacity: 0; }
+                14%, 100% { opacity: 1; }
+            }
+            @keyframes appear-arrow-blue-h {
+                0%, 28% { opacity: 0; }
+                29%, 100% { opacity: 1; }
+            }
+            @keyframes appear-cross-blue {
+                0%, 14% { opacity: 0; }
+                15%, 100% { opacity: 1; }
+            }
+            
+            /* Animations flèche VERTE (33-66%) */
+            @keyframes draw-green-v {
+                0%, 38% { stroke-dashoffset: 280; }
+                38%, 42% { stroke-dashoffset: 280; }
+                42%, 47% { stroke-dashoffset: 0; }
+                47%, 100% { stroke-dashoffset: 0; }
+            }
+            @keyframes draw-green-h {
+                0%, 49% { stroke-dashoffset: 510; }
+                49%, 53% { stroke-dashoffset: 510; }
+                53%, 62% { stroke-dashoffset: 0; }
+                62%, 100% { stroke-dashoffset: 0; }
+            }
+            @keyframes appear-arrow-green-v {
+                0%, 46% { opacity: 0; }
+                47%, 100% { opacity: 1; }
+            }
+            @keyframes appear-arrow-green-h {
+                0%, 61% { opacity: 0; }
+                62%, 100% { opacity: 1; }
+            }
+            @keyframes appear-cross-green {
+                0%, 47% { opacity: 0; }
+                48%, 100% { opacity: 1; }
+            }
+            
+            /* Animations flèche ROUGE (66-100%) */
+            @keyframes draw-red-h {
+                0%, 71% { stroke-dashoffset: 610; }
+                71%, 75% { stroke-dashoffset: 610; }
+                75%, 80% { stroke-dashoffset: 0; }
+                80%, 100% { stroke-dashoffset: 0; }
+            }
+            @keyframes draw-red-v {
+                0%, 82% { stroke-dashoffset: 395; }
+                82%, 86% { stroke-dashoffset: 395; }
+                86%, 95% { stroke-dashoffset: 0; }
+                95%, 100% { stroke-dashoffset: 0; }
+            }
+            @keyframes appear-arrow-red-h {
+                0%, 79% { opacity: 0; }
+                80%, 100% { opacity: 1; }
+            }
+            @keyframes appear-arrow-red-v {
+                0%, 94% { opacity: 0; }
+                95%, 100% { opacity: 1; }
+            }
+            @keyframes appear-cross-red {
+                0%, 80% { opacity: 0; }
+                81%, 100% { opacity: 1; }
+            }
+            
+            .arrow-blue-v { 
+                stroke-dasharray: 100;
+                animation: draw-blue-v 9s ease-in-out infinite;
+            }
+            .arrow-blue-h { 
+                stroke-dasharray: 310;
+                animation: draw-blue-h 9s ease-in-out infinite;
+            }
+            .arrowhead-blue-v {
+                animation: appear-arrow-blue-v 9s ease-in-out infinite;
+            }
+            .arrowhead-blue-h {
+                animation: appear-arrow-blue-h 9s ease-in-out infinite;
+            }
+            .cross-blue {
+                animation: appear-cross-blue 9s ease-in-out infinite;
+            }
+            
+            .arrow-green-v { 
+                stroke-dasharray: 280;
+                animation: draw-green-v 9s ease-in-out infinite;
+            }
+            .arrow-green-h { 
+                stroke-dasharray: 510;
+                animation: draw-green-h 9s ease-in-out infinite;
+            }
+            .arrowhead-green-v {
+                animation: appear-arrow-green-v 9s ease-in-out infinite;
+            }
+            .arrowhead-green-h {
+                animation: appear-arrow-green-h 9s ease-in-out infinite;
+            }
+            .cross-green {
+                animation: appear-cross-green 9s ease-in-out infinite;
+            }
+            
+            .arrow-red-h { 
+                stroke-dasharray: 610;
+                animation: draw-red-h 9s ease-in-out infinite;
+            }
+            .arrow-red-v { 
+                stroke-dasharray: 395;
+                animation: draw-red-v 9s ease-in-out infinite;
+            }
+            .arrowhead-red-h {
+                animation: appear-arrow-red-h 9s ease-in-out infinite;
+            }
+            .arrowhead-red-v {
+                animation: appear-arrow-red-v 9s ease-in-out infinite;
+            }
+            .cross-red {
+                animation: appear-cross-red 9s ease-in-out infinite;
+            }
+        </style>
+        
+        <svg width="800" height="500" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 20px auto; background: white; border: 1px solid #ddd;">
+            <!-- Grille -->
+            <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e0e0e0" stroke-width="0.5"/>
+                </pattern>
+                <!-- Flèches pour les axes -->
+                <marker id="arrowaxis" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+                </marker>
+            </defs>
+            
+            <rect width="800" height="500" fill="url(#grid)"/>
+            
+            <!-- Axes -->
+            <line x1="80" y1="450" x2="750" y2="450" stroke="#000" stroke-width="2" marker-end="url(#arrowaxis)"/>
+            <line x1="80" y1="450" x2="80" y2="30" stroke="#000" stroke-width="2" marker-end="url(#arrowaxis)"/>
+            
+            <!-- Graduations X (0 à 20, tous les 2) -->
+            <g font-size="14" text-anchor="middle">
+                <text x="80" y="470">0</text>
+                <line x1="147" y1="445" x2="147" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="147" y="470">2</text>
+                <line x1="214" y1="445" x2="214" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="214" y="470">4</text>
+                <line x1="281" y1="445" x2="281" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="281" y="470">6</text>
+                <line x1="348" y1="445" x2="348" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="348" y="470">8</text>
+                <line x1="415" y1="445" x2="415" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="415" y="470">10</text>
+                <line x1="482" y1="445" x2="482" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="482" y="470">12</text>
+                <line x1="549" y1="445" x2="549" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="549" y="470">14</text>
+                <line x1="616" y1="445" x2="616" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="616" y="470">16</text>
+                <line x1="683" y1="445" x2="683" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="683" y="470">18</text>
+            </g>
+            
+            <!-- Graduations Y (0 à 28, tous les 2) -->
+            <g font-size="14" text-anchor="end">
+                <text x="70" y="455">0</text>
+                <line x1="75" y1="420" x2="85" y2="420" stroke="#000" stroke-width="1"/>
+                <text x="70" y="425">2</text>
+                <line x1="75" y1="390" x2="85" y2="390" stroke="#000" stroke-width="1"/>
+                <text x="70" y="395">4</text>
+                <line x1="75" y1="360" x2="85" y2="360" stroke="#000" stroke-width="1"/>
+                <text x="70" y="365">6</text>
+                <line x1="75" y1="330" x2="85" y2="330" stroke="#000" stroke-width="1"/>
+                <text x="70" y="335">8</text>
+                <line x1="75" y1="300" x2="85" y2="300" stroke="#000" stroke-width="1"/>
+                <text x="70" y="305">10</text>
+                <line x1="75" y1="270" x2="85" y2="270" stroke="#000" stroke-width="1"/>
+                <text x="70" y="275">12</text>
+                <line x1="75" y1="240" x2="85" y2="240" stroke="#000" stroke-width="1"/>
+                <text x="70" y="245">14</text>
+                <line x1="75" y1="210" x2="85" y2="210" stroke="#000" stroke-width="1"/>
+                <text x="70" y="215">16</text>
+                <line x1="75" y1="180" x2="85" y2="180" stroke="#000" stroke-width="1"/>
+                <text x="70" y="185">18</text>
+                <line x1="75" y1="150" x2="85" y2="150" stroke="#000" stroke-width="1"/>
+                <text x="70" y="155">20</text>
+                <line x1="75" y1="120" x2="85" y2="120" stroke="#000" stroke-width="1"/>
+                <text x="70" y="125">22</text>
+                <line x1="75" y1="90" x2="85" y2="90" stroke="#000" stroke-width="1"/>
+                <text x="70" y="95">24</text>
+                <line x1="75" y1="60" x2="85" y2="60" stroke="#000" stroke-width="1"/>
+                <text x="70" y="65">26</text>
+            </g>
+            
+            <!-- Labels des axes -->
+            <text x="760" y="465" font-size="16" font-weight="bold">x</text>
+            <text x="60" y="25" font-size="16" font-weight="bold">y</text>
+            
+            <!-- Courbe f(x) = 0.08x² RECALCULÉE CORRECTEMENT -->
+            <!-- Échelle: x: 1 unité = 33.5px, y: 1 unité = 15px, origine (80,450) -->
+            <!-- f(x) = 0,08x² donc pour chaque x, y_pixel = 450 - f(x)×15 -->
+            <path d="M 80,450
+                     L 113.5,448.8
+                     L 147,445.2
+                     L 180.5,439.2
+                     L 214,430.8
+                     L 247.5,420
+                     L 281,406.8
+                     L 314.5,391.2
+                     L 348,373.2
+                     L 381.5,352.8
+                     L 415,330
+                     L 448.5,304.8
+                     L 482,277.2
+                     L 515.5,247.2
+                     L 549,214.8
+                     L 582.5,180
+                     L 616,142.8
+                     L 649.5,103.2
+                     L 683,61.2
+                     L 716.5,16.8" 
+                  fill="none" stroke="#2c3e50" stroke-width="3"/>
+            
+            <!-- Flèche 1 BLEUE : x=9 -> y≈6.5 (f(9)=6.48) -->
+            <g>
+                <line x1="381.5" y1="450" x2="381.5" y2="352.8" stroke="#3498db" stroke-width="3" class="arrow-blue-v"/>
+                <line x1="381.5" y1="352.8" x2="80" y2="352.8" stroke="#3498db" stroke-width="3" class="arrow-blue-h"/>
+                <!-- Pointes de flèches (à la FIN de chaque segment) -->
+                <path d="M 381.5,352.8 l -5,12 l 10,0 z" fill="#3498db" class="arrowhead-blue-v" opacity="0"/>
+                <path d="M 80,352.8 l 12,-5 l 0,10 z" fill="#3498db" class="arrowhead-blue-h" opacity="0"/>
+                <!-- Croix bleue -->
+                <g class="cross-blue" opacity="0">
+                    <line x1="374.5" y1="345.8" x2="388.5" y2="359.8" stroke="#3498db" stroke-width="3"/>
+                    <line x1="388.5" y1="345.8" x2="374.5" y2="359.8" stroke="#3498db" stroke-width="3"/>
+                </g>
+            </g>
+            
+            <!-- Flèche 2 VERTE : x=15 -> y=18 -->
+            <g>
+                <line x1="582.5" y1="450" x2="582.5" y2="180" stroke="#27ae60" stroke-width="3" class="arrow-green-v"/>
+                <line x1="582.5" y1="180" x2="80" y2="180" stroke="#27ae60" stroke-width="3" class="arrow-green-h"/>
+                <!-- Pointes de flèches (à la FIN de chaque segment) -->
+                <path d="M 582.5,180 l -5,12 l 10,0 z" fill="#27ae60" class="arrowhead-green-v" opacity="0"/>
+                <path d="M 80,180 l 12,-5 l 0,10 z" fill="#27ae60" class="arrowhead-green-h" opacity="0"/>
+                <!-- Croix verte -->
+                <g class="cross-green" opacity="0">
+                    <line x1="575.5" y1="173" x2="589.5" y2="187" stroke="#27ae60" stroke-width="3"/>
+                    <line x1="589.5" y1="173" x2="575.5" y2="187" stroke="#27ae60" stroke-width="3"/>
+                </g>
+            </g>
+            
+            <!-- Flèche 3 ROUGE : y≈26 -> x=18 (antécédent, f(18)=25.92) -->
+            <g>
+                <line x1="80" y1="61.2" x2="683" y2="61.2" stroke="#e74c3c" stroke-width="3" class="arrow-red-h"/>
+                <line x1="683" y1="61.2" x2="683" y2="450" stroke="#e74c3c" stroke-width="3" class="arrow-red-v"/>
+                <!-- Pointes de flèches (flèche vers la DROITE pour toucher la courbe) -->
+                <path d="M 683,61.2 l -12,-5 l 0,10 z" fill="#e74c3c" class="arrowhead-red-h" opacity="0"/>
+                <path d="M 683,450 l -5,-12 l 10,0 z" fill="#e74c3c" class="arrowhead-red-v" opacity="0"/>
+                <!-- Croix rouge -->
+                <g class="cross-red" opacity="0">
+                    <line x1="676" y1="54.2" x2="690" y2="68.2" stroke="#e74c3c" stroke-width="3"/>
+                    <line x1="690" y1="54.2" x2="676" y2="68.2" stroke="#e74c3c" stroke-width="3"/>
+                </g>
+            </g>
+        </svg>
+        
+        <div style="margin-top: 10px;">
+            <div style="color: #3498db; font-weight: bold; margin: 5px 0;">
+                • L'image de 9 est d'environ 6,5.
+            </div>
+            <div style="color: #27ae60; font-weight: bold; margin: 5px 0;">
+                • L'image de 15 est d'environ 18.
+            </div>
+            <div style="color: #e74c3c; font-weight: bold; margin: 5px 0;">
+                • L'antécédent de 26 est d'environ 18.
+            </div>
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>Attention,</strong> cette méthode n'est pas très précise, la seule vérification est le calcul :<br><br>
+        Vérifions si le point A(18 ; 26) est sur la courbe :<br><br>
+        <span class="math">f</span>(18) = 0,08 × 18² = 0,08 × 324 = 25,92<br><br>
+        donc A n'est pas sur la courbe représentative de la fonction <span class="math">f</span>.
+    </div>
+
+    <h3>Par un tableau de valeur</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Un tableau de valeur permet de connaître les valeurs prises par une fonction <span class="math">f</span> pour certaines valeurs de la variable.<br><br>
+        Avec suffisamment de valeurs, on peut tracer la courbe représentative de façon approchée.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Remplir le tableau de valeur ci-dessous pour la fonction <span class="math">f</span> telle que <span class="math">f</span>(<span class="math">x</span>) = 0,08<span class="math">x</span>².<br><br>
+        <table>
+            <tr>
+                <th><span class="math">x</span></th>
+                <td>0</td>
+                <td>4</td>
+                <td>7</td>
+                <td>10</td>
+                <td>15</td>
+                <td>18</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <th><span class="math">f</span>(<span class="math">x</span>)</th>
+                <td>0</td>
+                <td>1,28</td>
+                <td>3,92</td>
+                <td>8</td>
+                <td>18</td>
+                <td>25,92</td>
+                <td>32</td>
+            </tr>
+        </table>
+        <br>
+        Pour <span class="math">x</span> = 4 : <span class="math">f</span>(4) = 0,08 × 4² = 0,08 × 16 = 1,28<br><br>
+        On peut ensuite tracer l'allure générale de la courbe :<br><br>
+        
+        <style>
+            @keyframes appear-table-cross-0 { 0%, 10% { opacity: 0; } 11%, 100% { opacity: 1; } }
+            @keyframes appear-table-cross-1 { 0%, 20% { opacity: 0; } 21%, 100% { opacity: 1; } }
+            @keyframes appear-table-cross-2 { 0%, 30% { opacity: 0; } 31%, 100% { opacity: 1; } }
+            @keyframes appear-table-cross-3 { 0%, 40% { opacity: 0; } 41%, 100% { opacity: 1; } }
+            @keyframes appear-table-cross-4 { 0%, 50% { opacity: 0; } 51%, 100% { opacity: 1; } }
+            @keyframes appear-table-cross-5 { 0%, 60% { opacity: 0; } 61%, 100% { opacity: 1; } }
+            @keyframes appear-table-cross-6 { 0%, 70% { opacity: 0; } 71%, 100% { opacity: 1; } }
+            @keyframes draw-table-curve {
+                0%, 72% { stroke-dashoffset: 1000; }
+                72%, 100% { stroke-dashoffset: 0; }
+            }
+            .table-cross-0 { animation: appear-table-cross-0 10s ease-in-out infinite; }
+            .table-cross-1 { animation: appear-table-cross-1 10s ease-in-out infinite; }
+            .table-cross-2 { animation: appear-table-cross-2 10s ease-in-out infinite; }
+            .table-cross-3 { animation: appear-table-cross-3 10s ease-in-out infinite; }
+            .table-cross-4 { animation: appear-table-cross-4 10s ease-in-out infinite; }
+            .table-cross-5 { animation: appear-table-cross-5 10s ease-in-out infinite; }
+            .table-cross-6 { animation: appear-table-cross-6 10s ease-in-out infinite; }
+            .table-curve { stroke-dasharray: 1000; animation: draw-table-curve 10s ease-in-out infinite; }
+        </style>
+        
+        <svg width="800" height="500" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 20px auto; background: white; border: 1px solid #ddd;">
+            <defs>
+                <pattern id="grid3" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e0e0e0" stroke-width="0.5"/>
+                </pattern>
+                <marker id="arrowaxis3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#000"/>
+                </marker>
+            </defs>
+            
+            <rect width="800" height="500" fill="url(#grid3)"/>
+            
+            <!-- Axes -->
+            <line x1="80" y1="450" x2="750" y2="450" stroke="#000" stroke-width="2" marker-end="url(#arrowaxis3)"/>
+            <line x1="80" y1="450" x2="80" y2="30" stroke="#000" stroke-width="2" marker-end="url(#arrowaxis3)"/>
+            
+            <!-- Graduations X (0 à 22, tous les 2) - échelle: 30.45px par unité -->
+            <g font-size="14" text-anchor="middle">
+                <text x="80" y="470">0</text>
+                <line x1="141" y1="445" x2="141" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="141" y="470">2</text>
+                <line x1="202" y1="445" x2="202" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="202" y="470">4</text>
+                <line x1="263" y1="445" x2="263" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="263" y="470">6</text>
+                <line x1="324" y1="445" x2="324" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="324" y="470">8</text>
+                <line x1="385" y1="445" x2="385" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="385" y="470">10</text>
+                <line x1="446" y1="445" x2="446" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="446" y="470">12</text>
+                <line x1="507" y1="445" x2="507" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="507" y="470">14</text>
+                <line x1="568" y1="445" x2="568" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="568" y="470">16</text>
+                <line x1="629" y1="445" x2="629" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="629" y="470">18</text>
+                <line x1="690" y1="445" x2="690" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="690" y="470">20</text>
+                <line x1="750" y1="445" x2="750" y2="455" stroke="#000" stroke-width="1"/>
+                <text x="750" y="470">22</text>
+            </g>
+            
+            <!-- Graduations Y (0 à 35, tous les 5) - échelle: 12px par unité -->
+            <g font-size="14" text-anchor="end">
+                <text x="70" y="455">0</text>
+                <line x1="75" y1="390" x2="85" y2="390" stroke="#000" stroke-width="1"/>
+                <text x="70" y="395">5</text>
+                <line x1="75" y1="330" x2="85" y2="330" stroke="#000" stroke-width="1"/>
+                <text x="70" y="335">10</text>
+                <line x1="75" y1="270" x2="85" y2="270" stroke="#000" stroke-width="1"/>
+                <text x="70" y="275">15</text>
+                <line x1="75" y1="210" x2="85" y2="210" stroke="#000" stroke-width="1"/>
+                <text x="70" y="215">20</text>
+                <line x1="75" y1="150" x2="85" y2="150" stroke="#000" stroke-width="1"/>
+                <text x="70" y="155">25</text>
+                <line x1="75" y1="90" x2="85" y2="90" stroke="#000" stroke-width="1"/>
+                <text x="70" y="95">30</text>
+                <line x1="75" y1="30" x2="85" y2="30" stroke="#000" stroke-width="1"/>
+                <text x="70" y="35">35</text>
+            </g>
+            
+            <!-- Labels des axes -->
+            <text x="760" y="465" font-size="16" font-weight="bold">x</text>
+            <text x="60" y="25" font-size="16" font-weight="bold">y</text>
+            
+            <!-- Croix apparaissant une par une -->
+            <!-- Échelle: x: 30.45px/unité (670/22), y: 12px/unité (420/35), origine (80,450) -->
+            <!-- Croix 0: (0,0) → (80,450) -->
+            <g class="table-cross-0" opacity="0">
+                <line x1="73" y1="443" x2="87" y2="457" stroke="#e74c3c" stroke-width="3"/>
+                <line x1="87" y1="443" x2="73" y2="457" stroke="#e74c3c" stroke-width="3"/>
+            </g>
+            
+            <!-- Croix 1: (4,1.28) → (201.8,434.64) -->
+            <g class="table-cross-1" opacity="0">
+                <line x1="194.8" y1="427.64" x2="208.8" y2="441.64" stroke="#e74c3c" stroke-width="3"/>
+                <line x1="208.8" y1="427.64" x2="194.8" y2="441.64" stroke="#e74c3c" stroke-width="3"/>
+            </g>
+            
+            <!-- Croix 2: (7,3.92) → (293.15,403.04) -->
+            <g class="table-cross-2" opacity="0">
+                <line x1="286.15" y1="396.04" x2="300.15" y2="410.04" stroke="#e74c3c" stroke-width="3"/>
+                <line x1="300.15" y1="396.04" x2="286.15" y2="410.04" stroke="#e74c3c" stroke-width="3"/>
+            </g>
+            
+            <!-- Croix 3: (10,8) → (384.5,354) -->
+            <g class="table-cross-3" opacity="0">
+                <line x1="377.5" y1="347" x2="391.5" y2="361" stroke="#e74c3c" stroke-width="3"/>
+                <line x1="391.5" y1="347" x2="377.5" y2="361" stroke="#e74c3c" stroke-width="3"/>
+            </g>
+            
+            <!-- Croix 4: (15,18) → (536.75,234) -->
+            <g class="table-cross-4" opacity="0">
+                <line x1="529.75" y1="227" x2="543.75" y2="241" stroke="#e74c3c" stroke-width="3"/>
+                <line x1="543.75" y1="227" x2="529.75" y2="241" stroke="#e74c3c" stroke-width="3"/>
+            </g>
+            
+            <!-- Croix 5: (18,25.92) → (628.1,138.96) -->
+            <g class="table-cross-5" opacity="0">
+                <line x1="621.1" y1="131.96" x2="635.1" y2="145.96" stroke="#e74c3c" stroke-width="3"/>
+                <line x1="635.1" y1="131.96" x2="621.1" y2="145.96" stroke="#e74c3c" stroke-width="3"/>
+            </g>
+            
+            <!-- Croix 6: (20,32) → (689,66) -->
+            <g class="table-cross-6" opacity="0">
+                <line x1="682" y1="59" x2="696" y2="73" stroke="#e74c3c" stroke-width="3"/>
+                <line x1="696" y1="59" x2="682" y2="73" stroke="#e74c3c" stroke-width="3"/>
+            </g>
+            
+            <!-- Courbe arrondie - vraie parabole f(x)=0.08x² calculée point par point (tous les 0.5) -->
+            <path d="M 80.00,450.00
+                     L 95.22,449.76
+                     L 110.45,449.04
+                     L 125.67,447.84
+                     L 140.90,446.16
+                     L 156.12,444.00
+                     L 171.35,441.36
+                     L 186.57,438.24
+                     L 201.80,434.64
+                     L 217.03,430.56
+                     L 232.25,426.00
+                     L 247.47,420.96
+                     L 262.70,415.44
+                     L 277.92,409.44
+                     L 293.15,402.96
+                     L 308.38,396.00
+                     L 323.60,388.56
+                     L 338.82,380.64
+                     L 354.05,372.24
+                     L 369.27,363.36
+                     L 384.50,354.00
+                     L 399.72,344.16
+                     L 414.95,333.84
+                     L 430.18,323.04
+                     L 445.40,311.76
+                     L 460.62,300.00
+                     L 475.85,287.76
+                     L 491.07,275.04
+                     L 506.30,261.84
+                     L 521.52,248.16
+                     L 536.75,234.00
+                     L 551.97,219.36
+                     L 567.20,204.24
+                     L 582.42,188.64
+                     L 597.65,172.56
+                     L 612.88,156.00
+                     L 628.10,138.96
+                     L 643.32,121.44
+                     L 658.55,103.44
+                     L 673.77,84.96
+                     L 689.00,66.00" 
+                  fill="none" stroke="#2c3e50" stroke-width="3" class="table-curve"/>
+        </svg>
+    </div>
+
+</body>
+</html>

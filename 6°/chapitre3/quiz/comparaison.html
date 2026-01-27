@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Décimaux 6ème</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 30px 20px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-screen {
+            text-align: center;
+        }
+
+        .menu-screen h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .menu-screen .emoji {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .menu-screen p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .menu-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .menu-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 30px 20px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .menu-btn.green {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .menu-btn.blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+        }
+
+        .menu-btn.purple {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+        }
+
+        .menu-btn .emoji {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .menu-btn .subtitle {
+            font-size: 0.8rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .badge.score {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+        }
+
+        .question-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+            padding: 30px 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid #a5b4fc;
+        }
+
+        .question-box h2 {
+            font-size: 1.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            word-wrap: break-word;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .option-btn {
+            padding: 35px 20px;
+            border: none;
+            border-radius: 16px;
+            font-size: 2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            color: #1f2937;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .option-btn.correct {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+            animation: pulse 0.5s ease;
+        }
+
+        .option-btn.incorrect {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            transform: scale(0.95);
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+            animation: shake 0.5s ease;
+        }
+
+        .option-btn.disabled {
+            opacity: 0.5;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .next-btn {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .feedback {
+            padding: 18px;
+            border-radius: 14px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 15px;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.correct {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+
+        .feedback.incorrect {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+            border: 2px solid #ef4444;
+        }
+
+        .result-screen {
+            text-align: center;
+        }
+
+        .result-screen .emoji {
+            font-size: 4rem;
+            animation: bounce 1s infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .result-screen h2 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        .result-score {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .result-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .home-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .home-btn:hover {
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.6);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .info-text {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.8rem;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 600px) {
+            .container {
+                padding: 40px;
+            }
+            .menu-screen h1 {
+                font-size: 3.5rem;
+            }
+            .menu-screen .emoji {
+                font-size: 5rem;
+                margin-bottom: 20px;
+            }
+            .menu-screen p {
+                font-size: 1.3rem;
+                margin-bottom: 40px;
+            }
+            .menu-buttons {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            .menu-btn {
+                padding: 40px 20px;
+                font-size: 1.5rem;
+            }
+            .menu-btn .emoji {
+                font-size: 3rem;
+                margin-bottom: 10px;
+            }
+            .menu-btn .subtitle {
+                font-size: 0.9rem;
+                margin-top: 10px;
+            }
+            .badge {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            .progress-bar {
+                height: 12px;
+                margin-bottom: 30px;
+            }
+            .question-box {
+                padding: 40px;
+                margin-bottom: 30px;
+            }
+            .question-box h2 {
+                font-size: 2rem;
+            }
+            .options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+            .option-btn {
+                padding: 50px 20px;
+                font-size: 2.5rem;
+            }
+            .next-btn {
+                padding: 15px 40px;
+                font-size: 1.2rem;
+            }
+            .feedback {
+                padding: 20px;
+                font-size: 1.1rem;
+                margin-top: 20px;
+            }
+            .result-screen .emoji {
+                font-size: 6rem;
+                margin-bottom: 20px;
+            }
+            .result-screen h2 {
+                font-size: 3rem;
+                margin-bottom: 20px;
+            }
+            .result-score {
+                font-size: 5rem;
+                margin-bottom: 20px;
+            }
+            .result-message {
+                font-size: 1.5rem;
+                margin-bottom: 40px;
+            }
+            .result-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .info-text {
+                font-size: 0.9rem;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../../classe-6e.html" style="position: absolute; top: 20px; left: 20px; padding: 12px 24px; background: white; color: #667eea; text-decoration: none; border-radius: 12px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; z-index: 1000;">← Retour</a>
+    <div class="container">
+        <div id="menuScreen" class="menu-screen">
+            <div class="emoji">📊</div>
+            <h1>Quiz Décimaux</h1>
+            <p>Choisis le nombre de questions pour commencer !</p>
+            <div class="menu-buttons">
+                <button class="menu-btn green" onclick="startQuiz(5)">
+                    <span class="emoji">⚡</span>
+                    5 Questions
+                    <div class="subtitle">Mode Rapide</div>
+                </button>
+                <button class="menu-btn blue" onclick="startQuiz(10)">
+                    <span class="emoji">🎯</span>
+                    10 Questions
+                    <div class="subtitle">Mode Standard</div>
+                </button>
+                <button class="menu-btn purple" onclick="startQuiz(20)">
+                    <span class="emoji">🔥</span>
+                    20 Questions
+                    <div class="subtitle">Mode Expert</div>
+                </button>
+            </div>
+            <div class="info-text">Plus de 1000 questions différentes disponibles !</div>
+        </div>
+
+        <div id="quizScreen" class="hidden">
+            <div class="header">
+                <div class="badge">
+                    Question <span id="currentQuestion">1</span>/<span id="totalQuestions">10</span>
+                </div>
+                <div class="badge score">
+                    Score : <span id="score">0</span> 🌟
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+
+            <div class="question-box">
+                <h2 id="question">Compare : 3,5 ... 3,50</h2>
+            </div>
+
+            <div class="options" id="options"></div>
+
+            <button id="nextBtn" class="next-btn hidden" onclick="nextQuestion()">
+                Question suivante → (Entrée)
+            </button>
+
+            <div id="feedback" class="feedback hidden"></div>
+        </div>
+
+        <div id="resultScreen" class="result-screen hidden">
+            <div class="emoji" id="resultEmoji">🎉</div>
+            <h2>Quiz terminé !</h2>
+            <div class="result-score" id="resultScore">10/10</div>
+            <p class="result-message" id="resultMessage">Parfait ! Tu es un champion des décimaux !</p>
+            <div class="result-buttons">
+                <button class="next-btn" onclick="restartQuiz()">
+                    🔄 Nouveau quiz
+                </button>
+                <button class="next-btn home-btn" onclick="window.location.href='index.html'">
+                    🏠 Retour à l'Index
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let banqueQuestions = [];
+        let questions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let nbQuestions = 10;
+        let answered = false;
+
+        function genererBanqueQuestions() {
+            const questions = [];
+            
+            // 1. Égalités avec zéros (100 questions)
+            for (let i = 0; i < 100; i++) {
+                const entier = Math.floor(Math.random() * 50);
+                const dec = Math.floor(Math.random() * 9) + 1;
+                const zeros = Math.floor(Math.random() * 2) + 1;
+                questions.push({
+                    q: `Compare : ${entier},${dec} ... ${entier},${dec}${'0'.repeat(zeros)}`,
+                    correct: "="
+                });
+            }
+            
+            // 2. 1 chiffre vs 2 chiffres - même partie entière (150 questions)
+            for (let i = 0; i < 150; i++) {
+                const entier = Math.floor(Math.random() * 50);
+                const dec1Chiffre = Math.floor(Math.random() * 9) + 1;
+                const dec2 = Math.floor(Math.random() * 90) + 10;
+                const dec2Str = dec2 < 10 ? `0${dec2}` : `${dec2}`;
+                questions.push({
+                    q: `Compare : ${entier},${dec1Chiffre} ... ${entier},${dec2Str}`,
+                    correct: dec1Chiffre * 10 < dec2 ? "<" : (dec1Chiffre * 10 > dec2 ? ">" : "=")
+                });
+            }
+            
+            // 3. 2 chiffres vs 1 chiffre - même partie entière (150 questions)
+            for (let i = 0; i < 150; i++) {
+                const entier = Math.floor(Math.random() * 50);
+                const dec1 = Math.floor(Math.random() * 90) + 10;
+                const dec2Chiffre = Math.floor(Math.random() * 9) + 1;
+                const dec1Str = dec1 < 10 ? `0${dec1}` : `${dec1}`;
+                questions.push({
+                    q: `Compare : ${entier},${dec1Str} ... ${entier},${dec2Chiffre}`,
+                    correct: dec1 < dec2Chiffre * 10 ? "<" : (dec1 > dec2Chiffre * 10 ? ">" : "=")
+                });
+            }
+            
+            // 4. 1 chiffre vs 3 chiffres - même partie entière (150 questions)
+            for (let i = 0; i < 150; i++) {
+                const entier = Math.floor(Math.random() * 50);
+                const dec1Chiffre = Math.floor(Math.random() * 9) + 1;
+                const dec2 = Math.floor(Math.random() * 900) + 100;
+                questions.push({
+                    q: `Compare : ${entier},${dec1Chiffre} ... ${entier},${dec2}`,
+                    correct: dec1Chiffre * 100 < dec2 ? "<" : (dec1Chiffre * 100 > dec2 ? ">" : "=")
+                });
+            }
+            
+            // 5. 3 chiffres vs 1 chiffre - même partie entière (150 questions)
+            for (let i = 0; i < 150; i++) {
+                const entier = Math.floor(Math.random() * 50);
+                const dec1 = Math.floor(Math.random() * 900) + 100;
+                const dec2Chiffre = Math.floor(Math.random() * 9) + 1;
+                questions.push({
+                    q: `Compare : ${entier},${dec1} ... ${entier},${dec2Chiffre}`,
+                    correct: dec1 < dec2Chiffre * 100 ? "<" : (dec1 > dec2Chiffre * 100 ? ">" : "=")
+                });
+            }
+            
+            // 6. 2 chiffres vs 3 chiffres - même partie entière (150 questions)
+            for (let i = 0; i < 150; i++) {
+                const entier = Math.floor(Math.random() * 50);
+                const dec1 = Math.floor(Math.random() * 90) + 10;
+                const dec2 = Math.floor(Math.random() * 900) + 100;
+                const dec1Str = dec1 < 10 ? `0${dec1}` : `${dec1}`;
+                questions.push({
+                    q: `Compare : ${entier},${dec1Str} ... ${entier},${dec2}`,
+                    correct: dec1 * 10 < dec2 ? "<" : (dec1 * 10 > dec2 ? ">" : "=")
+                });
+            }
+            
+            // 7. 3 chiffres vs 2 chiffres - même partie entière (150 questions)
+            for (let i = 0; i < 150; i++) {
+                const entier = Math.floor(Math.random() * 50);
+                const dec1 = Math.floor(Math.random() * 900) + 100;
+                const dec2 = Math.floor(Math.random() * 90) + 10;
+                const dec2Str = dec2 < 10 ? `0${dec2}` : `${dec2}`;
+                questions.push({
+                    q: `Compare : ${entier},${dec1} ... ${entier},${dec2Str}`,
+                    correct: dec1 < dec2 * 10 ? "<" : (dec1 > dec2 * 10 ? ">" : "=")
+                });
+            }
+            
+            // 8. Cas pièges type 0,5 vs 0,05 (100 questions)
+            for (let i = 0; i < 100; i++) {
+                const entier = Math.floor(Math.random() * 30);
+                const dec1 = Math.floor(Math.random() * 9) + 1;
+                const dec2 = Math.floor(Math.random() * 9) + 1;
+                questions.push({
+                    q: `Compare : ${entier},${dec1} ... ${entier},0${dec2}`,
+                    correct: ">"
+                });
+            }
+            
+            // 9. Cas pièges type 0,05 vs 0,5 (100 questions)
+            for (let i = 0; i < 100; i++) {
+                const entier = Math.floor(Math.random() * 30);
+                const dec1 = Math.floor(Math.random() * 9) + 1;
+                const dec2 = Math.floor(Math.random() * 9) + 1;
+                questions.push({
+                    q: `Compare : ${entier},0${dec1} ... ${entier},${dec2}`,
+                    correct: "<"
+                });
+            }
+            
+            // 10. Cas type 3,70 vs 3,7 (égalité avec zéro terminal) (50 questions)
+            for (let i = 0; i < 50; i++) {
+                const entier = Math.floor(Math.random() * 50);
+                const dec = Math.floor(Math.random() * 9) + 1;
+                questions.push({
+                    q: `Compare : ${entier},${dec}0 ... ${entier},${dec}`,
+                    correct: "="
+                });
+            }
+            
+            // 11. Parties entières différentes + longueurs différentes (100 questions)
+            for (let i = 0; i < 50; i++) {
+                const entier1 = Math.floor(Math.random() * 30);
+                const entier2 = entier1 + Math.floor(Math.random() * 20) + 1;
+                const dec1 = Math.floor(Math.random() * 9) + 1;
+                const dec2 = Math.floor(Math.random() * 90) + 10;
+                const dec2Str = dec2 < 10 ? `0${dec2}` : `${dec2}`;
+                questions.push({
+                    q: `Compare : ${entier1},${dec1} ... ${entier2},${dec2Str}`,
+                    correct: "<"
+                });
+            }
+            
+            for (let i = 0; i < 50; i++) {
+                const entier1 = Math.floor(Math.random() * 50) + 20;
+                const entier2 = Math.floor(Math.random() * (entier1 - 1)) + 1;
+                const dec1 = Math.floor(Math.random() * 900) + 100;
+                const dec2 = Math.floor(Math.random() * 9) + 1;
+                questions.push({
+                    q: `Compare : ${entier1},${dec1} ... ${entier2},${dec2}`,
+                    correct: ">"
+                });
+            }
+            
+            return questions;
+        }
+
+        function startQuiz(nb) {
+            nbQuestions = nb;
+            const shuffled = banqueQuestions.sort(() => Math.random() - 0.5);
+            questions = shuffled.slice(0, nb);
+            currentIndex = 0;
+            score = 0;
+            answered = false;
+            
+            document.getElementById('menuScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            document.getElementById('totalQuestions').textContent = nb;
+            
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            answered = false;
+            const question = questions[currentIndex];
+            document.getElementById('question').textContent = question.q;
+            document.getElementById('currentQuestion').textContent = currentIndex + 1;
+            document.getElementById('score').textContent = score;
+            
+            const progress = ((currentIndex + 1) / nbQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            const options = ['<', '>', '='];
+            
+            options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;
+                btn.onclick = () => checkAnswer(option, question.correct);
+                optionsDiv.appendChild(btn);
+            });
+            
+            document.getElementById('feedback').classList.add('hidden');
+            document.getElementById('nextBtn').classList.add('hidden');
+        }
+
+        function checkAnswer(selected, correct) {
+            if (answered) return;
+            answered = true;
+            
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === correct) {
+                    btn.classList.add('correct');
+                }
+                if (btn.textContent === selected && selected !== correct) {
+                    btn.classList.add('incorrect');
+                }
+                if (btn.textContent !== correct && btn.textContent !== selected) {
+                    btn.classList.add('disabled');
+                }
+            });
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.remove('hidden');
+            
+            if (selected === correct) {
+                score++;
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = '<span style="font-size: 1.5rem;">✓</span> Bravo ! Bonne réponse !';
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `<span style="font-size: 1.5rem;">✗</span> La bonne réponse était : <span style="font-size: 1.5rem;">${correct}</span>`;
+            }
+            
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.classList.remove('hidden');
+            
+            if (currentIndex === nbQuestions - 1) {
+                nextBtn.textContent = '🎯 Voir les résultats';
+            }
+            
+            document.addEventListener('keypress', function handler(e) {
+                if (e.key === 'Enter') {
+                    nextQuestion();
+                    document.removeEventListener('keypress', handler);
+                }
+            });
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            
+            if (currentIndex < nbQuestions) {
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+            
+            const resultScore = document.getElementById('resultScore');
+            const resultMessage = document.getElementById('resultMessage');
+            const resultEmoji = document.getElementById('resultEmoji');
+            
+            resultScore.textContent = `${score}/${nbQuestions}`;
+            
+            const percentage = (score / nbQuestions) * 100;
+            
+            if (percentage === 100) {
+                resultEmoji.textContent = '🏆';
+                resultMessage.textContent = '🌟 Parfait ! Tu es un champion des décimaux !';
+            } else if (percentage >= 70) {
+                resultEmoji.textContent = '🎉';
+                resultMessage.textContent = '✨ Très bien ! Continue comme ça !';
+            } else if (percentage >= 50) {
+                resultEmoji.textContent = '👍';
+                resultMessage.textContent = '👏 Bien joué ! Encore un peu d\'entraînement.';
+            } else {
+                resultEmoji.textContent = '💪';
+                resultMessage.textContent = '🚀 Continue à t\'entraîner, tu vas y arriver !';
+            }
+        }
+
+        function restartQuiz() {
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('menuScreen').classList.remove('hidden');
+            currentIndex = 0;
+            score = 0;
+        }
+
+        window.onload = function() {
+            banqueQuestions = genererBanqueQuestions();
+        };
+    </script>
+</body>
+</html>
