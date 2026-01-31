@@ -396,7 +396,7 @@
         <div class="quiz-info">
             <div class="info-item">
                 <div class="info-label">Questions</div>
-                <div class="info-value" id="totalQuestions">10</div>
+                <div class="info-value" id="totalQuestions">12</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Question actuelle</div>
@@ -421,7 +421,7 @@
             <h2>🎉 Quiz terminé !</h2>
 
             <div class="results-score" id="resultsScore">
-                <div class="score-big" id="scoreBig">0/10</div>
+                <div class="score-big" id="scoreBig">0/12</div>
                 <div class="score-message" id="scoreMessage">Bravo !</div>
             </div>
 
@@ -580,7 +580,7 @@
                 expression: expr8,
                 correct: `${result8a}${v8a} + ${c8b}${v8b}`,
                 wrongAnswers: [`${c8a + c8b + c8c}${v8a}${v8b}`, `${c8a + c8c}${v8a}${v8b}`, `${c8a}${v8a} + ${c8b + c8c}${v8b}`],
-                explanation: `<strong>Règle :</strong> On ne peut réduire que les termes avec la MÊME lettre.<br><br>${expr8}<br>= ${c8a}${v8a} + ${c8c}${v8a} + ${c8b}${v8b}<br>= (${c8a} + ${c8c})${v8a} + ${c8b}${v8b}<br>= <strong>${result8a}${v8a} + ${c8b}${v8b}</strong><br><br>On regroupe les "${v8a}" ensemble, mais on ne peut pas les mélanger avec les "${v8b}" !`
+                explanation: `<strong>Règle :</strong> On ne peut réduire que les termes avec la MÊME lettre.<br><br>${expr8}<br>= ${c8a}${v8a} + ${c8c}${v8a} + ${c8b}${v8b}<br>= (${c8a} + ${c8c})${v8a} + ${c8b}${v8b}<br>= <strong>${result8a}${v8a} + ${c8b}${v8b}</strong><br><br>On regroupe les "${v8a}" ensemble, mais on ne peut pas les mélanger avec les "${v8b}" !<br><br><em>Note : ${c8b}${v8b} + ${result8a}${v8a} serait aussi correct, l'ordre n'a pas d'importance.</em>`
             });
 
             // Type 9: Simplification avec lettres répétées (ex: 2 × a × b × a = 2a²b)
@@ -608,7 +608,36 @@
                 expression: expr10,
                 correct: `${result10a}a + ${c10b}b + ${c10c}c`,
                 wrongAnswers: [`${c10a + c10b + c10c + c10d}abc`, `${c10a}a + ${c10b}b + ${c10c + c10d}c`, `${c10a + c10d}a + ${c10b + c10c}bc`],
-                explanation: `<strong>Règle :</strong> On regroupe uniquement les termes avec la MÊME lettre.<br><br>${expr10}<br>= ${c10a}a + ${c10d}a + ${c10b}b + ${c10c}c<br>= (${c10a} + ${c10d})a + ${c10b}b + ${c10c}c<br>= <strong>${result10a}a + ${c10b}b + ${c10c}c</strong><br><br>Seuls les "a" peuvent être regroupés. Les "b" et "c" restent séparés !`
+                explanation: `<strong>Règle :</strong> On regroupe uniquement les termes avec la MÊME lettre.<br><br>${expr10}<br>= ${c10a}a + ${c10d}a + ${c10b}b + ${c10c}c<br>= (${c10a} + ${c10d})a + ${c10b}b + ${c10c}c<br>= <strong>${result10a}a + ${c10b}b + ${c10c}c</strong><br><br>Seuls les "a" peuvent être regroupés. Les "b" et "c" restent séparés !<br><br><em>Note : L'ordre des termes n'a pas d'importance (${c10b}b + ${result10a}a + ${c10c}c serait aussi correct).</em>`
+            });
+
+            // Type 11: Réduction avec des carrés (ex: 3a² + 2a² = 5a²)
+            const c11a = randomInt(2, 5);
+            const c11b = randomInt(2, 5);
+            const v11 = variables[randomInt(0, 3)];
+            const expr11 = `${c11a}${v11}² + ${c11b}${v11}²`;
+            const result11 = c11a + c11b;
+            questions.push({
+                type: 'reduce_squared',
+                expression: expr11,
+                correct: `${result11}${v11}²`,
+                wrongAnswers: [`${c11a * c11b}${v11}²`, `${result11}${v11}⁴`, `${result11}${v11}`],
+                explanation: `<strong>Règle :</strong> On peut additionner des termes en ${v11}² entre eux !<br><br>${expr11} = (${c11a} + ${c11b})${v11}² = <strong>${result11}${v11}²</strong><br><br>Attention : ${v11}² + ${v11}² = 2${v11}² (pas ${v11}⁴ !). On additionne les coefficients, pas les exposants.`
+            });
+
+            // Type 12: Réduction mixte carrés et termes simples (ex: 2a² + 3a + 4a² = 6a² + 3a)
+            const c12a = randomInt(2, 4);
+            const c12b = randomInt(2, 5);
+            const c12c = randomInt(2, 4);
+            const v12 = 'x';
+            const expr12 = `${c12a}${v12}² + ${c12b}${v12} + ${c12c}${v12}²`;
+            const result12 = c12a + c12c;
+            questions.push({
+                type: 'reduce_mixed_powers',
+                expression: expr12,
+                correct: `${result12}${v12}² + ${c12b}${v12}`,
+                wrongAnswers: [`${c12a + c12b + c12c}${v12}²`, `${result12}${v12}³ + ${c12b}${v12}`, `${c12a + c12c}${v12}² + ${c12b}${v12}²`],
+                explanation: `<strong>Règle :</strong> On ne peut réduire que les termes de MÊME nature !<br><br>${expr12}<br>= ${c12a}${v12}² + ${c12c}${v12}² + ${c12b}${v12}<br>= (${c12a} + ${c12c})${v12}² + ${c12b}${v12}<br>= <strong>${result12}${v12}² + ${c12b}${v12}</strong><br><br>${v12}² et ${v12} sont DIFFÉRENTS ! On ne peut pas les mélanger.<br><br><em>Note : ${c12b}${v12} + ${result12}${v12}² serait aussi correct.</em>`
             });
 
             return shuffle(questions);
@@ -647,7 +676,7 @@
 
             container.innerHTML = `
                 <div class="question-header">
-                    <div class="question-number">Question ${questionNum}/10</div>
+                    <div class="question-number">Question ${questionNum}/12</div>
                 </div>
                 <div class="question-body">
                     <div class="question-text">
@@ -669,7 +698,7 @@
 
         function initQuiz() {
             questionsData = generateQuestions();
-            quizData = new Array(10).fill(null);
+            quizData = new Array(12).fill(null);
 
             const questionsContainer = document.getElementById('questionsContainer');
             questionsContainer.innerHTML = '';
