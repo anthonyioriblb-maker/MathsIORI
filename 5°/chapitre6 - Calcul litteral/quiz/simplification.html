@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Simplification du calcul littéral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0052d4 0%, #4364f7 50%, #6fb1fc 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #0052d4;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-family: Arial, sans-serif;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #0052d4;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .question-container {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #0052d4 0%, #4364f7 50%, #6fb1fc 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-number {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .question-body {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 0 0 15px 15px;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+        }
+
+        .math-expression {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.6em;
+            text-align: center;
+            margin: 20px 0;
+            border: 3px solid #0052d4;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 3px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 1.2em;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #4364f7;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(67, 100, 247, 0.2);
+        }
+
+        .option.selected {
+            border-color: #0052d4;
+            background: #f0f4ff;
+        }
+
+        .option.correct {
+            border-color: #43cea2;
+            background: #f0fff4;
+        }
+
+        .option.incorrect {
+            border-color: #ff5e62;
+            background: #fff5f5;
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .option-label {
+            display: inline-block;
+            background: #0052d4;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .option.correct .option-label {
+            background: #43cea2;
+        }
+
+        .option.incorrect .option-label {
+            background: #ff5e62;
+        }
+
+        .explanation {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            font-family: Arial, sans-serif;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .explanation-title {
+            font-weight: bold;
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0052d4 0%, #4364f7 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 82, 212, 0.4);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 82, 212, 0.6);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #0052d4;
+            border: 2px solid #0052d4;
+        }
+
+        .btn-secondary:hover {
+            background: #0052d4;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .results-container.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .results-score {
+            background: linear-gradient(135deg, #43cea2 0%, #38f9d7 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .results-score.low {
+            background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%);
+        }
+
+        .results-score.medium {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .score-big {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .score-message {
+            font-size: 1.5em;
+            margin-top: 15px;
+        }
+
+        .results-details {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #0052d4 0%, #4364f7 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 82, 212, 0.6);
+        }
+
+        .floating-next {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9999;
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-size: 1.05em;
+        }
+
+        .rule-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: Arial, sans-serif;
+            font-size: 0.95em;
+        }
+
+        .rule-box strong {
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <a href="../../classe-5e.html" style="position: absolute; top: 20px; left: 20px; padding: 12px 24px; background: white; color: #0052d4; text-decoration: none; border-radius: 12px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; z-index: 1000;">← Retour</a>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Quiz - Simplification</h1>
+            <p class="subtitle">Calcul littéral - 5ème</p>
+        </div>
+
+        <div class="quiz-info">
+            <div class="info-item">
+                <div class="info-label">Questions</div>
+                <div class="info-value" id="totalQuestions">14</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Question actuelle</div>
+                <div class="info-value" id="currentQuestion">1</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Score</div>
+                <div class="info-value" id="currentScore">0</div>
+            </div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="button-group" id="quizButtons">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display:none;">← Précédent</button>
+            <button class="btn btn-primary" id="validateBtn" onclick="validateAnswer()" disabled>Valider la réponse</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Suivant →</button>
+            <button class="btn btn-primary" id="finishBtn" onclick="showResults()" disabled>Voir les résultats 🎉</button>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+            <h2>🎉 Quiz terminé !</h2>
+
+            <div class="results-score" id="resultsScore">
+                <div class="score-big" id="scoreBig">0/14</div>
+                <div class="score-message" id="scoreMessage">Bravo !</div>
+            </div>
+
+            <div class="results-details">
+                <div class="detail-row">
+                    <span><strong>Bonnes réponses :</strong></span>
+                    <span id="correctCount">0</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Mauvaises réponses :</strong></span>
+                    <span id="incorrectCount">0</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Pourcentage :</strong></span>
+                    <span id="percentage">0%</span>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../../classe-5e.html" class="nav-btn">← Retour au chapitre</a>
+                <button class="btn btn-primary" onclick="restartQuiz()">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <div class="navigation" id="initialNav">
+            <a href="../../classe-5e.html" class="nav-btn">← Retour au chapitre</a>
+        </div>
+
+        <button id="floatingNextBtn" class="btn btn-primary floating-next" onclick="nextQuestion()" disabled aria-label="Suivant">Suivant →</button>
+    </div>
+
+    <script>
+        // Génération de nombres aléatoires
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function shuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        const variables = ['a', 'b', 'x', 'y', 'n', 'm'];
+
+        // Types de questions
+        function generateQuestions() {
+            const questions = [];
+
+            // Type 1: Enlever le × avec 1 (ex: 1 × a = a)
+            const v1 = variables[randomInt(0, variables.length - 1)];
+            const order1 = randomInt(0, 1);
+            const expr1 = order1 === 0 ? `1 × ${v1}` : `${v1} × 1`;
+            questions.push({
+                type: 'mult_one',
+                expression: expr1,
+                correct: v1,
+                wrongAnswers: [`1${v1}`, `${v1}1`, `1`],
+                explanation: `<strong>Règle :</strong> Multiplier par 1 ne change rien !<br><br>${expr1} = <strong>${v1}</strong><br><br>On n'écrit pas le 1 devant une lettre, car 1 × ${v1} = ${v1}.`
+            });
+
+            // Type 2: Enlever le × avec un nombre (ex: 3 × x = 3x)
+            const coef2 = randomInt(2, 9);
+            const v2 = variables[randomInt(0, variables.length - 1)];
+            const order2 = randomInt(0, 1);
+            const expr2 = order2 === 0 ? `${coef2} × ${v2}` : `${v2} × ${coef2}`;
+            questions.push({
+                type: 'mult_coef',
+                expression: expr2,
+                correct: `${coef2}${v2}`,
+                wrongAnswers: [`${coef2} × ${v2}`, `${coef2 + v2}`, `${v2}${coef2}`],
+                explanation: `<strong>Règle :</strong> On supprime le signe × entre un nombre et une lettre.<br><br>${expr2} = <strong>${coef2}${v2}</strong><br><br>On écrit le nombre devant la lettre, collé, sans le ×.`
+            });
+
+            // Type 3: Enlever le × entre deux lettres (ex: a × b = ab)
+            const v3a = variables[randomInt(0, 2)];
+            let v3b = variables[randomInt(3, 5)];
+            const expr3 = `${v3a} × ${v3b}`;
+            questions.push({
+                type: 'mult_vars',
+                expression: expr3,
+                correct: `${v3a}${v3b}`,
+                wrongAnswers: [`${v3b}${v3a}`, `${v3a} + ${v3b}`, `${v3a}²`],
+                explanation: `<strong>Règle :</strong> On supprime le signe × entre deux lettres.<br><br>${expr3} = <strong>${v3a}${v3b}</strong><br><br>On colle simplement les deux lettres (par convention, on écrit souvent dans l'ordre alphabétique).`
+            });
+
+            // Type 4: Expression avec plusieurs × (ex: 2 × a × 3 = 6a)
+            const c4a = randomInt(2, 4);
+            const c4b = randomInt(2, 4);
+            const v4 = variables[randomInt(0, variables.length - 1)];
+            const expr4 = `${c4a} × ${v4} × ${c4b}`;
+            const result4 = c4a * c4b;
+            questions.push({
+                type: 'mult_multiple',
+                expression: expr4,
+                correct: `${result4}${v4}`,
+                wrongAnswers: [`${c4a}${v4}${c4b}`, `${c4a + c4b}${v4}`, `${c4a}${c4b}${v4}`],
+                explanation: `<strong>Règle :</strong> On multiplie les nombres entre eux, puis on supprime les ×.<br><br>${expr4} = ${c4a} × ${c4b} × ${v4} = <strong>${result4}${v4}</strong><br><br>Les nombres : ${c4a} × ${c4b} = ${result4}. Puis on colle la lettre.`
+            });
+
+            // Type 5: Réduire une somme (ex: 2a + 3a = 5a)
+            const c5a = randomInt(2, 5);
+            const c5b = randomInt(2, 5);
+            const v5 = variables[randomInt(0, variables.length - 1)];
+            const expr5 = `${c5a}${v5} + ${c5b}${v5}`;
+            const result5 = c5a + c5b;
+            questions.push({
+                type: 'reduce_sum',
+                expression: expr5,
+                correct: `${result5}${v5}`,
+                wrongAnswers: [`${c5a * c5b}${v5}`, `${c5a}${v5}²`, `${c5a + c5b}${v5}²`],
+                explanation: `<strong>Règle :</strong> On additionne les coefficients devant la même lettre.<br><br>${expr5} = (${c5a} + ${c5b})${v5} = <strong>${result5}${v5}</strong><br><br>C'est comme ${c5a} pommes + ${c5b} pommes = ${result5} pommes !`
+            });
+
+            // Type 6: Réduire une différence (ex: 5x - 2x = 3x)
+            const c6a = randomInt(5, 9);
+            const c6b = randomInt(2, 4);
+            const v6 = variables[randomInt(0, variables.length - 1)];
+            const expr6 = `${c6a}${v6} - ${c6b}${v6}`;
+            const result6 = c6a - c6b;
+            questions.push({
+                type: 'reduce_diff',
+                expression: expr6,
+                correct: `${result6}${v6}`,
+                wrongAnswers: [`${c6a - c6b}`, `${c6a * c6b}${v6}`, `${c6a}${v6} - ${c6b}`],
+                explanation: `<strong>Règle :</strong> On soustrait les coefficients devant la même lettre.<br><br>${expr6} = (${c6a} - ${c6b})${v6} = <strong>${result6}${v6}</strong><br><br>C'est comme ${c6a} bonbons - ${c6b} bonbons = ${result6} bonbons !`
+            });
+
+            // Type 7: Réduire avec coefficient 1 implicite (ex: 3a + a = 4a)
+            const c7 = randomInt(2, 6);
+            const v7 = variables[randomInt(0, variables.length - 1)];
+            const order7 = randomInt(0, 1);
+            const expr7 = order7 === 0 ? `${c7}${v7} + ${v7}` : `${v7} + ${c7}${v7}`;
+            const result7 = c7 + 1;
+            questions.push({
+                type: 'reduce_implicit',
+                expression: expr7,
+                correct: `${result7}${v7}`,
+                wrongAnswers: [`${c7}${v7}`, `${c7 + 1}`, `${c7}${v7}²`],
+                explanation: `<strong>Règle :</strong> Quand il n'y a pas de nombre devant la lettre, c'est comme s'il y avait un 1 !<br><br>${v7} = 1${v7}<br><br>Donc : ${expr7} = ${c7}${v7} + 1${v7} = <strong>${result7}${v7}</strong>`
+            });
+
+            // Type 8: Réduire avec termes différents (ex: 2a + 3b + 4a = 6a + 3b)
+            const c8a = randomInt(2, 4);
+            const c8b = randomInt(2, 5);
+            const c8c = randomInt(2, 4);
+            const v8a = 'a';
+            const v8b = 'b';
+            const expr8 = `${c8a}${v8a} + ${c8b}${v8b} + ${c8c}${v8a}`;
+            const result8a = c8a + c8c;
+            questions.push({
+                type: 'reduce_mixed',
+                expression: expr8,
+                correct: `${result8a}${v8a} + ${c8b}${v8b}`,
+                wrongAnswers: [`${c8a + c8b + c8c}${v8a}${v8b}`, `${c8a + c8c}${v8a}${v8b}`, `${c8a}${v8a} + ${c8b + c8c}${v8b}`],
+                explanation: `<strong>Règle :</strong> On ne peut réduire que les termes avec la MÊME lettre.<br><br>${expr8}<br>= ${c8a}${v8a} + ${c8c}${v8a} + ${c8b}${v8b}<br>= (${c8a} + ${c8c})${v8a} + ${c8b}${v8b}<br>= <strong>${result8a}${v8a} + ${c8b}${v8b}</strong><br><br>On regroupe les "${v8a}" ensemble, mais on ne peut pas les mélanger avec les "${v8b}" !<br><br><em>Note : ${c8b}${v8b} + ${result8a}${v8a} serait aussi correct, l'ordre n'a pas d'importance.</em>`
+            });
+
+            // Type 9: Simplification avec lettres répétées (ex: 2 × a × b × a = 2a²b)
+            const c9 = randomInt(2, 5);
+            const v9a = 'a';
+            const v9b = 'b';
+            const expr9 = `${c9} × ${v9a} × ${v9b} × ${v9a}`;
+            questions.push({
+                type: 'mult_squared',
+                expression: expr9,
+                correct: `${c9}${v9a}²${v9b}`,
+                wrongAnswers: [`${c9}${v9a}${v9b}${v9a}`, `${c9}${v9a}${v9b}`, `${c9 * 2}${v9a}${v9b}`],
+                explanation: `<strong>Règle :</strong> Quand une même lettre apparaît plusieurs fois en multiplication, on utilise une puissance.<br><br>${expr9}<br>= ${c9} × ${v9a} × ${v9a} × ${v9b}<br>= ${c9} × ${v9a}² × ${v9b}<br>= <strong>${c9}${v9a}²${v9b}</strong><br><br>${v9a} × ${v9a} = ${v9a}² (lire "${v9a} au carré")`
+            });
+
+            // Type 10: Réduction avec trois termes différents (ex: 2a + 3b + 4c + 5a = 7a + 3b + 4c)
+            const c10a = randomInt(2, 4);
+            const c10b = randomInt(2, 4);
+            const c10c = randomInt(2, 4);
+            const c10d = randomInt(2, 4);
+            const expr10 = `${c10a}a + ${c10b}b + ${c10c}c + ${c10d}a`;
+            const result10a = c10a + c10d;
+            questions.push({
+                type: 'reduce_three_terms',
+                expression: expr10,
+                correct: `${result10a}a + ${c10b}b + ${c10c}c`,
+                wrongAnswers: [`${c10a + c10b + c10c + c10d}abc`, `${c10a}a + ${c10b}b + ${c10c + c10d}c`, `${c10a + c10d}a + ${c10b + c10c}bc`],
+                explanation: `<strong>Règle :</strong> On regroupe uniquement les termes avec la MÊME lettre.<br><br>${expr10}<br>= ${c10a}a + ${c10d}a + ${c10b}b + ${c10c}c<br>= (${c10a} + ${c10d})a + ${c10b}b + ${c10c}c<br>= <strong>${result10a}a + ${c10b}b + ${c10c}c</strong><br><br>Seuls les "a" peuvent être regroupés. Les "b" et "c" restent séparés !<br><br><em>Note : L'ordre des termes n'a pas d'importance (${c10b}b + ${result10a}a + ${c10c}c serait aussi correct).</em>`
+            });
+
+            // Type 11: Réduction avec des carrés (ex: 3a² + 2a² = 5a²)
+            const c11a = randomInt(2, 5);
+            const c11b = randomInt(2, 5);
+            const v11 = variables[randomInt(0, 3)];
+            const expr11 = `${c11a}${v11}² + ${c11b}${v11}²`;
+            const result11 = c11a + c11b;
+            questions.push({
+                type: 'reduce_squared',
+                expression: expr11,
+                correct: `${result11}${v11}²`,
+                wrongAnswers: [`${c11a * c11b}${v11}²`, `${result11}${v11}⁴`, `${result11}${v11}`],
+                explanation: `<strong>Règle :</strong> On peut additionner des termes en ${v11}² entre eux !<br><br>${expr11} = (${c11a} + ${c11b})${v11}² = <strong>${result11}${v11}²</strong><br><br>Attention : ${v11}² + ${v11}² = 2${v11}² (pas ${v11}⁴ !). On additionne les coefficients, pas les exposants.`
+            });
+
+            // Type 12: Réduction mixte carrés et termes simples (ex: 2a² + 3a + 4a² = 6a² + 3a)
+            const c12a = randomInt(2, 4);
+            const c12b = randomInt(2, 5);
+            const c12c = randomInt(2, 4);
+            const v12 = 'x';
+            const expr12 = `${c12a}${v12}² + ${c12b}${v12} + ${c12c}${v12}²`;
+            const result12 = c12a + c12c;
+            questions.push({
+                type: 'reduce_mixed_powers',
+                expression: expr12,
+                correct: `${result12}${v12}² + ${c12b}${v12}`,
+                wrongAnswers: [`${c12a + c12b + c12c}${v12}²`, `${result12}${v12}³ + ${c12b}${v12}`, `${c12a + c12c}${v12}² + ${c12b}${v12}²`],
+                explanation: `<strong>Règle :</strong> On ne peut réduire que les termes de MÊME nature !<br><br>${expr12}<br>= ${c12a}${v12}² + ${c12c}${v12}² + ${c12b}${v12}<br>= (${c12a} + ${c12c})${v12}² + ${c12b}${v12}<br>= <strong>${result12}${v12}² + ${c12b}${v12}</strong><br><br>${v12}² et ${v12} sont DIFFÉRENTS ! On ne peut pas les mélanger.<br><br><em>Note : ${c12b}${v12} + ${result12}${v12}² serait aussi correct.</em>`
+            });
+
+            // Type 13: PIÈGE - Expression déjà simplifiée (ex: 3a + 4 ou 4 + 3a)
+            const c13a = randomInt(2, 6);
+            const c13b = randomInt(2, 9);
+            const v13 = variables[randomInt(0, 3)];
+            const order13 = randomInt(0, 1);
+            const expr13 = order13 === 0 ? `${c13a}${v13} + ${c13b}` : `${c13b} + ${c13a}${v13}`;
+            const correctExpr13 = order13 === 0 ? `${c13a}${v13} + ${c13b}` : `${c13b} + ${c13a}${v13}`;
+            questions.push({
+                type: 'trap_already_simple',
+                expression: expr13,
+                correct: correctExpr13,
+                wrongAnswers: [`${c13a + c13b}${v13}`, `${c13a * c13b}${v13}`, `${c13a + c13b}`],
+                explanation: `<strong>PIÈGE !</strong> Cette expression est DÉJÀ simplifiée !<br><br>${expr13} = <strong>${correctExpr13}</strong><br><br>On ne peut PAS additionner ${c13a}${v13} et ${c13b} car ce ne sont pas des termes de même nature :<br>• ${c13a}${v13} contient la lettre ${v13}<br>• ${c13b} est juste un nombre<br><br>C'est comme dire "3 pommes + 4" = ? On ne peut pas répondre !`
+            });
+
+            // Type 14: PIÈGE - Expression avec lettres différentes déjà simplifiée (ex: 2a + 3b)
+            const c14a = randomInt(2, 5);
+            const c14b = randomInt(2, 5);
+            const expr14 = `${c14a}a + ${c14b}b`;
+            questions.push({
+                type: 'trap_different_vars',
+                expression: expr14,
+                correct: `${c14a}a + ${c14b}b`,
+                wrongAnswers: [`${c14a + c14b}ab`, `${c14a * c14b}ab`, `${c14a + c14b}a`],
+                explanation: `<strong>PIÈGE !</strong> Cette expression est DÉJÀ simplifiée !<br><br>${expr14} = <strong>${c14a}a + ${c14b}b</strong><br><br>On ne peut PAS additionner des "a" avec des "b" !<br><br>C'est comme dire "${c14a} pommes + ${c14b} bananes" = ? On garde les deux séparés !`
+            });
+
+            return shuffle(questions);
+        }
+
+        let questionsData = [];
+        let quizData = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answeredQuestions = [];
+
+        function createQuestionHTML(questionNum, data) {
+            const container = document.createElement('div');
+            container.className = 'question-container' + (questionNum === 1 ? ' active' : '');
+            container.id = `question${questionNum}`;
+
+            // Créer les options mélangées
+            const allAnswers = [data.correct, ...data.wrongAnswers];
+            const shuffledAnswers = shuffle(allAnswers);
+
+            // Trouver l'index de la bonne réponse
+            const correctIndex = shuffledAnswers.indexOf(data.correct);
+            quizData[questionNum - 1] = { question: questionNum, correctAnswer: correctIndex };
+
+            const labels = ['A', 'B', 'C', 'D'];
+            let optionsHTML = '';
+            shuffledAnswers.forEach((answer, idx) => {
+                optionsHTML += `
+                    <div class="option" onclick="selectOption(${questionNum}, ${idx})">
+                        <span class="option-label">${labels[idx]}</span>
+                        <span>${answer}</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">Question ${questionNum}/14</div>
+                </div>
+                <div class="question-body">
+                    <div class="question-text">
+                        Simplifie l'expression suivante :
+                    </div>
+                    <div class="math-expression">${data.expression}</div>
+                    <div class="options">
+                        ${optionsHTML}
+                    </div>
+                    <div class="explanation" id="explanation${questionNum}">
+                        <div class="explanation-title">💡 Explication</div>
+                        ${data.explanation}
+                    </div>
+                </div>
+            `;
+
+            return container;
+        }
+
+        function initQuiz() {
+            questionsData = generateQuestions();
+            quizData = new Array(14).fill(null);
+
+            const questionsContainer = document.getElementById('questionsContainer');
+            questionsContainer.innerHTML = '';
+
+            questionsData.forEach((data, idx) => {
+                const questionHTML = createQuestionHTML(idx + 1, data);
+                questionsContainer.appendChild(questionHTML);
+            });
+
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            answeredQuestions = [];
+
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('currentScore').textContent = '0';
+        }
+
+        window.addEventListener('DOMContentLoaded', initQuiz);
+
+        function setNextEnabled(enabled) {
+            const next = document.getElementById('nextBtn');
+            const floating = document.getElementById('floatingNextBtn');
+            if (next) next.disabled = !enabled;
+            if (floating) floating.disabled = !enabled;
+        }
+
+        function selectOption(questionNum, optionIndex) {
+            if (answeredQuestions.includes(questionNum)) return;
+
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+
+            options.forEach(opt => opt.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            selectedAnswer = optionIndex;
+
+            document.getElementById('validateBtn').disabled = false;
+        }
+
+        function validateAnswer() {
+            const questionNum = currentQuestionIndex + 1;
+            const correctAnswerIndex = quizData[currentQuestionIndex].correctAnswer;
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+
+            answeredQuestions.push(questionNum);
+
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.style.cursor = 'not-allowed';
+            });
+
+            if (selectedAnswer === correctAnswerIndex) {
+                options[selectedAnswer].classList.add('correct');
+                score++;
+            } else {
+                options[selectedAnswer].classList.add('incorrect');
+                options[correctAnswerIndex].classList.add('correct');
+            }
+
+            document.getElementById(`explanation${questionNum}`).classList.add('show');
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('validateBtn').style.display = 'none';
+
+            if (currentQuestionIndex < quizData.length - 1) {
+                setNextEnabled(true);
+                document.getElementById('finishBtn').disabled = true;
+            } else {
+                setNextEnabled(false);
+                document.getElementById('finishBtn').disabled = false;
+            }
+        }
+
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex++;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+
+            selectedAnswer = null;
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            setNextEnabled(false);
+            document.getElementById('finishBtn').disabled = true;
+
+            if (currentQuestionIndex > 0) {
+                document.getElementById('prevBtn').style.display = 'block';
+            }
+        }
+
+        function previousQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex--;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+
+            if (currentQuestionIndex === 0) {
+                document.getElementById('prevBtn').style.display = 'none';
+            }
+
+            if (answeredQuestions.includes(currentQuestionIndex + 1)) {
+                document.getElementById('validateBtn').style.display = 'none';
+                if (currentQuestionIndex < quizData.length - 1) {
+                    setNextEnabled(true);
+                    document.getElementById('finishBtn').disabled = true;
+                } else {
+                    document.getElementById('finishBtn').disabled = false;
+                    setNextEnabled(false);
+                }
+            } else {
+                document.getElementById('validateBtn').style.display = 'block';
+                setNextEnabled(false);
+                document.getElementById('finishBtn').disabled = true;
+            }
+        }
+
+        function showResults() {
+            document.querySelector('.quiz-info').style.display = 'none';
+            document.querySelectorAll('.question-container').forEach(q => q.style.display = 'none');
+            document.getElementById('quizButtons').style.display = 'none';
+            document.getElementById('initialNav').style.display = 'none';
+
+            const floating = document.getElementById('floatingNextBtn');
+            if (floating) {
+                floating.style.display = 'none';
+                floating.setAttribute('aria-hidden', 'true');
+            }
+
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.classList.add('show');
+
+            const totalQuestions = quizData.length;
+            const incorrectCount = totalQuestions - score;
+            const percentageValue = Math.round((score / totalQuestions) * 100);
+
+            document.getElementById('scoreBig').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('percentage').textContent = percentageValue + '%';
+
+            const resultsScore = document.getElementById('resultsScore');
+            const scoreMessage = document.getElementById('scoreMessage');
+
+            if (percentageValue === 100) {
+                scoreMessage.textContent = '🏆 Parfait ! Tu maîtrises la simplification du calcul littéral !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 75) {
+                scoreMessage.textContent = '🌟 Très bien ! Tu as bien compris les règles de simplification !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 50) {
+                scoreMessage.textContent = '👍 Pas mal ! Révise encore les règles de simplification !';
+                resultsScore.className = 'results-score medium';
+            } else {
+                scoreMessage.textContent = '💪 Continue à t\'entraîner, tu vas y arriver !';
+                resultsScore.className = 'results-score low';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            document.querySelector('.quiz-info').style.display = 'flex';
+            document.getElementById('quizButtons').style.display = 'flex';
+            document.getElementById('initialNav').style.display = 'flex';
+            document.getElementById('resultsContainer').classList.remove('show');
+
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('validateBtn').disabled = true;
+            document.getElementById('prevBtn').style.display = 'none';
+            setNextEnabled(false);
+            document.getElementById('finishBtn').disabled = true;
+
+            const floatingBtn = document.getElementById('floatingNextBtn');
+            if (floatingBtn) {
+                floatingBtn.style.display = 'inline-block';
+                floatingBtn.setAttribute('aria-hidden', 'false');
+            }
+
+            initQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
