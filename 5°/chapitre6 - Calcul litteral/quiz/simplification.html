@@ -396,7 +396,7 @@
         <div class="quiz-info">
             <div class="info-item">
                 <div class="info-label">Questions</div>
-                <div class="info-value" id="totalQuestions">12</div>
+                <div class="info-value" id="totalQuestions">14</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Question actuelle</div>
@@ -421,7 +421,7 @@
             <h2>🎉 Quiz terminé !</h2>
 
             <div class="results-score" id="resultsScore">
-                <div class="score-big" id="scoreBig">0/12</div>
+                <div class="score-big" id="scoreBig">0/14</div>
                 <div class="score-message" id="scoreMessage">Bravo !</div>
             </div>
 
@@ -640,6 +640,33 @@
                 explanation: `<strong>Règle :</strong> On ne peut réduire que les termes de MÊME nature !<br><br>${expr12}<br>= ${c12a}${v12}² + ${c12c}${v12}² + ${c12b}${v12}<br>= (${c12a} + ${c12c})${v12}² + ${c12b}${v12}<br>= <strong>${result12}${v12}² + ${c12b}${v12}</strong><br><br>${v12}² et ${v12} sont DIFFÉRENTS ! On ne peut pas les mélanger.<br><br><em>Note : ${c12b}${v12} + ${result12}${v12}² serait aussi correct.</em>`
             });
 
+            // Type 13: PIÈGE - Expression déjà simplifiée (ex: 3a + 4 ou 4 + 3a)
+            const c13a = randomInt(2, 6);
+            const c13b = randomInt(2, 9);
+            const v13 = variables[randomInt(0, 3)];
+            const order13 = randomInt(0, 1);
+            const expr13 = order13 === 0 ? `${c13a}${v13} + ${c13b}` : `${c13b} + ${c13a}${v13}`;
+            const correctExpr13 = order13 === 0 ? `${c13a}${v13} + ${c13b}` : `${c13b} + ${c13a}${v13}`;
+            questions.push({
+                type: 'trap_already_simple',
+                expression: expr13,
+                correct: correctExpr13,
+                wrongAnswers: [`${c13a + c13b}${v13}`, `${c13a * c13b}${v13}`, `${c13a + c13b}`],
+                explanation: `<strong>PIÈGE !</strong> Cette expression est DÉJÀ simplifiée !<br><br>${expr13} = <strong>${correctExpr13}</strong><br><br>On ne peut PAS additionner ${c13a}${v13} et ${c13b} car ce ne sont pas des termes de même nature :<br>• ${c13a}${v13} contient la lettre ${v13}<br>• ${c13b} est juste un nombre<br><br>C'est comme dire "3 pommes + 4" = ? On ne peut pas répondre !`
+            });
+
+            // Type 14: PIÈGE - Expression avec lettres différentes déjà simplifiée (ex: 2a + 3b)
+            const c14a = randomInt(2, 5);
+            const c14b = randomInt(2, 5);
+            const expr14 = `${c14a}a + ${c14b}b`;
+            questions.push({
+                type: 'trap_different_vars',
+                expression: expr14,
+                correct: `${c14a}a + ${c14b}b`,
+                wrongAnswers: [`${c14a + c14b}ab`, `${c14a * c14b}ab`, `${c14a + c14b}a`],
+                explanation: `<strong>PIÈGE !</strong> Cette expression est DÉJÀ simplifiée !<br><br>${expr14} = <strong>${c14a}a + ${c14b}b</strong><br><br>On ne peut PAS additionner des "a" avec des "b" !<br><br>C'est comme dire "${c14a} pommes + ${c14b} bananes" = ? On garde les deux séparés !`
+            });
+
             return shuffle(questions);
         }
 
@@ -676,7 +703,7 @@
 
             container.innerHTML = `
                 <div class="question-header">
-                    <div class="question-number">Question ${questionNum}/12</div>
+                    <div class="question-number">Question ${questionNum}/14</div>
                 </div>
                 <div class="question-body">
                     <div class="question-text">
@@ -698,7 +725,7 @@
 
         function initQuiz() {
             questionsData = generateQuestions();
-            quizData = new Array(12).fill(null);
+            quizData = new Array(14).fill(null);
 
             const questionsContainer = document.getElementById('questionsContainer');
             questionsContainer.innerHTML = '';
