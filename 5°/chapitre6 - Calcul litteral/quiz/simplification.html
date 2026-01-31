@@ -507,8 +507,8 @@
                 type: 'mult_vars',
                 expression: expr3,
                 correct: `${v3a}${v3b}`,
-                wrongAnswers: [`${v3b}${v3a}`, `${v3a} + ${v3b}`, `${v3a}²`],
-                explanation: `<strong>Règle :</strong> On supprime le signe × entre deux lettres.<br><br>${expr3} = <strong>${v3a}${v3b}</strong><br><br>On colle simplement les deux lettres (par convention, on écrit souvent dans l'ordre alphabétique).`
+                wrongAnswers: [`${v3a} × ${v3b}`, `${v3a} + ${v3b}`, `2${v3a}${v3b}`],
+                explanation: `<strong>Règle :</strong> On supprime le signe × entre deux lettres.<br><br>${expr3} = <strong>${v3a}${v3b}</strong><br><br>On colle simplement les deux lettres.<br><br><em>Note : ${v3b}${v3a} serait aussi correct, l'ordre n'a pas d'importance en multiplication.</em>`
             });
 
             // Type 4: Expression avec plusieurs × (ex: 2 × a × 3 = 6a)
@@ -593,7 +593,7 @@
                 expression: expr9,
                 correct: `${c9}${v9a}²${v9b}`,
                 wrongAnswers: [`${c9}${v9a}${v9b}${v9a}`, `${c9}${v9a}${v9b}`, `${c9 * 2}${v9a}${v9b}`],
-                explanation: `<strong>Règle :</strong> Quand une même lettre apparaît plusieurs fois en multiplication, on utilise une puissance.<br><br>${expr9}<br>= ${c9} × ${v9a} × ${v9a} × ${v9b}<br>= ${c9} × ${v9a}² × ${v9b}<br>= <strong>${c9}${v9a}²${v9b}</strong><br><br>${v9a} × ${v9a} = ${v9a}² (lire "${v9a} au carré")`
+                explanation: `<strong>Règle :</strong> Quand une même lettre apparaît plusieurs fois en multiplication, on utilise une puissance.<br><br>${expr9}<br>= ${c9} × ${v9a} × ${v9a} × ${v9b}<br>= ${c9} × ${v9a}² × ${v9b}<br>= <strong>${c9}${v9a}²${v9b}</strong><br><br>${v9a} × ${v9a} = ${v9a}² (lire "${v9a} au carré")<br><br><em>Note : ${c9}${v9b}${v9a}² serait aussi correct, l'ordre n'a pas d'importance.</em>`
             });
 
             // Type 10: Réduction avec trois termes différents (ex: 2a + 3b + 4c + 5a = 7a + 3b + 4c)
