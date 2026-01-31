@@ -396,7 +396,7 @@
         <div class="quiz-info">
             <div class="info-item">
                 <div class="info-label">Questions</div>
-                <div class="info-value" id="totalQuestions">8</div>
+                <div class="info-value" id="totalQuestions">10</div>
             </div>
             <div class="info-item">
                 <div class="info-label">Question actuelle</div>
@@ -421,7 +421,7 @@
             <h2>🎉 Quiz terminé !</h2>
 
             <div class="results-score" id="resultsScore">
-                <div class="score-big" id="scoreBig">0/8</div>
+                <div class="score-big" id="scoreBig">0/10</div>
                 <div class="score-message" id="scoreMessage">Bravo !</div>
             </div>
 
@@ -583,6 +583,34 @@
                 explanation: `<strong>Règle :</strong> On ne peut réduire que les termes avec la MÊME lettre.<br><br>${expr8}<br>= ${c8a}${v8a} + ${c8c}${v8a} + ${c8b}${v8b}<br>= (${c8a} + ${c8c})${v8a} + ${c8b}${v8b}<br>= <strong>${result8a}${v8a} + ${c8b}${v8b}</strong><br><br>On regroupe les "${v8a}" ensemble, mais on ne peut pas les mélanger avec les "${v8b}" !`
             });
 
+            // Type 9: Simplification avec lettres répétées (ex: 2 × a × b × a = 2a²b)
+            const c9 = randomInt(2, 5);
+            const v9a = 'a';
+            const v9b = 'b';
+            const expr9 = `${c9} × ${v9a} × ${v9b} × ${v9a}`;
+            questions.push({
+                type: 'mult_squared',
+                expression: expr9,
+                correct: `${c9}${v9a}²${v9b}`,
+                wrongAnswers: [`${c9}${v9a}${v9b}${v9a}`, `${c9}${v9a}${v9b}`, `${c9 * 2}${v9a}${v9b}`],
+                explanation: `<strong>Règle :</strong> Quand une même lettre apparaît plusieurs fois en multiplication, on utilise une puissance.<br><br>${expr9}<br>= ${c9} × ${v9a} × ${v9a} × ${v9b}<br>= ${c9} × ${v9a}² × ${v9b}<br>= <strong>${c9}${v9a}²${v9b}</strong><br><br>${v9a} × ${v9a} = ${v9a}² (lire "${v9a} au carré")`
+            });
+
+            // Type 10: Réduction avec trois termes différents (ex: 2a + 3b + 4c + 5a = 7a + 3b + 4c)
+            const c10a = randomInt(2, 4);
+            const c10b = randomInt(2, 4);
+            const c10c = randomInt(2, 4);
+            const c10d = randomInt(2, 4);
+            const expr10 = `${c10a}a + ${c10b}b + ${c10c}c + ${c10d}a`;
+            const result10a = c10a + c10d;
+            questions.push({
+                type: 'reduce_three_terms',
+                expression: expr10,
+                correct: `${result10a}a + ${c10b}b + ${c10c}c`,
+                wrongAnswers: [`${c10a + c10b + c10c + c10d}abc`, `${c10a}a + ${c10b}b + ${c10c + c10d}c`, `${c10a + c10d}a + ${c10b + c10c}bc`],
+                explanation: `<strong>Règle :</strong> On regroupe uniquement les termes avec la MÊME lettre.<br><br>${expr10}<br>= ${c10a}a + ${c10d}a + ${c10b}b + ${c10c}c<br>= (${c10a} + ${c10d})a + ${c10b}b + ${c10c}c<br>= <strong>${result10a}a + ${c10b}b + ${c10c}c</strong><br><br>Seuls les "a" peuvent être regroupés. Les "b" et "c" restent séparés !`
+            });
+
             return shuffle(questions);
         }
 
@@ -619,7 +647,7 @@
 
             container.innerHTML = `
                 <div class="question-header">
-                    <div class="question-number">Question ${questionNum}/8</div>
+                    <div class="question-number">Question ${questionNum}/10</div>
                 </div>
                 <div class="question-body">
                     <div class="question-text">
@@ -641,7 +669,7 @@
 
         function initQuiz() {
             questionsData = generateQuestions();
-            quizData = new Array(8).fill(null);
+            quizData = new Array(10).fill(null);
 
             const questionsContainer = document.getElementById('questionsContainer');
             questionsContainer.innerHTML = '';
