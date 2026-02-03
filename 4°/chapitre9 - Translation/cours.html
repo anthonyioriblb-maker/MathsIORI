@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : La translation</title>
+    <link rel="stylesheet" href="../../styles.css?v=20251120143124">
+</head>
+<body>
+    <a href="../classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre 9 : La translation</h1>
+
+    <h2>Définitions</h2>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Soient deux points P et P'.<br>
+        On appelle <span style="color: red;">translation qui transforme P en P'</span>, le glissement :<br>
+        <ul>
+            <li>selon la <span style="color: red;">direction de la droite (PP')</span>,</li>
+            <li>dans le <span style="color: red;">sens de P vers P'</span>,</li>
+            <li>d'une <span style="color: red;">longueur égale à PP'</span>.</li>
+        </ul>
+    </div>
+
+    <div class="definition">
+<div style="text-align: center; margin: 20px 0;">
+        <img src="images/4-91.png" alt="Illustration de la translation avec figure F et son image F'" style="width: 500px;">
+    </div>
+        Ici, la figure F' est l'<span style="color: red;">image</span> de la figure F par cette translation.
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Pour schématiser la translation, on peut tracer une flèche allant de P vers P'.<br>
+        Cette flèche s'appelle un <span style="color: red;">vecteur</span> et on peut noter <span class="vecteur">PP'</span>.
+    </div>
+
+    <div class="important">
+        <span style="color: red;">Vocabulaire :</span> On dit alors que F' est l'image de F par la translation de vecteur <span class="vecteur">PP'</span>.
+    </div>
+
+    
+
+    <h2>Construction</h2>
+
+    <h3>Avec un quadrillage</h3>
+
+    <div class="example">
+        <strong>Énoncé :</strong> Construire l'image de ABCD par la translation de vecteur <span class="vecteur">PP'</span>.<br><br>
+
+        <div style="text-align: center; background: white; padding: 15px; border-radius: 5px;">
+            <svg id="translationSVG" width="800" height="550" viewBox="0 0 800 550" style="max-width: 100%; height: auto;">
+                <!-- Quadrillage (toujours visible) -->
+                <g id="grid">
+                    <!-- Lignes verticales -->
+                    <line x1="50" y1="50" x2="50" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="100" y1="50" x2="100" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="150" y1="50" x2="150" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="200" y1="50" x2="200" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="250" y1="50" x2="250" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="300" y1="50" x2="300" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="350" y1="50" x2="350" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="400" y1="50" x2="400" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="450" y1="50" x2="450" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="500" y1="50" x2="500" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="550" y1="50" x2="550" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="600" y1="50" x2="600" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="650" y1="50" x2="650" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="700" y1="50" x2="700" y2="500" stroke="#ccc" stroke-width="1"/>
+                    <line x1="750" y1="50" x2="750" y2="500" stroke="#ccc" stroke-width="1"/>
+                    
+                    <!-- Lignes horizontales -->
+                    <line x1="50" y1="50" x2="750" y2="50" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="100" x2="750" y2="100" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="150" x2="750" y2="150" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="200" x2="750" y2="200" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="250" x2="750" y2="250" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="300" x2="750" y2="300" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="350" x2="750" y2="350" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="400" x2="750" y2="400" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="450" x2="750" y2="450" stroke="#ccc" stroke-width="1"/>
+                    <line x1="50" y1="500" x2="750" y2="500" stroke="#ccc" stroke-width="1"/>
+                </g>
+                
+                <!-- Vecteur PP' (toujours visible) -->
+                <g id="vector">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="red" />
+                        </marker>
+                    </defs>
+                    <line x1="350" y1="200" x2="50" y2="350" stroke="red" stroke-width="3" marker-end="url(#arrowhead)"/>
+                    <!-- Croix P -->
+                    <line x1="345" y1="195" x2="355" y2="205" stroke="red" stroke-width="2"/>
+                    <line x1="355" y1="195" x2="345" y2="205" stroke="red" stroke-width="2"/>
+                    <text x="360" y="195" font-size="20" fill="red" font-weight="bold">P</text>
+                    <!-- Croix P' -->
+                    <line x1="45" y1="345" x2="55" y2="355" stroke="red" stroke-width="2"/>
+                    <line x1="55" y1="345" x2="45" y2="355" stroke="red" stroke-width="2"/>
+                    <text x="25" y="345" font-size="20" fill="red" font-weight="bold">P'</text>
+                </g>
+                
+                <!-- Figure ABCD (toujours visible) -->
+                <g id="figure">
+                    <polygon points="550,150 700,200 650,300 500,300" fill="none" stroke="black" stroke-width="3"/>
+                    <!-- Croix A -->
+                    <line x1="545" y1="145" x2="555" y2="155" stroke="black" stroke-width="2"/>
+                    <line x1="555" y1="145" x2="545" y2="155" stroke="black" stroke-width="2"/>
+                    <text x="530" y="140" font-size="20" fill="black" font-weight="bold">A</text>
+                    <!-- Croix B -->
+                    <line x1="695" y1="195" x2="705" y2="205" stroke="black" stroke-width="2"/>
+                    <line x1="705" y1="195" x2="695" y2="205" stroke="black" stroke-width="2"/>
+                    <text x="710" y="205" font-size="20" fill="black" font-weight="bold">B</text>
+                    <!-- Croix C -->
+                    <line x1="645" y1="295" x2="655" y2="305" stroke="black" stroke-width="2"/>
+                    <line x1="655" y1="295" x2="645" y2="305" stroke="black" stroke-width="2"/>
+                    <text x="660" y="315" font-size="20" fill="black" font-weight="bold">C</text>
+                    <!-- Croix D -->
+                    <line x1="495" y1="295" x2="505" y2="305" stroke="black" stroke-width="2"/>
+                    <line x1="505" y1="295" x2="495" y2="305" stroke="black" stroke-width="2"/>
+                    <text x="480" y="315" font-size="20" fill="black" font-weight="bold">D</text>
+                </g>
+                
+                <!-- Images des points avec flèches de translation -->
+                <!-- Point A' -->
+                <g id="pointA" style="opacity: 0; transition: opacity 0.5s;">
+                    <line x1="550" y1="150" x2="250" y2="300" stroke="blue" stroke-width="1.5" stroke-dasharray="5,5" opacity="0.6"/>
+                    <!-- Croix A' -->
+                    <line x1="245" y1="295" x2="255" y2="305" stroke="blue" stroke-width="2"/>
+                    <line x1="255" y1="295" x2="245" y2="305" stroke="blue" stroke-width="2"/>
+                    <text x="230" y="290" font-size="20" fill="blue" font-weight="bold">A'</text>
+                </g>
+                
+                <!-- Point B' -->
+                <g id="pointB" style="opacity: 0; transition: opacity 0.5s;">
+                    <line x1="700" y1="200" x2="400" y2="350" stroke="blue" stroke-width="1.5" stroke-dasharray="5,5" opacity="0.6"/>
+                    <!-- Croix B' -->
+                    <line x1="395" y1="345" x2="405" y2="355" stroke="blue" stroke-width="2"/>
+                    <line x1="405" y1="345" x2="395" y2="355" stroke="blue" stroke-width="2"/>
+                    <text x="410" y="355" font-size="20" fill="blue" font-weight="bold">B'</text>
+                </g>
+                
+                <!-- Point C' -->
+                <g id="pointC" style="opacity: 0; transition: opacity 0.5s;">
+                    <line x1="650" y1="300" x2="350" y2="450" stroke="blue" stroke-width="1.5" stroke-dasharray="5,5" opacity="0.6"/>
+                    <!-- Croix C' -->
+                    <line x1="345" y1="445" x2="355" y2="455" stroke="blue" stroke-width="2"/>
+                    <line x1="355" y1="445" x2="345" y2="455" stroke="blue" stroke-width="2"/>
+                    <text x="360" y="465" font-size="20" fill="blue" font-weight="bold">C'</text>
+                </g>
+                
+                <!-- Point D' -->
+                <g id="pointD" style="opacity: 0; transition: opacity 0.5s;">
+                    <line x1="500" y1="300" x2="200" y2="450" stroke="blue" stroke-width="1.5" stroke-dasharray="5,5" opacity="0.6"/>
+                    <!-- Croix D' -->
+                    <line x1="195" y1="445" x2="205" y2="455" stroke="blue" stroke-width="2"/>
+                    <line x1="205" y1="445" x2="195" y2="455" stroke="blue" stroke-width="2"/>
+                    <text x="180" y="465" font-size="20" fill="blue" font-weight="bold">D'</text>
+                </g>
+                
+                <!-- Figure complète A'B'C'D' -->
+                <g id="figureComplete" style="opacity: 0; transition: opacity 0.5s;">
+                    <polygon points="250,300 400,350 350,450 200,450" fill="rgba(0,100,255,0.1)" stroke="blue" stroke-width="3"/>
+                </g>
+            </svg>
+            
+            <div style="margin-top: 10px;">
+                <button onclick="toggleTranslationPoint('pointA', this)" style="background-color: #3498db; color: white; border: none; padding: 5px 12px; margin: 2px; border-radius: 3px; cursor: pointer; font-size: 14px;">A'</button>
+                <button onclick="toggleTranslationPoint('pointB', this)" style="background-color: #3498db; color: white; border: none; padding: 5px 12px; margin: 2px; border-radius: 3px; cursor: pointer; font-size: 14px;">B'</button>
+                <button onclick="toggleTranslationPoint('pointC', this)" style="background-color: #3498db; color: white; border: none; padding: 5px 12px; margin: 2px; border-radius: 3px; cursor: pointer; font-size: 14px;">C'</button>
+                <button onclick="toggleTranslationPoint('pointD', this)" style="background-color: #3498db; color: white; border: none; padding: 5px 12px; margin: 2px; border-radius: 3px; cursor: pointer; font-size: 14px;">D'</button>
+                <button onclick="toggleTranslationComplete(this)" style="background-color: #27ae60; color: white; border: none; padding: 5px 12px; margin: 2px; border-radius: 3px; cursor: pointer; font-size: 14px;">Figure complète</button>
+                <button onclick="resetTranslation()" style="background-color: #e74c3c; color: white; border: none; padding: 5px 12px; margin: 2px; border-radius: 3px; cursor: pointer; font-size: 14px;">Effacer</button>
+            </div>
+        </div>
+
+        <script>
+            const translationPoints = {
+                pointA: false,
+                pointB: false,
+                pointC: false,
+                pointD: false,
+                figureComplete: false
+            };
+            
+            function toggleTranslationPoint(pointId, btn) {
+                const element = document.getElementById(pointId);
+                
+                if (translationPoints[pointId]) {
+                    element.style.opacity = '0';
+                    translationPoints[pointId] = false;
+                    btn.style.backgroundColor = '#3498db';
+                } else {
+                    element.style.opacity = '1';
+                    translationPoints[pointId] = true;
+                    btn.style.backgroundColor = '#27ae60';
+                }
+            }
+            
+            function toggleTranslationComplete(btn) {
+                const element = document.getElementById('figureComplete');
+                
+                if (translationPoints.figureComplete) {
+                    element.style.opacity = '0';
+                    translationPoints.figureComplete = false;
+                    btn.style.backgroundColor = '#27ae60';
+                } else {
+                    // Afficher tous les points d'abord
+                    ['pointA', 'pointB', 'pointC', 'pointD'].forEach(id => {
+                        const pointElement = document.getElementById(id);
+                        pointElement.style.opacity = '1';
+                        translationPoints[id] = true;
+                    });
+                    
+                    // Mettre à jour les boutons des points
+                    const buttons = document.querySelectorAll('button[onclick^="toggleTranslationPoint"]');
+                    buttons.forEach(b => b.style.backgroundColor = '#27ae60');
+                    
+                    // Afficher la figure complète
+                    element.style.opacity = '1';
+                    translationPoints.figureComplete = true;
+                    btn.style.backgroundColor = '#c0392b';
+                }
+            }
+            
+            function resetTranslation() {
+                ['pointA', 'pointB', 'pointC', 'pointD', 'figureComplete'].forEach(id => {
+                    const element = document.getElementById(id);
+                    element.style.opacity = '0';
+                    translationPoints[id] = false;
+                });
+                
+                const buttons = document.querySelectorAll('button[onclick*="Translation"]');
+                buttons.forEach(btn => {
+                    if (btn.textContent === 'Figure complète') {
+                        btn.style.backgroundColor = '#27ae60';
+                    } else if (btn.textContent !== 'Effacer') {
+                        btn.style.backgroundColor = '#3498db';
+                    }
+                });
+            }
+        </script>
+
+        <div class="method" style="margin-top: 10px;">
+            <strong>Méthode :</strong><br>
+            Pour aller de P à P', on descend de 3 carreaux et on va de 6 carreaux vers la gauche.<br>
+            On applique donc ce mouvement à A, B, C et D.
+        </div>
+    </div>
+
+    <h3>Sur feuille blanche</h3>
+
+    <h4>a) Construction à l'équerre, règle et compas</h4>
+
+<div style="text-align: center;">
+<iframe src="animation-paralleles.html" width="900" height="800" 
+        scrolling="no" 
+        style="border: none; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden;"></iframe>
+</div>
+
+<div class="method" style="margin-top: 10px;">
+    <strong>Méthode avec équerre, règle et compas :</strong><br><br>
+    <div style="padding-left: 20px;">
+        1. On pose l'équerre avec un côté de l'angle droit sur la droite (AB)<br>
+        2. On pose la règle le long de l'autre côté de l'angle droit (perpendiculaire à AB)<br>
+        3. On fait glisser l'équerre le long de la règle jusqu'à ce que le côté passe par M<br>
+        4. On trace la parallèle à (AB) le long de ce côté<br>
+        5. Avec le compas, on prend l'écartement AB<br>
+        6. On reporte cet écartement à partir du point M sur la parallèle<br>
+        7. Le point d'intersection de l'arc et de la parallèle est le point M'<br>
+        8. On recommence pour chaque point de la figure
+    </div>
+</div>
+
+    <h4>b) Construction au compas seulement</h4>
+
+    <div class="example">
+        <strong>Énoncé :</strong> Construire l'image du point M par la translation de vecteur <span class="vecteur">AB</span> (uniquement au compas).<br><br>
+
+
+        <div style="text-align: center;">
+            <iframe src="animation-compas-simple.html" width="900" height="800" 
+        scrolling="no" 
+        style="border: none; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden;"></iframe>
+        </div>
+
+        <div class="method" style="margin-top: 10px;">
+            <strong>Méthode avec le compas uniquement :</strong><br><br>
+            <div style="padding-left: 20px;">
+                1. Avec le compas, on prend l'écartement AM<br>
+                2. On reporte cet écartement à partir du point B<br>
+                3. Avec le compas, on prend l'écartement AB<br>
+                4. On reporte cet écartement à partir du point M<br>
+                5. Le point d'intersection des deux arcs de cercle est le point M'<br>
+                6. On recommence pour chaque point de la figure
+            </div>
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Le quadrilatère ABM'M est un parallélogramme.
+    </div>
+
+    <h2>Propriétés</h2>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> La translation conserve :<br>
+        <ul>
+            <li>l'<span style="color: red;">alignement</span> (donc le parallélisme et la perpendicularité)</li>
+            <li>les <span style="color: red;">longueurs</span></li>
+            <li>les <span style="color: red;">angles</span></li>
+            <li>les <span style="color: red;">aires</span>.</li>
+        </ul>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> La translation transforme donc :<br>
+        <ul>
+            <li>un segment en un segment de même longueur,</li>
+            <li>une droite en une droite parallèle,</li>
+            <li>un angle en un angle de même mesure,</li>
+            <li>un cercle en un cercle de même rayon,</li>
+            <li>une figure en une figure de même aire.</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Si ABC est un triangle rectangle en A tel que AB = 5 cm et <span class="angle">ABC</span> = 40°, alors l'image A'B'C' de ABC par une translation est également un triangle rectangle en A' tel que A'B' = 5 cm et <span class="angle">A'B'C'</span> = 40°.
+    </div>
+
+</body>
+</html>

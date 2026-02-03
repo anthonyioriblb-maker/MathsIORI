@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Translation — méthode des parallèles</title>
+    <style>
+        body {
+            margin: 0; padding: 0; background-color: #fafafa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 10px; }
+        .step-text {
+            background-color: #e3f2fd; border-left: 5px solid #2196f3;
+            padding: 15px 20px; margin: 15px 0; color: #1565c0;
+            font-size: 17px; min-height: 60px; font-weight: 500;
+            display: flex; align-items: center;
+        }
+        svg { display: block; margin: 0 auto; background: #fafafa; border: 2px solid #ddd; border-radius: 8px; }
+        .controls { text-align: center; margin: 20px 0; }
+        button {
+            background-color: #3498db; color: white; border: none;
+            padding: 14px 28px; margin: 8px; border-radius: 6px;
+            cursor: pointer; font-size: 17px; font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: all 0.3s;
+        }
+        button:hover { background-color: #2980b9; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: none; }
+        button.reset { background-color: #e74c3c; }
+        button.reset:hover { background-color: #c0392b; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        Cliquez sur « Étape suivante » pour voir la construction étape par étape.
+    </div>
+
+    <svg id="anim" width="850" height="550" viewBox="0 0 850 550">
+        <defs>
+            <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto">
+                <polygon points="0 0, 12 4, 0 8" fill="black"/>
+            </marker>
+        </defs>
+
+        <!-- ====== TOUJOURS VISIBLES ====== -->
+        <line x1="100" y1="310" x2="343" y2="193" stroke="black" stroke-width="3" marker-end="url(#arrow)"/>
+        <!-- A -->
+        <line x1="95"  y1="305" x2="105" y2="315" stroke="black" stroke-width="3"/>
+        <line x1="105" y1="305" x2="95"  y2="315" stroke="black" stroke-width="3"/>
+        <text x="72" y="302" font-size="22" fill="black" font-weight="bold">A</text>
+        <!-- B -->
+        <line x1="345" y1="185" x2="355" y2="195" stroke="black" stroke-width="3"/>
+        <line x1="355" y1="185" x2="345" y2="195" stroke="black" stroke-width="3"/>
+        <text x="360" y="183" font-size="22" fill="black" font-weight="bold">B</text>
+        <!-- M -->
+        <line x1="245" y1="425" x2="255" y2="435" stroke="black" stroke-width="3"/>
+        <line x1="255" y1="425" x2="245" y2="435" stroke="black" stroke-width="3"/>
+        <text x="222" y="425" font-size="22" fill="black" font-weight="bold">M</text>
+
+        <!-- ====== CONSTRUCTION ====== -->
+        <!-- Parallèle à (AB) par M -->
+        <line id="lineParM" x1="175" y1="466" x2="588" y2="268"
+              stroke="#9b59b6" stroke-width="2.5" stroke-dasharray="8,4" opacity="0"/>
+        <text id="labelParM" x="592" y="272" font-size="16" fill="#9b59b6" font-weight="bold" opacity="0">// (AB)</text>
+
+        <!-- Arc centré en M, rayon |AB| -->
+        <path id="arcM" d="" stroke="#27ae60" stroke-width="3" fill="none" opacity="0"/>
+
+        <!-- Point M' -->
+        <g id="pointMPrime" opacity="0">
+            <line x1="495" y1="305" x2="505" y2="315" stroke="blue" stroke-width="3"/>
+            <line x1="505" y1="305" x2="495" y2="315" stroke="blue" stroke-width="3"/>
+            <text x="510" y="300" font-size="22" fill="blue" font-weight="bold">M'</text>
+        </g>
+
+        <!-- Parallélogramme -->
+        <g id="parallelogram" opacity="0">
+            <line x1="100" y1="310" x2="350" y2="190" stroke="#e67e22" stroke-width="2.5" stroke-dasharray="5,5"/>
+            <line x1="350" y1="190" x2="500" y2="310" stroke="#e67e22" stroke-width="2.5" stroke-dasharray="5,5"/>
+            <line x1="500" y1="310" x2="250" y2="430" stroke="#e67e22" stroke-width="2.5" stroke-dasharray="5,5"/>
+            <line x1="250" y1="430" x2="100" y2="310" stroke="#e67e22" stroke-width="2.5" stroke-dasharray="5,5"/>
+            <g stroke="red" stroke-width="3" stroke-linecap="round">
+                <line x1="222.4" y1="244.6" x2="227.6" y2="255.4"/>
+                <line x1="372.4" y1="364.6" x2="377.6" y2="375.4"/>
+                <line x1="174.8" y1="362.2" x2="167.3" y2="371.6"/>
+                <line x1="182.7" y1="368.4" x2="175.2" y2="377.8"/>
+                <line x1="424.8" y1="242.2" x2="417.3" y2="251.6"/>
+                <line x1="432.7" y1="248.4" x2="425.2" y2="257.8"/>
+            </g>
+        </g>
+
+        <!-- ====== OUTILS ====== -->
+
+        <!--
+             ÉQUERRE
+             Angle droit à l'origine.
+             Côté +x = 80  → le long de AB (sera sur la droite (AB) puis parallèle)
+             Côté +y = 180 → perpendiculaire vers M (le long de la règle)
+             Rotation = -25,64° (direction AB).
+             Elle glisse de F(175,274) à M(250,430).
+        -->
+        <g id="setSquare" opacity="0" transform="translate(175,274) rotate(-25.64)">
+            <polygon points="0,0 80,0 0,180"
+                     fill="rgba(100,180,255,0.25)" stroke="#2980b9"
+                     stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Petit carré angle droit -->
+            <polyline points="16,0 16,16 0,16" fill="none" stroke="#2980b9" stroke-width="1.5"/>
+        </g>
+
+        <!--
+             RÈGLE (perpendiculaire à AB, fixe)
+             Centrée en (239, 435) pour que le bord inférieur (y=-12) passe par M et F.
+             Rotation = 64,36° (= -25,64° + 90°). Le bord inférieur (y=-12) passe par F et M.
+             F et M sont tous les deux sur le bord inférieur (y=-12 en local) — l'équerre glisse le long de ce bord.
+        -->
+        <g id="ruler" opacity="0" transform="translate(239,435) rotate(64.36)">
+            <rect x="-180" y="-12" width="360" height="24" fill="#faebd7" stroke="#8B7355" stroke-width="1.5" rx="3"/>
+            <rect x="-180" y="-12" width="360" height="5" fill="#d2b48c" rx="1"/>
+            <g stroke="#8B7355" stroke-width="1.2">
+                <line x1="-160" y1="-12" x2="-160" y2="-5"/>
+                <line x1="-120" y1="-12" x2="-120" y2="-5"/>
+                <line x1="-80"  y1="-12" x2="-80"  y2="-5"/>
+                <line x1="-40"  y1="-12" x2="-40"  y2="-5"/>
+                <line x1="0"    y1="-12" x2="0"    y2="-5"/>
+                <line x1="40"   y1="-12" x2="40"   y2="-5"/>
+                <line x1="80"   y1="-12" x2="80"   y2="-5"/>
+                <line x1="120"  y1="-12" x2="120"  y2="-5"/>
+                <line x1="160"  y1="-12" x2="160"  y2="-5"/>
+            </g>
+            <g stroke="#8B7355" stroke-width="0.7">
+                <line x1="-140" y1="-12" x2="-140" y2="-8"/>
+                <line x1="-100" y1="-12" x2="-100" y2="-8"/>
+                <line x1="-60"  y1="-12" x2="-60"  y2="-8"/>
+                <line x1="-20"  y1="-12" x2="-20"  y2="-8"/>
+                <line x1="20"   y1="-12" x2="20"   y2="-8"/>
+                <line x1="60"   y1="-12" x2="60"   y2="-8"/>
+                <line x1="100"  y1="-12" x2="100"  y2="-8"/>
+                <line x1="140"  y1="-12" x2="140"  y2="-8"/>
+            </g>
+            <text x="-163" y="-1" font-size="8" fill="#8B7355" font-family="monospace">1</text>
+            <text x="-123" y="-1" font-size="8" fill="#8B7355" font-family="monospace">2</text>
+            <text x="-83"  y="-1" font-size="8" fill="#8B7355" font-family="monospace">3</text>
+            <text x="-43"  y="-1" font-size="8" fill="#8B7355" font-family="monospace">4</text>
+            <text x="-3"   y="-1" font-size="8" fill="#8B7355" font-family="monospace">5</text>
+            <text x="37"   y="-1" font-size="8" fill="#8B7355" font-family="monospace">6</text>
+            <text x="77"   y="-1" font-size="8" fill="#8B7355" font-family="monospace">7</text>
+            <text x="117"  y="-1" font-size="8" fill="#8B7355" font-family="monospace">8</text>
+            <text x="157"  y="-1" font-size="8" fill="#8B7355" font-family="monospace">9</text>
+        </g>
+
+        <!-- M au-dessus des outils (sinon la règle le couvre) -->
+        <line x1="245" y1="425" x2="255" y2="435" stroke="black" stroke-width="3"/>
+        <line x1="255" y1="425" x2="245" y2="435" stroke="black" stroke-width="3"/>
+        <text x="222" y="425" font-size="22" fill="black" font-weight="bold">M</text>
+
+        <!-- COMPAS -->
+        <g id="compass" opacity="0">
+            <circle id="compassHinge" cx="0" cy="0" r="10" fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+            <line id="compassPointBranch" x1="0" y1="0" x2="-5" y2="60" stroke="#ff8c00" stroke-width="6"/>
+            <circle id="compassPointTip" cx="-5" cy="60" r="6" fill="#222" stroke="#000" stroke-width="2"/>
+            <line id="compassPencilBranch" x1="0" y1="0" x2="5" y2="60" stroke="#ff8c00" stroke-width="6"/>
+            <rect id="compassPencilBody" x="0" y="50" width="10" height="25" fill="#ff4444" stroke="#cc0000" stroke-width="2" rx="2"/>
+            <polygon id="compassPencilTip" points="5,75 0,85 10,85" fill="#333"/>
+            <circle id="compassPencilPoint" cx="5" cy="85" r="3" fill="#000"/>
+        </g>
+    </svg>
+
+    <div class="controls">
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+</div>
+
+<script>
+const A  = {x:100, y:310};
+const B  = {x:350, y:190};
+const M  = {x:250, y:430};
+const Mp = {x:500, y:310};
+
+const ANGLE_AB   = -25.64;   // direction AB
+// Équerre : angle droit glide de F → M
+const EQ_START   = {x:175, y:274};   // F = pied perp de M sur (AB)
+const EQ_END     = {x:250, y:430};   // M
+
+let currentStep = 0;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour voir la construction étape par étape.',
+    '<strong style="color:#2980b9;font-size:20px;">1.</strong> On pose l\'équerre avec une cathète sur la droite (AB).',
+    '<strong style="color:#8B7355;font-size:20px;">2.</strong> On pose la règle le long de l\'autre cathète (celle qui est perpendiculaire à AB).',
+    '<strong style="color:#9b59b6;font-size:20px;">3.</strong> On fait glisser l\'équerre le long de la règle jusqu\'à ce que la cathète passe par M.',
+    '<strong style="color:#9b59b6;font-size:20px;">4.</strong> On trace la parallèle à (AB) le long de ce côté.',
+    '<strong style="color:#2196f3;font-size:20px;">5.</strong> Avec le compas, on prend l\'écartement AB.',
+    '<strong style="color:#2196f3;font-size:20px;">6.</strong> On reporte cet écartement à partir de M sur la parallèle.',
+    '<strong style="color:#27ae60;font-size:20px;">7.</strong> L\'intersection de l\'arc et de la parallèle est le point M\'.<br>Le quadrilatère ABM\'M est un parallélogramme.'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const dist  = (a,b) => Math.hypot(b.x-a.x, b.y-a.y);
+const el    = id => document.getElementById(id);
+
+/* ── compas ── */
+function setCompass(tip, pen) {
+    const hx=(tip.x+pen.x)/2, hy=(tip.y+pen.y)/2;
+    el('compassHinge').setAttribute('cx',hx);
+    el('compassHinge').setAttribute('cy',hy);
+    el('compassPointBranch').setAttribute('x1',hx);
+    el('compassPointBranch').setAttribute('y1',hy);
+    el('compassPointBranch').setAttribute('x2',tip.x);
+    el('compassPointBranch').setAttribute('y2',tip.y);
+    el('compassPointTip').setAttribute('cx',tip.x);
+    el('compassPointTip').setAttribute('cy',tip.y);
+    el('compassPencilBranch').setAttribute('x1',hx);
+    el('compassPencilBranch').setAttribute('y1',hy);
+    el('compassPencilBranch').setAttribute('x2',pen.x);
+    el('compassPencilBranch').setAttribute('y2',pen.y);
+    const ang = Math.atan2(pen.y-hy, pen.x-hx)*180/Math.PI + 90;
+    el('compassPencilBody').setAttribute('transform',`translate(${pen.x},${pen.y-15}) rotate(${ang})`);
+    el('compassPencilTip').setAttribute('transform',`translate(${pen.x-5},${pen.y}) rotate(${ang} 5 0)`);
+    el('compassPencilPoint').setAttribute('cx',pen.x);
+    el('compassPencilPoint').setAttribute('cy',pen.y);
+}
+async function compassOpen(center, target, ms) {
+    const N=30;
+    for (let i=0;i<=N;i++){
+        const t=i/N;
+        setCompass(center,{x:center.x+(target.x-center.x)*t, y:center.y+(target.y-center.y)*t});
+        await sleep(ms/N);
+    }
+}
+async function compassMove(t1,p1,t2,p2,ms) {
+    const N=40;
+    for (let i=0;i<=N;i++){
+        const t=i/N;
+        setCompass({x:t1.x+(t2.x-t1.x)*t, y:t1.y+(t2.y-t1.y)*t},
+                   {x:p1.x+(p2.x-p1.x)*t, y:p1.y+(p2.y-p1.y)*t});
+        await sleep(ms/N);
+    }
+}
+
+/* ── arc ── */
+function drawArc(center, radius, a1, a2) {
+    let d='';
+    for (let i=0;i<=60;i++){
+        const a = a1+(a2-a1)*i/60;
+        d += (i===0?'M':'L') + (center.x+radius*Math.cos(a)) + ' ' + (center.y+radius*Math.sin(a));
+    }
+    el('arcM').setAttribute('d',d);
+    el('arcM').style.opacity='1';
+}
+
+/* ── équerre glisse le long de la règle (direction ⊥ à AB, fixe) ── */
+async function slideSquare(from, to, ms) {
+    const N=45;
+    for (let i=0;i<=N;i++){
+        const t=i/N;
+        el('setSquare').setAttribute('transform',
+            `translate(${from.x+(to.x-from.x)*t},${from.y+(to.y-from.y)*t}) rotate(${ANGLE_AB})`);
+        await sleep(ms/N);
+    }
+}
+
+/* ──────────── ÉTAPES ──────────── */
+async function nextStep() {
+    const txt = el('stepText');
+    const btn = el('nextBtn');
+    if (currentStep >= 7) return;
+    btn.disabled = true;
+
+    /* 1 : équerre sur (AB) */
+    if (currentStep === 0) {
+        txt.innerHTML = stepTexts[1];
+        el('setSquare').setAttribute('transform',
+            `translate(${EQ_START.x},${EQ_START.y}) rotate(${ANGLE_AB})`);
+        el('setSquare').style.opacity = '1';
+        await sleep(1600);
+        currentStep = 1;
+    }
+
+    /* 2 : règle le long du côté perp */
+    else if (currentStep === 1) {
+        txt.innerHTML = stepTexts[2];
+        el('ruler').style.opacity = '1';   // position fixe définie dans le SVG
+        await sleep(1600);
+        currentStep = 2;
+    }
+
+    /* 3 : équerre glisse jusqu'à M */
+    else if (currentStep === 2) {
+        txt.innerHTML = stepTexts[3];
+        await slideSquare(EQ_START, EQ_END, 2200);
+        await sleep(1200);
+        currentStep = 3;
+    }
+
+    /* 4 : on trace la parallèle */
+    else if (currentStep === 3) {
+        txt.innerHTML = stepTexts[4];
+        el('lineParM').style.opacity  = '1';
+        el('labelParM').style.opacity = '1';
+        await sleep(1200);
+        // on cache les outils
+        el('ruler').style.opacity     = '0';
+        el('setSquare').style.opacity = '0';
+        await sleep(700);
+        currentStep = 4;
+    }
+
+    /* 5 : compas prend AB */
+    else if (currentStep === 4) {
+        txt.innerHTML = stepTexts[5];
+        el('compass').style.opacity = '1';
+        setCompass(A, A);
+        await sleep(600);
+        await compassOpen(A, B, 1500);
+        await sleep(1000);
+        currentStep = 5;
+    }
+
+    /* 6 : report depuis M */
+    else if (currentStep === 5) {
+        txt.innerHTML = stepTexts[6];
+        await compassMove(A, B, M, Mp, 1600);
+        await sleep(700);
+        const r   = dist(A, B);
+        const ang = Math.atan2(Mp.y-M.y, Mp.x-M.x);
+        drawArc(M, r, ang-0.3, ang+0.3);
+        await sleep(1200);
+        currentStep = 6;
+    }
+
+    /* 7 : résultat */
+    else if (currentStep === 6) {
+        txt.innerHTML = stepTexts[7];
+        txt.style.backgroundColor = '#c8e6c9';
+        txt.style.borderLeftColor  = '#4caf50';
+        txt.style.color            = '#2e7d32';
+        el('compass').style.opacity = '0';
+        await sleep(500);
+        el('pointMPrime').style.opacity   = '1';
+        await sleep(900);
+        el('parallelogram').style.opacity = '1';
+        await sleep(600);
+        currentStep = 7;
+        btn.textContent = '✓ Terminé';
+    }
+
+    btn.disabled = false;
+}
+
+/* ── reset ── */
+function resetAnimation() {
+    ['lineParM','labelParM','arcM','pointMPrime','parallelogram',
+     'ruler','setSquare','compass'].forEach(id => el(id).style.opacity = '0');
+    el('arcM').setAttribute('d','');
+    el('setSquare').setAttribute('transform',
+        `translate(${EQ_START.x},${EQ_START.y}) rotate(${ANGLE_AB})`);
+
+    const txt = el('stepText');
+    txt.innerHTML            = stepTexts[0];
+    txt.style.backgroundColor = '#e3f2fd';
+    txt.style.borderLeftColor  = '#2196f3';
+    txt.style.color            = '#1565c0';
+
+    const btn = el('nextBtn');
+    btn.textContent = '▶ Étape suivante';
+    btn.disabled    = false;
+    currentStep     = 0;
+}
+</script>
+    </div>
+</html>
