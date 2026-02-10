@@ -100,7 +100,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Bouton événement
         let evenementBtn = '';
         if (chapitre.evenement && chapitre.evenement.actif) {
-            evenementBtn = `<a href="${chapitre.evenement.fichier}" class="action-button evenement">📅 ${chapitre.evenement.titre}</a>`;
+            // Nouveau format avec items (plusieurs fichiers)
+            if (chapitre.evenement.items && chapitre.evenement.items.length > 0) {
+                const evenementItems = chapitre.evenement.items.map(evt =>
+                    `<a href="${evt.fichier}" class="dropdown-item evenement-item">📄 ${evt.titre}</a>`
+                ).join('');
+
+                evenementBtn = `
+                    <div class="dropdown-wrapper">
+                        <button class="action-button evenement">
+                            📅 ${chapitre.evenement.titre} <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            ${evenementItems}
+                        </div>
+                    </div>
+                `;
+            }
+            // Ancien format avec un seul fichier (compatibilité)
+            else if (chapitre.evenement.fichier) {
+                evenementBtn = `<a href="${chapitre.evenement.fichier}" class="action-button evenement">📅 ${chapitre.evenement.titre}</a>`;
+            }
         }
 
         card.innerHTML = `
