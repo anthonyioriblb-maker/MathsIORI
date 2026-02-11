@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feuille Bilan - Notion de Fonction - 3ème</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.3;
+            padding: 10px;
+            max-width: 210mm;
+            margin: 0 auto;
+            background: #f5f5f5;
+            font-size: 14px;
+        }
+        
+        .page {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 22px;
+            margin-bottom: 3px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 6px;
+        }
+        
+        h2 {
+            color: #2980b9;
+            font-size: 16px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            border-left: 4px solid #3498db;
+            padding-left: 8px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-size: 14px;
+            margin-top: 8px;
+            margin-bottom: 4px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        
+        .definition {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 8px;
+            margin: 6px 0;
+        }
+        
+        .propriete {
+            background: #fef9e7;
+            border-left: 4px solid #f39c12;
+            padding: 8px;
+            margin: 6px 0;
+        }
+        
+        .exemple {
+            background: #e8f8f5;
+            border-left: 4px solid #1abc9c;
+            padding: 8px;
+            margin: 6px 0;
+        }
+        
+        .methode {
+            background: #fdeaea;
+            border-left: 4px solid #e74c3c;
+            padding: 8px;
+            margin: 6px 0;
+        }
+        
+        .attention {
+            background: #fdeaea;
+            border: 2px solid #e74c3c;
+            padding: 6px;
+            margin: 6px 0;
+            border-radius: 5px;
+        }
+        
+        .attention::before {
+            content: "⚠️ Attention : ";
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin: 8px auto;
+            width: auto;
+        }
+        
+        table td, table th {
+            border: 1px solid #34495e;
+            padding: 6px 10px;
+            text-align: center;
+        }
+        
+        table th {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .formule {
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 6px 0;
+            padding: 6px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+        
+        li {
+            margin: 2px 0;
+        }
+        
+        .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        
+        .fraction .num {
+            display: block;
+            border-bottom: 1px solid #000;
+            padding: 0 3px;
+        }
+        
+        .fraction .den {
+            display: block;
+            padding: 0 3px;
+        }
+        
+        .sqrt {
+            display: inline-block;
+            position: relative;
+            padding-left: 10px;
+            margin: 0 2px;
+            vertical-align: baseline;
+        }
+        
+        .sqrt::before {
+            content: '√';
+            position: absolute;
+            left: -3px;
+            top: 0px;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        
+        .sqrt .radicand {
+            border-top: 2px solid #000;
+            padding: 0 4px 0 4px;
+            display: inline-block;
+            min-width: 8px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .sqrt .radicand::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -3px;
+            width: 3px;
+            height: 2px;
+            background: #000;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 10px 0;
+        }
+        
+        .vocabulaire-box {
+            background: #f8f9fa;
+            padding: 8px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+        }
+        
+        strong {
+            color: #2c3e50;
+        }
+        
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 8px 0;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <h1>🔢 FEUILLE BILAN - NOTION DE FONCTION</h1>
+        <div class="subtitle">Classe de 3ème</div>
+
+        <h2>I. Définition et vocabulaire</h2>
+        
+        <div class="definition">
+            <strong>Définition :</strong> Une <strong>fonction</strong> est un procédé qui, à un nombre, associe <strong>un unique</strong> autre nombre.
+        </div>
+
+        <div class="vocabulaire-box">
+            <h3>Vocabulaire important :</h3>
+            <ul>
+                <li>Le nombre de départ s'appelle l'<strong>antécédent</strong> (ou la <strong>variable</strong>)</li>
+                <li>Le nombre d'arrivée s'appelle l'<strong>image</strong></li>
+                <li>On note souvent la fonction <strong>f</strong> et l'antécédent <strong>x</strong></li>
+                <li>L'image de x par f se note : <strong>f(x)</strong> (se lit "f de x")</li>
+            </ul>
+        </div>
+
+        <div class="exemple">
+            <strong>Exemple :</strong> La fonction f qui à un nombre associe son double.<br>
+            • Si x = 3, alors f(3) = 6<br>
+            • Si x = -5, alors f(-5) = -10<br>
+            → On dit que <strong>6 est l'image de 3 par f</strong> et que <strong>3 est un antécédent de 6 par f</strong>
+        </div>
+
+        <div class="attention">
+            Un nombre a une seule image, mais une image peut avoir plusieurs antécédents !
+        </div>
+
+        <h2>II. Représentations d'une fonction</h2>
+
+        <h3>1) Par une expression algébrique</h3>
+        <div class="exemple">
+            <strong>Exemples :</strong><br>
+            • f(x) = 2x + 3<br>
+            • g(x) = x² - 4<br>
+            • h(x) = -3x² + 5
+        </div>
+
+        <h3>2) Par un tableau de valeurs</h3>
+        <div class="exemple">
+            <strong>Exemple :</strong> Tableau de valeurs pour f(x) = x² - 4<br>
+            <table>
+                <tr>
+                    <th>x</th>
+                    <td>-2</td>
+                    <td>-1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <th>f(x)</th>
+                    <td>0</td>
+                    <td>-3</td>
+                    <td>-4</td>
+                    <td>-3</td>
+                    <td>0</td>
+                </tr>
+            </table>
+            <strong>Détail pour x = -1 :</strong><br>
+            f(-1) = (-1)² - 4 = 1 - 4 = -3
+        </div>
+
+        <h3>3) Par une courbe représentative</h3>
+        <div class="propriete">
+            <strong>Propriété :</strong> Dans un repère, on peut représenter une fonction par une courbe.<br>
+            Chaque point de la courbe a pour coordonnées (x ; f(x))
+        </div>
+
+        <h2>III. Calculer une image</h2>
+
+        <div class="methode">
+            <strong>Méthode :</strong> Pour calculer l'image d'un nombre par une fonction :<br>
+            <strong>On remplace x par le nombre</strong> dans l'expression de la fonction.
+        </div>
+
+        <div class="example-grid">
+            <div class="exemple">
+                <strong>Exemple 1 :</strong> Soit f(x) = 3x - 5. Calculer f(-2).<br>
+                <strong>Solution :</strong><br>
+                f(-2) = 3 × (-2) - 5<br>
+                f(-2) = -6 - 5<br>
+                f(-2) = -11<br>
+                → L'image de -2 par f est -11
+            </div>
+
+            <div class="exemple">
+                <strong>Exemple 2 :</strong> Soit g(x) = 2x² + 3. Calculer g(-3).<br>
+                <strong>Solution :</strong><br>
+                g(-3) = 2 × (-3)² + 3<br>
+                g(-3) = 2 × 9 + 3<br>
+                g(-3) = 18 + 3<br>
+                g(-3) = 21<br>
+                → L'image de -3 par g est 21
+            </div>
+        </div>
+
+        <div class="exemple">
+            <strong>Exemple 3 :</strong> Soit h(x) = -x² + 4. Calculer h(-2).<br>
+            <strong>Solution :</strong><br>
+            h(-2) = -(-2)² + 4<br>
+            h(-2) = -4 + 4<br>
+            h(-2) = 0<br>
+            → L'image de -2 par h est 0
+        </div>
+
+        <h2>IV. Déterminer un antécédent</h2>
+
+        <div class="methode">
+            <strong>Méthode :</strong> Pour déterminer un antécédent d'un nombre b par une fonction f :<br>
+            <strong>On résout l'équation f(x) = b</strong>
+        </div>
+
+        <div class="example-grid">
+            <div class="exemple">
+                <strong>Exemple 1 :</strong> Soit f(x) = 3x - 5. Déterminer l'antécédent de -8 par f.<br>
+                <strong>Solution :</strong><br>
+                On cherche x tel que f(x) = -8<br>
+                3x - 5 = -8<br>
+                3x = -8 + 5<br>
+                3x = -3<br>
+                x = <span class="fraction"><span class="num">-3</span><span class="den">3</span></span><br>
+                x = -1<br>
+                → Un antécédent de -8 par f est -1
+            </div>
+
+            <div class="exemple">
+                <strong>Exemple 2 :</strong> Soit g(x) = x² - 9. Déterminer les antécédents de 0 par g.<br>
+                <strong>Solution :</strong><br>
+                On cherche x tel que g(x) = 0<br>
+                x² - 9 = 0<br>
+                x² = 9<br>
+                x = <span class="sqrt"><span class="radicand">9</span></span> ou x = -<span class="sqrt"><span class="radicand">9</span></span><br>
+                x = 3 ou x = -3<br>
+                → Les antécédents de 0 par g sont 3 et -3
+            </div>
+        </div>
+
+        <div class="example-grid">
+            <div class="exemple">
+                <strong>Exemple 3 :</strong> Soit h(x) = 2x² + 1. Déterminer les antécédents de 19 par h.<br>
+                <strong>Solution :</strong><br>
+                On cherche x tel que h(x) = 19<br>
+                2x² + 1 = 19<br>
+                2x² = 19 - 1<br>
+                2x² = 18<br>
+                x² = <span class="fraction"><span class="num">18</span><span class="den">2</span></span><br>
+                x² = 9<br>
+                x = <span class="sqrt"><span class="radicand">9</span></span> ou x = -<span class="sqrt"><span class="radicand">9</span></span><br>
+                x = 3 ou x = -3<br>
+                → Les antécédents de 19 par h sont 3 et -3
+            </div>
+
+            <div class="exemple">
+                <strong>Exemple 4 :</strong> Soit f(x) = -x² + 5. Déterminer les antécédents de 1 par f.<br>
+                <strong>Solution :</strong><br>
+                On cherche x tel que f(x) = 1<br>
+                -x² + 5 = 1<br>
+                -x² = 1 - 5<br>
+                -x² = -4<br>
+                x² = <span class="fraction"><span class="num">-4</span><span class="den">-1</span></span><br>
+                x² = 4<br>
+                x = <span class="sqrt"><span class="radicand">4</span></span> ou x = -<span class="sqrt"><span class="radicand">4</span></span><br>
+                x = 2 ou x = -2<br>
+                → Les antécédents de 1 par f sont 2 et -2
+            </div>
+        </div>
+
+        <h2>V. Lecture graphique</h2>
+
+        <div class="methode">
+            <strong>Pour lire graphiquement :</strong><br>
+            • <strong>Une image :</strong> On part de l'antécédent sur l'axe des abscisses, on monte/descend jusqu'à la courbe, puis on lit l'ordonnée<br>
+            • <strong>Un antécédent :</strong> On part de l'image sur l'axe des ordonnées, on va horizontalement jusqu'à la courbe, puis on lit l'abscisse
+        </div>
+
+        <h2>VI. À retenir absolument</h2>
+
+        <div class="vocabulaire-box">
+            <ul>
+                <li>f(x) se lit "<strong>f de x</strong>" et non "f fois x"</li>
+                <li>Un antécédent peut ne pas exister</li>
+                <li>Une image existe toujours pour les fonctions usuelles</li>
+                <li>Un nombre a <strong>une seule image</strong> par une fonction donnée</li>
+                <li>Un nombre peut avoir <strong>plusieurs antécédents</strong> (surtout avec x²)</li>
+                <li>Avec x² : attention au signe ! (-3)² = 9</li>
+                <li>Pour les antécédents : bien vérifier les deux solutions possibles avec x²</li>
+                <li>Image = ordonnée du point / Antécédent = abscisse du point</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
