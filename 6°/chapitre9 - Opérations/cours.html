@@ -411,7 +411,7 @@
                     <span class="symbole">&nbsp;</span>
                     <span class="chiffre" id="m1_1">&nbsp;</span>
                     <span class="chiffre" id="m1_2">&nbsp;</span>
-                    <span class="chiffre" id="m1_3" style="position: relative;">5<span id="m1_v" style="position: absolute; left: 38px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
+                    <span class="chiffre" id="m1_3" style="position: relative;">5<span id="m1_v" style="position: absolute; left: 32px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
                     <span class="chiffre" id="m1_4">6</span>
                     <span class="chiffre" id="m1_5">8</span>
                 </div>
@@ -421,7 +421,7 @@
                     <span class="symbole visible">×</span>
                     <span class="chiffre" id="m2_1">&nbsp;</span>
                     <span class="chiffre" id="m2_2">&nbsp;</span>
-                    <span class="chiffre" id="m2_3" style="position: relative;">3<span id="m2_v" style="position: absolute; left: 38px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
+                    <span class="chiffre" id="m2_3" style="position: relative;">3<span id="m2_v" style="position: absolute; left: 32px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
                     <span class="chiffre" id="m2_4">4</span>
                     <span class="chiffre" id="m2_5">&nbsp;</span>
                 </div>
@@ -460,7 +460,7 @@
                 <div class="ligne-operation">
                     <span class="symbole">&nbsp;</span>
                     <span class="chiffre resultat" id="mres_1">1</span>
-                    <span class="chiffre resultat" id="mres_2" style="position: relative;">9<span id="mres_v" style="position: absolute; left: 38px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
+                    <span class="chiffre resultat" id="mres_2" style="position: relative;">9<span id="mres_v" style="position: absolute; left: 32px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
                     <span class="chiffre resultat" id="mres_3">3</span>
                     <span class="chiffre resultat" id="mres_4">1</span>
                     <span class="chiffre resultat" id="mres_5">2</span>
@@ -486,25 +486,14 @@
     <h2>Division euclidienne</h2>
 
     <div class="definition">
-        <strong>Définition :</strong> Effectuer la division euclidienne d'un nombre entier (le <span class="red-text">dividende</span>) par un autre nombre entier (le <span class="red-text">diviseur</span>), c'est trouver deux nombres entiers :
+        <strong>Définition :</strong> Effectuer la division euclidienne d'un nombre entier (le <span class="red-text">dividende</span>) par un autre nombre entier (le <span class="red-text">diviseur</span>), c'est trouver deux nombres entiers : le <span class="red-text"> quotient</span> et le <span class="red-text">reste</span>, tels que :
         <ul>
-            <li>Le <span class="red-text">quotient</span></li>
-            <li>Le <span class="red-text">reste</span>, qui doit être inférieur au diviseur</li>
-        </ul>
-        Tels que : <strong>dividende = diviseur × quotient + reste</strong>
-    </div>
-
-    <div class="remarque">
-        <strong>Remarque :</strong> Dans l'exemple suivant, 1347 = 24 × 56 + 3 :
-        <ul>
-            <li>1347 est le <span class="red-text">dividende</span></li>
-            <li>24 est le <span class="red-text">diviseur</span></li>
-            <li>56 est le <span class="red-text">quotient</span></li>
-            <li>3 est le <span class="red-text">reste</span> (qui est bien inférieur à 24)</li>
+        <li>dividende = diviseur × quotient + reste</li>
+        <li>le reste est strictement inférieur au diviseur</li>
         </ul>
     </div>
 
-    <h3>Poser une division euclidienne</h3>
+       <h3>Poser une division euclidienne</h3>
 
     <div class="definition">
         <strong>Règle :</strong> Pour effectuer une division euclidienne, on cherche combien de fois le diviseur est contenu dans le dividende.
@@ -577,7 +566,15 @@
             </div>
         </div>
     </div>
-
+ <div class="remarque">
+        <strong>Remarque :</strong> Dans l'exemple précédent, 1347 = 24 × 56 + 3 :
+        <ul>
+            <li>1347 est le <span class="red-text">dividende</span></li>
+            <li>24 est le <span class="red-text">diviseur</span></li>
+            <li>56 est le <span class="red-text">quotient</span></li>
+            <li>3 est le <span class="red-text">reste</span> (qui est bien inférieur à 24)</li>
+        </ul>
+    </div>
     <h2>Vocabulaire</h2>
 
     <div class="definition">
@@ -620,12 +617,18 @@
                 <div style="display: flex; justify-content: center; font-family: 'Courier New', monospace; font-size: 2.2em; margin: 40px 0;">
                 <div style="display: grid; grid-template-columns: 45px repeat(7, 45px) 5px repeat(6, 45px); grid-auto-rows: minmax(45px, auto); gap: 0; position: relative;">
                     
-                    <!-- ROW 1 : 1347 | 24 -->
+                    <!-- ROW 1 : 1347 + virgule fantôme + 000 fantômes | 24 -->
                     <div style="grid-column: 1;"></div>
                     <div style="text-align: center; grid-column: 2; grid-row: 1;">1</div>
                     <div style="text-align: center; grid-column: 3; grid-row: 1;">3</div>
                     <div style="text-align: center; grid-column: 4; grid-row: 1;">4</div>
-                    <div style="text-align: center; grid-column: 5; grid-row: 1;">7</div>
+                    <!-- 7 avec virgule fantôme en absolute (ne prend pas de colonne) -->
+                    <div style="text-align: center; grid-column: 5; grid-row: 1; position: relative;">7<span id="dec_ph_virgule" style="position: absolute; left: 32px; top: 0; opacity: 0; color: #f39c12; font-style: italic;">,</span></div>
+                    <!-- 0 fantômes dans les colonnes 6, 7, 8 -->
+                    <div id="dec_ph0_1" style="text-align: center; grid-column: 6; grid-row: 1; opacity: 0; color: #f39c12; font-style: italic; font-size: 0.85em; border: 2px dashed #f39c12; border-radius: 4px; line-height: 1; margin-top: 5px;">0</div>
+                    <div id="dec_ph0_2" style="text-align: center; grid-column: 7; grid-row: 1; opacity: 0; color: #f39c12; font-style: italic; font-size: 0.85em; border: 2px dashed #f39c12; border-radius: 4px; line-height: 1; margin-top: 5px;">0</div>
+                    <div id="dec_ph0_3" style="text-align: center; grid-column: 8; grid-row: 1; opacity: 0; color: #f39c12; font-style: italic; font-size: 0.85em; border: 2px dashed #f39c12; border-radius: 4px; line-height: 1; margin-top: 5px;">0</div>
+                    <!-- Barre verticale -->
                     <div style="grid-column: 9; grid-row: 1 / 12; width: 3px; background-color: black; justify-self: center;"></div>
                     <div style="text-align: center; grid-column: 10; grid-row: 1;">2</div>
                     <div style="text-align: center; grid-column: 11; grid-row: 1;">4</div>
@@ -653,42 +656,38 @@
                     <div style="text-align: center; grid-column: 3; grid-row: 4; color: #2ecc71;">1</div>
                     <div style="text-align: center; grid-column: 4; grid-row: 4; color: #2ecc71;">4</div>
                     <div style="text-align: center; grid-column: 5; grid-row: 4; color: #2ecc71;">4</div>
-                    <!-- Trait sous 144 -->
                     <div style="grid-column: 2 / 6; grid-row: 4; border-bottom: 3px solid black; align-self: end;"></div>
                     
-                    <!-- ROW 5 : 3 puis 30 -->
+                    <!-- ROW 5 : reste 3 + 0 fantôme descendu → 30 -->
                     <div style="text-align: center; grid-column: 5; grid-row: 5;">3</div>
-                    <div class="chiffre" id="dec_30" style="text-align: center; grid-column: 6; grid-row: 5; opacity: 0;">0</div>
+                    <div class="chiffre" id="dec_30" style="text-align: center; grid-column: 6; grid-row: 5; color: #f39c12;">0</div>
                     
                     <!-- ROW 6 : - 24 -->
                     <div id="dec_moins1" style="text-align: center; grid-column: 4; grid-row: 6; opacity: 0;">-</div>
                     <div class="chiffre" id="dec_24_1" style="text-align: center; grid-column: 5; grid-row: 6; color: #9b59b6;">2</div>
                     <div class="chiffre" id="dec_24_2" style="text-align: center; grid-column: 6; grid-row: 6; color: #9b59b6;">4</div>
-                    <!-- Trait sous 24 -->
                     <div id="dec_trait1" style="grid-column: 4 / 7; grid-row: 6; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
                     
-                    <!-- ROW 7 : 6 puis 60 -->
+                    <!-- ROW 7 : reste 6 + 0 fantôme descendu → 60 -->
                     <div class="chiffre" id="dec_60_1" style="text-align: center; grid-column: 6; grid-row: 7;">6</div>
-                    <div class="chiffre" id="dec_60_2" style="text-align: center; grid-column: 7; grid-row: 7; opacity: 0;">0</div>
+                    <div class="chiffre" id="dec_60_2" style="text-align: center; grid-column: 7; grid-row: 7; color: #f39c12;">0</div>
                     
                     <!-- ROW 8 : - 48 -->
                     <div id="dec_moins2" style="text-align: center; grid-column: 5; grid-row: 8; opacity: 0;">-</div>
                     <div class="chiffre" id="dec_48_1" style="text-align: center; grid-column: 6; grid-row: 8; color: #e67e22;">4</div>
                     <div class="chiffre" id="dec_48_2" style="text-align: center; grid-column: 7; grid-row: 8; color: #e67e22;">8</div>
-                    <!-- Trait sous 48 -->
                     <div id="dec_trait2" style="grid-column: 5 / 8; grid-row: 8; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
                     
-                    <!-- ROW 9 : 12 puis 120 -->
+                    <!-- ROW 9 : reste 12 + 0 fantôme descendu → 120 -->
                     <div class="chiffre" id="dec_120_1" style="text-align: center; grid-column: 6; grid-row: 9;">1</div>
                     <div class="chiffre" id="dec_120_2" style="text-align: center; grid-column: 7; grid-row: 9;">2</div>
-                    <div class="chiffre" id="dec_120_3" style="text-align: center; grid-column: 8; grid-row: 9; opacity: 0;">0</div>
+                    <div class="chiffre" id="dec_120_3" style="text-align: center; grid-column: 8; grid-row: 9; color: #f39c12;">0</div>
                     
                     <!-- ROW 10 : - 120 -->
                     <div id="dec_moins3" style="text-align: center; grid-column: 5; grid-row: 10; opacity: 0;">-</div>
                     <div class="chiffre" id="dec_120s_1" style="text-align: center; grid-column: 6; grid-row: 10; color: #16a085;">1</div>
                     <div class="chiffre" id="dec_120s_2" style="text-align: center; grid-column: 7; grid-row: 10; color: #16a085;">2</div>
                     <div class="chiffre" id="dec_120s_3" style="text-align: center; grid-column: 8; grid-row: 10; color: #16a085;">0</div>
-                    <!-- Trait sous 120 -->
                     <div id="dec_trait3" style="grid-column: 5 / 9; grid-row: 10; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
                     
                     <!-- ROW 11 : 0 -->
@@ -712,68 +711,69 @@
     <h3>Diviser un nombre décimal</h3>
 
     <div class="example">
-        <strong>Exemple :</strong> Calculer 187,2 ÷ 12
+        <strong>Exemple :</strong> Calculer 9,4 ÷ 4
         
         <div class="animation-container">
             <div class="animation-content">
                 <div class="step-info" id="stepInfo6">Cliquez sur "Étape suivante" pour démarrer l'animation</div>
                 
                 <div style="display: flex; justify-content: center; font-family: 'Courier New', monospace; font-size: 2.2em; margin: 40px 0;">
-                <div style="display: grid; grid-template-columns: 45px repeat(6, 45px) 5px repeat(4, 45px); grid-auto-rows: minmax(45px, auto); gap: 0; position: relative;">
+                <div style="display: grid; grid-template-columns: 45px repeat(4, 45px) 5px repeat(5, 45px); grid-auto-rows: minmax(45px, auto); gap: 0; position: relative;">
                     
-                    <!-- ROW 1 : 187,2 | 12 (virgule visible dès le début) -->
+                    <!-- ROW 1 : 9,4(0 fantôme) | 4 -->
                     <div style="grid-column: 1;"></div>
-                    <div style="text-align: center; grid-column: 2; grid-row: 1;">1</div>
-                    <div style="text-align: center; grid-column: 3; grid-row: 1;">8</div>
-                    <div style="text-align: center; grid-column: 4; grid-row: 1;">7</div>
-                    <div style="text-align: center; grid-column: 5; grid-row: 1;">,</div>
-                    <div style="text-align: center; grid-column: 6; grid-row: 1;">2</div>
-                    <div style="grid-column: 8; grid-row: 1 / 8; width: 3px; background-color: black; justify-self: center;"></div>
-                    <div style="text-align: center; grid-column: 9; grid-row: 1;">1</div>
-                    <div style="text-align: center; grid-column: 10; grid-row: 1;">2</div>
-                    <div style="grid-column: 9 / 11; grid-row: 1; height: 3px; background-color: black; align-self: end;"></div>
+                    <!-- 9 avec virgule en absolute (ne prend pas de colonne) -->
+                    <div style="text-align: center; grid-column: 2; grid-row: 1; position: relative;">9<span style="position: absolute; left: 32px; top: 0;">,</span></div>
+                    <div style="text-align: center; grid-column: 3; grid-row: 1;">4</div>
+                    <!-- 0 fantôme -->
+                    <div id="dd_zero_fantome" style="text-align: center; grid-column: 4; grid-row: 1; opacity: 0; color: #f39c12; font-style: italic; font-size: 0.85em; border: 2px dashed #f39c12; border-radius: 4px; line-height: 1; margin-top: 5px;">0</div>
+                    <!-- Barre verticale -->
+                    <div style="grid-column: 6; grid-row: 1 / 9; width: 3px; background-color: black; justify-self: center;"></div>
+                    <!-- Diviseur -->
+                    <div style="text-align: center; grid-column: 7; grid-row: 1;">4</div>
+                    <!-- Trait horizontal -->
+                    <div style="grid-column: 7 / 12; grid-row: 1; height: 3px; background-color: black; align-self: end;"></div>
                     
-                    <!-- ROW 2 : - 12 + Quotient 15,6 -->
+                    <!-- ROW 2 : -8 | quotient 2,35 -->
                     <div id="dd_moins1" style="text-align: center; grid-column: 1; grid-row: 2; opacity: 0;">-</div>
-                    <div class="chiffre" id="dd_12_1" style="text-align: center; grid-column: 2; grid-row: 2; color: #e74c3c;">1</div>
-                    <div class="chiffre" id="dd_12_2" style="text-align: center; grid-column: 3; grid-row: 2; color: #e74c3c;">2</div>
-                    <div class="chiffre resultat" id="dd_q1" style="text-align: center; grid-column: 9; grid-row: 2; color: #e74c3c;">1</div>
-                    <div class="chiffre resultat" id="dd_q2" style="text-align: center; grid-column: 10; grid-row: 2; color: #2ecc71;">5</div>
-                    <div id="dd_virgule" style="text-align: center; grid-column: 11; grid-row: 2; opacity: 0;">,</div>
-                    <div class="chiffre resultat" id="dd_q3" style="text-align: center; grid-column: 12; grid-row: 2; color: #9b59b6;">6</div>
+                    <div class="chiffre" id="dd_8s1" style="text-align: center; grid-column: 2; grid-row: 2; color: #e74c3c;">8</div>
+                    <div class="chiffre resultat" id="dd_q1" style="text-align: center; grid-column: 8; grid-row: 2; color: #e74c3c;">2</div>
+                    <div id="dd_virgule" style="text-align: center; grid-column: 9; grid-row: 2; opacity: 0;">,</div>
+                    <div class="chiffre resultat" id="dd_q2" style="text-align: center; grid-column: 10; grid-row: 2; color: #2ecc71;">3</div>
+                    <div class="chiffre resultat" id="dd_q3" style="text-align: center; grid-column: 11; grid-row: 2; color: #9b59b6;">5</div>
+                    <!-- Trait sous 8 -->
+                    <div id="dd_trait1" style="grid-column: 1 / 3; grid-row: 2; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
+                    
+                    <!-- ROW 3 : reste 1 + descend 4 → 14 -->
+                    <div class="chiffre" id="dd_reste1" style="text-align: center; grid-column: 2; grid-row: 3;">1</div>
+                    <div class="chiffre" id="dd_desc4" style="text-align: center; grid-column: 3; grid-row: 3;">4</div>
+                    
+                    <!-- ROW 4 : -12 -->
+                    <div id="dd_moins2" style="text-align: center; grid-column: 1; grid-row: 4; opacity: 0;">-</div>
+                    <div class="chiffre" id="dd_12_1" style="text-align: center; grid-column: 2; grid-row: 4; color: #2ecc71;">1</div>
+                    <div class="chiffre" id="dd_12_2" style="text-align: center; grid-column: 3; grid-row: 4; color: #2ecc71;">2</div>
                     <!-- Trait sous 12 -->
-                    <div id="dd_trait1" style="grid-column: 1 / 4; grid-row: 2; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
+                    <div id="dd_trait2" style="grid-column: 1 / 4; grid-row: 4; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
                     
-                    <!-- ROW 3 : 67 -->
-                    <div class="chiffre" id="dd_67_1" style="text-align: center; grid-column: 3; grid-row: 3;">6</div>
-                    <div class="chiffre" id="dd_67_2" style="text-align: center; grid-column: 4; grid-row: 3;">7</div>
+                    <!-- ROW 5 : reste 2 + 0 fantôme descendu → 20 -->
+                    <div class="chiffre" id="dd_reste2" style="text-align: center; grid-column: 3; grid-row: 5;">2</div>
+                    <div class="chiffre" id="dd_zero_desc" style="text-align: center; grid-column: 4; grid-row: 5; color: #f39c12;">0</div>
                     
-                    <!-- ROW 4 : - 60 -->
-                    <div id="dd_moins2" style="text-align: center; grid-column: 2; grid-row: 4; opacity: 0;">-</div>
-                    <div class="chiffre" id="dd_60_1" style="text-align: center; grid-column: 3; grid-row: 4; color: #2ecc71;">6</div>
-                    <div class="chiffre" id="dd_60_2" style="text-align: center; grid-column: 4; grid-row: 4; color: #2ecc71;">0</div>
-                    <!-- Trait sous 60 -->
-                    <div id="dd_trait2" style="grid-column: 2 / 5; grid-row: 4; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
+                    <!-- ROW 6 : -20 -->
+                    <div id="dd_moins3" style="text-align: center; grid-column: 2; grid-row: 6; opacity: 0;">-</div>
+                    <div class="chiffre" id="dd_20_1" style="text-align: center; grid-column: 3; grid-row: 6; color: #9b59b6;">2</div>
+                    <div class="chiffre" id="dd_20_2" style="text-align: center; grid-column: 4; grid-row: 6; color: #9b59b6;">0</div>
+                    <!-- Trait sous 20 -->
+                    <div id="dd_trait3" style="grid-column: 2 / 5; grid-row: 6; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
                     
-                    <!-- ROW 5 : 7 puis 72 (le 7 reste, puis on descend le 2) -->
-                    <div class="chiffre" id="dd_reste7" style="text-align: center; grid-column: 4; grid-row: 5;">7</div>
-                    <div class="chiffre" id="dd_desc2" style="text-align: center; grid-column: 6; grid-row: 5; opacity: 0;">2</div>
-                    
-                    <!-- ROW 6 : - 72 -->
-                    <div id="dd_moins3" style="text-align: center; grid-column: 3; grid-row: 6; opacity: 0;">-</div>
-                    <div class="chiffre" id="dd_72s_1" style="text-align: center; grid-column: 4; grid-row: 6; color: #9b59b6;">7</div>
-                    <div class="chiffre" id="dd_72s_2" style="text-align: center; grid-column: 6; grid-row: 6; color: #9b59b6;">2</div>
-                    <!-- Trait sous 72 -->
-                    <div id="dd_trait3" style="grid-column: 3 / 7; grid-row: 6; border-bottom: 3px solid black; align-self: end; opacity: 0;"></div>
-                    
-                    <!-- ROW 7 : 0 -->
-                    <div class="chiffre resultat" id="dd_reste0" style="text-align: center; grid-column: 6; grid-row: 7;">0</div>
+                    <!-- ROW 7 : reste 0 -->
+                    <div class="chiffre resultat" id="dd_reste0" style="text-align: center; grid-column: 4; grid-row: 7;">0</div>
                     
                 </div>
             </div>
             
             <div style="margin-top: 30px; font-size: 1.8em; text-align: center;" id="egalite_dd">
-                <span style="opacity: 0;">187,2 ÷ 12 = 15,6</span>
+                <span style="opacity: 0;">9,4 ÷ 4 = 2,35</span>
             </div>
             </div>
 
@@ -1123,11 +1123,13 @@
             
             switch(stepDecimale) {
                 case 0:
-                    stepInfo.innerHTML = 'On a terminé la division euclidienne : quotient = 56, reste = 3. Pour continuer, on ajoute une virgule au quotient';
+                    stepInfo.innerHTML = 'On a terminé la division euclidienne : quotient = 56, reste = 3. Pour continuer, on ajoute une virgule au quotient et on imagine une virgule après 1347 dans le dividende';
                     document.getElementById('dec_virgule').style.opacity = '1';
+                    document.getElementById('dec_ph_virgule').style.opacity = '1';
                     break;
                 case 1:
-                    stepInfo.innerHTML = 'On transforme le reste 3 en 30 en ajoutant un 0';
+                    stepInfo.innerHTML = 'On peut ajouter des <span style="color: #f39c12; font-weight: bold;">0</span> invisibles après la virgule de 1347. On "descend" le premier → le reste 3 devient 30';
+                    document.getElementById('dec_ph0_1').style.opacity = '1';
                     document.getElementById('dec_30').style.opacity = '1';
                     break;
                 case 2:
@@ -1143,7 +1145,8 @@
                     document.getElementById('dec_trait1').style.opacity = '1';
                     break;
                 case 4:
-                    stepInfo.innerHTML = 'Reste : 6. On ajoute un 0 → 60';
+                    stepInfo.innerHTML = 'Reste 6 : on descend un deuxième <span style="color: #f39c12; font-weight: bold;">0</span> invisible → 60';
+                    document.getElementById('dec_ph0_2').style.opacity = '1';
                     document.getElementById('dec_60_1').classList.add('visible');
                     document.getElementById('dec_60_2').style.opacity = '1';
                     break;
@@ -1160,7 +1163,8 @@
                     document.getElementById('dec_trait2').style.opacity = '1';
                     break;
                 case 7:
-                    stepInfo.innerHTML = 'Reste : 12. On ajoute un 0 → 120';
+                    stepInfo.innerHTML = 'Reste 12 : on descend un troisième <span style="color: #f39c12; font-weight: bold;">0</span> invisible → 120';
+                    document.getElementById('dec_ph0_3').style.opacity = '1';
                     document.getElementById('dec_120_1').classList.add('visible');
                     document.getElementById('dec_120_2').classList.add('visible');
                     document.getElementById('dec_120_3').style.opacity = '1';
@@ -1209,7 +1213,8 @@
                 if (elem) elem.style.opacity = '0';
             });
             
-            ['dec_virgule', 'dec_moins1', 'dec_moins2', 'dec_moins3'].forEach(id => {
+            ['dec_virgule', 'dec_moins1', 'dec_moins2', 'dec_moins3',
+             'dec_ph_virgule', 'dec_ph0_1', 'dec_ph0_2', 'dec_ph0_3'].forEach(id => {
                 document.getElementById(id).style.opacity = '0';
             });
             
@@ -1224,57 +1229,54 @@
             
             switch(stepDividendeDecimal) {
                 case 0:
-                    stepInfo.innerHTML = 'La division est posée : 187,2 ÷ 12. Dans 18, combien de fois 12 ?';
+                    stepInfo.innerHTML = 'La division est posée : 9,4 ÷ 4. Dans 9, combien de fois 4 ?';
                     break;
                 case 1:
-                    stepInfo.innerHTML = '<span style="color: #e74c3c;">1 fois</span> car 12 × 1 = 12. On écrit <span style="color: #e74c3c;">1</span> au quotient';
+                    stepInfo.innerHTML = '<span style="color: #e74c3c;">2 fois</span> car 4 × 2 = 8. On écrit <span style="color: #e74c3c;">2</span> au quotient';
                     document.getElementById('dd_q1').classList.add('visible');
                     break;
                 case 2:
-                    stepInfo.innerHTML = 'On soustrait : 18 − <span style="color: #e74c3c;">12</span> = 6';
+                    stepInfo.innerHTML = 'On soustrait : 9 − <span style="color: #e74c3c;">8</span> = 1';
                     document.getElementById('dd_moins1').style.opacity = '1';
-                    ['dd_12_1', 'dd_12_2'].forEach(id => {
-                        document.getElementById(id).classList.add('visible');
-                    });
+                    document.getElementById('dd_8s1').classList.add('visible');
                     document.getElementById('dd_trait1').style.opacity = '1';
+                    document.getElementById('dd_reste1').classList.add('visible');
                     break;
                 case 3:
-                    stepInfo.innerHTML = 'On "descend" le 7. On obtient 67';
-                    document.getElementById('dd_67_1').classList.add('visible');
-                    document.getElementById('dd_67_2').classList.add('visible');
+                    stepInfo.innerHTML = 'On descend le 4 (chiffre après la virgule) → <strong>14</strong>. On pose la virgule au quotient. Dans 14, combien de fois 4 ?';
+                    document.getElementById('dd_desc4').classList.add('visible');
+                    document.getElementById('dd_virgule').style.opacity = '1';
                     break;
                 case 4:
-                    stepInfo.innerHTML = 'Dans 67, combien de fois 12 ? <span style="color: #2ecc71;">5 fois</span> car 12 × 5 = 60. On écrit <span style="color: #2ecc71;">5</span>';
+                    stepInfo.innerHTML = '<span style="color: #2ecc71;">3 fois</span> car 4 × 3 = 12. On écrit <span style="color: #2ecc71;">3</span> au quotient';
                     document.getElementById('dd_q2').classList.add('visible');
                     break;
                 case 5:
-                    stepInfo.innerHTML = 'On soustrait : 67 − <span style="color: #2ecc71;">60</span> = 7';
+                    stepInfo.innerHTML = 'On soustrait : 14 − <span style="color: #2ecc71;">12</span> = 2. Reste 2. Il n\'y a plus de chiffre à descendre… mais la division n\'est pas finie !';
                     document.getElementById('dd_moins2').style.opacity = '1';
-                    ['dd_60_1', 'dd_60_2'].forEach(id => {
-                        document.getElementById(id).classList.add('visible');
-                    });
+                    document.getElementById('dd_12_1').classList.add('visible');
+                    document.getElementById('dd_12_2').classList.add('visible');
                     document.getElementById('dd_trait2').style.opacity = '1';
+                    document.getElementById('dd_reste2').classList.add('visible');
                     break;
                 case 6:
-                    stepInfo.innerHTML = 'Reste : 7. On "descend" le 2 (chiffre après la virgule du dividende) → 72. On place la virgule au quotient';
-                    document.getElementById('dd_reste7').classList.add('visible');
-                    document.getElementById('dd_desc2').style.opacity = '1';
-                    document.getElementById('dd_virgule').style.opacity = '1';
+                    stepInfo.innerHTML = 'On peut toujours ajouter un <span style="color: #f39c12; font-weight: bold;">0</span> après la virgule d\'un nombre décimal sans en changer la valeur ! On "descend" ce <span style="color: #f39c12; font-weight: bold;">0</span> → <strong style="color: #f39c12;">20</strong>';
+                    document.getElementById('dd_zero_fantome').style.opacity = '1';
+                    document.getElementById('dd_zero_desc').classList.add('visible');
                     break;
                 case 7:
-                    stepInfo.innerHTML = 'Dans 72, combien de fois 12 ? <span style="color: #9b59b6;">6 fois</span> car 12 × 6 = 72. On écrit <span style="color: #9b59b6;">6</span> après la virgule';
+                    stepInfo.innerHTML = 'Dans 20, combien de fois 4 ? <span style="color: #9b59b6;">5 fois</span> car 4 × 5 = 20. On écrit <span style="color: #9b59b6;">5</span> au quotient';
                     document.getElementById('dd_q3').classList.add('visible');
                     break;
                 case 8:
-                    stepInfo.innerHTML = 'On soustrait : 72 − <span style="color: #9b59b6;">72</span> = 0. La division est terminée !';
+                    stepInfo.innerHTML = 'On soustrait : 20 − <span style="color: #9b59b6;">20</span> = 0. La division est terminée !';
                     document.getElementById('dd_moins3').style.opacity = '1';
-                    ['dd_72s_1', 'dd_72s_2'].forEach(id => {
-                        document.getElementById(id).classList.add('visible');
-                    });
+                    document.getElementById('dd_20_1').classList.add('visible');
+                    document.getElementById('dd_20_2').classList.add('visible');
                     document.getElementById('dd_trait3').style.opacity = '1';
                     break;
                 case 9:
-                    stepInfo.innerHTML = '<strong style="color: #2ecc71;">✓ Résultat : 187,2 ÷ 12 = 15,6</strong>';
+                    stepInfo.innerHTML = '<strong style="color: #2ecc71;">✓ Résultat : 9,4 ÷ 4 = 2,35</strong>';
                     document.getElementById('dd_reste0').classList.add('visible');
                     document.querySelector('#egalite_dd span').style.opacity = '1';
                     document.getElementById('btnNext6').disabled = true;
@@ -1288,20 +1290,18 @@
             document.getElementById('btnNext6').disabled = false;
             document.getElementById('stepInfo6').innerHTML = 'Cliquez sur "Étape suivante" pour démarrer l\'animation';
             
-            ['dd_12_1', 'dd_12_2', 'dd_q1', 'dd_67_1', 'dd_67_2',
-             'dd_60_1', 'dd_60_2', 'dd_q2', 'dd_reste7',
-             'dd_72s_1', 'dd_72s_2', 'dd_q3', 'dd_reste0'].forEach(id => {
+            ['dd_8s1', 'dd_q1', 'dd_reste1', 'dd_desc4', 'dd_q2',
+             'dd_12_1', 'dd_12_2', 'dd_reste2', 'dd_zero_desc',
+             'dd_q3', 'dd_20_1', 'dd_20_2', 'dd_reste0'].forEach(id => {
                 const elem = document.getElementById(id);
                 if (elem) elem.classList.remove('visible');
             });
             
-            ['dd_trait1', 'dd_trait2', 'dd_trait3', 'dd_desc2'].forEach(id => {
+            ['dd_trait1', 'dd_trait2', 'dd_trait3',
+             'dd_moins1', 'dd_moins2', 'dd_moins3',
+             'dd_virgule', 'dd_zero_fantome'].forEach(id => {
                 const elem = document.getElementById(id);
                 if (elem) elem.style.opacity = '0';
-            });
-            
-            ['dd_virgule', 'dd_moins1', 'dd_moins2', 'dd_moins3'].forEach(id => {
-                document.getElementById(id).style.opacity = '0';
             });
             
             document.querySelector('#egalite_dd span').style.opacity = '0';

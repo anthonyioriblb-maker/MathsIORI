@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Les puissances</title>
+    <link rel="stylesheet" href="../../styles.css?v=20250301">
+</head>
+<body>
+
+    <h1>Chapitre 10 : Les puissances</h1>
+
+    <!-- ============================================================ -->
+    <h2>Puissance d'un nombre</h2>
+    <!-- ============================================================ -->
+
+    <h3>Puissance positive</h3>
+
+    <h4>a) Définition</h4>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Soit <span class="math">a</span> un nombre différent de zéro et <span class="math">n</span> un nombre entier <strong>positif</strong>, le produit de <span class="math">a</span> par lui-même <span class="math">n</span> fois est noté <span class="math">a<span class="exposant">n</span></span>.<br><br>
+        C'est-à-dire :
+        <div style="display: flex; align-items: flex-start; justify-content: center; gap: 12px; margin: 16px 0;">
+            <span class="math" style="white-space: nowrap; line-height: 1.5; padding-top: 2px;">a<span class="exposant">n</span> =</span>
+            <div style="text-align: center; display: inline-block;">
+                <div><span class="math">a × a × a × … × a × a × a</span></div>
+                <div style="border-bottom: 2px solid #333; border-left: 2px solid #333; border-right: 2px solid #333; border-radius: 0 0 8px 8px; height: 12px; margin: 3px 4px 0 4px;"></div>
+                <div style="font-style: italic; color: #555; font-size: 0.85em; margin-top: 4px;"><span class="math">n</span> facteurs</div>
+            </div>
+        </div>
+        <span class="math">n</span> s'appelle l'<span style="color: red;">exposant</span> ou la <span style="color: red;">puissance</span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong>
+        <ul>
+            <li><span class="math">5<span class="exposant">7</span></span> se lit : « cinq exposant sept » ou « cinq puissance sept ».</li>
+            <li><span class="math">6<span class="exposant">2</span></span> se lit : « six exposant deux » ou « six au carré ».</li>
+            <li><span class="math">8<span class="exposant">3</span></span> se lit : « huit exposant trois » ou « huit au cube ».</li>
+        </ul>
+        <br>
+        <span class="math">8<span class="exposant">3</span> = 8 × 8 × 8</span><br>
+        <span class="math">5<span class="exposant">6</span> = 5 × 5 × 5 × 5 × 5 × 5</span>
+    </div>
+
+    <h4>b) Utilisation de la calculatrice</h4>
+
+    <div class="remarque">
+        <strong>Calculatrice :</strong> Pour calculer <span class="math">3<span class="exposant">7</span></span> à la calculatrice :<br>
+        • Sur <strong>Casio</strong> : taper <kbd>3</kbd> <kbd>x□</kbd> <kbd>7</kbd> <kbd>EXE</kbd><br>
+        • Sur <strong>TI</strong> : taper <kbd>3</kbd> <kbd>^</kbd> <kbd>7</kbd> <kbd>ENTER</kbd><br><br>
+        On trouve <span class="math">3<span class="exposant">7</span> = 2187</span>
+    </div>
+
+    <h4>c) Signe</h4>
+
+    <div class="property">
+        <span style="color: red;">Propriété :</span> Pour déterminer le signe d'un nombre négatif élevé à une certaine puissance, il suffit de regarder la puissance :<br>
+        • Si la puissance est <span style="color: red;"><strong>paire</strong></span>, le résultat est <span style="color: red;"><strong>positif</strong></span>.<br>
+        • Si la puissance est <span style="color: red;"><strong>impaire</strong></span>, le résultat est <span style="color: red;"><strong>négatif</strong></span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br>
+        <span class="math">(−3)<span class="exposant">4</span> = (−3) × (−3) × (−3) × (−3) = +81</span><br>
+        <span class="math">(−3)<span class="exposant">5</span> = (−3) × (−3) × (−3) × (−3) × (−3) = −243</span>
+    </div>
+
+    <div class="remarque">
+        <strong>⚠️ Attention aux pièges :</strong><br>
+        <span class="math">(−3)<span class="exposant">6</span> = (−3) × (−3) × (−3) × (−3) × (−3) × (−3) = <strong>+729</strong></span><br>
+        <span class="math">−3<span class="exposant">6</span> = −(3 × 3 × 3 × 3 × 3 × 3) = <strong>−729</strong></span><br><br>
+        Les parenthèses changent tout !
+    </div>
+
+    <h4>d) Cas particuliers</h4>
+
+    <div class="property">
+        <span style="color: red;">Propriété :</span><br>
+        • <span class="math">1<span class="exposant">n</span> = 1</span> quel que soit le nombre <span class="math">n</span> choisi.<br>
+        • <span class="math">0<span class="exposant">n</span> = 0</span> quel que soit le nombre <span class="math">n</span> choisi.<br>
+        • <span class="math">a<span class="exposant">0</span> = 1</span> quel que soit le nombre <span class="math">a</span> choisi.
+    </div>
+
+    <h3>Puissances négatives</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Soit <span class="math">n</span> un nombre entier positif et <span class="math">a</span> un nombre différent de zéro,
+        <span class="math">a<span class="exposant">−n</span></span> est l'<span style="color: red;">inverse</span> de <span class="math">a<span class="exposant">n</span></span>.<br><br>
+        C'est-à-dire :
+        <span class="math">a<span class="exposant">−n</span> = </span>
+        <span class="frac"><span class="num">1</span><span class="den">a<span class="exposant">n</span></span></span>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong><br>
+        <span class="math">2<span class="exposant">−5</span> = </span>
+        <span class="frac"><span class="num">1</span><span class="den">2<span class="exposant">5</span></span></span>
+        <span class="math"> = </span>
+        <span class="frac"><span class="num">1</span><span class="den">2 × 2 × 2 × 2 × 2</span></span>
+        <span class="math"> = </span>
+        <span class="frac"><span class="num">1</span><span class="den">32</span></span>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Puissances de 10</h2>
+    <!-- ============================================================ -->
+
+    <h3>Rappels</h3>
+
+    <div class="remarque">
+        <strong>Rappels :</strong>
+        <ul>
+            <li>Pour <strong>multiplier</strong> un nombre par 10 ; 100 ; 1 000 … il suffit de déplacer la virgule vers la <strong>droite</strong> d'autant de rangs qu'il y a de zéros.</li>
+            <li>Pour <strong>diviser</strong> un nombre par 10 ; 100 ; 1 000 … (ou multiplier par 0,1 ; 0,01 ; 0,001 …) il suffit de déplacer la virgule vers la <strong>gauche</strong> d'autant de rangs qu'il y a de zéros.</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px;">
+            <div>
+                <span class="math">2,145 × 100 = 214,5</span><br>
+                <span class="math">3,2 × 1000 = 3200</span>
+            </div>
+            <div>
+                <span class="math">35 × 0,01 = 0,35</span><br>
+                <span class="math">4,8 × 0,01 = 0,048</span>
+            </div>
+        </div>
+    </div>
+
+    <h3>Puissance de 10</h3>
+
+    <div class="example">
+        <span class="math">100 = 10 × 10 = 10<span class="exposant">2</span></span><br>
+        <span class="math">1000 = 10 × 10 × 10 = 10<span class="exposant">3</span></span><br>
+        <span class="math">0,01 = 0,1 × 0,1 = </span>
+        <span class="frac"><span class="num">1</span><span class="den">10</span></span>
+        <span class="math"> × </span>
+        <span class="frac"><span class="num">1</span><span class="den">10</span></span>
+        <span class="math"> = </span>
+        <span class="frac"><span class="num">1</span><span class="den">10<span class="exposant">2</span></span></span>
+        <span class="math"> = 10<span class="exposant">−2</span></span>
+    </div>
+
+    <div class="property">
+        <span style="color: red;">Propriété :</span> Si <span class="math">n</span> est un nombre entier positif, alors :<br><br>
+        <div style="display: flex; justify-content: center; gap: 60px; margin: 10px 0;">
+            <div style="text-align: center; border: 2px solid #ffc107; border-radius: 8px; padding: 12px 25px; background: white;">
+                <table style="border: none; margin: 0 auto; width: auto; border-collapse: collapse;">
+                    <tr>
+                        <td style="border: none; padding: 0; vertical-align: bottom; white-space: nowrap;">
+                            <span class="math">10<span class="exposant">n</span> = 1</span>
+                        </td>
+                        <td style="border: none; padding: 0; vertical-align: bottom; text-align: center;">
+                            <span class="math">00…000</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; padding: 0;"></td>
+                        <td style="border: none; padding: 0; text-align: center;">
+                            <div style="border-bottom: 2px solid #333; border-left: 2px solid #333; border-right: 2px solid #333; border-radius: 0 0 8px 8px; height: 12px; margin: 3px 4px 0 4px;"></div>
+                            <div style="font-style: italic; color: #555; font-size: 0.85em; margin-top: 4px;"><span class="math">n</span> zéros</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="text-align: center; border: 2px solid #ffc107; border-radius: 8px; padding: 12px 25px; background: white;">
+                <table style="border: none; margin: 0 auto; width: auto; border-collapse: collapse;">
+                    <tr>
+                        <td style="border: none; padding: 0; vertical-align: bottom; white-space: nowrap;">
+                            <span class="math">10<span class="exposant">−n</span> = </span>
+                        </td>
+                        <td style="border: none; padding: 0; vertical-align: bottom; text-align: center;">
+                            <span class="math">0,000…00</span>
+                        </td>
+                        <td style="border: none; padding: 0; vertical-align: bottom; white-space: nowrap;">
+                            <span class="math">1</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: none; padding: 0;"></td>
+                        <td style="border: none; padding: 0; text-align: center;">
+                            <div style="border-bottom: 2px solid #333; border-left: 2px solid #333; border-right: 2px solid #333; border-radius: 0 0 8px 8px; height: 12px; margin: 3px 4px 0 4px;"></div>
+                            <div style="font-style: italic; color: #555; font-size: 0.85em; margin-top: 4px;"><span class="math">n</span> zéros</div>
+                        </td>
+                        <td style="border: none; padding: 0;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <h3>La notation scientifique</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Un nombre est écrit en <span style="color: red;">notation scientifique</span> s'il est écrit sous la forme <span class="math">a × 10<span class="exposant">n</span></span> avec :<br>
+        • <span class="math">a</span> un nombre décimal dont la distance à zéro est comprise entre <strong>1 (inclus) et 10 (exclu)</strong> ;<br>
+        • <span class="math">n</span> un nombre entier.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br>
+        <span class="math">0,00023 = 2,3 × 10<span class="exposant">−4</span></span><br>
+        <span class="math">5874 = 5,874 × 10<span class="exposant">3</span></span>
+    </div>
+
+    <div class="example">
+        <strong>Exemple de calcul :</strong>
+        <div class="calcul-detail">
+            <div style="margin: 8px 0;">
+                <span class="frac"><span class="num">2 × 10<span class="exposant">5</span> × 0,2 × 10<span class="exposant">3</span></span><span class="den">2 × 10<span class="exposant">7</span> × 5 × 10<span class="exposant">2</span></span></span>
+            </div>
+            <div style="margin: 8px 0;">
+                <span class="math">= </span>
+                <span class="frac"><span class="num">2 × 0,2</span><span class="den">2 × 5</span></span>
+                <span class="math"> × </span>
+                <span class="frac"><span class="num">10<span class="exposant">5+3</span></span><span class="den">10<span class="exposant">7+2</span></span></span>
+            </div>
+            <div style="margin: 8px 0;">
+                <span class="math">= 0,04 × </span>
+                <span class="frac"><span class="num">10<span class="exposant">8</span></span><span class="den">10<span class="exposant">9</span></span></span>
+            </div>
+            <div style="margin: 8px 0;">
+                <span class="math">= 0,04 × 10<span class="exposant">8−9</span></span>
+            </div>
+            <div style="margin: 8px 0;">
+                <span class="math">= 0,04 × 10<span class="exposant">−1</span></span>
+            </div>
+            <div style="margin: 8px 0;">
+                <span class="math">= 4 × 10<span class="exposant">−2</span> × 10<span class="exposant">−1</span></span>
+            </div>
+            <div style="margin: 8px 0;">
+                <span class="math">= <strong>4 × 10<span class="exposant">−3</span></strong></span>
+            </div>
+        </div>
+    </div>
+
+    <h3>Préfixes des unités de mesure</h3>
+
+    <div class="example">
+        <table>
+            <tr>
+                <th>Préfixe</th>
+                <th>femto</th>
+                <th>pico</th>
+                <th>nano</th>
+                <th>micro</th>
+                <th>milli</th>
+                <th>centi</th>
+                <th>déci</th>
+                <th>déca</th>
+                <th>kilo</th>
+                <th>mega</th>
+                <th>giga</th>
+                <th>tera</th>
+            </tr>
+            <tr>
+                <th>Symbole</th>
+                <td>f</td><td>p</td><td>n</td><td>μ</td><td>m</td><td>c</td><td>d</td><td>da</td><td>k</td><td>M</td><td>G</td><td>T</td>
+            </tr>
+            <tr>
+                <th>Puissance</th>
+                <td><span class="math">10<span class="exposant">−15</span></span></td>
+                <td><span class="math">10<span class="exposant">−12</span></span></td>
+                <td><span class="math">10<span class="exposant">−9</span></span></td>
+                <td><span class="math">10<span class="exposant">−6</span></span></td>
+                <td><span class="math">10<span class="exposant">−3</span></span></td>
+                <td><span class="math">10<span class="exposant">−2</span></span></td>
+                <td><span class="math">10<span class="exposant">−1</span></span></td>
+                <td><span class="math">10<span class="exposant">1</span></span></td>
+                <td><span class="math">10<span class="exposant">3</span></span></td>
+                <td><span class="math">10<span class="exposant">6</span></span></td>
+                <td><span class="math">10<span class="exposant">9</span></span></td>
+                <td><span class="math">10<span class="exposant">12</span></span></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

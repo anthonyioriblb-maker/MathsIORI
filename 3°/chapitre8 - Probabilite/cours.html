@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Les probabilités</title>
+    <link rel="stylesheet" href="../../styles.css?v=20250301">
+</head>
+<body>
+
+    <h1>Chapitre 8 : Les probabilités</h1>
+
+    <!-- ============================================================ -->
+    <h2>Vocabulaire</h2>
+    <!-- ============================================================ -->
+
+    <div class="example">
+        On considère deux expériences :<br><br>
+        <strong>Expérience 1 :</strong> « Je lance une pièce de monnaie non truquée et on regarde la face supérieure »<br>
+        <strong>Expérience 2 :</strong> « Je lance un dé non truqué et je regarde le nombre de points sur la face supérieure »
+    </div>
+
+    <h3>Issue</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Chacun des résultats possibles d'une expérience est une <span style="color: red;">issue</span> de l'expérience.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br>
+        L'expérience 1 a deux issues : pile et face.<br>
+        L'expérience 2 a six issues : 1 ; 2 ; 3 ; 4 ; 5 et 6.
+    </div>
+
+    <h3>Événement</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Un <span style="color: red;">événement</span> est une condition qui peut être, ou non, réalisée lors de l'expérience.<br><br>
+        Un événement peut être réalisé par une ou plusieurs issues de cette expérience.<br><br>
+        Un événement réalisé par une seule issue est un <span style="color: red;">événement élémentaire</span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br>
+        Dans l'expérience 1, l'événement « on obtient pile » est réalisé par une seule issue : pile. C'est un événement élémentaire.<br>
+        Dans l'expérience 2, l'événement « on obtient un nombre impair » est réalisé par les issues 1 ; 3 et 5.
+    </div>
+
+    <h3>Expérience aléatoire</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Une expérience est dite <span style="color: red;">aléatoire</span> si elle a plusieurs issues possibles sans savoir avec certitude quelles seront les issues produites.
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Notion de probabilité</h2>
+    <!-- ============================================================ -->
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Si on effectue un très grand nombre de fois une expérience aléatoire, la fréquence de réalisation d'un événement se stabilise autour d'un nombre : la <span style="color: red;">probabilité</span> de cet événement.<br><br>
+        Soit A un événement, on note <span class="math">p(A)</span> sa probabilité.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br>
+        Dans l'expérience 1, si on lance la pièce un très grand nombre de fois, on aurait « pile » environ une fois sur deux.<br>
+        Dans l'expérience 2, si on lance le dé un très grand nombre de fois, on aurait « 4 » environ une fois sur six.
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Calcul d'une probabilité</h2>
+    <!-- ============================================================ -->
+
+    <h3>Situation équiprobable</h3>
+
+    <div class="property">
+        <span style="color: red;">Propriété :</span> Quand les issues d'une expérience aléatoire ont toutes la même probabilité (situation <span style="color: red;">équiprobable</span>) alors la probabilité d'un événement est :<br><br>
+        <div style="text-align: center; margin: 12px 0;">
+            <span class="frac" style="font-size: 1.1em;">
+                <span class="num"><em>nombre de cas favorables</em></span>
+                <span class="den"><em>nombre de cas possibles</em></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br><br>
+        Dans l'expérience 1, la situation est équiprobable (autant de chances d'obtenir pile que face).<br>
+        On considère l'événement A : « On obtient pile » alors :
+        <div style="text-align: center; margin: 8px 0;">
+            <span class="math">p(A) = </span>
+            <span class="frac"><span class="num">1</span><span class="den">2</span></span>
+        </div>
+
+        Dans l'expérience 2, la situation est équiprobable (autant de chances d'obtenir 1 que 2 que 3 … que 6).<br>
+        On considère l'événement B : « obtenir 1 ou 3 » alors :
+        <div style="text-align: center; margin: 8px 0;">
+            <span class="math">p(B) = </span>
+            <span class="frac"><span class="num">2</span><span class="den">6</span></span>
+            <span class="math"> = </span>
+            <span class="frac"><span class="num">1</span><span class="den">3</span></span>
+        </div>
+    </div>
+
+    <h3>Propriétés générales</h3>
+
+    <div class="property">
+        <span style="color: red;">Propriétés :</span>
+        <ul>
+            <li>Une probabilité est un nombre compris entre <strong>0 et 1</strong>.</li>
+            <li>Un événement qui ne peut pas se produire est dit <span style="color: red;"><strong>impossible</strong></span> et sa probabilité est nulle : <span class="math">p = 0</span>.</li>
+            <li>Un événement qui se produit nécessairement est dit <span style="color: red;"><strong>certain</strong></span> et sa probabilité est 1 : <span class="math">p = 1</span>.</li>
+            <li>La <strong>somme</strong> des probabilités de toutes les issues est égale à 1.</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br>
+        Dans l'expérience 2, l'événement C : « obtenir plus que 15 » est impossible donc <span class="math">p(C) = 0</span>.<br>
+        Dans l'expérience 2, l'événement D : « obtenir un nombre supérieur à 0 » est certain donc <span class="math">p(D) = 1</span>.<br>
+        Dans l'expérience 1, soit E : « on obtient pile » et F : « on obtient face ». <span class="math">p(E) + p(F) = </span><span class="frac"><span class="num">1</span><span class="den">2</span></span><span class="math"> + </span><span class="frac"><span class="num">1</span><span class="den">2</span></span><span class="math"> = 1</span>.
+    </div>
+
+    <h3>Événement contraire</h3>
+
+    <div class="property">
+        <span style="color: red;">Propriété :</span> La probabilité de l'événement <span class="math">Ḡ</span>, événement contraire d'un événement G, est :
+        <div style="text-align: center; margin: 10px 0;">
+            <span class="math">p(Ḡ) = 1 − p(G)</span>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong><br>
+        Dans l'expérience 2, l'événement H : « Obtenir un multiple de 3 » a pour événement contraire H̄ : « ne pas obtenir de multiple de 3 » ou bien « obtenir 1 ; 2 ; 4 ou 5 ».<br><br>
+        <span class="math">p(H) = </span><span class="frac"><span class="num">2</span><span class="den">6</span></span><span class="math"> = </span><span class="frac"><span class="num">1</span><span class="den">3</span></span>
+        &nbsp;&nbsp; donc &nbsp;&nbsp;
+        <span class="math">p(H̄) = 1 − </span><span class="frac"><span class="num">1</span><span class="den">3</span></span><span class="math"> = </span><span class="frac"><span class="num">2</span><span class="den">3</span></span>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Expérience à deux épreuves</h2>
+    <!-- ============================================================ -->
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Lorsqu'une expérience aléatoire comporte <span style="color: red;">deux épreuves</span>, on peut recenser toutes les issues possibles dans un <span style="color: red;">tableau à double entrée</span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> On lance deux dés non truqués et on s'intéresse à la somme des points obtenus.<br><br>
+        <table>
+            <tr>
+                <th style="background: #ddd;" colspan="2" rowspan="2">Somme</th>
+                <th colspan="6" style="background: #e8f0fe; text-align: center;">Dé 2</th>
+            </tr>
+            <tr>
+                <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th>
+            </tr>
+            <tr>
+                <th rowspan="6" style="background: #e8f0fe; writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); padding: 8px 4px;">Dé 1</th>
+                <th>1</th>
+                <td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td>
+            </tr>
+            <tr>
+                <th>2</th>
+                <td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td>
+            </tr>
+            <tr>
+                <th>3</th>
+                <td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td>
+            </tr>
+            <tr>
+                <th>4</th>
+                <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td>
+            </tr>
+            <tr>
+                <th>5</th>
+                <td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
+            </tr>
+            <tr>
+                <th>6</th>
+                <td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
+            </tr>
+        </table>
+        <br>
+        Il y a <strong>36 cases</strong> au total donc 36 issues équiprobables.<br><br>
+        Soit A l'événement « obtenir une somme égale à 7 » :<br>
+        On compte 6 cases avec la valeur 7 donc :
+        <div style="text-align: center; margin: 8px 0;">
+            <span class="math">p(A) = </span>
+            <span class="frac"><span class="num">6</span><span class="den">36</span></span>
+            <span class="math"> = </span>
+            <span class="frac"><span class="num">1</span><span class="den">6</span></span>
+        </div>
+    </div>
+
+</body>
+</html>
