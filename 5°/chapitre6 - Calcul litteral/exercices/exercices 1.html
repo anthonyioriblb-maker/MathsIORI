@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiche d'exercices — Calcul littéral</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6fa;
+      color: #222;
+      padding: 20px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.7em;
+      color: #2E4057;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #2E4057;
+    }
+
+    .exo {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .exo-header {
+      background: #2E4057;
+      color: white;
+      font-weight: bold;
+      font-size: 1.05em;
+      padding: 8px 16px;
+    }
+
+    .exo-body {
+      padding: 10px 16px 8px;
+      font-size: 1em;
+      line-height: 1.7;
+    }
+
+    .exo-body p { margin-bottom: 4px; }
+
+    .formule {
+      text-align: center;
+      font-size: 1.15em;
+      font-weight: bold;
+      margin: 8px 0;
+      color: #2E4057;
+    }
+
+    .grille3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      margin: 8px 0;
+    }
+
+    .grille3 .cell {
+      text-align: center;
+      padding: 6px 4px;
+      font-size: 1em;
+    }
+
+    .programme {
+      background: #f0f3f8;
+      border: 1.5px solid #2E4057;
+      border-radius: 6px;
+      padding: 10px 20px;
+      margin: 10px auto;
+      width: fit-content;
+      min-width: 260px;
+      font-size: 1em;
+      line-height: 2;
+    }
+
+    /* Bouton correction */
+    .btn-corr {
+      display: block;
+      margin: 4px 16px 10px;
+      padding: 6px 16px;
+      background: #eef3fb;
+      border: 1.5px solid #1B6CA8;
+      border-radius: 5px;
+      color: #1B6CA8;
+      font-size: 0.92em;
+      font-weight: bold;
+      cursor: pointer;
+      width: fit-content;
+      transition: background 0.2s;
+    }
+    .btn-corr:hover { background: #d6e6f7; }
+
+    .correction { display: none; }
+    .correction.visible { display: block; }
+
+    .corr-box {
+      background: #f7faff;
+      border-top: 1px dashed #b0c8e8;
+      padding: 10px 16px 8px;
+      font-size: 0.97em;
+      line-height: 1.8;
+    }
+
+    .corr-box p { margin-bottom: 4px; }
+
+    .res { color: #1B6CA8; font-weight: bold; }
+    .etape { color: #777; font-size: 0.93em; display: block; padding-left: 16px; }
+    .vrai { color: #157A6E; font-weight: bold; }
+    .faux { color: #c0392b; font-weight: bold; }
+
+    /* Tableau test égalité */
+    .test-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95em;
+      margin-top: 4px;
+    }
+    .test-table th {
+      background: #dce6f0;
+      color: #2E4057;
+      padding: 6px 8px;
+      text-align: left;
+      border: 1px solid #b0c0d0;
+    }
+    .test-table td {
+      border: 1px solid #dde;
+      padding: 5px 8px;
+    }
+    .test-table tr:nth-child(even) td { background: #f5f8fc; }
+
+    sup { font-size: 0.72em; vertical-align: super; }
+
+    @media (max-width: 580px) {
+      .grille3 { grid-template-columns: 1fr; }
+      body { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Fiche d'exercices sur le calcul littéral</h1>
+
+<!-- ══ Exercice 1 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 1</div>
+  <div class="exo-body">
+    <p><b>1)</b> Simplifie les écritures suivantes :</p>
+    <div class="grille3">
+      <div class="cell">A = 3 × x − 7</div>
+      <div class="cell">B = 9 × a + 7 × b</div>
+      <div class="cell">C = a × 2</div>
+      <div class="cell">D = a × (b + 3)</div>
+      <div class="cell">E = 4 × x × y</div>
+      <div class="cell"></div>
+    </div>
+    <p><b>2)</b> Pourquoi dans l'écriture 3 × 5 ne peut-on pas supprimer le signe × ?</p>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <p><b>1)</b></p>
+      <div class="grille3">
+        <div class="cell">A = 3 × x − 7 → <span class="res">A = 3x − 7</span></div>
+        <div class="cell">B = 9 × a + 7 × b → <span class="res">B = 9a + 7b</span></div>
+        <div class="cell">C = a × 2 → <span class="res">C = 2a</span></div>
+        <div class="cell">D = a × (b + 3) → <span class="res">D = a(b + 3)</span></div>
+        <div class="cell">E = 4 × x × y → <span class="res">E = 4xy</span></div>
+        <div class="cell"></div>
+      </div>
+      <p><b>2)</b> Dans 3 × 5, les deux facteurs sont des <b>nombres</b>. Si on supprime le ×, on obtient 35, qui est un nombre complètement différent. On ne peut supprimer le × que lorsqu'un des facteurs est une lettre.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Exercice 2 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 2 — Calcule pour x = 2 et y = 5</div>
+  <div class="exo-body">
+    <div class="grille3">
+      <div class="cell">A = 10x − 2y</div>
+      <div class="cell">B = 4xy</div>
+      <div class="cell">C = 5(x + 2y)</div>
+    </div>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <p><b>A</b> = 10x − 2y</p>
+      <span class="etape">= 10×2 − 2×5</span>
+      <span class="etape">= 20 − 10</span>
+      <span class="res" style="padding-left:16px">= 10</span>
+      <br>
+      <p><b>B</b> = 4xy</p>
+      <span class="etape">= 4×2×5</span>
+      <span class="res" style="padding-left:16px">= 40</span>
+      <br>
+      <p><b>C</b> = 5(x + 2y)</p>
+      <span class="etape">= 5×(2 + 2×5)</span>
+      <span class="etape">= 5×(2 + 10)</span>
+      <span class="etape">= 5×12</span>
+      <span class="res" style="padding-left:16px">= 60</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Exercice 3 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 3 — Pointures</div>
+  <div class="exo-body">
+    <p>En France, la pointure P des chaussures est donnée par la formule :</p>
+    <div class="formule">P = 1,5L + 2</div>
+    <p>où L désigne la longueur du pied, en cm.</p>
+    <p style="margin-top:6px">Les pieds de Juliette mesurent 22 cm et ceux de Louis mesurent 24 cm. Calculer leurs pointures.</p>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <p><b>Juliette</b> (L = 22 cm) :</p>
+      <span class="etape">P = 1,5 × 22 + 2 = 33 + 2</span>
+      <span class="res" style="padding-left:16px">P = 35</span>
+      <br>
+      <p><b>Louis</b> (L = 24 cm) :</p>
+      <span class="etape">P = 1,5 × 24 + 2 = 36 + 2</span>
+      <span class="res" style="padding-left:16px">P = 38</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Exercice 4 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 4 — Fusée</div>
+  <div class="exo-body">
+    <p>La hauteur h (en mètres) d'une fusée t secondes après son lancement :</p>
+    <div class="formule">h = 60t − 4,9t²</div>
+    <p>À quelle hauteur se trouve la fusée :</p>
+    <p>a.  3 secondes après son lancement ?</p>
+    <p>b.  7 secondes après son lancement ?</p>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <p><b>a. t = 3 s :</b></p>
+      <span class="etape">h = 60×3 − 4,9×3²</span>
+      <span class="etape">= 180 − 4,9×9</span>
+      <span class="etape">= 180 − 44,1</span>
+      <span class="res" style="padding-left:16px">h = 135,9 m</span>
+      <br>
+      <p><b>b. t = 7 s :</b></p>
+      <span class="etape">h = 60×7 − 4,9×7²</span>
+      <span class="etape">= 420 − 4,9×49</span>
+      <span class="etape">= 420 − 240,1</span>
+      <span class="res" style="padding-left:16px">h = 179,9 m</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Exercice 5 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 5 — Ballons de basket</div>
+  <div class="exo-body">
+    <p>La gestionnaire d'un collège commande des ballons à 5,90 € l'unité. Frais de port : 5 €.</p>
+    <div class="formule">Montant à payer = 5,90 × n + 5</div>
+    <p><b>1.</b> Que représente n dans cette formule ?</p>
+    <p><b>2.</b> Quel est le montant à payer pour :</p>
+    <div class="grille3">
+      <div class="cell">a. n = 10 ?</div>
+      <div class="cell">b. n = 20 ?</div>
+      <div class="cell">c. n = 25 ?</div>
+    </div>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <p><b>1.</b> n représente le <span class="res">nombre de ballons commandés</span>.</p>
+      <br>
+      <p><b>2.</b></p>
+      <p><b>a. n = 10 :</b>
+        <span class="etape">5,90 × 10 + 5 = 59 + 5</span>
+        <span class="res" style="padding-left:16px">= 64 €</span>
+      </p>
+      <p><b>b. n = 20 :</b>
+        <span class="etape">5,90 × 20 + 5 = 118 + 5</span>
+        <span class="res" style="padding-left:16px">= 123 €</span>
+      </p>
+      <p><b>c. n = 25 :</b>
+        <span class="etape">5,90 × 25 + 5 = 147,50 + 5</span>
+        <span class="res" style="padding-left:16px">= 152,50 €</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Exercice 6 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 6 — Test d'égalité pour x = 4</div>
+  <div class="exo-body">
+    <div class="grille3">
+      <div class="cell">a. 8x + 5 = 37</div>
+      <div class="cell">b. 6x − 3 = 7x</div>
+      <div class="cell">c. 9 + 3x = 5x + 1</div>
+    </div>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <table class="test-table">
+        <tr><th>#</th><th>Membre gauche</th><th>Membre droit</th><th>Conclusion</th></tr>
+        <tr>
+          <td><b>a.</b></td>
+          <td>8×4 + 5 = 32 + 5 = <b>37</b></td>
+          <td><b>37</b></td>
+          <td class="vrai">37 = 37 ✓ VRAIE</td>
+        </tr>
+        <tr>
+          <td><b>b.</b></td>
+          <td>6×4 − 3 = 24 − 3 = <b>21</b></td>
+          <td>7×4 = <b>28</b></td>
+          <td class="faux">21 ≠ 28 ✗ FAUSSE</td>
+        </tr>
+        <tr>
+          <td><b>c.</b></td>
+          <td>9 + 3×4 = 9 + 12 = <b>21</b></td>
+          <td>5×4 + 1 = 20 + 1 = <b>21</b></td>
+          <td class="vrai">21 = 21 ✓ VRAIE</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Exercice 7 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 7 — Bracelets et collier</div>
+  <div class="exo-body">
+    <p>Lalie a payé 80 € pour trois bracelets et un collier. Elle écrit :</p>
+    <div class="formule">3x + y = 80</div>
+    <p><b>1.</b> Que représentent ici x et y ?</p>
+    <p><b>2.</b> Est-il possible que :</p>
+    <div class="grille3" style="grid-template-columns:1fr 1fr;">
+      <div class="cell">a. x = 12 et y = 44 ?</div>
+      <div class="cell">b. x = 16 et y = 22 ?</div>
+    </div>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <p><b>1.</b> x = <span class="res">prix d'un bracelet</span> (en €)  et  y = <span class="res">prix du collier</span> (en €).</p>
+      <br>
+      <p><b>2.</b></p>
+      <p><b>a.</b> x = 12, y = 44 :
+        <span class="etape">3×12 + 44 = 36 + 44 = 80</span>
+        <span class="vrai" style="padding-left:16px">80 = 80 ✓ POSSIBLE</span>
+      </p>
+      <p><b>b.</b> x = 16, y = 22 :
+        <span class="etape">3×16 + 22 = 48 + 22 = 70</span>
+        <span class="faux" style="padding-left:16px">70 ≠ 80 ✗ IMPOSSIBLE</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Exercice 8 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 8 — Programme de calcul</div>
+  <div class="exo-body">
+    <div class="programme">
+      • Choisir un nombre<br>
+      • Ajouter 4<br>
+      • Multiplier le résultat par 3
+    </div>
+    <p><b>1.</b> Quel sera le résultat si le nombre choisi est <b>2</b> ? <b>5</b> ?</p>
+    <p style="margin-top:6px"><b>2.</b> Quelle est l'expression littérale correspondant à ce programme ?</p>
+    <div class="grille3" style="margin-top:6px">
+      <div class="cell">x + 4 × 3 ?</div>
+      <div class="cell">4x + 3 ?</div>
+      <div class="cell">(x + 4) × 3 ?</div>
+    </div>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <p><b>1.</b></p>
+      <p>Nombre de départ <b>2</b> :
+        <span class="etape">(2 + 4) × 3 = 6 × 3</span>
+        <span class="res" style="padding-left:16px">= 18</span>
+      </p>
+      <p>Nombre de départ <b>5</b> :
+        <span class="etape">(5 + 4) × 3 = 9 × 3</span>
+        <span class="res" style="padding-left:16px">= 27</span>
+      </p>
+      <br>
+      <p><b>2.</b> La bonne expression est <span class="res">(x + 4) × 3</span>.<br>
+      On ajoute d'abord 4 au nombre (donc x + 4), puis on multiplie ce résultat par 3.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Exercice 9 ══ -->
+<div class="exo">
+  <div class="exo-header">Exercice 9 — Compléter le programme</div>
+  <div class="exo-body">
+    <p>Complète le programme pour que le résultat s'écrive <b>5x + 4</b> :</p>
+    <div class="programme">
+      • Choisir un nombre<br>
+      • ........................................<br>
+      • ........................................
+    </div>
+  </div>
+  <button class="btn-corr" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="corr-box">
+      <div class="programme" style="border-color:#1B6CA8; background:#f0f6ff;">
+        • Choisir un nombre<br>
+        • <span class="res">Multiplier par 5</span><br>
+        • <span class="res">Ajouter 4</span>
+      </div>
+      <p style="margin-top:8px">Vérification : x → ×5 → 5x → +4 → <span class="res">5x + 4</span> ✓</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleCorr(btn) {
+    const corr = btn.nextElementSibling;
+    const visible = corr.classList.toggle('visible');
+    btn.textContent = visible ? '▼ Masquer la correction' : '▶ Voir la correction';
+  }
+</script>
+
+</body>
+</html>

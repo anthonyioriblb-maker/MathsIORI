@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status -u)",
+      "Bash(git add \"3°/classe-3e.html\" \"4°/classe-4e.html\" \"5°/classe-5e.html\" \"6°/classe-6e.html\")",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git add \"3°/classe-3e.html\")",
+      "Bash(python3 -:*)",
+      "Bash(node --version)",
+      "Bash(git add -A)",
+      "Bash(git restore --staged \".claude/settings.local.json\" \"5°/chapitre6 - Calcul litteral/exercices/controle.html\" \"5°/chapitre6 - Calcul litteral/exercices/exercices.html\")",
+      "Bash(git add \"6°/classe-6e.html\")"
+    ]
+  }
+}
