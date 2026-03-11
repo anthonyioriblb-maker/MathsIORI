@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Correction – Calcul Littéral – 5ème</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 14px; padding: 20px 30px; color: #111; }
+
+  .titre {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: underline;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .exercice { margin-bottom: 18px; }
+
+  .ex-titre {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  /* Bloc de correction d'une question */
+  .q { margin-bottom: 10px; }
+  .q-label { font-weight: bold; margin-bottom: 3px; }
+
+  /* Lignes de calcul */
+  .calc {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin-left: 20px;
+  }
+  .calc .ligne {
+    line-height: 1.8;
+  }
+  /* Ligne avec commentaire discret */
+  .calc .ligne .com {
+    color: #777;
+    font-size: 12px;
+    margin-left: 12px;
+  }
+  /* Résultat encadré */
+  .calc .res {
+    display: inline-block;
+    border: 1.5px solid #111;
+    padding: 1px 8px;
+    margin-top: 2px;
+    font-weight: bold;
+  }
+
+  /* Vrai / Faux */
+  .vrai  { color: #1a7a1a; font-weight: bold; }
+  .faux  { color: #b00000; font-weight: bold; }
+
+  .sep { border: none; border-top: 1px dashed #ccc; margin: 14px 0; }
+
+  @media print {
+    body { padding: 10px 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="titre">Correction – Test : Calcul Littéral</div>
+
+<!-- ======= EXERCICE 1 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 1 – Réduire des expressions</div>
+
+  <div class="q">
+    <div class="q-label">a)</div>
+    <div class="calc">
+      <div class="ligne">A = 3x + 5 + 2x − 1</div>
+      <div class="ligne">A = (3x + 2x) + (5 − 1)</div>
+      <div class="ligne"><span class="res">A = 5x + 4</span></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-label">b)</div>
+    <div class="calc">
+      <div class="ligne">B = 7a − 3b + 2a + 8b − 5</div>
+      <div class="ligne">B = (7a + 2a) + (−3b + 8b) − 5</div>
+      <div class="ligne"><span class="res">B = 9a + 5b − 5</span></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-label">c)</div>
+    <div class="calc">
+      <div class="ligne">C = 4x² + 3x − x² + 2 − x</div>
+      <div class="ligne">C = (4x² − x²) + (3x − x) + 2</div>
+      <div class="ligne"><span class="res">C = 3x² + 2x + 2</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ======= EXERCICE 2 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 2</div>
+
+  <div class="q">
+    <div class="q-label">1.</div>
+    <div class="calc">
+      <div class="ligne">P<sub>carré</sub> = 4 × x</div>
+      <div class="ligne"><span class="res">P<sub>carré</sub> = 4x</span></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-label">2.</div>
+    <div class="calc">
+      <div class="ligne">P<sub>rect</sub> = 2 × (y + y + 4)</div>
+      <div class="ligne">P<sub>rect</sub> = 2 × (2y + 4)</div>
+      <div class="ligne"><span class="res">P<sub>rect</sub> = 4y + 8</span></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-label">3.</div>
+    <div class="calc">
+      <div class="ligne">P<sub>carré</sub> = 4 × 3 = 12</div>
+      <div class="ligne">P<sub>rect</sub> = 4 × 1 + 8 = 12</div>
+      <div class="ligne"><span class="res">Les deux périmètres sont égaux (12 unités).</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ======= EXERCICE 3 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 3</div>
+
+  <div class="q">
+    <div class="q-label">1. pour t = 4 :</div>
+    <div class="calc">
+      <div class="ligne">Membre gauche : 3 + 4 = 7</div>
+      <div class="ligne">Membre droit : 2 × 4 + 7 = 15</div>
+      <div class="ligne">7 ≠ 15 → <span class="faux">FAUSSE</span></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-label">2. pour t = 2 :</div>
+    <div class="calc">
+      <div class="ligne">Membre gauche : 4 × (2 − 1) = 4 × 1 = 4</div>
+      <div class="ligne">Membre droit : 2² = 4</div>
+      <div class="ligne">4 = 4 → <span class="vrai">VRAIE</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ======= EXERCICE 4 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 4</div>
+
+  <div class="q">
+    <div class="q-label">A</div>
+    <div class="calc">
+      <div class="ligne">A = s(s + 2)</div>
+      <div class="ligne">A = s × s + s × 2</div>
+      <div class="ligne"><span class="res">A = s² + 2s</span></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-label">B</div>
+    <div class="calc">
+      <div class="ligne">B = 4 + 3(2y − 5)</div>
+      <div class="ligne">B = 4 + 6y − 15</div>
+      <div class="ligne"><span class="res">B = 6y − 11</span></div>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="q-label">C</div>
+    <div class="calc">
+      <div class="ligne">C = 3,5(2 − b) + 8,2</div>
+      <div class="ligne">C = 7 − 3,5b + 8,2</div>
+      <div class="ligne"><span class="res">C = −3,5b + 15,2</span></div>
+    </div>
+  </div>
+</div>
+
+<hr class="sep">
+
+<!-- ======= EXERCICE 5 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 5</div>
+
+  <div class="q">
+    <div class="calc">
+      <div class="ligne">On note n le nombre de départ.</div>
+      <div class="ligne">Programme de Nour : 5n − 20</div>
+      <div class="ligne">Programme de Flore : n × (n − 4) = n² − 4n</div>
+      <div class="ligne" style="margin-top:4px;">Test avec n = 10 :</div>
+      <div class="ligne">Nour : 5 × 10 − 20 = 30</div>
+      <div class="ligne">Flore : 10 × (10 − 4) = 60</div>
+      <div class="ligne">30 ≠ 60</div>
+      <div class="ligne"><span class="res"><span class="faux">Non</span>, ce n'est pas toujours vrai. Le contre-exemple n = 10 le prouve.</span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

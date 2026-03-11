@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correction - Proportionnalité</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background-color: #27ae60;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        h2 {
+            color: #27ae60;
+            border-bottom: 2px solid #27ae60;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+        
+        .exercice {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .question {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        
+        .reponse {
+            background-color: #d4edda;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .methode {
+            background-color: #fff3cd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        td, th {
+            border: 2px solid #2c3e50;
+            padding: 10px;
+            text-align: center;
+            min-width: 60px;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .calcul {
+            font-family: 'Courier New', monospace;
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+        
+        .important {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .titre-question {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        ul {
+            line-height: 1.8;
+        }
+        
+        .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        
+        .fraction .numerateur {
+            display: block;
+            border-bottom: 1px solid #000;
+            padding: 0 5px;
+        }
+        
+        .fraction .denominateur {
+            display: block;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CORRECTION : PROPORTIONNALITÉ</h1>
+            <p style="margin: 5px 0;">6ème - Évaluation exemple</p>
+        </div>
+        
+        <div class="exercice">
+            <h2>EXERCICE 1 : Reconnaître une situation de proportionnalité</h2>
+            
+            <div class="question">
+                <div class="titre-question">1. Tableau des stylos</div>
+                <table>
+                    <tr>
+                        <th>Nombre de stylos</th>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>8</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <th>Prix en €</th>
+                        <td>6</td>
+                        <td>10</td>
+                        <td>16</td>
+                        <td>20</td>
+                    </tr>
+                </table>
+                
+                <div class="reponse">
+                    <p><strong>Justification :</strong></p>
+                    <p>On a :</p>
+                    <div class="calcul">
+                        <span class="fraction"><span class="numerateur">6</span><span class="denominateur">3</span></span> = 2 ; 
+                        <span class="fraction"><span class="numerateur">10</span><span class="denominateur">5</span></span> = 2 ; 
+                        <span class="fraction"><span class="numerateur">16</span><span class="denominateur">8</span></span> = 2 ; 
+                        <span class="fraction"><span class="numerateur">20</span><span class="denominateur">10</span></span> = 2
+                    </div>
+                    
+                    <p>Les quotients sont égaux.</p>
+                    <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie toujours par le même nombre : 2.</p>
+                    <p><span class="important">Réponse :</span> Dans ce cas les deux grandeurs sont <strong>proportionnelles</strong>. Un stylo coûte 2 €.</p>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="titre-question">2. Situation des croissants</div>
+                <p><em>« 3 croissants pour 2,70 €, 6 croissants pour 4,80 € »</em></p>
+                
+                <div class="reponse">
+                    <p><strong>Justification :</strong></p>
+                    <p>On a :</p>
+                    <div class="calcul">
+                        <span class="fraction"><span class="numerateur">2,70</span><span class="denominateur">3</span></span> = 0,90<br>
+                        <span class="fraction"><span class="numerateur">4,80</span><span class="denominateur">6</span></span> = 0,80
+                    </div>
+                    
+                    <p>Les quotients ne sont pas égaux (0,90 ≠ 0,80).</p>
+                    <p><span class="important">Réponse :</span> Dans ce cas les deux grandeurs <strong>ne sont pas proportionnelles</strong>.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exercice">
+            <h2>EXERCICE 2 : Calculs avec la proportionnalité</h2>
+            
+            <p><strong>Données :</strong> Marc a payé 4,20 € pour 3 kg de pommes.</p>
+            
+            <table>
+                <tr>
+                    <th>Masse (kg)</th>
+                    <td>3</td>
+                    <td>2,5</td>
+                    <td>?</td>
+                </tr>
+                <tr>
+                    <th>Prix (€)</th>
+                    <td>4,20</td>
+                    <td>?</td>
+                    <td>5,60</td>
+                </tr>
+            </table>
+            
+            <div class="reponse">
+                <div class="methode">
+                    <strong>Méthode : Trouver le coefficient pour passer de la première ligne à la deuxième ligne</strong>
+                </div>
+                
+                <p><strong>Calcul du coefficient :</strong></p>
+                <div class="calcul">
+                    <span class="fraction"><span class="numerateur">4,20</span><span class="denominateur">3</span></span> = 1,4
+                </div>
+                <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par 1,4.</p>
+                <p><strong>Pour passer de la deuxième ligne à la première ligne</strong>, on divise par 1,4.</p>
+            </div>
+            
+            <div class="question">
+                <div class="titre-question">a. Combien Sophie va-t-elle payer pour 2,5 kg de pommes ?</div>
+                
+                <div class="reponse">
+                    <p><strong>Calcul :</strong></p>
+                    <p>On passe de la première ligne à la deuxième ligne, donc on multiplie par 1,4.</p>
+                    <div class="calcul">
+                        2,5 × 1,4 = 3,50 €
+                    </div>
+                    
+                    <p><span class="important">Réponse :</span> Sophie va payer <strong>3,50 €</strong> pour 2,5 kg de pommes.</p>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="titre-question">b. Avec 5,60 €, quelle masse de pommes Thomas peut-il acheter ?</div>
+                
+                <div class="reponse">
+                    <p><strong>Calcul :</strong></p>
+                    <p>On passe de la deuxième ligne à la première ligne, donc on divise par 1,4.</p>
+                    <div class="calcul">
+                        5,60 ÷ 1,4 = 4 kg
+                    </div>
+                    
+                    <p><span class="important">Réponse :</span> Avec 5,60 €, Thomas peut acheter <strong>4 kg</strong> de pommes.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exercice">
+            <h2>EXERCICE 3 : Pourcentages</h2>
+            
+            <p><strong>Données :</strong></p>
+            <ul>
+                <li>Boîte de 120 chocolats</li>
+                <li>40 % de chocolats au lait</li>
+                <li>35 % de chocolats noirs</li>
+                <li>Le reste : chocolats blancs</li>
+            </ul>
+            
+            <div class="question">
+                <div class="titre-question">1. Combien de chocolats au lait contient la boîte ?</div>
+                
+                <div class="reponse">
+                    <div class="methode">
+                        <strong>Rappel :</strong> Appliquer 40 % à un nombre, c'est multiplier ce nombre par <span class="fraction"><span class="numerateur">40</span><span class="denominateur">100</span></span>
+                    </div>
+                    
+                    <p><strong>Calcul :</strong></p>
+                    <div class="calcul">
+                        120 × <span class="fraction"><span class="numerateur">40</span><span class="denominateur">100</span></span> = 120 × 0,4 = 48
+                    </div>
+                    
+                    <p><span class="important">Réponse :</span> La boîte contient <strong>48 chocolats au lait</strong>.</p>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="titre-question">2. Combien de chocolats blancs contient la boîte ?</div>
+                
+                <div class="reponse">
+                    <div class="methode">
+                        <strong>Méthode 1 : Calculer le pourcentage manquant puis appliquer le pourcentage</strong>
+                    </div>
+                    
+                    <p><strong>Étape 1 :</strong> Calculer le pourcentage de chocolats blancs</p>
+                    <div class="calcul">
+                        100 % - 40 % - 35 % = 25 %
+                    </div>
+                    <p>Les chocolats blancs représentent 25 % de la boîte.</p>
+                    
+                    <p><strong>Étape 2 :</strong> Calculer 25 % de 120</p>
+                    <div class="calcul">
+                        120 × <span class="fraction"><span class="numerateur">25</span><span class="denominateur">100</span></span> = 120 × 0,25 = 30
+                    </div>
+                    
+                    <p><span class="important">Réponse :</span> La boîte contient <strong>30 chocolats blancs</strong>.</p>
+                    
+                    <hr style="margin: 15px 0; border: 1px dashed #ccc;">
+                    
+                    <div class="methode">
+                        <strong>Méthode 2 : Soustraire les quantités dans le tableau</strong>
+                    </div>
+                    
+                    <p>On calcule d'abord 35 % de 120 (chocolats noirs) :</p>
+                    <div class="calcul">
+                        120 × <span class="fraction"><span class="numerateur">35</span><span class="denominateur">100</span></span> = 120 × 0,35 = 42 chocolats noirs
+                    </div>
+                    
+                    <p>Dans un tableau de proportionnalité on peut soustraire deux colonnes :</p>
+                    <div class="calcul">
+                        120 - 48 - 42 = 30 chocolats blancs
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exercice">
+            <h2>EXERCICE 4 : Échelles</h2>
+            
+            <p><strong>Données :</strong></p>
+            <ul>
+                <li>Statue de la Liberté : 93 m de haut</li>
+                <li>Échelle : <span class="fraction"><span class="numerateur">1</span><span class="denominateur">50</span></span> (1 m sur la maquette = 50 m en réalité)</li>
+                <li>Affirmation de Léa : la maquette ne dépassera pas 2 m</li>
+            </ul>
+            
+            <div class="question">
+                <div class="titre-question">A-t-elle raison ?</div>
+                
+                <div class="reponse">
+                    <div class="methode">
+                        <strong>Méthode : Trouver le coefficient pour passer de la deuxième ligne à la première ligne</strong>
+                    </div>
+                    
+                    <table>
+                        <tr>
+                            <th>Distance sur la maquette en m</th>
+                            <td>1</td>
+                            <td>?</td>
+                        </tr>
+                        <tr>
+                            <th>Distance réelle en m</th>
+                            <td>50</td>
+                            <td>93</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Calcul :</strong></p>
+                    <p>On cherche le nombre pour passer de la deuxième ligne à la première ligne.</p>
+                    <div class="calcul">
+                        <span class="fraction"><span class="numerateur">1</span><span class="denominateur">50</span></span> = 0,02
+                    </div>
+                    <p><strong>Pour passer de la deuxième ligne à la première ligne</strong>, on multiplie par 0,02.</p>
+                    
+                    <div class="calcul">
+                        Hauteur de la maquette = 93 × 0,02 = 1,86 m
+                    </div>
+                    
+                    <p><strong>Comparaison :</strong> 1,86 m < 2 m</p>
+                    
+                    <p><span class="important">Réponse :</span> Oui, Léa a raison. La maquette mesurera <strong>1,86 m</strong>, ce qui ne dépasse effectivement pas 2 m.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 15px; background-color: #d4edda; border-radius: 5px; border-left: 4px solid #28a745;">
+            <p style="margin: 0; font-weight: bold; color: #155724;">
+                📌 Points importants à retenir :
+            </p>
+            <ul style="color: #155724; margin: 10px 0;">
+                <li>Pour vérifier une proportionnalité : calculer les quotients et vérifier qu'ils sont égaux</li>
+                <li>Pour compléter un tableau : trouver le coefficient pour passer d'une ligne à l'autre</li>
+                <li>Pourcentage : multiplier par <span class="fraction"><span class="numerateur">x</span><span class="denominateur">100</span></span></li>
+                <li>Échelle : utiliser le coefficient de proportionnalité</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
