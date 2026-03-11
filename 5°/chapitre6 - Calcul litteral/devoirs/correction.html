@@ -61,6 +61,40 @@
 
   .sep { border: none; border-top: 1px dashed #ccc; margin: 14px 0; }
 
+  /* Programmes de calcul avec flèches */
+  .programmes-fleches {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    margin: 12px 0;
+  }
+  .prog-titre {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .programme-calcul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .etape-calcul {
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 3px 14px;
+    font-size: 13px;
+    background: #f9f9f9;
+    min-width: 60px;
+    text-align: center;
+  }
+  .fleche-calcul {
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 0.85em;
+  }
+
   @media print {
     body { padding: 10px 15px; }
   }
@@ -202,12 +236,33 @@
 
   <div class="q">
     <div class="calc">
-      <div class="ligne">On note n le nombre de départ.</div>
-      <div class="ligne">Programme de Nour : 5n − 20</div>
-      <div class="ligne">Programme de Flore : n × (n − 4) = n² − 4n</div>
-      <div class="ligne" style="margin-top:4px;">Test avec n = 10 :</div>
-      <div class="ligne">Nour : 5 × 10 − 20 = 30</div>
-      <div class="ligne">Flore : 10 × (10 − 4) = 60</div>
+      <div class="ligne">Contre-exemple avec n = 10 :</div>
+    </div>
+
+    <div class="programmes-fleches">
+      <div>
+        <div class="prog-titre">Programme de Nour</div>
+        <div class="programme-calcul">
+          <div class="etape-calcul">10</div>
+          <div class="fleche-calcul">↓ Multiplier par 5</div>
+          <div class="etape-calcul">50</div>
+          <div class="fleche-calcul">↓ Soustraire 20</div>
+          <div class="etape-calcul"><strong>30</strong></div>
+        </div>
+      </div>
+      <div>
+        <div class="prog-titre">Programme de Flore</div>
+        <div class="programme-calcul">
+          <div class="etape-calcul">10</div>
+          <div class="fleche-calcul">↓ Soustraire 4</div>
+          <div class="etape-calcul">6</div>
+          <div class="fleche-calcul">↓ Multiplier par 10</div>
+          <div class="etape-calcul"><strong>60</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc" style="margin-top:8px;">
       <div class="ligne">30 ≠ 60</div>
       <div class="ligne"><span class="res"><span class="faux">Non</span>, ce n'est pas toujours vrai. Le contre-exemple n = 10 le prouve.</span></div>
     </div>
