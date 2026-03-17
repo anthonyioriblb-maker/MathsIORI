@@ -84,8 +84,8 @@
         <svg width="600" height="440" viewBox="0 0 600 440"
              style="display:block;margin:10px auto;background:white;border:1px solid #ddd;">
             <defs>
-                <pattern id="grid" width="80" height="60" patternUnits="userSpaceOnUse" x="70" y="20">
-                    <path d="M 80 0 L 0 0 0 60" fill="none" stroke="#d5d5d5" stroke-width="0.7"/>
+                <pattern id="grid" width="80" height="24" patternUnits="userSpaceOnUse" x="70" y="20">
+                    <path d="M 80 0 L 0 0 0 24" fill="none" stroke="#d5d5d5" stroke-width="0.7"/>
                 </pattern>
                 <marker id="axArr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                     <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
@@ -104,12 +104,19 @@
                 <line x1="470" y1="376" x2="470" y2="384" stroke="#333" stroke-width="1.5"/><text x="470" y="400">5</text>
             </g>
             <!-- Y labels -->
-            <g font-size="13" text-anchor="end" fill="#333">
-                <line x1="66" y1="320" x2="74" y2="320" stroke="#333" stroke-width="1.5"/><text x="60" y="324">2,5</text>
-                <line x1="66" y1="260" x2="74" y2="260" stroke="#333" stroke-width="1.5"/><text x="60" y="264">5</text>
-                <line x1="66" y1="200" x2="74" y2="200" stroke="#333" stroke-width="1.5"/><text x="60" y="204">7,5</text>
-                <line x1="66" y1="140" x2="74" y2="140" stroke="#333" stroke-width="1.5"/><text x="60" y="144">10</text>
-                <line x1="66" y1="80"  x2="74" y2="80"  stroke="#333" stroke-width="1.5"/><text x="60" y="84">12,5</text>
+            <g font-size="12" text-anchor="end" fill="#333">
+                <line x1="66" y1="356" x2="74" y2="356" stroke="#333" stroke-width="1.5"/><text x="60" y="360">1</text>
+                <line x1="66" y1="332" x2="74" y2="332" stroke="#333" stroke-width="1.5"/><text x="60" y="336">2</text>
+                <line x1="66" y1="308" x2="74" y2="308" stroke="#333" stroke-width="1.5"/><text x="60" y="312">3</text>
+                <line x1="66" y1="284" x2="74" y2="284" stroke="#333" stroke-width="1.5"/><text x="60" y="288">4</text>
+                <line x1="66" y1="260" x2="74" y2="260" stroke="#333" stroke-width="2"/><text x="60" y="264" font-weight="bold" font-size="13">5</text>
+                <line x1="66" y1="236" x2="74" y2="236" stroke="#333" stroke-width="1.5"/><text x="60" y="240">6</text>
+                <line x1="66" y1="212" x2="74" y2="212" stroke="#333" stroke-width="1.5"/><text x="60" y="216">7</text>
+                <line x1="66" y1="188" x2="74" y2="188" stroke="#333" stroke-width="1.5"/><text x="60" y="192">8</text>
+                <line x1="66" y1="164" x2="74" y2="164" stroke="#333" stroke-width="1.5"/><text x="60" y="168">9</text>
+                <line x1="66" y1="140" x2="74" y2="140" stroke="#333" stroke-width="2"/><text x="60" y="144" font-weight="bold" font-size="13">10</text>
+                <line x1="66" y1="116" x2="74" y2="116" stroke="#333" stroke-width="1.5"/><text x="60" y="120">11</text>
+                <line x1="66" y1="92"  x2="74" y2="92"  stroke="#333" stroke-width="1.5"/><text x="60" y="96">12</text>
             </g>
             <text x="580" y="390" font-size="15" font-weight="bold" fill="#333">x</text>
             <text x="55"  y="13"  font-size="14" font-weight="bold" fill="#333">y</text>
