@@ -35,69 +35,36 @@
                 <line x1="275" y1="45"  x2="95"  y2="260" stroke="black" stroke-width="2.5"/>
                 <line x1="275" y1="45"  x2="455" y2="260" stroke="black" stroke-width="2.5"/>
                 <line x1="95"  y1="260" x2="455" y2="260" stroke="black" stroke-width="2.5"/>
-                <!-- Labels -->
                 <text x="275" y="33"  text-anchor="middle" font-size="20" font-weight="bold">A</text>
                 <text x="74"  y="272" text-anchor="middle" font-size="20" font-weight="bold">B</text>
                 <text x="476" y="272" text-anchor="middle" font-size="20" font-weight="bold">C</text>
-
-                <!-- Arc ROUGE à A (r=28) -->
-                <!--  angle to B: atan2(215,−180)≈2.269  angle to C: atan2(215,180)≈0.873  -->
+                <!-- Arc à A -->
                 <path d="M 291.5 67.9 A 28 28 0 0 1 258.5 67.9"
                       stroke="#e74c3c" stroke-width="2.5" fill="rgba(231,76,60,0.15)"/>
                 <text x="275" y="92" text-anchor="middle" font-size="14" fill="#e74c3c" font-weight="bold">70°</text>
-
-                <!-- Arc BLEU à B (r=28) -->
-                <!-- angle to A: ≈−0.873  angle to C: 0 -->
+                <!-- Arc à B -->
                 <path d="M 123 260 A 28 28 0 0 0 113.7 238.6"
                       stroke="#2980b9" stroke-width="2.5" fill="rgba(52,152,219,0.15)"/>
                 <text x="136" y="248" font-size="14" fill="#2980b9" font-weight="bold">50°</text>
 
-                <!-- Arc VERT à C (r=28) — réponse masquée -->
-                <path d="M 427 260 A 28 28 0 0 0 436.3 238.6"
-                      stroke="#27ae60" stroke-width="2.5" fill="rgba(39,174,96,0.15)"/>
-                <text id="valAngleC" x="418" y="248" font-size="14" fill="#27ae60" font-weight="bold" opacity="0">60°</text>
             </svg>
         </div>
 
-        <div style="text-align: center; margin-top: 8px;">
-            <button id="btnAngleC" onclick="toggleAngleC()" style="background:#3498db;color:white;border:none;padding:7px 18px;border-radius:5px;cursor:pointer;font-size:14px;">
-                Afficher la réponse
-            </button>
-        </div>
-
-        <script>
-            function toggleAngleC() {
-                const el = document.getElementById('valAngleC');
-                const btn = document.getElementById('btnAngleC');
-                if (el.getAttribute('opacity') === '0') {
-                    el.setAttribute('opacity', '1');
-                    btn.style.backgroundColor = '#27ae60';
-                    btn.textContent = 'Masquer la réponse';
-                } else {
-                    el.setAttribute('opacity', '0');
-                    btn.style.backgroundColor = '#3498db';
-                    btn.textContent = 'Afficher la réponse';
-                }
-            }
-        </script>
-
         <div class="method" style="margin-top: 10px;">
-            <strong>Méthode :</strong><br>
-            D'après la propriété : <span class="angle">BCA</span> = 180° − <span class="angle">BAC</span> − <span class="angle">ABC</span><br>
-            <span class="angle">BCA</span> = 180° − 70° − 50° = <strong>60°</strong>
+            <strong>Solution :</strong><br><br>
+            D'après la propriété, la somme des angles d'un triangle est égale à 180°, donc :<br><br>
+            <span class="angle">BCA</span> = 180° − <span class="angle">BAC</span> − <span class="angle">ABC</span><br>
+            <span class="angle">BCA</span> = 180° − 70° − 50°<br>
+            <span class="angle">BCA</span> = <strong>60°</strong>
         </div>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <h2>Inégalité triangulaire</h2>
 
-    <div class="definition">
-        <span style="color: red;">Définition :</span> Trois longueurs permettent de construire un triangle si et seulement si chacune d'elles est <span style="color: red;">strictement inférieure à la somme des deux autres</span>.
-    </div>
-
     <div class="important">
         <span style="color: red;">Propriété (inégalité triangulaire) :</span><br>
-        Trois longueurs <em>a</em>, <em>b</em> et <em>c</em> forment un triangle si et seulement si :<br><br>
+        Trois longueurs <em>a</em>, <em>b</em> et <em>c</em> permettent de construire un triangle si et seulement si :<br><br>
         <div style="text-align: center;">
             <em>a</em> &lt; <em>b</em> + <em>c</em> &nbsp;&nbsp;&nbsp; <strong>et</strong> &nbsp;&nbsp;&nbsp;
             <em>b</em> &lt; <em>a</em> + <em>c</em> &nbsp;&nbsp;&nbsp; <strong>et</strong> &nbsp;&nbsp;&nbsp;
@@ -120,758 +87,9 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <h2>La médiatrice d'un segment</h2>
-
-    <div class="definition">
-        <span style="color: red;">Définition :</span> La <span style="color: red;">médiatrice</span> d'un segment [AB] est la droite qui est à la fois :<br>
-        <ul>
-            <li><span style="color: red;">perpendiculaire</span> au segment [AB],</li>
-            <li>passant par le <span style="color: red;">milieu</span> du segment [AB].</li>
-        </ul>
-    </div>
-
-    <div class="important">
-        <span style="color: red;">Propriété :</span> Un point M est sur la médiatrice du segment [AB]
-        si et seulement si il est <span style="color: red;">équidistant</span> de A et de B :<br><br>
-        <div style="text-align: center; font-size: 1.05em;">
-            M est sur la médiatrice de [AB] &nbsp;⟺&nbsp; MA = MB
-        </div>
-    </div>
-
-    <div class="example">
-        <strong>Exemple :</strong><br>
-        <div style="text-align: center; background: white; padding: 10px; border-radius: 5px; margin-top: 8px;">
-            <svg width="580" height="280" viewBox="0 0 580 280" style="max-width: 100%; height: auto;">
-                <!-- Segment AB : A=(60,195) B=(520,195) I=(290,195) milieu -->
-                <line x1="60"  y1="195" x2="520" y2="195" stroke="black" stroke-width="2.5"/>
-                <!-- Croix A -->
-                <line x1="55"  y1="190" x2="65"  y2="200" stroke="black" stroke-width="2"/>
-                <line x1="65"  y1="190" x2="55"  y2="200" stroke="black" stroke-width="2"/>
-                <text x="43"  y="215" font-size="18" font-weight="bold">A</text>
-                <!-- Croix B -->
-                <line x1="515" y1="190" x2="525" y2="200" stroke="black" stroke-width="2"/>
-                <line x1="525" y1="190" x2="515" y2="200" stroke="black" stroke-width="2"/>
-                <text x="527" y="215" font-size="18" font-weight="bold">B</text>
-
-                <!-- Milieu I -->
-                <line x1="285" y1="190" x2="295" y2="200" stroke="black" stroke-width="2"/>
-                <line x1="295" y1="190" x2="285" y2="200" stroke="black" stroke-width="2"/>
-                <text x="290" y="217" text-anchor="middle" font-size="15" fill="#555">I</text>
-
-                <!-- Carré angle droit (médiatrice ⊥ AB) -->
-                <polyline points="290,195 290,183 302,183" stroke="black" stroke-width="2" fill="none"/>
-
-                <!-- Médiatrice (droite verticale x=290, de y=20 à y=260) -->
-                <line x1="290" y1="20"  x2="290" y2="265" stroke="#e74c3c" stroke-width="2" stroke-dasharray="8,4"/>
-                <text x="300" y="28"  font-size="14" fill="#e74c3c" font-style="italic">médiatrice</text>
-
-                <!-- Point M sur la médiatrice -->
-                <line x1="285" y1="78" x2="295" y2="88" stroke="#2980b9" stroke-width="2.5"/>
-                <line x1="295" y1="78" x2="285" y2="88" stroke="#2980b9" stroke-width="2.5"/>
-                <text x="305" y="82" font-size="18" font-weight="bold" fill="#2980b9">M</text>
-
-                <!-- Segments MA et MB en pointillés -->
-                <line x1="60"  y1="195" x2="290" y2="83" stroke="#2980b9" stroke-width="1.8" stroke-dasharray="5,3"/>
-                <line x1="520" y1="195" x2="290" y2="83" stroke="#2980b9" stroke-width="1.8" stroke-dasharray="5,3"/>
-
-                <!-- Étiquettes MA et MB -->
-                <text x="155" y="133" font-size="14" fill="#2980b9" font-style="italic">MA</text>
-                <text x="408" y="133" font-size="14" fill="#2980b9" font-style="italic">MB</text>
-
-                <!-- Ticks égalité MA = MB -->
-                <!-- Milieu MA ≈ (175,139), perp: (112,230)/√... -->
-                <line x1="168" y1="143" x2="182" y2="135" stroke="#2980b9" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- Milieu MB ≈ (405,139) -->
-                <line x1="398" y1="135" x2="412" y2="143" stroke="#2980b9" stroke-width="2.5" stroke-linecap="round"/>
-
-                <!-- Annotation MA = MB -->
-                <text x="290" y="270" text-anchor="middle" font-size="15" fill="#2980b9">MA = MB ≈ 241</text>
-            </svg>
-        </div>
-        <div style="text-align:center; font-size:14px; color:#555; margin-top:4px;">
-            M est sur la médiatrice de [AB] &nbsp;⟹&nbsp; MA = MB
-        </div>
-    </div>
-
-    <!-- ─────────── Méthode compas ─────────── -->
-    <h3>Méthode 1 : avec le compas</h3>
-
-    <div class="example">
-        <strong>Énoncé :</strong> Construire la médiatrice du segment [AB].<br><br>
-
-        <div style="background:#e3f2fd;border-left:5px solid #2196f3;padding:12px 18px;margin-bottom:8px;color:#1565c0;font-size:16px;font-weight:500;min-height:50px;display:flex;align-items:center;">
-            <span id="stMC">Cliquez sur « Étape suivante » pour voir la construction.</span>
-        </div>
-
-        <div style="text-align:center;background:white;padding:6px;border-radius:5px;border:2px solid #ddd;">
-        <svg id="svgMC" width="530" height="330" viewBox="0 0 530 330"
-             style="max-width:100%;height:auto;background:#fafafa;display:block;margin:0 auto;">
-            <!-- Segment AB masqué au départ -->
-            <g id="grpABmc" opacity="0">
-                <line id="segABmc" x1="80" y1="240" x2="80" y2="240" stroke="black" stroke-width="2.5"/>
-                <line x1="75" y1="235" x2="85" y2="245" stroke="black" stroke-width="2"/>
-                <line x1="85" y1="235" x2="75" y2="245" stroke="black" stroke-width="2"/>
-                <text x="60" y="238" font-size="20" font-weight="bold">A</text>
-                <line x1="415" y1="235" x2="425" y2="245" stroke="black" stroke-width="2"/>
-                <line x1="425" y1="235" x2="415" y2="245" stroke="black" stroke-width="2"/>
-                <text x="430" y="238" font-size="20" font-weight="bold">B</text>
-            </g>
-            <!-- Arcs depuis A (rouge) et B (bleu) -->
-            <path id="arcAmc" d="" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="6,3" opacity="0"/>
-            <path id="arcBmc" d="" stroke="#3498db" stroke-width="2" fill="none" stroke-dasharray="6,3" opacity="0"/>
-            <!-- Points d'intersection P1 et P2 -->
-            <g id="ptsmc" opacity="0">
-                <line x1="245" y1="175" x2="255" y2="185" stroke="black" stroke-width="2"/>
-                <line x1="255" y1="175" x2="245" y2="185" stroke="black" stroke-width="2"/>
-                <line x1="245" y1="295" x2="255" y2="305" stroke="black" stroke-width="2"/>
-                <line x1="255" y1="295" x2="245" y2="305" stroke="black" stroke-width="2"/>
-            </g>
-            <!-- Médiatrice -->
-            <line id="medmc" x1="250" y1="80" x2="250" y2="310" stroke="#e74c3c" stroke-width="2.5"
-                  stroke-dasharray="9,4" opacity="0"/>
-            <!-- Milieu I et angle droit -->
-            <g id="milmc" opacity="0">
-                <line x1="245" y1="235" x2="255" y2="245" stroke="black" stroke-width="2"/>
-                <line x1="255" y1="235" x2="245" y2="245" stroke="black" stroke-width="2"/>
-                <text x="258" y="258" font-size="15" fill="#555">I</text>
-                <polyline points="250,240 250,228 262,228" stroke="black" stroke-width="1.8" fill="none"/>
-            </g>
-            <!-- Compas -->
-            <g id="cmpMC" opacity="0">
-                <circle id="mcH"  cx="0" cy="0" r="9"  fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
-                <line   id="mcPb" x1="0" y1="0" x2="0" y2="50" stroke="#ff8c00" stroke-width="5"/>
-                <circle id="mcPt" cx="0" cy="50" r="5" fill="#222" stroke="#000" stroke-width="1.5"/>
-                <line   id="mcNb" x1="0" y1="0" x2="0" y2="50" stroke="#ff8c00" stroke-width="5"/>
-                <rect   id="mcBd" x="-4" y="44" width="8" height="18" fill="#e74c3c" stroke="#cc0000" stroke-width="1.5" rx="2"/>
-                <polygon id="mcTp" points="0,62 -4,70 4,70" fill="#333"/>
-                <circle  id="mcPp" cx="0" cy="70" r="3" fill="#000"/>
-            </g>
-            <!-- Règle animée -->
-            <g id="rulMC" opacity="0" transform="translate(0,-150)"></g>
-        </svg>
-        </div>
-
-        <div style="text-align:center;margin-top:8px;display:flex;justify-content:center;gap:10px;">
-            <button id="btnMC" onclick="nextMC()"
-                style="background:#3498db;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
-                Étape suivante ▶
-            </button>
-            <button onclick="resetMC()"
-                style="background:#e74c3c;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
-                Recommencer ↺
-            </button>
-        </div>
-
-        <script>
-        (function(){
-            const A={x:80,y:240}, B={x:420,y:240};
-            const r=180; // rayon > AB/2=170
-            // Intersections des deux arcs :
-            // x = 250, y = 240 ± sqrt(180²-170²) = 240 ± 60
-            const P1={x:250,y:180}, P2={x:250,y:300};
-            let step=0, anim=false;
-
-            const texts=[
-                'Cliquez sur « Étape suivante » pour voir la construction.',
-                'Étape 1 – On trace le segment [AB] à la règle.',
-                'Étape 2 – On règle le compas sur un rayon supérieur à la moitié de AB. Pointe sèche en A, on trace un arc au-dessus et en-dessous.',
-                'Étape 3 – Sans changer l\'écartement, pointe sèche en B, on trace un second arc.',
-                'Étape 4 – La médiatrice passe par les deux points d\'intersection des arcs. On trace la droite.'
-            ];
-
-            function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
-
-            /* ── Règle ── */
-            function buildRuler(gId,x0,yBottom,nCm,ppCm){
-                const g=document.getElementById(gId),NS='http://www.w3.org/2000/svg';
-                const h=38,yTop=yBottom-h,tw=nCm*ppCm+24,xs=x0-8;
-                const rc=document.createElementNS(NS,'rect');
-                rc.setAttribute('x',xs);rc.setAttribute('y',yTop);rc.setAttribute('width',tw);rc.setAttribute('height',h);
-                rc.setAttribute('rx','3');rc.setAttribute('fill','rgba(215,235,255,0.93)');rc.setAttribute('stroke','#4488bb');rc.setAttribute('stroke-width','1.8');g.appendChild(rc);
-                const ed=document.createElementNS(NS,'line');
-                ed.setAttribute('x1',xs);ed.setAttribute('y1',yBottom);ed.setAttribute('x2',(xs+tw).toString());ed.setAttribute('y2',yBottom);
-                ed.setAttribute('stroke','#2266aa');ed.setAttribute('stroke-width','2.5');g.appendChild(ed);
-                const sh=document.createElementNS(NS,'line');
-                sh.setAttribute('x1',(xs+4).toString());sh.setAttribute('y1',(yTop+4).toString());sh.setAttribute('x2',(xs+tw-4).toString());sh.setAttribute('y2',(yTop+4).toString());
-                sh.setAttribute('stroke','rgba(255,255,255,0.65)');sh.setAttribute('stroke-width','3');sh.setAttribute('stroke-linecap','round');g.appendChild(sh);
-                for(let mm=0;mm<=nCm*10;mm++){
-                    const x=x0+mm*ppCm/10;let tH,sw,col;
-                    if(mm%10===0){tH=22;sw=1.6;col='#223';}else if(mm%5===0){tH=14;sw=1.2;col='#446';}else{tH=7;sw=0.8;col='#779';}
-                    const ln=document.createElementNS(NS,'line');
-                    ln.setAttribute('x1',x.toFixed(1));ln.setAttribute('y1',(yBottom-tH).toString());ln.setAttribute('x2',x.toFixed(1));ln.setAttribute('y2',yBottom.toString());
-                    ln.setAttribute('stroke',col);ln.setAttribute('stroke-width',sw.toString());g.appendChild(ln);
-                    if(mm%10===0&&mm>0){
-                        const tx=document.createElementNS(NS,'text');
-                        tx.setAttribute('x',x.toFixed(1));tx.setAttribute('y',(yTop+16).toString());
-                        tx.setAttribute('text-anchor','middle');tx.setAttribute('font-size','13');tx.setAttribute('font-weight','bold');tx.setAttribute('fill','#223');
-                        tx.textContent=String(mm/10);g.appendChild(tx);
-                    }
-                }
-            }
-            async function slideRuler(gId,d0,d1,dur){
-                const g=document.getElementById(gId);g.style.opacity='1';const N=28;
-                for(let i=0;i<=N;i++){const d=d0+(d1-d0)*i/N;g.setAttribute('transform',`translate(0,${d.toFixed(1)})`);await sleep(dur/N);}
-                if(d1<0)g.style.opacity='0';
-            }
-
-            /* ── Compas ── */
-            function setC(dry,pen){
-                const hx=(dry.x+pen.x)/2,hy=(dry.y+pen.y)/2;
-                document.getElementById('mcH').setAttribute('cx',hx);document.getElementById('mcH').setAttribute('cy',hy);
-                const pb=document.getElementById('mcPb');pb.setAttribute('x1',hx);pb.setAttribute('y1',hy);pb.setAttribute('x2',dry.x);pb.setAttribute('y2',dry.y);
-                document.getElementById('mcPt').setAttribute('cx',dry.x);document.getElementById('mcPt').setAttribute('cy',dry.y);
-                const nb=document.getElementById('mcNb');nb.setAttribute('x1',hx);nb.setAttribute('y1',hy);nb.setAttribute('x2',pen.x);nb.setAttribute('y2',pen.y);
-                const ang=Math.atan2(pen.y-hy,pen.x-hx),deg=ang*180/Math.PI;
-                document.getElementById('mcBd').setAttribute('transform',`translate(${pen.x},${pen.y-9}) rotate(${deg+90})`);
-                document.getElementById('mcTp').setAttribute('transform',`translate(${pen.x-4},${pen.y}) rotate(${deg+90} 4 0)`);
-                document.getElementById('mcPp').setAttribute('cx',pen.x);document.getElementById('mcPp').setAttribute('cy',pen.y);
-            }
-            async function openC(center,target,dur){
-                const N=30;
-                for(let i=0;i<=N;i++){
-                    const t=i/N;setC(center,{x:center.x+(target.x-center.x)*t,y:center.y+(target.y-center.y)*t});await sleep(dur/N);
-                }
-            }
-            async function moveC(fp,fe,tp,te,dur){
-                const N=40;
-                for(let i=0;i<=N;i++){
-                    const t=i/N;
-                    setC({x:fp.x+(tp.x-fp.x)*t,y:fp.y+(tp.y-fp.y)*t},{x:fe.x+(te.x-fe.x)*t,y:fe.y+(te.y-fe.y)*t});
-                    await sleep(dur/N);
-                }
-            }
-
-            /* ── Arc progressif ── */
-            async function drawArc(pathId,cx,cy,radius,a0,a1,dur){
-                const el=document.getElementById(pathId);el.style.opacity='1';
-                const N=55;let d='';
-                for(let i=0;i<=N;i++){
-                    const a=a0+(a1-a0)*i/N;
-                    const px=(cx+radius*Math.cos(a)).toFixed(1),py=(cy+radius*Math.sin(a)).toFixed(1);
-                    d+=(i===0?'M ':'L ')+px+' '+py+' ';
-                    el.setAttribute('d',d);
-                    setC(i===0?{x:cx,y:cy}:{x:cx,y:cy},{x:cx+radius*Math.cos(a),y:cy+radius*Math.sin(a)});
-                    if(i<N)await sleep(dur/N);
-                }
-            }
-
-            /* ── Arc partiel (ajoute au path existant sans effacer) ── */
-            async function drawArcPartial(pathId,cx,cy,radius,a0,a1,dur){
-                const el=document.getElementById(pathId);el.style.opacity='1';
-                const N=25;
-                let d=el.getAttribute('d')||'';
-                for(let i=0;i<=N;i++){
-                    const a=a0+(a1-a0)*i/N;
-                    const px=(cx+radius*Math.cos(a)).toFixed(1),py=(cy+radius*Math.sin(a)).toFixed(1);
-                    d+=(i===0?' M ':' L ')+px+' '+py;
-                    el.setAttribute('d',d);
-                    setC({x:cx,y:cy},{x:cx+radius*Math.cos(a),y:cy+radius*Math.sin(a)});
-                    if(i<N)await sleep(dur/N);
-                }
-            }
-
-            buildRuler('rulMC',80,240,7,50);
-
-            window.nextMC=async function(){
-                if(anim||step>=4)return;
-                const btn=document.getElementById('btnMC');btn.disabled=true;anim=true;step++;
-                document.getElementById('stMC').textContent=texts[step];
-
-                if(step===1){
-                    await slideRuler('rulMC',-150,0,480);await sleep(200);
-                    document.getElementById('grpABmc').style.opacity='1';
-                    const seg=document.getElementById('segABmc');seg.style.opacity='1';
-                    const N=40;for(let i=0;i<=N;i++){seg.setAttribute('x2',(80+(420-80)*i/N).toFixed(1));await sleep(700/N);}
-                    await sleep(300);await slideRuler('rulMC',0,-150,380);
-
-                }else if(step===2){
-                    // Compas depuis A : ouverture jusqu'à P1 (rayon = dist A→P1)
-                    const cmp=document.getElementById('cmpMC');cmp.style.opacity='1';
-                    setC(A,A);await sleep(300);
-                    await openC(A,P1,1200);await sleep(300);
-                    // Arc depuis A : de l'angle vers P1 jusqu'à P2 (demi-arc ~120° de chaque côté)
-                    const aA0=Math.atan2(P1.y-A.y,P1.x-A.x)-0.3;
-                    const aA1=Math.atan2(P2.y-A.y,P2.x-A.x)+0.3;
-                    await drawArc('arcAmc',A.x,A.y,r,aA0,aA1,1400);
-                    // Le compas RESTE ouvert et visible — on le déplace vers B
-                    await sleep(500);
-
-                }else if(step===3){
-                    // Compas se déplace de A vers B EN GARDANT le même écartement
-                    const cmp=document.getElementById('cmpMC');cmp.style.opacity='1';
-                    // Position actuelle : pointe en A, crayon en direction de P1
-                    const penCurr={x:A.x+r*Math.cos(Math.atan2(P1.y-A.y,P1.x-A.x)),
-                                   y:A.y+r*Math.sin(Math.atan2(P1.y-A.y,P1.x-A.x))};
-                    // Position cible : pointe en B, crayon même direction angulaire (vers P1 depuis B)
-                    const angToP1fromB=Math.atan2(P1.y-B.y,P1.x-B.x);
-                    const penTarget={x:B.x+r*Math.cos(angToP1fromB),
-                                     y:B.y+r*Math.sin(angToP1fromB)};
-                    // Déplacement en gardant l'écartement constant
-                    await moveC(A,penCurr,B,penTarget,900);
-                    await sleep(300);
-                    // Arc PARTIEL depuis B : juste autour des deux intersections (±0.4 rad)
-                    const aB_P1=Math.atan2(P1.y-B.y,P1.x-B.x);
-                    const aB_P2=Math.atan2(P2.y-B.y,P2.x-B.x);
-                    // Tracer deux petits arcs séparés autour de chaque intersection
-                    await drawArcPartial('arcBmc',B.x,B.y,r,aB_P1-0.35,aB_P1+0.35,600);
-                    await drawArcPartial('arcBmc',B.x,B.y,r,aB_P2-0.35,aB_P2+0.35,600);
-                    await sleep(400);
-                    document.getElementById('ptsmc').style.opacity='1';
-                    await sleep(400);cmp.style.opacity='0';
-
-                }else if(step===4){
-                    // Médiatrice + milieu I
-                    document.getElementById('medmc').style.opacity='1';
-                    await sleep(500);
-                    document.getElementById('milmc').style.opacity='1';
-                    btn.textContent='— Fin —';btn.style.backgroundColor='#888';
-                }
-                anim=false;if(step<4)btn.disabled=false;
-            };
-
-            window.resetMC=function(){
-                step=0;anim=false;
-                document.getElementById('stMC').textContent=texts[0];
-                ['grpABmc','arcAmc','arcBmc','ptsmc','medmc','milmc','cmpMC'].forEach(id=>document.getElementById(id).style.opacity='0');
-                document.getElementById('segABmc').setAttribute('x2','80');
-                document.getElementById('arcAmc').setAttribute('d','');
-                document.getElementById('arcBmc').setAttribute('d','');
-                document.getElementById('rulMC').setAttribute('transform','translate(0,-150)');
-                document.getElementById('rulMC').style.opacity='0';
-                const btn=document.getElementById('btnMC');btn.disabled=false;btn.textContent='Étape suivante ▶';btn.style.backgroundColor='#3498db';
-            };
-        })();
-        </script>
-
-        <div class="method" style="margin-top:12px;">
-            <strong>Protocole de construction :</strong><br><br>
-            <div style="padding-left:20px;">
-                1. Tracer le segment [AB].<br>
-                2. Régler le compas sur un rayon <strong>strictement supérieur à la moitié de AB</strong>.
-                   Pointe sèche en A, tracer un arc de cercle de part et d'autre de [AB].<br>
-                3. Sans changer l'écartement, pointe sèche en B, tracer un second arc.<br>
-                4. La médiatrice passe par les deux points d'intersection des arcs.
-            </div>
-        </div>
-    </div>
-
-    <!-- ─────────── Méthode équerre ─────────── -->
-    <h3>Méthode 2 : avec l'équerre et la règle</h3>
-
-    <div class="example">
-        <strong>Énoncé :</strong> Construire la médiatrice du segment [AB].<br><br>
-
-        <div style="background:#e3f2fd;border-left:5px solid #2196f3;padding:12px 18px;margin-bottom:8px;color:#1565c0;font-size:16px;font-weight:500;min-height:50px;display:flex;align-items:center;">
-            <span id="stME">Cliquez sur « Étape suivante » pour voir la construction.</span>
-        </div>
-
-        <div style="text-align:center;background:white;padding:6px;border-radius:5px;border:2px solid #ddd;">
-        <svg id="svgME" width="530" height="320" viewBox="0 0 530 320"
-             style="max-width:100%;height:auto;background:#fafafa;display:block;margin:0 auto;">
-            <!-- AB masqué : A=(80,240), B=(380,240), AB=300px=6cm à 50px/cm, I=(230,240) -->
-            <g id="grpABme" opacity="0">
-                <line id="segABme" x1="80" y1="240" x2="80" y2="240" stroke="black" stroke-width="2.5"/>
-                <line x1="75" y1="235" x2="85" y2="245" stroke="black" stroke-width="2"/>
-                <line x1="85" y1="235" x2="75" y2="245" stroke="black" stroke-width="2"/>
-                <text x="60" y="238" font-size="20" font-weight="bold">A</text>
-                <line x1="375" y1="235" x2="385" y2="245" stroke="black" stroke-width="2"/>
-                <line x1="385" y1="235" x2="375" y2="245" stroke="black" stroke-width="2"/>
-                <text x="390" y="238" font-size="20" font-weight="bold">B</text>
-            </g>
-            <!-- Milieu I -->
-            <g id="milme" opacity="0">
-                <line x1="225" y1="235" x2="235" y2="245" stroke="black" stroke-width="2"/>
-                <line x1="235" y1="235" x2="225" y2="245" stroke="black" stroke-width="2"/>
-                <text x="237" y="258" font-size="15" fill="#555">I</text>
-                <!-- Tick sur [AI] milieu=(155,240), perp=vertical -->
-                <line x1="155" y1="233" x2="155" y2="247" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- Tick sur [IB] milieu=(305,240), perp=vertical -->
-                <line x1="305" y1="233" x2="305" y2="247" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
-            </g>
-            <!-- Équerre (construite en JS, positionnée par transform) -->
-            <g id="eqme" opacity="0" transform="translate(80,240)"></g>
-            <!-- Médiatrice -->
-            <line id="medme" x1="230" y1="70" x2="230" y2="300" stroke="#e74c3c" stroke-width="2.5"
-                  stroke-dasharray="9,4" opacity="0"/>
-            <!-- Angle droit au milieu -->
-            <g id="adme" opacity="0">
-                <polyline points="230,240 230,228 242,228" stroke="black" stroke-width="1.8" fill="none"/>
-            </g>
-            <!-- Règle animée -->
-            <g id="rulME" opacity="0" transform="translate(0,-150)"></g>
-            <!-- Règle de mesure (pour trouver I) -->
-            <g id="rulME2" opacity="0" transform="translate(0,-150)"></g>
-        </svg>
-        </div>
-
-        <div style="text-align:center;margin-top:8px;display:flex;justify-content:center;gap:10px;">
-            <button id="btnME" onclick="nextME()"
-                style="background:#3498db;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
-                Étape suivante ▶
-            </button>
-            <button onclick="resetME()"
-                style="background:#e74c3c;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
-                Recommencer ↺
-            </button>
-        </div>
-
-        <script>
-        (function(){
-            let step=0, anim=false;
-            const texts=[
-                'Cliquez sur « Étape suivante » pour voir la construction.',
-                'Étape 1 – On trace le segment [AB] de longueur 6 cm à la règle.',
-                'Étape 2 – On mesure AB = 6 cm. On reporte AB÷2 = 3 cm depuis A pour trouver le milieu I.',
-                'Étape 3 – On place l\'équerre en I : l\'angle droit sur I, un côté le long de [AB].',
-                'Étape 4 – On trace la médiatrice le long du côté perpendiculaire de l\'équerre. On retire l\'équerre.'
-            ];
-
-            function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
-
-            /* ── Règle ── */
-            function buildRuler(gId,x0,yBottom,nCm,ppCm){
-                const g=document.getElementById(gId),NS='http://www.w3.org/2000/svg';
-                const h=38,yTop=yBottom-h,tw=nCm*ppCm+24,xs=x0-8;
-                const rc=document.createElementNS(NS,'rect');
-                rc.setAttribute('x',xs);rc.setAttribute('y',yTop);rc.setAttribute('width',tw);rc.setAttribute('height',h);
-                rc.setAttribute('rx','3');rc.setAttribute('fill','rgba(215,235,255,0.93)');rc.setAttribute('stroke','#4488bb');rc.setAttribute('stroke-width','1.8');g.appendChild(rc);
-                const ed=document.createElementNS(NS,'line');
-                ed.setAttribute('x1',xs);ed.setAttribute('y1',yBottom);ed.setAttribute('x2',(xs+tw).toString());ed.setAttribute('y2',yBottom);
-                ed.setAttribute('stroke','#2266aa');ed.setAttribute('stroke-width','2.5');g.appendChild(ed);
-                const sh=document.createElementNS(NS,'line');
-                sh.setAttribute('x1',(xs+4).toString());sh.setAttribute('y1',(yTop+4).toString());sh.setAttribute('x2',(xs+tw-4).toString());sh.setAttribute('y2',(yTop+4).toString());
-                sh.setAttribute('stroke','rgba(255,255,255,0.65)');sh.setAttribute('stroke-width','3');sh.setAttribute('stroke-linecap','round');g.appendChild(sh);
-                for(let mm=0;mm<=nCm*10;mm++){
-                    const x=x0+mm*ppCm/10;let tH,sw,col;
-                    if(mm%10===0){tH=22;sw=1.6;col='#223';}else if(mm%5===0){tH=14;sw=1.2;col='#446';}else{tH=7;sw=0.8;col='#779';}
-                    const ln=document.createElementNS(NS,'line');
-                    ln.setAttribute('x1',x.toFixed(1));ln.setAttribute('y1',(yBottom-tH).toString());ln.setAttribute('x2',x.toFixed(1));ln.setAttribute('y2',yBottom.toString());
-                    ln.setAttribute('stroke',col);ln.setAttribute('stroke-width',sw.toString());g.appendChild(ln);
-                    if(mm%10===0&&mm>0){
-                        const tx=document.createElementNS(NS,'text');
-                        tx.setAttribute('x',x.toFixed(1));tx.setAttribute('y',(yTop+16).toString());
-                        tx.setAttribute('text-anchor','middle');tx.setAttribute('font-size','13');tx.setAttribute('font-weight','bold');tx.setAttribute('fill','#223');
-                        tx.textContent=String(mm/10);g.appendChild(tx);
-                    }
-                }
-            }
-            async function slideRuler(gId,d0,d1,dur){
-                const g=document.getElementById(gId);g.style.opacity='1';const N=28;
-                for(let i=0;i<=N;i++){const d=d0+(d1-d0)*i/N;g.setAttribute('transform',`translate(0,${d.toFixed(1)})`);await sleep(dur/N);}
-                if(d1<0)g.style.opacity='0';
-            }
-
-            /* ── Équerre (triangle rectangle) ──
-               angle droit à (0,0), jambe H vers la droite (leg=75px), jambe V vers le haut (leg=90px)
-               Positionnée par translate(cx, cy) sur le SVG */
-            function buildEq(gId){
-                const g=document.getElementById(gId),NS='http://www.w3.org/2000/svg';
-                // Corps
-                const poly=document.createElementNS(NS,'polygon');
-                poly.setAttribute('points','0,0 75,0 0,-92');
-                poly.setAttribute('fill','rgba(180,220,255,0.82)');
-                poly.setAttribute('stroke','#2255aa');poly.setAttribute('stroke-width','2');
-                g.appendChild(poly);
-                // Angle droit
-                const sq=document.createElementNS(NS,'polyline');
-                sq.setAttribute('points','11,0 11,-11 0,-11');
-                sq.setAttribute('stroke','#1144aa');sq.setAttribute('stroke-width','1.8');sq.setAttribute('fill','none');
-                g.appendChild(sq);
-            }
-            async function slideEq(xFrom,xTo,dur){
-                const g=document.getElementById('eqme');g.style.opacity='1';const N=36;
-                for(let i=0;i<=N;i++){
-                    const x=xFrom+(xTo-xFrom)*i/N;
-                    g.setAttribute('transform',`translate(${x.toFixed(1)},240)`);
-                    await sleep(dur/N);
-                }
-            }
-            async function fadeEq(dur){
-                const g=document.getElementById('eqme');const N=18;
-                for(let i=N;i>=0;i--){
-                    g.style.opacity=(i/N).toFixed(2);await sleep(dur/N);
-                }
-                g.style.opacity='0';
-            }
-            /* ── Médiatrice tracée progressivement (haut vers bas depuis I) ── */
-            async function drawMed(dur){
-                const el=document.getElementById('medme');el.style.opacity='1';
-                // Anime via stroke-dashoffset
-                const len=230; // longueur totale
-                el.style.strokeDasharray=len+' '+len;
-                el.style.strokeDashoffset=len;
-                const N=40;
-                for(let i=0;i<=N;i++){
-                    el.style.strokeDashoffset=String(len*(1-i/N));
-                    await sleep(dur/N);
-                }
-                el.style.strokeDasharray='9,4';
-                el.style.strokeDashoffset='0';
-            }
-
-            buildRuler('rulME',80,240,6,50);
-            buildRuler('rulME2',80,240,6,50);
-            buildEq('eqme');
-
-            window.nextME=async function(){
-                if(anim||step>=4)return;
-                const btn=document.getElementById('btnME');btn.disabled=true;anim=true;step++;
-                document.getElementById('stME').textContent=texts[step];
-
-                if(step===1){
-                    // Règle trace AB
-                    await slideRuler('rulME',-150,0,480);await sleep(200);
-                    document.getElementById('grpABme').style.opacity='1';
-                    const seg=document.getElementById('segABme');seg.style.opacity='1';
-                    const N=40;for(let i=0;i<=N;i++){seg.setAttribute('x2',(80+(380-80)*i/N).toFixed(1));await sleep(700/N);}
-                    await sleep(300);await slideRuler('rulME',0,-150,380);
-
-                }else if(step===2){
-                    // Règle mesure le milieu : réapparaît, indicateur se déplace vers I
-                    await slideRuler('rulME2',-150,0,480);await sleep(400);
-                    // Point I apparaît progressivement
-                    document.getElementById('milme').style.opacity='1';
-                    await sleep(600);
-                    await slideRuler('rulME2',0,-150,380);
-
-                }else if(step===3){
-                    // Équerre glisse depuis A jusqu'en I=(230,240)
-                    await slideEq(80,230,900);
-
-                }else if(step===4){
-                    // Médiatrice se trace + angle droit + équerre disparaît
-                    await drawMed(900);
-                    document.getElementById('adme').style.opacity='1';
-                    await sleep(300);
-                    await fadeEq(500);
-                    btn.textContent='— Fin —';btn.style.backgroundColor='#888';
-                }
-                anim=false;if(step<4)btn.disabled=false;
-            };
-
-            window.resetME=function(){
-                step=0;anim=false;
-                document.getElementById('stME').textContent=texts[0];
-                ['grpABme','milme','eqme','adme'].forEach(id=>document.getElementById(id).style.opacity='0');
-                document.getElementById('segABme').setAttribute('x2','80');
-                const med=document.getElementById('medme');med.style.opacity='0';med.style.strokeDasharray='9,4';med.style.strokeDashoffset='0';
-                ['rulME','rulME2'].forEach(id=>{
-                    document.getElementById(id).setAttribute('transform','translate(0,-150)');
-                    document.getElementById(id).style.opacity='0';
-                });
-                const btn=document.getElementById('btnME');btn.disabled=false;btn.textContent='Étape suivante ▶';btn.style.backgroundColor='#3498db';
-            };
-        })();
-        </script>
-
-        <div class="method" style="margin-top:12px;">
-            <strong>Protocole de construction :</strong><br><br>
-            <div style="padding-left:20px;">
-                1. Tracer le segment [AB].<br>
-                2. Mesurer [AB] et reporter la moitié de cette longueur depuis A pour trouver le milieu I.<br>
-                3. Placer l'équerre en I : l'angle droit positionné sur I, un côté de l'équerre le long de [AB].<br>
-                4. Tracer la médiatrice le long du côté perpendiculaire de l'équerre.
-            </div>
-        </div>
-    </div>
-
-    <div class="property">
-        <span style="color: red;">Propriété :</span> Les trois médiatrices d'un triangle sont
-        <span style="color: red;">concourantes</span> : elles se coupent toutes en un même point
-        appelé le <span style="color: red;">centre du cercle circonscrit</span> au triangle
-        (le cercle qui passe par les trois sommets).
-    </div>
-
-    <div class="example">
-        <strong>Exemple :</strong> Triangle ABC et ses trois médiatrices.<br><br>
-        <div style="text-align:center; background:white; padding:10px; border-radius:5px;">
-        <svg width="500" height="300" viewBox="0 0 500 300"
-             style="max-width:100%;height:auto;">
-            <!-- Triangle A=(250,25) B=(55,275) C=(440,275) -->
-            <line x1="250" y1="25"  x2="55"  y2="275" stroke="black" stroke-width="2.5"/>
-            <line x1="55"  y1="275" x2="440" y2="275" stroke="black" stroke-width="2.5"/>
-            <line x1="440" y1="275" x2="250" y2="25"  stroke="black" stroke-width="2.5"/>
-            <!-- Sommets -->
-            <text x="240" y="17" font-size="19" font-weight="bold">A</text>
-            <text x="36"  y="285" font-size="19" font-weight="bold">B</text>
-            <text x="448" y="285" font-size="19" font-weight="bold">C</text>
-
-            <!-- Circumcenter O=(250,220), r≈198 -->
-            <!-- Milieu AB=(152.5,150), milieu BC=(247.5,275), milieu AC=(345,150) -->
-
-            <!-- Médiatrice de AB : milieu (152.5,150), direction perp à AB=(−250,250) → (1,1)/√2
-                 Ligne passant par (152.5,150) de direction (1,1) -->
-            <line x1="40"  y1="37"  x2="265" y2="262" stroke="#e74c3c" stroke-width="2"
-                  stroke-dasharray="8,4"/>
-            <!-- Carré angle droit sur AB au milieu (152.5,150) :
-                 AB direction=(−195,250)/|(−195,250)|≈(−0.615,0.788)
-                 perp=(0.788,0.615). Carré 10px -->
-            <polyline points="158.4,142.9 163.2,150.8 155.3,155.5 150.5,147.5"
-                      stroke="#e74c3c" stroke-width="1.8" fill="none"/>
-
-            <!-- Médiatrice de BC : milieu (247.5,275), direction verticale (BC horizontal) -->
-            <line x1="247.5" y1="110" x2="247.5" y2="290" stroke="#3498db" stroke-width="2"
-                  stroke-dasharray="8,4"/>
-            <!-- Carré angle droit sur BC au milieu (247.5,275) -->
-            <polyline points="247.5,265 257.5,265 257.5,275"
-                      stroke="#3498db" stroke-width="1.8" fill="none"/>
-
-            <!-- Médiatrice de AC : milieu (345,150), direction perp à AC=(190,250) → (−1,0.76)/√2
-                 AC direction=(190,250)/|(190,250)|=(0.604,0.797), perp=(−0.797,0.604)
-                 Ligne: milieu ± 130×perp -->
-            <line x1="449"  y1="72"  x2="241" y2="228" stroke="#27ae60" stroke-width="2"
-                  stroke-dasharray="8,4"/>
-            <!-- Carré angle droit sur AC au milieu (345,150) -->
-            <polyline points="340.2,157.2 347.4,152.4 352.2,159.6 345.0,164.4"
-                      stroke="#27ae60" stroke-width="1.8" fill="none"/>
-
-            <!-- Cercle circonscrit, centre O=(250,220), r≈198 -->
-            <circle cx="250" cy="220" r="198" fill="none" stroke="#999"
-                    stroke-width="1.5" stroke-dasharray="6,6"/>
-
-            <!-- Centre O -->
-            <circle cx="250" cy="220" r="5" fill="#e74c3c"/>
-            <text x="258" y="236" font-size="15" font-weight="bold" fill="#e74c3c">O</text>
-
-            <!-- Labels médiatrices -->
-            <text x="258" y="118" font-size="12" fill="#3498db" font-style="italic">méd. [BC]</text>
-            <text x="40"  y="30"  font-size="12" fill="#e74c3c" font-style="italic">méd. [AB]</text>
-            <text x="446" y="68"  font-size="12" fill="#27ae60" font-style="italic">méd. [AC]</text>
-        </svg>
-        </div>
-        <div style="text-align:center;font-size:14px;color:#555;margin-top:6px;">
-            O est équidistant des trois sommets : OA = OB = OC (rayon du cercle circonscrit).
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <h2>Les hauteurs d'un triangle</h2>
-
-    <div class="definition">
-        <span style="color: red;">Définition :</span> Une <span style="color: red;">hauteur</span> d'un triangle est un segment :<br>
-        <ul>
-            <li>issu d'un <span style="color: red;">sommet</span> du triangle,</li>
-            <li><span style="color: red;">perpendiculaire</span> au côté opposé (ou à son prolongement).</li>
-        </ul>
-        Le pied de la hauteur est le point de la droite du côté opposé situé à l'aplomb du sommet.<br>
-        Un triangle possède <span style="color:red;">trois hauteurs</span>.
-    </div>
-
-    <div class="remarque">
-        <strong>Remarque :</strong> Les trois hauteurs d'un triangle se coupent en un même point appelé l'<span style="color: red;">orthocentre</span> du triangle.
-    </div>
-
-    <div class="example">
-        <strong>Exemple :</strong> Les trois hauteurs d'un triangle et son orthocentre.<br>
-        <em>(Utiliser les boutons pour afficher chaque hauteur.)</em><br><br>
-
-        <div style="text-align: center; background: white; padding: 10px; border-radius: 5px;">
-            <svg id="hauteursSVG" width="620" height="330" viewBox="0 0 620 330" style="max-width: 100%; height: auto;">
-                <!-- Triangle ABC : A=(80,295) B=(540,295) C=(220,60) -->
-                <line x1="80"  y1="295" x2="540" y2="295" stroke="black" stroke-width="2.5"/>
-                <line x1="80"  y1="295" x2="220" y2="60"  stroke="black" stroke-width="2.5"/>
-                <line x1="540" y1="295" x2="220" y2="60"  stroke="black" stroke-width="2.5"/>
-                <!-- Labels -->
-                <text x="60"  y="313" font-size="19" font-weight="bold">A</text>
-                <text x="548" y="313" font-size="19" font-weight="bold">B</text>
-                <text x="213" y="50"  font-size="19" font-weight="bold">C</text>
-
-                <!-- HAUTEUR depuis C → H_c=(220,295) sur AB (AB horizontal) -->
-                <g id="hc" style="opacity:0; transition:opacity 0.4s;">
-                    <!-- Carré angle droit à H_c -->
-                    <polyline points="220,295 220,283 232,283" stroke="#e74c3c" stroke-width="2" fill="none"/>
-                    <!-- Segment hauteur CH_c -->
-                    <line x1="220" y1="60" x2="220" y2="295" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="8,4"/>
-                    <!-- Label H_c -->
-                    <text x="225" y="311" font-size="14" fill="#e74c3c">H<tspan font-size="11" dy="2">C</tspan></text>
-                </g>
-
-                <!-- HAUTEUR depuis A → H_a ≈ (234,80) sur BC
-                     BC vec=(−300,−235) len≈381.7
-                     t=(A−B)·(C−B)/|C−B|² = (−460,0)·(−300,−235)/145225 = 138000/145225≈0.9503
-                     H_a=B+t·(C−B)=(540−300×0.9503, 295−235×0.9503)=(254,71.7)≈(254,72) -->
-                <g id="ha" style="opacity:0; transition:opacity 0.4s;">
-                    <!-- Carré angle droit à H_a (≈254,72) le long de BC et de la hauteur) -->
-                    <!-- BC direction unit ≈ (−0.786,−0.616), perp ≈ (0.616,−0.786) toward A -->
-                    <!-- Carré: point+7*BC_unit, point+7*BC_unit+7*perp, point+7*perp -->
-                    <polyline points="248.5,67.7 242.8,71.6 246.7,77.3" stroke="#3498db" stroke-width="2" fill="none"/>
-                    <!-- Segment AH_a -->
-                    <line x1="80" y1="295" x2="254" y2="72" stroke="#3498db" stroke-width="2.5" stroke-dasharray="8,4"/>
-                    <text x="140" y="175" font-size="14" fill="#3498db">H<tspan font-size="11" dy="2">A</tspan></text>
-                </g>
-
-                <!-- HAUTEUR depuis B → H_b ≈ (204,91) sur AC
-                     AC vec=(140,−235) len=√(19600+55225)=√74825≈273.5
-                     t=(B−A)·(C−A)/|C−A|² = (460,0)·(140,−235)/74825 = 64400/74825≈0.8607
-                     H_b=A+t·(C−A)=(80+140×0.8607, 295−235×0.8607)=(200.5,92.7)≈(201,93) -->
-                <g id="hb" style="opacity:0; transition:opacity 0.4s;">
-                    <!-- Carré angle droit à H_b (≈201,93) -->
-                    <!-- AC direction unit ≈ (0.512,−0.859), perp ≈ (0.859,0.512) toward B -->
-                    <polyline points="206.6,89.0 210.6,95.0 204.5,98.6" stroke="#27ae60" stroke-width="2" fill="none"/>
-                    <!-- Segment BH_b -->
-                    <line x1="540" y1="295" x2="201" y2="93" stroke="#27ae60" stroke-width="2.5" stroke-dasharray="8,4"/>
-                    <text x="393" y="185" font-size="14" fill="#27ae60">H<tspan font-size="11" dy="2">B</tspan></text>
-                </g>
-
-                <!-- ORTHOCENTRE O ≈ intersection → x=220, vérif avec AH_a: t=(220-80)/(254-80)=0.805 → y=295-0.805*223=116 -->
-                <!-- Orthocentre ≈ (220,116) -->
-                <g id="ortho" style="opacity:0; transition:opacity 0.4s;">
-                    <circle cx="220" cy="116" r="5" fill="#8e44ad"/>
-                    <text x="228" y="112" font-size="14" fill="#8e44ad" font-weight="bold">O</text>
-                    <text x="228" y="127" font-size="12" fill="#8e44ad">(orthocentre)</text>
-                </g>
-            </svg>
-        </div>
-
-        <div style="text-align: center; margin-top: 8px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
-            <button id="btnHc" onclick="toggleHauteur('hc','btnHc','#e74c3c')"
-                style="background:#e74c3c;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
-                Hauteur de C
-            </button>
-            <button id="btnHa" onclick="toggleHauteur('ha','btnHa','#3498db')"
-                style="background:#3498db;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
-                Hauteur de A
-            </button>
-            <button id="btnHb" onclick="toggleHauteur('hb','btnHb','#27ae60')"
-                style="background:#27ae60;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
-                Hauteur de B
-            </button>
-            <button id="btnOrtho" onclick="toggleHauteur('ortho','btnOrtho','#8e44ad')"
-                style="background:#8e44ad;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
-                Orthocentre
-            </button>
-            <button onclick="resetHauteurs()"
-                style="background:#7f8c8d;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
-                Effacer
-            </button>
-        </div>
-
-        <script>
-            const hauteurState = { hc: false, ha: false, hb: false, ortho: false };
-            function toggleHauteur(id, btnId, color) {
-                const el  = document.getElementById(id);
-                const btn = document.getElementById(btnId);
-                hauteurState[id] = !hauteurState[id];
-                el.style.opacity = hauteurState[id] ? '1' : '0';
-                btn.style.backgroundColor = hauteurState[id] ? '#555' : color;
-            }
-            function resetHauteurs() {
-                ['hc','ha','hb','ortho'].forEach(id => {
-                    document.getElementById(id).style.opacity = '0';
-                    hauteurState[id] = false;
-                });
-                document.getElementById('btnHc').style.backgroundColor    = '#e74c3c';
-                document.getElementById('btnHa').style.backgroundColor    = '#3498db';
-                document.getElementById('btnHb').style.backgroundColor    = '#27ae60';
-                document.getElementById('btnOrtho').style.backgroundColor = '#8e44ad';
-            }
-        </script>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
     <h2>Protocole de construction d'un triangle</h2>
 
-    <h3>1) Construction d'un triangle connaissant ses trois côtés</h3>
+    <h3>Construction d'un triangle connaissant ses trois côtés</h3>
 
     <div class="example">
         <strong>Énoncé :</strong> Construire un triangle ABC tel que AB = 6 cm, BC = 4,5 cm et AC = 5 cm.<br><br>
@@ -1198,7 +416,7 @@
         </div>
     </div>
 
-    <h3>2) Construction connaissant un angle et les deux côtés adjacents</h3>
+    <h3>Construction connaissant un angle et les deux côtés adjacents</h3>
 
     <div class="example">
         <strong>Énoncé :</strong> Construire un triangle ABC tel que <span class="angle">BAC</span> = 50°, AB = 5 cm et AC = 4 cm.<br><br>
@@ -1575,7 +793,7 @@
     </div>
 
     <!-- ──────────────────────────────────────────────────────────── -->
-    <h3>3) Construction connaissant deux angles et le côté compris entre eux</h3>
+    <h3>Construction connaissant deux angles et le côté compris entre eux</h3>
 
     <div class="example">
         <strong>Énoncé :</strong> Construire un triangle ABC tel que BC = 5 cm,
@@ -1889,55 +1107,1083 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
-    <h2>Cas particuliers de triangles</h2>
+    <h2>La médiatrice d'un segment</h2>
 
-    <!-- ──────────────────── TRIANGLE ISOCÈLE ──────────────────── -->
-    <h3>1) Triangle isocèle</h3>
+    <div class="definition">
+        <span style="color: red;">Définition :</span> La <span style="color: red;">médiatrice</span> d'un segment [AB] est la droite qui est à la fois :<br>
+        <ul>
+            <li><span style="color: red;">perpendiculaire</span> au segment [AB],</li>
+            <li>passant par le <span style="color: red;">milieu</span> du segment [AB].</li>
+        </ul>
+    </div>
+
+    <!-- ─────────── Méthode équerre ─────────── -->
+    <h3>Méthode avec l'équerre et la règle</h3>
+
+    <div class="example">
+        <strong>Énoncé :</strong> Construire la médiatrice du segment [AB].<br><br>
+
+        <div style="background:#e3f2fd;border-left:5px solid #2196f3;padding:12px 18px;margin-bottom:8px;color:#1565c0;font-size:16px;font-weight:500;min-height:50px;display:flex;align-items:center;">
+            <span id="stME">Cliquez sur « Étape suivante » pour voir la construction.</span>
+        </div>
+
+        <div style="text-align:center;background:white;padding:6px;border-radius:5px;border:2px solid #ddd;">
+        <svg id="svgME" width="530" height="320" viewBox="0 0 530 320"
+             style="max-width:100%;height:auto;background:#fafafa;display:block;margin:0 auto;">
+            <!-- AB masqué : A=(80,240), B=(380,240), AB=300px=6cm à 50px/cm, I=(230,240) -->
+            <g id="grpABme" opacity="0">
+                <line id="segABme" x1="80" y1="240" x2="80" y2="240" stroke="black" stroke-width="2.5"/>
+                <line x1="75" y1="235" x2="85" y2="245" stroke="black" stroke-width="2"/>
+                <line x1="85" y1="235" x2="75" y2="245" stroke="black" stroke-width="2"/>
+                <text x="60" y="238" font-size="20" font-weight="bold">A</text>
+                <line x1="375" y1="235" x2="385" y2="245" stroke="black" stroke-width="2"/>
+                <line x1="385" y1="235" x2="375" y2="245" stroke="black" stroke-width="2"/>
+                <text x="390" y="238" font-size="20" font-weight="bold">B</text>
+            </g>
+            <!-- Milieu I -->
+            <g id="milme" opacity="0">
+                <line x1="225" y1="235" x2="235" y2="245" stroke="black" stroke-width="2"/>
+                <line x1="235" y1="235" x2="225" y2="245" stroke="black" stroke-width="2"/>
+                <text x="237" y="258" font-size="15" fill="#555">I</text>
+                <!-- Tick sur [AI] milieu=(155,240), perp=vertical -->
+                <line x1="155" y1="233" x2="155" y2="247" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Tick sur [IB] milieu=(305,240), perp=vertical -->
+                <line x1="305" y1="233" x2="305" y2="247" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <!-- Équerre (construite en JS, positionnée par transform) -->
+            <g id="eqme" opacity="0" transform="translate(80,240)"></g>
+            <!-- Médiatrice -->
+            <line id="medme" x1="230" y1="70" x2="230" y2="300" stroke="#e74c3c" stroke-width="2.5"
+                  stroke-dasharray="9,4" opacity="0"/>
+            <!-- Angle droit au milieu -->
+            <g id="adme" opacity="0">
+                <polyline points="230,240 230,228 242,228" stroke="black" stroke-width="1.8" fill="none"/>
+            </g>
+            <!-- Règle animée -->
+            <g id="rulME" opacity="0" transform="translate(0,-150)"></g>
+            <!-- Règle de mesure (pour trouver I) -->
+            <g id="rulME2" opacity="0" transform="translate(0,-150)"></g>
+        </svg>
+        </div>
+
+        <div style="text-align:center;margin-top:8px;display:flex;justify-content:center;gap:10px;">
+            <button id="btnME" onclick="nextME()"
+                style="background:#3498db;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
+                Étape suivante ▶
+            </button>
+            <button onclick="resetME()"
+                style="background:#e74c3c;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
+                Recommencer ↺
+            </button>
+        </div>
+
+        <script>
+        (function(){
+            let step=0, anim=false;
+            const texts=[
+                'Cliquez sur « Étape suivante » pour voir la construction.',
+                'Étape 1 – On trace le segment [AB] de longueur 6 cm à la règle.',
+                'Étape 2 – On mesure AB = 6 cm. On reporte AB÷2 = 3 cm depuis A pour trouver le milieu I.',
+                'Étape 3 – On place l\'équerre en I : l\'angle droit sur I, un côté le long de [AB].',
+                'Étape 4 – On trace la médiatrice le long du côté perpendiculaire de l\'équerre. On retire l\'équerre.'
+            ];
+
+            function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+            /* ── Règle ── */
+            function buildRuler(gId,x0,yBottom,nCm,ppCm){
+                const g=document.getElementById(gId),NS='http://www.w3.org/2000/svg';
+                const h=38,yTop=yBottom-h,tw=nCm*ppCm+24,xs=x0-8;
+                const rc=document.createElementNS(NS,'rect');
+                rc.setAttribute('x',xs);rc.setAttribute('y',yTop);rc.setAttribute('width',tw);rc.setAttribute('height',h);
+                rc.setAttribute('rx','3');rc.setAttribute('fill','rgba(215,235,255,0.93)');rc.setAttribute('stroke','#4488bb');rc.setAttribute('stroke-width','1.8');g.appendChild(rc);
+                const ed=document.createElementNS(NS,'line');
+                ed.setAttribute('x1',xs);ed.setAttribute('y1',yBottom);ed.setAttribute('x2',(xs+tw).toString());ed.setAttribute('y2',yBottom);
+                ed.setAttribute('stroke','#2266aa');ed.setAttribute('stroke-width','2.5');g.appendChild(ed);
+                const sh=document.createElementNS(NS,'line');
+                sh.setAttribute('x1',(xs+4).toString());sh.setAttribute('y1',(yTop+4).toString());sh.setAttribute('x2',(xs+tw-4).toString());sh.setAttribute('y2',(yTop+4).toString());
+                sh.setAttribute('stroke','rgba(255,255,255,0.65)');sh.setAttribute('stroke-width','3');sh.setAttribute('stroke-linecap','round');g.appendChild(sh);
+                for(let mm=0;mm<=nCm*10;mm++){
+                    const x=x0+mm*ppCm/10;let tH,sw,col;
+                    if(mm%10===0){tH=22;sw=1.6;col='#223';}else if(mm%5===0){tH=14;sw=1.2;col='#446';}else{tH=7;sw=0.8;col='#779';}
+                    const ln=document.createElementNS(NS,'line');
+                    ln.setAttribute('x1',x.toFixed(1));ln.setAttribute('y1',(yBottom-tH).toString());ln.setAttribute('x2',x.toFixed(1));ln.setAttribute('y2',yBottom.toString());
+                    ln.setAttribute('stroke',col);ln.setAttribute('stroke-width',sw.toString());g.appendChild(ln);
+                    if(mm%10===0&&mm>0){
+                        const tx=document.createElementNS(NS,'text');
+                        tx.setAttribute('x',x.toFixed(1));tx.setAttribute('y',(yTop+16).toString());
+                        tx.setAttribute('text-anchor','middle');tx.setAttribute('font-size','13');tx.setAttribute('font-weight','bold');tx.setAttribute('fill','#223');
+                        tx.textContent=String(mm/10);g.appendChild(tx);
+                    }
+                }
+            }
+            async function slideRuler(gId,d0,d1,dur){
+                const g=document.getElementById(gId);g.style.opacity='1';const N=28;
+                for(let i=0;i<=N;i++){const d=d0+(d1-d0)*i/N;g.setAttribute('transform',`translate(0,${d.toFixed(1)})`);await sleep(dur/N);}
+                if(d1<0)g.style.opacity='0';
+            }
+
+            /* ── Équerre (triangle rectangle) ──
+               angle droit à (0,0), jambe H vers la droite (leg=75px), jambe V vers le haut (leg=90px)
+               Positionnée par translate(cx, cy) sur le SVG */
+            function buildEq(gId){
+                const g=document.getElementById(gId),NS='http://www.w3.org/2000/svg';
+                // Corps
+                const poly=document.createElementNS(NS,'polygon');
+                poly.setAttribute('points','0,0 75,0 0,-92');
+                poly.setAttribute('fill','rgba(180,220,255,0.82)');
+                poly.setAttribute('stroke','#2255aa');poly.setAttribute('stroke-width','2');
+                g.appendChild(poly);
+                // Angle droit
+                const sq=document.createElementNS(NS,'polyline');
+                sq.setAttribute('points','11,0 11,-11 0,-11');
+                sq.setAttribute('stroke','#1144aa');sq.setAttribute('stroke-width','1.8');sq.setAttribute('fill','none');
+                g.appendChild(sq);
+            }
+            async function slideEq(xFrom,xTo,dur){
+                const g=document.getElementById('eqme');g.style.opacity='1';const N=36;
+                for(let i=0;i<=N;i++){
+                    const x=xFrom+(xTo-xFrom)*i/N;
+                    g.setAttribute('transform',`translate(${x.toFixed(1)},240)`);
+                    await sleep(dur/N);
+                }
+            }
+            async function fadeEq(dur){
+                const g=document.getElementById('eqme');const N=18;
+                for(let i=N;i>=0;i--){
+                    g.style.opacity=(i/N).toFixed(2);await sleep(dur/N);
+                }
+                g.style.opacity='0';
+            }
+            /* ── Médiatrice tracée progressivement (haut vers bas depuis I) ── */
+            async function drawMed(dur){
+                const el=document.getElementById('medme');el.style.opacity='1';
+                // Anime via stroke-dashoffset
+                const len=230; // longueur totale
+                el.style.strokeDasharray=len+' '+len;
+                el.style.strokeDashoffset=len;
+                const N=40;
+                for(let i=0;i<=N;i++){
+                    el.style.strokeDashoffset=String(len*(1-i/N));
+                    await sleep(dur/N);
+                }
+                el.style.strokeDasharray='9,4';
+                el.style.strokeDashoffset='0';
+            }
+
+            buildRuler('rulME',80,240,6,50);
+            buildRuler('rulME2',80,240,6,50);
+            buildEq('eqme');
+
+            window.nextME=async function(){
+                if(anim||step>=4)return;
+                const btn=document.getElementById('btnME');btn.disabled=true;anim=true;step++;
+                document.getElementById('stME').textContent=texts[step];
+
+                if(step===1){
+                    // Règle trace AB
+                    await slideRuler('rulME',-150,0,480);await sleep(200);
+                    document.getElementById('grpABme').style.opacity='1';
+                    const seg=document.getElementById('segABme');seg.style.opacity='1';
+                    const N=40;for(let i=0;i<=N;i++){seg.setAttribute('x2',(80+(380-80)*i/N).toFixed(1));await sleep(700/N);}
+                    await sleep(300);await slideRuler('rulME',0,-150,380);
+
+                }else if(step===2){
+                    // Règle mesure le milieu : réapparaît, indicateur se déplace vers I
+                    await slideRuler('rulME2',-150,0,480);await sleep(400);
+                    // Point I apparaît progressivement
+                    document.getElementById('milme').style.opacity='1';
+                    await sleep(600);
+                    await slideRuler('rulME2',0,-150,380);
+
+                }else if(step===3){
+                    // Équerre glisse depuis A jusqu'en I=(230,240)
+                    await slideEq(80,230,900);
+
+                }else if(step===4){
+                    // Médiatrice se trace + angle droit + équerre disparaît
+                    await drawMed(900);
+                    document.getElementById('adme').style.opacity='1';
+                    await sleep(300);
+                    await fadeEq(500);
+                    btn.textContent='— Fin —';btn.style.backgroundColor='#888';
+                }
+                anim=false;if(step<4)btn.disabled=false;
+            };
+
+            window.resetME=function(){
+                step=0;anim=false;
+                document.getElementById('stME').textContent=texts[0];
+                ['grpABme','milme','eqme','adme'].forEach(id=>document.getElementById(id).style.opacity='0');
+                document.getElementById('segABme').setAttribute('x2','80');
+                const med=document.getElementById('medme');med.style.opacity='0';med.style.strokeDasharray='9,4';med.style.strokeDashoffset='0';
+                ['rulME','rulME2'].forEach(id=>{
+                    document.getElementById(id).setAttribute('transform','translate(0,-150)');
+                    document.getElementById(id).style.opacity='0';
+                });
+                const btn=document.getElementById('btnME');btn.disabled=false;btn.textContent='Étape suivante ▶';btn.style.backgroundColor='#3498db';
+            };
+        })();
+        </script>
+
+        <div class="method" style="margin-top:12px;">
+            <strong>Protocole de construction :</strong><br><br>
+            <div style="padding-left:20px;">
+                1. Tracer le segment [AB].<br>
+                2. Mesurer [AB] et reporter la moitié de cette longueur depuis A pour trouver le milieu I.<br>
+                3. Placer l'équerre en I : l'angle droit positionné sur I, un côté de l'équerre le long de [AB].<br>
+                4. Tracer la médiatrice le long du côté perpendiculaire de l'équerre.
+            </div>
+        </div>
+    </div>
+
+    <h3>Propriétés</h3>
 
     <div class="property">
-        <span style="color: red;">Propriété 1 :</span> Si un triangle est
-        <span style="color: red;">isocèle</span> en A (c'est-à-dire AB = AC),
-        alors les <span style="color: red;">angles à la base sont égaux</span> :
-        <span class="angle">ABC</span> = <span class="angle">ACB</span>.
+        <span style="color: red;">Propriété :</span> Si un point M est sur la médiatrice du segment [AB],
+        alors il est <span style="color: red;">équidistant</span> de A et de B : MA = MB.
     </div>
 
     <div class="property">
-        <span style="color: red;">Propriété 2 (réciproque) :</span> Si un triangle ABC vérifie
-        <span class="angle">ABC</span> = <span class="angle">ACB</span>,
-        alors le triangle est <span style="color: red;">isocèle en A</span> (AB = AC).
+        <span style="color: red;">Réciproque :</span> Si un point M vérifie MA = MB,
+        alors il est sur la <span style="color: red;">médiatrice</span> du segment [AB].
+    </div>
+    <!-- ─────────── Méthode compas ─────────── -->
+    <h3>Méthode avec le compas</h3>
+
+    <div class="example">
+        <strong>Énoncé :</strong> Construire la médiatrice du segment [AB].<br><br>
+
+        <div style="background:#e3f2fd;border-left:5px solid #2196f3;padding:12px 18px;margin-bottom:8px;color:#1565c0;font-size:16px;font-weight:500;min-height:50px;display:flex;align-items:center;">
+            <span id="stMC">Cliquez sur « Étape suivante » pour voir la construction.</span>
+        </div>
+
+        <div style="text-align:center;background:white;padding:6px;border-radius:5px;border:2px solid #ddd;">
+        <svg id="svgMC" width="530" height="330" viewBox="0 0 530 330"
+             style="max-width:100%;height:auto;background:#fafafa;display:block;margin:0 auto;">
+            <!-- Segment AB masqué au départ -->
+            <g id="grpABmc" opacity="0">
+                <line id="segABmc" x1="80" y1="240" x2="80" y2="240" stroke="black" stroke-width="2.5"/>
+                <line x1="75" y1="235" x2="85" y2="245" stroke="black" stroke-width="2"/>
+                <line x1="85" y1="235" x2="75" y2="245" stroke="black" stroke-width="2"/>
+                <text x="60" y="238" font-size="20" font-weight="bold">A</text>
+                <line x1="415" y1="235" x2="425" y2="245" stroke="black" stroke-width="2"/>
+                <line x1="425" y1="235" x2="415" y2="245" stroke="black" stroke-width="2"/>
+                <text x="430" y="238" font-size="20" font-weight="bold">B</text>
+            </g>
+            <!-- Arcs depuis A (rouge) et B (bleu) -->
+            <path id="arcAmc" d="" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="6,3" opacity="0"/>
+            <path id="arcBmc" d="" stroke="#3498db" stroke-width="2" fill="none" stroke-dasharray="6,3" opacity="0"/>
+            <!-- Points d'intersection P1 et P2 -->
+            <g id="ptsmc" opacity="0">
+                <line x1="245" y1="175" x2="255" y2="185" stroke="black" stroke-width="2"/>
+                <line x1="255" y1="175" x2="245" y2="185" stroke="black" stroke-width="2"/>
+                <line x1="245" y1="295" x2="255" y2="305" stroke="black" stroke-width="2"/>
+                <line x1="255" y1="295" x2="245" y2="305" stroke="black" stroke-width="2"/>
+            </g>
+            <!-- Médiatrice -->
+            <line id="medmc" x1="250" y1="80" x2="250" y2="310" stroke="#e74c3c" stroke-width="2.5"
+                  stroke-dasharray="9,4" opacity="0"/>
+            <!-- Milieu I et angle droit -->
+            <g id="milmc" opacity="0">
+                <line x1="245" y1="235" x2="255" y2="245" stroke="black" stroke-width="2"/>
+                <line x1="255" y1="235" x2="245" y2="245" stroke="black" stroke-width="2"/>
+                <text x="258" y="258" font-size="15" fill="#555">I</text>
+                <polyline points="250,240 250,228 262,228" stroke="black" stroke-width="1.8" fill="none"/>
+            </g>
+            <!-- Compas -->
+            <g id="cmpMC" opacity="0">
+                <circle id="mcH"  cx="0" cy="0" r="9"  fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+                <line   id="mcPb" x1="0" y1="0" x2="0" y2="50" stroke="#ff8c00" stroke-width="5"/>
+                <circle id="mcPt" cx="0" cy="50" r="5" fill="#222" stroke="#000" stroke-width="1.5"/>
+                <line   id="mcNb" x1="0" y1="0" x2="0" y2="50" stroke="#ff8c00" stroke-width="5"/>
+                <rect   id="mcBd" x="-4" y="44" width="8" height="18" fill="#e74c3c" stroke="#cc0000" stroke-width="1.5" rx="2"/>
+                <polygon id="mcTp" points="0,62 -4,70 4,70" fill="#333"/>
+                <circle  id="mcPp" cx="0" cy="70" r="3" fill="#000"/>
+            </g>
+            <!-- Règle animée -->
+            <g id="rulMC" opacity="0" transform="translate(0,-150)"></g>
+        </svg>
+        </div>
+
+        <div style="text-align:center;margin-top:8px;display:flex;justify-content:center;gap:10px;">
+            <button id="btnMC" onclick="nextMC()"
+                style="background:#3498db;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
+                Étape suivante ▶
+            </button>
+            <button onclick="resetMC()"
+                style="background:#e74c3c;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
+                Recommencer ↺
+            </button>
+        </div>
+
+        <script>
+        (function(){
+            const A={x:80,y:240}, B={x:420,y:240};
+            const r=180; // rayon > AB/2=170
+            // Intersections des deux arcs :
+            // x = 250, y = 240 ± sqrt(180²-170²) = 240 ± 60
+            const P1={x:250,y:180}, P2={x:250,y:300};
+            let step=0, anim=false;
+
+            const texts=[
+                'Cliquez sur « Étape suivante » pour voir la construction.',
+                'Étape 1 – On trace le segment [AB] à la règle.',
+                'Étape 2 – On règle le compas sur un rayon supérieur à la moitié de AB. Pointe sèche en A, on trace un arc au-dessus et en-dessous.',
+                'Étape 3 – Sans changer l\'écartement, pointe sèche en B, on trace un second arc.',
+                'Étape 4 – La médiatrice passe par les deux points d\'intersection des arcs. On trace la droite.'
+            ];
+
+            function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+            /* ── Règle ── */
+            function buildRuler(gId,x0,yBottom,nCm,ppCm){
+                const g=document.getElementById(gId),NS='http://www.w3.org/2000/svg';
+                const h=38,yTop=yBottom-h,tw=nCm*ppCm+24,xs=x0-8;
+                const rc=document.createElementNS(NS,'rect');
+                rc.setAttribute('x',xs);rc.setAttribute('y',yTop);rc.setAttribute('width',tw);rc.setAttribute('height',h);
+                rc.setAttribute('rx','3');rc.setAttribute('fill','rgba(215,235,255,0.93)');rc.setAttribute('stroke','#4488bb');rc.setAttribute('stroke-width','1.8');g.appendChild(rc);
+                const ed=document.createElementNS(NS,'line');
+                ed.setAttribute('x1',xs);ed.setAttribute('y1',yBottom);ed.setAttribute('x2',(xs+tw).toString());ed.setAttribute('y2',yBottom);
+                ed.setAttribute('stroke','#2266aa');ed.setAttribute('stroke-width','2.5');g.appendChild(ed);
+                const sh=document.createElementNS(NS,'line');
+                sh.setAttribute('x1',(xs+4).toString());sh.setAttribute('y1',(yTop+4).toString());sh.setAttribute('x2',(xs+tw-4).toString());sh.setAttribute('y2',(yTop+4).toString());
+                sh.setAttribute('stroke','rgba(255,255,255,0.65)');sh.setAttribute('stroke-width','3');sh.setAttribute('stroke-linecap','round');g.appendChild(sh);
+                for(let mm=0;mm<=nCm*10;mm++){
+                    const x=x0+mm*ppCm/10;let tH,sw,col;
+                    if(mm%10===0){tH=22;sw=1.6;col='#223';}else if(mm%5===0){tH=14;sw=1.2;col='#446';}else{tH=7;sw=0.8;col='#779';}
+                    const ln=document.createElementNS(NS,'line');
+                    ln.setAttribute('x1',x.toFixed(1));ln.setAttribute('y1',(yBottom-tH).toString());ln.setAttribute('x2',x.toFixed(1));ln.setAttribute('y2',yBottom.toString());
+                    ln.setAttribute('stroke',col);ln.setAttribute('stroke-width',sw.toString());g.appendChild(ln);
+                    if(mm%10===0&&mm>0){
+                        const tx=document.createElementNS(NS,'text');
+                        tx.setAttribute('x',x.toFixed(1));tx.setAttribute('y',(yTop+16).toString());
+                        tx.setAttribute('text-anchor','middle');tx.setAttribute('font-size','13');tx.setAttribute('font-weight','bold');tx.setAttribute('fill','#223');
+                        tx.textContent=String(mm/10);g.appendChild(tx);
+                    }
+                }
+            }
+            async function slideRuler(gId,d0,d1,dur){
+                const g=document.getElementById(gId);g.style.opacity='1';const N=28;
+                for(let i=0;i<=N;i++){const d=d0+(d1-d0)*i/N;g.setAttribute('transform',`translate(0,${d.toFixed(1)})`);await sleep(dur/N);}
+                if(d1<0)g.style.opacity='0';
+            }
+
+            /* ── Compas ── */
+            function setC(dry,pen){
+                const hx=(dry.x+pen.x)/2,hy=(dry.y+pen.y)/2;
+                document.getElementById('mcH').setAttribute('cx',hx);document.getElementById('mcH').setAttribute('cy',hy);
+                const pb=document.getElementById('mcPb');pb.setAttribute('x1',hx);pb.setAttribute('y1',hy);pb.setAttribute('x2',dry.x);pb.setAttribute('y2',dry.y);
+                document.getElementById('mcPt').setAttribute('cx',dry.x);document.getElementById('mcPt').setAttribute('cy',dry.y);
+                const nb=document.getElementById('mcNb');nb.setAttribute('x1',hx);nb.setAttribute('y1',hy);nb.setAttribute('x2',pen.x);nb.setAttribute('y2',pen.y);
+                const ang=Math.atan2(pen.y-hy,pen.x-hx),deg=ang*180/Math.PI;
+                document.getElementById('mcBd').setAttribute('transform',`translate(${pen.x},${pen.y-9}) rotate(${deg+90})`);
+                document.getElementById('mcTp').setAttribute('transform',`translate(${pen.x-4},${pen.y}) rotate(${deg+90} 4 0)`);
+                document.getElementById('mcPp').setAttribute('cx',pen.x);document.getElementById('mcPp').setAttribute('cy',pen.y);
+            }
+            async function openC(center,target,dur){
+                const N=30;
+                for(let i=0;i<=N;i++){
+                    const t=i/N;setC(center,{x:center.x+(target.x-center.x)*t,y:center.y+(target.y-center.y)*t});await sleep(dur/N);
+                }
+            }
+            async function moveC(fp,fe,tp,te,dur){
+                const N=40;
+                for(let i=0;i<=N;i++){
+                    const t=i/N;
+                    setC({x:fp.x+(tp.x-fp.x)*t,y:fp.y+(tp.y-fp.y)*t},{x:fe.x+(te.x-fe.x)*t,y:fe.y+(te.y-fe.y)*t});
+                    await sleep(dur/N);
+                }
+            }
+
+            /* ── Arc progressif ── */
+            async function drawArc(pathId,cx,cy,radius,a0,a1,dur){
+                const el=document.getElementById(pathId);el.style.opacity='1';
+                const N=55;let d='';
+                for(let i=0;i<=N;i++){
+                    const a=a0+(a1-a0)*i/N;
+                    const px=(cx+radius*Math.cos(a)).toFixed(1),py=(cy+radius*Math.sin(a)).toFixed(1);
+                    d+=(i===0?'M ':'L ')+px+' '+py+' ';
+                    el.setAttribute('d',d);
+                    setC(i===0?{x:cx,y:cy}:{x:cx,y:cy},{x:cx+radius*Math.cos(a),y:cy+radius*Math.sin(a)});
+                    if(i<N)await sleep(dur/N);
+                }
+            }
+
+            /* ── Arc partiel (ajoute au path existant sans effacer) ── */
+            async function drawArcPartial(pathId,cx,cy,radius,a0,a1,dur){
+                const el=document.getElementById(pathId);el.style.opacity='1';
+                const N=25;
+                let d=el.getAttribute('d')||'';
+                for(let i=0;i<=N;i++){
+                    const a=a0+(a1-a0)*i/N;
+                    const px=(cx+radius*Math.cos(a)).toFixed(1),py=(cy+radius*Math.sin(a)).toFixed(1);
+                    d+=(i===0?' M ':' L ')+px+' '+py;
+                    el.setAttribute('d',d);
+                    setC({x:cx,y:cy},{x:cx+radius*Math.cos(a),y:cy+radius*Math.sin(a)});
+                    if(i<N)await sleep(dur/N);
+                }
+            }
+
+            buildRuler('rulMC',80,240,7,50);
+
+            window.nextMC=async function(){
+                if(anim||step>=4)return;
+                const btn=document.getElementById('btnMC');btn.disabled=true;anim=true;step++;
+                document.getElementById('stMC').textContent=texts[step];
+
+                if(step===1){
+                    await slideRuler('rulMC',-150,0,480);await sleep(200);
+                    document.getElementById('grpABmc').style.opacity='1';
+                    const seg=document.getElementById('segABmc');seg.style.opacity='1';
+                    const N=40;for(let i=0;i<=N;i++){seg.setAttribute('x2',(80+(420-80)*i/N).toFixed(1));await sleep(700/N);}
+                    await sleep(300);await slideRuler('rulMC',0,-150,380);
+
+                }else if(step===2){
+                    // Compas depuis A : ouverture jusqu'à P1 (rayon = dist A→P1)
+                    const cmp=document.getElementById('cmpMC');cmp.style.opacity='1';
+                    setC(A,A);await sleep(300);
+                    await openC(A,P1,1200);await sleep(300);
+                    // Arc depuis A : de l'angle vers P1 jusqu'à P2 (demi-arc ~120° de chaque côté)
+                    const aA0=Math.atan2(P1.y-A.y,P1.x-A.x)-0.3;
+                    const aA1=Math.atan2(P2.y-A.y,P2.x-A.x)+0.3;
+                    await drawArc('arcAmc',A.x,A.y,r,aA0,aA1,1400);
+                    // Le compas RESTE ouvert et visible — on le déplace vers B
+                    await sleep(500);
+
+                }else if(step===3){
+                    // Compas se déplace de A vers B EN GARDANT le même écartement
+                    const cmp=document.getElementById('cmpMC');cmp.style.opacity='1';
+                    // Position actuelle : pointe en A, crayon en direction de P1
+                    const penCurr={x:A.x+r*Math.cos(Math.atan2(P1.y-A.y,P1.x-A.x)),
+                                   y:A.y+r*Math.sin(Math.atan2(P1.y-A.y,P1.x-A.x))};
+                    // Position cible : pointe en B, crayon même direction angulaire (vers P1 depuis B)
+                    const angToP1fromB=Math.atan2(P1.y-B.y,P1.x-B.x);
+                    const penTarget={x:B.x+r*Math.cos(angToP1fromB),
+                                     y:B.y+r*Math.sin(angToP1fromB)};
+                    // Déplacement en gardant l'écartement constant
+                    await moveC(A,penCurr,B,penTarget,900);
+                    await sleep(300);
+                    // Arc PARTIEL depuis B : juste autour des deux intersections (±0.4 rad)
+                    const aB_P1=Math.atan2(P1.y-B.y,P1.x-B.x);
+                    const aB_P2=Math.atan2(P2.y-B.y,P2.x-B.x);
+                    // Tracer deux petits arcs séparés autour de chaque intersection
+                    await drawArcPartial('arcBmc',B.x,B.y,r,aB_P1-0.35,aB_P1+0.35,600);
+                    await drawArcPartial('arcBmc',B.x,B.y,r,aB_P2-0.35,aB_P2+0.35,600);
+                    await sleep(400);
+                    document.getElementById('ptsmc').style.opacity='1';
+                    await sleep(400);cmp.style.opacity='0';
+
+                }else if(step===4){
+                    // Médiatrice + milieu I
+                    document.getElementById('medmc').style.opacity='1';
+                    await sleep(500);
+                    document.getElementById('milmc').style.opacity='1';
+                    btn.textContent='— Fin —';btn.style.backgroundColor='#888';
+                }
+                anim=false;if(step<4)btn.disabled=false;
+            };
+
+            window.resetMC=function(){
+                step=0;anim=false;
+                document.getElementById('stMC').textContent=texts[0];
+                ['grpABmc','arcAmc','arcBmc','ptsmc','medmc','milmc','cmpMC'].forEach(id=>document.getElementById(id).style.opacity='0');
+                document.getElementById('segABmc').setAttribute('x2','80');
+                document.getElementById('arcAmc').setAttribute('d','');
+                document.getElementById('arcBmc').setAttribute('d','');
+                document.getElementById('rulMC').setAttribute('transform','translate(0,-150)');
+                document.getElementById('rulMC').style.opacity='0';
+                const btn=document.getElementById('btnMC');btn.disabled=false;btn.textContent='Étape suivante ▶';btn.style.backgroundColor='#3498db';
+            };
+        })();
+        </script>
+
+        <div class="method" style="margin-top:12px;">
+            <strong>Protocole de construction :</strong><br><br>
+            <div style="padding-left:20px;">
+                1. Tracer le segment [AB].<br>
+                2. Régler le compas sur un rayon <strong>strictement supérieur à la moitié de AB</strong>.
+                   Pointe sèche en A, tracer un arc de cercle de part et d'autre de [AB].<br>
+                3. Sans changer l'écartement, pointe sèche en B, tracer un second arc.<br>
+                4. La médiatrice passe par les deux points d'intersection des arcs.
+            </div>
+        </div>
+    </div>
+
+
+    <h3>Cercle circonscrit</h3>
+
+    <div class="property">
+        <span style="color: red;">Propriété :</span> Les trois médiatrices d'un triangle sont
+        <span style="color: red;">concourantes</span> : elles se coupent toutes en un même point
+        appelé le <span style="color: red;">centre du cercle circonscrit</span> au triangle
+        (le cercle qui passe par les trois sommets).
     </div>
 
     <div class="example">
-        <strong>Exemple :</strong> Triangle isocèle en A — AB = AC, donc
-        <span class="angle">ABC</span> = <span class="angle">ACB</span>.<br><br>
+        <strong>Construction :</strong> Trouver le centre du cercle circonscrit au triangle ABC.<br><br>
+
+        <div style="background:#e3f2fd;border-left:5px solid #2196f3;padding:12px 18px;margin-bottom:8px;color:#1565c0;font-size:16px;font-weight:500;min-height:50px;display:flex;align-items:center;">
+            <span id="stCC">Cliquez sur « Étape suivante » pour voir la construction.</span>
+        </div>
+
+        <div style="text-align:center;background:white;padding:6px;border-radius:5px;border:2px solid #ddd;">
+        <svg id="svgCC" width="530" height="420" viewBox="0 0 530 420"
+             style="max-width:100%;height:auto;background:#fafafa;display:block;margin:0 auto;">
+
+            <!-- Triangle A=(250,40) B=(80,270) C=(390,230) — toujours visible -->
+            <line x1="250" y1="40"  x2="80"  y2="270" stroke="black" stroke-width="2.5"/>
+            <line x1="80"  y1="270" x2="390" y2="230" stroke="black" stroke-width="2.5"/>
+            <line x1="390" y1="230" x2="250" y2="40"  stroke="black" stroke-width="2.5"/>
+            <text x="244" y="30"  font-size="19" font-weight="bold">A</text>
+            <text x="60"  y="284" font-size="19" font-weight="bold">B</text>
+            <text x="398" y="243" font-size="19" font-weight="bold">C</text>
+
+            <!-- Arcs depuis A (rouge) pour méd AB -->
+            <path id="arcA1cc" d="" stroke="#e74c3c" stroke-width="1.8" fill="none" stroke-dasharray="5,3" opacity="0"/>
+            <!-- Arcs depuis B (rouge aussi) pour méd AB -->
+            <path id="arcB1cc" d="" stroke="#e74c3c" stroke-width="1.8" fill="none" stroke-dasharray="5,3" opacity="0"/>
+            <!-- Médiatrice [AB] -->
+            <line id="medABcc" x1="36" y1="60" x2="294" y2="250" stroke="#e74c3c" stroke-width="2"
+                  stroke-dasharray="9,4" opacity="0"/>
+            <g id="sqABcc" opacity="0">
+                <polyline points="170.2,146.8 178.4,151.0 174.2,159.2 166.0,155.0"
+                          stroke="#e74c3c" stroke-width="1.6" fill="none"/>
+            </g>
+
+            <!-- Arcs depuis B (bleu) pour méd BC -->
+            <path id="arcB2cc" d="" stroke="#3498db" stroke-width="1.8" fill="none" stroke-dasharray="5,3" opacity="0"/>
+            <!-- Arcs depuis C (bleu aussi) pour méd BC -->
+            <path id="arcC2cc" d="" stroke="#3498db" stroke-width="1.8" fill="none" stroke-dasharray="5,3" opacity="0"/>
+            <!-- Médiatrice [BC] — endpoints exacts passant par O=(229,202) -->
+            <line id="medBCcc" x1="215" y1="91" x2="248" y2="343" stroke="#3498db" stroke-width="2"
+                  stroke-dasharray="9,4" opacity="0"/>
+            <g id="sqBCcc" opacity="0">
+                <!-- Carré angle droit au milieu de BC (235,250) -->
+                <polyline points="233.6,242.7 240.9,240.6 243.0,247.9 235.7,250.0"
+                          stroke="#3498db" stroke-width="1.6" fill="none"/>
+            </g>
+
+            <!-- Point O=(229,202) — croix -->
+            <g id="ptOcc" opacity="0">
+                <line x1="224" y1="197" x2="234" y2="207" stroke="#8e44ad" stroke-width="2.5"/>
+                <line x1="234" y1="197" x2="224" y2="207" stroke="#8e44ad" stroke-width="2.5"/>
+                <text x="238" y="198" font-size="15" font-weight="bold" fill="#8e44ad">O</text>
+            </g>
+
+            <!-- Cercle circonscrit animé -->
+            <path id="circCC" d="" stroke="#888" stroke-width="2"
+                  stroke-dasharray="8,5" fill="none" opacity="0"/>
+
+            <!-- Compas -->
+            <g id="cmpCC" opacity="0">
+                <circle id="ccH"  cx="0" cy="0" r="9"  fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+                <line   id="ccPb" x1="0" y1="0" x2="0" y2="50" stroke="#ff8c00" stroke-width="5"/>
+                <circle id="ccPt" cx="0" cy="50" r="5" fill="#222" stroke="#000" stroke-width="1.5"/>
+                <line   id="ccNb" x1="0" y1="0" x2="0" y2="50" stroke="#ff8c00" stroke-width="5"/>
+                <rect   id="ccBd" x="-4" y="44" width="8" height="18" fill="#e74c3c"
+                        stroke="#cc0000" stroke-width="1.5" rx="2"/>
+                <polygon id="ccTp" points="0,62 -4,70 4,70" fill="#333"/>
+                <circle  id="ccPp" cx="0" cy="70" r="3" fill="#000"/>
+            </g>
+        </svg>
+        </div>
+
+        <div style="text-align:center;margin-top:8px;display:flex;justify-content:center;gap:10px;">
+            <button id="btnCC" onclick="nextCC()"
+                style="background:#3498db;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
+                Étape suivante ▶
+            </button>
+            <button onclick="resetCC()"
+                style="background:#e74c3c;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
+                Recommencer ↺
+            </button>
+        </div>
+
+        <script>
+        (function(){
+            // Coordonnées
+            const A={x:250,y:40}, B={x:80,y:270}, C={x:390,y:230};
+            const O={x:229,y:202}, R=164;
+            // Rayons des arcs pour chaque médiatrice
+            const r_AB=180, r_BC=200;
+            // Points d'intersection des arcs pour méd AB
+            const P1AB={x:77,y:90}, P2AB={x:253,y:220};
+            // Points d'intersection des arcs pour méd BC
+            const P1BC={x:251,y:374}, P2BC={x:219,y:126};
+
+            let step=0, anim=false;
+            const texts=[
+                'Cliquez sur « Étape suivante » pour voir la construction.',
+                'Étape 1 – On trace la médiatrice de [AB] : compas depuis A puis depuis B (même écartement), les arcs se croisent en deux points.',
+                'Étape 2 – On trace la droite passant par les deux points d\'intersection : c\'est la médiatrice de [AB].',
+                'Étape 3 – On recommence avec [BC] : arcs depuis B puis depuis C.',
+                'Étape 4 – On trace la médiatrice de [BC]. Son intersection avec la médiatrice de [AB] est le point O.',
+                'Étape 5 – On ouvre le compas de O jusqu\'à A et on trace le cercle circonscrit.'
+            ];
+
+            function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+            function show(id){document.getElementById(id).style.opacity='1';}
+
+            /* ── Compas ── */
+            function setC(dry,pen){
+                const hx=(dry.x+pen.x)/2,hy=(dry.y+pen.y)/2;
+                ['ccH','ccPt','ccPp'].forEach(id=>document.getElementById(id));
+                document.getElementById('ccH').setAttribute('cx',hx);
+                document.getElementById('ccH').setAttribute('cy',hy);
+                const pb=document.getElementById('ccPb');
+                pb.setAttribute('x1',hx);pb.setAttribute('y1',hy);
+                pb.setAttribute('x2',dry.x);pb.setAttribute('y2',dry.y);
+                document.getElementById('ccPt').setAttribute('cx',dry.x);
+                document.getElementById('ccPt').setAttribute('cy',dry.y);
+                const nb=document.getElementById('ccNb');
+                nb.setAttribute('x1',hx);nb.setAttribute('y1',hy);
+                nb.setAttribute('x2',pen.x);nb.setAttribute('y2',pen.y);
+                const ang=Math.atan2(pen.y-hy,pen.x-hx),deg=ang*180/Math.PI;
+                document.getElementById('ccBd').setAttribute('transform',
+                    `translate(${pen.x},${pen.y-9}) rotate(${deg+90})`);
+                document.getElementById('ccTp').setAttribute('transform',
+                    `translate(${pen.x-4},${pen.y}) rotate(${deg+90} 4 0)`);
+                document.getElementById('ccPp').setAttribute('cx',pen.x);
+                document.getElementById('ccPp').setAttribute('cy',pen.y);
+            }
+            async function openC(center,target,dur){
+                const N=30;
+                for(let i=0;i<=N;i++){
+                    const t=i/N;
+                    setC(center,{x:center.x+(target.x-center.x)*t,y:center.y+(target.y-center.y)*t});
+                    await sleep(dur/N);
+                }
+            }
+            // moveC avec rayon constant : le crayon garde la même distance au pivot
+            async function moveCFixed(fromCenter,toCenter,radius,angle,dur){
+                const N=40;
+                for(let i=0;i<=N;i++){
+                    const t=i/N;
+                    const cx=fromCenter.x+(toCenter.x-fromCenter.x)*t;
+                    const cy=fromCenter.y+(toCenter.y-fromCenter.y)*t;
+                    setC({x:cx,y:cy},{x:cx+radius*Math.cos(angle),y:cy+radius*Math.sin(angle)});
+                    await sleep(dur/N);
+                }
+            }
+            async function drawArcAnim(pathId,cx,cy,radius,a0,a1,dur,updateCompass){
+                const el=document.getElementById(pathId);el.style.opacity='1';
+                const N=60;let d=el.getAttribute('d')||'';
+                for(let i=0;i<=N;i++){
+                    const a=a0+(a1-a0)*i/N;
+                    const px=(cx+radius*Math.cos(a)).toFixed(1),py=(cy+radius*Math.sin(a)).toFixed(1);
+                    d+=(i===0?' M ':' L ')+px+' '+py;
+                    el.setAttribute('d',d);
+                    if(updateCompass) setC({x:cx,y:cy},{x:cx+radius*Math.cos(a),y:cy+radius*Math.sin(a)});
+                    if(i<N)await sleep(dur/N);
+                }
+            }
+            async function drawCircle(dur){
+                const el=document.getElementById('circCC');el.style.opacity='1';
+                const N=70;let d='';
+                for(let i=0;i<=N;i++){
+                    const a=-Math.PI/2+(2*Math.PI)*i/N;
+                    const px=(O.x+R*Math.cos(a)).toFixed(1),py=(O.y+R*Math.sin(a)).toFixed(1);
+                    d+=(i===0?'M ':'L ')+px+' '+py+' ';
+                    el.setAttribute('d',d);
+                    setC(O,{x:O.x+R*Math.cos(a),y:O.y+R*Math.sin(a)});
+                    if(i<N)await sleep(dur/N);
+                }
+            }
+
+            window.nextCC=async function(){
+                if(anim||step>=5)return;
+                const btn=document.getElementById('btnCC');
+                btn.disabled=true;anim=true;step++;
+                document.getElementById('stCC').textContent=texts[step];
+                const cmp=document.getElementById('cmpCC');
+
+                if(step===1){
+                    cmp.style.opacity='1';
+                    setC(A,A); await sleep(300);
+                    await openC(A,P1AB,1000); await sleep(200);
+                    // Arc depuis A : borner VERS L'EXTÉRIEUR des deux intersections
+                    // aA1 > aA2 → on va de (aA1+marge) down to (aA2-marge)
+                    const aA1=Math.atan2(P1AB.y-A.y,P1AB.x-A.x); // ~2.86 rad
+                    const aA2=Math.atan2(P2AB.y-A.y,P2AB.x-A.x); // ~1.56 rad
+                    const margin=0.6;
+                    const a0A = aA1+0.25;
+                    const a1A = aA2-0.25;
+                    await drawArcAnim('arcA1cc',A.x,A.y,r_AB,a0A,a1A,1400,true);
+                    await sleep(400);
+                    await moveCFixed(A,B,r_AB,aA1,800); await sleep(200);
+                    const aB1=Math.atan2(P1AB.y-B.y,P1AB.x-B.x);
+                    const aB2=Math.atan2(P2AB.y-B.y,P2AB.x-B.x);
+                    const a0B2 = aB1-0.25;
+                    const a1B2 = aB2+0.25;
+                    await drawArcAnim('arcB1cc',B.x,B.y,r_AB,a0B2,a1B2,1400,true);
+                    await sleep(400); cmp.style.opacity='0';
+
+                }else if(step===2){
+                    show('medABcc'); show('sqABcc');
+
+                }else if(step===3){
+                    cmp.style.opacity='1';
+                    // Angles exacts depuis B vers les deux intersections
+                    const aB_P2=Math.atan2(P2BC.y-B.y,P2BC.x-B.x);
+                    const aB_P1=Math.atan2(P1BC.y-B.y,P1BC.x-B.x);
+                    // Ouvrir le compas depuis B à r_BC dans la direction de P2BC
+                    const penOpen={x:B.x+r_BC*Math.cos(aB_P2), y:B.y+r_BC*Math.sin(aB_P2)};
+                    setC(B,B); await sleep(200);
+                    await openC(B,penOpen,900); await sleep(200);
+                    // Arc depuis B de P2BC à P1BC
+                    await drawArcAnim('arcB2cc',B.x,B.y,r_BC,aB_P2-0.2,aB_P1+0.2,1200,true);
+                    // Déplacer vers C en gardant r_BC et même angle de départ
+                    await moveCFixed(B,C,r_BC,aB_P2,800); await sleep(200);
+                    // Arc depuis C de P1BC à P2BC
+                    const aC_P1=Math.atan2(P1BC.y-C.y,P1BC.x-C.x);
+                    const aC_P2=Math.atan2(P2BC.y-C.y,P2BC.x-C.x)+2*Math.PI;
+                    await drawArcAnim('arcC2cc',C.x,C.y,r_BC,aC_P1-0.2,aC_P2+0.2,1200,true);
+                    await sleep(400); cmp.style.opacity='0';
+
+                }else if(step===4){
+                    // Médiatrice BC + point O
+                    show('medBCcc'); show('sqBCcc');
+                    await sleep(600);
+                    show('ptOcc');
+
+                }else if(step===5){
+                    // Compas de O vers A → cercle
+                    cmp.style.opacity='1';
+                    setC(O,O); await sleep(300);
+                    await openC(O,A,1000); await sleep(400);
+                    await drawCircle(1600);
+                    await sleep(300);cmp.style.opacity='0';
+                    btn.textContent='— Fin —';btn.style.backgroundColor='#888';
+                }
+                anim=false;if(step<5)btn.disabled=false;
+            };
+
+            window.resetCC=function(){
+                step=0;anim=false;
+                document.getElementById('stCC').textContent=texts[0];
+                ['arcA1cc','arcB1cc','medABcc','sqABcc',
+                 'arcB2cc','arcC2cc','medBCcc','sqBCcc',
+                 'ptOcc','circCC','cmpCC'].forEach(id=>{
+                    const el=document.getElementById(id);
+                    el.style.opacity='0';
+                    if(el.tagName==='path')el.setAttribute('d','');
+                });
+                const btn=document.getElementById('btnCC');
+                btn.disabled=false;btn.textContent='Étape suivante ▶';btn.style.backgroundColor='#3498db';
+            };
+        })();
+        </script>
+
+        <div style="text-align:center;font-size:14px;color:#555;margin-top:8px;">
+            O est équidistant des trois sommets : OA = OB = OC (rayon du cercle circonscrit).
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Les hauteurs d'un triangle</h2>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Une <span style="color: red;">hauteur</span> d'un triangle est un segment :<br>
+        <ul>
+            <li>issu d'un <span style="color: red;">sommet</span> du triangle,</li>
+            <li><span style="color: red;">perpendiculaire</span> au côté opposé (ou à son prolongement).</li>
+        </ul>
+        Le pied de la hauteur est le point de la droite du côté opposé situé à l'aplomb du sommet.<br>
+        Un triangle possède <span style="color:red;">trois hauteurs</span>.
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Les trois hauteurs d'un triangle se coupent en un même point appelé l'<span style="color: red;">orthocentre</span> du triangle.
+    </div>
+
+    <div class="example">
+        <strong>Construction :</strong> Tracer la hauteur issue de C dans le triangle ABC.<br><br>
+
+        <div style="background:#e3f2fd;border-left:5px solid #2196f3;padding:12px 18px;margin-bottom:8px;color:#1565c0;font-size:16px;font-weight:500;min-height:50px;display:flex;align-items:center;">
+            <span id="stH">Cliquez sur « Étape suivante » pour voir la construction.</span>
+        </div>
+
+        <div style="text-align:center;background:white;padding:6px;border-radius:5px;border:2px solid #ddd;">
+        <svg id="svgH" width="560" height="320" viewBox="0 0 560 320"
+             style="max-width:100%;height:auto;background:#fafafa;display:block;margin:0 auto;">
+            <!-- Triangle A=(60,280) B=(480,280) C=(200,50) -->
+            <line x1="60"  y1="280" x2="480" y2="280" stroke="black" stroke-width="2.5"/>
+            <line x1="60"  y1="280" x2="200" y2="50"  stroke="black" stroke-width="2.5"/>
+            <line x1="480" y1="280" x2="200" y2="50"  stroke="black" stroke-width="2.5"/>
+            <text x="40"  y="300" font-size="19" font-weight="bold">A</text>
+            <text x="488" y="300" font-size="19" font-weight="bold">B</text>
+            <text x="193" y="40"  font-size="19" font-weight="bold">C</text>
+
+            <!-- Équerre (construite en JS) -->
+            <g id="eqH" opacity="0" transform="translate(200,280)"></g>
+
+            <!-- Hauteur CH_C -->
+            <line id="hautH" x1="200" y1="50" x2="200" y2="280"
+                  stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="9,4" opacity="0"/>
+            <!-- Pied H_C + carré angle droit -->
+            <g id="piedH" opacity="0">
+                <line x1="195" y1="275" x2="205" y2="285" stroke="black" stroke-width="2"/>
+                <line x1="205" y1="275" x2="195" y2="285" stroke="black" stroke-width="2"/>
+                <text x="208" y="300" font-size="15" fill="#e74c3c">H<tspan font-size="11" dy="2">C</tspan></text>
+                <polyline points="200,268 212,268 212,280" stroke="#e74c3c" stroke-width="2" fill="none"/>
+            </g>
+        </svg>
+        </div>
+
+        <div style="text-align:center;margin-top:8px;display:flex;justify-content:center;gap:10px;">
+            <button id="btnH" onclick="nextH()"
+                style="background:#3498db;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
+                Étape suivante ▶
+            </button>
+            <button onclick="resetH()"
+                style="background:#e74c3c;color:white;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:16px;font-weight:bold;">
+                Recommencer ↺
+            </button>
+        </div>
+
+        <script>
+        (function(){
+            let step=0, anim=false;
+            const texts=[
+                'Cliquez sur « Étape suivante » pour voir la construction.',
+                'Étape 1 – On place l\'équerre sur le côté [AB] : un côté de l\'angle droit longe [AB].',
+                'Étape 2 – On fait glisser l\'équerre le long de [AB] jusqu\'à ce que l\'autre côté de l\'angle droit passe par le sommet C.',
+                'Étape 3 – On trace le segment de C jusqu\'au pied H_C sur [AB]. C\'est la hauteur issue de C. On retire l\'équerre.'
+            ];
+
+            function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+            /* ── Équerre ── */
+            function buildEqH(gId){
+                const g=document.getElementById(gId), NS='http://www.w3.org/2000/svg';
+                // legV doit atteindre C=(200,50) depuis y=280 → 230px vers le haut
+                // legH large pour être visible sur [AB]
+                const poly=document.createElementNS(NS,'polygon');
+                poly.setAttribute('points','0,0 140,0 0,-240');
+                poly.setAttribute('fill','rgba(180,220,255,0.72)');
+                poly.setAttribute('stroke','#2255aa');poly.setAttribute('stroke-width','2');
+                g.appendChild(poly);
+                const sq=document.createElementNS(NS,'polyline');
+                sq.setAttribute('points','14,0 14,-14 0,-14');
+                sq.setAttribute('stroke','#1144aa');sq.setAttribute('stroke-width','1.8');sq.setAttribute('fill','none');
+                g.appendChild(sq);
+            }
+
+            async function slideEqH(xFrom,xTo,dur){
+                const g=document.getElementById('eqH');g.style.opacity='1';
+                const N=40;
+                for(let i=0;i<=N;i++){
+                    const x=xFrom+(xTo-xFrom)*i/N;
+                    g.setAttribute('transform',`translate(${x.toFixed(1)},280)`);
+                    await sleep(dur/N);
+                }
+            }
+
+            async function fadeEqH(dur){
+                const g=document.getElementById('eqH');const N=18;
+                for(let i=N;i>=0;i--){g.style.opacity=(i/N).toFixed(2);await sleep(dur/N);}
+                g.style.opacity='0';
+            }
+
+            async function drawHauteur(dur){
+                const el=document.getElementById('hautH');el.style.opacity='1';
+                const len=230;
+                el.style.strokeDasharray=len+' '+len;
+                el.style.strokeDashoffset=len;
+                const N=40;
+                for(let i=0;i<=N;i++){
+                    el.style.strokeDashoffset=String(len*(1-i/N));
+                    await sleep(dur/N);
+                }
+                el.style.strokeDasharray='9,4';
+                el.style.strokeDashoffset='0';
+            }
+
+            buildEqH('eqH');
+
+            window.nextH=async function(){
+                if(anim||step>=3)return;
+                const btn=document.getElementById('btnH');
+                btn.disabled=true;anim=true;step++;
+                document.getElementById('stH').textContent=texts[step];
+
+                if(step===1){
+                    // Équerre arrive depuis la gauche et se pose en A
+                    await slideEqH(-60,60,600);
+
+                }else if(step===2){
+                    // Équerre glisse vers x=200 (sous C)
+                    await slideEqH(60,200,1000);
+
+                }else if(step===3){
+                    // Hauteur se trace + pied apparaît + équerre disparaît
+                    await drawHauteur(800);
+                    document.getElementById('piedH').style.opacity='1';
+                    await sleep(300);
+                    await fadeEqH(500);
+                    btn.textContent='— Fin —';btn.style.backgroundColor='#888';
+                }
+                anim=false;if(step<3)btn.disabled=false;
+            };
+
+            window.resetH=function(){
+                step=0;anim=false;
+                document.getElementById('stH').textContent=texts[0];
+                document.getElementById('eqH').style.opacity='0';
+                document.getElementById('eqH').setAttribute('transform','translate(-60,280)');
+                const h=document.getElementById('hautH');
+                h.style.opacity='0';h.style.strokeDasharray='9,4';h.style.strokeDashoffset='0';
+                document.getElementById('piedH').style.opacity='0';
+                const btn=document.getElementById('btnH');
+                btn.disabled=false;btn.textContent='Étape suivante ▶';btn.style.backgroundColor='#3498db';
+            };
+        })();
+        </script>
+
+        <div class="method" style="margin-top:12px;">
+            <strong>Protocole de construction :</strong><br><br>
+            <div style="padding-left:20px;">
+                1. Poser l'équerre sur le côté [AB], un côté de l'angle droit le long de [AB].<br>
+                2. Faire glisser l'équerre jusqu'à ce que l'autre côté de l'angle droit passe par le sommet C.<br>
+                3. Tracer le segment de C jusqu'au pied H<sub>C</sub> sur [AB].
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Les trois hauteurs d'un triangle et son orthocentre.<br>
+        <em>(Utiliser les boutons pour afficher chaque hauteur.)</em><br><br>
+
+        <div style="text-align: center; background: white; padding: 10px; border-radius: 5px;">
+            <svg id="hauteursSVG" width="620" height="330" viewBox="0 0 620 330" style="max-width: 100%; height: auto;">
+                <!-- Triangle ABC : A=(80,295) B=(540,295) C=(220,60) -->
+                <line x1="80"  y1="295" x2="540" y2="295" stroke="black" stroke-width="2.5"/>
+                <line x1="80"  y1="295" x2="220" y2="60"  stroke="black" stroke-width="2.5"/>
+                <line x1="540" y1="295" x2="220" y2="60"  stroke="black" stroke-width="2.5"/>
+                <!-- Labels -->
+                <text x="60"  y="313" font-size="19" font-weight="bold">A</text>
+                <text x="548" y="313" font-size="19" font-weight="bold">B</text>
+                <text x="213" y="50"  font-size="19" font-weight="bold">C</text>
+
+                <!-- HAUTEUR depuis C → H_C=(220,295) sur AB -->
+                <g id="hc" style="opacity:0; transition:opacity 0.4s;">
+                    <polyline points="230,295 230,285 220,285" stroke="#e74c3c" stroke-width="2" fill="none"/>
+                    <line x1="220" y1="60" x2="220" y2="295" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="8,4"/>
+                    <text x="225" y="311" font-size="14" fill="#e74c3c">H<tspan font-size="11" dy="2">C</tspan></text>
+                </g>
+
+                <!-- HAUTEUR depuis A → H_A=(241,76) sur BC -->
+                <g id="ha" style="opacity:0; transition:opacity 0.4s;">
+                    <polyline points="233.1,69.6 227.2,77.7 235.2,83.6" stroke="#3498db" stroke-width="2" fill="none"/>
+                    <line x1="80" y1="295" x2="241" y2="76" stroke="#3498db" stroke-width="2.5" stroke-dasharray="8,4"/>
+                    <text x="130" y="185" font-size="14" fill="#3498db">H<tspan font-size="11" dy="2">A</tspan></text>
+                </g>
+
+                <!-- HAUTEUR depuis B → H_B=(201,93) sur AC -->
+                <g id="hb" style="opacity:0; transition:opacity 0.4s;">
+                    <polyline points="205.6,84.2 214.2,89.3 209.1,97.9" stroke="#27ae60" stroke-width="2" fill="none"/>
+                    <line x1="540" y1="295" x2="201" y2="93" stroke="#27ae60" stroke-width="2.5" stroke-dasharray="8,4"/>
+                    <text x="390" y="190" font-size="14" fill="#27ae60">H<tspan font-size="11" dy="2">B</tspan></text>
+                </g>
+
+                <!-- ORTHOCENTRE (220,104) -->
+                <g id="ortho" style="opacity:0; transition:opacity 0.4s;">
+                    <line x1="215" y1="99" x2="225" y2="109" stroke="#8e44ad" stroke-width="2.5"/>
+                    <line x1="225" y1="99" x2="215" y2="109" stroke="#8e44ad" stroke-width="2.5"/>
+                    <text x="228" y="100" font-size="14" fill="#8e44ad" font-weight="bold">O</text>
+                    <text x="228" y="115" font-size="12" fill="#8e44ad">(orthocentre)</text>
+                </g>
+            </svg>
+        </div>
+
+        <div style="text-align: center; margin-top: 8px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+            <button id="btnHc" onclick="toggleHauteur('hc','btnHc','#e74c3c')"
+                style="background:#e74c3c;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
+                Hauteur de C
+            </button>
+            <button id="btnHa" onclick="toggleHauteur('ha','btnHa','#3498db')"
+                style="background:#3498db;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
+                Hauteur de A
+            </button>
+            <button id="btnHb" onclick="toggleHauteur('hb','btnHb','#27ae60')"
+                style="background:#27ae60;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
+                Hauteur de B
+            </button>
+            <button id="btnOrtho" onclick="toggleHauteur('ortho','btnOrtho','#8e44ad')"
+                style="background:#8e44ad;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
+                Orthocentre
+            </button>
+            <button onclick="resetHauteurs()"
+                style="background:#7f8c8d;color:white;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px;">
+                Effacer
+            </button>
+        </div>
+
+        <script>
+            const hauteurState = { hc: false, ha: false, hb: false, ortho: false };
+            function toggleHauteur(id, btnId, color) {
+                const el  = document.getElementById(id);
+                const btn = document.getElementById(btnId);
+                hauteurState[id] = !hauteurState[id];
+                el.style.opacity = hauteurState[id] ? '1' : '0';
+                btn.style.backgroundColor = hauteurState[id] ? '#555' : color;
+            }
+            function resetHauteurs() {
+                ['hc','ha','hb','ortho'].forEach(id => {
+                    document.getElementById(id).style.opacity = '0';
+                    hauteurState[id] = false;
+                });
+                document.getElementById('btnHc').style.backgroundColor    = '#e74c3c';
+                document.getElementById('btnHa').style.backgroundColor    = '#3498db';
+                document.getElementById('btnHb').style.backgroundColor    = '#27ae60';
+                document.getElementById('btnOrtho').style.backgroundColor = '#8e44ad';
+            }
+        </script>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Cas particuliers de triangles</h2>
+
+    <!-- ──────────────────── TRIANGLE ISOCÈLE ──────────────────── -->
+    <h3>Triangle isocèle</h3>
+
+    <div class="property">
+        <span style="color: red;">Propriété 1 :</span> Si un triangle est
+        <span style="color: red;">isocèle</span>, alors ses
+        <span style="color: red;">angles à la base sont égaux</span>.
+    </div>
+
+    <div class="property">
+        <span style="color: red;">Propriété 2 (réciproque) :</span> Si un triangle a deux
+        <span style="color: red;">angles de même mesure</span>, alors le triangle est
+        <span style="color: red;">isocèle</span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Triangle isocèle en A.<br><br>
         <div style="text-align:center; background:white; padding:10px; border-radius:5px;">
         <svg width="360" height="230" viewBox="0 0 360 230" style="max-width:100%;height:auto;">
-            <!-- A=(180,30) B=(50,210) C=(310,210) -->
+            <!-- A=(180,30) B=(50,210) C=(310,210) — AB=AC=222px -->
             <line x1="180" y1="30"  x2="50"  y2="210" stroke="black" stroke-width="2.5"/>
             <line x1="180" y1="30"  x2="310" y2="210" stroke="black" stroke-width="2.5"/>
             <line x1="50"  y1="210" x2="310" y2="210" stroke="black" stroke-width="2.5"/>
             <text x="172" y="22"  font-size="19" font-weight="bold">A</text>
-            <text x="30"  y="220" font-size="19" font-weight="bold">B</text>
-            <text x="316" y="220" font-size="19" font-weight="bold">C</text>
-            <!-- Ticks AB et AC (2 tirets) -->
-            <!-- Milieu AB=(115,120), dir AB=(−130,180)/√(130²+180²)=(−0.585,0.811) → perp=(0.811,0.585) -->
-            <line x1="107" y1="122" x2="123" y2="118" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="110" y1="130" x2="126" y2="126" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Milieu AC=(245,120), dir AC=(130,180)/√...=(0.585,0.811) → perp=(0.811,−0.585) -->
-            <line x1="237" y1="118" x2="253" y2="122" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="234" y1="126" x2="250" y2="130" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Arcs égaux en B et C -->
-            <path d="M 78 199 A 32 32 0 0 1 69 178" stroke="#3498db" stroke-width="2" fill="none"/>
-            <path d="M 291 178 A 32 32 0 0 1 282 199" stroke="#3498db" stroke-width="2" fill="none"/>
-            <!-- Petits arcs supplémentaires (même nb = même mesure) -->
-            <path d="M 84 193 A 38 38 0 0 1 74 170" stroke="#3498db" stroke-width="2" fill="none"/>
-            <path d="M 286 170 A 38 38 0 0 1 276 193" stroke="#3498db" stroke-width="2" fill="none"/>
+            <text x="30"  y="224" font-size="19" font-weight="bold">B</text>
+            <text x="316" y="224" font-size="19" font-weight="bold">C</text>
+            <!-- Tick AB -->
+            <line x1="126.3" y1="128.2" x2="103.7" y2="111.8" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="256.3" y1="111.8" x2="233.7" y2="128.2" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Arc en B : sweep=1 -->
+            <path d="M 62.9 192.2 A 22 22 0 0 1 72.0 210.0" stroke="#3498db" stroke-width="2" fill="none"/>
+            <!-- Arc en C : sweep=0 -->
+            <path d="M 297.1 192.2 A 22 22 0 0 0 288.0 210.0" stroke="#3498db" stroke-width="2" fill="none"/>
         </svg>
         </div>
     </div>
 
     <!-- ────────────────── TRIANGLE ÉQUILATÉRAL ─────────────────── -->
-    <h3>2) Triangle équilatéral</h3>
+    <h3>Triangle équilatéral</h3>
 
     <div class="property">
         <span style="color: red;">Propriété 3 :</span> Si un triangle est
@@ -1952,42 +2198,41 @@
     </div>
 
     <div class="example">
-        <strong>Exemple :</strong> Triangle équilatéral ABC — AB = BC = CA, donc
-        <span class="angle">ABC</span> = <span class="angle">BCA</span> = <span class="angle">CAB</span> = 60°.<br><br>
+        <strong>Exemple :</strong> Triangle équilatéral ABC.<br><br>
         <div style="text-align:center; background:white; padding:10px; border-radius:5px;">
         <svg width="320" height="230" viewBox="0 0 320 230" style="max-width:100%;height:auto;">
-            <!-- A=(160,20) B=(20,207) C=(300,207) côté ≈ 208px -->
+            <!-- A=(160,20) B=(20,207) C=(300,207) -->
             <line x1="160" y1="20"  x2="20"  y2="207" stroke="black" stroke-width="2.5"/>
             <line x1="20"  y1="207" x2="300" y2="207" stroke="black" stroke-width="2.5"/>
             <line x1="300" y1="207" x2="160" y2="20"  stroke="black" stroke-width="2.5"/>
             <text x="152" y="13"  font-size="19" font-weight="bold">A</text>
             <text x="2"   y="222" font-size="19" font-weight="bold">B</text>
             <text x="306" y="222" font-size="19" font-weight="bold">C</text>
-            <!-- Ticks 1 tiret sur chaque côté -->
-            <!-- Milieu AB=(90,113.5), dir=(−140,187)/√... perp=(0.801,0.599) -->
-            <line x1="83.7" y1="116.5" x2="96.3" y2="110.5" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Milieu BC=(160,207) perp vertical -->
-            <line x1="160" y1="200" x2="160" y2="214" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Milieu AC=(230,113.5), dir=(140,187)/√... perp=(0.801,−0.599) -->
-            <line x1="223.7" y1="110.5" x2="236.3" y2="116.5" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- Arcs 60° aux 3 sommets -->
-            <path d="M 52 193 A 36 36 0 0 1 44 168" stroke="#3498db" stroke-width="2" fill="none"/>
-            <path d="M 256 168 A 36 36 0 0 1 248 193" stroke="#3498db" stroke-width="2" fill="none"/>
-            <path d="M 178 49 A 36 36 0 0 0 142 49"  stroke="#3498db" stroke-width="2" fill="none"/>
+            <!-- Ticks -->
+            <line x1="101.2" y1="121.9" x2="78.8"  y2="105.1" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="160.0" y1="193.0" x2="160.0" y2="221.0" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="218.8" y1="121.9" x2="241.2" y2="105.1" stroke="red" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Arc en A : sweep=0 -->
+            <path d="M 146.8 37.6 A 22 22 0 0 0 173.2 37.6" stroke="#3498db" stroke-width="2" fill="none"/>
+            <!-- Arc en B : sweep=1 -->
+            <path d="M 33.2 189.4 A 22 22 0 0 1 42.0 207.0" stroke="#3498db" stroke-width="2" fill="none"/>
+            <!-- Arc en C : sweep=0 -->
+            <path d="M 286.8 189.4 A 22 22 0 0 0 278.0 207.0" stroke="#3498db" stroke-width="2" fill="none"/>
             <!-- Labels 60° -->
-            <text x="57"  y="176" font-size="13" fill="#3498db">60°</text>
-            <text x="243" y="176" font-size="13" fill="#3498db">60°</text>
-            <text x="143" y="68"  font-size="13" fill="#3498db">60°</text>
+            <text x="148" y="58"  text-anchor="middle" font-size="13" fill="#3498db">60°</text>
+            <text x="52"  y="195" font-size="13" fill="#3498db">60°</text>
+            <text x="248" y="195" font-size="13" fill="#3498db">60°</text>
         </svg>
         </div>
     </div>
 
     <!-- ────────────────── TRIANGLE RECTANGLE ───────────────────── -->
-    <h3>3) Triangle rectangle</h3>
+    <h3>Triangle rectangle</h3>
 
     <div class="property">
         <span style="color: red;">Propriété :</span> Dans un triangle rectangle,
-        la somme des deux <span style="color: red;">angles aigus</span> est égale à <span style="color: red;">90°</span>.
+        les deux <span style="color: red;">angles aigus sont complémentaires</span>
+        (leur somme est égale à 90°).
     </div>
 
     <div class="definition">
@@ -1997,30 +2242,31 @@
     </div>
 
     <div class="example">
-        <strong>Exemple :</strong> Triangle rectangle en C —
-        <span class="angle">ACB</span> = 90°,
-        donc <span class="angle">BAC</span> + <span class="angle">ABC</span> = 90°.
-        Le côté [AB] est l'hypoténuse.<br><br>
+        <strong>Exemple :</strong> Triangle rectangle en C.<br><br>
         <div style="text-align:center; background:white; padding:10px; border-radius:5px;">
-        <svg width="380" height="250" viewBox="0 0 380 250" style="max-width:100%;height:auto;">
-            <!-- A=(50,220) B=(330,220) C=(50,50) -->
-            <line x1="50"  y1="220" x2="330" y2="220" stroke="black" stroke-width="2.5"/>
-            <line x1="50"  y1="220" x2="50"  y2="50"  stroke="black" stroke-width="2.5"/>
-            <line x1="50"  y1="50"  x2="330" y2="220" stroke="#e74c3c" stroke-width="3"/>
-            <text x="30"  y="240" font-size="19" font-weight="bold">A</text>
-            <text x="336" y="236" font-size="19" font-weight="bold">B</text>
-            <text x="30"  y="45"  font-size="19" font-weight="bold">C</text>
-            <!-- Angle droit en C=(50,50) -->
-            <polyline points="50,50 62,50 62,62 50,62" stroke="black" stroke-width="2" fill="none"/>
-            <!-- Légende hypoténuse -->
-            <text x="152" y="147" font-size="14" fill="#e74c3c" font-weight="bold"
-                  transform="rotate(31,152,147)">hypoténuse</text>
-            <!-- Arcs angles aigus -->
-            <path d="M 76 220 A 26 26 0 0 0 68 199" stroke="#3498db" stroke-width="2" fill="none"/>
-            <text x="72" y="207" font-size="12" fill="#3498db">α</text>
-            <path d="M 310 220 A 26 26 0 0 1 295 208" stroke="#3498db" stroke-width="2" fill="none"/>
-            <text x="292" y="208" font-size="12" fill="#3498db">β</text>
-            <text x="155" y="245" text-anchor="middle" font-size="14" fill="#3498db">α + β = 90°</text>
+        <svg width="390" height="270" viewBox="0 0 390 270" style="max-width:100%;height:auto;">
+            <!-- C=(50,50) angle droit, B=(330,50) en haut à droite, A=(50,230) en bas à gauche -->
+            <!-- CB horizontal, CA vertical → angle droit en C ✓ -->
+            <!-- Hypoténuse [AB] en rouge -->
+            <line x1="50"  y1="50"  x2="330" y2="50"  stroke="black" stroke-width="2.5"/>
+            <line x1="50"  y1="50"  x2="50"  y2="230" stroke="black" stroke-width="2.5"/>
+            <line x1="50"  y1="230" x2="330" y2="50"  stroke="#e74c3c" stroke-width="2.5"/>
+            <text x="22"  y="45"   font-size="19" font-weight="bold">C</text>
+            <text x="30"  y="250"  font-size="19" font-weight="bold">A</text>
+            <text x="338" y="45"   font-size="19" font-weight="bold">B</text>
+            <!-- Angle droit en C : L entre CB (→) et CA (↓) -->
+            <polyline points="62,50 62,62 50,62" stroke="black" stroke-width="2" fill="none"/>
+            <!-- Label hypoténuse -->
+            <text x="210" y="152" text-anchor="middle" font-size="13" fill="#e74c3c"
+                  font-weight="bold" transform="rotate(-32,210,152)">hypoténuse</text>
+            <!-- Arc aigu en A : sweep=1 -->
+            <path d="M 50.0 204.0 A 26 26 0 0 1 72.0 217.4" stroke="#3498db" stroke-width="2" fill="none"/>
+            <text x="70"  y="210" font-size="13" fill="#3498db">α</text>
+            <!-- Arc aigu en B : sweep=1 -->
+            <path d="M 308.0 60.6 A 26 26 0 0 1 304.0 50.0" stroke="#3498db" stroke-width="2" fill="none"/>
+            <text x="292" y="68"  font-size="13" fill="#3498db">β</text>
+            <!-- Label -->
+            <text x="190" y="258" text-anchor="middle" font-size="14" fill="#3498db">α + β = 90°</text>
         </svg>
         </div>
     </div>
