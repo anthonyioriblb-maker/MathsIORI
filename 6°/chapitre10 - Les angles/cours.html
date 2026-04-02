@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Les angles</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .btn-anim {
+            background: #2196f3; color: white; border: none;
+            padding: 10px 22px; border-radius: 6px; font-size: 16px;
+            cursor: pointer; margin: 4px;
+        }
+        .btn-anim:hover { background: #1565c0; }
+        .btn-reset {
+            background: #e0e0e0; color: #333; border: none;
+            padding: 10px 22px; border-radius: 6px; font-size: 16px;
+            cursor: pointer; margin: 4px;
+        }
+        .step-box {
+            background: #e3f2fd; border-left: 5px solid #2196f3;
+            padding: 12px 18px; margin-bottom: 8px; color: #1565c0;
+            font-size: 16px; font-weight: 500; min-height: 54px;
+            display: flex; align-items: center;
+        }
+        .svg-wrap {
+            text-align: center; background: white; padding: 6px;
+            border-radius: 5px; border: 2px solid #ddd;
+        }
+        .angle-card {
+            display: inline-block; text-align: center;
+            margin: 10px; padding: 12px 16px;
+            border: 2px solid #ddd; border-radius: 8px;
+            background: white; width: 240px; vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <a href="../classe-6e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Les angles</h1>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Vocabulaire</h2>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Un <strong>angle</strong> est formé par deux <strong>demi-droites</strong> de même origine.<br><br>
+
+        <!-- Schéma + texte animé côte à côte -->
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:20px; background:white; padding:14px; border-radius:8px;">
+
+            <!-- SVG propre, sans labels intrusifs -->
+            <div style="flex:0 0 auto; text-align:center;">
+                <!-- SVG 340×230 : O=(80,185) A=(310,185) B=(210,25) -->
+                <svg id="svgVoc" width="340" height="230" viewBox="0 0 340 230" style="display:block;">
+
+                    <!-- ── Géométrie de base ── -->
+                    <!-- Rayon OA -->
+                    <line x1="80" y1="185" x2="312" y2="185" stroke="black" stroke-width="2.5"/>
+                    <!-- Rayon OB -->
+                    <line x1="80" y1="185" x2="210" y2="25" stroke="black" stroke-width="2.5"/>
+                    <!-- Croix sur O -->
+                    <line x1="74" y1="179" x2="86" y2="191" stroke="black" stroke-width="2.2"/>
+                    <line x1="86" y1="179" x2="74" y2="191" stroke="black" stroke-width="2.2"/>
+                    <!-- Lettres A B O -->
+                    <text x="56"  y="190" font-size="22" font-weight="bold" fill="black">O</text>
+                    <text x="318" y="190" font-size="22" font-weight="bold" fill="black">A</text>
+                    <text x="215" y="21"  font-size="22" font-weight="bold" fill="black">B</text>
+
+                    <!-- ── Étape 1 : sommet ──
+                         Cercle rouge autour de O + label "sommet" collé à droite de O -->
+                    <g id="vocLblSommet" opacity="0">
+                        <circle cx="80" cy="185" r="16" fill="none" stroke="#e74c3c" stroke-width="2.5"/>
+                        <!-- label placé juste au-dessus de O, légèrement à droite -->
+                        <text x="102" y="175" font-size="14" fill="#e74c3c" font-weight="bold">sommet</text>
+                    </g>
+
+                    <!-- ── Étape 2 : côtés ──
+                         Labels placés directement sur chaque demi-droite, sans tiret long -->
+                    <!-- OA : texte sous le milieu du segment -->
+                    <g id="vocLblOA" opacity="0">
+                        <text x="196" y="207" text-anchor="middle" font-size="14" fill="#2980b9" font-weight="bold">côté [OA)</text>
+                    </g>
+                    <!-- OB : milieu de OB ≈ (145,105), texte à droite du milieu -->
+                    <g id="vocLblOB" opacity="0">
+                        <text x="158" y="102" font-size="14" fill="#2980b9" font-weight="bold">côté [OB)</text>
+                    </g>
+
+                    <!-- Arc de l'angle (utilisé étapes 2 et 3) -->
+                    <!-- rayon 65 depuis O=(80,185), de 0° à ~58° (angle OA→OB) -->
+                    <!-- OB direction: atan2(185-25, 80-210)=atan2(160,-130)≈129° depuis axe x+ -->
+                    <!-- En SVG (y vers le bas): angle = atan2(25-185, 210-80)=atan2(-160,130)≈-51° soit 51° au-dessus -->
+                    <!-- Point sur OA à r=65: (145,185) ; point sur OB à r=65: (80+65*cos51°, 185-65*sin51°)=(121,135) -->
+                    <path id="vocArc" d="M 145 185 A 65 65 0 0 0 121 135"
+                          stroke="#e74c3c" stroke-width="2.5" fill="rgba(231,76,60,0.15)" opacity="0"/>
+
+                    <!-- ── Étape 3 : notation AOB avec chapeau ── -->
+                    <g id="vocNotation" opacity="0">
+                        <!-- Texte AOB -->
+                        <text x="152" y="167" font-size="15" fill="#e74c3c" font-weight="bold">AOB</text>
+                        <!-- Chapeau = deux droites en ^ au-dessus de AOB -->
+                        <path d="M 150 153 L 167 141 L 184 153" stroke="#e74c3c" stroke-width="2" fill="none" stroke-linejoin="round"/>
+                    </g>
+
+                </svg>
+            </div>
+
+            <!-- Texte qui apparaît étape par étape -->
+            <div style="flex:1; min-width:200px; font-size:16px; color:#333; line-height:2;">
+                <div id="vocTxt0" style="opacity:0; transition:opacity 0.5s; color:#555; font-style:italic;">
+                    Clique sur le bouton pour découvrir le vocabulaire ↓
+                </div>
+                <div id="vocTxt1" style="opacity:0; transition:opacity 0.6s; margin-bottom:6px;">
+                    🔴 <strong style="color:#e74c3c;">O</strong> est le <strong>sommet</strong> de l'angle<br>
+                    <span style="font-size:13px; color:#888;">(point d'origine des deux demi-droites)</span>
+                </div>
+                <div id="vocTxt2" style="opacity:0; transition:opacity 0.6s; margin-bottom:6px;">
+                    🔵 Les demi-droites <strong style="color:#2980b9;">[OA)</strong> et <strong style="color:#2980b9;">[OB)</strong> sont les <strong>côtés</strong> de l'angle
+                </div>
+                <div id="vocTxt3" style="opacity:0; transition:opacity 0.6s; margin-bottom:6px;">
+                    L'angle se note <strong><span class="angle">AOB</span></strong> ou <strong><span class="angle">BOA</span></strong><br>
+                    <span style="font-size:13px; color:#666;">(la lettre du milieu = le sommet)</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center; margin-top:10px;">
+            <button class="btn-anim" onclick="nextStepVoc()">Étape suivante ▶</button>
+            <button class="btn-reset" onclick="resetVoc()">Recommencer ↺</button>
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>Attention :</strong> l'ordre des lettres est important.
+        La lettre du <strong>milieu</strong> indique le <strong>sommet</strong> de l'angle.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Dans le triangle ABC ci-dessous, on peut nommer trois angles différents.
+        <div style="text-align:center; background:white; padding:10px; border-radius:5px; margin-top:10px;">
+            <svg width="500" height="280" viewBox="0 0 500 280" style="max-width:100%; height:auto;">
+                <!-- Triangle A=(60,250) B=(250,25) C=(440,250) -->
+                <line x1="60" y1="250" x2="250" y2="25" stroke="black" stroke-width="2.5"/>
+                <line x1="250" y1="25" x2="440" y2="250" stroke="black" stroke-width="2.5"/>
+                <line x1="60" y1="250" x2="440" y2="250" stroke="black" stroke-width="2.5"/>
+                <text x="38" y="263" font-size="20" font-weight="bold">A</text>
+                <text x="250" y="18" text-anchor="middle" font-size="20" font-weight="bold">B</text>
+                <text x="448" y="263" font-size="20" font-weight="bold">C</text>
+                <!-- Arc at A (red) -->
+                <path d="M 97 250 A 40 40 0 0 1 82 214" stroke="#e74c3c" stroke-width="2.5" fill="rgba(231,76,60,0.15)"/>
+                <text x="104" y="242" font-size="13" fill="#e74c3c" font-weight="bold">BAC</text>
+                <!-- Arc at B (blue) -->
+                <path d="M 225 50 A 36 36 0 0 1 274 50" stroke="#2980b9" stroke-width="2.5" fill="rgba(52,152,219,0.15)"/>
+                <text x="234" y="74" font-size="13" fill="#2980b9" font-weight="bold">ABC</text>
+                <!-- Arc at C (green) -->
+                <path d="M 406 250 A 40 40 0 0 0 422 214" stroke="#27ae60" stroke-width="2.5" fill="rgba(39,174,96,0.15)"/>
+                <text x="372" y="242" font-size="13" fill="#27ae60" font-weight="bold">BCA</text>
+            </svg>
+        </div>
+        Les trois angles sont :
+        <span class="angle" style="color:#e74c3c;">BAC</span> (ou <span class="angle" style="color:#e74c3c;">CAB</span>),
+        &nbsp;<span class="angle" style="color:#2980b9;">ABC</span> (ou <span class="angle" style="color:#2980b9;">CBA</span>),
+        &nbsp;<span class="angle" style="color:#27ae60;">BCA</span> (ou <span class="angle" style="color:#27ae60;">ACB</span>).
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Mesure d'un angle</h2>
+
+    <h3>Mesure en degrés</h3>
+
+    <div class="definition">
+        L'unité de mesure d'un angle est le <strong>degré</strong> (symbole : °).
+        Pour mesurer un angle, on utilise un <strong>rapporteur</strong>.<br>
+        Un angle peut mesurer entre <strong>0°</strong> et <strong>180°</strong>.
+    </div>
+
+    <!-- ─── Animation : mesurer un angle ─── -->
+    <div class="example">
+        <strong>Méthode pour mesurer un angle :</strong><br><br>
+
+        <div class="step-box"><span id="stepMes">Cliquez sur « Étape suivante » pour voir comment mesurer l'angle <span class="angle">AOB</span>.</span></div>
+        <div class="svg-wrap">
+            <svg id="svgMes" width="580" height="340" viewBox="0 0 580 340" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+
+                <!-- O=(200,280) A=(460,280) B=200+250cos30, 280-250sin30 = (417,155) -->
+
+                <!-- OA ray -->
+                <line x1="200" y1="280" x2="480" y2="280" stroke="black" stroke-width="2.5"/>
+                <polygon points="480,280 468,274 468,286" fill="black"/>
+                <!-- OB ray -->
+                <line x1="200" y1="280" x2="417" y2="155" stroke="black" stroke-width="2.5"/>
+                <polygon points="417,155 406,163 414,170" fill="black"/>
+                <!-- Markers -->
+                <line x1="194" y1="274" x2="206" y2="286" stroke="black" stroke-width="2"/>
+                <line x1="206" y1="274" x2="194" y2="286" stroke="black" stroke-width="2"/>
+                <text x="178" y="282" font-size="20" font-weight="bold">O</text>
+                <text x="487" y="285" font-size="20" font-weight="bold">A</text>
+                <text x="422" y="148" font-size="20" font-weight="bold">B</text>
+
+                <!-- Rapporteur (groupe caché au départ) -->
+                <!-- Centré en O=(200,280), rayon=120, base horizontale -->
+                <g id="rapporteur" opacity="0">
+                    <!-- Demi-cercle transparent avec contour -->
+                    <path d="M 80 280 A 120 120 0 0 1 320 280 Z" fill="rgba(255,250,200,0.85)" stroke="#999" stroke-width="1.5"/>
+                    <!-- Ligne de base -->
+                    <line x1="80" y1="280" x2="320" y2="280" stroke="#888" stroke-width="1"/>
+                    <!-- Trou central -->
+                    <circle cx="200" cy="280" r="4" fill="white" stroke="#555" stroke-width="1.5"/>
+                    <!-- Graduation 0° (droite) -->
+                    <line x1="316" y1="280" x2="320" y2="280" stroke="#333" stroke-width="2"/>
+                    <text x="324" y="284" font-size="12" fill="#333" font-weight="bold">0</text>
+                    <!-- 180° (gauche) -->
+                    <line x1="80" y1="280" x2="84" y2="280" stroke="#333" stroke-width="2"/>
+                    <text x="58" y="284" font-size="12" fill="#333" font-weight="bold">180</text>
+                    <!-- Tick marks every 10° -->
+                    <g id="ticks"></g>
+                    <!-- Labels principaux générés par JS -->
+                    <g id="labels"></g>
+                </g>
+
+                <!-- Trait de 0° sur OA (caché au départ) -->
+                <line id="zeroline" x1="200" y1="280" x2="340" y2="280" stroke="#ff8c00" stroke-width="2.5" stroke-dasharray="8,4" opacity="0"/>
+
+                <!-- Arc montrant l'angle 30° (caché) -->
+                <path id="arcMes" d="M 280 280 A 80 80 0 0 0 269 240" stroke="#e74c3c" stroke-width="2.5" fill="rgba(231,76,60,0.15)" opacity="0"/>
+
+                <!-- Surlignage 30° sur le rapporteur (caché) -->
+                <!-- 30°: x=200+120*cos30=304, y=280-120*sin30=220 -->
+                <line id="mark30" x1="200" y1="280" x2="304" y2="220" stroke="#e74c3c" stroke-width="3" stroke-dasharray="6,3" opacity="0"/>
+                <circle id="dot30" cx="304" cy="220" r="5" fill="#e74c3c" opacity="0"/>
+
+                <!-- Etiquette 30° -->
+                <text id="label30" x="286" y="252" font-size="16" fill="#e74c3c" font-weight="bold" opacity="0">30°</text>
+                <text id="result" x="200" y="60" text-anchor="middle" font-size="20" fill="#c0392b" font-weight="bold" opacity="0"><tspan class="angle">AOB</tspan> = 30°</text>
+            </svg>
+        </div>
+        <div style="text-align:center; margin-top:10px;">
+            <button class="btn-anim" onclick="nextStepMes()">Étape suivante ▶</button>
+            <button class="btn-reset" onclick="resetMes()">Recommencer ↺</button>
+        </div>
+
+        <div style="margin-top:12px;">
+            <strong>Résumé des étapes :</strong>
+            <ul>
+                <li>Placer le <strong>centre du rapporteur</strong> exactement sur le <strong>sommet</strong> de l'angle.</li>
+                <li>Aligner la graduation <strong>0°</strong> sur un des côtés de l'angle.</li>
+                <li>Lire la mesure là où l'<strong>autre côté</strong> coupe le rapporteur.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>Nature des angles</h3>
+
+    <div class="definition">
+        On classe les angles selon leur mesure :
+    </div>
+
+    <div class="example">
+        <div style="text-align:center; flex-wrap:wrap; display:flex; justify-content:center; gap:12px; margin-top:10px;">
+
+            <!-- Angle aigu -->
+            <div class="angle-card" style="border-color:#e74c3c;">
+                <svg width="180" height="130" viewBox="0 0 180 130" style="max-width:100%;">
+                    <line x1="30" y1="100" x2="160" y2="100" stroke="black" stroke-width="2.5"/>
+                    <line x1="30" y1="100" x2="110" y2="20" stroke="black" stroke-width="2.5"/>
+                    <path d="M 80 100 A 50 50 0 0 0 64 62" stroke="#e74c3c" stroke-width="2" fill="rgba(231,76,60,0.18)"/>
+                    <text x="86" y="85" font-size="13" fill="#e74c3c" font-weight="bold">45°</text>
+                    <line x1="24" y1="94" x2="36" y2="106" stroke="black" stroke-width="1.5"/>
+                    <line x1="36" y1="94" x2="24" y2="106" stroke="black" stroke-width="1.5"/>
+                </svg>
+                <p style="color:#e74c3c; font-weight:bold; margin:0;">Angle aigu</p>
+                <p style="color:#333; margin:4px 0 0;">0° &lt; mesure &lt; 90°</p>
+            </div>
+
+            <!-- Angle droit -->
+            <div class="angle-card" style="border-color:#17375e;">
+                <svg width="180" height="130" viewBox="0 0 180 130" style="max-width:100%;">
+                    <line x1="30" y1="100" x2="160" y2="100" stroke="black" stroke-width="2.5"/>
+                    <line x1="30" y1="100" x2="30" y2="20" stroke="black" stroke-width="2.5"/>
+                    <!-- Carré angle droit -->
+                    <rect x="30" y="80" width="20" height="20" fill="none" stroke="#17375e" stroke-width="2.5"/>
+                    <line x1="24" y1="94" x2="36" y2="106" stroke="black" stroke-width="1.5"/>
+                    <line x1="36" y1="94" x2="24" y2="106" stroke="black" stroke-width="1.5"/>
+                    <text x="55" y="92" font-size="13" fill="#17375e" font-weight="bold">90°</text>
+                </svg>
+                <p style="color:#17375e; font-weight:bold; margin:0;">Angle droit</p>
+                <p style="color:#333; margin:4px 0 0;">mesure = 90°</p>
+            </div>
+
+            <!-- Angle obtus -->
+            <div class="angle-card" style="border-color:#2e75b6;">
+                <svg width="180" height="130" viewBox="0 0 180 130" style="max-width:100%;">
+                    <line x1="30" y1="100" x2="160" y2="100" stroke="black" stroke-width="2.5"/>
+                    <!-- OB à 130° -->
+                    <!-- 130° : x=30+120*cos130=-77+30=-47 trop à gauche... -->
+                    <!-- Utilisons un angle plus petit: 120° -->
+                    <!-- cos120=-0.5, sin120=0.866 : B=(30-60, 100-104)=(-30,−4) encore à gauche -->
+                    <!-- Essayons 130° mais depuis le centre à x=70 -->
+                    <!-- Centre O=(70,100), A=(155,100), B à 120° de OA -->
+                    <!-- B = (70+80*cos120, 100-80*sin120) = (70-40, 100-69) = (30,31) -->
+                    <line x1="70" y1="100" x2="30" y2="31" stroke="black" stroke-width="2.5"/>
+                    <line x1="70" y1="100" x2="155" y2="100" stroke="black" stroke-width="2.5"/>
+                    <path d="M 115 100 A 45 45 0 0 0 47 64" stroke="#2e75b6" stroke-width="2" fill="rgba(46,117,182,0.18)"/>
+                    <text x="86" y="80" font-size="13" fill="#2e75b6" font-weight="bold">120°</text>
+                    <line x1="64" y1="94" x2="76" y2="106" stroke="black" stroke-width="1.5"/>
+                    <line x1="76" y1="94" x2="64" y2="106" stroke="black" stroke-width="1.5"/>
+                </svg>
+                <p style="color:#2e75b6; font-weight:bold; margin:0;">Angle obtus</p>
+                <p style="color:#333; margin:4px 0 0;">90° &lt; mesure &lt; 180°</p>
+            </div>
+
+            <!-- Angle plat -->
+            <div class="angle-card" style="border-color:#7030a0;">
+                <svg width="180" height="130" viewBox="0 0 180 130" style="max-width:100%;">
+                    <line x1="10" y1="80" x2="170" y2="80" stroke="black" stroke-width="2.5"/>
+                    <polygon points="170,80 158,74 158,86" fill="black"/>
+                    <polygon points="10,80 22,74 22,86" fill="black"/>
+                    <!-- Arc demi-cercle -->
+                    <path d="M 50 80 A 40 40 0 0 0 130 80" stroke="#7030a0" stroke-width="2" fill="rgba(112,48,160,0.15)"/>
+                    <text x="90" y="64" text-anchor="middle" font-size="13" fill="#7030a0" font-weight="bold">180°</text>
+                    <line x1="84" y1="74" x2="96" y2="86" stroke="black" stroke-width="1.5"/>
+                    <line x1="96" y1="74" x2="84" y2="86" stroke="black" stroke-width="1.5"/>
+                </svg>
+                <p style="color:#7030a0; font-weight:bold; margin:0;">Angle plat</p>
+                <p style="color:#333; margin:4px 0 0;">mesure = 180°</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Tracer un angle de mesure donnée</h3>
+
+    <!-- ─── Animation : tracer BAC = 72° ─── -->
+    <div class="example">
+        <strong>Méthode pour tracer un angle <span class="angle">BAC</span> = 72° :</strong><br><br>
+
+        <div class="step-box"><span id="stepTrac">Cliquez sur « Étape suivante » pour voir la construction.</span></div>
+        <div class="svg-wrap">
+            <svg id="svgTrac" width="580" height="320" viewBox="0 0 580 320" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+
+                <!-- A=(100,260) B=(430,260)  C=72° : (100+300*cos72, 260-300*sin72) = (193, -25) trop haut -->
+                <!-- Réduire: C=(100+200*cos72, 260-200*sin72) = (162, 70) -->
+
+                <!-- A marker -->
+                <line x1="94" y1="254" x2="106" y2="266" stroke="black" stroke-width="2" opacity="0" id="tA1"/>
+                <line x1="106" y1="254" x2="94" y2="266" stroke="black" stroke-width="2" opacity="0" id="tA2"/>
+                <text x="78" y="262" font-size="20" font-weight="bold" opacity="0" id="tAl">A</text>
+
+                <!-- AB ray (étape 1) -->
+                <g id="rayAB" opacity="0">
+                    <line x1="100" y1="260" x2="450" y2="260" stroke="black" stroke-width="2.5"/>
+                    <polygon points="450,260 438,254 438,266" fill="black"/>
+                    <text x="456" y="265" font-size="18" font-weight="bold">B</text>
+                    <text x="280" y="290" text-anchor="middle" font-size="14" fill="#1565c0">On trace la demi-droite [AB)</text>
+                </g>
+
+                <!-- Rapporteur (étape 2) -->
+                <!-- Centré en A=(100,260), rayon=100, base sur AB -->
+                <g id="rapTrac" opacity="0">
+                    <path d="M 0 260 A 100 100 0 0 1 200 260 Z" fill="rgba(255,250,200,0.9)" stroke="#999" stroke-width="1.5"/>
+                    <line x1="0" y1="260" x2="200" y2="260" stroke="#aaa" stroke-width="1"/>
+                    <circle cx="100" cy="260" r="3.5" fill="white" stroke="#555" stroke-width="1.5"/>
+                    <!-- Graduation 0° -->
+                    <text x="202" y="264" font-size="11" fill="#333" font-weight="bold">0°</text>
+                    <!-- Graduation 72° markée -->
+                    <!-- cos72≈0.309, sin72≈0.951 : x=100+100*0.309=131, y=260-100*0.951=165 -->
+                    <line x1="100" y1="260" x2="131" y2="165" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="5,3"/>
+                    <circle cx="131" cy="165" r="5" fill="#e74c3c"/>
+                    <text x="136" y="162" font-size="13" fill="#e74c3c" font-weight="bold">72°</text>
+                    <!-- Autres graduations principales -->
+                    <!-- 30°: (187,210) 60°: (150,173) 90°: (100,160) 120°: (50,173) 150°: (13,210) -->
+                    <text x="188" y="208" font-size="10" fill="#888">30</text>
+                    <text x="150" y="170" font-size="10" fill="#888">60</text>
+                    <text x="98" y="155" font-size="10" fill="#888">90</text>
+                    <text x="34" y="170" font-size="10" fill="#888">120</text>
+                    <text x="-4" y="208" font-size="10" fill="#888">150</text>
+                    <text x="-8" y="265" font-size="10" fill="#333" font-weight="bold">180°</text>
+                    <text x="94" y="306" text-anchor="middle" font-size="13" fill="#1565c0">Le rapporteur est centré en A, le 0° est sur [AB)</text>
+                    <text x="94" y="322" text-anchor="middle" font-size="13" fill="#1565c0">On repère 72° et on fait un trait</text>
+                </g>
+
+                <!-- Après enlèvement du rapporteur : trait du 72° (étape 3) -->
+                <g id="trait72" opacity="0">
+                    <!-- petit trait de repère à 72° -->
+                    <line x1="100" y1="260" x2="162" y2="70" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,4"/>
+                    <circle cx="162" cy="70" r="5" fill="#e74c3c"/>
+                    <text x="280" y="305" text-anchor="middle" font-size="14" fill="#1565c0">Rapporteur enlevé — trait de repère à 72°</text>
+                </g>
+
+                <!-- AC ray final (étape 4) -->
+                <g id="rayAC" opacity="0">
+                    <line x1="100" y1="260" x2="162" y2="70" stroke="black" stroke-width="2.5"/>
+                    <polygon points="162,70 156,84 167,80" fill="black"/>
+                    <text x="167" y="65" font-size="18" font-weight="bold">C</text>
+                    <!-- Arc angle BAC = 72° -->
+                    <path d="M 160 260 A 60 60 0 0 0 119 203" stroke="#e74c3c" stroke-width="2" fill="rgba(231,76,60,0.12)"/>
+                    <text x="168" y="235" font-size="16" fill="#e74c3c" font-weight="bold">72°</text>
+                    <text x="280" y="305" text-anchor="middle" font-size="14" fill="#1565c0">On trace la demi-droite [AC) — C est placé sur cette demi-droite</text>
+                </g>
+
+            </svg>
+        </div>
+        <div style="text-align:center; margin-top:10px;">
+            <button class="btn-anim" onclick="nextStepTrac()">Étape suivante ▶</button>
+            <button class="btn-reset" onclick="resetTrac()">Recommencer ↺</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>La bissectrice</h2>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        La <strong>bissectrice</strong> d'un angle est la demi-droite issue du
+        <strong>sommet</strong> de cet angle qui le partage en deux angles
+        <strong>de même mesure</strong>.<br><br>
+        <div style="text-align:center; background:white; padding:10px; border-radius:5px;">
+            <svg width="360" height="220" viewBox="0 0 360 220" style="max-width:100%; height:auto;">
+                <!-- O=(60,190) A=(320,190) B à 80° -->
+                <!-- B = (60+220*cos80, 190-220*sin80) = (98, -27) trop haut -->
+                <!-- Utilisons: O=(80,190), B à 80°, longueur 180 -->
+                <!-- B = (80+180*cos80, 190-180*sin80) = (80+31, 190-177) = (111, 13) -->
+                <!-- A = (80+220, 190) = (300, 190) -->
+                <!-- OA -->
+                <line x1="80" y1="190" x2="320" y2="190" stroke="black" stroke-width="2.5"/>
+                <polygon points="320,190 308,184 308,196" fill="black"/>
+                <text x="326" y="195" font-size="18" font-weight="bold">A</text>
+                <!-- OB -->
+                <line x1="80" y1="190" x2="111" y2="13" stroke="black" stroke-width="2.5"/>
+                <polygon points="111,13 106,27 117,24" fill="black"/>
+                <text x="115" y="10" font-size="18" font-weight="bold">B</text>
+                <!-- Bissectrice OD à 40° -->
+                <!-- D = (80+220*cos40, 190-220*sin40) = (80+169, 190-141) = (249, 49) -->
+                <line x1="80" y1="190" x2="249" y2="49" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="10,4"/>
+                <polygon points="249,49 240,62 251,60" fill="#e74c3c"/>
+                <text x="254" y="46" font-size="18" font-weight="bold" fill="#e74c3c">D</text>
+                <!-- O marker -->
+                <line x1="74" y1="184" x2="86" y2="196" stroke="black" stroke-width="2"/>
+                <line x1="86" y1="184" x2="74" y2="196" stroke="black" stroke-width="2"/>
+                <text x="58" y="194" font-size="18" font-weight="bold">O</text>
+                <!-- Arc AOD (green) -->
+                <!-- AOD = 40° : de 0° à 40°, rayon 60 -->
+                <path d="M 140 190 A 60 60 0 0 0 126 151" stroke="#27ae60" stroke-width="2" fill="rgba(39,174,96,0.15)"/>
+                <text x="150" y="176" font-size="13" fill="#27ae60" font-weight="bold">40°</text>
+                <!-- Arc DOB (blue) -->
+                <!-- DOB de 40° à 80°, rayon 80 -->
+                <path d="M 126 151 A 60 60 0 0 0 90 131" stroke="#2980b9" stroke-width="2" fill="rgba(52,152,219,0.15)"/>
+                <text x="110" y="146" font-size="13" fill="#2980b9" font-weight="bold">40°</text>
+                <!-- Label bissectrice -->
+                <text x="170" y="112" font-size="13" fill="#e74c3c" font-weight="bold">[OD) bissectrice</text>
+            </svg>
+        </div>
+        [OD) est la bissectrice de l'angle AOB car
+        <span class="angle">AOD</span> = <span class="angle">DOB</span> = 40°.
+    </div>
+
+    <div class="important">
+        <span style="color:red;">Propriété :</span>
+        Si [OD) est la bissectrice de l'angle AOB, alors :<br><br>
+        <div style="text-align:center; font-size:1.1em;">
+            <span class="angle">AOD</span> = <span class="angle">DOB</span>
+            &nbsp;&nbsp; et &nbsp;&nbsp;
+            <span class="angle">AOD</span> = <span class="angle">AOB</span> ÷ 2
+        </div>
+    </div>
+
+    <h3>Tracer la bissectrice au rapporteur</h3>
+
+    <div class="method">
+        <strong>Méthode :</strong>
+        <ol style="margin-top:8px; line-height:2;">
+            <li>Mesurer l'angle AOB au rapporteur.</li>
+            <li>Diviser cette mesure par 2.</li>
+            <li>Tracer la demi-droite [OD) faisant un angle égal à la moitié de AOB avec [OA).</li>
+        </ol>
+        <strong>Exemple :</strong> Si <span class="angle">AOB</span> = 80°, alors la bissectrice fait un angle de 80° ÷ 2 = <strong>40°</strong> avec [OA).
+    </div>
+
+    <h3>Tracer la bissectrice au compas</h3>
+
+    <!-- ─── Animation : bissectrice au compas ─── -->
+    <div class="example">
+        <strong>Méthode au compas pour tracer la bissectrice de l'angle AOB :</strong><br><br>
+
+        <div class="step-box"><span id="stepBis">Cliquez sur « Étape suivante » pour voir la construction au compas.</span></div>
+        <div class="svg-wrap">
+            <svg id="svgBis" width="580" height="370" viewBox="0 0 580 370" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+
+                <!-- O=(100,310) A=(450,310) B à 70°: (100+300*cos70, 310-300*sin70) = (203, 28) -->
+                <!-- OA ray -->
+                <line x1="100" y1="310" x2="470" y2="310" stroke="black" stroke-width="2.5"/>
+                <polygon points="470,310 458,304 458,316" fill="black"/>
+                <text x="477" y="315" font-size="20" font-weight="bold">A</text>
+                <!-- OB ray -->
+                <line x1="100" y1="310" x2="203" y2="28" stroke="black" stroke-width="2.5"/>
+                <polygon points="203,28 196,42 207,39" fill="black"/>
+                <text x="208" y="24" font-size="20" font-weight="bold">B</text>
+                <!-- O marker -->
+                <line x1="94" y1="304" x2="106" y2="316" stroke="black" stroke-width="2"/>
+                <line x1="106" y1="304" x2="94" y2="316" stroke="black" stroke-width="2"/>
+                <text x="76" y="316" font-size="20" font-weight="bold">O</text>
+
+                <!-- Étape 1 : arc centré en O, rayon 150 -->
+                <!-- coupe OA en M=(250,310) et OB en N=(100+150*cos70, 310-150*sin70)=(151,169) -->
+                <path id="arcO" d="M 250 310 A 150 150 0 0 0 151 169" stroke="#e74c3c" stroke-width="2.5" fill="none" stroke-dasharray="8,4" opacity="0"/>
+                <!-- Points M et N -->
+                <g id="ptM" opacity="0">
+                    <line x1="244" y1="304" x2="256" y2="316" stroke="#e74c3c" stroke-width="2"/>
+                    <line x1="256" y1="304" x2="244" y2="316" stroke="#e74c3c" stroke-width="2"/>
+                    <text x="258" y="307" font-size="18" font-weight="bold" fill="#e74c3c">M</text>
+                </g>
+                <g id="ptN" opacity="0">
+                    <line x1="145" y1="163" x2="157" y2="175" stroke="#e74c3c" stroke-width="2"/>
+                    <line x1="157" y1="163" x2="145" y2="175" stroke="#e74c3c" stroke-width="2"/>
+                    <text x="159" y="166" font-size="18" font-weight="bold" fill="#e74c3c">N</text>
+                </g>
+
+                <!-- Étape 2 : arcs depuis M et N de même rayon (170) -->
+                <!-- Intersection D à 35° de OA: D=(100+270*cos35, 310-270*sin35)=(321, 155) -->
+                <!-- Arc depuis M=(250,310), rayon 180, vers D=(321,155) -->
+                <!-- dist(M,D)=sqrt(71^2+155^2)=sqrt(5041+24025)=sqrt(29066)≈170 ✓ -->
+                <!-- Arc depuis N=(151,169), rayon 180, vers D=(321,155) -->
+                <!-- dist(N,D)=sqrt(170^2+14^2)=sqrt(28900+196)=sqrt(29096)≈171 ✓ -->
+                <path id="arcM" d="M 250 310 A 170 170 0 0 0 390 155" stroke="#3498db" stroke-width="2.5" fill="none" stroke-dasharray="8,4" opacity="0"/>
+                <path id="arcN" d="M 151 169 A 170 170 0 0 1 390 155" stroke="#27ae60" stroke-width="2.5" fill="none" stroke-dasharray="8,4" opacity="0"/>
+
+                <!-- Point D -->
+                <g id="ptD" opacity="0">
+                    <line x1="316" y1="149" x2="326" y2="161" stroke="#333" stroke-width="2.5"/>
+                    <line x1="326" y1="149" x2="316" y2="161" stroke="#333" stroke-width="2.5"/>
+                    <text x="330" y="152" font-size="18" font-weight="bold" fill="#333">D</text>
+                </g>
+
+                <!-- Étape 3 : demi-droite [OD) bissectrice -->
+                <!-- D=(321,155), rayon vers (410,90) environ en prolongeant -->
+                <g id="bissec" opacity="0">
+                    <line x1="100" y1="310" x2="420" y2="90" stroke="#e74c3c" stroke-width="3"/>
+                    <polygon points="420,90 408,102 417,106" fill="#e74c3c"/>
+                    <!-- Arc AOD (35°, rayon 80) -->
+                    <path d="M 180 310 A 80 80 0 0 0 156 246" stroke="#f39c12" stroke-width="2" fill="rgba(243,156,18,0.18)"/>
+                    <text x="192" y="277" font-size="14" fill="#f39c12" font-weight="bold">35°</text>
+                    <!-- Arc DOB (35°, rayon 80) -->
+                    <path d="M 156 246 A 80 80 0 0 0 127 238" stroke="#f39c12" stroke-width="2" fill="rgba(243,156,18,0.18)"/>
+                    <text x="136" y="256" font-size="14" fill="#f39c12" font-weight="bold">35°</text>
+                    <text x="290" y="60" text-anchor="middle" font-size="16" fill="#c0392b" font-weight="bold">[OD) est la bissectrice de l'angle AOB</text>
+                </g>
+
+                <!-- Compas animé -->
+                <g id="compassBis" opacity="0">
+                    <circle id="cHingeBis" cx="100" cy="310" r="9" fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+                    <line id="cLeg1" x1="100" y1="310" x2="250" y2="310" stroke="#ff8c00" stroke-width="5"/>
+                    <circle id="cTip1" cx="250" cy="310" r="5" fill="#222"/>
+                    <line id="cLeg2" x1="100" y1="310" x2="151" y2="169" stroke="#ff8c00" stroke-width="5"/>
+                    <circle id="cTip2" cx="151" cy="169" r="5" fill="#222"/>
+                </g>
+
+            </svg>
+        </div>
+        <div style="text-align:center; margin-top:10px;">
+            <button class="btn-anim" onclick="nextStepBis()">Étape suivante ▶</button>
+            <button class="btn-reset" onclick="resetBis()">Recommencer ↺</button>
+        </div>
+
+        <div style="margin-top:12px;">
+            <strong>Résumé des étapes :</strong>
+            <ol style="line-height:2.2;">
+                <li>Tracer un arc centré en <strong>O</strong> qui coupe [OA) en <strong>M</strong> et [OB) en <strong>N</strong>.</li>
+                <li>Sans changer l'écartement du compas, tracer des arcs centrés en <strong>M</strong> et en <strong>N</strong> qui se croisent en un point <strong>D</strong>.</li>
+                <li>Tracer la demi-droite [OD) : c'est la <strong>bissectrice</strong> de l'angle AOB.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <script>
+    // ────────────────────────────────────────────────────
+    // ANIMATION 0 : Vocabulaire
+    // ────────────────────────────────────────────────────
+    let stepVoc = 0;
+    const vocSteps = [
+        // step 0 → show hint text
+        () => { fade('vocTxt0', 1); },
+        // step 1 → sommet
+        () => {
+            fade('vocTxt0', 0);
+            fade('vocTxt1', 1);
+            setOpacity('vocLblSommet', 1);
+        },
+        // step 2 → côtés
+        () => {
+            fade('vocTxt2', 1);
+            setOpacity('vocLblOA', 1);
+            setOpacity('vocLblOB', 1);
+            setOpacity('vocArc', 1);
+        },
+        // step 3 → notation
+        () => {
+            fade('vocTxt3', 1);
+            setOpacity('vocNotation', 1);
+        },
+    ];
+
+    function fade(id, v) {
+        const el = document.getElementById(id);
+        if (el) el.style.opacity = v;
+    }
+
+    function nextStepVoc() {
+        if (stepVoc < vocSteps.length) {
+            vocSteps[stepVoc]();
+            stepVoc++;
+        }
+    }
+
+    function resetVoc() {
+        stepVoc = 0;
+        ['vocTxt0','vocTxt1','vocTxt2','vocTxt3'].forEach(id => fade(id, 0));
+        ['vocLblSommet','vocLblOA','vocLblOB','vocArc','vocNotation'].forEach(id => setOpacity(id, 0));
+    }
+
+    // ────────────────────────────────────────────────────
+    // ANIMATION 1 : Mesurer un angle
+    // ────────────────────────────────────────────────────
+    const mesTexts = [
+        "Cliquez sur « Étape suivante » pour voir comment mesurer l'angle <span class='angle'>AOB</span>.",
+        "Étape 1 : On place le <strong>centre du rapporteur</strong> exactement sur le sommet <strong>O</strong> de l'angle.",
+        "Étape 2 : On aligne la graduation <strong>0°</strong> sur le côté [OA) et on cherche où le côté [OB) coupe le rapporteur.",
+        "Étape 3 : On lit la mesure : le côté [OB) passe par la graduation <strong>30°</strong>. Donc <span class='angle'>AOB</span> = <strong>30°</strong>.",
+        "<span class='angle'>AOB</span> = <strong>30°</strong> — c'est un angle <strong style='color:#e74c3c;'>aigu</strong> (entre 0° et 90°)."
+    ];
+    let stepMes = 0;
+
+    function buildRapporteur() {
+        const svg = document.getElementById('svgMes');
+        const ticks = document.getElementById('ticks');
+        const labels = document.getElementById('labels');
+        if (!ticks) return;
+        const cx = 200, cy = 280, r = 120;
+        for (let deg = 0; deg <= 180; deg += 5) {
+            const rad = deg * Math.PI / 180;
+            const xo = cx + r * Math.cos(rad);
+            const yo = cy - r * Math.sin(rad);
+            const inner = (deg % 10 === 0) ? 108 : 114;
+            const xi = cx + inner * Math.cos(rad);
+            const yi = cy - inner * Math.sin(rad);
+            const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+            line.setAttribute('x1', xo.toFixed(1));
+            line.setAttribute('y1', yo.toFixed(1));
+            line.setAttribute('x2', xi.toFixed(1));
+            line.setAttribute('y2', yi.toFixed(1));
+            line.setAttribute('stroke', '#555');
+            line.setAttribute('stroke-width', deg % 30 === 0 ? '2' : '1');
+            ticks.appendChild(line);
+        }
+        [0, 30, 60, 90, 120, 150, 180].forEach(deg => {
+            const rad = deg * Math.PI / 180;
+            const lx = cx + 95 * Math.cos(rad);
+            const ly = cy - 95 * Math.sin(rad);
+            const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+            txt.setAttribute('x', (lx - 4).toFixed(1));
+            txt.setAttribute('y', (ly + 4).toFixed(1));
+            txt.setAttribute('font-size', '10');
+            txt.setAttribute('fill', deg === 30 ? '#e74c3c' : '#555');
+            txt.setAttribute('font-weight', deg === 30 ? 'bold' : 'normal');
+            txt.setAttribute('text-anchor', 'middle');
+            txt.textContent = deg;
+            labels.appendChild(txt);
+        });
+    }
+
+    function setOpacity(id, v) {
+        const el = document.getElementById(id);
+        if (el) el.setAttribute('opacity', v);
+    }
+
+    function nextStepMes() {
+        stepMes++;
+        if (stepMes > 4) stepMes = 4;
+        document.getElementById('stepMes').innerHTML = mesTexts[stepMes];
+        if (stepMes >= 1) setOpacity('rapporteur', 1);
+        if (stepMes >= 2) setOpacity('zeroline', 1);
+        if (stepMes >= 3) { setOpacity('mark30', 1); setOpacity('dot30', 1); setOpacity('arcMes', 1); setOpacity('label30', 1); }
+        if (stepMes >= 4) setOpacity('result', 1);
+    }
+
+    function resetMes() {
+        stepMes = 0;
+        document.getElementById('stepMes').innerHTML = mesTexts[0];
+        ['rapporteur','zeroline','mark30','dot30','arcMes','label30','result'].forEach(id => setOpacity(id, 0));
+    }
+
+    // ────────────────────────────────────────────────────
+    // ANIMATION 2 : Tracer un angle
+    // ────────────────────────────────────────────────────
+    const tracTexts = [
+        "Cliquez sur « Étape suivante » pour voir comment tracer l'angle <span class='angle'>BAC</span> = 72°.",
+        "Étape 1 : On trace la demi-droite [AB) et on place le point <strong>A</strong> (sommet).",
+        "Étape 2 : On place le centre du rapporteur en <strong>A</strong>, on aligne le <strong>0°</strong> sur [AB) et on repère <strong>72°</strong> par un trait.",
+        "Étape 3 : On enlève le rapporteur. Le trait de repère indique la direction du côté [AC).",
+        "Étape 4 : On trace la demi-droite [AC) et on place le point <strong>C</strong> dessus. L'angle <span class='angle'>BAC</span> = <strong>72°</strong> est construit !"
+    ];
+    let stepTrac = 0;
+
+    function nextStepTrac() {
+        stepTrac++;
+        if (stepTrac > 4) stepTrac = 4;
+        document.getElementById('stepTrac').innerHTML = tracTexts[stepTrac];
+        if (stepTrac >= 1) { setOpacity('tA1', 1); setOpacity('tA2', 1); setOpacity('tAl', 1); setOpacity('rayAB', 1); }
+        if (stepTrac >= 2) setOpacity('rapTrac', 1);
+        if (stepTrac >= 3) { setOpacity('rapTrac', 0); setOpacity('trait72', 1); }
+        if (stepTrac >= 4) { setOpacity('trait72', 0); setOpacity('rayAC', 1); }
+    }
+
+    function resetTrac() {
+        stepTrac = 0;
+        document.getElementById('stepTrac').innerHTML = tracTexts[0];
+        ['tA1','tA2','tAl','rayAB','rapTrac','trait72','rayAC'].forEach(id => setOpacity(id, 0));
+    }
+
+    // ────────────────────────────────────────────────────
+    // ANIMATION 3 : Bissectrice au compas
+    // ────────────────────────────────────────────────────
+    const bisTexts = [
+        "Cliquez sur « Étape suivante » pour voir la construction de la bissectrice au compas.",
+        "Étape 1 : On place la pointe du compas en <strong>O</strong> et on trace un arc qui coupe [OA) en <strong>M</strong> et [OB) en <strong>N</strong>.",
+        "Étape 2 : Sans changer l'écartement du compas, on place la pointe en <strong>M</strong> et on trace un arc. Puis on fait la même chose depuis <strong>N</strong>. Les deux arcs se croisent en <strong>D</strong>.",
+        "Étape 3 : On trace la demi-droite [OD). C'est la <strong>bissectrice</strong> de l'angle AOB : elle partage l'angle en deux angles <strong>égaux</strong>."
+    ];
+    let stepBis = 0;
+
+    function nextStepBis() {
+        stepBis++;
+        if (stepBis > 3) stepBis = 3;
+        document.getElementById('stepBis').innerHTML = bisTexts[stepBis];
+        if (stepBis >= 1) {
+            setOpacity('compassBis', 1);
+            setOpacity('arcO', 1);
+            setOpacity('ptM', 1);
+            setOpacity('ptN', 1);
+        }
+        if (stepBis >= 2) {
+            setOpacity('compassBis', 0);
+            setOpacity('arcM', 1);
+            setOpacity('arcN', 1);
+            setOpacity('ptD', 1);
+        }
+        if (stepBis >= 3) {
+            setOpacity('arcM', 0.3);
+            setOpacity('arcN', 0.3);
+            setOpacity('bissec', 1);
+        }
+    }
+
+    function resetBis() {
+        stepBis = 0;
+        document.getElementById('stepBis').innerHTML = bisTexts[0];
+        ['compassBis','arcO','ptM','ptN','arcM','arcN','ptD','bissec'].forEach(id => setOpacity(id, 0));
+    }
+
+    // Initialisation
+    window.onload = function() {
+        buildRapporteur();
+    };
+    </script>
+
+</body>
+</html>

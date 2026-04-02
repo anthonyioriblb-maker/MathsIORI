@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Fonctions affines et linéaires</title>
+    <link rel="stylesheet" href="../../styles.css?v=20250326">
+    <style>
+        .graph-center { text-align: center; margin: 15px 0; }
+        svg.repere { border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+        .tableau-valeurs th { background-color: #d4ebf7; color: #1a5276; border: 2px solid #2980b9; }
+        .tableau-valeurs td { background-color: #eaf6ff; color: #1a5276; border: 2px solid #2980b9; }
+        .calcul { font-family: 'Times New Roman', serif; font-style: italic; text-align: center;
+            margin: 10px 0; font-size: 1.05em; color: #1a1a6e; }
+        .calcul .ligne { display: block; margin: 3px 0; }
+        .btn-anim {
+            padding: 10px 22px; font-size: 15px; border: none; border-radius: 5px;
+            cursor: pointer; font-weight: bold; margin: 4px 6px;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .btn-anim:hover:not(:disabled) { transform: translateY(-2px); }
+        .btn-anim:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-bleu   { background: #3498db; color: white; }
+        .btn-vert   { background: #27ae60; color: white; }
+        .btn-rouge  { background: #e74c3c; color: white; }
+        .btn-orange { background: #e67e22; color: white; }
+        .btn-gris   { background: #95a5a6; color: white; }
+        .anim-el { opacity: 0; transition: opacity 0.5s ease; }
+        .anim-el.visible { opacity: 1; }
+        .droite-anim { transition: stroke-dashoffset 1.2s ease; }
+    </style>
+</head>
+<body>
+    <a href="../classe-3e.html" class="home-button" style="margin: 20px; display:inline-block;">&#8592; Retour au choix des chapitres</a>
+
+    <h1>Chapitre 10 : Fonctions affines et lin&#233;aires</h1>
+
+    <h2>Fonction lin&#233;aire</h2>
+
+    <h3>Proportionnalit&#233; et fonction lin&#233;aire</h3>
+
+    <div class="example">
+        Voici un tableau de valeurs indiquant le prix &#224; payer en fonction de la quantit&#233; de gazole prise &#224; la station-service :<br><br>
+        <table class="tableau-valeurs">
+            <tr>
+                <th>Quantit&#233; de gazole (en L)</th>
+                <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
+            </tr>
+            <tr>
+                <th>Prix (en &#8364;)</th>
+                <td>1,4</td><td>2,8</td><td>4,2</td><td>5,6</td><td>7</td><td>8,4</td>
+            </tr>
+        </table>
+        <br>
+        On calcule les rapports :
+        <span class="frac"><span class="num">1,4</span><span class="den">1</span></span> = 1,4 &nbsp;;
+        <span class="frac"><span class="num">2,8</span><span class="den">2</span></span> = 1,4 &nbsp;;
+        <span class="frac"><span class="num">4,2</span><span class="den">3</span></span> = 1,4 &nbsp;;
+        <span class="frac"><span class="num">5,6</span><span class="den">4</span></span> = 1,4 &nbsp;;
+        <span class="frac"><span class="num">7</span><span class="den">5</span></span> = 1,4 &nbsp;;
+        <span class="frac"><span class="num">8,4</span><span class="den">6</span></span> = 1,4<br><br>
+        Le prix est <strong>proportionnel</strong> &#224; la quantit&#233; de gazole. Le <strong>coefficient de proportionnalit&#233;</strong> est <strong>1,4</strong>.
+    </div>
+
+    <div class="important">
+        La courbe obtenue est une <strong>droite passant par l&#8217;origine du rep&#232;re</strong>. C&#8217;est la repr&#233;sentation graphique d&#8217;une <strong>fonction lin&#233;aire</strong> : <span class="math">f(x) = 1,4x</span>.
+    </div>
+
+    <!-- GRAPHIQUE 1 : f(x)=1,4x  ox=50 oy=250 ux=40 uy=28 -->
+    <div class="graph-center">
+        <div style="margin-bottom:8px;">
+            <button class="btn-anim btn-rouge" id="g1-btn-pts" onclick="g1PlacerPoints()">&#128205; Placer les points du tableau</button>
+            <button class="btn-anim btn-bleu"  id="g1-btn-droite" onclick="g1TracerDroite()" disabled>&#128207; Tracer la droite f(x) = 1,4x</button>
+            <button class="btn-anim btn-gris"  onclick="g1Reset()">&#8635; R&#233;initialiser</button>
+        </div>
+        <svg class="repere" width="330" height="275">
+            <line x1="90"  y1="22" x2="90"  y2="250" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="130" y1="22" x2="130" y2="250" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="170" y1="22" x2="170" y2="250" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="210" y1="22" x2="210" y2="250" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="250" y1="22" x2="250" y2="250" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="290" y1="22" x2="290" y2="250" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="50" y1="222" x2="300" y2="222" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="50" y1="194" x2="300" y2="194" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="50" y1="166" x2="300" y2="166" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="50" y1="138" x2="300" y2="138" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="50" y1="110" x2="300" y2="110" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="50" y1="82"  x2="300" y2="82"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="50" y1="54"  x2="300" y2="54"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="50" y1="26"  x2="300" y2="26"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="45" y1="250" x2="310" y2="250" stroke="#333" stroke-width="2"/>
+            <polygon points="310,246 310,254 318,250" fill="#333"/>
+            <line x1="50" y1="258" x2="50" y2="15" stroke="#333" stroke-width="2"/>
+            <polygon points="46,15 54,15 50,7" fill="#333"/>
+            <text x="90"  y="265" text-anchor="middle" font-size="13" fill="#555">1</text>
+            <text x="130" y="265" text-anchor="middle" font-size="13" fill="#555">2</text>
+            <text x="170" y="265" text-anchor="middle" font-size="13" fill="#555">3</text>
+            <text x="210" y="265" text-anchor="middle" font-size="13" fill="#555">4</text>
+            <text x="250" y="265" text-anchor="middle" font-size="13" fill="#555">5</text>
+            <text x="290" y="265" text-anchor="middle" font-size="13" fill="#555">6</text>
+            <text x="38" y="226" text-anchor="end" font-size="12" fill="#555">1</text>
+            <text x="38" y="198" text-anchor="end" font-size="12" fill="#555">2</text>
+            <text x="38" y="170" text-anchor="end" font-size="12" fill="#555">3</text>
+            <text x="38" y="142" text-anchor="end" font-size="12" fill="#555">4</text>
+            <text x="38" y="114" text-anchor="end" font-size="12" fill="#555">5</text>
+            <text x="38" y="86"  text-anchor="end" font-size="12" fill="#555">6</text>
+            <text x="38" y="58"  text-anchor="end" font-size="12" fill="#555">7</text>
+            <text x="38" y="30"  text-anchor="end" font-size="12" fill="#555">8</text>
+            <text x="35" y="265" text-anchor="end" font-size="13" fill="#333">O</text>
+            <text x="322" y="254" font-size="13" font-style="italic" fill="#444">x</text>
+            <text x="55"  y="12"  font-size="13" font-style="italic" fill="#444">f(x)</text>
+            <text x="185" y="275" text-anchor="middle" font-size="11" fill="#1a5276">Quantit&#233; de gazole (en L)</text>
+            <!-- Points (1;1,4)=>(90,211)  (2;2,8)=>(130,172)  (3;4,2)=>(170,133)  (4;5,6)=>(210,94)  (5;7)=>(250,54) -->
+            <g id="g1-pt1" class="anim-el"><line x1="85" y1="211" x2="95" y2="211" stroke="#e74c3c" stroke-width="2.5"/><line x1="90" y1="206" x2="90" y2="216" stroke="#e74c3c" stroke-width="2.5"/></g>
+            <g id="g1-pt2" class="anim-el"><line x1="125" y1="172" x2="135" y2="172" stroke="#e74c3c" stroke-width="2.5"/><line x1="130" y1="167" x2="130" y2="177" stroke="#e74c3c" stroke-width="2.5"/></g>
+            <g id="g1-pt3" class="anim-el"><line x1="165" y1="133" x2="175" y2="133" stroke="#e74c3c" stroke-width="2.5"/><line x1="170" y1="128" x2="170" y2="138" stroke="#e74c3c" stroke-width="2.5"/></g>
+            <g id="g1-pt4" class="anim-el"><line x1="205" y1="94"  x2="215" y2="94"  stroke="#e74c3c" stroke-width="2.5"/><line x1="210" y1="89"  x2="210" y2="99"  stroke="#e74c3c" stroke-width="2.5"/></g>
+            <g id="g1-pt5" class="anim-el"><line x1="245" y1="54"  x2="255" y2="54"  stroke="#e74c3c" stroke-width="2.5"/><line x1="250" y1="49"  x2="250" y2="59"  stroke="#e74c3c" stroke-width="2.5"/></g>
+            <g id="g1-tirets" class="anim-el">
+                <line x1="90" y1="250" x2="90" y2="211" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="50" y1="211" x2="90" y2="211" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+            </g>
+            <!-- Droite O(50,250)->(290,15)  longueur~336 -->
+            <line id="g1-droite" x1="50" y1="250" x2="290" y2="15" stroke="#e74c3c" stroke-width="2.5" class="droite-anim" style="stroke-dasharray:336;stroke-dashoffset:336;"/>
+            <text id="g1-label" class="anim-el" x="272" y="12" font-size="13" font-weight="bold" fill="#e74c3c">f(x)=1,4x</text>
+        </svg>
+    </div>
+
+    <h3>D&#233;finition et repr&#233;sentation graphique</h3>
+
+    <div class="definition">
+        <span style="color:red;">D&#233;finition :</span> &#201;tant donn&#233; un nombre <span class="math">a</span>, la <strong>fonction lin&#233;aire</strong> <span class="math">f</span> de coefficient <span class="math">a</span> est la fonction qui &#224; tout nombre <span class="math">x</span> associe le nombre <span class="math">ax</span>.<br>
+        On note : <span class="math">f : x &#8594; ax</span> &nbsp; ou &nbsp; <span class="math">f(x) = ax</span>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Soit la fonction <span class="math">f</span> qui &#224; tout nombre <span class="math">x</span> associe son <strong>quadruple</strong>.<br>
+        On a <span class="math">f(x) = 4x</span>. C&#8217;est une fonction lin&#233;aire de coefficient <strong>4</strong>.
+    </div>
+
+    <div class="property">
+        <span style="color:red;">Propri&#233;t&#233; :</span>
+        <ul>
+            <li>Un rep&#232;re &#233;tant choisi, la repr&#233;sentation graphique de <span class="math">f : x &#8594; ax</span> est une <strong>droite passant par l&#8217;origine du rep&#232;re</strong>.</li>
+            <li>R&#233;ciproquement, toute droite passant par l&#8217;origine (sauf l&#8217;axe des ordonn&#233;es) est la repr&#233;sentation graphique d&#8217;une fonction lin&#233;aire.</li>
+            <li>Le nombre <span class="math">a</span> est appel&#233; le <strong>coefficient directeur</strong> de la droite.</li>
+        </ul>
+    </div>
+
+    <div class="method">
+        <strong>M&#233;thode &#8212; Tracer la courbe de <span class="math">f(x) = 3x</span> :</strong><br><br>
+        Comme <span class="math">f</span> est une fonction lin&#233;aire, la courbe est une droite passant par l&#8217;origine. Il suffit de calculer les coordonn&#233;es d&#8217;un <strong>deuxi&#232;me point</strong>.<br><br>
+        On choisit <span class="math">x = 2</span> : &nbsp; <span class="math">f(2) = 3 &#215; 2 = 6</span>.<br><br>
+        La courbe passe donc par <strong>O(0 ; 0)</strong> et par le point <strong>A(2 ; 6)</strong>.<br>
+        L&#8217;&#233;quation de la droite est <strong><span class="math">y = 3x</span></strong>. Le <strong>coefficient directeur</strong> est <strong>3</strong>.
+    </div>
+
+    <!-- GRAPHIQUE 2 : f(x)=3x  ox=90 oy=255 ux=60 uy=30 -->
+    <div class="graph-center">
+        <div style="margin-bottom:8px;">
+            <button class="btn-anim btn-rouge"  id="g2-btn-A"      onclick="g2PlacerA()">&#128205; Placer le point A(2 ; 6)</button>
+            <button class="btn-anim btn-bleu"   id="g2-btn-droite" onclick="g2TracerDroite()" disabled>&#128207; Tracer la droite y = 3x</button>
+            <button class="btn-anim btn-gris"   onclick="g2Reset()">&#8635; R&#233;initialiser</button>
+        </div>
+        <svg class="repere" width="265" height="305">
+            <line x1="30"  y1="65" x2="30"  y2="285" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="150" y1="65" x2="150" y2="285" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="210" y1="65" x2="210" y2="285" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="20" y1="285" x2="235" y2="285" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="20" y1="225" x2="235" y2="225" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="20" y1="195" x2="235" y2="195" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="20" y1="165" x2="235" y2="165" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="20" y1="135" x2="235" y2="135" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="20" y1="105" x2="235" y2="105" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="20" y1="75"  x2="235" y2="75"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="255" x2="245" y2="255" stroke="#333" stroke-width="2"/>
+            <polygon points="245,251 245,259 253,255" fill="#333"/>
+            <line x1="90" y1="292" x2="90" y2="55" stroke="#333" stroke-width="2"/>
+            <polygon points="86,55 94,55 90,47" fill="#333"/>
+            <text x="30"  y="270" text-anchor="middle" font-size="13" fill="#555">&#8722;1</text>
+            <text x="150" y="270" text-anchor="middle" font-size="13" fill="#555">1</text>
+            <text x="210" y="270" text-anchor="middle" font-size="13" fill="#555">2</text>
+            <text x="78" y="289" text-anchor="end" font-size="12" fill="#555">&#8722;1</text>
+            <text x="78" y="229" text-anchor="end" font-size="12" fill="#555">1</text>
+            <text x="78" y="199" text-anchor="end" font-size="12" fill="#555">2</text>
+            <text x="78" y="169" text-anchor="end" font-size="12" fill="#555">3</text>
+            <text x="78" y="139" text-anchor="end" font-size="12" fill="#555">4</text>
+            <text x="78" y="109" text-anchor="end" font-size="12" fill="#555">5</text>
+            <text x="78" y="79"  text-anchor="end" font-size="12" fill="#555">6</text>
+            <text x="78" y="270" text-anchor="end" font-size="13" fill="#333">O</text>
+            <text x="257" y="259" font-size="13" font-style="italic" fill="#444">x</text>
+            <text x="94"  y="48"  font-size="13" font-style="italic" fill="#444">f(x)</text>
+            <!-- Droite (70,285)->(217,65)  longueur~265 -->
+            <line id="g2-droite" x1="70" y1="285" x2="217" y2="65" stroke="#e74c3c" stroke-width="2.5" class="droite-anim" style="stroke-dasharray:265;stroke-dashoffset:265;"/>
+            <text id="g2-label" class="anim-el" x="195" y="62" font-size="13" font-weight="bold" fill="#e74c3c">y = 3x</text>
+            <!-- A(2;6)=(210,75) -->
+            <g id="g2-ptA" class="anim-el">
+                <line x1="204" y1="75" x2="216" y2="75" stroke="#e74c3c" stroke-width="2.5"/>
+                <line x1="210" y1="69" x2="210" y2="81" stroke="#e74c3c" stroke-width="2.5"/>
+                <text x="215" y="72" font-size="13" font-weight="bold" fill="#e74c3c">A(2 ; 6)</text>
+            </g>
+            <g id="g2-tirets" class="anim-el">
+                <line x1="210" y1="255" x2="210" y2="75" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+                <line x1="90"  y1="75"  x2="210" y2="75" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+            </g>
+        </svg>
+    </div>
+
+    <h2>Fonctions affines</h2>
+
+    <div class="definition">
+        <span style="color:red;">D&#233;finition :</span> Soient <span class="math">a</span> et <span class="math">b</span> deux nombres. On appelle <strong>fonction affine</strong> une fonction qui &#224; tout nombre <span class="math">x</span> associe <span class="math">ax + b</span>.<br>
+        On note : <span class="math">f : x &#8594; ax + b</span> &nbsp; ou &nbsp; <span class="math">f(x) = ax + b</span>
+    </div>
+
+    <div class="remarque">
+        <span style="color:red;">Cas particuliers :</span><br>
+        &nbsp;&#8212; Si <span class="math">b = 0</span>, alors <span class="math">f(x) = ax</span> : <span class="math">f</span> est une <strong>fonction lin&#233;aire</strong>.<br>
+        &nbsp;&#8212; Si <span class="math">a = 0</span>, alors <span class="math">f(x) = b</span> : <span class="math">f</span> est une <strong>fonction constante</strong>.
+    </div>
+
+    <div class="property">
+        <span style="color:red;">Propri&#233;t&#233;s :</span>
+        <ul>
+            <li>La repr&#233;sentation graphique de <span class="math">f : x &#8594; ax + b</span> est une <strong>droite</strong>.</li>
+            <li>Toute droite non parall&#232;le &#224; l&#8217;axe des ordonn&#233;es est la repr&#233;sentation graphique d&#8217;une fonction affine.</li>
+            <li>Le nombre <span class="math">a</span> est le <strong>coefficient directeur</strong> et <span class="math">b</span> est l&#8217;<strong>ordonn&#233;e &#224; l&#8217;origine</strong> de la droite.</li>
+        </ul>
+    </div>
+
+    <div class="method">
+        <strong>M&#233;thode &#8212; Tracer la courbe de <span class="math">f : x &#8594; 2x &#8722; 3</span> :</strong><br><br>
+        Comme <span class="math">f</span> est une fonction affine, la courbe est une droite. Il suffit de calculer les coordonn&#233;es de <strong>deux points</strong>.<br><br>
+        On choisit <span class="math">x = 0</span> et <span class="math">x = &#8722;2</span> :<br><br>
+        <span class="math">f(0) = 2 &#215; 0 &#8722; 3 = </span><strong>&#8722;3</strong> &nbsp; <em>(ordonn&#233;e &#224; l&#8217;origine)</em><br>
+        <span class="math">f(&#8722;2) = 2 &#215; (&#8722;2) &#8722; 3 = &#8722;4 &#8722; 3 = </span><strong>&#8722;7</strong><br><br>
+        La courbe passe donc par <strong>A(0 ; &#8722;3)</strong> et <strong>B(&#8722;2 ; &#8722;7)</strong>.
+    </div>
+
+    <!-- GRAPHIQUE 3 : f(x)=2x-3  ox=160 oy=80 ux=45 uy=20 -->
+    <div class="graph-center">
+        <div style="margin-bottom:8px;">
+            <button class="btn-anim btn-vert"  id="g3-btn-A"      onclick="g3PlacerA()">&#128205; Placer A(0 ; &#8722;3)</button>
+            <button class="btn-anim btn-rouge" id="g3-btn-B"      onclick="g3PlacerB()" disabled>&#128205; Placer B(&#8722;2 ; &#8722;7)</button>
+            <button class="btn-anim btn-bleu"  id="g3-btn-droite" onclick="g3TracerDroite()" disabled>&#128207; Tracer la droite y = 2x &#8722; 3</button>
+            <button class="btn-anim btn-gris"  onclick="g3Reset()">&#8635; R&#233;initialiser</button>
+        </div>
+        <svg class="repere" width="320" height="245">
+            <line x1="70"  y1="20" x2="70"  y2="230" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="115" y1="20" x2="115" y2="230" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="205" y1="20" x2="205" y2="230" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="250" y1="20" x2="250" y2="230" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="295" y1="20" x2="295" y2="230" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="40"  x2="305" y2="40"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="60"  x2="305" y2="60"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="100" x2="305" y2="100" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="120" x2="305" y2="120" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="140" x2="305" y2="140" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="160" x2="305" y2="160" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="180" x2="305" y2="180" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="200" x2="305" y2="200" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="55" y1="220" x2="305" y2="220" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="53" y1="80" x2="310" y2="80" stroke="#333" stroke-width="2"/>
+            <polygon points="310,76 310,84 318,80" fill="#333"/>
+            <line x1="160" y1="235" x2="160" y2="15" stroke="#333" stroke-width="2"/>
+            <polygon points="156,15 164,15 160,7" fill="#333"/>
+            <text x="70"  y="95" text-anchor="middle" font-size="13" fill="#555">&#8722;2</text>
+            <text x="115" y="95" text-anchor="middle" font-size="13" fill="#555">&#8722;1</text>
+            <text x="205" y="95" text-anchor="middle" font-size="13" fill="#555">1</text>
+            <text x="250" y="95" text-anchor="middle" font-size="13" fill="#555">2</text>
+            <text x="295" y="95" text-anchor="middle" font-size="13" fill="#555">3</text>
+            <text x="148" y="44"  text-anchor="end" font-size="12" fill="#555">2</text>
+            <text x="148" y="64"  text-anchor="end" font-size="12" fill="#555">1</text>
+            <text x="148" y="104" text-anchor="end" font-size="12" fill="#555">&#8722;1</text>
+            <text x="148" y="124" text-anchor="end" font-size="12" fill="#555">&#8722;2</text>
+            <text x="148" y="144" text-anchor="end" font-size="12" fill="#555">&#8722;3</text>
+            <text x="148" y="164" text-anchor="end" font-size="12" fill="#555">&#8722;4</text>
+            <text x="148" y="184" text-anchor="end" font-size="12" fill="#555">&#8722;5</text>
+            <text x="148" y="204" text-anchor="end" font-size="12" fill="#555">&#8722;6</text>
+            <text x="148" y="224" text-anchor="end" font-size="12" fill="#555">&#8722;7</text>
+            <text x="148" y="95"  text-anchor="end" font-size="13" fill="#333">O</text>
+            <text x="322" y="84"  font-size="13" font-style="italic" fill="#444">x</text>
+            <text x="163" y="10"  font-size="13" font-style="italic" fill="#444">f(x)</text>
+            <!-- Droite (70,220)->(295,20)  longueur~301 -->
+            <line id="g3-droite" x1="70" y1="220" x2="295" y2="20" stroke="#e74c3c" stroke-width="2.5" class="droite-anim" style="stroke-dasharray:301;stroke-dashoffset:301;"/>
+            <text id="g3-label" class="anim-el" x="270" y="18" font-size="13" font-weight="bold" fill="#e74c3c">y = 2x&#8722;3</text>
+            <!-- A(0;-3)=(160,140) -->
+            <g id="g3-ptA" class="anim-el">
+                <line x1="154" y1="140" x2="166" y2="140" stroke="#27ae60" stroke-width="2.5"/>
+                <line x1="160" y1="134" x2="160" y2="146" stroke="#27ae60" stroke-width="2.5"/>
+                <text x="165" y="138" font-size="13" font-weight="bold" fill="#27ae60">A(0 ; &#8722;3)</text>
+            </g>
+            <g id="g3-tiretsA" class="anim-el">
+                <line x1="160" y1="80"  x2="160" y2="140" stroke="#27ae60" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="55"  y1="140" x2="160" y2="140" stroke="#27ae60" stroke-width="1" stroke-dasharray="4,3"/>
+            </g>
+            <!-- B(-2;-7)=(70,220) -->
+            <g id="g3-ptB" class="anim-el">
+                <line x1="64" y1="220" x2="76" y2="220" stroke="#e74c3c" stroke-width="2.5"/>
+                <line x1="70" y1="214" x2="70" y2="226" stroke="#e74c3c" stroke-width="2.5"/>
+                <text x="75" y="218" font-size="13" font-weight="bold" fill="#e74c3c">B(&#8722;2 ; &#8722;7)</text>
+            </g>
+        </svg>
+    </div>
+
+    <h2>Proportionnalit&#233; des accroissements</h2>
+
+    <div class="property">
+        <span style="color:red;">Propri&#233;t&#233; :</span> Soit une fonction affine <span class="math">f : x &#8594; ax + b</span>. Soient <span class="math">x&#8321;</span> et <span class="math">x&#8322;</span> deux nombres.<br><br>
+        L&#8217;accroissement des images est <strong>proportionnel</strong> &#224; l&#8217;accroissement des abscisses, le coefficient &#233;tant <span class="math">a</span>.<br><br>
+        C&#8217;est-&#224;-dire : &nbsp;
+        <span class="math">a</span> =
+        <span class="frac"><span class="num">f(x&#8322;) &#8722; f(x&#8321;)</span><span class="den">x&#8322; &#8722; x&#8321;</span></span>
+    </div>
+
+    <div class="remarque">
+        <span style="color:red;">Remarque :</span> Si <span class="math">a &gt; 0</span> la droite est <strong>croissante</strong> ; si <span class="math">a &lt; 0</span> elle est <strong>d&#233;croissante</strong>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Soit une fonction affine <span class="math">g</span> telle que <span class="math">g(&#8722;1) = 2</span> et <span class="math">g(3) = 8</span>. D&#233;terminer l&#8217;expression alg&#233;brique de <span class="math">g</span>.<br><br>
+        La fonction <span class="math">g</span> est affine, donc de la forme <span class="math">g(x) = ax + b</span>.<br><br>
+        <strong>D&#233;termination de <span class="math">a</span> :</strong><br><br>
+        <div class="calcul">
+            <span class="ligne">
+                <em>a</em> =
+                <span class="frac"><span class="num"><em>g</em>(&#8722;1) &#8722; <em>g</em>(3)</span><span class="den">&#8722;1 &#8722; 3</span></span>
+                &nbsp;=&nbsp;
+                <span class="frac"><span class="num">2 &#8722; 8</span><span class="den">&#8722;1 &#8722; 3</span></span>
+                &nbsp;=&nbsp;
+                <span class="frac"><span class="num">&#8722;6</span><span class="den">&#8722;4</span></span>
+                &nbsp;=&nbsp; <strong>1,5</strong>
+            </span>
+        </div>
+        Ainsi, <span class="math">g(x) = 1,5x + b</span>.<br><br>
+        <strong>D&#233;termination de <span class="math">b</span> &#8212; M&#233;thode 1 : par le calcul</strong><br><br>
+        On utilise <span class="math">g(3) = 8</span> :<br>
+        <div class="calcul">
+            <span class="ligne">1,5 &#215; 3 + <em>b</em> = 8</span>
+            <span class="ligne">4,5 + <em>b</em> = 8</span>
+            <span class="ligne"><em>b</em> = 8 &#8722; 4,5</span>
+            <span class="ligne"><strong><em>b</em> = 3,5</strong></span>
+        </div><br>
+        Ainsi, <strong><span class="math">g(x) = 1,5x + 3,5</span></strong>.
+    </div>
+
+    <div class="method">
+        <strong>M&#233;thode 2 : Graphiquement &#8212; lire l&#8217;ordonn&#233;e &#224; l&#8217;origine</strong><br><br>
+        L&#8217;ordonn&#233;e &#224; l&#8217;origine <span class="math">b</span> se lit directement : c&#8217;est l&#8217;ordonn&#233;e du point o&#249; la droite coupe l&#8217;<strong>axe des ordonn&#233;es</strong>.<br><br>
+        Pour <span class="math">g(x) = 1,5x + 3,5</span>, la droite coupe l&#8217;axe des ordonn&#233;es au point <strong>C(0 ; 3,5)</strong>, donc <strong><span class="math">b</span> = 3,5</strong>.
+    </div>
+
+    <!-- GRAPHIQUE 4 : g(x)=1,5x+3,5  ox=120 oy=200 ux=50 uy=35 -->
+    <div class="graph-center">
+        <div style="margin-bottom:8px;">
+            <button class="btn-anim btn-bleu"   id="g4-btn-droite" onclick="g4TracerDroite()">&#128207; Tracer la droite g(x) = 1,5x + 3,5</button>
+            <button class="btn-anim btn-orange" id="g4-btn-C"      onclick="g4LireB()" disabled>&#128269; Lire b = 3,5 &#8594; point C</button>
+            <button class="btn-anim btn-gris"   onclick="g4Reset()">&#8635; R&#233;initialiser</button>
+        </div>
+        <svg class="repere" width="290" height="240">
+            <line x1="20"  y1="20" x2="20"  y2="215" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="70"  y1="20" x2="70"  y2="215" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="170" y1="20" x2="170" y2="215" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="220" y1="20" x2="220" y2="215" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="270" y1="20" x2="270" y2="215" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="10" y1="165" x2="280" y2="165" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="10" y1="130" x2="280" y2="130" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="10" y1="95"  x2="280" y2="95"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="10" y1="60"  x2="280" y2="60"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="10" y1="25"  x2="280" y2="25"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="10" y1="200" x2="282" y2="200" stroke="#333" stroke-width="2"/>
+            <polygon points="282,196 282,204 290,200" fill="#333"/>
+            <line x1="120" y1="220" x2="120" y2="12" stroke="#333" stroke-width="2"/>
+            <polygon points="116,12 124,12 120,4" fill="#333"/>
+            <text x="20"  y="215" text-anchor="middle" font-size="13" fill="#555">&#8722;2</text>
+            <text x="70"  y="215" text-anchor="middle" font-size="13" fill="#555">&#8722;1</text>
+            <text x="170" y="215" text-anchor="middle" font-size="13" fill="#555">1</text>
+            <text x="220" y="215" text-anchor="middle" font-size="13" fill="#555">2</text>
+            <text x="270" y="215" text-anchor="middle" font-size="13" fill="#555">3</text>
+            <text x="108" y="169" text-anchor="end" font-size="12" fill="#555">1</text>
+            <text x="108" y="134" text-anchor="end" font-size="12" fill="#555">2</text>
+            <text x="108" y="99"  text-anchor="end" font-size="12" fill="#555">3</text>
+            <text x="108" y="64"  text-anchor="end" font-size="12" fill="#555">4</text>
+            <text x="108" y="29"  text-anchor="end" font-size="12" fill="#555">5</text>
+            <text x="108" y="215" text-anchor="end" font-size="13" fill="#333">O</text>
+            <text x="286" y="204" font-size="13" font-style="italic" fill="#444">x</text>
+            <text x="124" y="8"   font-size="13" font-style="italic" fill="#444">g(x)</text>
+            <!-- Droite (20,183)->(172,22)  longueur~221 -->
+            <line id="g4-droite" x1="20" y1="183" x2="172" y2="22" stroke="#e74c3c" stroke-width="2.5" class="droite-anim" style="stroke-dasharray:221;stroke-dashoffset:221;"/>
+            <text id="g4-label" class="anim-el" x="175" y="22" font-size="12" font-weight="bold" fill="#e74c3c">g(x)=1,5x+3,5</text>
+            <!-- Points sur la droite : (-1;2)=(70,130)  (1;5)=(170,25) -->
+            <g id="g4-pts" class="anim-el">
+                <line x1="64" y1="130" x2="76" y2="130" stroke="#e74c3c" stroke-width="2"/>
+                <line x1="70" y1="124" x2="70" y2="136" stroke="#e74c3c" stroke-width="2"/>
+                <line x1="164" y1="25" x2="176" y2="25" stroke="#e74c3c" stroke-width="2"/>
+                <line x1="170" y1="19" x2="170" y2="31" stroke="#e74c3c" stroke-width="2"/>
+            </g>
+            <!-- C(0;3,5)=(120,78) -->
+            <g id="g4-ptC" class="anim-el">
+                <line x1="113" y1="78" x2="127" y2="78" stroke="#c0392b" stroke-width="2.5"/>
+                <line x1="120" y1="71" x2="120" y2="85" stroke="#c0392b" stroke-width="2.5"/>
+                <text x="124" y="75" font-size="12" font-weight="bold" fill="#c0392b">C(0 ; 3,5)</text>
+            </g>
+            <g id="g4-tiretC" class="anim-el">
+                <line x1="10" y1="78" x2="120" y2="78" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,3"/>
+                <text x="108" y="74" text-anchor="end" font-size="12" fill="#c0392b">3,5</text>
+            </g>
+        </svg>
+    </div>
+
+    <br>
+    <div style="text-align:center; margin-top:20px;">
+        <a href="../classe-3e.html" style="color:#2980b9;">&#8592; Retour au choix des chapitres</a>
+    </div><br>
+
+<script>
+/* ── Graphique 1 : f(x)=1,4x ── */
+var g1pts=false, g1d=false;
+function g1PlacerPoints(){
+    if(g1pts)return; g1pts=true;
+    document.getElementById('g1-btn-pts').disabled=true;
+    ['g1-pt1','g1-pt2','g1-pt3','g1-pt4','g1-pt5','g1-tirets'].forEach(function(id,i){
+        setTimeout(function(){ var e=document.getElementById(id); if(e) e.classList.add('visible'); }, i*220);
+    });
+    setTimeout(function(){ document.getElementById('g1-btn-droite').disabled=false; }, 6*220);
+}
+function g1TracerDroite(){
+    if(g1d)return; g1d=true;
+    document.getElementById('g1-btn-droite').disabled=true;
+    var d=document.getElementById('g1-droite');
+    if(d){ d.style.strokeDashoffset='0'; }
+    setTimeout(function(){ var e=document.getElementById('g1-label'); if(e) e.classList.add('visible'); }, 1400);
+}
+function g1Reset(){
+    g1pts=false; g1d=false;
+    ['g1-pt1','g1-pt2','g1-pt3','g1-pt4','g1-pt5','g1-tirets','g1-label'].forEach(function(id){
+        var e=document.getElementById(id); if(e) e.classList.remove('visible');
+    });
+    var d=document.getElementById('g1-droite');
+    if(d){ d.style.transition='none'; d.style.strokeDashoffset='336';
+        setTimeout(function(){ if(d) d.style.transition='stroke-dashoffset 1.2s ease'; },50); }
+    document.getElementById('g1-btn-pts').disabled=false;
+    document.getElementById('g1-btn-droite').disabled=true;
+}
+
+/* ── Graphique 2 : f(x)=3x ── */
+var g2a=false, g2d=false;
+function g2PlacerA(){
+    if(g2a)return; g2a=true;
+    document.getElementById('g2-btn-A').disabled=true;
+    ['g2-ptA','g2-tirets'].forEach(function(id,i){
+        setTimeout(function(){ var e=document.getElementById(id); if(e) e.classList.add('visible'); }, i*300);
+    });
+    setTimeout(function(){ document.getElementById('g2-btn-droite').disabled=false; }, 700);
+}
+function g2TracerDroite(){
+    if(g2d)return; g2d=true;
+    document.getElementById('g2-btn-droite').disabled=true;
+    var d=document.getElementById('g2-droite');
+    if(d){ d.style.strokeDashoffset='0'; }
+    setTimeout(function(){ var e=document.getElementById('g2-label'); if(e) e.classList.add('visible'); }, 1300);
+}
+function g2Reset(){
+    g2a=false; g2d=false;
+    ['g2-ptA','g2-tirets','g2-label'].forEach(function(id){
+        var e=document.getElementById(id); if(e) e.classList.remove('visible');
+    });
+    var d=document.getElementById('g2-droite');
+    if(d){ d.style.transition='none'; d.style.strokeDashoffset='265';
+        setTimeout(function(){ if(d) d.style.transition='stroke-dashoffset 1.2s ease'; },50); }
+    document.getElementById('g2-btn-A').disabled=false;
+    document.getElementById('g2-btn-droite').disabled=true;
+}
+
+/* ── Graphique 3 : f(x)=2x-3 ── */
+var g3a=false, g3b=false, g3d=false;
+function g3PlacerA(){
+    if(g3a)return; g3a=true;
+    document.getElementById('g3-btn-A').disabled=true;
+    ['g3-ptA','g3-tiretsA'].forEach(function(id,i){
+        setTimeout(function(){ var e=document.getElementById(id); if(e) e.classList.add('visible'); }, i*300);
+    });
+    setTimeout(function(){ document.getElementById('g3-btn-B').disabled=false; }, 700);
+}
+function g3PlacerB(){
+    if(g3b)return; g3b=true;
+    document.getElementById('g3-btn-B').disabled=true;
+    var e=document.getElementById('g3-ptB'); if(e) e.classList.add('visible');
+    setTimeout(function(){ document.getElementById('g3-btn-droite').disabled=false; }, 500);
+}
+function g3TracerDroite(){
+    if(g3d)return; g3d=true;
+    document.getElementById('g3-btn-droite').disabled=true;
+    var d=document.getElementById('g3-droite');
+    if(d){ d.style.strokeDashoffset='0'; }
+    setTimeout(function(){ var e=document.getElementById('g3-label'); if(e) e.classList.add('visible'); }, 1300);
+}
+function g3Reset(){
+    g3a=false; g3b=false; g3d=false;
+    ['g3-ptA','g3-tiretsA','g3-ptB','g3-label'].forEach(function(id){
+        var e=document.getElementById(id); if(e) e.classList.remove('visible');
+    });
+    var d=document.getElementById('g3-droite');
+    if(d){ d.style.transition='none'; d.style.strokeDashoffset='301';
+        setTimeout(function(){ if(d) d.style.transition='stroke-dashoffset 1.2s ease'; },50); }
+    document.getElementById('g3-btn-A').disabled=false;
+    document.getElementById('g3-btn-B').disabled=true;
+    document.getElementById('g3-btn-droite').disabled=true;
+}
+
+/* ── Graphique 4 : g(x)=1,5x+3,5 ── */
+var g4d=false, g4c=false;
+function g4TracerDroite(){
+    if(g4d)return; g4d=true;
+    document.getElementById('g4-btn-droite').disabled=true;
+    var d=document.getElementById('g4-droite');
+    if(d){ d.style.strokeDashoffset='0'; }
+    setTimeout(function(){
+        ['g4-label','g4-pts'].forEach(function(id){ var e=document.getElementById(id); if(e) e.classList.add('visible'); });
+    }, 1300);
+    setTimeout(function(){ document.getElementById('g4-btn-C').disabled=false; }, 1600);
+}
+function g4LireB(){
+    if(g4c)return; g4c=true;
+    document.getElementById('g4-btn-C').disabled=true;
+    ['g4-ptC','g4-tiretC'].forEach(function(id,i){
+        setTimeout(function(){ var e=document.getElementById(id); if(e) e.classList.add('visible'); }, i*400);
+    });
+}
+function g4Reset(){
+    g4d=false; g4c=false;
+    ['g4-label','g4-pts','g4-ptC','g4-tiretC'].forEach(function(id){
+        var e=document.getElementById(id); if(e) e.classList.remove('visible');
+    });
+    var d=document.getElementById('g4-droite');
+    if(d){ d.style.transition='none'; d.style.strokeDashoffset='221';
+        setTimeout(function(){ if(d) d.style.transition='stroke-dashoffset 1.2s ease'; },50); }
+    document.getElementById('g4-btn-droite').disabled=false;
+    document.getElementById('g4-btn-C').disabled=true;
+}
+</script>
+</body>
+</html>
