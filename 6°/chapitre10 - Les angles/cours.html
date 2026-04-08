@@ -36,6 +36,118 @@
             border: 2px solid #ddd; border-radius: 8px;
             background: white; width: 240px; vertical-align: top;
         }
+
+        /* Étape 1 : le rapporteur glisse depuis la droite et arrive en position */
+        @keyframes rapArrive {
+            0%   { transform: translate(260px,-70px); opacity: 0; }
+            35%  { opacity: 1; }
+            100% { transform: translate(0,0); opacity: 1; }
+        }
+        /* Étape 2 : petites rotations pour montrer qu'on aligne le 0° sur [OA) */
+        @keyframes rapAlign {
+            0%   { transform: translate(0,0) rotate(0deg);  opacity: 1; }
+            18%  { transform: translate(0,0) rotate(-9deg); opacity: 1; }
+            36%  { transform: translate(0,0) rotate(6deg);  opacity: 1; }
+            54%  { transform: translate(0,0) rotate(-4deg); opacity: 1; }
+            72%  { transform: translate(0,0) rotate(2deg);  opacity: 1; }
+            100% { transform: translate(0,0) rotate(0deg);  opacity: 1; }
+        }
+        #rapporteur {
+            transform-origin: 200px 280px;   /* pivot = sommet O */
+        }
+        /* état caché par défaut (avant l'animation) */
+        #rapporteur.rap-hidden { opacity: 0; }
+        #rapporteur.arrive {
+            animation: rapArrive 1.2s cubic-bezier(0.22,1,0.36,1) forwards;
+        }
+        #rapporteur.aligne {
+            animation: rapAlign 1.4s ease-in-out forwards;
+        }
+
+        /* ── Animation tracer un angle : rapporteur glisse + s'aligne sur [AB) ── */
+        @keyframes rapTracArrive {
+            0%   { transform: translate(320px,-90px); opacity: 0; }
+            30%  { opacity: 1; }
+            55%  { transform: translate(0,0); opacity: 1; }
+            65%  { transform: translate(0,0) rotate(-8deg); opacity: 1; }
+            75%  { transform: translate(0,0) rotate(5deg);  opacity: 1; }
+            85%  { transform: translate(0,0) rotate(-3deg); opacity: 1; }
+            93%  { transform: translate(0,0) rotate(1deg);  opacity: 1; }
+            100% { transform: translate(0,0) rotate(0deg);  opacity: 1; }
+        }
+        @keyframes rapTracDisparait {
+            0%   { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        #rapTrac {
+            transform-origin: 100px 260px;   /* pivot = sommet A */
+        }
+        #rapTrac.rap-hidden   { opacity: 0; }
+        #rapTrac.trac-arrive  { animation: rapTracArrive 2.2s cubic-bezier(0.22,1,0.36,1) forwards; }
+        #rapTrac.trac-cache   { animation: rapTracDisparait 0.4s ease-in forwards; }
+
+        /* ── Balayage vers 72° ── */
+        @keyframes sweepScan {
+            0%   { transform: rotate(0deg);   opacity: 1; }
+            20%  { transform: rotate(-25deg); opacity: 1; }
+            45%  { transform: rotate(-55deg); opacity: 1; }
+            65%  { transform: rotate(-78deg); opacity: 1; }
+            80%  { transform: rotate(-65deg); opacity: 1; }
+            91%  { transform: rotate(-74deg); opacity: 1; }
+            96%  { transform: rotate(-72deg); opacity: 1; }
+            100% { transform: rotate(-72deg); opacity: 0; }
+        }
+        @keyframes fadeInMark {
+            0%   { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        #sweepLine72 { transform-origin: 100px 260px; }
+        #sweepLine72.sweep-active { animation: sweepScan 1.8s ease-in-out 2.2s forwards; }
+        #mark72 { opacity: 0; }
+        #mark72.mark-show { animation: fadeInMark 0.4s ease-out forwards; }
+
+        /* ── Bissectrice au rapporteur ── */
+        @keyframes brRapArrive {
+            0%   { transform: translate(280px,-70px); opacity: 0; }
+            25%  { opacity: 1; }
+            55%  { transform: translate(0,0); opacity: 1; }
+            67%  { transform: translate(0,0) rotate(-7deg); opacity: 1; }
+            78%  { transform: translate(0,0) rotate(5deg);  opacity: 1; }
+            88%  { transform: translate(0,0) rotate(-3deg); opacity: 1; }
+            95%  { transform: translate(0,0) rotate(1deg);  opacity: 1; }
+            100% { transform: translate(0,0) rotate(0deg);  opacity: 1; }
+        }
+        @keyframes brRapDisparait {
+            0%   { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @keyframes brPencilDown {
+            0%   { transform: translateY(-28px); opacity: 0; }
+            35%  { opacity: 1; }
+            100% { transform: translateY(0px); opacity: 1; }
+        }
+        @keyframes brDotPop {
+            0%   { opacity: 0; transform: scale(0); }
+            60%  { opacity: 1; transform: scale(1.4); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        #brRapporteur { transform-origin: 130px 270px; }
+        #brRapporteur.br-hidden  { opacity: 0; }
+        #brRapporteur.br-arrive  { animation: brRapArrive 2.2s cubic-bezier(0.22,1,0.36,1) forwards; }
+        #brRapporteur.br-cache   { animation: brRapDisparait 0.4s ease-in forwards; }
+        #brPencil { transform-origin: 199px 212px; }
+        #brPencil.pencil-draw    { animation: brPencilDown 0.7s ease-out forwards; }
+        #brDot40  { transform-origin: 199px 212px; }
+        #brDot40.dot-pop         { animation: brDotPop 0.4s ease-out forwards; }
+        /* Crayon + règle pour "Tracer un angle" */
+        #pencilTrac { transform-origin: 131px 165px; }
+        #pencilTrac.ptrac-draw   { animation: brPencilDown 0.7s ease-out forwards; }
+        @keyframes brPencilUp {
+            0%   { transform: translateY(0px);   opacity: 1; }
+            100% { transform: translateY(-32px); opacity: 0; }
+        }
+        #pencilTrac.ptrac-hide { animation: brPencilUp 0.5s ease-in forwards; }
+        #brPencil.pencil-hide  { animation: brPencilUp 0.5s ease-in forwards; }
     </style>
 </head>
 <body>
@@ -68,7 +180,13 @@
                     <line x1="86" y1="179" x2="74" y2="191" stroke="black" stroke-width="2.2"/>
                     <!-- Lettres A B O -->
                     <text x="56"  y="190" font-size="22" font-weight="bold" fill="black">O</text>
+                    <!-- Croix A (fin de [OA) à (312,185)) -->
+                    <line x1="306" y1="179" x2="318" y2="191" stroke="black" stroke-width="2"/>
+                    <line x1="318" y1="179" x2="306" y2="191" stroke="black" stroke-width="2"/>
                     <text x="318" y="190" font-size="22" font-weight="bold" fill="black">A</text>
+                    <!-- Croix B (fin de [OB) à (210,25)) -->
+                    <line x1="204" y1="19" x2="216" y2="31" stroke="black" stroke-width="2"/>
+                    <line x1="216" y1="19" x2="204" y2="31" stroke="black" stroke-width="2"/>
                     <text x="215" y="21"  font-size="22" font-weight="bold" fill="black">B</text>
 
                     <!-- ── Étape 1 : sommet ──
@@ -112,7 +230,7 @@
             <!-- Texte qui apparaît étape par étape -->
             <div style="flex:1; min-width:200px; font-size:16px; color:#333; line-height:2;">
                 <div id="vocTxt0" style="opacity:0; transition:opacity 0.5s; color:#555; font-style:italic;">
-                    Clique sur le bouton pour découvrir le vocabulaire ↓
+                    Cliquez sur le bouton pour découvrir le vocabulaire ↓
                 </div>
                 <div id="vocTxt1" style="opacity:0; transition:opacity 0.6s; margin-bottom:6px;">
                     🔴 <strong style="color:#e74c3c;">O</strong> est le <strong>sommet</strong> de l'angle<br>
@@ -140,31 +258,97 @@
     </div>
 
     <div class="example">
-        <strong>Exemple :</strong> Dans le triangle ABC ci-dessous, on peut nommer trois angles différents.
+        <strong>Exemple :</strong> Dans le triangle ABC ci-dessous, on peut nommer trois angles différents.<br>
+        Cliquez sur « Étape suivante » pour les faire apparaître un par un.
+
         <div style="text-align:center; background:white; padding:10px; border-radius:5px; margin-top:10px;">
-            <svg width="500" height="280" viewBox="0 0 500 280" style="max-width:100%; height:auto;">
-                <!-- Triangle A=(60,250) B=(250,25) C=(440,250) -->
-                <line x1="60" y1="250" x2="250" y2="25" stroke="black" stroke-width="2.5"/>
-                <line x1="250" y1="25" x2="440" y2="250" stroke="black" stroke-width="2.5"/>
-                <line x1="60" y1="250" x2="440" y2="250" stroke="black" stroke-width="2.5"/>
-                <text x="38" y="263" font-size="20" font-weight="bold">A</text>
-                <text x="250" y="18" text-anchor="middle" font-size="20" font-weight="bold">B</text>
-                <text x="448" y="263" font-size="20" font-weight="bold">C</text>
-                <!-- Arc at A (red) -->
-                <path d="M 97 250 A 40 40 0 0 1 82 214" stroke="#e74c3c" stroke-width="2.5" fill="rgba(231,76,60,0.15)"/>
-                <text x="104" y="242" font-size="13" fill="#e74c3c" font-weight="bold">BAC</text>
-                <!-- Arc at B (blue) -->
-                <path d="M 225 50 A 36 36 0 0 1 274 50" stroke="#2980b9" stroke-width="2.5" fill="rgba(52,152,219,0.15)"/>
-                <text x="234" y="74" font-size="13" fill="#2980b9" font-weight="bold">ABC</text>
-                <!-- Arc at C (green) -->
-                <path d="M 406 250 A 40 40 0 0 0 422 214" stroke="#27ae60" stroke-width="2.5" fill="rgba(39,174,96,0.15)"/>
-                <text x="372" y="242" font-size="13" fill="#27ae60" font-weight="bold">BCA</text>
+            <!--
+                Triangle : A=(60,250)  B=(250,25)  C=(440,250)
+                SVG theta = atan2(dy_screen/r, dx/r), sweep=0 décroissant, sweep=1 croissant
+
+                ── Angle BAC, sommet A ──
+                  P_AC=(100,250) → θ=0°   P_AB=(86,219) → θ=−51° (≡309°)
+                  Petit arc : θ décroissant de 0° à −51° = sweep=0  ✓ bombe vers l'intérieur (vers y<250)
+
+                ── Angle ABC, sommet B ──
+                  P_BA=(227,52) → θ=130°   P_BC=(273,52) → θ=50°
+                  Petit arc : θ décroissant de 130° à 50° = sweep=0  ✓ bombe vers y=61 (intérieur)
+
+                ── Angle BCA, sommet C ──
+                  P_CA=(400,250) → θ=180°   P_CB=(414,219) → θ=230°
+                  Petit arc : θ croissant de 180° à 230° = sweep=1  ✓ bombe vers (404,233) intérieur
+            -->
+            <svg id="svgTriEx" width="500" height="290" viewBox="-15 -15 530 320" style="max-width:100%; height:auto;">
+
+                <!-- Côtés du triangle -->
+                <line x1="60" y1="250" x2="250" y2="25"  stroke="black" stroke-width="2.5"/>
+                <line x1="250" y1="25"  x2="440" y2="250" stroke="black" stroke-width="2.5"/>
+                <line x1="60" y1="250"  x2="440" y2="250" stroke="black" stroke-width="2.5"/>
+
+                <!-- Sommets avec croix -->
+                <line x1="54" y1="244" x2="66" y2="256" stroke="black" stroke-width="2"/>
+                <line x1="66" y1="244" x2="54" y2="256" stroke="black" stroke-width="2"/>
+                <text x="36"  y="265" font-size="22" font-weight="bold" fill="black">A</text>
+                <line x1="244" y1="19" x2="256" y2="31" stroke="black" stroke-width="2"/>
+                <line x1="256" y1="19" x2="244" y2="31" stroke="black" stroke-width="2"/>
+                <text x="240" y="18"  font-size="22" font-weight="bold" fill="black">B</text>
+                <line x1="434" y1="244" x2="446" y2="256" stroke="black" stroke-width="2"/>
+                <line x1="446" y1="244" x2="434" y2="256" stroke="black" stroke-width="2"/>
+                <text x="448" y="265" font-size="22" font-weight="bold" fill="black">C</text>
+
+                <!-- ── Angle BAC (rouge) ── -->
+                <g id="exAngleA" opacity="0" style="transition:opacity 0.6s;">
+                    <path d="M 60 250 L 100 250 A 40 40 0 0 0 86 219 Z"
+                          fill="rgba(231,76,60,0.2)" stroke="none"/>
+                    <path d="M 100 250 A 40 40 0 0 0 86 219"
+                          stroke="#e74c3c" stroke-width="2.8" fill="none"/>
+                    <!-- label : chapeau sur A (lettre du sommet) -->
+                    <text x="108" y="248" font-size="15" fill="#e74c3c" font-weight="bold">BAC</text>
+                    <path d="M 115 233 L 121 228 L 127 233"
+                          stroke="#e74c3c" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                </g>
+
+                <!-- ── Angle ABC (bleu) — sweep=0 (θ décroissant 130°→50°) ── -->
+                <g id="exAngleB" opacity="0" style="transition:opacity 0.6s;">
+                    <path d="M 250 25 L 227 52 A 36 36 0 0 0 273 52 Z"
+                          fill="rgba(52,152,219,0.2)" stroke="none"/>
+                    <path d="M 227 52 A 36 36 0 0 0 273 52"
+                          stroke="#2980b9" stroke-width="2.8" fill="none"/>
+                    <!-- label : chapeau sur B (lettre du sommet) -->
+                    <text x="230" y="92" font-size="15" fill="#2980b9" font-weight="bold">ABC</text>
+                    <path d="M 237 77 L 243 72 L 249 77"
+                          stroke="#2980b9" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                </g>
+
+                <!-- ── Angle BCA (vert) — sweep=1 (θ croissant 180°→230°) ── -->
+                <g id="exAngleC" opacity="0" style="transition:opacity 0.6s;">
+                    <path d="M 440 250 L 400 250 A 40 40 0 0 1 414 219 Z"
+                          fill="rgba(39,174,96,0.2)" stroke="none"/>
+                    <path d="M 400 250 A 40 40 0 0 1 414 219"
+                          stroke="#27ae60" stroke-width="2.8" fill="none"/>
+                    <!-- label : chapeau sur C (lettre du sommet) -->
+                    <text x="364" y="248" font-size="15" fill="#27ae60" font-weight="bold">BCA</text>
+                    <path d="M 371 233 L 377 228 L 383 233"
+                          stroke="#27ae60" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                </g>
+
             </svg>
+
+            <!-- Message d'état -->
+            <div id="exTxtAngle" style="min-height:28px; font-size:15px; color:#555; font-style:italic; margin:4px 0 8px;">
+                Cliquez sur « Étape suivante » pour faire apparaître les angles.
+            </div>
+
+            <button class="btn-anim" onclick="nextStepTriEx()">Étape suivante ▶</button>
+            <button class="btn-reset" onclick="resetTriEx()">Recommencer ↺</button>
         </div>
+
+        <div id="exRecap" style="opacity:0; transition:opacity 0.6s; margin-top:8px;">
         Les trois angles sont :
         <span class="angle" style="color:#e74c3c;">BAC</span> (ou <span class="angle" style="color:#e74c3c;">CAB</span>),
         &nbsp;<span class="angle" style="color:#2980b9;">ABC</span> (ou <span class="angle" style="color:#2980b9;">CBA</span>),
         &nbsp;<span class="angle" style="color:#27ae60;">BCA</span> (ou <span class="angle" style="color:#27ae60;">ACB</span>).
+        </div>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
@@ -188,38 +372,49 @@
 
                 <!-- O=(200,280) A=(460,280) B=200+250cos30, 280-250sin30 = (417,155) -->
 
-                <!-- OA ray -->
+                <!-- OA ray — sans flèche -->
                 <line x1="200" y1="280" x2="480" y2="280" stroke="black" stroke-width="2.5"/>
-                <polygon points="480,280 468,274 468,286" fill="black"/>
-                <!-- OB ray -->
+                <!-- OB ray — sans flèche -->
                 <line x1="200" y1="280" x2="417" y2="155" stroke="black" stroke-width="2.5"/>
-                <polygon points="417,155 406,163 414,170" fill="black"/>
-                <!-- Markers -->
+                <!-- Croix sur O -->
                 <line x1="194" y1="274" x2="206" y2="286" stroke="black" stroke-width="2"/>
                 <line x1="206" y1="274" x2="194" y2="286" stroke="black" stroke-width="2"/>
                 <text x="178" y="282" font-size="20" font-weight="bold">O</text>
+                <!-- Croix A (fin de [OA) à (480,280)) -->
+                <line x1="474" y1="274" x2="486" y2="286" stroke="black" stroke-width="2"/>
+                <line x1="486" y1="274" x2="474" y2="286" stroke="black" stroke-width="2"/>
                 <text x="487" y="285" font-size="20" font-weight="bold">A</text>
+                <!-- Croix B (fin de [OB) à (417,155)) -->
+                <line x1="411" y1="149" x2="423" y2="161" stroke="black" stroke-width="2"/>
+                <line x1="423" y1="149" x2="411" y2="161" stroke="black" stroke-width="2"/>
                 <text x="422" y="148" font-size="20" font-weight="bold">B</text>
 
-                <!-- Rapporteur (groupe caché au départ) -->
+                <!-- Rapporteur : arrive depuis la droite avec animation CSS -->
                 <!-- Centré en O=(200,280), rayon=120, base horizontale -->
-                <g id="rapporteur" opacity="0">
-                    <!-- Demi-cercle transparent avec contour -->
-                    <path d="M 80 280 A 120 120 0 0 1 320 280 Z" fill="rgba(255,250,200,0.85)" stroke="#999" stroke-width="1.5"/>
-                    <!-- Ligne de base -->
-                    <line x1="80" y1="280" x2="320" y2="280" stroke="#888" stroke-width="1"/>
-                    <!-- Trou central -->
-                    <circle cx="200" cy="280" r="4" fill="white" stroke="#555" stroke-width="1.5"/>
-                    <!-- Graduation 0° (droite) -->
-                    <line x1="316" y1="280" x2="320" y2="280" stroke="#333" stroke-width="2"/>
-                    <text x="324" y="284" font-size="12" fill="#333" font-weight="bold">0</text>
-                    <!-- 180° (gauche) -->
-                    <line x1="80" y1="280" x2="84" y2="280" stroke="#333" stroke-width="2"/>
-                    <text x="58" y="284" font-size="12" fill="#333" font-weight="bold">180</text>
-                    <!-- Tick marks every 10° -->
+                <g id="rapporteur" class="rap-hidden">
+                    <!-- Corps cyan -->
+                    <path d="M 80 280 A 120 120 0 0 1 320 280 Z" fill="rgba(120,228,235,0.82)" stroke="#0a8090" stroke-width="2"/>
+                    <!-- Base -->
+                    <line x1="80" y1="280" x2="320" y2="280" stroke="#0a8090" stroke-width="1.5"/>
+                    <!-- Poignée centrale -->
+                    <rect x="190" y="279" width="20" height="11" rx="4" fill="rgba(80,200,215,0.9)" stroke="#0a8090" stroke-width="1.2"/>
+                    <!-- Croix de centrage -->
+                    <circle cx="200" cy="280" r="8" fill="white" stroke="#222" stroke-width="1.4"/>
+                    <circle cx="200" cy="280" r="2" fill="#222"/>
+                    <line x1="192" y1="280" x2="208" y2="280" stroke="#222" stroke-width="1"/>
+                    <line x1="200" y1="272" x2="200" y2="288" stroke="#222" stroke-width="1"/>
+                    <!-- Ticks et labels générés par JS -->
                     <g id="ticks"></g>
-                    <!-- Labels principaux générés par JS -->
                     <g id="labels"></g>
+                    <g id="labels2"></g>
+                    <!-- Case 90° noire en haut -->
+                    <rect x="184" y="155" width="32" height="17" rx="3" fill="black"/>
+                    <text x="200" y="167" text-anchor="middle" font-size="11" fill="white" font-weight="bold">90°</text>
+                    <!-- Labels 0/180 aux extrémités -->
+                    <text x="322" y="292" font-size="10" fill="#1565c0" font-weight="bold">0</text>
+                    <text x="320" y="278" font-size="8"  fill="#c0392b">180</text>
+                    <text x="48"  y="292" font-size="10" fill="#1565c0" font-weight="bold">180</text>
+                    <text x="56"  y="278" font-size="8"  fill="#c0392b">0</text>
                 </g>
 
                 <!-- Trait de 0° sur OA (caché au départ) -->
@@ -235,7 +430,13 @@
 
                 <!-- Etiquette 30° -->
                 <text id="label30" x="286" y="252" font-size="16" fill="#e74c3c" font-weight="bold" opacity="0">30°</text>
-                <text id="result" x="200" y="60" text-anchor="middle" font-size="20" fill="#c0392b" font-weight="bold" opacity="0"><tspan class="angle">AOB</tspan> = 30°</text>
+
+                <!-- Résultat avec chapeau explicite au-dessus du O -->
+                <g id="result" opacity="0">
+                    <text x="200" y="60" text-anchor="middle" font-size="20" fill="#c0392b" font-weight="bold">AOB = 30°</text>
+                    <!-- chapeau au-dessus du O (lettre du sommet, 2e lettre) -->
+                    <path d="M 163 41 L 170 35 L 177 41" stroke="#c0392b" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+                </g>
             </svg>
         </div>
         <div style="text-align:center; margin-top:10px;">
@@ -262,9 +463,25 @@
     <div class="example">
         <div style="text-align:center; flex-wrap:wrap; display:flex; justify-content:center; gap:12px; margin-top:10px;">
 
+            <!-- Angle nul -->
+            <div class="angle-card" style="border-color:#27ae60;">
+                <svg width="180" height="130" viewBox="-10 -10 200 150" style="max-width:100%;">
+                    <!-- Les deux côtés sont confondus sur la même demi-droite -->
+                    <line x1="30" y1="100" x2="160" y2="100" stroke="black" stroke-width="2.5"/>
+                    <!-- Petit arc de 0° = juste un point / arc très petit pour symboliser -->
+                    <text x="75" y="88" font-size="13" fill="#27ae60" font-weight="bold">0°</text>
+                    <line x1="24" y1="94" x2="36" y2="106" stroke="black" stroke-width="1.5"/>
+                    <line x1="36" y1="94" x2="24" y2="106" stroke="black" stroke-width="1.5"/>
+                    <!-- Flèche indiquant les deux côtés confondus -->
+                    <text x="90" y="120" text-anchor="middle" font-size="10" fill="#27ae60" font-style="italic">côtés confondus</text>
+                </svg>
+                <p style="color:#27ae60; font-weight:bold; margin:0;">Angle nul</p>
+                <p style="color:#333; margin:4px 0 0;">mesure = 0°</p>
+            </div>
+
             <!-- Angle aigu -->
             <div class="angle-card" style="border-color:#e74c3c;">
-                <svg width="180" height="130" viewBox="0 0 180 130" style="max-width:100%;">
+                <svg width="180" height="130" viewBox="-10 -10 200 150" style="max-width:100%;">
                     <line x1="30" y1="100" x2="160" y2="100" stroke="black" stroke-width="2.5"/>
                     <line x1="30" y1="100" x2="110" y2="20" stroke="black" stroke-width="2.5"/>
                     <path d="M 80 100 A 50 50 0 0 0 64 62" stroke="#e74c3c" stroke-width="2" fill="rgba(231,76,60,0.18)"/>
@@ -278,7 +495,7 @@
 
             <!-- Angle droit -->
             <div class="angle-card" style="border-color:#17375e;">
-                <svg width="180" height="130" viewBox="0 0 180 130" style="max-width:100%;">
+                <svg width="180" height="130" viewBox="-10 -10 200 150" style="max-width:100%;">
                     <line x1="30" y1="100" x2="160" y2="100" stroke="black" stroke-width="2.5"/>
                     <line x1="30" y1="100" x2="30" y2="20" stroke="black" stroke-width="2.5"/>
                     <!-- Carré angle droit -->
@@ -293,7 +510,7 @@
 
             <!-- Angle obtus -->
             <div class="angle-card" style="border-color:#2e75b6;">
-                <svg width="180" height="130" viewBox="0 0 180 130" style="max-width:100%;">
+                <svg width="180" height="130" viewBox="-10 -10 200 150" style="max-width:100%;">
                     <line x1="30" y1="100" x2="160" y2="100" stroke="black" stroke-width="2.5"/>
                     <!-- OB à 130° -->
                     <!-- 130° : x=30+120*cos130=-77+30=-47 trop à gauche... -->
@@ -315,10 +532,8 @@
 
             <!-- Angle plat -->
             <div class="angle-card" style="border-color:#7030a0;">
-                <svg width="180" height="130" viewBox="0 0 180 130" style="max-width:100%;">
+                <svg width="180" height="130" viewBox="-10 -10 200 150" style="max-width:100%;">
                     <line x1="10" y1="80" x2="170" y2="80" stroke="black" stroke-width="2.5"/>
-                    <polygon points="170,80 158,74 158,86" fill="black"/>
-                    <polygon points="10,80 22,74 22,86" fill="black"/>
                     <!-- Arc demi-cercle -->
                     <path d="M 50 80 A 40 40 0 0 0 130 80" stroke="#7030a0" stroke-width="2" fill="rgba(112,48,160,0.15)"/>
                     <text x="90" y="64" text-anchor="middle" font-size="13" fill="#7030a0" font-weight="bold">180°</text>
@@ -352,34 +567,76 @@
                 <!-- AB ray (étape 1) -->
                 <g id="rayAB" opacity="0">
                     <line x1="100" y1="260" x2="450" y2="260" stroke="black" stroke-width="2.5"/>
-                    <polygon points="450,260 438,254 438,266" fill="black"/>
+                    <line x1="444" y1="254" x2="456" y2="266" stroke="black" stroke-width="1.8"/>
+                    <line x1="456" y1="254" x2="444" y2="266" stroke="black" stroke-width="1.8"/>
                     <text x="456" y="265" font-size="18" font-weight="bold">B</text>
                     <text x="280" y="290" text-anchor="middle" font-size="14" fill="#1565c0">On trace la demi-droite [AB)</text>
                 </g>
 
-                <!-- Rapporteur (étape 2) -->
-                <!-- Centré en A=(100,260), rayon=100, base sur AB -->
-                <g id="rapTrac" opacity="0">
-                    <path d="M 0 260 A 100 100 0 0 1 200 260 Z" fill="rgba(255,250,200,0.9)" stroke="#999" stroke-width="1.5"/>
-                    <line x1="0" y1="260" x2="200" y2="260" stroke="#aaa" stroke-width="1"/>
-                    <circle cx="100" cy="260" r="3.5" fill="white" stroke="#555" stroke-width="1.5"/>
-                    <!-- Graduation 0° -->
-                    <text x="202" y="264" font-size="11" fill="#333" font-weight="bold">0°</text>
-                    <!-- Graduation 72° markée -->
-                    <!-- cos72≈0.309, sin72≈0.951 : x=100+100*0.309=131, y=260-100*0.951=165 -->
-                    <line x1="100" y1="260" x2="131" y2="165" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="5,3"/>
-                    <circle cx="131" cy="165" r="5" fill="#e74c3c"/>
-                    <text x="136" y="162" font-size="13" fill="#e74c3c" font-weight="bold">72°</text>
-                    <!-- Autres graduations principales -->
-                    <!-- 30°: (187,210) 60°: (150,173) 90°: (100,160) 120°: (50,173) 150°: (13,210) -->
-                    <text x="188" y="208" font-size="10" fill="#888">30</text>
-                    <text x="150" y="170" font-size="10" fill="#888">60</text>
-                    <text x="98" y="155" font-size="10" fill="#888">90</text>
-                    <text x="34" y="170" font-size="10" fill="#888">120</text>
-                    <text x="-4" y="208" font-size="10" fill="#888">150</text>
-                    <text x="-8" y="265" font-size="10" fill="#333" font-weight="bold">180°</text>
-                    <text x="94" y="306" text-anchor="middle" font-size="13" fill="#1565c0">Le rapporteur est centré en A, le 0° est sur [AB)</text>
-                    <text x="94" y="322" text-anchor="middle" font-size="13" fill="#1565c0">On repère 72° et on fait un trait</text>
+                <!-- Rapporteur (étape 2) — cx=100 cy=260 r=100 -->
+                <g id="rapTrac" class="rap-hidden">
+                    <!-- Corps cyan -->
+                    <path d="M 0 260 A 100 100 0 0 1 200 260 Z" fill="rgba(120,228,235,0.82)" stroke="#0a8090" stroke-width="2"/>
+                    <line x1="0" y1="260" x2="200" y2="260" stroke="#0a8090" stroke-width="1.5"/>
+                    <!-- Poignée -->
+                    <rect x="90" y="259" width="20" height="10" rx="4" fill="rgba(80,200,215,0.9)" stroke="#0a8090" stroke-width="1.2"/>
+                    <!-- Croix de centrage -->
+                    <circle cx="100" cy="260" r="7" fill="white" stroke="#222" stroke-width="1.4"/>
+                    <circle cx="100" cy="260" r="2" fill="#222"/>
+                    <line x1="93" y1="260" x2="107" y2="260" stroke="#222" stroke-width="1"/>
+                    <line x1="100" y1="253" x2="100" y2="267" stroke="#222" stroke-width="1"/>
+                    <!-- Ticks -->
+                    <g id="ticksTrac"></g>
+                    <g id="labelsTrac"></g>
+                    <g id="labels2Trac"></g>
+                    <!-- Case 90° -->
+                    <rect x="85" y="156" width="30" height="16" rx="3" fill="black"/>
+                    <text x="100" y="168" text-anchor="middle" font-size="10" fill="white" font-weight="bold">90°</text>
+                    <!-- Extrémités -->
+                    <text x="201" y="272" font-size="9" fill="#1565c0" font-weight="bold">0</text>
+                    <text x="200" y="258" font-size="7" fill="#c0392b">180</text>
+                    <text x="-16" y="272" font-size="9" fill="#1565c0" font-weight="bold">180</text>
+                    <text x="-8"  y="258" font-size="7" fill="#c0392b">0</text>
+                    <!-- Ligne de balayage -->
+                    <line id="sweepLine72" x1="100" y1="260" x2="193" y2="260" stroke="#e74c3c" stroke-width="2.2"/>
+                    <!-- Graduation 72° -->
+                    <g id="mark72">
+                        <line x1="100" y1="260" x2="131" y2="165" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="5,3"/>
+                        <circle cx="131" cy="165" r="5" fill="#e74c3c"/>
+                        <text x="136" y="162" font-size="13" fill="#e74c3c" font-weight="bold">72°</text>
+                    </g>
+                    <text x="94" y="308" text-anchor="middle" font-size="13" fill="#1565c0">Le rapporteur est centré en A, le 0° est sur [AB)</text>
+                    <text x="94" y="324" text-anchor="middle" font-size="13" fill="#1565c0">On repère 72° et on fait un trait</text>
+                </g>
+
+                <!-- Crayon : marque le point à 72° sur le rapporteur, tip=(131,165) -->
+                <g id="pencilTrac" opacity="0">
+                    <g transform="translate(131,165) rotate(18)">
+                        <polygon points="-3.5,0 3.5,0 0,11" fill="#d4a76a"/>
+                        <line x1="0" y1="7" x2="0" y2="11" stroke="#222" stroke-width="1.5"/>
+                        <rect x="-3.5" y="-28" width="7" height="28" fill="#f7dc6f" stroke="#d4ac0d" stroke-width="0.8"/>
+                        <rect x="-3.5" y="-35" width="7" height="8" fill="#e8a0a0" stroke="#d4ac0d" stroke-width="0.8"/>
+                    </g>
+                </g>
+
+                <!-- Règle : bord supérieur (y=0) = [AC), graduations vers le bas -->
+                <!-- A=(100,260)→C=(162,70), angle≈-71.9°, la demi-droite longe le bord -->
+                <g id="rulerTrac" opacity="0" transform="translate(100,260) rotate(-71.9)">
+                    <rect x="-12" y="0" width="228" height="18" fill="rgba(210,235,255,0.90)" stroke="#4a80a8" stroke-width="1.5" rx="2"/>
+                    <!-- bord supérieur = ligne de tracé -->
+                    <line x1="-12" y1="0" x2="216" y2="0" stroke="#4a80a8" stroke-width="1.5"/>
+                    <!-- graduations (depuis le bord vers l'intérieur) -->
+                    <line x1="0"   y1="0" x2="0"   y2="18" stroke="#4a80a8" stroke-width="1.5"/>
+                    <line x1="20"  y1="0" x2="20"  y2="7"  stroke="#4a80a8" stroke-width="0.8"/>
+                    <line x1="40"  y1="0" x2="40"  y2="11" stroke="#4a80a8" stroke-width="1.2"/>
+                    <line x1="60"  y1="0" x2="60"  y2="7"  stroke="#4a80a8" stroke-width="0.8"/>
+                    <line x1="80"  y1="0" x2="80"  y2="11" stroke="#4a80a8" stroke-width="1.2"/>
+                    <line x1="100" y1="0" x2="100" y2="18" stroke="#4a80a8" stroke-width="1.5"/>
+                    <line x1="120" y1="0" x2="120" y2="7"  stroke="#4a80a8" stroke-width="0.8"/>
+                    <line x1="140" y1="0" x2="140" y2="11" stroke="#4a80a8" stroke-width="1.2"/>
+                    <line x1="160" y1="0" x2="160" y2="7"  stroke="#4a80a8" stroke-width="0.8"/>
+                    <line x1="180" y1="0" x2="180" y2="11" stroke="#4a80a8" stroke-width="1.2"/>
+                    <line x1="200" y1="0" x2="200" y2="18" stroke="#4a80a8" stroke-width="1.5"/>
                 </g>
 
                 <!-- Après enlèvement du rapporteur : trait du 72° (étape 3) -->
@@ -393,7 +650,8 @@
                 <!-- AC ray final (étape 4) -->
                 <g id="rayAC" opacity="0">
                     <line x1="100" y1="260" x2="162" y2="70" stroke="black" stroke-width="2.5"/>
-                    <polygon points="162,70 156,84 167,80" fill="black"/>
+                    <line x1="156" y1="64" x2="168" y2="76" stroke="black" stroke-width="1.8"/>
+                    <line x1="168" y1="64" x2="156" y2="76" stroke="black" stroke-width="1.8"/>
                     <text x="167" y="65" font-size="18" font-weight="bold">C</text>
                     <!-- Arc angle BAC = 72° -->
                     <path d="M 160 260 A 60 60 0 0 0 119 203" stroke="#e74c3c" stroke-width="2" fill="rgba(231,76,60,0.12)"/>
@@ -410,60 +668,189 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Angles supplémentaires</h2>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span><br><br>
+        Deux angles sont <span style="color:red;">supplémentaires</span> si la somme de leurs mesures est égale à <span style="color:red;">180°</span>.
+    </div>
+
+    <div class="example">
+        <svg width="320" height="130" viewBox="-10 -22 340 162" style="display:block; margin:auto; max-width:100%;">
+            <!-- Ligne horizontale (angle plat) -->
+            <line x1="20" y1="90" x2="300" y2="90" stroke="black" stroke-width="2"/>
+            <!-- Rayon oblique : vertex=(160,90), direction vers (240,20) -->
+            <line x1="160" y1="90" x2="240" y2="20" stroke="black" stroke-width="2"/>
+            <!-- Point sur le rayon oblique à r=40 : (160+40×0.753, 90-40×0.659) ≈ (190, 64) -->
+
+            <!-- α (bleu) : arc de (120,90) vers (190,64), sweep=1 (CW) = monte au-dessus -->
+            <path d="M 160 90 L 120 90 A 40 40 0 0 1 190 64 Z" fill="rgba(0,0,200,0.12)" stroke="none"/>
+            <path d="M 120 90 A 40 40 0 0 1 190 64" fill="none" stroke="blue" stroke-width="2"/>
+            <text x="110" y="60" font-size="16" fill="blue">α</text>
+
+            <!-- β (vert) : arc de (190,64) vers (200,90), sweep=1 (CW) = descend vers droite -->
+            <path d="M 160 90 L 190 64 A 40 40 0 0 1 200 90 Z" fill="rgba(0,160,0,0.12)" stroke="none"/>
+            <path d="M 190 64 A 40 40 0 0 1 200 90" fill="none" stroke="green" stroke-width="2"/>
+            <text x="196" y="71" font-size="16" fill="green">β</text>
+
+            <line x1="156" y1="86" x2="164" y2="94" stroke="black" stroke-width="1.8"/>
+            <line x1="164" y1="86" x2="156" y2="94" stroke="black" stroke-width="1.8"/>
+            <text x="40" y="118" font-size="13" fill="black">α + β = 180° → α et β sont supplémentaires</text>
+        </svg>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong><br><br>
+        Deux angles supplémentaires adjacents forment ensemble un <span style="color:red;">angle plat</span>.
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Angles adjacents</h2>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span><br><br>
+        Deux angles sont <span style="color:red;">adjacents</span> si :<br><br>
+        • ils ont le <span style="color:red;">même sommet</span>,<br><br>
+        • ils ont un <span style="color:red;">côté commun</span>,<br><br>
+        • ils sont de <span style="color:red;">part et d'autre</span> de ce côté commun (ils ne se chevauchent pas).
+    </div>
+
+    <div class="example">
+        <svg width="300" height="170" viewBox="-18 -12 346 200" style="display:block; margin:auto; max-width:100%;">
+            <!-- O=(150,145) ; A=(35,65) [gauche] ; B=(249,46) [commun] ; C=(290,145) [droit] -->
+            <!-- Points à r=35 : gauche=(121,125) commun=(175,120) droit=(185,145) -->
+            <!-- Côté gauche [OA] -->
+            <line x1="150" y1="145" x2="35" y2="65" stroke="black" stroke-width="2"/>
+            <!-- Côté commun [OB] — trait plein rouge -->
+            <line x1="150" y1="145" x2="249" y2="46" stroke="red" stroke-width="2"/>
+            <!-- Côté droit [OC] -->
+            <line x1="150" y1="145" x2="290" y2="145" stroke="black" stroke-width="2"/>
+            <!-- arc AOB (bleu, ~100°) : (121,125)→(175,120) sweep=1 -->
+            <path d="M 150 145 L 121 125 A 35 35 0 0 1 175 120 Z" fill="rgba(0,0,200,0.12)" stroke="none"/>
+            <path d="M 121 125 A 35 35 0 0 1 175 120" fill="none" stroke="blue" stroke-width="2"/>
+            <text x="116" y="96" font-size="13" fill="blue" font-weight="bold">AOB</text>
+            <path d="M 124 84 L 128 80 L 132 84" stroke="blue" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+            <!-- arc BOC (vert, ~45°) : (175,120)→(185,145) sweep=1 -->
+            <path d="M 150 145 L 175 120 A 35 35 0 0 1 185 145 Z" fill="rgba(0,160,0,0.12)" stroke="none"/>
+            <path d="M 175 120 A 35 35 0 0 1 185 145" fill="none" stroke="green" stroke-width="2"/>
+            <text x="188" y="129" font-size="13" fill="green" font-weight="bold">BOC</text>
+            <path d="M 196 117 L 200 113 L 204 117" stroke="green" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+            <!-- Sommets -->
+            <line x1="146" y1="141" x2="154" y2="149" stroke="black" stroke-width="1.8"/>
+            <line x1="154" y1="141" x2="146" y2="149" stroke="black" stroke-width="1.8"/>
+            <text x="140" y="162" font-size="14" font-weight="bold">O</text>
+            <line x1="31" y1="61" x2="39" y2="69" stroke="black" stroke-width="1.8"/>
+            <line x1="39" y1="61" x2="31" y2="69" stroke="black" stroke-width="1.8"/>
+            <text x="22" y="59" font-size="14" font-weight="bold">A</text>
+            <line x1="245" y1="42" x2="253" y2="50" stroke="red" stroke-width="1.8"/>
+            <line x1="253" y1="42" x2="245" y2="50" stroke="red" stroke-width="1.8"/>
+            <text x="255" y="41" font-size="14" font-weight="bold" fill="red">B</text>
+            <line x1="286" y1="141" x2="294" y2="149" stroke="black" stroke-width="1.8"/>
+            <line x1="294" y1="141" x2="286" y2="149" stroke="black" stroke-width="1.8"/>
+            <text x="296" y="141" font-size="14" font-weight="bold">C</text>
+        </svg>
+        <p style="text-align:center; font-size:14px; margin-top:6px;">
+            Les angles <span class="angle">AOB</span> et <span class="angle">BOC</span> sont <strong>adjacents</strong>.
+        </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Angles opposés par le sommet</h2>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span><br><br>
+        Deux angles sont <span style="color:red;">opposés par le sommet</span> si :<br><br>
+        • ils ont le <span style="color:red;">même sommet</span>,<br><br>
+        • les côtés de l'un sont le <span style="color:red;">prolongement</span> des côtés de l'autre.
+    </div>
+
+    <div class="example">
+        <svg width="300" height="200" viewBox="-15 -12 330 224" style="display:block; margin:auto; max-width:100%;">
+            <!-- O=(150,102) ; ligne1:(30,50)→(270,155) dir=(-120,-52)/130.8=(-0.918,-0.398) et (0.918,0.398) -->
+            <!-- ligne2:(270,50)→(30,155) dir=(120,-52)/130.8=(0.918,-0.398) et (-0.918,0.398) -->
+            <!-- Points à r=22 : haut-gauche=(130,93) haut-droit=(170,93) bas-droit=(170,111) bas-gauche=(130,111) -->
+            <line x1="30" y1="50" x2="270" y2="155" stroke="black" stroke-width="2"/>
+            <line x1="270" y1="50" x2="30" y2="155" stroke="black" stroke-width="2"/>
+            <!-- angle α haut : (130,93)→(170,93) sweep=1 (CW, passe par le haut) -->
+            <path d="M 150 102 L 130 93 A 22 22 0 0 1 170 93 Z" fill="rgba(220,0,0,0.2)" stroke="none"/>
+            <path d="M 130 93 A 22 22 0 0 1 170 93" fill="none" stroke="red" stroke-width="2"/>
+            <text x="142" y="86" font-size="15" fill="red">α</text>
+            <!-- angle α bas (opposé) : (170,111)→(130,111) sweep=1 (CW, passe par le bas) -->
+            <path d="M 150 102 L 170 111 A 22 22 0 0 1 130 111 Z" fill="rgba(220,0,0,0.2)" stroke="none"/>
+            <path d="M 170 111 A 22 22 0 0 1 130 111" fill="none" stroke="red" stroke-width="2"/>
+            <text x="142" y="128" font-size="15" fill="red">α</text>
+            <!-- O dessiné en dernier pour ne pas être masqué par les remplissages -->
+            <line x1="144" y1="96" x2="156" y2="108" stroke="black" stroke-width="1.8"/>
+            <line x1="156" y1="96" x2="144" y2="108" stroke="black" stroke-width="1.8"/>
+            <text x="157" y="106" font-size="14" font-weight="bold">O</text>
+            <text x="30" y="182" font-size="12" fill="black">Les deux angles rouges sont opposés par le sommet.</text>
+        </svg>
+    </div>
+
+    <div class="important">
+        <span style="color:red;">Propriété :</span><br><br>
+        Deux angles <span style="color:red;">opposés par le sommet</span> sont toujours <span style="color:red;">égaux</span>.
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
     <h2>La bissectrice</h2>
+
+    <h3>Définition</h3>
 
     <div class="definition">
         <span style="color:red;">Définition :</span>
         La <strong>bissectrice</strong> d'un angle est la demi-droite issue du
         <strong>sommet</strong> de cet angle qui le partage en deux angles
-        <strong>de même mesure</strong>.<br><br>
+        <strong>adjacents</strong> de <strong>même mesure</strong>.<br><br>
         <div style="text-align:center; background:white; padding:10px; border-radius:5px;">
-            <svg width="360" height="220" viewBox="0 0 360 220" style="max-width:100%; height:auto;">
-                <!-- O=(60,190) A=(320,190) B à 80° -->
-                <!-- B = (60+220*cos80, 190-220*sin80) = (98, -27) trop haut -->
-                <!-- Utilisons: O=(80,190), B à 80°, longueur 180 -->
-                <!-- B = (80+180*cos80, 190-180*sin80) = (80+31, 190-177) = (111, 13) -->
-                <!-- A = (80+220, 190) = (300, 190) -->
+            <svg width="360" height="220" viewBox="-10 -22 385 254" style="max-width:100%; height:auto;">
+                <!-- O=(80,190) A=(320,190) B à 80°=(111,13) D à 40°=(249,49) -->
                 <!-- OA -->
                 <line x1="80" y1="190" x2="320" y2="190" stroke="black" stroke-width="2.5"/>
-                <polygon points="320,190 308,184 308,196" fill="black"/>
-                <text x="326" y="195" font-size="18" font-weight="bold">A</text>
                 <!-- OB -->
                 <line x1="80" y1="190" x2="111" y2="13" stroke="black" stroke-width="2.5"/>
-                <polygon points="111,13 106,27 117,24" fill="black"/>
-                <text x="115" y="10" font-size="18" font-weight="bold">B</text>
-                <!-- Bissectrice OD à 40° -->
-                <!-- D = (80+220*cos40, 190-220*sin40) = (80+169, 190-141) = (249, 49) -->
-                <line x1="80" y1="190" x2="249" y2="49" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="10,4"/>
-                <polygon points="249,49 240,62 251,60" fill="#e74c3c"/>
-                <text x="254" y="46" font-size="18" font-weight="bold" fill="#e74c3c">D</text>
+                <!-- Bissectrice OD — trait plein -->
+                <line x1="80" y1="190" x2="249" y2="49" stroke="#e74c3c" stroke-width="2.5"/>
+
+                <!-- Arc AOD (vert, r=50) : de OA à OD, sweep=0 (CCW = monte) -->
+                <!-- r=50 sur OA : (130,190) ; sur OD (40°) : (118,158) -->
+                <path d="M 130 190 A 50 50 0 0 0 118 158" stroke="#27ae60" stroke-width="2.5" fill="rgba(39,174,96,0.18)"/>
+                <text x="147" y="178" font-size="13" fill="#27ae60" font-weight="bold">40°</text>
+
+                <!-- Arc DOB (bleu, r=78) : de OD à OB, sweep=0 (CCW = monte) -->
+                <!-- r=78 sur OD (40°) : (80+78*cos40,190-78*sin40)=(140,140) ; sur OB (80°) : (80+78*cos80,190-78*sin80)=(94,113) -->
+                <path d="M 140 140 A 78 78 0 0 0 94 113" stroke="#2980b9" stroke-width="2.5" fill="rgba(52,152,219,0.18)"/>
+                <text x="102" y="136" font-size="13" fill="#2980b9" font-weight="bold">40°</text>
+
                 <!-- O marker -->
                 <line x1="74" y1="184" x2="86" y2="196" stroke="black" stroke-width="2"/>
                 <line x1="86" y1="184" x2="74" y2="196" stroke="black" stroke-width="2"/>
                 <text x="58" y="194" font-size="18" font-weight="bold">O</text>
-                <!-- Arc AOD (green) -->
-                <!-- AOD = 40° : de 0° à 40°, rayon 60 -->
-                <path d="M 140 190 A 60 60 0 0 0 126 151" stroke="#27ae60" stroke-width="2" fill="rgba(39,174,96,0.15)"/>
-                <text x="150" y="176" font-size="13" fill="#27ae60" font-weight="bold">40°</text>
-                <!-- Arc DOB (blue) -->
-                <!-- DOB de 40° à 80°, rayon 80 -->
-                <path d="M 126 151 A 60 60 0 0 0 90 131" stroke="#2980b9" stroke-width="2" fill="rgba(52,152,219,0.15)"/>
-                <text x="110" y="146" font-size="13" fill="#2980b9" font-weight="bold">40°</text>
-                <!-- Label bissectrice -->
-                <text x="170" y="112" font-size="13" fill="#e74c3c" font-weight="bold">[OD) bissectrice</text>
+                <!-- Croix A -->
+                <line x1="316" y1="186" x2="324" y2="194" stroke="black" stroke-width="2"/>
+                <line x1="324" y1="186" x2="316" y2="194" stroke="black" stroke-width="2"/>
+                <text x="326" y="195" font-size="18" font-weight="bold">A</text>
+                <!-- Croix B -->
+                <line x1="107" y1="9"  x2="115" y2="17" stroke="black" stroke-width="2"/>
+                <line x1="115" y1="9"  x2="107" y2="17" stroke="black" stroke-width="2"/>
+                <text x="118" y="11" font-size="18" font-weight="bold">B</text>
+                <!-- Croix D (rouge) -->
+                <line x1="245" y1="45" x2="253" y2="53" stroke="#e74c3c" stroke-width="2"/>
+                <line x1="253" y1="45" x2="245" y2="53" stroke="#e74c3c" stroke-width="2"/>
+                <text x="256" y="47" font-size="18" font-weight="bold" fill="#e74c3c">D</text>
             </svg>
         </div>
-        [OD) est la bissectrice de l'angle AOB car
-        <span class="angle">AOD</span> = <span class="angle">DOB</span> = 40°.
+        <p style="text-align:center; margin-top:6px;">
+            [OD) est la bissectrice de l'angle <span class="angle">AOB</span> car
+            <span class="angle">AOD</span> = <span class="angle">DOB</span> = 40°.
+        </p>
     </div>
 
     <div class="important">
         <span style="color:red;">Propriété :</span>
-        Si [OD) est la bissectrice de l'angle AOB, alors :<br><br>
+        Si [OD) est la bissectrice de l'angle <span class="angle">AOB</span>, alors :<br><br>
         <div style="text-align:center; font-size:1.1em;">
-            <span class="angle">AOD</span> = <span class="angle">DOB</span>
-            &nbsp;&nbsp; et &nbsp;&nbsp;
-            <span class="angle">AOD</span> = <span class="angle">AOB</span> ÷ 2
+            <span class="angle">AOD</span> = <span class="angle">DOB</span> = <span class="angle">AOB</span> ÷ 2
         </div>
     </div>
 
@@ -472,107 +859,127 @@
     <div class="method">
         <strong>Méthode :</strong>
         <ol style="margin-top:8px; line-height:2;">
-            <li>Mesurer l'angle AOB au rapporteur.</li>
+            <li>Mesurer l'angle <span class="angle">AOB</span> au rapporteur.</li>
             <li>Diviser cette mesure par 2.</li>
-            <li>Tracer la demi-droite [OD) faisant un angle égal à la moitié de AOB avec [OA).</li>
+            <li>Tracer la demi-droite [OD) faisant un angle égal à la moitié de <span class="angle">AOB</span> avec [OA).</li>
         </ol>
         <strong>Exemple :</strong> Si <span class="angle">AOB</span> = 80°, alors la bissectrice fait un angle de 80° ÷ 2 = <strong>40°</strong> avec [OA).
     </div>
 
-    <h3>Tracer la bissectrice au compas</h3>
-
-    <!-- ─── Animation : bissectrice au compas ─── -->
+    <!-- ─── Animation : bissectrice au rapporteur ─── -->
     <div class="example">
-        <strong>Méthode au compas pour tracer la bissectrice de l'angle AOB :</strong><br><br>
-
-        <div class="step-box"><span id="stepBis">Cliquez sur « Étape suivante » pour voir la construction au compas.</span></div>
+        <strong>Exemple animé : tracer la bissectrice de l'angle <span class="angle">AOB</span> = 80° au rapporteur</strong><br><br>
+        <div class="step-box"><span id="stepBisRap">Cliquez sur « Étape suivante » pour voir la construction.</span></div>
         <div class="svg-wrap">
-            <svg id="svgBis" width="580" height="370" viewBox="0 0 580 370" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+            <svg id="svgBisRap" width="500" height="320" viewBox="-15 -15 530 350" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
 
-                <!-- O=(100,310) A=(450,310) B à 70°: (100+300*cos70, 310-300*sin70) = (203, 28) -->
-                <!-- OA ray -->
-                <line x1="100" y1="310" x2="470" y2="310" stroke="black" stroke-width="2.5"/>
-                <polygon points="470,310 458,304 458,316" fill="black"/>
-                <text x="477" y="315" font-size="20" font-weight="bold">A</text>
-                <!-- OB ray -->
-                <line x1="100" y1="310" x2="203" y2="28" stroke="black" stroke-width="2.5"/>
-                <polygon points="203,28 196,42 207,39" fill="black"/>
-                <text x="208" y="24" font-size="20" font-weight="bold">B</text>
-                <!-- O marker -->
-                <line x1="94" y1="304" x2="106" y2="316" stroke="black" stroke-width="2"/>
-                <line x1="106" y1="304" x2="94" y2="316" stroke="black" stroke-width="2"/>
-                <text x="76" y="316" font-size="20" font-weight="bold">O</text>
+                <!-- O=(130,270) A=(420,270) B à 80°=(165,73) D à 40°=(283,141) -->
 
-                <!-- Étape 1 : arc centré en O, rayon 150 -->
-                <!-- coupe OA en M=(250,310) et OB en N=(100+150*cos70, 310-150*sin70)=(151,169) -->
-                <path id="arcO" d="M 250 310 A 150 150 0 0 0 151 169" stroke="#e74c3c" stroke-width="2.5" fill="none" stroke-dasharray="8,4" opacity="0"/>
-                <!-- Points M et N -->
-                <g id="ptM" opacity="0">
-                    <line x1="244" y1="304" x2="256" y2="316" stroke="#e74c3c" stroke-width="2"/>
-                    <line x1="256" y1="304" x2="244" y2="316" stroke="#e74c3c" stroke-width="2"/>
-                    <text x="258" y="307" font-size="18" font-weight="bold" fill="#e74c3c">M</text>
+                <!-- [OA) -->
+                <g id="brOA" opacity="0">
+                    <line x1="130" y1="270" x2="420" y2="270" stroke="black" stroke-width="2.5"/>
+                    <line x1="416" y1="266" x2="424" y2="274" stroke="black" stroke-width="1.8"/>
+                    <line x1="424" y1="266" x2="416" y2="274" stroke="black" stroke-width="1.8"/>
+                    <text x="428" y="275" font-size="18" font-weight="bold">A</text>
                 </g>
-                <g id="ptN" opacity="0">
-                    <line x1="145" y1="163" x2="157" y2="175" stroke="#e74c3c" stroke-width="2"/>
-                    <line x1="157" y1="163" x2="145" y2="175" stroke="#e74c3c" stroke-width="2"/>
-                    <text x="159" y="166" font-size="18" font-weight="bold" fill="#e74c3c">N</text>
+                <!-- [OB) -->
+                <g id="brOB" opacity="0">
+                    <line x1="130" y1="270" x2="165" y2="73" stroke="black" stroke-width="2.5"/>
+                    <line x1="161" y1="69" x2="169" y2="77" stroke="black" stroke-width="1.8"/>
+                    <line x1="169" y1="69" x2="161" y2="77" stroke="black" stroke-width="1.8"/>
+                    <text x="170" y="70" font-size="18" font-weight="bold">B</text>
+                </g>
+                <!-- O -->
+                <g id="brO" opacity="0">
+                    <line x1="124" y1="264" x2="136" y2="276" stroke="black" stroke-width="2"/>
+                    <line x1="136" y1="264" x2="124" y2="276" stroke="black" stroke-width="2"/>
+                    <text x="108" y="274" font-size="18" font-weight="bold">O</text>
                 </g>
 
-                <!-- Étape 2 : arcs depuis M et N de même rayon (170) -->
-                <!-- Intersection D à 35° de OA: D=(100+270*cos35, 310-270*sin35)=(321, 155) -->
-                <!-- Arc depuis M=(250,310), rayon 180, vers D=(321,155) -->
-                <!-- dist(M,D)=sqrt(71^2+155^2)=sqrt(5041+24025)=sqrt(29066)≈170 ✓ -->
-                <!-- Arc depuis N=(151,169), rayon 180, vers D=(321,155) -->
-                <!-- dist(N,D)=sqrt(170^2+14^2)=sqrt(28900+196)=sqrt(29096)≈171 ✓ -->
-                <path id="arcM" d="M 250 310 A 170 170 0 0 0 390 155" stroke="#3498db" stroke-width="2.5" fill="none" stroke-dasharray="8,4" opacity="0"/>
-                <path id="arcN" d="M 151 169 A 170 170 0 0 1 390 155" stroke="#27ae60" stroke-width="2.5" fill="none" stroke-dasharray="8,4" opacity="0"/>
-
-                <!-- Point D -->
-                <g id="ptD" opacity="0">
-                    <line x1="316" y1="149" x2="326" y2="161" stroke="#333" stroke-width="2.5"/>
-                    <line x1="326" y1="149" x2="316" y2="161" stroke="#333" stroke-width="2.5"/>
-                    <text x="330" y="152" font-size="18" font-weight="bold" fill="#333">D</text>
+                <!-- Arc AOB = 80° -->
+                <!-- r=70 sur OA: (200,270) ; sur OB 80°: (130+70*cos80, 270-70*sin80)=(142,201) -->
+                <g id="brArcAOB" opacity="0">
+                    <path d="M 130 270 L 200 270 A 70 70 0 0 0 142 201 Z" fill="rgba(52,152,219,0.12)" stroke="none"/>
+                    <path d="M 200 270 A 70 70 0 0 0 142 201" fill="none" stroke="#2980b9" stroke-width="2"/>
+                    <text x="214" y="236" font-size="15" fill="#2980b9" font-weight="bold">80°</text>
                 </g>
 
-                <!-- Étape 3 : demi-droite [OD) bissectrice -->
-                <!-- D=(321,155), rayon vers (410,90) environ en prolongeant -->
-                <g id="bissec" opacity="0">
-                    <line x1="100" y1="310" x2="420" y2="90" stroke="#e74c3c" stroke-width="3"/>
-                    <polygon points="420,90 408,102 417,106" fill="#e74c3c"/>
-                    <!-- Arc AOD (35°, rayon 80) -->
-                    <path d="M 180 310 A 80 80 0 0 0 156 246" stroke="#f39c12" stroke-width="2" fill="rgba(243,156,18,0.18)"/>
-                    <text x="192" y="277" font-size="14" fill="#f39c12" font-weight="bold">35°</text>
-                    <!-- Arc DOB (35°, rayon 80) -->
-                    <path d="M 156 246 A 80 80 0 0 0 127 238" stroke="#f39c12" stroke-width="2" fill="rgba(243,156,18,0.18)"/>
-                    <text x="136" y="256" font-size="14" fill="#f39c12" font-weight="bold">35°</text>
-                    <text x="290" y="60" text-anchor="middle" font-size="16" fill="#c0392b" font-weight="bold">[OD) est la bissectrice de l'angle AOB</text>
+                <!-- Rapporteur centré en O=(130,270) r=90 — classe CSS pour animation -->
+                <g id="brRapporteur" class="br-hidden">
+                    <!-- Corps cyan -->
+                    <path d="M 40 270 A 90 90 0 0 1 220 270 Z" fill="rgba(120,228,235,0.82)" stroke="#0a8090" stroke-width="2"/>
+                    <line x1="40" y1="270" x2="220" y2="270" stroke="#0a8090" stroke-width="1.5"/>
+                    <!-- Poignée -->
+                    <rect x="120" y="269" width="20" height="10" rx="4" fill="rgba(80,200,215,0.9)" stroke="#0a8090" stroke-width="1.2"/>
+                    <!-- Croix de centrage -->
+                    <circle cx="130" cy="270" r="7" fill="white" stroke="#222" stroke-width="1.4"/>
+                    <circle cx="130" cy="270" r="2" fill="#222"/>
+                    <line x1="123" y1="270" x2="137" y2="270" stroke="#222" stroke-width="1"/>
+                    <line x1="130" y1="263" x2="130" y2="277" stroke="#222" stroke-width="1"/>
+                    <!-- Ticks -->
+                    <g id="ticksBR"></g>
+                    <g id="labelsBR"></g>
+                    <g id="labels2BR"></g>
+                    <!-- Case 90° -->
+                    <rect x="115" y="178" width="30" height="15" rx="3" fill="black"/>
+                    <text x="130" y="190" text-anchor="middle" font-size="10" fill="white" font-weight="bold">90°</text>
+                    <!-- Extrémités -->
+                    <text x="222" y="282" font-size="9" fill="#1565c0" font-weight="bold">0</text>
+                    <text x="220" y="268" font-size="7" fill="#c0392b">180</text>
+                    <text x="22"  y="282" font-size="9" fill="#1565c0" font-weight="bold">180</text>
+                    <text x="30"  y="268" font-size="7" fill="#c0392b">0</text>
+                    <!-- Marque 80° -->
+                    <!-- 80° r=82 : (130+82*cos80, 270-82*sin80)=(144,189) -->
+                    <line x1="130" y1="270" x2="144" y2="189" stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,3" id="brLine80"/>
+                    <text x="146" y="183" font-size="11" fill="#e74c3c" font-weight="bold">80°</text>
+                    <!-- Marque 40° -->
+                    <line x1="130" y1="270" x2="199" y2="212" stroke="#27ae60" stroke-width="2.5" opacity="0" id="brLine40"/>
+                    <text x="202" y="208" font-size="12" fill="#27ae60" font-weight="bold" opacity="0" id="brLabel40">40°</text>
                 </g>
 
-                <!-- Compas animé -->
-                <g id="compassBis" opacity="0">
-                    <circle id="cHingeBis" cx="100" cy="310" r="9" fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
-                    <line id="cLeg1" x1="100" y1="310" x2="250" y2="310" stroke="#ff8c00" stroke-width="5"/>
-                    <circle id="cTip1" cx="250" cy="310" r="5" fill="#222"/>
-                    <line id="cLeg2" x1="100" y1="310" x2="151" y2="169" stroke="#ff8c00" stroke-width="5"/>
-                    <circle id="cTip2" cx="151" cy="169" r="5" fill="#222"/>
+                <!-- Crayon (apparaît après l'arrivée du rapporteur, tip à 40°=(199,212)) -->
+                <!-- 40° sur r=90 : (130+90*cos40, 270-90*sin40) = (199,212) -->
+                <g id="brPencil" opacity="0">
+                    <g transform="translate(199,212) rotate(22)">
+                        <polygon points="-3.5,0 3.5,0 0,11" fill="#d4a76a"/>
+                        <line x1="0" y1="7" x2="0" y2="11" stroke="#222" stroke-width="1.5"/>
+                        <rect x="-3.5" y="-28" width="7" height="28" fill="#f7dc6f" stroke="#d4ac0d" stroke-width="0.8"/>
+                        <rect x="-3.5" y="-35" width="7" height="8" fill="#e8a0a0" stroke="#d4ac0d" stroke-width="0.8"/>
+                    </g>
+                </g>
+                <!-- Point tracé à 40° (apparaît quand le crayon touche) -->
+                <circle id="brDot40" cx="199" cy="212" r="4" fill="#e74c3c" opacity="0"/>
+                <!-- Résultat 80÷2=40 -->
+                <text id="brResult" x="230" y="170" font-size="13" fill="#c0392b" font-weight="bold" opacity="0">80° ÷ 2 = <tspan font-size="15">40°</tspan></text>
+
+                <!-- [OD) à 40° -->
+                <g id="brOD" opacity="0">
+                    <line x1="130" y1="270" x2="283" y2="141" stroke="#e74c3c" stroke-width="2.5"/>
+                    <line x1="279" y1="137" x2="287" y2="145" stroke="#e74c3c" stroke-width="1.8"/>
+                    <line x1="287" y1="137" x2="279" y2="145" stroke="#e74c3c" stroke-width="1.8"/>
+                    <text x="288" y="138" font-size="18" font-weight="bold" fill="#e74c3c">D</text>
+                </g>
+
+                <!-- Deux arcs égaux (étape finale) -->
+                <!-- Arc AOD vert r=55: OA=(185,270) OD40°=(130+55*cos40,270-55*sin40)=(172,235) -->
+                <!-- Arc DOB bleu r=80: OD=(130+80*cos40,270-80*sin40)=(191,219) OB=(130+80*cos80,270-80*sin80)=(144,191) -->
+                <g id="brArcsEqual" opacity="0">
+                    <path d="M 130 270 L 185 270 A 55 55 0 0 0 172 235 Z" fill="rgba(39,174,96,0.18)" stroke="none"/>
+                    <path d="M 185 270 A 55 55 0 0 0 172 235" fill="none" stroke="#27ae60" stroke-width="2.5"/>
+                    <text x="196" y="258" font-size="13" fill="#27ae60" font-weight="bold">40°</text>
+                    <path d="M 130 270 L 191 219 A 80 80 0 0 0 144 191 Z" fill="rgba(52,152,219,0.18)" stroke="none"/>
+                    <path d="M 191 219 A 80 80 0 0 0 144 191" fill="none" stroke="#2980b9" stroke-width="2.5"/>
+                    <text x="157" y="208" font-size="13" fill="#2980b9" font-weight="bold">40°</text>
                 </g>
 
             </svg>
         </div>
         <div style="text-align:center; margin-top:10px;">
-            <button class="btn-anim" onclick="nextStepBis()">Étape suivante ▶</button>
-            <button class="btn-reset" onclick="resetBis()">Recommencer ↺</button>
-        </div>
-
-        <div style="margin-top:12px;">
-            <strong>Résumé des étapes :</strong>
-            <ol style="line-height:2.2;">
-                <li>Tracer un arc centré en <strong>O</strong> qui coupe [OA) en <strong>M</strong> et [OB) en <strong>N</strong>.</li>
-                <li>Sans changer l'écartement du compas, tracer des arcs centrés en <strong>M</strong> et en <strong>N</strong> qui se croisent en un point <strong>D</strong>.</li>
-                <li>Tracer la demi-droite [OD) : c'est la <strong>bissectrice</strong> de l'angle AOB.</li>
-            </ol>
+            <button class="btn-anim" onclick="nextStepBisRap()">Étape suivante ▶</button>
+            <button class="btn-reset" onclick="resetBisRap()">Recommencer ↺</button>
         </div>
     </div>
+
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <script>
@@ -622,53 +1029,114 @@
     }
 
     // ────────────────────────────────────────────────────
+    // ANIMATION 0 : Triangle exemple – angles nommés
+    // ────────────────────────────────────────────────────
+    let stepTriEx = 0;
+    const triExTexts = [
+        "Cliquez sur « Étape suivante » pour faire apparaître les angles.",
+        "L'angle <span class='angle' style='color:#e74c3c;'>BAC</span> a son sommet en <strong>A</strong>. Ses côtés sont [AB) et [AC).",
+        "L'angle <span class='angle' style='color:#2980b9;'>ABC</span> a son sommet en <strong>B</strong>. Ses côtés sont [BA) et [BC).",
+        "L'angle <span class='angle' style='color:#27ae60;'>BCA</span> a son sommet en <strong>C</strong>. Ses côtés sont [CB) et [CA)."
+    ];
+
+    function nextStepTriEx() {
+        stepTriEx++;
+        if (stepTriEx > 3) stepTriEx = 3;
+        document.getElementById('exTxtAngle').innerHTML = triExTexts[stepTriEx];
+        if (stepTriEx >= 1) setOpacity('exAngleA', 1);
+        if (stepTriEx >= 2) setOpacity('exAngleB', 1);
+        if (stepTriEx >= 3) {
+            setOpacity('exAngleC', 1);
+            fade('exRecap', 1);
+        }
+    }
+
+    function resetTriEx() {
+        stepTriEx = 0;
+        document.getElementById('exTxtAngle').innerHTML = triExTexts[0];
+        ['exAngleA','exAngleB','exAngleC'].forEach(id => setOpacity(id, 0));
+        fade('exRecap', 0);
+    }
+
+    // ────────────────────────────────────────────────────
     // ANIMATION 1 : Mesurer un angle
     // ────────────────────────────────────────────────────
     const mesTexts = [
         "Cliquez sur « Étape suivante » pour voir comment mesurer l'angle <span class='angle'>AOB</span>.",
         "Étape 1 : On place le <strong>centre du rapporteur</strong> exactement sur le sommet <strong>O</strong> de l'angle.",
-        "Étape 2 : On aligne la graduation <strong>0°</strong> sur le côté [OA) et on cherche où le côté [OB) coupe le rapporteur.",
+        "Étape 2 : On aligne la <strong>ligne de base</strong> sur le côté [OA). Le rapporteur a <strong>deux échelles</strong> (0° des deux côtés) : on lit sur celle qui commence à <strong>0°</strong> du côté de [OA).",
         "Étape 3 : On lit la mesure : le côté [OB) passe par la graduation <strong>30°</strong>. Donc <span class='angle'>AOB</span> = <strong>30°</strong>.",
         "<span class='angle'>AOB</span> = <strong>30°</strong> — c'est un angle <strong style='color:#e74c3c;'>aigu</strong> (entre 0° et 90°)."
     ];
     let stepMes = 0;
 
-    function buildRapporteur() {
-        const svg = document.getElementById('svgMes');
-        const ticks = document.getElementById('ticks');
-        const labels = document.getElementById('labels');
-        if (!ticks) return;
-        const cx = 200, cy = 280, r = 120;
-        for (let deg = 0; deg <= 180; deg += 5) {
+    /* ── Génère les ticks et labels d'un rapporteur style Maped ──
+       cx,cy = centre  r = rayon  highlightDeg = graduation à surligner (rouge, 0=aucun)
+       ticksId, labelsId, labels2Id = IDs des <g> dans le SVG                          */
+    function buildProto(cx, cy, r, highlightDeg, ticksId, labelsId, labels2Id) {
+        const NS = 'http://www.w3.org/2000/svg';
+        const gT  = document.getElementById(ticksId);
+        const gL  = document.getElementById(labelsId);
+        const gL2 = document.getElementById(labels2Id);
+        if (!gT) return;
+
+        for (let deg = 0; deg <= 180; deg++) {
             const rad = deg * Math.PI / 180;
             const xo = cx + r * Math.cos(rad);
             const yo = cy - r * Math.sin(rad);
-            const inner = (deg % 10 === 0) ? 108 : 114;
-            const xi = cx + inner * Math.cos(rad);
-            const yi = cy - inner * Math.sin(rad);
-            const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-            line.setAttribute('x1', xo.toFixed(1));
-            line.setAttribute('y1', yo.toFixed(1));
-            line.setAttribute('x2', xi.toFixed(1));
-            line.setAttribute('y2', yi.toFixed(1));
-            line.setAttribute('stroke', '#555');
-            line.setAttribute('stroke-width', deg % 30 === 0 ? '2' : '1');
-            ticks.appendChild(line);
+            // longueur du tick selon multiple
+            let len = 3;  // 1°
+            if (deg % 5  === 0) len = 5;
+            if (deg % 10 === 0) len = 9;
+            const xi = cx + (r - len) * Math.cos(rad);
+            const yi = cy - (r - len) * Math.sin(rad);
+            const line = document.createElementNS(NS, 'line');
+            line.setAttribute('x1', xo.toFixed(1)); line.setAttribute('y1', yo.toFixed(1));
+            line.setAttribute('x2', xi.toFixed(1)); line.setAttribute('y2', yi.toFixed(1));
+            line.setAttribute('stroke', '#1a6070');
+            line.setAttribute('stroke-width', deg % 10 === 0 ? '1.4' : deg % 5 === 0 ? '0.9' : '0.5');
+            gT.appendChild(line);
         }
-        [0, 30, 60, 90, 120, 150, 180].forEach(deg => {
+
+        // ── Labels extérieurs bleus (0→180) tous les 10° sauf 0,90,180 ──
+        for (let deg = 10; deg <= 170; deg += 10) {
+            if (deg === 90) continue;  // déjà la case noire
             const rad = deg * Math.PI / 180;
-            const lx = cx + 95 * Math.cos(rad);
-            const ly = cy - 95 * Math.sin(rad);
-            const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
-            txt.setAttribute('x', (lx - 4).toFixed(1));
-            txt.setAttribute('y', (ly + 4).toFixed(1));
-            txt.setAttribute('font-size', '10');
-            txt.setAttribute('fill', deg === 30 ? '#e74c3c' : '#555');
-            txt.setAttribute('font-weight', deg === 30 ? 'bold' : 'normal');
+            const lx = cx + (r - 17) * Math.cos(rad);
+            const ly = cy - (r - 17) * Math.sin(rad);
+            const txt = document.createElementNS(NS, 'text');
+            txt.setAttribute('x', lx.toFixed(1));
+            txt.setAttribute('y', (ly + 3.5).toFixed(1));
+            txt.setAttribute('font-size', r >= 110 ? '9' : '8');
+            txt.setAttribute('fill', deg === highlightDeg ? '#e74c3c' : '#1a4a8a');
+            txt.setAttribute('font-weight', deg === highlightDeg ? 'bold' : 'normal');
             txt.setAttribute('text-anchor', 'middle');
             txt.textContent = deg;
-            labels.appendChild(txt);
-        });
+            gL.appendChild(txt);
+        }
+
+        // ── Labels intérieurs rouges (180→0) tous les 10° sauf 0,90,180 ──
+        for (let deg = 10; deg <= 170; deg += 10) {
+            if (deg === 90) continue;
+            const rad = deg * Math.PI / 180;
+            const lx = cx + (r - 27) * Math.cos(rad);
+            const ly = cy - (r - 27) * Math.sin(rad);
+            const txt = document.createElementNS(NS, 'text');
+            txt.setAttribute('x', lx.toFixed(1));
+            txt.setAttribute('y', (ly + 3).toFixed(1));
+            txt.setAttribute('font-size', r >= 110 ? '8' : '7');
+            txt.setAttribute('fill', (180 - deg) === highlightDeg ? '#e74c3c' : '#b03020');
+            txt.setAttribute('font-weight', (180 - deg) === highlightDeg ? 'bold' : 'normal');
+            txt.setAttribute('text-anchor', 'middle');
+            txt.textContent = 180 - deg;
+            gL2.appendChild(txt);
+        }
+    }
+
+    function buildRapporteur() {
+        buildProto(200, 280, 120, 30,  'ticks',    'labels',    'labels2');
+        buildProto(100, 260, 100, 72,  'ticksTrac','labelsTrac','labels2Trac');
+        buildProto(130, 270,  90, 80,  'ticksBR',  'labelsBR',  'labels2BR');
     }
 
     function setOpacity(id, v) {
@@ -680,8 +1148,20 @@
         stepMes++;
         if (stepMes > 4) stepMes = 4;
         document.getElementById('stepMes').innerHTML = mesTexts[stepMes];
-        if (stepMes >= 1) setOpacity('rapporteur', 1);
-        if (stepMes >= 2) setOpacity('zeroline', 1);
+        const rap = document.getElementById('rapporteur');
+        if (stepMes === 1) {
+            // Étape 1 : glisse et arrive en position
+            rap.classList.remove('rap-hidden', 'aligne');
+            void rap.offsetWidth;
+            rap.classList.add('arrive');
+        }
+        if (stepMes === 2) {
+            // Étape 2 : rotations d'alignement (rapAlign inclut opacity:1 à chaque keyframe)
+            rap.classList.remove('arrive');
+            void rap.offsetWidth;
+            rap.classList.add('aligne');
+            setOpacity('zeroline', 1);
+        }
         if (stepMes >= 3) { setOpacity('mark30', 1); setOpacity('dot30', 1); setOpacity('arcMes', 1); setOpacity('label30', 1); }
         if (stepMes >= 4) setOpacity('result', 1);
     }
@@ -689,7 +1169,11 @@
     function resetMes() {
         stepMes = 0;
         document.getElementById('stepMes').innerHTML = mesTexts[0];
-        ['rapporteur','zeroline','mark30','dot30','arcMes','label30','result'].forEach(id => setOpacity(id, 0));
+        const rap = document.getElementById('rapporteur');
+        rap.classList.remove('arrive', 'aligne');
+        void rap.offsetWidth;
+        rap.classList.add('rap-hidden');
+        ['zeroline','mark30','dot30','arcMes','label30','result'].forEach(id => setOpacity(id, 0));
     }
 
     // ────────────────────────────────────────────────────
@@ -708,56 +1192,164 @@
         stepTrac++;
         if (stepTrac > 4) stepTrac = 4;
         document.getElementById('stepTrac').innerHTML = tracTexts[stepTrac];
+        const rapT = document.getElementById('rapTrac');
         if (stepTrac >= 1) { setOpacity('tA1', 1); setOpacity('tA2', 1); setOpacity('tAl', 1); setOpacity('rayAB', 1); }
-        if (stepTrac >= 2) setOpacity('rapTrac', 1);
-        if (stepTrac >= 3) { setOpacity('rapTrac', 0); setOpacity('trait72', 1); }
-        if (stepTrac >= 4) { setOpacity('trait72', 0); setOpacity('rayAC', 1); }
+        if (stepTrac === 2) {
+            // Rapporteur glisse depuis la droite puis s'aligne sur [AB)
+            rapT.classList.remove('rap-hidden', 'trac-cache');
+            void rapT.offsetWidth;
+            rapT.classList.add('trac-arrive');
+            // Balayage vers 72° (démarre après 2.2s)
+            const sw = document.getElementById('sweepLine72');
+            const mk = document.getElementById('mark72');
+            sw.classList.remove('sweep-active');
+            mk.classList.remove('mark-show');
+            void sw.offsetWidth;
+            sw.classList.add('sweep-active');
+            // mark72 reste caché — le crayon l'affiche
+            // Crayon apparaît après la fin du balayage (~4.1s)
+            setTimeout(() => {
+                const pt = document.getElementById('pencilTrac');
+                pt.style.opacity = '1';
+                pt.classList.remove('ptrac-draw', 'ptrac-hide');
+                void pt.offsetWidth;
+                pt.classList.add('ptrac-draw');
+                // Quand le crayon touche (~0.7s), mark72 apparaît
+                setTimeout(() => {
+                    mk.classList.remove('mark-show');
+                    void mk.offsetWidth;
+                    mk.classList.add('mark-show');
+                }, 650);
+                // Crayon remonte après la marque
+                setTimeout(() => {
+                    pt.classList.remove('ptrac-draw');
+                    void pt.offsetWidth;
+                    pt.classList.add('ptrac-hide');
+                }, 900);
+            }, 4100);
+        }
+        if (stepTrac === 3) {
+            // Rapporteur + balayage disparaissent, règle apparaît
+            rapT.classList.remove('trac-arrive');
+            void rapT.offsetWidth;
+            rapT.classList.add('trac-cache');
+            const sw = document.getElementById('sweepLine72');
+            const mk = document.getElementById('mark72');
+            sw.classList.remove('sweep-active');
+            mk.classList.remove('mark-show');
+            setOpacity('trait72', 1);
+            setOpacity('rulerTrac', 1);
+        }
+        if (stepTrac >= 4) {
+            setOpacity('trait72', 0);
+            setOpacity('rayAC', 1);
+            // La règle disparaît après le tracé
+            setTimeout(() => setOpacity('rulerTrac', 0), 800);
+        }
     }
 
     function resetTrac() {
         stepTrac = 0;
         document.getElementById('stepTrac').innerHTML = tracTexts[0];
-        ['tA1','tA2','tAl','rayAB','rapTrac','trait72','rayAC'].forEach(id => setOpacity(id, 0));
+        const rapT = document.getElementById('rapTrac');
+        rapT.classList.remove('trac-arrive', 'trac-cache');
+        void rapT.offsetWidth;
+        rapT.classList.add('rap-hidden');
+        // Réinitialiser le balayage
+        const sw = document.getElementById('sweepLine72');
+        const mk = document.getElementById('mark72');
+        sw.classList.remove('sweep-active');
+        mk.classList.remove('mark-show');
+        // Réinitialiser crayon et règle
+        const pt = document.getElementById('pencilTrac');
+        pt.classList.remove('ptrac-draw', 'ptrac-hide');
+        pt.style.opacity = '0';
+        setOpacity('rulerTrac', 0);
+        ['tA1','tA2','tAl','rayAB','trait72','rayAC'].forEach(id => setOpacity(id, 0));
     }
 
     // ────────────────────────────────────────────────────
-    // ANIMATION 3 : Bissectrice au compas
+    // ANIMATION : Bissectrice au rapporteur
     // ────────────────────────────────────────────────────
-    const bisTexts = [
-        "Cliquez sur « Étape suivante » pour voir la construction de la bissectrice au compas.",
-        "Étape 1 : On place la pointe du compas en <strong>O</strong> et on trace un arc qui coupe [OA) en <strong>M</strong> et [OB) en <strong>N</strong>.",
-        "Étape 2 : Sans changer l'écartement du compas, on place la pointe en <strong>M</strong> et on trace un arc. Puis on fait la même chose depuis <strong>N</strong>. Les deux arcs se croisent en <strong>D</strong>.",
-        "Étape 3 : On trace la demi-droite [OD). C'est la <strong>bissectrice</strong> de l'angle AOB : elle partage l'angle en deux angles <strong>égaux</strong>."
+    const bisRapTexts = [
+        "Cliquez sur « Étape suivante » pour voir comment tracer la bissectrice de l'angle <span class='angle'>AOB</span> = 80° au rapporteur.",
+        "Étape 1 : On trace l'angle <span class='angle'>AOB</span> = 80° avec ses deux côtés [OA) et [OB).",
+        "Étape 2 : On place le rapporteur en O sur [OA) et on mesure 80°. On divise par 2 : 80° ÷ 2 = <strong>40°</strong>. On repère 40° sur le rapporteur.",
+        "Étape 3 : On enlève le rapporteur et on trace la demi-droite [OD) à 40° de [OA). C'est la <strong>bissectrice</strong> de l'angle <span class='angle'>AOB</span> !",
+        "Résultat : <span class='angle'>AOD</span> = <span class='angle'>DOB</span> = 40°. La bissectrice partage l'angle en deux angles <strong>adjacents de même mesure</strong>."
     ];
-    let stepBis = 0;
+    let stepBisRap = 0;
 
-    function nextStepBis() {
-        stepBis++;
-        if (stepBis > 3) stepBis = 3;
-        document.getElementById('stepBis').innerHTML = bisTexts[stepBis];
-        if (stepBis >= 1) {
-            setOpacity('compassBis', 1);
-            setOpacity('arcO', 1);
-            setOpacity('ptM', 1);
-            setOpacity('ptN', 1);
+    function nextStepBisRap() {
+        stepBisRap++;
+        if (stepBisRap > 4) stepBisRap = 4;
+        document.getElementById('stepBisRap').innerHTML = bisRapTexts[stepBisRap];
+
+        if (stepBisRap >= 1) {
+            setOpacity('brOA',1); setOpacity('brOB',1); setOpacity('brO',1); setOpacity('brArcAOB',1);
         }
-        if (stepBis >= 2) {
-            setOpacity('compassBis', 0);
-            setOpacity('arcM', 1);
-            setOpacity('arcN', 1);
-            setOpacity('ptD', 1);
+        if (stepBisRap === 2) {
+            // Rapporteur glisse et s'aligne
+            const rap = document.getElementById('brRapporteur');
+            rap.classList.remove('br-hidden', 'br-cache');
+            void rap.offsetWidth;
+            rap.classList.add('br-arrive');
+            // Crayon descend après 2.3s
+            setTimeout(() => {
+                const p = document.getElementById('brPencil');
+                p.style.opacity = '1';
+                p.classList.add('pencil-draw');
+            }, 2300);
+            // Point + marque verte + résultat après 3s
+            setTimeout(() => {
+                const d = document.getElementById('brDot40');
+                d.style.opacity = '1';
+                d.classList.add('dot-pop');
+                setOpacity('brLine40', 1);
+                setOpacity('brLabel40', 1);
+                // Crayon remonte après avoir fait la marque
+                setTimeout(() => {
+                    const p = document.getElementById('brPencil');
+                    p.classList.remove('pencil-draw');
+                    void p.offsetWidth;
+                    p.classList.add('pencil-hide');
+                }, 500);
+            }, 3000);
+            setTimeout(() => setOpacity('brResult', 1), 3600);
         }
-        if (stepBis >= 3) {
-            setOpacity('arcM', 0.3);
-            setOpacity('arcN', 0.3);
-            setOpacity('bissec', 1);
+        if (stepBisRap === 3) {
+            // Rapporteur et crayon disparaissent
+            const rap = document.getElementById('brRapporteur');
+            rap.classList.remove('br-arrive');
+            void rap.offsetWidth;
+            rap.classList.add('br-cache');
+            setOpacity('brPencil', 0);
+            setOpacity('brDot40', 0);
+            setOpacity('brResult', 0);
+            setOpacity('brArcAOB', 0);
+            setOpacity('brOD', 1);
         }
+        if (stepBisRap >= 4) { setOpacity('brArcsEqual', 1); }
     }
 
-    function resetBis() {
-        stepBis = 0;
-        document.getElementById('stepBis').innerHTML = bisTexts[0];
-        ['compassBis','arcO','ptM','ptN','arcM','arcN','ptD','bissec'].forEach(id => setOpacity(id, 0));
+    function resetBisRap() {
+        stepBisRap = 0;
+        document.getElementById('stepBisRap').innerHTML = bisRapTexts[0];
+        // Rapporteur
+        const rap = document.getElementById('brRapporteur');
+        rap.classList.remove('br-arrive', 'br-cache');
+        void rap.offsetWidth;
+        rap.classList.add('br-hidden');
+        // Crayon
+        const p = document.getElementById('brPencil');
+        p.classList.remove('pencil-draw', 'pencil-hide');
+        p.style.opacity = '0';
+        // Point
+        const d = document.getElementById('brDot40');
+        d.classList.remove('dot-pop');
+        d.style.opacity = '0';
+        ['brOA','brOB','brO','brArcAOB','brOD','brArcsEqual'].forEach(id => setOpacity(id, 0));
+        ['brLine40','brLabel40','brResult'].forEach(id => setOpacity(id, 0));
     }
 
     // Initialisation
