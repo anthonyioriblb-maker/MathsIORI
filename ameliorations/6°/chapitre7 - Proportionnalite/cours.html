@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Proportionnalité</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        /* ── Cellules animées ── */
+        .cell-q { color: #c0392b; font-weight: bold; font-size: 1.05em; }
+        .cell-a { display: none; font-weight: bold; color: #27ae60; }
+
+        /* ── Rédaction cachée au départ ── */
+        .redac-step { opacity: 0; transition: opacity 0.5s; margin-top: 6px; }
+
+        /* ── Boutons ── */
+        .btn-etape {
+            display: inline-block;
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 7px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 8px 4px 4px 0;
+            font-weight: bold;
+        }
+        .btn-etape:hover { background: #1a6fa8; }
+        .btn-etape:disabled { background: #95a5a6; cursor: default; }
+        .btn-reset-anim {
+            display: inline-block;
+            background: #7f8c8d;
+            color: white;
+            border: none;
+            padding: 7px 11px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 8px 0 4px 0;
+        }
+        .btn-reset-anim:hover { background: #636e72; }
+
+        /* ── SVG arc côté droit du tableau ── */
+        .fleche-anim-svg {
+            width: 75px;
+            overflow: visible;
+            display: block;
+        }
+
+        /* ── Conteneur arc horizontal (méthode c) ── */
+        .arc-horizontal-wrap {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <a href="../../../6°/classe-6e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre : Proportionnalité</h1>
+
+    <!-- ══════════════════════════════════════════ -->
+    <h2>Situation de proportionnalité</h2>
+
+    <h3>Reconnaître une situation de proportionnalité</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Deux grandeurs sont proportionnelles lorsque l'une s'obtient en multipliant (ou en divisant) l'autre par un <span style="color: red;">même nombre non nul</span>.
+    </div>
+
+    <!-- Exemple 1 – tableau animé (coefficient ×1,5) -->
+    <div class="example">
+        <strong>Exemple 1 :</strong><br>
+        <div class="tableau-avec-fleche">
+            <table>
+                <tr>
+                    <th>Nombre de croissants</th>
+                    <td>2</td><td>5</td><td>8</td>
+                </tr>
+                <tr>
+                    <th>Prix (en €)</th>
+                    <td>3</td><td>7,5</td><td>12</td>
+                </tr>
+            </table>
+            <div class="fleche-coefficient">
+                <svg class="fleche-anim-svg" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+                    <path id="arc-ex1" d="M 10 20 C 80 20, 80 80, 10 80"
+                          stroke="#e67e22" stroke-width="3" fill="none"/>
+                    <polygon id="ptr-ex1" points="13,75 13,85 5,80" fill="#e67e22" style="opacity:0"/>
+                </svg>
+                <div class="coefficient" id="lbl-ex1" style="opacity:0; transition:opacity 0.4s;">× 1,5</div>
+            </div>
+        </div>
+
+        <div style="margin: 4px 0 8px;">
+            <button class="btn-etape" id="btn-ex1" onclick="stepEx1()">▶ Voir le coefficient</button>
+            <button class="btn-reset-anim" onclick="resetBlkEx1()" title="Réinitialiser">↻</button>
+        </div>
+
+        <p>On a :</p>
+        <p>
+            <span class="fraction"><span class="numerateur">3</span><span class="denominateur">2</span></span> = 1,5 &nbsp;;&nbsp;
+            <span class="fraction"><span class="numerateur">7,5</span><span class="denominateur">5</span></span> = 1,5 &nbsp;;&nbsp;
+            <span class="fraction"><span class="numerateur">12</span><span class="denominateur">8</span></span> = 1,5
+        </p>
+        <p>Les quotients sont égaux.</p>
+        <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie toujours par le même nombre : 1,5.</p>
+        <p>Dans ce cas les deux grandeurs sont <strong>proportionnelles</strong>.</p>
+    </div>
+
+    <!-- Exemple 2 – contre-exemple (statique) -->
+    <div class="example">
+        <strong>Exemple 2 (contre-exemple) :</strong><br>
+        <table>
+            <tr>
+                <th>Âge de Léo (en années)</th>
+                <td>5</td><td>10</td><td>15</td>
+            </tr>
+            <tr>
+                <th>Taille de Léo (en cm)</th>
+                <td>110</td><td>140</td><td>165</td>
+            </tr>
+        </table>
+        <p>On a :</p>
+        <p>
+            <span class="fraction"><span class="numerateur">110</span><span class="denominateur">5</span></span> = 22 &nbsp;;&nbsp;
+            <span class="fraction"><span class="numerateur">140</span><span class="denominateur">10</span></span> = 14
+        </p>
+        <p>Les quotients ne sont pas égaux.</p>
+        <p>Dans ce cas les deux grandeurs <strong>ne sont pas proportionnelles</strong>.</p>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <h3>Compléter un tableau de proportionnalité</h3>
+
+    <div class="example">
+        <strong>Exemple :</strong> Paul achète 3 kg de pommes pour 6,9 €. Compléter le tableau suivant :<br>
+        <table>
+            <tr>
+                <th>Quantité de pommes (Kg)</th>
+                <td>3</td><td>4</td><td>7</td><td>15</td>
+            </tr>
+            <tr>
+                <th>Prix (en €)</th>
+                <td>6,9</td>
+                <td><span class="cell-q">?</span></td>
+                <td><span class="cell-q">?</span></td>
+                <td><span class="cell-q">?</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ── Méthode a) coefficient ── -->
+    <h4>a) En trouvant le nombre pour passer de la première ligne à la deuxième ligne</h4>
+    <div class="method">
+        <div class="tableau-avec-fleche">
+            <table>
+                <tr>
+                    <th>Quantité de pommes (Kg)</th>
+                    <td>3</td><td>4</td>
+                </tr>
+                <tr>
+                    <th>Prix (en €)</th>
+                    <td>6,9</td>
+                    <td id="rep-A"><span class="cell-q">?</span><span class="cell-a">9,2</span></td>
+                </tr>
+            </table>
+            <div class="fleche-coefficient">
+                <svg class="fleche-anim-svg" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+                    <path id="arc-A" d="M 10 20 C 80 20, 80 80, 10 80"
+                          stroke="#e67e22" stroke-width="3" fill="none"/>
+                    <polygon id="ptr-A" points="13,75 13,85 5,80" fill="#e67e22" style="opacity:0"/>
+                </svg>
+                <div class="coefficient" id="lbl-A" style="opacity:0; transition:opacity 0.4s;">× 2,3</div>
+            </div>
+        </div>
+
+        <div id="redac-A" class="redac-step">
+            <p><span class="fraction"><span class="numerateur">6,9</span><span class="denominateur">3</span></span> = 2,3</p>
+            <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par 2,3.</p>
+            <p>Donc : 4 × 2,3 = <strong>9,2</strong></p>
+        </div>
+
+        <div>
+            <button class="btn-etape" id="btn-A" onclick="nextStep('A')">▶ Voir le calcul</button>
+            <button class="btn-reset-anim" onclick="resetBlk('A')" title="Réinitialiser">↻</button>
+        </div>
+    </div>
+
+    <!-- ── Méthode b) addition de colonnes ── -->
+    <h4>b) En additionnant ou en soustrayant deux colonnes du tableau</h4>
+    <div class="method">
+        <p>Dans un tableau de proportionnalité on peut additionner ou soustraire deux colonnes :</p>
+        <table>
+            <tr>
+                <th>Quantité de pommes (Kg)</th>
+                <td>3</td><td>4</td>
+                <td id="rep-B1"><span class="cell-q">?</span><span class="cell-a">7</span></td>
+            </tr>
+            <tr>
+                <th>Prix (en €)</th>
+                <td>6,9</td><td>9,2</td>
+                <td id="rep-B2"><span class="cell-q">?</span><span class="cell-a">16,1</span></td>
+            </tr>
+        </table>
+
+        <div id="redac-B" class="redac-step">
+            <p>3 kg + 4 kg = 7 kg, et 6,9 € + 9,2 € = 16,1 €</p>
+        </div>
+
+        <div>
+            <button class="btn-etape" id="btn-B" onclick="stepB()">▶ Voir le calcul</button>
+            <button class="btn-reset-anim" onclick="resetBlkB()" title="Réinitialiser">↻</button>
+        </div>
+    </div>
+
+    <!-- ── Méthode c) multiplication de colonne ── -->
+    <h4>c) En multipliant ou en divisant une colonne par un nombre non nul</h4>
+    <div class="method">
+
+        <!-- Arc horizontal au-dessus du tableau -->
+        <div class="arc-horizontal-wrap">
+            <svg id="svg-arc-C" viewBox="0 0 280 65" style="width:100%; max-width:380px; overflow:visible;">
+                <path id="arc-C" d="M 50 60 C 50 10 230 10 230 60"
+                      fill="none" stroke="#e67e22" stroke-width="2.8"/>
+                <polygon id="ptr-C" points="224,50 232,50 230,62" fill="#e67e22" style="opacity:0"/>
+                <text id="lbl-C" x="140" y="27" text-anchor="middle"
+                      fill="#e67e22" font-size="15" font-weight="bold"
+                      style="opacity:0">× 5</text>
+            </svg>
+        </div>
+
+        <table>
+            <tr>
+                <th>Quantité de pommes (Kg)</th>
+                <td>3</td><td>15</td>
+            </tr>
+            <tr>
+                <th>Prix (en €)</th>
+                <td>6,9</td>
+                <td id="rep-C"><span class="cell-q">?</span><span class="cell-a">34,5</span></td>
+            </tr>
+        </table>
+
+        <div id="redac-C" class="redac-step">
+            <p><span class="fraction"><span class="numerateur">15</span><span class="denominateur">3</span></span> = 5</p>
+            <p>Ainsi on passe de la première colonne à la deuxième colonne en multipliant par 5.</p>
+            <p>Donc : 6,9 × 5 = <strong>34,5</strong></p>
+        </div>
+
+        <div>
+            <button class="btn-etape" id="btn-C" onclick="nextStep('C')">▶ Voir le calcul</button>
+            <button class="btn-reset-anim" onclick="resetBlk('C')" title="Réinitialiser">↻</button>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <h2>Exemples d'utilisations de la proportionnalité</h2>
+
+    <h3>Les pourcentages</h3>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Appliquer <span class="math">x</span> % à un nombre, c'est multiplier ce nombre par
+        <span class="fraction"><span class="numerateur">x</span><span class="denominateur">100</span></span>.
+    </div>
+
+    <h4>a) Appliquer un pourcentage :</h4>
+    <div class="example">
+        <strong>Exemple :</strong> Dans un collège de 400 élèves, 15% des élèves jouent au volley. Combien d'élèves jouent au volley ?<br><br>
+        <p>400 × <span class="fraction"><span class="numerateur">15</span><span class="denominateur">100</span></span> = 400 × 0,15 = 60</p>
+        <p>Il y a <strong>60 élèves</strong> qui jouent au volley dans ce collège.</p>
+        <p><strong>Ou bien :</strong></p>
+        <table>
+            <tr>
+                <th>Nombre d'élèves</th>
+                <td>100</td><td>400</td>
+            </tr>
+            <tr>
+                <th>Nombre d'élèves qui jouent au volley</th>
+                <td>15</td><td><strong>60</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>b) Calculer un pourcentage :</h4>
+    <div class="example">
+        <strong>Exemple :</strong> Dans une classe de 30 élèves il y a 9 filles. Quel est le pourcentage de filles dans cette classe ?<br><br>
+        <p>Cela revient à déterminer le nombre de filles qu'il y aurait si la classe était composée de 100 élèves.</p>
+        <table>
+            <tr>
+                <th>Nombre d'élèves</th>
+                <td>30</td><td>100</td>
+            </tr>
+            <tr>
+                <th>Nombre de filles</th>
+                <td>9</td><td><strong>30</strong></td>
+            </tr>
+        </table>
+        <p><span class="fraction"><span class="numerateur">9</span><span class="denominateur">30</span></span> = 0,3</p>
+        <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par 0,3.</p>
+        <p>Dans cette classe, il y a <strong>30% de filles</strong>.</p>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <h3>Échelles</h3>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Sur une représentation à l'échelle, les mesures sur la représentation sont proportionnelles aux mesures réelles.
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque importante :</strong> Les mesures sont exprimées dans la <strong>même unité</strong>.
+    </div>
+
+    <h4>a) Utilisation d'une échelle :</h4>
+    <div class="example">
+        <strong>Exemple :</strong> Sur une carte à l'échelle
+        <span class="fraction"><span class="numerateur">1</span><span class="denominateur">50 000</span></span>,
+        deux villes sont distantes de 12 cm.<br>
+        Quelle est la distance réelle entre ces deux villes ?<br><br>
+        <table>
+            <tr>
+                <th>Distance sur la carte en cm</th>
+                <td>1</td><td>12</td>
+            </tr>
+            <tr>
+                <th>Distance réelle en cm</th>
+                <td>50 000</td><td><strong>600 000</strong></td>
+            </tr>
+        </table>
+        <p><span class="fraction"><span class="numerateur">50 000</span><span class="denominateur">1</span></span> = 50 000</p>
+        <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par 50 000.</p>
+        <p>La distance réelle est de 600 000 cm soit <strong>6 km</strong>.</p>
+    </div>
+
+    <h4>b) Calculer une échelle :</h4>
+    <div class="example">
+        <strong>Exemple :</strong> Calculer l'échelle de ce dessin :<br>
+        <img src="../../../6°/chapitre7 - Proportionnalite/images/6-71.png" alt="Dessin d'un roller"><br>
+        Sur ce dessin, on mesure la longueur de la flèche, elle mesure 4 cm.<br>
+        On cherche combien 1 cm sur le dessin va représenter en réalité.<br><br>
+        <table>
+            <tr>
+                <th>Distance sur le dessin en cm</th>
+                <td>4</td><td>1</td>
+            </tr>
+            <tr>
+                <th>Distance réelle en cm</th>
+                <td>36</td><td><strong>9</strong></td>
+            </tr>
+        </table>
+        <p><span class="fraction"><span class="numerateur">36</span><span class="denominateur">4</span></span> = 9</p>
+        <p><strong>Pour passer de la première ligne à la deuxième ligne</strong>, on multiplie par 9.</p>
+        <p>L'échelle est <span class="fraction"><span class="numerateur">1</span><span class="denominateur">9</span></span>.</p>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Calculer une échelle revient à calculer le nombre représenté par la fraction :
+        <span class="fraction"><span class="numerateur">distance sur la carte</span><span class="denominateur">distance réelle</span></span>,
+        <strong>ces distances étant dans la même unité</strong>.
+    </div>
+
+    <div class="exercice">
+        <strong>Exercice 1 :</strong> Un élève achète 5 cahiers pour 8 €. Quel est le prix de 8 cahiers ? de 12 cahiers ?<br><br>
+        <strong>Exercice 2 :</strong> Dans un collège, 60 % des élèves sont demi-pensionnaires.
+        Il y a 450 élèves dans le collège. Combien d'élèves sont demi-pensionnaires ?<br><br>
+        <strong>Exercice 3 :</strong> Sur une carte à l'échelle
+        <span class="fraction"><span class="numerateur">1</span><span class="denominateur">25 000</span></span>,
+        deux villes sont distantes de 8 cm. Quelle est la distance réelle en km ?
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════ -->
+    <script>
+        // ── État de chaque bloc animé ──
+        const blkState = {};
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialise les arcs SVG avec stroke-dasharray/offset
+            ['ex1', 'A', 'C'].forEach(id => {
+                const arc = document.getElementById('arc-' + id);
+                if (!arc) return;
+                const len = Math.ceil(arc.getTotalLength()) + 5;
+                arc.style.strokeDasharray = len;
+                arc.style.strokeDashoffset = len;
+                blkState[id] = 0;
+            });
+        });
+
+        // ── Exemple 1 : une seule étape (afficher la flèche ×1,5) ──
+        function stepEx1() {
+            if ((blkState['ex1'] || 0) >= 1) return;
+            blkState['ex1'] = 1;
+
+            const arc = document.getElementById('arc-ex1');
+            requestAnimationFrame(() => {
+                arc.style.transition = 'stroke-dashoffset 0.8s ease-out';
+                arc.style.strokeDashoffset = '0';
+            });
+            setTimeout(() => {
+                const ptr = document.getElementById('ptr-ex1');
+                ptr.style.transition = 'opacity 0.15s';
+                ptr.style.opacity = '1';
+            }, 850);
+            setTimeout(() => {
+                const lbl = document.getElementById('lbl-ex1');
+                lbl.style.opacity = '1';
+            }, 1050);
+            setTimeout(() => {
+                document.getElementById('btn-ex1').disabled = true;
+            }, 1100);
+        }
+
+        function resetBlkEx1() {
+            blkState['ex1'] = 0;
+            const arc = document.getElementById('arc-ex1');
+            const len = Math.ceil(arc.getTotalLength()) + 5;
+            arc.style.transition = 'none';
+            arc.style.strokeDasharray = len;
+            arc.style.strokeDashoffset = len;
+
+            const ptr = document.getElementById('ptr-ex1');
+            ptr.style.transition = 'none';
+            ptr.style.opacity = '0';
+
+            const lbl = document.getElementById('lbl-ex1');
+            lbl.style.transition = 'none';
+            lbl.style.opacity = '0';
+
+            document.getElementById('btn-ex1').disabled = false;
+        }
+
+        // ── Blocs A et C : 3 étapes (rédaction → flèche → réponse) ──
+        function nextStep(id) {
+            blkState[id] = (blkState[id] || 0) + 1;
+            const state = blkState[id];
+            const btn = document.getElementById('btn-' + id);
+
+            if (state === 1) {
+                // Étape 1 : afficher la rédaction
+                const redac = document.getElementById('redac-' + id);
+                if (redac) redac.style.opacity = '1';
+                if (btn) btn.textContent = '▶ Voir le coefficient';
+
+            } else if (state === 2) {
+                // Étape 2 : dessiner la flèche
+                const arc = document.getElementById('arc-' + id);
+                requestAnimationFrame(() => {
+                    arc.style.transition = 'stroke-dashoffset 0.8s ease-out';
+                    arc.style.strokeDashoffset = '0';
+                });
+                setTimeout(() => {
+                    const ptr = document.getElementById('ptr-' + id);
+                    ptr.style.transition = 'opacity 0.15s';
+                    ptr.style.opacity = '1';
+                }, 850);
+                setTimeout(() => {
+                    const lbl = document.getElementById('lbl-' + id);
+                    lbl.style.opacity = '1';
+                }, 1050);
+                if (btn) btn.textContent = '▶ Voir la réponse';
+
+            } else if (state === 3) {
+                // Étape 3 : révéler la cellule réponse
+                const rep = document.getElementById('rep-' + id);
+                if (rep) {
+                    rep.querySelector('.cell-q').style.display = 'none';
+                    rep.querySelector('.cell-a').style.display = 'inline';
+                }
+                if (btn) btn.disabled = true;
+            }
+        }
+
+        function resetBlk(id) {
+            blkState[id] = 0;
+
+            const arc = document.getElementById('arc-' + id);
+            const len = Math.ceil(arc.getTotalLength()) + 5;
+            arc.style.transition = 'none';
+            arc.style.strokeDasharray = len;
+            arc.style.strokeDashoffset = len;
+
+            const ptr = document.getElementById('ptr-' + id);
+            ptr.style.transition = 'none';
+            ptr.style.opacity = '0';
+
+            const lbl = document.getElementById('lbl-' + id);
+            lbl.style.transition = 'none';
+            lbl.style.opacity = '0';
+
+            const rep = document.getElementById('rep-' + id);
+            if (rep) {
+                rep.querySelector('.cell-q').style.display = 'inline';
+                rep.querySelector('.cell-a').style.display = 'none';
+            }
+
+            const redac = document.getElementById('redac-' + id);
+            if (redac) { redac.style.transition = 'none'; redac.style.opacity = '0'; }
+
+            const btn = document.getElementById('btn-' + id);
+            btn.disabled = false;
+            btn.textContent = '▶ Voir le calcul';
+        }
+
+        // ── Bloc B : 2 étapes (rédaction → réponse) ──
+        function stepB() {
+            blkState['B'] = (blkState['B'] || 0) + 1;
+            const state = blkState['B'];
+            const btn = document.getElementById('btn-B');
+
+            if (state === 1) {
+                // Étape 1 : afficher la rédaction
+                const redac = document.getElementById('redac-B');
+                if (redac) redac.style.opacity = '1';
+                if (btn) btn.textContent = '▶ Voir la réponse';
+
+            } else if (state === 2) {
+                // Étape 2 : révéler les cellules
+                ['rep-B1', 'rep-B2'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.querySelector('.cell-q').style.display = 'none';
+                    el.querySelector('.cell-a').style.display = 'inline';
+                });
+                if (btn) btn.disabled = true;
+            }
+        }
+
+        function resetBlkB() {
+            blkState['B'] = 0;
+            ['rep-B1', 'rep-B2'].forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.querySelector('.cell-q').style.display = 'inline';
+                el.querySelector('.cell-a').style.display = 'none';
+            });
+            const redac = document.getElementById('redac-B');
+            if (redac) { redac.style.transition = 'none'; redac.style.opacity = '0'; }
+            const btn = document.getElementById('btn-B');
+            btn.disabled = false;
+            btn.textContent = '▶ Voir le calcul';
+        }
+    </script>
+</body>
+</html>

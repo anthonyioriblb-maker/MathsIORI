@@ -291,10 +291,6 @@
                 <line x1="160" y1="134" x2="160" y2="146" stroke="#27ae60" stroke-width="2.5"/>
                 <text x="165" y="138" font-size="13" font-weight="bold" fill="#27ae60">A(0 ; &#8722;3)</text>
             </g>
-            <g id="g3-tiretsA" class="anim-el">
-                <line x1="160" y1="80"  x2="160" y2="140" stroke="#27ae60" stroke-width="1" stroke-dasharray="4,3"/>
-                <line x1="55"  y1="140" x2="160" y2="140" stroke="#27ae60" stroke-width="1" stroke-dasharray="4,3"/>
-            </g>
             <!-- B(-2;-7)=(70,220) -->
             <g id="g3-ptB" class="anim-el">
                 <line x1="64" y1="220" x2="76" y2="220" stroke="#e74c3c" stroke-width="2.5"/>
@@ -304,7 +300,9 @@
         </svg>
     </div>
 
-    <h2>Proportionnalit&#233; des accroissements</h2>
+    <h2>Trouver l&#8217;expression alg&#233;brique d&#8217;une fonction</h2>
+
+    <h3>Proportionnalit&#233; des accroissements</h3>
 
     <div class="property">
         <span style="color:red;">Propri&#233;t&#233; :</span> Soit une fonction affine <span class="math">f : x &#8594; ax + b</span>. Soient <span class="math">x&#8321;</span> et <span class="math">x&#8322;</span> deux nombres.<br><br>
@@ -334,7 +332,7 @@
             </span>
         </div>
         Ainsi, <span class="math">g(x) = 1,5x + b</span>.<br><br>
-        <strong>D&#233;termination de <span class="math">b</span> &#8212; M&#233;thode 1 : par le calcul</strong><br><br>
+        <strong>D&#233;termination de <span class="math">b</span> :</strong><br><br>
         On utilise <span class="math">g(3) = 8</span> :<br>
         <div class="calcul">
             <span class="ligne">1,5 &#215; 3 + <em>b</em> = 8</span>
@@ -345,66 +343,224 @@
         Ainsi, <strong><span class="math">g(x) = 1,5x + 3,5</span></strong>.
     </div>
 
-    <div class="method">
-        <strong>M&#233;thode 2 : Graphiquement &#8212; lire l&#8217;ordonn&#233;e &#224; l&#8217;origine</strong><br><br>
-        L&#8217;ordonn&#233;e &#224; l&#8217;origine <span class="math">b</span> se lit directement : c&#8217;est l&#8217;ordonn&#233;e du point o&#249; la droite coupe l&#8217;<strong>axe des ordonn&#233;es</strong>.<br><br>
-        Pour <span class="math">g(x) = 1,5x + 3,5</span>, la droite coupe l&#8217;axe des ordonn&#233;es au point <strong>C(0 ; 3,5)</strong>, donc <strong><span class="math">b</span> = 3,5</strong>.
+    <h3>Par lecture graphique</h3>
+
+    <div class="property">
+        <span style="color:red;">Propri&#233;t&#233; :</span> Pour lire <span class="math">b</span>, on lit l&#8217;ordonn&#233;e du point o&#249; la droite coupe l&#8217;<strong>axe des ordonn&#233;es</strong>.<br><br>
+        Pour d&#233;terminer <span class="math">a</span>, on choisit un <strong>point quelconque</strong> de la droite situ&#233; sur le quadrillage, puis on avance de <strong>1</strong> vers la droite sur les abscisses et on lit la <strong>variation des ordonn&#233;es</strong>. <em>(voir animation)</em>
     </div>
 
-    <!-- GRAPHIQUE 4 : g(x)=1,5x+3,5  ox=120 oy=200 ux=50 uy=35 -->
+    <!-- GRAPHIQUE 4 : g(x)=2x+1  O=(160,240) ux=60 uy=40  valeurs enti&#232;res -->
+    <!-- C(0;1)=(160,200)  B(1;3)=(220,120)  droite de (100,280) &#224; (280,40)  longueur=300 -->
     <div class="graph-center">
-        <div style="margin-bottom:8px;">
-            <button class="btn-anim btn-bleu"   id="g4-btn-droite" onclick="g4TracerDroite()">&#128207; Tracer la droite g(x) = 1,5x + 3,5</button>
-            <button class="btn-anim btn-orange" id="g4-btn-C"      onclick="g4LireB()" disabled>&#128269; Lire b = 3,5 &#8594; point C</button>
+        <div style="margin-bottom:10px;">
+            <button class="btn-anim btn-bleu"   id="g4-btn-droite" onclick="g4TracerDroite()">&#128207; Voici la droite &#8212; trac&#233;e !</button>
+            <button class="btn-anim btn-vert"   id="g4-btn-C"      onclick="g4LireB()"     disabled>&#128270; Lire l&#8217;ordonn&#233;e &#224; l&#8217;origine b</button>
+            <button class="btn-anim btn-orange" id="g4-btn-a"      onclick="g4TrouverA()"  disabled>&#128208; Trouver le coefficient directeur a</button>
+            <button class="btn-anim btn-rouge"  id="g4-btn-eq"     onclick="g4RevelerEq()" disabled>&#10003; R&#233;v&#233;ler l&#8217;&#233;quation</button>
             <button class="btn-anim btn-gris"   onclick="g4Reset()">&#8635; R&#233;initialiser</button>
         </div>
-        <svg class="repere" width="290" height="240">
-            <line x1="20"  y1="20" x2="20"  y2="215" stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="70"  y1="20" x2="70"  y2="215" stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="170" y1="20" x2="170" y2="215" stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="220" y1="20" x2="220" y2="215" stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="270" y1="20" x2="270" y2="215" stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="10" y1="165" x2="280" y2="165" stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="10" y1="130" x2="280" y2="130" stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="10" y1="95"  x2="280" y2="95"  stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="10" y1="60"  x2="280" y2="60"  stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="10" y1="25"  x2="280" y2="25"  stroke="#c8e0f4" stroke-width="1"/>
-            <line x1="10" y1="200" x2="282" y2="200" stroke="#333" stroke-width="2"/>
-            <polygon points="282,196 282,204 290,200" fill="#333"/>
-            <line x1="120" y1="220" x2="120" y2="12" stroke="#333" stroke-width="2"/>
-            <polygon points="116,12 124,12 120,4" fill="#333"/>
-            <text x="20"  y="215" text-anchor="middle" font-size="13" fill="#555">&#8722;2</text>
-            <text x="70"  y="215" text-anchor="middle" font-size="13" fill="#555">&#8722;1</text>
-            <text x="170" y="215" text-anchor="middle" font-size="13" fill="#555">1</text>
-            <text x="220" y="215" text-anchor="middle" font-size="13" fill="#555">2</text>
-            <text x="270" y="215" text-anchor="middle" font-size="13" fill="#555">3</text>
-            <text x="108" y="169" text-anchor="end" font-size="12" fill="#555">1</text>
-            <text x="108" y="134" text-anchor="end" font-size="12" fill="#555">2</text>
-            <text x="108" y="99"  text-anchor="end" font-size="12" fill="#555">3</text>
-            <text x="108" y="64"  text-anchor="end" font-size="12" fill="#555">4</text>
-            <text x="108" y="29"  text-anchor="end" font-size="12" fill="#555">5</text>
-            <text x="108" y="215" text-anchor="end" font-size="13" fill="#333">O</text>
-            <text x="286" y="204" font-size="13" font-style="italic" fill="#444">x</text>
-            <text x="124" y="8"   font-size="13" font-style="italic" fill="#444">g(x)</text>
-            <!-- Droite (20,183)->(172,22)  longueur~221 -->
-            <line id="g4-droite" x1="20" y1="183" x2="172" y2="22" stroke="#e74c3c" stroke-width="2.5" class="droite-anim" style="stroke-dasharray:221;stroke-dashoffset:221;"/>
-            <text id="g4-label" class="anim-el" x="175" y="22" font-size="12" font-weight="bold" fill="#e74c3c">g(x)=1,5x+3,5</text>
-            <!-- Points sur la droite : (-1;2)=(70,130)  (1;5)=(170,25) -->
-            <g id="g4-pts" class="anim-el">
-                <line x1="64" y1="130" x2="76" y2="130" stroke="#e74c3c" stroke-width="2"/>
-                <line x1="70" y1="124" x2="70" y2="136" stroke="#e74c3c" stroke-width="2"/>
-                <line x1="164" y1="25" x2="176" y2="25" stroke="#e74c3c" stroke-width="2"/>
-                <line x1="170" y1="19" x2="170" y2="31" stroke="#e74c3c" stroke-width="2"/>
-            </g>
-            <!-- C(0;3,5)=(120,78) -->
+        <svg class="repere" width="380" height="310">
+            <defs>
+                <marker id="g4-arr-o" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                    <path d="M0,0 L0,8 L10,4 z" fill="#e67e22"/>
+                </marker>
+                <marker id="g4-arr-v" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                    <path d="M0,0 L0,8 L10,4 z" fill="#8e44ad"/>
+                </marker>
+            </defs>
+
+            <!-- Quadrillage vertical : x=&#8722;2,&#8722;1,1,2,3  (px = 160+x*60) -->
+            <line x1="40"  y1="18" x2="40"  y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="100" y1="18" x2="100" y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="220" y1="18" x2="220" y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="280" y1="18" x2="280" y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="340" y1="18" x2="340" y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <!-- Quadrillage horizontal : y=&#8722;1,1,2,3,4,5  (py = 240&#8722;y*40) -->
+            <line x1="18" y1="280" x2="362" y2="280" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="200" x2="362" y2="200" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="160" x2="362" y2="160" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="120" x2="362" y2="120" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="80"  x2="362" y2="80"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="40"  x2="362" y2="40"  stroke="#c8e0f4" stroke-width="1"/>
+
+            <!-- Axes -->
+            <line x1="16" y1="240" x2="358" y2="240" stroke="#333" stroke-width="2"/>
+            <polygon points="358,236 358,244 368,240" fill="#333"/>
+            <line x1="160" y1="298" x2="160" y2="14" stroke="#333" stroke-width="2"/>
+            <polygon points="156,14 164,14 160,6" fill="#333"/>
+
+            <!-- Graduations x -->
+            <text x="40"  y="258" text-anchor="middle" font-size="14" fill="#555">&#8722;2</text>
+            <text x="100" y="258" text-anchor="middle" font-size="14" fill="#555">&#8722;1</text>
+            <text x="220" y="258" text-anchor="middle" font-size="14" fill="#555">1</text>
+            <text x="280" y="258" text-anchor="middle" font-size="14" fill="#555">2</text>
+            <text x="340" y="258" text-anchor="middle" font-size="14" fill="#555">3</text>
+            <!-- Graduations y -->
+            <text x="148" y="284" text-anchor="end" font-size="13" fill="#555">&#8722;1</text>
+            <text x="148" y="204" text-anchor="end" font-size="13" fill="#555">1</text>
+            <text x="148" y="164" text-anchor="end" font-size="13" fill="#555">2</text>
+            <text x="148" y="124" text-anchor="end" font-size="13" fill="#555">3</text>
+            <text x="148" y="84"  text-anchor="end" font-size="13" fill="#555">4</text>
+            <text x="148" y="44"  text-anchor="end" font-size="13" fill="#555">5</text>
+            <text x="148" y="258" text-anchor="end" font-size="14" fill="#333">O</text>
+            <text x="372" y="244" font-size="14" font-style="italic" fill="#444">x</text>
+            <text x="165" y="10"  font-size="14" font-style="italic" fill="#444">y</text>
+
+            <!-- &#201;TAPE 1 : droite g(x)=2x+1  de (-1;-1)=(100,280) &#224; (2;5)=(280,40)  longueur=300 -->
+            <line id="g4-droite" x1="100" y1="280" x2="280" y2="40"
+                  stroke="#e74c3c" stroke-width="3" class="droite-anim"
+                  style="stroke-dasharray:300;stroke-dashoffset:300;"/>
+            <!-- label &#233;quation : cach&#233; jusqu&#8217;&#224; &#233;tape 4 -->
+            <text id="g4-label" class="anim-el"
+                  x="245" y="37" font-size="14" font-weight="bold" fill="#e74c3c">g(x) = 2x + 1</text>
+
+            <!-- &#201;TAPE 2 : b = 1  &#8212;  C(0;1) = (160, 200)  sur la ligne y=1 -->
             <g id="g4-ptC" class="anim-el">
-                <line x1="113" y1="78" x2="127" y2="78" stroke="#c0392b" stroke-width="2.5"/>
-                <line x1="120" y1="71" x2="120" y2="85" stroke="#c0392b" stroke-width="2.5"/>
-                <text x="124" y="75" font-size="12" font-weight="bold" fill="#c0392b">C(0 ; 3,5)</text>
+                <!-- croix verte -->
+                <line x1="150" y1="200" x2="170" y2="200" stroke="#27ae60" stroke-width="3"/>
+                <line x1="160" y1="190" x2="160" y2="210" stroke="#27ae60" stroke-width="3"/>
+                <!-- label bien &#224; droite, hors de la zone des fl&#232;ches -->
+                <text x="175" y="195" font-size="16" font-weight="bold" fill="#27ae60">b = 1</text>
+                <text x="175" y="214" font-size="13" fill="#27ae60" font-style="italic">ordonn&#233;e &#224; l&#8217;origine</text>
             </g>
-            <g id="g4-tiretC" class="anim-el">
-                <line x1="10" y1="78" x2="120" y2="78" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,3"/>
-                <text x="108" y="74" text-anchor="end" font-size="12" fill="#c0392b">3,5</text>
+
+            <!-- &#201;TAPE 3 : a = 2  &#8212;  on part d&#8217;un point QUELCONQUE D(1;3)=(220,120) -->
+            <!-- croix orange au point de d&#233;part D &#8594; montre qu&#8217;on ne part pas forc&#233;ment de b -->
+            <g id="g4-ptD" class="anim-el">
+                <line x1="210" y1="120" x2="230" y2="120" stroke="#e67e22" stroke-width="2.5"/>
+                <line x1="220" y1="110" x2="220" y2="130" stroke="#e67e22" stroke-width="2.5"/>
+            </g>
+            <!-- Fl&#232;che horizontale  D(220,120) &#8594; (280,120)  &#916;x = +1 -->
+            <g id="g4-ah" class="anim-el">
+                <line x1="222" y1="120" x2="274" y2="120"
+                      stroke="#e67e22" stroke-width="3" marker-end="url(#g4-arr-o)"/>
+                <text x="248" y="140" text-anchor="middle" font-size="15" font-weight="bold" fill="#e67e22">+1</text>
+            </g>
+            <!-- Fl&#232;che verticale  (280,120) &#8594; (280,44)  &#916;y = +2 -->
+            <g id="g4-av" class="anim-el">
+                <line x1="280" y1="118" x2="280" y2="46"
+                      stroke="#8e44ad" stroke-width="3" marker-end="url(#g4-arr-v)"/>
+                <text x="290" y="85" font-size="15" font-weight="bold" fill="#8e44ad">+2</text>
+            </g>
+            <!-- Angle droit au coin (280,120) -->
+            <g id="g4-angle" class="anim-el">
+                <polyline points="271,120 271,111 280,111" fill="none" stroke="#999" stroke-width="2"/>
+            </g>
+            <!-- Bulle "a = 2" en bas &#224; gauche, zone libre -->
+            <g id="g4-a-label" class="anim-el">
+                <rect x="20" y="256" width="145" height="46" rx="7"
+                      fill="#fff8e1" stroke="#e67e22" stroke-width="2"/>
+                <text x="92" y="276" text-anchor="middle" font-size="13" fill="#555">+1 sur x &#8594; monter de 2</text>
+                <text x="92" y="295" text-anchor="middle" font-size="17" font-weight="bold" fill="#e67e22">a = 2</text>
+            </g>
+        </svg>
+    </div>
+
+    <p style="text-align:center; margin-top:18px;"><em>Autre exemple &#8212; fonction d&#233;croissante :</em></p>
+
+    <!-- GRAPHIQUE 5 : h(x)=-2x+3  O=(160,240) ux=60 uy=40  valeurs enti&#232;res -->
+    <!-- C(0;3)=(160,120)  D(1;1)=(220,200)  droite de (-1;5)=(100,40) &#224; (2;-1)=(280,280)  longueur=300 -->
+    <div class="graph-center">
+        <div style="margin-bottom:10px;">
+            <button class="btn-anim btn-bleu"   id="g5-btn-droite" onclick="g5TracerDroite()">&#128207; Voici la droite &#8212; trac&#233;e !</button>
+            <button class="btn-anim btn-vert"   id="g5-btn-C"      onclick="g5LireB()"     disabled>&#128270; Lire l&#8217;ordonn&#233;e &#224; l&#8217;origine b</button>
+            <button class="btn-anim btn-orange" id="g5-btn-a"      onclick="g5TrouverA()"  disabled>&#128208; Trouver le coefficient directeur a</button>
+            <button class="btn-anim btn-rouge"  id="g5-btn-eq"     onclick="g5RevelerEq()" disabled>&#10003; R&#233;v&#233;ler l&#8217;&#233;quation</button>
+            <button class="btn-anim btn-gris"   onclick="g5Reset()">&#8635; R&#233;initialiser</button>
+        </div>
+        <svg class="repere" width="380" height="310">
+            <defs>
+                <marker id="g5-arr-o" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                    <path d="M0,0 L0,8 L10,4 z" fill="#e67e22"/>
+                </marker>
+                <marker id="g5-arr-v" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+                    <path d="M0,0 L0,8 L10,4 z" fill="#8e44ad"/>
+                </marker>
+            </defs>
+
+            <!-- Quadrillage vertical -->
+            <line x1="40"  y1="18" x2="40"  y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="100" y1="18" x2="100" y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="220" y1="18" x2="220" y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="280" y1="18" x2="280" y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="340" y1="18" x2="340" y2="290" stroke="#c8e0f4" stroke-width="1"/>
+            <!-- Quadrillage horizontal -->
+            <line x1="18" y1="280" x2="362" y2="280" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="200" x2="362" y2="200" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="160" x2="362" y2="160" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="120" x2="362" y2="120" stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="80"  x2="362" y2="80"  stroke="#c8e0f4" stroke-width="1"/>
+            <line x1="18" y1="40"  x2="362" y2="40"  stroke="#c8e0f4" stroke-width="1"/>
+
+            <!-- Axes -->
+            <line x1="16" y1="240" x2="358" y2="240" stroke="#333" stroke-width="2"/>
+            <polygon points="358,236 358,244 368,240" fill="#333"/>
+            <line x1="160" y1="298" x2="160" y2="14" stroke="#333" stroke-width="2"/>
+            <polygon points="156,14 164,14 160,6" fill="#333"/>
+
+            <!-- Graduations x -->
+            <text x="40"  y="258" text-anchor="middle" font-size="14" fill="#555">&#8722;2</text>
+            <text x="100" y="258" text-anchor="middle" font-size="14" fill="#555">&#8722;1</text>
+            <text x="220" y="258" text-anchor="middle" font-size="14" fill="#555">1</text>
+            <text x="280" y="258" text-anchor="middle" font-size="14" fill="#555">2</text>
+            <text x="340" y="258" text-anchor="middle" font-size="14" fill="#555">3</text>
+            <!-- Graduations y -->
+            <text x="148" y="284" text-anchor="end" font-size="13" fill="#555">&#8722;1</text>
+            <text x="148" y="204" text-anchor="end" font-size="13" fill="#555">1</text>
+            <text x="148" y="164" text-anchor="end" font-size="13" fill="#555">2</text>
+            <text x="148" y="124" text-anchor="end" font-size="13" fill="#555">3</text>
+            <text x="148" y="84"  text-anchor="end" font-size="13" fill="#555">4</text>
+            <text x="148" y="44"  text-anchor="end" font-size="13" fill="#555">5</text>
+            <text x="148" y="258" text-anchor="end" font-size="14" fill="#333">O</text>
+            <text x="372" y="244" font-size="14" font-style="italic" fill="#444">x</text>
+            <text x="165" y="10"  font-size="14" font-style="italic" fill="#444">y</text>
+
+            <!-- &#201;TAPE 1 : droite h(x)=-2x+3  de (-1;5)=(100,40) &#224; (2;-1)=(280,280)  longueur=300 -->
+            <line id="g5-droite" x1="100" y1="40" x2="280" y2="280"
+                  stroke="#e74c3c" stroke-width="3" class="droite-anim"
+                  style="stroke-dasharray:300;stroke-dashoffset:300;"/>
+            <!-- label &#233;quation : cach&#233; jusqu&#8217;&#224; &#233;tape 4 -->
+            <text id="g5-label" class="anim-el"
+                  x="25" y="32" font-size="14" font-weight="bold" fill="#e74c3c">h(x) = &#8722;2x + 3</text>
+
+            <!-- &#201;TAPE 2 : b = 3  &#8212;  C(0;3) = (160, 120) -->
+            <g id="g5-ptC" class="anim-el">
+                <!-- croix verte -->
+                <line x1="150" y1="120" x2="170" y2="120" stroke="#27ae60" stroke-width="3"/>
+                <line x1="160" y1="110" x2="160" y2="130" stroke="#27ae60" stroke-width="3"/>
+                <!-- label &#224; droite du point -->
+                <text x="180" y="115" font-size="16" font-weight="bold" fill="#27ae60">b = 3</text>
+                <text x="180" y="134" font-size="13" fill="#27ae60" font-style="italic">ordonn&#233;e &#224; l&#8217;origine</text>
+            </g>
+
+            <!-- &#201;TAPE 3 : a = -2  &#8212;  on part d&#8217;un point QUELCONQUE D(1;1)=(220,200) -->
+            <g id="g5-ptD" class="anim-el">
+                <line x1="210" y1="200" x2="230" y2="200" stroke="#e67e22" stroke-width="2.5"/>
+                <line x1="220" y1="190" x2="220" y2="210" stroke="#e67e22" stroke-width="2.5"/>
+            </g>
+            <!-- Fl&#232;che horizontale  D(220,200) &#8594; (280,200)  &#916;x = +1 -->
+            <g id="g5-ah" class="anim-el">
+                <line x1="222" y1="200" x2="274" y2="200"
+                      stroke="#e67e22" stroke-width="3" marker-end="url(#g5-arr-o)"/>
+                <text x="248" y="218" text-anchor="middle" font-size="15" font-weight="bold" fill="#e67e22">+1</text>
+            </g>
+            <!-- Fl&#232;che verticale  (280,200) &#8594; (280,274)  &#916;y = -2 (descend) -->
+            <g id="g5-av" class="anim-el">
+                <line x1="280" y1="202" x2="280" y2="274"
+                      stroke="#8e44ad" stroke-width="3" marker-end="url(#g5-arr-v)"/>
+                <text x="295" y="242" font-size="15" font-weight="bold" fill="#8e44ad">&#8722;2</text>
+            </g>
+            <!-- Angle droit au coin (280,200) -->
+            <g id="g5-angle" class="anim-el">
+                <polyline points="271,200 271,209 280,209" fill="none" stroke="#999" stroke-width="2"/>
+            </g>
+            <!-- Bulle "a = -2" en bas &#224; gauche, zone libre -->
+            <g id="g5-a-label" class="anim-el">
+                <rect x="20" y="256" width="160" height="46" rx="7"
+                      fill="#fff8e1" stroke="#e67e22" stroke-width="2"/>
+                <text x="100" y="276" text-anchor="middle" font-size="13" fill="#555">+1 sur x &#8594; descendre de 2</text>
+                <text x="100" y="295" text-anchor="middle" font-size="17" font-weight="bold" fill="#e67e22">a = &#8722;2</text>
             </g>
         </svg>
     </div>
@@ -478,7 +634,7 @@ var g3a=false, g3b=false, g3d=false;
 function g3PlacerA(){
     if(g3a)return; g3a=true;
     document.getElementById('g3-btn-A').disabled=true;
-    ['g3-ptA','g3-tiretsA'].forEach(function(id,i){
+    ['g3-ptA'].forEach(function(id,i){
         setTimeout(function(){ var e=document.getElementById(id); if(e) e.classList.add('visible'); }, i*300);
     });
     setTimeout(function(){ document.getElementById('g3-btn-B').disabled=false; }, 700);
@@ -498,7 +654,7 @@ function g3TracerDroite(){
 }
 function g3Reset(){
     g3a=false; g3b=false; g3d=false;
-    ['g3-ptA','g3-tiretsA','g3-ptB','g3-label'].forEach(function(id){
+    ['g3-ptA','g3-ptB','g3-label'].forEach(function(id){
         var e=document.getElementById(id); if(e) e.classList.remove('visible');
     });
     var d=document.getElementById('g3-droite');
@@ -509,35 +665,92 @@ function g3Reset(){
     document.getElementById('g3-btn-droite').disabled=true;
 }
 
-/* ── Graphique 4 : g(x)=1,5x+3,5 ── */
-var g4d=false, g4c=false;
+/* ── Graphique 4 : g(x)=2x+1  valeurs enti&#232;res ── */
+var g4d=false, g4c=false, g4a=false, g4eq=false;
 function g4TracerDroite(){
     if(g4d)return; g4d=true;
     document.getElementById('g4-btn-droite').disabled=true;
     var d=document.getElementById('g4-droite');
     if(d){ d.style.strokeDashoffset='0'; }
-    setTimeout(function(){
-        ['g4-label','g4-pts'].forEach(function(id){ var e=document.getElementById(id); if(e) e.classList.add('visible'); });
-    }, 1300);
-    setTimeout(function(){ document.getElementById('g4-btn-C').disabled=false; }, 1600);
+    setTimeout(function(){ document.getElementById('g4-btn-C').disabled=false; }, 1500);
 }
 function g4LireB(){
     if(g4c)return; g4c=true;
     document.getElementById('g4-btn-C').disabled=true;
-    ['g4-ptC','g4-tiretC'].forEach(function(id,i){
-        setTimeout(function(){ var e=document.getElementById(id); if(e) e.classList.add('visible'); }, i*400);
-    });
+    var e=document.getElementById('g4-ptC'); if(e) e.classList.add('visible');
+    setTimeout(function(){ document.getElementById('g4-btn-a').disabled=false; }, 800);
+}
+function g4TrouverA(){
+    if(g4a)return; g4a=true;
+    document.getElementById('g4-btn-a').disabled=true;
+    var eD=document.getElementById('g4-ptD');   if(eD) eD.classList.add('visible');
+    var e1=document.getElementById('g4-ah');    if(e1) e1.classList.add('visible');
+    var e2=document.getElementById('g4-angle'); if(e2) e2.classList.add('visible');
+    setTimeout(function(){ var e=document.getElementById('g4-av');      if(e) e.classList.add('visible'); }, 900);
+    setTimeout(function(){ var e=document.getElementById('g4-a-label'); if(e) e.classList.add('visible'); }, 1500);
+    setTimeout(function(){ document.getElementById('g4-btn-eq').disabled=false; }, 2000);
+}
+function g4RevelerEq(){
+    if(g4eq)return; g4eq=true;
+    document.getElementById('g4-btn-eq').disabled=true;
+    var e=document.getElementById('g4-label'); if(e) e.classList.add('visible');
 }
 function g4Reset(){
-    g4d=false; g4c=false;
-    ['g4-label','g4-pts','g4-ptC','g4-tiretC'].forEach(function(id){
+    g4d=false; g4c=false; g4a=false; g4eq=false;
+    ['g4-label','g4-ptC','g4-ptD','g4-ah','g4-av','g4-angle','g4-a-label'].forEach(function(id){
         var e=document.getElementById(id); if(e) e.classList.remove('visible');
     });
     var d=document.getElementById('g4-droite');
-    if(d){ d.style.transition='none'; d.style.strokeDashoffset='221';
+    if(d){ d.style.transition='none'; d.style.strokeDashoffset='300';
         setTimeout(function(){ if(d) d.style.transition='stroke-dashoffset 1.2s ease'; },50); }
     document.getElementById('g4-btn-droite').disabled=false;
     document.getElementById('g4-btn-C').disabled=true;
+    document.getElementById('g4-btn-a').disabled=true;
+    document.getElementById('g4-btn-eq').disabled=true;
+}
+
+/* ── Graphique 5 : h(x)=-2x+3  valeurs enti&#232;res ── */
+var g5d=false, g5c=false, g5a=false, g5eq=false;
+function g5TracerDroite(){
+    if(g5d)return; g5d=true;
+    document.getElementById('g5-btn-droite').disabled=true;
+    var d=document.getElementById('g5-droite');
+    if(d){ d.style.strokeDashoffset='0'; }
+    setTimeout(function(){ document.getElementById('g5-btn-C').disabled=false; }, 1500);
+}
+function g5LireB(){
+    if(g5c)return; g5c=true;
+    document.getElementById('g5-btn-C').disabled=true;
+    var e=document.getElementById('g5-ptC'); if(e) e.classList.add('visible');
+    setTimeout(function(){ document.getElementById('g5-btn-a').disabled=false; }, 800);
+}
+function g5TrouverA(){
+    if(g5a)return; g5a=true;
+    document.getElementById('g5-btn-a').disabled=true;
+    var eD=document.getElementById('g5-ptD');   if(eD) eD.classList.add('visible');
+    var e1=document.getElementById('g5-ah');    if(e1) e1.classList.add('visible');
+    var e2=document.getElementById('g5-angle'); if(e2) e2.classList.add('visible');
+    setTimeout(function(){ var e=document.getElementById('g5-av');      if(e) e.classList.add('visible'); }, 900);
+    setTimeout(function(){ var e=document.getElementById('g5-a-label'); if(e) e.classList.add('visible'); }, 1500);
+    setTimeout(function(){ document.getElementById('g5-btn-eq').disabled=false; }, 2000);
+}
+function g5RevelerEq(){
+    if(g5eq)return; g5eq=true;
+    document.getElementById('g5-btn-eq').disabled=true;
+    var e=document.getElementById('g5-label'); if(e) e.classList.add('visible');
+}
+function g5Reset(){
+    g5d=false; g5c=false; g5a=false; g5eq=false;
+    ['g5-label','g5-ptC','g5-ptD','g5-ah','g5-av','g5-angle','g5-a-label'].forEach(function(id){
+        var e=document.getElementById(id); if(e) e.classList.remove('visible');
+    });
+    var d=document.getElementById('g5-droite');
+    if(d){ d.style.transition='none'; d.style.strokeDashoffset='300';
+        setTimeout(function(){ if(d) d.style.transition='stroke-dashoffset 1.2s ease'; },50); }
+    document.getElementById('g5-btn-droite').disabled=false;
+    document.getElementById('g5-btn-C').disabled=true;
+    document.getElementById('g5-btn-a').disabled=true;
+    document.getElementById('g5-btn-eq').disabled=true;
 }
 </script>
 </body>
