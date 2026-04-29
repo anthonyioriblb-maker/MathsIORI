@@ -554,23 +554,24 @@
 
         <div class="step-box"><span id="stepTrac">Cliquez sur « Étape suivante » pour voir la construction.</span></div>
         <div class="svg-wrap">
-            <svg id="svgTrac" width="580" height="320" viewBox="0 0 580 320" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+            <svg id="svgTrac" width="580" height="340" viewBox="0 0 580 340" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
 
-                <!-- A=(100,260) B=(430,260)  C=72° : (100+300*cos72, 260-300*sin72) = (193, -25) trop haut -->
-                <!-- Réduire: C=(100+200*cos72, 260-200*sin72) = (162, 70) -->
+                <!-- A=(100,260) B à droite sur horizontale  C=72° : (100+200*cos72, 260-200*sin72) = (162, 70) -->
 
                 <!-- A marker -->
                 <line x1="94" y1="254" x2="106" y2="266" stroke="black" stroke-width="2" opacity="0" id="tA1"/>
                 <line x1="106" y1="254" x2="94" y2="266" stroke="black" stroke-width="2" opacity="0" id="tA2"/>
                 <text x="78" y="262" font-size="20" font-weight="bold" opacity="0" id="tAl">A</text>
 
-                <!-- AB ray (étape 1) -->
+                <!-- AB ray (étape 1) — demi-droite étendue avec flèche -->
                 <g id="rayAB" opacity="0">
-                    <line x1="100" y1="260" x2="450" y2="260" stroke="black" stroke-width="2.5"/>
+                    <!-- Ligne étendue au-delà de B jusqu'au bord du SVG -->
+                    <line x1="100" y1="260" x2="565" y2="260" stroke="black" stroke-width="2.5"/>
+                    <!-- Croix sur le point B (intermédiaire sur la demi-droite) -->
                     <line x1="444" y1="254" x2="456" y2="266" stroke="black" stroke-width="1.8"/>
                     <line x1="456" y1="254" x2="444" y2="266" stroke="black" stroke-width="1.8"/>
-                    <text x="456" y="265" font-size="18" font-weight="bold">B</text>
-                    <text x="280" y="290" text-anchor="middle" font-size="14" fill="#1565c0">On trace la demi-droite [AB)</text>
+                    <text x="456" y="252" font-size="18" font-weight="bold">B</text>
+                    <text x="280" y="295" text-anchor="middle" font-size="14" fill="#1565c0">On trace la demi-droite [AB)</text>
                 </g>
 
                 <!-- Rapporteur (étape 2) — cx=100 cy=260 r=100 -->
@@ -605,8 +606,8 @@
                         <circle cx="131" cy="165" r="5" fill="#e74c3c"/>
                         <text x="136" y="162" font-size="13" fill="#e74c3c" font-weight="bold">72°</text>
                     </g>
-                    <text x="94" y="308" text-anchor="middle" font-size="13" fill="#1565c0">Le rapporteur est centré en A, le 0° est sur [AB)</text>
-                    <text x="94" y="324" text-anchor="middle" font-size="13" fill="#1565c0">On repère 72° et on fait un trait</text>
+                    <text x="290" y="310" text-anchor="middle" font-size="13" fill="#1565c0">Le rapporteur est centré en A, le 0° est sur [AB)</text>
+                    <text x="290" y="327" text-anchor="middle" font-size="13" fill="#1565c0">On repère 72° et on fait un trait</text>
                 </g>
 
                 <!-- Crayon : marque le point à 72° sur le rapporteur, tip=(131,165) -->
@@ -644,19 +645,22 @@
                     <!-- petit trait de repère à 72° -->
                     <line x1="100" y1="260" x2="162" y2="70" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,4"/>
                     <circle cx="162" cy="70" r="5" fill="#e74c3c"/>
-                    <text x="280" y="305" text-anchor="middle" font-size="14" fill="#1565c0">Rapporteur enlevé — trait de repère à 72°</text>
+                    <text x="280" y="312" text-anchor="middle" font-size="14" fill="#1565c0">Rapporteur enlevé — trait de repère à 72°</text>
                 </g>
 
-                <!-- AC ray final (étape 4) -->
+                <!-- AC ray final (étape 4) — demi-droite étendue au-delà de C avec flèche -->
                 <g id="rayAC" opacity="0">
-                    <line x1="100" y1="260" x2="162" y2="70" stroke="black" stroke-width="2.5"/>
+                    <!-- Direction AC : (62,-190)/199.86 ≈ (0.310,-0.950). C à (162,70).
+                         Extension jusqu'à y≈5 : endpoint ≈ (183, 5) -->
+                    <line x1="100" y1="260" x2="183" y2="5" stroke="black" stroke-width="2.5"/>
+                    <!-- Croix sur le point C (intermédiaire sur la demi-droite) -->
                     <line x1="156" y1="64" x2="168" y2="76" stroke="black" stroke-width="1.8"/>
                     <line x1="168" y1="64" x2="156" y2="76" stroke="black" stroke-width="1.8"/>
-                    <text x="167" y="65" font-size="18" font-weight="bold">C</text>
+                    <text x="170" y="62" font-size="18" font-weight="bold">C</text>
                     <!-- Arc angle BAC = 72° -->
                     <path d="M 160 260 A 60 60 0 0 0 119 203" stroke="#e74c3c" stroke-width="2" fill="rgba(231,76,60,0.12)"/>
                     <text x="168" y="235" font-size="16" fill="#e74c3c" font-weight="bold">72°</text>
-                    <text x="280" y="305" text-anchor="middle" font-size="14" fill="#1565c0">On trace la demi-droite [AC) — C est placé sur cette demi-droite</text>
+                    <text x="280" y="312" text-anchor="middle" font-size="14" fill="#1565c0">On trace la demi-droite [AC) — C est placé sur cette demi-droite</text>
                 </g>
 
             </svg>
@@ -665,43 +669,6 @@
             <button class="btn-anim" onclick="nextStepTrac()">Étape suivante ▶</button>
             <button class="btn-reset" onclick="resetTrac()">Recommencer ↺</button>
         </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════ -->
-    <h2>Angles supplémentaires</h2>
-
-    <div class="definition">
-        <span style="color:red;">Définition :</span><br><br>
-        Deux angles sont <span style="color:red;">supplémentaires</span> si la somme de leurs mesures est égale à <span style="color:red;">180°</span>.
-    </div>
-
-    <div class="example">
-        <svg width="320" height="130" viewBox="-10 -22 340 162" style="display:block; margin:auto; max-width:100%;">
-            <!-- Ligne horizontale (angle plat) -->
-            <line x1="20" y1="90" x2="300" y2="90" stroke="black" stroke-width="2"/>
-            <!-- Rayon oblique : vertex=(160,90), direction vers (240,20) -->
-            <line x1="160" y1="90" x2="240" y2="20" stroke="black" stroke-width="2"/>
-            <!-- Point sur le rayon oblique à r=40 : (160+40×0.753, 90-40×0.659) ≈ (190, 64) -->
-
-            <!-- α (bleu) : arc de (120,90) vers (190,64), sweep=1 (CW) = monte au-dessus -->
-            <path d="M 160 90 L 120 90 A 40 40 0 0 1 190 64 Z" fill="rgba(0,0,200,0.12)" stroke="none"/>
-            <path d="M 120 90 A 40 40 0 0 1 190 64" fill="none" stroke="blue" stroke-width="2"/>
-            <text x="110" y="60" font-size="16" fill="blue">α</text>
-
-            <!-- β (vert) : arc de (190,64) vers (200,90), sweep=1 (CW) = descend vers droite -->
-            <path d="M 160 90 L 190 64 A 40 40 0 0 1 200 90 Z" fill="rgba(0,160,0,0.12)" stroke="none"/>
-            <path d="M 190 64 A 40 40 0 0 1 200 90" fill="none" stroke="green" stroke-width="2"/>
-            <text x="196" y="71" font-size="16" fill="green">β</text>
-
-            <line x1="156" y1="86" x2="164" y2="94" stroke="black" stroke-width="1.8"/>
-            <line x1="164" y1="86" x2="156" y2="94" stroke="black" stroke-width="1.8"/>
-            <text x="40" y="118" font-size="13" fill="black">α + β = 180° → α et β sont supplémentaires</text>
-        </svg>
-    </div>
-
-    <div class="remarque">
-        <strong>Remarque :</strong><br><br>
-        Deux angles supplémentaires adjacents forment ensemble un <span style="color:red;">angle plat</span>.
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
@@ -752,6 +719,43 @@
         <p style="text-align:center; font-size:14px; margin-top:6px;">
             Les angles <span class="angle">AOB</span> et <span class="angle">BOC</span> sont <strong>adjacents</strong>.
         </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Angles supplémentaires</h2>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span><br><br>
+        Deux angles sont <span style="color:red;">supplémentaires</span> si la somme de leurs mesures est égale à <span style="color:red;">180°</span>.
+    </div>
+
+    <div class="example">
+        <svg width="320" height="130" viewBox="-10 -22 340 162" style="display:block; margin:auto; max-width:100%;">
+            <!-- Ligne horizontale (angle plat) -->
+            <line x1="20" y1="90" x2="300" y2="90" stroke="black" stroke-width="2"/>
+            <!-- Rayon oblique : vertex=(160,90), direction vers (240,20) -->
+            <line x1="160" y1="90" x2="240" y2="20" stroke="black" stroke-width="2"/>
+            <!-- Point sur le rayon oblique à r=40 : (160+40×0.753, 90-40×0.659) ≈ (190, 64) -->
+
+            <!-- α (bleu) : arc de (120,90) vers (190,64), sweep=1 (CW) = monte au-dessus -->
+            <path d="M 160 90 L 120 90 A 40 40 0 0 1 190 64 Z" fill="rgba(0,0,200,0.12)" stroke="none"/>
+            <path d="M 120 90 A 40 40 0 0 1 190 64" fill="none" stroke="blue" stroke-width="2"/>
+            <text x="110" y="60" font-size="16" fill="blue">α</text>
+
+            <!-- β (vert) : arc de (190,64) vers (200,90), sweep=1 (CW) = descend vers droite -->
+            <path d="M 160 90 L 190 64 A 40 40 0 0 1 200 90 Z" fill="rgba(0,160,0,0.12)" stroke="none"/>
+            <path d="M 190 64 A 40 40 0 0 1 200 90" fill="none" stroke="green" stroke-width="2"/>
+            <text x="196" y="71" font-size="16" fill="green">β</text>
+
+            <line x1="156" y1="86" x2="164" y2="94" stroke="black" stroke-width="1.8"/>
+            <line x1="164" y1="86" x2="156" y2="94" stroke="black" stroke-width="1.8"/>
+            <text x="40" y="118" font-size="13" fill="black">α + β = 180° → α et β sont supplémentaires</text>
+        </svg>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong><br><br>
+        Deux angles supplémentaires adjacents forment ensemble un <span style="color:red;">angle plat</span>.
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
