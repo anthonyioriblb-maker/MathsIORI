@@ -1015,14 +1015,17 @@
                     <text x="100" y="262" font-size="20" font-weight="bold">A</text>
                     <text x="426" y="262" font-size="20" font-weight="bold">B</text>
                     <text x="319" y="24"  font-size="20" font-weight="bold">C</text>
-                    <!-- Secteur α au sommet A (45°, bleu) : sweep=0 CCW → bombé vers l'extérieur -->
+                    <!-- Secteur α au sommet A (45°, bleu) -->
+                    <!-- r=40 : sur AB=(160,240), sur AC=(148,212) -->
                     <path d="M 120 240 L 160 240 A 40 40 0 0 0 148 212 Z"
                           fill="rgba(52,152,219,0.35)" stroke="#2980b9" stroke-width="1.5"/>
-                    <!-- Secteur β au sommet B (65°, vert) : sweep=0 CCW -->
+                    <!-- Secteur β au sommet B (65°, vert) -->
+                    <!-- r=40 : sur BC=(403,204), sur BA=(380,240) -->
                     <path d="M 420 240 L 403 204 A 40 40 0 0 0 380 240 Z"
                           fill="rgba(39,174,96,0.35)" stroke="#27ae60" stroke-width="1.5"/>
-                    <!-- Secteur γ au sommet C (70°, rouge) : sweep=0 CCW → bombé vers l'intérieur du triangle -->
-                    <path d="M 325 35 L 297 63 A 40 40 0 0 0 342 71 Z"
+                    <!-- Secteur γ au sommet C (70°, rouge) -->
+                    <!-- r=40 : sur CA=(297,63), sur CB=(342,71) sweep=1 (intérieur vers le bas) -->
+                    <path d="M 325 35 L 297 63 A 40 40 0 0 1 342 71 Z"
                           fill="rgba(231,76,60,0.35)" stroke="#e74c3c" stroke-width="1.5"/>
                     <!-- Labels des angles dans le triangle -->
                     <text x="170" y="225" font-size="18" fill="#2980b9" font-weight="bold">&#945;</text>
@@ -1030,41 +1033,36 @@
                     <text x="310" y="94"  font-size="18" fill="#e74c3c" font-weight="bold">&#947;</text>
                 </g>
 
-                <!-- ─── Groupe 2 : structure fixe de la démonstration (ligne + titre) ─── -->
-                <g id="demoStructure" opacity="0">
+                <!-- ─── Groupe 2 : angles disposés côte à côte sur une droite ─── -->
+                <g id="demoGroup" opacity="0">
+                    <!-- Titre explicatif -->
                     <text x="270" y="277" font-size="14" fill="#444" text-anchor="middle"
                           font-style="italic">On place les 3 angles c&#244;te &#224; c&#244;te&#160;:</text>
-                    <!-- Demi-droite représentant l'angle plat -->
+                    <!-- Ligne horizontale (angle plat) avec flèches -->
                     <line x1="210" y1="332" x2="332" y2="332" stroke="#333" stroke-width="2.5"/>
                     <polygon points="210,329 203,332 210,335" fill="#333"/>
                     <polygon points="332,329 339,332 332,335" fill="#333"/>
-                </g>
-
-                <!-- ─── Secteurs animés : glissent depuis A, B, C vers le centre (270,332) ─── -->
-                <!-- Centre démo (270,332) r=55 ; décalages de départ : A→(-150,-92) B→(+150,-92) C→(+55,-297) -->
-                <g id="animAlpha" opacity="0">
-                    <!-- sweep=1 (CW sur écran) = arc convexe bombé depuis (270,332) vers le haut-gauche -->
-                    <path d="M 270 332 L 215 332 A 55 55 0 0 1 231 293 Z"
-                          fill="rgba(52,152,219,0.65)" stroke="#2980b9" stroke-width="1.5"/>
+                    <!-- Centre (270,332) r=55 -->
+                    <!-- Secteur α (bleu, 45°) : de 180° à 135° → (215,332)→(231,293) sweep=0 -->
+                    <path d="M 270 332 L 215 332 A 55 55 0 0 0 231 293 Z"
+                          fill="rgba(52,152,219,0.55)" stroke="#2980b9" stroke-width="1.5"/>
+                    <!-- Secteur β (vert, 65°) : de 135° à 70° → (231,293)→(289,280) sweep=0 -->
+                    <path d="M 270 332 L 231 293 A 55 55 0 0 0 289 280 Z"
+                          fill="rgba(39,174,96,0.55)" stroke="#27ae60" stroke-width="1.5"/>
+                    <!-- Secteur γ (rouge, 70°) : de 70° à 0° → (289,280)→(325,332) sweep=0 -->
+                    <path d="M 270 332 L 289 280 A 55 55 0 0 0 325 332 Z"
+                          fill="rgba(231,76,60,0.55)" stroke="#e74c3c" stroke-width="1.5"/>
+                    <!-- Labels dans les secteurs de démo -->
                     <text x="232" y="320" font-size="16" fill="#1a5276" font-weight="bold">&#945;</text>
-                </g>
-                <g id="animBeta" opacity="0">
-                    <!-- sweep=1 = arc convexe bombé vers le haut -->
-                    <path d="M 270 332 L 231 293 A 55 55 0 0 1 289 280 Z"
-                          fill="rgba(39,174,96,0.65)" stroke="#27ae60" stroke-width="1.5"/>
                     <text x="257" y="295" font-size="16" fill="#1a7a4a" font-weight="bold">&#946;</text>
-                </g>
-                <g id="animGamma" opacity="0">
-                    <!-- sweep=1 = arc convexe bombé vers le haut-droit -->
-                    <path d="M 270 332 L 289 280 A 55 55 0 0 1 325 332 Z"
-                          fill="rgba(231,76,60,0.65)" stroke="#e74c3c" stroke-width="1.5"/>
                     <text x="296" y="316" font-size="16" fill="#922b21" font-weight="bold">&#947;</text>
+                    <!-- Indication angle plat -->
+                    <text x="270" y="360" font-size="14" fill="#333" text-anchor="middle">= angle plat</text>
                 </g>
 
                 <!-- ─── Groupe 3 : résultat final ─── -->
                 <g id="resultTri" opacity="0">
-                    <text x="270" y="363" font-size="14" fill="#333" text-anchor="middle">= angle plat</text>
-                    <text x="270" y="387" font-size="22" font-weight="bold" fill="#c0392b"
+                    <text x="270" y="385" font-size="22" font-weight="bold" fill="#c0392b"
                           text-anchor="middle">&#945; + &#946; + &#947; = 180&#176;</text>
                 </g>
 
@@ -1458,61 +1456,24 @@
     const triTexts = [
         "Cliquez sur &#171;&#160;&#201;tape suivante&#160;&#187; pour voir la d&#233;monstration.",
         "Un triangle ABC poss&#232;de trois angles&#160;: &#945; (bleu en A), &#946; (vert en B) et &#947; (rouge en C).",
-        "L&#39;angle &#945; glisse depuis le sommet A et vient se placer sur la droite.",
-        "L&#39;angle &#946; glisse depuis le sommet B et se colle contre &#945;.",
-        "L&#39;angle &#947; glisse depuis le sommet C et compl&#232;te l&#39;angle plat.",
+        "On dispose les trois angles c&#244;te &#224; c&#244;te&#160;: ils forment exactement un angle plat.",
         "Conclusion&#160;: &#945;&#160;+&#160;&#946;&#160;+&#160;&#947;&#160;=&#160;180&#176;&#160;!"
     ];
     let stepTri = 0;
 
-    // slideToDemo : déplace un secteur depuis son sommet vers le centre démo (270,332)
-    // dx,dy = décalage de départ ; rot = rotation initiale en degrés
-    function slideToDemo(id, dx, dy, rot) {
-        const el = document.getElementById(id);
-        el.style.transformOrigin = '270px 332px';
-        el.setAttribute('opacity', 1);
-        el.style.transition = 'none';
-        el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot + 'deg)';
-        void el.getBoundingClientRect();
-        setTimeout(function() {
-            el.style.transition = 'transform 2s cubic-bezier(0.4, 0, 0.2, 1)';
-            el.style.transform = 'translate(0,0) rotate(0deg)';
-        }, 30);
-    }
-
     function nextStepTri() {
         stepTri++;
-        if (stepTri > 5) stepTri = 5;
+        if (stepTri > 3) stepTri = 3;
         document.getElementById('stepTri').innerHTML = triTexts[stepTri];
         if (stepTri >= 1) setOpacity('triGroup', 1);
-        if (stepTri === 2) {
-            setOpacity('demoStructure', 1);
-            // α depuis A=(120,240) : décalage (-150,-92), rotation +135°
-            slideToDemo('animAlpha', -150, -92, 135);
-        }
-        if (stepTri === 3) {
-            // β depuis B=(420,240) : décalage (+150,-92), rotation -45°
-            slideToDemo('animBeta', 150, -92, -45);
-        }
-        if (stepTri === 4) {
-            // γ depuis C=(325,35) : décalage (+55,-297), rotation +135°
-            slideToDemo('animGamma', 55, -297, 135);
-        }
-        if (stepTri >= 5) setOpacity('resultTri', 1);
+        if (stepTri >= 2) setOpacity('demoGroup', 1);
+        if (stepTri >= 3) setOpacity('resultTri', 1);
     }
 
     function resetTri() {
         stepTri = 0;
         document.getElementById('stepTri').innerHTML = triTexts[0];
-        setOpacity('triGroup', 0);
-        setOpacity('demoStructure', 0);
-        setOpacity('resultTri', 0);
-        ['animAlpha', 'animBeta', 'animGamma'].forEach(function(id) {
-            const el = document.getElementById(id);
-            el.style.transition = 'none';
-            el.style.transform = 'translate(0,0) rotate(0deg)';
-            el.setAttribute('opacity', 0);
-        });
+        ['triGroup', 'demoGroup', 'resultTri'].forEach(id => setOpacity(id, 0));
     }
 
     // Initialisation

@@ -171,10 +171,10 @@
                 <svg id="svgVoc" width="340" height="230" viewBox="0 0 340 230" style="display:block;">
 
                     <!-- ── Géométrie de base ── -->
-                    <!-- Demi-droite [OA) prolongée au-delà de A -->
-                    <line x1="80" y1="185" x2="330" y2="185" stroke="black" stroke-width="2.5"/>
-                    <!-- Demi-droite [OB) prolongée au-delà de B -->
-                    <line x1="80" y1="185" x2="223" y2="10" stroke="black" stroke-width="2.5"/>
+                    <!-- Demi-droite [OA) -->
+                    <line x1="80" y1="185" x2="312" y2="185" stroke="black" stroke-width="2.5"/>
+                    <!-- Demi-droite [OB) -->
+                    <line x1="80" y1="185" x2="210" y2="25" stroke="black" stroke-width="2.5"/>
                     <!-- Croix sur O -->
                     <line x1="74" y1="179" x2="86" y2="191" stroke="black" stroke-width="2.2"/>
                     <line x1="86" y1="179" x2="74" y2="191" stroke="black" stroke-width="2.2"/>
@@ -183,11 +183,11 @@
                     <!-- Croix A (fin de [OA) à (312,185)) -->
                     <line x1="306" y1="179" x2="318" y2="191" stroke="black" stroke-width="2"/>
                     <line x1="318" y1="179" x2="306" y2="191" stroke="black" stroke-width="2"/>
-                    <text x="320" y="202" font-size="22" font-weight="bold" fill="black">A</text>
+                    <text x="318" y="190" font-size="22" font-weight="bold" fill="black">A</text>
                     <!-- Croix B (fin de [OB) à (210,25)) -->
                     <line x1="204" y1="19" x2="216" y2="31" stroke="black" stroke-width="2"/>
                     <line x1="216" y1="19" x2="204" y2="31" stroke="black" stroke-width="2"/>
-                    <text x="220" y="30"  font-size="22" font-weight="bold" fill="black">B</text>
+                    <text x="215" y="21"  font-size="22" font-weight="bold" fill="black">B</text>
 
                     <!-- ── Étape 1 : sommet ──
                          Cercle rouge autour de O + label "sommet" collé à droite de O -->
@@ -372,10 +372,10 @@
 
                 <!-- O=(200,280) A=(460,280) B=200+250cos30, 280-250sin30 = (417,155) -->
 
-                <!-- Demi-droite [OA) prolongée au-delà de A -->
-                <line x1="200" y1="280" x2="500" y2="280" stroke="black" stroke-width="2.5"/>
-                <!-- Demi-droite [OB) prolongée au-delà de B -->
-                <line x1="200" y1="280" x2="434" y2="145" stroke="black" stroke-width="2.5"/>
+                <!-- Demi-droite [OA) -->
+                <line x1="200" y1="280" x2="480" y2="280" stroke="black" stroke-width="2.5"/>
+                <!-- Demi-droite [OB) -->
+                <line x1="200" y1="280" x2="417" y2="155" stroke="black" stroke-width="2.5"/>
                 <!-- Croix sur O -->
                 <line x1="194" y1="274" x2="206" y2="286" stroke="black" stroke-width="2"/>
                 <line x1="206" y1="274" x2="194" y2="286" stroke="black" stroke-width="2"/>
@@ -383,11 +383,11 @@
                 <!-- Croix A (fin de [OA) à (480,280)) -->
                 <line x1="474" y1="274" x2="486" y2="286" stroke="black" stroke-width="2"/>
                 <line x1="486" y1="274" x2="474" y2="286" stroke="black" stroke-width="2"/>
-                <text x="503" y="300" font-size="20" font-weight="bold">A</text>
+                <text x="487" y="285" font-size="20" font-weight="bold">A</text>
                 <!-- Croix B (fin de [OB) à (417,155)) -->
                 <line x1="411" y1="149" x2="423" y2="161" stroke="black" stroke-width="2"/>
                 <line x1="423" y1="149" x2="411" y2="161" stroke="black" stroke-width="2"/>
-                <text x="428" y="143" font-size="20" font-weight="bold">B</text>
+                <text x="422" y="148" font-size="20" font-weight="bold">B</text>
 
                 <!-- Rapporteur : arrive depuis la droite avec animation CSS -->
                 <!-- Centré en O=(200,280), rayon=120, base horizontale -->
@@ -513,14 +513,13 @@
                 <svg width="180" height="130" viewBox="-10 -10 200 150" style="max-width:100%;">
                     <!-- Centre O=(70,100), A=(155,100), B à 120° de OA -->
                     <!-- B = (70+80*cos120, 100-80*sin120) = (70-40, 100-69) = (30,31) -->
-                    <line x1="70" y1="100" x2="22" y2="18" stroke="black" stroke-width="2.5"/>
-                    <line x1="70" y1="100" x2="170" y2="100" stroke="black" stroke-width="2.5"/>
+                    <line x1="30" y1="100" x2="160" y2="100" stroke="black" stroke-width="2.5"/>
+                    <line x1="70" y1="100" x2="30" y2="31" stroke="black" stroke-width="2.5"/>
+                    <line x1="70" y1="100" x2="155" y2="100" stroke="black" stroke-width="2.5"/>
                     <path d="M 115 100 A 45 45 0 0 0 47 64" stroke="#2e75b6" stroke-width="2" fill="rgba(46,117,182,0.18)"/>
                     <text x="86" y="80" font-size="13" fill="#2e75b6" font-weight="bold">120°</text>
-                    <line x1="149" y1="94" x2="161" y2="106" stroke="black" stroke-width="1.5"/>
-                    <line x1="161" y1="94" x2="149" y2="106" stroke="black" stroke-width="1.5"/>
-                    <line x1="24" y1="25" x2="36" y2="37" stroke="black" stroke-width="1.5"/>
-                    <line x1="36" y1="25" x2="24" y2="37" stroke="black" stroke-width="1.5"/>
+                    <line x1="64" y1="94" x2="76" y2="106" stroke="black" stroke-width="1.5"/>
+                    <line x1="76" y1="94" x2="64" y2="106" stroke="black" stroke-width="1.5"/>
                 </svg>
                 <p style="color:#2e75b6; font-weight:bold; margin:0;">Angle obtus</p>
                 <p style="color:#333; margin:4px 0 0;">90° &lt; mesure &lt; 180°</p>
@@ -679,15 +678,15 @@
     </div>
 
     <div class="example">
-        <svg width="960" height="554" viewBox="-18 -12 346 200" style="display:block; margin:auto; max-width:100%;">
+        <svg width="300" height="170" viewBox="-18 -12 346 200" style="display:block; margin:auto; max-width:100%;">
             <!-- O=(150,145) ; A=(35,65) [gauche] ; B=(249,46) [commun] ; C=(290,145) [droit] -->
             <!-- Points à r=35 : gauche=(121,125) commun=(175,120) droit=(185,145) -->
-            <!-- Côté gauche [OA] prolongé au-delà de A -->
-            <line x1="150" y1="145" x2="23" y2="56" stroke="black" stroke-width="2"/>
-            <!-- Côté commun [OB] prolongé au-delà de B — trait plein rouge -->
-            <line x1="150" y1="145" x2="260" y2="35" stroke="red" stroke-width="2"/>
-            <!-- Côté droit [OC] prolongé au-delà de C -->
-            <line x1="150" y1="145" x2="305" y2="145" stroke="black" stroke-width="2"/>
+            <!-- Côté gauche [OA] -->
+            <line x1="150" y1="145" x2="35" y2="65" stroke="black" stroke-width="2"/>
+            <!-- Côté commun [OB] — trait plein rouge -->
+            <line x1="150" y1="145" x2="249" y2="46" stroke="red" stroke-width="2"/>
+            <!-- Côté droit [OC] -->
+            <line x1="150" y1="145" x2="290" y2="145" stroke="black" stroke-width="2"/>
             <!-- arc AOB (bleu, ~100°) : (121,125)→(175,120) sweep=1 -->
             <path d="M 150 145 L 121 125 A 35 35 0 0 1 175 120 Z" fill="rgba(0,0,200,0.12)" stroke="none"/>
             <path d="M 121 125 A 35 35 0 0 1 175 120" fill="none" stroke="blue" stroke-width="2"/>
@@ -704,13 +703,13 @@
             <text x="140" y="162" font-size="14" font-weight="bold">O</text>
             <line x1="31" y1="61" x2="39" y2="69" stroke="black" stroke-width="1.8"/>
             <line x1="39" y1="61" x2="31" y2="69" stroke="black" stroke-width="1.8"/>
-            <text x="12" y="52" font-size="14" font-weight="bold">A</text>
+            <text x="22" y="59" font-size="14" font-weight="bold">A</text>
             <line x1="245" y1="42" x2="253" y2="50" stroke="red" stroke-width="1.8"/>
             <line x1="253" y1="42" x2="245" y2="50" stroke="red" stroke-width="1.8"/>
-            <text x="238" y="33" font-size="14" font-weight="bold" fill="red">B</text>
+            <text x="255" y="41" font-size="14" font-weight="bold" fill="red">B</text>
             <line x1="286" y1="141" x2="294" y2="149" stroke="black" stroke-width="1.8"/>
             <line x1="294" y1="141" x2="286" y2="149" stroke="black" stroke-width="1.8"/>
-            <text x="292" y="130" font-size="14" font-weight="bold">C</text>
+            <text x="296" y="141" font-size="14" font-weight="bold">C</text>
         </svg>
         <p style="text-align:center; font-size:14px; margin-top:6px;">
             Les angles <span class="angle">AOB</span> et <span class="angle">BOC</span> sont <strong>adjacents</strong>.
@@ -726,7 +725,7 @@
     </div>
 
     <div class="example">
-        <svg width="960" height="390" viewBox="-10 -22 340 162" style="display:block; margin:auto; max-width:100%;">
+        <svg width="320" height="130" viewBox="-10 -22 340 162" style="display:block; margin:auto; max-width:100%;">
             <!-- Ligne horizontale (angle plat) -->
             <line x1="20" y1="90" x2="300" y2="90" stroke="black" stroke-width="2"/>
             <!-- Rayon oblique : vertex=(160,90), direction vers (240,20) -->
@@ -765,7 +764,7 @@
     </div>
 
     <div class="example">
-        <svg width="960" height="651" viewBox="-15 -12 330 224" style="display:block; margin:auto; max-width:100%;">
+        <svg width="300" height="200" viewBox="-15 -12 330 224" style="display:block; margin:auto; max-width:100%;">
             <!-- O=(150,102) ; ligne1:(30,50)→(270,155) dir=(-120,-52)/130.8=(-0.918,-0.398) et (0.918,0.398) -->
             <!-- ligne2:(270,50)→(30,155) dir=(120,-52)/130.8=(0.918,-0.398) et (-0.918,0.398) -->
             <!-- Points à r=22 : haut-gauche=(130,93) haut-droit=(170,93) bas-droit=(170,111) bas-gauche=(130,111) -->
@@ -774,11 +773,11 @@
             <!-- angle α haut : (130,93)→(170,93) sweep=1 (CW, passe par le haut) -->
             <path d="M 150 102 L 130 93 A 22 22 0 0 1 170 93 Z" fill="rgba(220,0,0,0.2)" stroke="none"/>
             <path d="M 130 93 A 22 22 0 0 1 170 93" fill="none" stroke="red" stroke-width="2"/>
-            <text x="145" y="68" font-size="18" fill="red">α</text>
+            <text x="142" y="86" font-size="15" fill="red">α</text>
             <!-- angle α bas (opposé) : (170,111)→(130,111) sweep=1 (CW, passe par le bas) -->
             <path d="M 150 102 L 170 111 A 22 22 0 0 1 130 111 Z" fill="rgba(220,0,0,0.2)" stroke="none"/>
             <path d="M 170 111 A 22 22 0 0 1 130 111" fill="none" stroke="red" stroke-width="2"/>
-            <text x="145" y="148" font-size="18" fill="red">α</text>
+            <text x="142" y="128" font-size="15" fill="red">α</text>
             <!-- O dessiné en dernier pour ne pas être masqué par les remplissages -->
             <line x1="144" y1="96" x2="156" y2="108" stroke="black" stroke-width="1.8"/>
             <line x1="156" y1="96" x2="144" y2="108" stroke="black" stroke-width="1.8"/>
@@ -805,12 +804,12 @@
         <div style="text-align:center; background:white; padding:10px; border-radius:5px;">
             <svg width="360" height="220" viewBox="-10 -22 385 254" style="max-width:100%; height:auto;">
                 <!-- O=(80,190) A=(320,190) B à 80°=(111,13) D à 40°=(249,49) -->
-                <!-- OA prolongée au-delà de A -->
-                <line x1="80" y1="190" x2="335" y2="190" stroke="black" stroke-width="2.5"/>
-                <!-- OB prolongée au-delà de B -->
-                <line x1="80" y1="190" x2="114" y2="-2" stroke="black" stroke-width="2.5"/>
-                <!-- Bissectrice OD prolongée au-delà de D — trait plein -->
-                <line x1="80" y1="190" x2="261" y2="39" stroke="#e74c3c" stroke-width="2.5"/>
+                <!-- OA -->
+                <line x1="80" y1="190" x2="320" y2="190" stroke="black" stroke-width="2.5"/>
+                <!-- OB -->
+                <line x1="80" y1="190" x2="111" y2="13" stroke="black" stroke-width="2.5"/>
+                <!-- Bissectrice OD — trait plein -->
+                <line x1="80" y1="190" x2="249" y2="49" stroke="#e74c3c" stroke-width="2.5"/>
 
                 <!-- Arc AOD (vert, r=50) : de OA à OD, sweep=0 (CCW = monte) -->
                 <!-- r=50 sur OA : (130,190) ; sur OD (40°) : (118,158) -->
@@ -829,7 +828,7 @@
                 <!-- Croix A -->
                 <line x1="316" y1="186" x2="324" y2="194" stroke="black" stroke-width="2"/>
                 <line x1="324" y1="186" x2="316" y2="194" stroke="black" stroke-width="2"/>
-                <text x="326" y="205" font-size="18" font-weight="bold">A</text>
+                <text x="326" y="195" font-size="18" font-weight="bold">A</text>
                 <!-- Croix B -->
                 <line x1="107" y1="9"  x2="115" y2="17" stroke="black" stroke-width="2"/>
                 <line x1="115" y1="9"  x2="107" y2="17" stroke="black" stroke-width="2"/>
@@ -837,7 +836,7 @@
                 <!-- Croix D (rouge) -->
                 <line x1="245" y1="45" x2="253" y2="53" stroke="#e74c3c" stroke-width="2"/>
                 <line x1="253" y1="45" x2="245" y2="53" stroke="#e74c3c" stroke-width="2"/>
-                <text x="256" y="56" font-size="18" font-weight="bold" fill="#e74c3c">D</text>
+                <text x="256" y="47" font-size="18" font-weight="bold" fill="#e74c3c">D</text>
             </svg>
         </div>
         <p style="text-align:center; margin-top:6px;">
@@ -875,16 +874,16 @@
 
                 <!-- O=(130,270) A=(420,270) B à 80°=(165,73) D à 40°=(283,141) -->
 
-                <!-- [OA) prolongée au-delà de A -->
+                <!-- [OA) -->
                 <g id="brOA" opacity="0">
-                    <line x1="130" y1="270" x2="440" y2="270" stroke="black" stroke-width="2.5"/>
+                    <line x1="130" y1="270" x2="420" y2="270" stroke="black" stroke-width="2.5"/>
                     <line x1="416" y1="266" x2="424" y2="274" stroke="black" stroke-width="1.8"/>
                     <line x1="424" y1="266" x2="416" y2="274" stroke="black" stroke-width="1.8"/>
-                    <text x="428" y="282" font-size="18" font-weight="bold">A</text>
+                    <text x="428" y="275" font-size="18" font-weight="bold">A</text>
                 </g>
-                <!-- [OB) prolongée au-delà de B -->
+                <!-- [OB) -->
                 <g id="brOB" opacity="0">
-                    <line x1="130" y1="270" x2="169" y2="53" stroke="black" stroke-width="2.5"/>
+                    <line x1="130" y1="270" x2="165" y2="73" stroke="black" stroke-width="2.5"/>
                     <line x1="161" y1="69" x2="169" y2="77" stroke="black" stroke-width="1.8"/>
                     <line x1="169" y1="69" x2="161" y2="77" stroke="black" stroke-width="1.8"/>
                     <text x="170" y="70" font-size="18" font-weight="bold">B</text>
@@ -957,12 +956,12 @@
                 <!-- Résultat 80÷2=40 -->
                 <text id="brResult" x="230" y="170" font-size="13" fill="#c0392b" font-weight="bold" opacity="0">80° ÷ 2 = <tspan font-size="15">40°</tspan></text>
 
-                <!-- [OD) à 40° prolongée au-delà de D -->
+                <!-- [OD) à 40° -->
                 <g id="brOD" opacity="0">
-                    <line x1="130" y1="270" x2="298" y2="128" stroke="#e74c3c" stroke-width="2.5"/>
+                    <line x1="130" y1="270" x2="283" y2="141" stroke="#e74c3c" stroke-width="2.5"/>
                     <line x1="279" y1="137" x2="287" y2="145" stroke="#e74c3c" stroke-width="1.8"/>
                     <line x1="287" y1="137" x2="279" y2="145" stroke="#e74c3c" stroke-width="1.8"/>
-                    <text x="288" y="148" font-size="18" font-weight="bold" fill="#e74c3c">D</text>
+                    <text x="288" y="138" font-size="18" font-weight="bold" fill="#e74c3c">D</text>
                 </g>
 
                 <!-- Deux arcs égaux (étape finale) -->
@@ -985,96 +984,6 @@
         </div>
     </div>
 
-
-
-
-    <h2>La somme des angles d&#39;un triangle</h2>
-
-    <div class="property">
-        <strong>Propri&#233;t&#233; :</strong>
-        La somme des mesures des angles d&#39;un triangle est &#233;gale &#224; <strong>180&#176;</strong>.<br><br>
-        Dans tout triangle ABC : <strong>&#194; + B&#770; + &#264; = 180&#176;</strong>
-    </div>
-
-    <!-- ─── Animation : somme des angles d'un triangle ─── -->
-    <div class="example">
-        <strong>D&#233;monstration : les trois angles d&#39;un triangle forment ensemble un angle plat (180&#176;)</strong><br><br>
-        <div class="step-box"><span id="stepTri">Cliquez sur &#171;&#160;&#201;tape suivante&#160;&#187; pour voir la d&#233;monstration.</span></div>
-        <div class="svg-wrap">
-            <svg id="svgTri" width="540" height="390" viewBox="0 0 540 390" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
-
-                <!-- Triangle ABC : A=(120,240) B=(420,240) C=(325,35) angles : α=45° β=65° γ=70° -->
-
-                <!-- ─── Groupe 1 : triangle + secteurs colorés ─── -->
-                <g id="triGroup" opacity="0">
-                    <!-- Côtés du triangle -->
-                    <line x1="120" y1="240" x2="420" y2="240" stroke="black" stroke-width="2.5"/>
-                    <line x1="120" y1="240" x2="325" y2="35"  stroke="black" stroke-width="2.5"/>
-                    <line x1="420" y1="240" x2="325" y2="35"  stroke="black" stroke-width="2.5"/>
-                    <!-- Sommets -->
-                    <text x="100" y="262" font-size="20" font-weight="bold">A</text>
-                    <text x="426" y="262" font-size="20" font-weight="bold">B</text>
-                    <text x="319" y="24"  font-size="20" font-weight="bold">C</text>
-                    <!-- Secteur α au sommet A (45°, bleu) : sweep=0 CCW → bombé vers l'extérieur -->
-                    <path d="M 120 240 L 160 240 A 40 40 0 0 0 148 212 Z"
-                          fill="rgba(52,152,219,0.35)" stroke="#2980b9" stroke-width="1.5"/>
-                    <!-- Secteur β au sommet B (65°, vert) : sweep=0 CCW -->
-                    <path d="M 420 240 L 403 204 A 40 40 0 0 0 380 240 Z"
-                          fill="rgba(39,174,96,0.35)" stroke="#27ae60" stroke-width="1.5"/>
-                    <!-- Secteur γ au sommet C (70°, rouge) : sweep=0 CCW → bombé vers l'intérieur du triangle -->
-                    <path d="M 325 35 L 297 63 A 40 40 0 0 0 342 71 Z"
-                          fill="rgba(231,76,60,0.35)" stroke="#e74c3c" stroke-width="1.5"/>
-                    <!-- Labels des angles dans le triangle -->
-                    <text x="170" y="225" font-size="18" fill="#2980b9" font-weight="bold">&#945;</text>
-                    <text x="368" y="222" font-size="18" fill="#27ae60" font-weight="bold">&#946;</text>
-                    <text x="310" y="94"  font-size="18" fill="#e74c3c" font-weight="bold">&#947;</text>
-                </g>
-
-                <!-- ─── Groupe 2 : structure fixe de la démonstration (ligne + titre) ─── -->
-                <g id="demoStructure" opacity="0">
-                    <text x="270" y="277" font-size="14" fill="#444" text-anchor="middle"
-                          font-style="italic">On place les 3 angles c&#244;te &#224; c&#244;te&#160;:</text>
-                    <!-- Demi-droite représentant l'angle plat -->
-                    <line x1="210" y1="332" x2="332" y2="332" stroke="#333" stroke-width="2.5"/>
-                    <polygon points="210,329 203,332 210,335" fill="#333"/>
-                    <polygon points="332,329 339,332 332,335" fill="#333"/>
-                </g>
-
-                <!-- ─── Secteurs animés : glissent depuis A, B, C vers le centre (270,332) ─── -->
-                <!-- Centre démo (270,332) r=55 ; décalages de départ : A→(-150,-92) B→(+150,-92) C→(+55,-297) -->
-                <g id="animAlpha" opacity="0">
-                    <!-- sweep=1 (CW sur écran) = arc convexe bombé depuis (270,332) vers le haut-gauche -->
-                    <path d="M 270 332 L 215 332 A 55 55 0 0 1 231 293 Z"
-                          fill="rgba(52,152,219,0.65)" stroke="#2980b9" stroke-width="1.5"/>
-                    <text x="232" y="320" font-size="16" fill="#1a5276" font-weight="bold">&#945;</text>
-                </g>
-                <g id="animBeta" opacity="0">
-                    <!-- sweep=1 = arc convexe bombé vers le haut -->
-                    <path d="M 270 332 L 231 293 A 55 55 0 0 1 289 280 Z"
-                          fill="rgba(39,174,96,0.65)" stroke="#27ae60" stroke-width="1.5"/>
-                    <text x="257" y="295" font-size="16" fill="#1a7a4a" font-weight="bold">&#946;</text>
-                </g>
-                <g id="animGamma" opacity="0">
-                    <!-- sweep=1 = arc convexe bombé vers le haut-droit -->
-                    <path d="M 270 332 L 289 280 A 55 55 0 0 1 325 332 Z"
-                          fill="rgba(231,76,60,0.65)" stroke="#e74c3c" stroke-width="1.5"/>
-                    <text x="296" y="316" font-size="16" fill="#922b21" font-weight="bold">&#947;</text>
-                </g>
-
-                <!-- ─── Groupe 3 : résultat final ─── -->
-                <g id="resultTri" opacity="0">
-                    <text x="270" y="363" font-size="14" fill="#333" text-anchor="middle">= angle plat</text>
-                    <text x="270" y="387" font-size="22" font-weight="bold" fill="#c0392b"
-                          text-anchor="middle">&#945; + &#946; + &#947; = 180&#176;</text>
-                </g>
-
-            </svg>
-        </div>
-        <div style="text-align:center; margin-top:10px;">
-            <button class="btn-anim" onclick="nextStepTri()">&#201;tape suivante &#9654;</button>
-            <button class="btn-reset" onclick="resetTri()">Recommencer &#8635;</button>
-        </div>
-    </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <script>
@@ -1451,70 +1360,6 @@
         ['brLine40','brLabel40','brResult'].forEach(id => setOpacity(id, 0));
     }
 
-
-    // ────────────────────────────────────────────────────
-    // ANIMATION : Somme des angles d'un triangle
-    // ────────────────────────────────────────────────────
-    const triTexts = [
-        "Cliquez sur &#171;&#160;&#201;tape suivante&#160;&#187; pour voir la d&#233;monstration.",
-        "Un triangle ABC poss&#232;de trois angles&#160;: &#945; (bleu en A), &#946; (vert en B) et &#947; (rouge en C).",
-        "L&#39;angle &#945; glisse depuis le sommet A et vient se placer sur la droite.",
-        "L&#39;angle &#946; glisse depuis le sommet B et se colle contre &#945;.",
-        "L&#39;angle &#947; glisse depuis le sommet C et compl&#232;te l&#39;angle plat.",
-        "Conclusion&#160;: &#945;&#160;+&#160;&#946;&#160;+&#160;&#947;&#160;=&#160;180&#176;&#160;!"
-    ];
-    let stepTri = 0;
-
-    // slideToDemo : déplace un secteur depuis son sommet vers le centre démo (270,332)
-    // dx,dy = décalage de départ ; rot = rotation initiale en degrés
-    function slideToDemo(id, dx, dy, rot) {
-        const el = document.getElementById(id);
-        el.style.transformOrigin = '270px 332px';
-        el.setAttribute('opacity', 1);
-        el.style.transition = 'none';
-        el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + rot + 'deg)';
-        void el.getBoundingClientRect();
-        setTimeout(function() {
-            el.style.transition = 'transform 2s cubic-bezier(0.4, 0, 0.2, 1)';
-            el.style.transform = 'translate(0,0) rotate(0deg)';
-        }, 30);
-    }
-
-    function nextStepTri() {
-        stepTri++;
-        if (stepTri > 5) stepTri = 5;
-        document.getElementById('stepTri').innerHTML = triTexts[stepTri];
-        if (stepTri >= 1) setOpacity('triGroup', 1);
-        if (stepTri === 2) {
-            setOpacity('demoStructure', 1);
-            // α depuis A=(120,240) : décalage (-150,-92), rotation +135°
-            slideToDemo('animAlpha', -150, -92, 135);
-        }
-        if (stepTri === 3) {
-            // β depuis B=(420,240) : décalage (+150,-92), rotation -45°
-            slideToDemo('animBeta', 150, -92, -45);
-        }
-        if (stepTri === 4) {
-            // γ depuis C=(325,35) : décalage (+55,-297), rotation +135°
-            slideToDemo('animGamma', 55, -297, 135);
-        }
-        if (stepTri >= 5) setOpacity('resultTri', 1);
-    }
-
-    function resetTri() {
-        stepTri = 0;
-        document.getElementById('stepTri').innerHTML = triTexts[0];
-        setOpacity('triGroup', 0);
-        setOpacity('demoStructure', 0);
-        setOpacity('resultTri', 0);
-        ['animAlpha', 'animBeta', 'animGamma'].forEach(function(id) {
-            const el = document.getElementById(id);
-            el.style.transition = 'none';
-            el.style.transform = 'translate(0,0) rotate(0deg)';
-            el.setAttribute('opacity', 0);
-        });
-    }
-
     // Initialisation
     window.onload = function() {
         buildRapporteur();
@@ -1523,4 +1368,4 @@
 
 </body>
 </html>
-                                           
+                                                                                                                                                                                                                                                                                                                                                                             
