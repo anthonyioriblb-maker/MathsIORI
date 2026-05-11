@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>DM – Fonctions affines – 3ème</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+@page { size: A4; margin: 14mm 14mm 14mm 14mm; }
+body {
+  font-family: Arial, sans-serif;
+  font-size: 11pt;
+  color: #111;
+  background: white;
+  max-width: 182mm;
+  margin: 0 auto;
+  padding: 8px 0;
+}
+
+/* ── HEADER ── */
+.dm-header {
+  border: 2.5px solid #1F4788;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.dm-title-bar {
+  background: #1F4788;
+  color: white;
+  text-align: center;
+  padding: 7px 12px 5px;
+}
+.dm-title-bar h1 { font-size: 14pt; letter-spacing: 0.5px; }
+.dm-title-bar p  { font-size: 9.5pt; margin-top: 2px; }
+.dm-info-row {
+  display: flex;
+  align-items: stretch;
+  padding: 8px 12px;
+  background: #EEF3FA;
+  gap: 16px;
+}
+.dm-field { flex: 1; font-size: 10pt; border-bottom: 1px solid #777; padding-bottom: 1px; }
+.dm-field label { font-weight: bold; margin-right: 4px; }
+.dm-score {
+  background: #1F4788; color: white;
+  padding: 3px 12px; border-radius: 4px;
+  font-size: 10pt; font-weight: bold;
+  display: flex; align-items: center;
+  white-space: nowrap;
+}
+
+/* ── EXERCISE ── */
+.exercice { margin-bottom: 12px; }
+.ex-title {
+  display: flex; align-items: center;
+  background: #1F4788; color: white;
+  padding: 5px 10px; border-radius: 4px 4px 0 0;
+  gap: 8px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.ex-num {
+  color: white;
+  font-weight: bold; font-size: 12pt;
+  flex-shrink: 0;
+}
+.ex-name { font-size: 11.5pt; font-weight: bold; flex: 1; }
+.ex-pts {
+  font-size: 9.5pt;
+  background: rgba(255,255,255,0.25);
+  padding: 2px 8px; border-radius: 10px;
+}
+.ex-body {
+  border: 1.5px solid #1F4788;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  padding: 8px 12px;
+}
+
+/* ── PARTIE ── */
+.partie-title {
+  font-weight: bold; color: #C55A11; font-size: 11pt;
+  margin: 10px 0 5px;
+  border-bottom: 1px solid #F4B183; padding-bottom: 2px;
+}
+
+/* ── QUESTION ── */
+.question {
+  display: flex; gap: 6px;
+  margin: 4px 0; font-size: 11pt; line-height: 1.5;
+}
+.q-num { font-weight: bold; color: #1F4788; min-width: 18px; }
+
+/* ── TABLES ── */
+table.dm-table {
+  border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 10.5pt;
+}
+table.dm-table th {
+  background: #1F4788; color: white;
+  padding: 5px 8px; text-align: center;
+  border: 1px solid #1F4788;
+}
+table.dm-table td {
+  border: 1px solid #AAAAAA; padding: 4px 8px; height: 30px;
+}
+table.dm-table td.fc { font-style: italic; font-weight: bold; background: #F7F8FC; }
+
+table.val-table {
+  border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 11pt;
+}
+table.val-table th, table.val-table td {
+  border: 1.5px solid #555; padding: 6px 4px;
+  text-align: center; height: 30px;
+}
+table.val-table th { background: #1F4788; color: white; }
+table.val-table td.rl { background: #EEF3FA; font-weight: bold; font-style: italic; }
+
+/* ── GRAPH ── */
+.graph-wrap { display: flex; justify-content: center; margin: 8px 0; }
+
+/* ── PROBLEM BOX ── */
+.ctx-box {
+  background: #FFF8E7; border: 1.5px solid #E6A817;
+  border-radius: 4px; padding: 8px 12px; margin: 6px 0;
+  font-size: 10.5pt; line-height: 1.65;
+}
+.ctx-box strong { color: #7D4A00; }
+
+/* ── ANSWER SPACE ── */
+.ans-lines { margin: 4px 0 4px 24px; }
+.ans-line  { border-bottom: 1px solid #BBB; min-height: 22px; margin: 3px 0; }
+
+/* ── FRACTION ── */
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  font-size: 0.88em;
+  line-height: 1.15;
+  margin: 0 1px;
+}
+.frac .num {
+  border-bottom: 1.2px solid currentColor;
+  padding: 0 3px 1px;
+  text-align: center;
+}
+.frac .den {
+  padding: 1px 3px 0;
+  text-align: center;
+}
+
+/* ── NOTA ── */
+.nota { font-size: 9pt; color: #666; font-style: italic; margin-top: 3px; }
+
+@media print {
+  body { padding: 0; max-width: 100%; }
+
+  /* Forcer l'impression des couleurs et fonds */
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .page-break { page-break-before: always; }
+
+  /* Éviter de couper les exercices et leurs parties */
+  .exercice          { break-inside: avoid; page-break-inside: avoid; }
+  .ex-title          { break-after: avoid;  page-break-after: avoid; }
+  .partie-title      { break-after: avoid;  page-break-after: avoid; }
+  .question          { break-inside: avoid; page-break-inside: avoid; }
+  .graph-wrap        { break-inside: avoid; page-break-inside: avoid; }
+  .ctx-box           { break-inside: avoid; page-break-inside: avoid; }
+
+  /* Exercice 2 commence toujours sur une nouvelle page (grand repère) */
+  .ex2-start         { break-before: page;  page-break-before: always; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     HEADER
+════════════════════════════════════════ -->
+<div class="dm-header">
+  <div class="dm-title-bar">
+    <h1>Devoir Maison &ndash; Fonctions affines et fonctions lin&eacute;aires</h1>
+  </div>
+  <div class="dm-info-row">
+    <div class="dm-field"><label>Nom :</label>&nbsp;</div>
+    <div class="dm-field"><label>Pr&eacute;nom :</label>&nbsp;</div>
+    <div class="dm-field"><label>Classe :</label> 3&egrave;me&nbsp;&nbsp;&nbsp;</div>
+  </div>
+  <div style="display:flex; justify-content:flex-end; align-items:center; padding:5px 12px 7px; background:#EEF3FA; border-top:1px solid #C9D8EE; gap:12px;">
+    <span style="font-size:10pt; font-weight:bold;">Note :</span>
+    <span style="display:inline-block; border-bottom:1.5px solid #333; min-width:60px;">&nbsp;</span>
+    <span style="font-size:10pt; font-weight:bold;">/ 18</span>
+    <span style="font-size:10pt; margin-left:20px; font-weight:bold;">Appr&eacute;ciation :</span>
+    <span style="display:inline-block; border-bottom:1.5px solid #333; min-width:120px;">&nbsp;</span>
+  </div>
+</div>
+
+<p style="text-align:center;font-size:9pt;color:#555;margin-bottom:10px;border:1px solid #DDD;padding:5px;border-radius:3px;background:#FAFAFA;">
+  Toute r&eacute;ponse doit &ecirc;tre justifi&eacute;e &mdash; Les r&eacute;sultats seront donn&eacute;s sous forme exacte sauf indication contraire.
+</p>
+
+<!-- ════════════════════════════════════════
+     EXERCICE 1 – RECONNAÎTRE
+════════════════════════════════════════ -->
+<div class="exercice">
+  <div class="ex-title">
+    <div class="ex-num">Exercice 1</div>
+    <div class="ex-name">Reconnaître une fonction affine ou lin&eacute;aire</div>
+    <div class="ex-pts">6 points</div>
+  </div>
+  <div class="ex-body">
+
+    <!-- PARTIE A -->
+    <div class="partie-title">Partie A &ndash; Par la formule &nbsp;&nbsp;<span style="font-weight:normal;color:#555;font-size:9.5pt">(3 points)</span></div>
+    <p style="margin-bottom:5px;font-size:10.5pt;">Pour chacune des fonctions suivantes, indiquer s&apos;il s&apos;agit d&apos;une <strong>fonction lin&eacute;aire</strong>, d&apos;une <strong>fonction affine</strong> ou d&apos;<strong>aucune des deux</strong>. Justifier bri&egrave;vement.</p>
+
+    <div style="margin: 8px 0 4px 12px; line-height: 2.2; font-size: 11pt;">
+      <div><strong>a.</strong> &emsp;<em>f</em>(<em>x</em>) = 3<em>x</em></div>
+      <div><strong>b.</strong> &emsp;<em>g</em>(<em>x</em>) = &minus;2<em>x</em> + 1</div>
+      <div><strong>c.</strong> &emsp;<em>h</em>(<em>x</em>) = <em>x</em>&sup2; &minus; 4</div>
+      <div><strong>d.</strong> &emsp;<em>k</em>(<em>x</em>) = <span class="frac"><span class="num">3</span><span class="den">4</span></span><em>x</em> &minus; 5</div>
+      <div><strong>e.</strong> &emsp;<em>p</em>(<em>x</em>) = <em>x</em>(<em>x</em> + 2)</div>
+    </div>
+
+    <!-- PARTIE B -->
+    <div class="partie-title">Partie B &ndash; Par le graphique &nbsp;&nbsp;<span style="font-weight:normal;color:#555;font-size:9.5pt">(3 points)</span></div>
+    <p style="margin-bottom:5px;font-size:10.5pt;">On donne ci-dessous la repr&eacute;sentation graphique de quatre courbes : (<em>d</em><sub>1</sub>), (<em>d</em><sub>2</sub>), (<em>d</em><sub>3</sub>) et (<em>C</em>).</p>
+
+    <div class="graph-wrap">
+    <svg viewBox="0 0 530 360" width="460" xmlns="http://www.w3.org/2000/svg" style="font-family:Arial,sans-serif;">
+      <g stroke="#CCCCCC" stroke-width="0.6">
+        <line x1="50"    y1="20" x2="50"    y2="320"/>
+        <line x1="102.5" y1="20" x2="102.5" y2="320"/>
+        <line x1="155"   y1="20" x2="155"   y2="320"/>
+        <line x1="260"   y1="20" x2="260"   y2="320"/>
+        <line x1="312.5" y1="20" x2="312.5" y2="320"/>
+        <line x1="365"   y1="20" x2="365"   y2="320"/>
+        <line x1="417.5" y1="20" x2="417.5" y2="320"/>
+        <line x1="470"   y1="20" x2="470"   y2="320"/>
+        <line x1="50" y1="290" x2="470" y2="290"/>
+        <line x1="50" y1="230" x2="470" y2="230"/>
+        <line x1="50" y1="200" x2="470" y2="200"/>
+        <line x1="50" y1="170" x2="470" y2="170"/>
+        <line x1="50" y1="140" x2="470" y2="140"/>
+        <line x1="50" y1="110" x2="470" y2="110"/>
+        <line x1="50" y1="80"  x2="470" y2="80"/>
+        <line x1="50" y1="50"  x2="470" y2="50"/>
+        <line x1="50" y1="20"  x2="470" y2="20"/>
+      </g>
+      <line x1="40" y1="260" x2="480" y2="260" stroke="#333" stroke-width="1.6"/>
+      <polygon points="480,260 472,256 472,264" fill="#333"/>
+      <line x1="207.5" y1="330" x2="207.5" y2="12" stroke="#333" stroke-width="1.6"/>
+      <polygon points="207.5,12 203,20 212,20" fill="#333"/>
+      <text x="483" y="264" font-size="12" font-style="italic">x</text>
+      <text x="211" y="11"  font-size="12" font-style="italic">y</text>
+      <text x="194" y="274" font-size="10">O</text>
+      <text x="47"    y="274" font-size="9" text-anchor="middle">−3</text>
+      <text x="99.5"  y="274" font-size="9" text-anchor="middle">−2</text>
+      <text x="152"   y="274" font-size="9" text-anchor="middle">−1</text>
+      <text x="257"   y="274" font-size="9" text-anchor="middle">1</text>
+      <text x="309.5" y="274" font-size="9" text-anchor="middle">2</text>
+      <text x="362"   y="274" font-size="9" text-anchor="middle">3</text>
+      <text x="414.5" y="274" font-size="9" text-anchor="middle">4</text>
+      <text x="467"   y="274" font-size="9" text-anchor="middle">5</text>
+      <text x="199" y="294" font-size="9" text-anchor="end">−2</text>
+      <text x="199" y="264" font-size="9" text-anchor="end">0</text>
+      <text x="199" y="234" font-size="9" text-anchor="end">1</text>
+      <text x="199" y="204" font-size="9" text-anchor="end">2</text>
+      <text x="199" y="174" font-size="9" text-anchor="end">3</text>
+      <text x="199" y="144" font-size="9" text-anchor="end">4</text>
+      <text x="199" y="114" font-size="9" text-anchor="end">5</text>
+      <text x="199" y="84"  font-size="9" text-anchor="end">6</text>
+      <text x="199" y="54"  font-size="9" text-anchor="end">7</text>
+      <text x="199" y="24"  font-size="9" text-anchor="end">8</text>
+      <g stroke="#333" stroke-width="0.8">
+        <line x1="50"    y1="256" x2="50"    y2="264"/>
+        <line x1="102.5" y1="256" x2="102.5" y2="264"/>
+        <line x1="155"   y1="256" x2="155"   y2="264"/>
+        <line x1="260"   y1="256" x2="260"   y2="264"/>
+        <line x1="312.5" y1="256" x2="312.5" y2="264"/>
+        <line x1="365"   y1="256" x2="365"   y2="264"/>
+        <line x1="417.5" y1="256" x2="417.5" y2="264"/>
+        <line x1="470"   y1="256" x2="470"   y2="264"/>
+        <line x1="203.5" y1="290" x2="211.5" y2="290"/>
+        <line x1="203.5" y1="230" x2="211.5" y2="230"/>
+        <line x1="203.5" y1="200" x2="211.5" y2="200"/>
+        <line x1="203.5" y1="170" x2="211.5" y2="170"/>
+        <line x1="203.5" y1="140" x2="211.5" y2="140"/>
+        <line x1="203.5" y1="110" x2="211.5" y2="110"/>
+        <line x1="203.5" y1="80"  x2="211.5" y2="80"/>
+        <line x1="203.5" y1="50"  x2="211.5" y2="50"/>
+        <line x1="203.5" y1="20"  x2="211.5" y2="20"/>
+      </g>
+      <line x1="137.7" y1="320" x2="470" y2="35" stroke="#1565C0" stroke-width="2.2" stroke-linecap="round"/>
+      <text x="474" y="35" font-size="11" fill="#1565C0" font-style="italic" font-weight="bold">(d₁)</text>
+      <line x1="50" y1="50" x2="470" y2="290" stroke="#C62828" stroke-width="2.2" stroke-linecap="round"/>
+      <text x="474" y="294" font-size="11" fill="#C62828" font-style="italic" font-weight="bold">(d₂)</text>
+      <polyline
+        points="50,155 76.25,196.25 102.5,230 128.75,256.25 155,275 181.25,286.25 207.5,290 233.75,286.25 260,275 286.25,256.25 312.5,230 338.75,196.25 365,155 391.25,106.25 417.5,50 430,20"
+        fill="none" stroke="#2E7D32" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+      <text x="434" y="17" font-size="11" fill="#2E7D32" font-style="italic" font-weight="bold">(C)</text>
+      <line x1="50" y1="200" x2="470" y2="200" stroke="#7B1FA2" stroke-width="2.2" stroke-linecap="round"/>
+      <text x="474" y="204" font-size="11" fill="#7B1FA2" font-style="italic" font-weight="bold">(d₃)</text>
+    </svg>
+    </div>
+
+    <div class="question"><div class="q-num">1.</div><div>Parmi ces quatre courbes, lesquelles sont des <strong>droites</strong> ? <em>(0,5 pt)</em></div></div>
+
+    <div class="question"><div class="q-num">2.</div><div>Laquelle (ou lesquelles) repr&eacute;sente(nt) une <strong>fonction lin&eacute;aire</strong> ? Justifier. <em>(1 pt)</em></div></div>
+
+    <div class="question"><div class="q-num">3.</div><div>Laquelle (ou lesquelles) repr&eacute;sente(nt) une <strong>fonction affine</strong> ? Justifier. <em>(1,5 pt)</em></div></div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     EXERCICE 2 – TRACER
+════════════════════════════════════════ -->
+<div class="exercice ex2-start">
+  <div class="ex-title">
+    <div class="ex-num">Exercice 2</div>
+    <div class="ex-name">Tracer des fonctions affines</div>
+    <div class="ex-pts">4 points</div>
+  </div>
+  <div class="ex-body">
+
+    <p style="margin-bottom:6px;font-size:10.5pt;">On consid&egrave;re les deux fonctions <em>f</em> et <em>g</em> d&eacute;finies par :</p>
+    <p style="text-align:center;font-size:12pt;font-weight:bold;margin-bottom:8px;">
+      f(x) = 2x &minus; 1 &nbsp;&nbsp;&nbsp;&nbsp; et &nbsp;&nbsp;&nbsp;&nbsp; g(x) = &minus;x + 2
+    </p>
+
+    <div class="question" style="margin-top:8px;"><div class="q-num">1.</div><div>En d&eacute;taillant votre m&eacute;thode sur votre copie, <strong>tracer</strong> dans le rep&egrave;re ci-dessous les droites repr&eacute;sentant <em>f</em> et <em>g</em>. <em>(3 pts)</em></div></div>
+
+    <div class="graph-wrap" style="margin-top:4px;">
+    <svg viewBox="0 0 510 410" width="460" xmlns="http://www.w3.org/2000/svg" style="font-family:Arial,sans-serif;">
+      <g stroke="#BDD7EE" stroke-width="0.7">
+        <line x1="55"  y1="20" x2="55"  y2="375"/>
+        <line x1="105" y1="20" x2="105" y2="375"/>
+        <line x1="155" y1="20" x2="155" y2="375"/>
+        <line x1="205" y1="20" x2="205" y2="375"/>
+        <line x1="305" y1="20" x2="305" y2="375"/>
+        <line x1="355" y1="20" x2="355" y2="375"/>
+        <line x1="405" y1="20" x2="405" y2="375"/>
+        <line x1="455" y1="20" x2="455" y2="375"/>
+        <line x1="50" y1="370" x2="460" y2="370"/>
+        <line x1="50" y1="345" x2="460" y2="345"/>
+        <line x1="50" y1="320" x2="460" y2="320"/>
+        <line x1="50" y1="295" x2="460" y2="295"/>
+        <line x1="50" y1="270" x2="460" y2="270"/>
+        <line x1="50" y1="220" x2="460" y2="220"/>
+        <line x1="50" y1="195" x2="460" y2="195"/>
+        <line x1="50" y1="170" x2="460" y2="170"/>
+        <line x1="50" y1="145" x2="460" y2="145"/>
+        <line x1="50" y1="120" x2="460" y2="120"/>
+        <line x1="50" y1="95"  x2="460" y2="95"/>
+        <line x1="50" y1="70"  x2="460" y2="70"/>
+        <line x1="50" y1="45"  x2="460" y2="45"/>
+        <line x1="50" y1="20"  x2="460" y2="20"/>
+      </g>
+      <line x1="44" y1="245" x2="467" y2="245" stroke="#333" stroke-width="1.8"/>
+      <polygon points="467,245 459,241 459,249" fill="#333"/>
+      <line x1="255" y1="380" x2="255" y2="12" stroke="#333" stroke-width="1.8"/>
+      <polygon points="255,12 250,21 260,21" fill="#333"/>
+      <text x="470" y="249" font-size="12" font-style="italic">x</text>
+      <text x="258" y="11"  font-size="12" font-style="italic">y</text>
+      <text x="240" y="260" font-size="10">O</text>
+      <g font-size="9" text-anchor="middle" fill="#333">
+        <text x="55"  y="259">−4</text>
+        <text x="105" y="259">−3</text>
+        <text x="155" y="259">−2</text>
+        <text x="205" y="259">−1</text>
+        <text x="305" y="259">1</text>
+        <text x="355" y="259">2</text>
+        <text x="405" y="259">3</text>
+        <text x="455" y="259">4</text>
+      </g>
+      <g font-size="9" text-anchor="end" fill="#333">
+        <text x="247" y="374">−5</text>
+        <text x="247" y="349">−4</text>
+        <text x="247" y="324">−3</text>
+        <text x="247" y="299">−2</text>
+        <text x="247" y="274">−1</text>
+        <text x="247" y="224">1</text>
+        <text x="247" y="199">2</text>
+        <text x="247" y="174">3</text>
+        <text x="247" y="149">4</text>
+        <text x="247" y="124">5</text>
+        <text x="247" y="99">6</text>
+        <text x="247" y="74">7</text>
+        <text x="247" y="49">8</text>
+        <text x="247" y="24">9</text>
+      </g>
+      <g stroke="#444" stroke-width="0.8">
+        <line x1="55"  y1="241" x2="55"  y2="249"/>
+        <line x1="105" y1="241" x2="105" y2="249"/>
+        <line x1="155" y1="241" x2="155" y2="249"/>
+        <line x1="205" y1="241" x2="205" y2="249"/>
+        <line x1="305" y1="241" x2="305" y2="249"/>
+        <line x1="355" y1="241" x2="355" y2="249"/>
+        <line x1="405" y1="241" x2="405" y2="249"/>
+        <line x1="455" y1="241" x2="455" y2="249"/>
+        <line x1="251" y1="370" x2="259" y2="370"/>
+        <line x1="251" y1="345" x2="259" y2="345"/>
+        <line x1="251" y1="320" x2="259" y2="320"/>
+        <line x1="251" y1="295" x2="259" y2="295"/>
+        <line x1="251" y1="270" x2="259" y2="270"/>
+        <line x1="251" y1="220" x2="259" y2="220"/>
+        <line x1="251" y1="195" x2="259" y2="195"/>
+        <line x1="251" y1="170" x2="259" y2="170"/>
+        <line x1="251" y1="145" x2="259" y2="145"/>
+        <line x1="251" y1="120" x2="259" y2="120"/>
+        <line x1="251" y1="95"  x2="259" y2="95"/>
+        <line x1="251" y1="70"  x2="259" y2="70"/>
+        <line x1="251" y1="45"  x2="259" y2="45"/>
+        <line x1="251" y1="20"  x2="259" y2="20"/>
+      </g>
+      <rect x="340" y="22" width="115" height="44" rx="4" fill="white" stroke="#888" stroke-width="1"/>
+      <text x="397" y="36"  font-size="9"  text-anchor="middle" fill="#555">Légende</text>
+      <line x1="350" y1="48" x2="375" y2="48" stroke="#888" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="380" y="52"  font-size="9" fill="#555">f(x) = …</text>
+      <line x1="350" y1="60" x2="375" y2="60" stroke="#888" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="380" y="64"  font-size="9" fill="#555">g(x) = …</text>
+    </svg>
+    </div>
+
+    <div class="question" style="margin-top:4px;"><div class="q-num">2.</div><div>Par <strong>lecture graphique</strong>, estimer les coordonn&eacute;es du point d&apos;intersection des deux droites. <em>(1 pt)</em></div></div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     EXERCICE 3 – PROBLÈME TYPE DNB
+════════════════════════════════════════ -->
+<div class="exercice">
+  <div class="ex-title">
+    <div class="ex-num">Exercice 3</div>
+    <div class="ex-name">Probl&egrave;me &ndash; type DNB</div>
+    <div class="ex-pts">8 points</div>
+  </div>
+  <div class="ex-body">
+
+    <div class="ctx-box">
+      <strong>Situation :</strong> Un artisan plombier propose deux formules tarifaires &agrave; ses clients :<br><br>
+      &bull; <strong>Formule A</strong> : 40 &euro; de frais fixes de d&eacute;placement, puis <strong>30 &euro; par heure</strong> de travail.<br>
+      &bull; <strong>Formule B</strong> : aucun frais de d&eacute;placement, mais <strong>50 &euro; par heure</strong> de travail.<br><br>
+      On note <strong><em>x</em></strong> le nombre d&apos;heures de travail (<em>x</em> &gt; 0).
+    </div>
+
+    <div class="question"><div class="q-num">1.</div><div>Exprimer le co&ucirc;t <strong>A(<em>x</em>)</strong> de la Formule A en fonction de <em>x</em>. <em>(1 pt)</em></div></div>
+
+    <div class="question"><div class="q-num">2.</div><div>Exprimer le co&ucirc;t <strong>B(<em>x</em>)</strong> de la Formule B en fonction de <em>x</em>. <em>(1 pt)</em></div></div>
+
+    <div class="question"><div class="q-num">3.</div><div>Quelle est la nature (lin&eacute;aire, affine) de chacune de ces deux fonctions ? Pr&eacute;ciser les coefficients. <em>(1 pt)</em></div></div>
+
+    <div class="question"><div class="q-num">4.</div><div>Calculer le co&ucirc;t de chaque formule pour <strong>2 heures</strong> de travail. Que remarque-t-on ? <em>(2 pts)</em></div></div>
+
+    <div class="question"><div class="q-num">5.</div><div>R&eacute;soudre alg&eacute;briquement l&apos;&eacute;quation A(<em>x</em>) = B(<em>x</em>). Interpr&eacute;ter le r&eacute;sultat dans le contexte. <em>(2 pts)</em></div></div>
+
+    <div class="question"><div class="q-num">6.</div><div>Pour un travail de <strong>3 heures</strong>, quelle formule est la moins ch&egrave;re ? Justifier par le calcul. <em>(1 pt)</em></div></div>
+
+  </div>
+</div>
+
+
+</body>
+</html>
