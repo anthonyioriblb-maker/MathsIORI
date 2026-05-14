@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Move-Item \"C:\\\\Users\\\\antho\\\\Documents\\\\GitHub\\\\MathsIORI\\\\4°\\\\chapitre7 - Geometrie dans l espace\\\\animation-sphere.html\" \"C:\\\\Users\\\\antho\\\\Documents\\\\GitHub\\\\MathsIORI\\\\3°\\\\chapitre11 - Geometrie dans l espace\\\\animation-sphere.html\")",
+      "PowerShell(Move-Item \"C:\\\\Users\\\\antho\\\\Documents\\\\GitHub\\\\MathsIORI\\\\4�\\\\chapitre7 - Geometrie dans l espace\\\\animation-sphere.html\" \"C:\\\\Users\\\\antho\\\\Documents\\\\GitHub\\\\MathsIORI\\\\3�\\\\chapitre11 - Geometrie dans l espace\\\\animation-sphere.html\")"
+    ]
+  }
+}
