@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Géométrie dans l'espace</title>
+    <link rel="stylesheet" href="../../styles.css?v=20250514">
+    <style>
+        .geo-center { text-align: center; margin: 15px 0; }
+        svg.geo { border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+        .img-cours { display: block; margin: 15px auto; max-width: 100%; height: auto; border-radius: 6px; }
+        .img-cours-small { display: block; margin: 10px auto; max-width: 380px; height: auto; border-radius: 6px; }
+        .calcul-outer { text-align: center; margin: 10px 0; }
+        .calcul { display: inline-block; text-align: left;
+            font-family: 'Times New Roman', serif; font-style: italic;
+            font-size: 1.05em; color: #1a1a6e; }
+        .calcul .ligne { display: block; margin: 3px 0; white-space: nowrap; }
+        .img-groupe { display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap; margin: 15px 0; }
+        .img-groupe img { max-width: 240px; height: auto; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <a href="../classe-3e.html" class="home-button" style="margin: 20px; display:inline-block;">&#8592; Retour au choix des chapitres</a>
+
+    <h1>Chapitre 11 : Géométrie dans l'espace</h1>
+
+    <!-- ══════════════════════════════════════════
+         I. SPHÈRE ET BOULE
+    ══════════════════════════════════════════ -->
+    <h2>Sphère et boule</h2>
+
+    <h3>Vocabulaire</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Soit O un point de l'espace et R un nombre positif :<br><br>
+        <ul>
+            <li>La <strong>sphère</strong> de centre O et de rayon R est l'ensemble des points M de l'espace tels que <span class="math">OM = R</span>.</li>
+            <li>La <strong>boule</strong> de centre O et de rayon R est l'ensemble des points M de l'espace tels que <span class="math">OM ≤ R</span>.</li>
+            <li>Le cercle de centre O et de rayon OA est appelé <strong>grand cercle</strong>.</li>
+        </ul>
+    </div>
+
+    <!-- Sphère SVG conservée -->
+    <div class="geo-center">
+        <svg class="geo" width="300" height="250">
+            <!-- Sphère -->
+            <circle cx="135" cy="120" r="100" fill="#eaf6ff" stroke="#2980b9" stroke-width="2"/>
+            <!-- Ellipse équatoriale -->
+            <ellipse cx="135" cy="120" rx="100" ry="26" fill="none" stroke="#2980b9" stroke-width="1.5" stroke-dasharray="5,4"/>
+            <!-- Rayon ON -->
+            <line x1="135" y1="120" x2="135" y2="20" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <!-- Rayon OS -->
+            <line x1="135" y1="120" x2="135" y2="220" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <!-- Rayon OA -->
+            <line x1="135" y1="120" x2="235" y2="120" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <!-- Rayon OB -->
+            <line x1="135" y1="120" x2="78" y2="52" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <!-- Rayon OC -->
+            <line x1="135" y1="120" x2="190" y2="190" stroke="#555" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <!-- Centre O (croix) -->
+            <line x1="131" y1="120" x2="139" y2="120" stroke="#333" stroke-width="2.5"/>
+            <line x1="135" y1="116" x2="135" y2="124" stroke="#333" stroke-width="2.5"/>
+            <text x="141" y="117" font-size="14" fill="#333" font-weight="bold">O</text>
+            <!-- Labels R sur les rayons -->
+            <text x="178" y="112" font-size="13" fill="#555" font-style="italic">R</text>
+            <text x="116" y="78" font-size="13" fill="#555" font-style="italic">R</text>
+            <text x="171" y="163" font-size="13" fill="#555" font-style="italic">R</text>
+            <text x="140" y="68" font-size="13" fill="#555" font-style="italic">R</text>
+            <text x="140" y="175" font-size="13" fill="#555" font-style="italic">R</text>
+            <!-- Point N (croix) — nord -->
+            <line x1="131" y1="20" x2="139" y2="20" stroke="#27ae60" stroke-width="2.5"/>
+            <line x1="135" y1="16" x2="135" y2="24" stroke="#27ae60" stroke-width="2.5"/>
+            <text x="141" y="14" font-size="13" fill="#27ae60" font-weight="bold">N</text>
+            <!-- Point S (croix) — sud -->
+            <line x1="131" y1="220" x2="139" y2="220" stroke="#27ae60" stroke-width="2.5"/>
+            <line x1="135" y1="216" x2="135" y2="224" stroke="#27ae60" stroke-width="2.5"/>
+            <text x="141" y="236" font-size="13" fill="#27ae60" font-weight="bold">S</text>
+            <!-- Point A (croix) — droite équateur -->
+            <line x1="231" y1="120" x2="239" y2="120" stroke="#e74c3c" stroke-width="2.5"/>
+            <line x1="235" y1="116" x2="235" y2="124" stroke="#e74c3c" stroke-width="2.5"/>
+            <text x="243" y="117" font-size="13" fill="#e74c3c" font-weight="bold">A</text>
+            <!-- Point B (croix) — haut gauche -->
+            <line x1="74" y1="52" x2="82" y2="52" stroke="#e74c3c" stroke-width="2.5"/>
+            <line x1="78" y1="48" x2="78" y2="56" stroke="#e74c3c" stroke-width="2.5"/>
+            <text x="50" y="47" font-size="13" fill="#e74c3c" font-weight="bold">B</text>
+            <!-- Point C (croix) — bas droite -->
+            <line x1="186" y1="190" x2="194" y2="190" stroke="#e74c3c" stroke-width="2.5"/>
+            <line x1="190" y1="186" x2="190" y2="194" stroke="#e74c3c" stroke-width="2.5"/>
+            <text x="196" y="208" font-size="13" fill="#e74c3c" font-weight="bold">C</text>
+        </svg>
+    </div>
+
+    <div class="remarque">
+        A, B, C, N, S sont des points de la sphère.<br>
+        O est le centre de cette sphère, de rayon <span class="math">R = OA = OB = OC</span>.<br>
+        Le segment [NS] est un <strong>diamètre</strong> de la sphère.
+    </div>
+
+    <h3>Aire d'une sphère et volume d'une boule</h3>
+
+    <div class="property">
+        <span style="color:red;">Propriétés :</span>
+        <ul>
+            <li>L'<strong>aire d'une sphère</strong> de rayon R est égale à <span class="math">4 × π × R²</span>.</li>
+            <li>Le <strong>volume d'une boule</strong> de rayon R est égal à
+                <span class="frac"><span class="num">4</span><span class="den">3</span></span>
+                <span class="math"> × π × R³</span>.
+            </li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong> Si R = 5 cm<br><br>
+        L'aire d'une sphère de rayon R est de :<br>
+        <div class="calcul-outer"><div class="calcul">
+            <span class="ligne"><span style="display:inline-block;width:1.2em;text-align:right;margin-right:0.3em;"><em>A</em></span>= 4 × π × R²</span>
+            <span class="ligne"><span style="display:inline-block;width:1.2em;"></span>= 4 × π × 5 cm × 5 cm</span>
+            <span class="ligne"><span style="display:inline-block;width:1.2em;"></span>= <strong>100π cm²</strong></span>
+        </div></div>
+        Le volume d'une boule de rayon R est de :<br>
+        <div class="calcul-outer"><div class="calcul">
+            <span class="ligne"><span style="display:inline-block;width:1.2em;text-align:right;margin-right:0.3em;"><em>V</em></span>= <span class="frac"><span class="num">4</span><span class="den">3</span></span> × π × R³</span>
+            <span class="ligne"><span style="display:inline-block;width:1.2em;"></span>= <span class="frac"><span class="num">4</span><span class="den">3</span></span> × π × 5 cm × 5 cm × 5 cm</span>
+            <span class="ligne"><span style="display:inline-block;width:1.2em;"></span>= <strong><span class="frac"><span class="num">500</span><span class="den">3</span></span>π cm³</strong></span>
+        </div></div>
+    </div>
+
+    <h3>Section d'une sphère par un plan</h3>
+
+    <div class="property">
+        <span style="color:red;">Propriété :</span> La section d'une sphère par un plan est un <strong>cercle</strong>.<br><br>
+        Le point H est le point d'intersection du plan et de la perpendiculaire au plan passant par O.<br>
+        La distance OH est appelée la <strong>distance de O au plan</strong>.<br>
+        Pour tout point M' de la section, le triangle OHM' est <strong>rectangle en H</strong>.
+    </div>
+
+    <img src="images/3-118.jpeg" alt="Section d'une sphère par un plan" class="img-cours-small">
+
+    <div class="remarque">
+        <span style="color:red;">Cas particuliers :</span>
+    </div>
+
+    <div class="img-groupe">
+        <div style="text-align:center;">
+            <img src="images/3-115.jpeg" alt="Grand cercle (OH=0)" style="max-width:240px; border-radius:6px;">
+            <div style="font-size:0.9em; color:#555; margin-top:5px;">Si le plan passe par O (<span class="math">OH = 0</span>) : <strong>grand cercle</strong></div>
+        </div>
+        <div style="text-align:center;">
+            <img src="images/3-116.jpeg" alt="Plan tangent (OH=R)" style="max-width:240px; border-radius:6px;">
+            <div style="font-size:0.9em; color:#555; margin-top:5px;">Si le plan est tangent à la sphère (<span class="math">OH = R</span>) : <strong>point H seulement</strong></div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         II. CUBES, PARALLÉLÉPIPÈDES ET CYLINDRES
+    ══════════════════════════════════════════ -->
+    <h2>Cubes, parallélépipèdes rectangles et cylindres de révolution</h2>
+
+    <h3>Volumes, aires latérales et patrons de ces solides</h3>
+
+    <img src="images/3-1112.jpeg" alt="Tableau volumes, patrons et formules — Prisme droit et Cylindre de révolution" class="img-cours">
+
+    <h3>Sections particulières de cubes, de parallélépipèdes rectangles et de cylindres de révolution</h3>
+
+    <div class="property">
+        <span style="color:red;">Propriétés :</span>
+        <ul>
+            <li>La section d'un <strong>cube</strong> par un plan <strong>parallèle à une face</strong> est un <strong>carré</strong>. (fig. 1)</li>
+            <li>La section d'un <strong>cube</strong> par un plan <strong>parallèle à une arête</strong> est un <strong>rectangle</strong>. (fig. 2)</li>
+            <li>La section d'un <strong>parallélépipède rectangle</strong> par un plan <strong>parallèle à une face</strong> est un <strong>rectangle</strong>. (fig. 3)</li>
+            <li>La section d'un <strong>parallélépipède rectangle</strong> par un plan <strong>parallèle à une arête</strong> est un <strong>rectangle</strong>. (fig. 4)</li>
+            <li>La section d'un <strong>cylindre de révolution</strong> par un plan <strong>parallèle à son axe</strong> est un <strong>rectangle</strong>. (fig. 5)</li>
+            <li>La section d'un <strong>cylindre de révolution</strong> par un plan <strong>perpendiculaire à son axe</strong> est un <strong>disque</strong>. (fig. 6)</li>
+        </ul>
+    </div>
+
+    <img src="images/3-1113.jpeg" alt="Figures 1 à 4 — sections de cubes et parallélépipèdes" class="img-cours">
+    <img src="images/3-1114.png" alt="Figures 5 et 6 — sections de cylindres" class="img-cours">
+
+    <!-- ══════════════════════════════════════════
+         III. PYRAMIDE ET CÔNE DE RÉVOLUTION
+    ══════════════════════════════════════════ -->
+    <h2>Pyramide et cône de révolution</h2>
+
+    <h3>Volumes, aires latérales et patrons de ces solides</h3>
+
+    <img src="images/3-1118.jpeg" alt="Tableau volumes, patrons et formules — Pyramide et Cône de révolution" class="img-cours">
+
+    <h3>Section d'une pyramide et d'un cône de révolution par un plan parallèle à la base</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        <ul>
+            <li>L'<strong>agrandissement de rapport k</strong> d'un objet est la transformation qui consiste à multiplier toutes les longueurs de cet objet par un nombre <span class="math">k</span> supérieur à 1.</li>
+            <li>La <strong>réduction de rapport k</strong> d'un objet est la transformation qui consiste à multiplier toutes les longueurs de cet objet par un nombre positif <span class="math">k</span> inférieur à 1.</li>
+        </ul>
+    </div>
+
+    <div class="property">
+        <span style="color:red;">Propriété :</span> Dans un agrandissement ou une réduction de rapport <span class="math">k</span>, les <strong>aires sont multipliées par k²</strong> et les <strong>volumes sont multipliés par k³</strong>.
+    </div>
+
+    <div class="property">
+        <span style="color:red;">Propriétés :</span>
+        <ul>
+            <li>La section d'une <strong>pyramide</strong> par un plan <strong>parallèle à la base</strong> est une <strong>réduction de la base</strong> de la pyramide.</li>
+            <li>La section d'un <strong>cône de révolution</strong> par un plan <strong>parallèle à la base</strong> est un <strong>disque</strong>.</li>
+        </ul>
+        La « petite pyramide » et le « petit cône » obtenus sont des réductions de la pyramide et du cône sectionnés. Le rapport de réduction k est égal au quotient d'une longueur de la petite pyramide ou du petit cône par la longueur correspondante de la pyramide ou du cône de départ.
+    </div>
+
+    <img src="images/3-1119.png" alt="Section d'un cône et d'une pyramide par un plan parallèle à la base" class="img-cours">
+
+    <div class="example">
+        Cette section est le cercle de centre O' et de rayon r et le coefficient de réduction est :
+        <span class="math">k = </span>
+        <span class="frac"><span class="num">AO'</span><span class="den">AO</span></span>
+        <br><br>
+        Cette section est le quadrilatère A'B'C'D' et le coefficient de réduction est :
+        <span class="math">k = </span>
+        <span class="frac"><span class="num">EA'</span><span class="den">EA</span></span>
+        <span class="math"> = </span>
+        <span class="frac"><span class="num">EC'</span><span class="den">EC</span></span>
+        <span class="math"> = </span>
+        <span class="frac"><span class="num">A'B'</span><span class="den">AB</span></span>
+        <span class="math"> = …</span>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         IV. REPÉRAGE DANS L'ESPACE
+    ══════════════════════════════════════════ -->
+    <h2>Repérage dans l'espace</h2>
+
+    <h3>Repère de l'espace</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Un <strong>repère de l'espace</strong> est formé d'un sommet d'un pavé droit et des 3 droites tracées sur les arêtes partant de ce sommet.<br><br>
+        On peut alors repérer n'importe quel point de ce pavé droit par <strong>3 nombres</strong> qui sont les <strong>coordonnées</strong> de ce point.<br>
+        Le premier sera son <strong>abscisse</strong>, le second son <strong>ordonnée</strong> et le troisième son <strong>altitude</strong> (ou sa côte).
+    </div>
+
+    <div style="display:flex; align-items:center; gap:30px; flex-wrap:wrap; margin: 15px 0;">
+        <div style="flex:1; min-width:280px;">
+            <div class="example">
+                ABCDEFGH est un parallélépipède rectangle.<br>
+                Le repère formé par les arêtes [EA], [EH] et [EF] a pour origine le point E. On le note <span class="math">(E ; A ; H ; F)</span>.<br><br>
+                Les coordonnées d'un point quelconque sont :<br>
+                <div style="text-align:center; margin: 8px 0;">
+                    <span style="color:#e74c3c;">abscisse</span> ;
+                    <span style="color:#2980b9;">ordonnée</span> ;
+                    <span style="color:#27ae60;">altitude</span>
+                </div>
+                <ul>
+                    <li>les coordonnées du point E sont : <span class="math">E(<span style="color:#e74c3c;">0</span> ; <span style="color:#2980b9;">0</span> ; <span style="color:#27ae60;">0</span>)</span> ;</li>
+                    <li>les coordonnées des points A, H, F sont :<br><br>
+                        <span class="math">A(<span style="color:#e74c3c;">1</span> ; <span style="color:#2980b9;">0</span> ; <span style="color:#27ae60;">0</span>) ; H(<span style="color:#e74c3c;">0</span> ; <span style="color:#2980b9;">1</span> ; <span style="color:#27ae60;">0</span>) ; F(<span style="color:#e74c3c;">0</span> ; <span style="color:#2980b9;">0</span> ; <span style="color:#27ae60;">1</span>)</span> ;
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div style="flex:0 0 auto;">
+            <img src="images/3-1123-figure.png" alt="Repère de l'espace — pavé droit ABCDEFGH" style="max-width:320px; height:auto;">
+        </div>
+    </div>
+
+    <h3>Se repérer sur une sphère</h3>
+
+    <div class="example">
+        La Terre a sensiblement la forme d'une boule de <strong>6 370 km de rayon</strong>.<br><br>
+        Les <strong>parallèles</strong> sont des cercles parallèles à l'Équateur. Ils découpent la Terre « en rondelles » à partir d'une ligne imaginaire appelée « l'équateur ». Ils donnent la <strong>latitude</strong> Nord ou Sud comprise entre 0° et 90° par rapport à l'Équateur.<br><br>
+        Les <strong>méridiens</strong> sont des demi-cercles qui relient les deux pôles. Ils découpent notre planète comme des quartiers d'orange à partir d'une autre ligne imaginaire appelée « le méridien de Greenwich ». Ils donnent la <strong>longitude</strong> Est ou Ouest comprise entre 0° et 180° par rapport au méridien de Greenwich.
+    </div>
+
+    <img src="images/3-1124.png" alt="Se repérer sur une sphère — latitude et longitude" class="img-cours-small">
+
+    <div class="remarque">
+        <span style="color:red;">Exemple :</span> Les coordonnées géographiques de New York sont : <strong>(74°O ; 41°N)</strong><br>
+        74°O est la <strong>longitude</strong> et 41°N est la <strong>latitude</strong>.
+    </div>
+
+    <br>
+    <div style="text-align:center; margin-top:20px;">
+        <a href="../classe-3e.html" style="color:#2980b9;">&#8592; Retour au choix des chapitres</a>
+    </div><br>
+
+</body>
+</html>
