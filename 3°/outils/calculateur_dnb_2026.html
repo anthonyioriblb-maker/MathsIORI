@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur DNB 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .section-points {
+            font-size: 16px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .matiere-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .matiere-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .matiere-item label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .matiere-item input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .matiere-item input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .epreuve-item {
+            display: grid;
+            grid-template-columns: 2fr 100px 100px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .epreuve-item label {
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .epreuve-item input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .epreuve-item input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .epreuve-coef {
+            text-align: center;
+            font-size: 13px;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .resultat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .resultat h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .score-box .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .score-box .value {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .mention {
+            font-size: 28px;
+            font-weight: bold;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .mentions-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+
+        .mentions-info div {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .btn-reset {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #1565c0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #856404;
+        }
+
+        @media (max-width: 600px) {
+            .matiere-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .score-display {
+                grid-template-columns: 1fr;
+            }
+
+            .epreuve-item {
+                grid-template-columns: 1fr;
+            }
+
+            .epreuve-coef {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Calculateur DNB 2026</h1>
+            <p>Nouveau système de notation sur 20 (60% épreuves / 40% contrôle continu)</p>
+        </div>
+
+        <div class="content">
+            <div class="warning-box">
+                ⚠️ <strong>Nouveau système à partir de 2026 !</strong> Le brevet n'est plus noté sur 800 points mais sur 20. Les épreuves finales comptent pour 60% et le contrôle continu pour 40%.
+            </div>
+
+            <!-- CONTRÔLE CONTINU -->
+            <div class="section">
+                <div class="section-title">
+                    <span>📚 Contrôle Continu (40%)</span>
+                    <span class="section-points" id="moyenneCC">0 / 20</span>
+                </div>
+                <div class="section-subtitle">
+                    Saisissez les moyennes annuelles de toutes vos disciplines de 3e (sur 20)
+                </div>
+                <div class="matiere-grid">
+                    <div class="matiere-item">
+                        <label for="francais">Français</label>
+                        <input type="number" id="francais" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="maths">Mathématiques</label>
+                        <input type="number" id="maths" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="histgeo">Histoire-Géographie</label>
+                        <input type="number" id="histgeo" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="emc">EMC</label>
+                        <input type="number" id="emc" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="lv1">LV1</label>
+                        <input type="number" id="lv1" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="lv2">LV2</label>
+                        <input type="number" id="lv2" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="svt">SVT</label>
+                        <input type="number" id="svt" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="physique">Physique-Chimie</label>
+                        <input type="number" id="physique" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="techno">Technologie</label>
+                        <input type="number" id="techno" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="eps">EPS</label>
+                        <input type="number" id="eps" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="arts">Arts plastiques</label>
+                        <input type="number" id="arts" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                    <div class="matiere-item">
+                        <label for="musique">Éducation musicale</label>
+                        <input type="number" id="musique" min="0" max="20" step="0.1" value="10" oninput="calculer()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ÉPREUVES FINALES -->
+            <div class="section">
+                <div class="section-title">
+                    <span>✍️ Épreuves Finales (60%)</span>
+                    <span class="section-points" id="moyenneEpreuves">0 / 20</span>
+                </div>
+                <div class="section-subtitle">
+                    Saisissez vos notes aux épreuves (sur 20) - la moyenne est pondérée par les coefficients
+                </div>
+                
+                <div class="epreuve-item">
+                    <label>Français</label>
+                    <input type="number" id="francaisEpreuve" min="0" max="20" step="0.5" value="10" oninput="calculer()">
+                    <div class="epreuve-coef">Coef. 2</div>
+                </div>
+                
+                <div class="epreuve-item">
+                    <label>Mathématiques</label>
+                    <input type="number" id="mathsEpreuve" min="0" max="20" step="0.5" value="10" oninput="calculer()">
+                    <div class="epreuve-coef">Coef. 2</div>
+                </div>
+                
+                <div class="epreuve-item">
+                    <label>Histoire-Géographie</label>
+                    <input type="number" id="histgeoEpreuve" min="0" max="20" step="0.5" value="10" oninput="calculer()">
+                    <div class="epreuve-coef">Coef. 1,5</div>
+                </div>
+                
+                <div class="epreuve-item">
+                    <label>EMC</label>
+                    <input type="number" id="emcEpreuve" min="0" max="20" step="0.5" value="10" oninput="calculer()">
+                    <div class="epreuve-coef">Coef. 0,5</div>
+                </div>
+                
+                <div class="epreuve-item">
+                    <label>Sciences (2 disciplines parmi 3)</label>
+                    <input type="number" id="sciencesEpreuve" min="0" max="20" step="0.5" value="10" oninput="calculer()">
+                    <div class="epreuve-coef">Coef. 2</div>
+                </div>
+                
+                <div class="epreuve-item">
+                    <label>Épreuve Orale</label>
+                    <input type="number" id="oral" min="0" max="20" step="0.5" value="10" oninput="calculer()">
+                    <div class="epreuve-coef">Coef. 2</div>
+                </div>
+            </div>
+
+            <!-- ENSEIGNEMENT FACULTATIF -->
+            <div class="section">
+                <div class="section-title">
+                    <span>🎵 Enseignement Facultatif (bonus)</span>
+                </div>
+                <div class="section-subtitle">
+                    Chorale, langues et cultures de l'Antiquité, etc. - Les points au-dessus de 10 s'ajoutent au total de vos notes avant le calcul de la moyenne de contrôle continu
+                </div>
+                <div class="epreuve-item">
+                    <label>Note de l'enseignement facultatif (/ 20)</label>
+                    <input type="number" id="option" min="0" max="20" step="0.5" value="10" oninput="calculer()">
+                    <div class="epreuve-coef" id="bonusOption">Bonus: 0</div>
+                </div>
+            </div>
+
+            <!-- RÉSULTAT -->
+            <div class="resultat">
+                <h2>📊 Résultat Final</h2>
+                
+                <div class="score-display">
+                    <div class="score-box">
+                        <div class="label">Contrôle Continu (40%)</div>
+                        <div class="value" id="affichageCC">10.00</div>
+                    </div>
+                    <div class="score-box">
+                        <div class="label">Épreuves (60%)</div>
+                        <div class="value" id="affichageEpreuves">10.00</div>
+                    </div>
+                    <div class="score-box">
+                        <div class="label">Bonus ajouté au CC</div>
+                        <div class="value" id="affichageBonus">0.00</div>
+                    </div>
+                    <div class="score-box">
+                        <div class="label">Moyenne Finale</div>
+                        <div class="value" id="affichageTotal">10.00</div>
+                    </div>
+                </div>
+
+                <div class="mention" id="mention">
+                    ✅ ADMIS
+                </div>
+
+                <div class="mentions-info">
+                    <div>≥ 10/20<br><strong>Admis</strong></div>
+                    <div>≥ 12/20<br><strong>Assez Bien</strong></div>
+                    <div>≥ 14/20<br><strong>Bien</strong></div>
+                    <div>≥ 16/20<br><strong>Très Bien</strong></div>
+                    <div>≥ 18/20<br><strong>TB + Félicitations</strong></div>
+                </div>
+
+                <button class="btn-reset" onclick="reinitialiser()">🔄 Réinitialiser</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculer() {
+            // Contrôle continu - moyenne de toutes les disciplines (coefficient 1 pour chaque)
+            const disciplinesCC = [
+                parseFloat(document.getElementById('francais').value) || 0,
+                parseFloat(document.getElementById('maths').value) || 0,
+                parseFloat(document.getElementById('histgeo').value) || 0,
+                parseFloat(document.getElementById('emc').value) || 0,
+                parseFloat(document.getElementById('lv1').value) || 0,
+                parseFloat(document.getElementById('lv2').value) || 0,
+                parseFloat(document.getElementById('svt').value) || 0,
+                parseFloat(document.getElementById('physique').value) || 0,
+                parseFloat(document.getElementById('techno').value) || 0,
+                parseFloat(document.getElementById('eps').value) || 0,
+                parseFloat(document.getElementById('arts').value) || 0,
+                parseFloat(document.getElementById('musique').value) || 0
+            ];
+            
+            let totalCC = disciplinesCC.reduce((a, b) => a + b, 0);
+            const nbDisciplines = disciplinesCC.length;
+
+            // Enseignement facultatif - seuls les points au-dessus de 10 s'ajoutent au TOTAL
+            const noteOption = parseFloat(document.getElementById('option').value) || 0;
+            const bonusOption = Math.max(0, noteOption - 10);
+            totalCC += bonusOption;
+            
+            // Moyenne CC = (total + bonus) / nombre de disciplines (plafonnée à 20)
+            const moyenneCC = Math.min(20, totalCC / nbDisciplines);
+
+            // Épreuves finales - moyenne pondérée par les coefficients
+            const francaisE = parseFloat(document.getElementById('francaisEpreuve').value) || 0;
+            const mathsE = parseFloat(document.getElementById('mathsEpreuve').value) || 0;
+            const histgeoE = parseFloat(document.getElementById('histgeoEpreuve').value) || 0;
+            const emcE = parseFloat(document.getElementById('emcEpreuve').value) || 0;
+            const sciencesE = parseFloat(document.getElementById('sciencesEpreuve').value) || 0;
+            const oralE = parseFloat(document.getElementById('oral').value) || 0;
+
+            const totalEpreuves = (francaisE * 2) + (mathsE * 2) + (histgeoE * 1.5) + (emcE * 0.5) + (sciencesE * 2) + (oralE * 2);
+            const totalCoefficients = 2 + 2 + 1.5 + 0.5 + 2 + 2; // = 10
+            const moyenneEpreuves = totalEpreuves / totalCoefficients;
+
+            // Moyenne finale (40% CC avec bonus + 60% Épreuves)
+            const moyenneTotale = (moyenneCC * 0.4) + (moyenneEpreuves * 0.6);
+
+            // Affichage
+            document.getElementById('moyenneCC').textContent = moyenneCC.toFixed(2) + ' / 20';
+            document.getElementById('moyenneEpreuves').textContent = moyenneEpreuves.toFixed(2) + ' / 20';
+            
+            document.getElementById('affichageCC').textContent = moyenneCC.toFixed(2);
+            document.getElementById('affichageEpreuves').textContent = moyenneEpreuves.toFixed(2);
+            document.getElementById('affichageBonus').textContent = bonusOption.toFixed(2);
+            document.getElementById('affichageTotal').textContent = moyenneTotale.toFixed(2);
+            document.getElementById('bonusOption').textContent = 'Bonus: ' + bonusOption.toFixed(1);
+
+            // Mention
+            let mention = '';
+            if (moyenneTotale < 10) {
+                mention = '❌ NON ADMIS';
+            } else if (moyenneTotale < 12) {
+                mention = '✅ ADMIS';
+            } else if (moyenneTotale < 14) {
+                mention = '🎖️ MENTION ASSEZ BIEN';
+            } else if (moyenneTotale < 16) {
+                mention = '🏅 MENTION BIEN';
+            } else if (moyenneTotale < 18) {
+                mention = '🏆 MENTION TRÈS BIEN';
+            } else {
+                mention = '🌟 MENTION TRÈS BIEN AVEC FÉLICITATIONS DU JURY';
+            }
+            
+            document.getElementById('mention').textContent = mention;
+        }
+
+        function reinitialiser() {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => input.value = 10);
+            calculer();
+        }
+
+        // Initialisation
+        calculer();
+    </script>
+</body>
+</html>

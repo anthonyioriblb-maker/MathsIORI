@@ -48,6 +48,34 @@
             --chapter-gradient-29: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
             --chapter-gradient-30: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
         }
+        .outils-section {
+            margin: 30px 0 10px 0;
+        }
+        .outils-section h2 {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .outil-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            color: #333;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(247,151,30,0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .outil-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(247,151,30,0.5);
+        }
+        .outil-card .outil-emoji { font-size: 1.5rem; }
     </style>
 </head>
 <body>
@@ -57,6 +85,14 @@
 
         <div class="chapters" id="chaptersContainer">
             <!-- Les chapitres seront générés automatiquement par JavaScript -->
+        </div>
+
+        <div class="outils-section">
+            <h2>🎓 Outils Brevet</h2>
+            <a href="outils/calculateur_dnb_2026.html" class="outil-card">
+                <span class="outil-emoji">🧮</span>
+                <span>Calculateur de note DNB 2026</span>
+            </a>
         </div>
 
         <a href="../index.html" class="home-button">← Retour à l'accueil</a>
