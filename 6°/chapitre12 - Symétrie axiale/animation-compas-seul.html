@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Symétrique d'un point — compas seul</title>
+    <style>
+        body { margin: 0; padding: 0; background: #fafafa;
+               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .container { max-width: 900px; margin: 0 auto; padding: 10px; }
+        .step-text {
+            background: #e3f2fd; border-left: 5px solid #2196f3;
+            padding: 15px 20px; margin: 15px 0; color: #1565c0;
+            font-size: 17px; min-height: 60px; font-weight: 500;
+            display: flex; align-items: center;
+        }
+        svg { display: block; margin: 0 auto; background: #fafafa;
+              border: 2px solid #ddd; border-radius: 8px; }
+        .controls { text-align: center; margin: 20px 0; }
+        button {
+            background: #3498db; color: white; border: none;
+            padding: 14px 28px; margin: 8px; border-radius: 6px;
+            cursor: pointer; font-size: 17px; font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: all 0.3s;
+        }
+        button:hover { background: #2980b9; transform: translateY(-2px); }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; transform: none; }
+        button.reset { background: #e74c3c; }
+        button.reset:hover { background: #c0392b; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        Cliquez sur « Étape suivante » pour voir la construction étape par étape.
+    </div>
+
+    <!--
+        GÉOMÉTRIE :
+        (d) verticale à x=425.
+        M=(175,310)   M'=(675,310)  (symétriques par rapport à d)
+
+        A=(425,110) sur (d)   B=(425,450) sur (d)
+
+        AM = sqrt((425-175)²+(110-310)²) = sqrt(250²+200²) = sqrt(62500+40000) = sqrt(102500) ≈ 320.2
+        BM = sqrt((425-175)²+(450-310)²) = sqrt(250²+140²) = sqrt(62500+19600) = sqrt(82100) ≈ 286.5
+
+        Vérif:
+        AM' = sqrt((675-425)²+(310-110)²) = sqrt(250²+200²) = 320.2 ✓
+        BM' = sqrt((675-425)²+(310-450)²) = sqrt(250²+140²) = 286.5 ✓
+
+        Arc A : centre A=(425,110), r=320.2
+          angle→M  : atan2(310-110, 175-425) = atan2(200,-250) ≈ 141.3° ≈ 2.467 rad
+          angle→M' : atan2(310-110, 675-425) = atan2(200, 250) ≈  38.7° ≈ 0.675 rad
+          Arc DÉCROISSANT (2.467→0.675), passe par π/2 (bas) : y=110+320.2=430.2 ✓
+
+        Arc B : centre B=(425,450), r=286.5
+          angle→M  : atan2(310-450, 175-425) = atan2(-140,-250) ≈ -150.8° ≈ -2.632 rad
+          angle→M' : atan2(310-450, 675-425) = atan2(-140, 250) ≈  -29.2° ≈ -0.510 rad
+          Arc CROISSANT (-2.632→-0.510), passe par -π/2 (haut) : y=450-286.5=163.5 ✓
+    -->
+    <svg id="anim" width="850" height="500" viewBox="0 0 850 500">
+
+        <!-- ══ TOUJOURS VISIBLES ══ -->
+        <!-- Axe (d) -->
+        <line x1="425" y1="10" x2="425" y2="490" stroke="#333" stroke-width="2.5"/>
+        <text x="430" y="26" font-size="18" fill="#333" font-weight="bold">(d)</text>
+
+        <!-- Point M -->
+        <line x1="169" y1="304" x2="181" y2="316" stroke="#2980b9" stroke-width="3"/>
+        <line x1="181" y1="304" x2="169" y2="316" stroke="#2980b9" stroke-width="3"/>
+        <text x="148" y="308" font-size="22" fill="#2980b9" font-weight="bold">M</text>
+
+        <!-- ══ ÉTAPE 1 : points A et B sur (d) ══ -->
+        <g id="ptA" opacity="0">
+            <circle cx="425" cy="110" r="5" fill="#888"/>
+            <text x="432" y="114" font-size="18" fill="#888" font-weight="bold">A</text>
+        </g>
+        <g id="ptB" opacity="0">
+            <circle cx="425" cy="450" r="5" fill="#888"/>
+            <text x="432" y="454" font-size="18" fill="#888" font-weight="bold">B</text>
+        </g>
+
+        <!-- ══ ARC 1 (centre A, rouge) ══ -->
+        <path id="arc1" d="" stroke="#e74c3c" stroke-width="2.5" fill="none" opacity="0"/>
+
+        <!-- ══ ARC 2 (centre B, vert) ══ -->
+        <path id="arc2" d="" stroke="#27ae60" stroke-width="2.5" fill="none" opacity="0"/>
+
+        <!-- ══ POINT M' ══ -->
+        <g id="pointMp" opacity="0">
+            <line x1="669" y1="304" x2="681" y2="316" stroke="#e74c3c" stroke-width="3"/>
+            <line x1="681" y1="304" x2="669" y2="316" stroke="#e74c3c" stroke-width="3"/>
+            <text x="686" y="308" font-size="22" fill="#e74c3c" font-weight="bold">M'</text>
+        </g>
+
+        <!-- ══ COMPAS ══ -->
+        <g id="compass" opacity="0">
+            <circle id="compassHinge" cx="0" cy="0" r="10"
+                    fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+            <line id="compassPointBranch" x1="0" y1="0" x2="-5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <circle id="compassPointTip" cx="-5" cy="60" r="6"
+                    fill="#222" stroke="#000" stroke-width="2"/>
+            <line id="compassPencilBranch" x1="0" y1="0" x2="5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <rect id="compassPencilBody" x="0" y="50" width="10" height="25"
+                  fill="#ff4444" stroke="#cc0000" stroke-width="2" rx="2"/>
+            <polygon id="compassPencilTip" points="5,75 0,85 10,85" fill="#333"/>
+            <circle id="compassPencilPoint" cx="5" cy="85" r="3" fill="#000"/>
+        </g>
+
+    </svg>
+
+    <div class="controls">
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+</div>
+
+<script>
+// ── Coordonnées ──────────────────────────────────────────
+const A  = {x: 425, y: 110};
+const B  = {x: 425, y: 450};
+const M  = {x: 175, y: 310};
+const Mp = {x: 675, y: 310};
+
+const R_A = Math.hypot(M.x - A.x, M.y - A.y);  // ≈ 320.2
+const R_B = Math.hypot(M.x - B.x, M.y - B.y);  // ≈ 286.5
+
+// Angles vers M et M' depuis A et B
+const angA_M  = Math.atan2(M.y  - A.y, M.x  - A.x);  // ≈ 2.467 rad
+const angA_Mp = Math.atan2(Mp.y - A.y, Mp.x - A.x);  // ≈ 0.675 rad
+const angB_M  = Math.atan2(M.y  - B.y, M.x  - B.x);  // ≈ -2.632 rad
+const angB_Mp = Math.atan2(Mp.y - B.y, Mp.x - B.x);  // ≈ -0.510 rad
+
+let currentStep = 0;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour voir la construction étape par étape.',
+    '<strong style="color:#555;font-size:20px;">1.</strong> Je place deux points A et B sur la droite (d).',
+    '<strong style="color:#e74c3c;font-size:20px;">2.</strong> Je trace un arc de cercle de <strong>centre A</strong> passant par M.',
+    '<strong style="color:#27ae60;font-size:20px;">3.</strong> Je trace un arc de cercle de <strong>centre B</strong> passant par M.',
+    '<strong style="color:#27ae60;font-size:20px;">4.</strong> Les deux arcs se coupent en M\'. M\' est le symétrique de M par rapport à (d). ✓'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const el = id => document.getElementById(id);
+
+// ── Compas ───────────────────────────────────────────────
+function setCompass(tip, pen) {
+    const hx = (tip.x + pen.x) / 2, hy = (tip.y + pen.y) / 2;
+    el('compassHinge').setAttribute('cx', hx);
+    el('compassHinge').setAttribute('cy', hy);
+    el('compassPointBranch').setAttribute('x1', hx);
+    el('compassPointBranch').setAttribute('y1', hy);
+    el('compassPointBranch').setAttribute('x2', tip.x);
+    el('compassPointBranch').setAttribute('y2', tip.y);
+    el('compassPointTip').setAttribute('cx', tip.x);
+    el('compassPointTip').setAttribute('cy', tip.y);
+    el('compassPencilBranch').setAttribute('x1', hx);
+    el('compassPencilBranch').setAttribute('y1', hy);
+    el('compassPencilBranch').setAttribute('x2', pen.x);
+    el('compassPencilBranch').setAttribute('y2', pen.y);
+    const ang = Math.atan2(pen.y - hy, pen.x - hx) * 180 / Math.PI + 90;
+    el('compassPencilBody').setAttribute('transform',
+        `translate(${pen.x},${pen.y - 15}) rotate(${ang})`);
+    el('compassPencilTip').setAttribute('transform',
+        `translate(${pen.x - 5},${pen.y}) rotate(${ang} 5 0)`);
+    el('compassPencilPoint').setAttribute('cx', pen.x);
+    el('compassPencilPoint').setAttribute('cy', pen.y);
+}
+
+async function compassOpen(tip, target, duration) {
+    const N = 30;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        setCompass(tip, {
+            x: tip.x + (target.x - tip.x) * t,
+            y: tip.y + (target.y - tip.y) * t
+        });
+        await sleep(duration / N);
+    }
+}
+
+async function compassMove(t1, p1, t2, p2, duration) {
+    const N = 40;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        setCompass(
+            {x: t1.x + (t2.x - t1.x) * t, y: t1.y + (t2.y - t1.y) * t},
+            {x: p1.x + (p2.x - p1.x) * t, y: p1.y + (p2.y - p1.y) * t}
+        );
+        await sleep(duration / N);
+    }
+}
+
+// Sweep du compas sur un arc et dessin progressif
+async function compassSweep(arcId, tip, radius, a1, a2, duration) {
+    const N = 70;
+    let path = '';
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        const pen = {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        };
+        if (i === 0) path = `M ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        else path += ` L ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        setCompass(tip, pen);
+        el(arcId).setAttribute('d', path);
+        el(arcId).style.opacity = '1';
+        await sleep(duration / N);
+    }
+}
+
+// ── ÉTAPES ───────────────────────────────────────────────
+async function nextStep() {
+    const txt = el('stepText');
+    const btn = el('nextBtn');
+    if (currentStep >= 4) return;
+    btn.disabled = true;
+
+    // 1 : placer A et B
+    if (currentStep === 0) {
+        txt.innerHTML = stepTexts[1];
+        el('ptA').style.opacity = '1';
+        el('ptB').style.opacity = '1';
+        await sleep(1200);
+        currentStep = 1;
+    }
+
+    // 2 : compas centre A, sweep de M à M' → arc1 (rouge)
+    // Arc A : a1=angA_M≈2.467 → a2=angA_Mp≈0.675 (décroissant, passe par le bas)
+    else if (currentStep === 1) {
+        txt.innerHTML = stepTexts[2];
+        el('compass').style.opacity = '1';
+        setCompass(A, A);
+        await sleep(400);
+        await compassOpen(A, M, 1200);   // ouvre à l'écartement AM
+        await sleep(600);
+        await compassSweep('arc1', A, R_A, angA_M, angA_Mp, 2500);
+        await sleep(800);
+        currentStep = 2;
+    }
+
+    // 3 : compas passe en B, sweep de M à M' → arc2 (vert)
+    // Arc B : a1=angB_M≈-2.632 → a2=angB_Mp≈-0.510 (croissant, passe par le haut)
+    else if (currentStep === 2) {
+        txt.innerHTML = stepTexts[3];
+        // Déplacer le compas de (A→M) à (B→M) en gardant le crayon sur M
+        const penAtM_fromA = M;
+        await compassMove(A, penAtM_fromA, B, M, 1400);
+        await sleep(500);
+        await compassSweep('arc2', B, R_B, angB_M, angB_Mp, 2500);
+        await sleep(800);
+        currentStep = 3;
+    }
+
+    // 4 : M' apparaît, compas disparaît
+    else if (currentStep === 3) {
+        txt.innerHTML = stepTexts[4];
+        txt.style.background      = '#c8e6c9';
+        txt.style.borderLeftColor = '#4caf50';
+        txt.style.color           = '#2e7d32';
+        el('compass').style.opacity = '0';
+        await sleep(400);
+        el('pointMp').style.opacity = '1';
+        await sleep(400);
+        currentStep = 4;
+        btn.textContent = '✓ Terminé';
+    }
+
+    btn.disabled = false;
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetAnimation() {
+    ['ptA','ptB','arc1','arc2','pointMp','compass'].forEach(id => {
+        el(id).style.opacity = '0';
+    });
+    ['arc1','arc2'].forEach(id => el(id).setAttribute('d', ''));
+
+    const txt = el('stepText');
+    txt.innerHTML             = stepTexts[0];
+    txt.style.background      = '#e3f2fd';
+    txt.style.borderLeftColor = '#2196f3';
+    txt.style.color           = '#1565c0';
+
+    const btn = el('nextBtn');
+    btn.textContent = '▶ Étape suivante';
+    btn.disabled    = false;
+    currentStep     = 0;
+}
+</script>
+</body>
+</html>
