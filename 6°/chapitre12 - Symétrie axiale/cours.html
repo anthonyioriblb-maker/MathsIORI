@@ -89,11 +89,18 @@
                      à gauche-haut et droite-bas. Les deux petits cercles indiquent
                      les points de la droite : ~(105,82) et ~(242,162) dans l'image originale,
                      soit ~(97,75) et ~(222,149) en 320px large. -->
+                <!--
+                    Pingouins à env. (75,80) et (225,155) dans l'affichage 320×227.
+                    Milieu : (150, 117).
+                    Direction du segment : (150, 75) → direction perp. : (-1, 2) normalisée.
+                    Axe : (150, 117) ± t*(-0.447, 0.894)
+                      t=−115 → (201, 14)
+                      t=+115 → (99,  220)
+                -->
                 <svg viewBox="0 0 320 227" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Droite (d) oblique passant par les deux repères -->
-                    <line x1="72" y1="50" x2="252" y2="190"
+                    <line x1="201" y1="10" x2="97" y2="225"
                           stroke="#e74c3c" stroke-width="2.5"/>
-                    <text x="256" y="190" font-size="15" fill="#e74c3c" font-weight="bold">(d)</text>
+                    <text x="78" y="224" font-size="15" fill="#e74c3c" font-weight="bold">(d)</text>
                 </svg>
             </div>
         </div>
@@ -154,52 +161,14 @@
                 I = pied de la perpendiculaire (sur (Δ)).
                 B est sur (Δ) : son symétrique est lui-même.
             -->
+            <!--
+                (Δ) de (20,120) à (360,80) – légèrement pentue.
+                A=(120,50). I=(127,107) pied perp. A'=(134,164).
+                B sur (Δ) : son symétrique est lui-même.
+            -->
             <svg width="380" height="220" viewBox="0 0 380 220" style="background:white; border-radius:8px; border:2px solid #ddd;">
-                <!-- Axe (Δ) : de (80,10) à (300,200) -->
-                <line x1="80" y1="10" x2="300" y2="200" stroke="#333" stroke-width="2"/>
-                <text x="304" y="204" font-size="15" fill="#333">(Δ)</text>
 
-                <!-- Direction de (Δ) : vecteur (220,190), normalisé ≈ (0.757, 0.654) -->
-                <!-- Perpendiculaire à (Δ) : direction (-0.654, 0.757) -->
-
-                <!-- Point A à (60, 100) -->
-                <!-- Projection de A sur (Δ) :
-                     Paramétrise (Δ) comme P(t) = (80,10) + t*(220,190)
-                     |(220,190)|² = 220²+190² = 48400+36100 = 84500
-                     t = ((60-80)*220 + (100-10)*190) / 84500
-                       = ((-20)*220 + 90*190) / 84500
-                       = (-4400 + 17100) / 84500
-                       = 12700 / 84500 ≈ 0.1503
-                     I = (80 + 0.1503*220, 10 + 0.1503*190) = (80+33.1, 10+28.6) = (113.1, 38.6) ≈ (113, 39)
-                -->
-                <!-- A' = 2*I - A = (2*113-60, 2*39-100) = (166, -22) → hors cadre -->
-                <!-- On recale : prenons A=(60,130) -->
-                <!-- t = ((60-80)*220 + (130-10)*190) / 84500
-                       = (-4400 + 22800) / 84500 = 18400/84500 ≈ 0.2178
-                     I = (80+47.9, 10+41.4) = (127.9, 51.4) ≈ (128, 51)
-                     A' = (196, -28) → encore hors cadre. La droite monte trop vite.
-                -->
-                <!-- Essayons (Δ) moins pentue : de (40,20) à (340,190) -->
-                <!-- Direction (300,170), |(300,170)|² = 90000+28900 = 118900 -->
-                <!-- Point A=(60,150) -->
-                <!-- t = ((60-40)*300 + (150-20)*170) / 118900
-                       = (6000 + 22100) / 118900 = 28100/118900 ≈ 0.2363
-                     I = (40+70.9, 20+40.2) = (110.9, 60.2) ≈ (111, 60)
-                     A' = (162, -30) → encore hors cadre... -->
-                <!-- Je vais utiliser une droite (Δ) quasi-horizontale légèrement pentue -->
-                <!-- (Δ) de (20,120) à (360,80) – pente négative légère -->
-                <!-- Direction (340,-40), |(340,-40)|² = 115600+1600=117200, norme≈342.2 -->
-                <!-- Point A=(120,50) -->
-                <!-- t = ((120-20)*340+(50-120)*(-40))/117200
-                       = (34000+2800)/117200 = 36800/117200 ≈ 0.3140
-                     I = (20+106.8, 120-12.6) = (126.8, 107.4) ≈ (127,107)
-                     A' = (134, 164) ✓ dans le cadre
-                     Vect AI = (127-120, 107-50) = (7, 57), longueur ≈ 57.4
-                     Angle droit en I : direction perp = (40,340)/342.2 ≈ (0.117, 0.993)
-                -->
-
-                <!-- Affichons cette configuration proprement -->
-                <!-- (Δ) de (20,120) à (360,80) -->
+                <!-- Axe (Δ) -->
                 <line x1="20" y1="120" x2="360" y2="80" stroke="#333" stroke-width="2"/>
                 <text x="362" y="82" font-size="15" fill="#333">(Δ)</text>
 
