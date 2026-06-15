@@ -260,74 +260,29 @@
     <div class="example">
         <strong>Exemple :</strong> Construire l'image A'B'C' du triangle ABC par la symétrie d'axe (d).<br><br>
         <div class="img-center">
-            <!-- Triangle ABC à gauche, axe (d) vertical, A'B'C' à droite -->
+            <!--
+                Axe (d) oblique : de (320,20) à (60,260)
+                Direction : (-260, 240), normalisée : u=(-0.734, 0.679)
+                Triangle ABC à droite de l'axe :
+                  A=(260,40), B=(370,80), C=(340,180)
+            -->
             <svg width="420" height="280" viewBox="0 0 420 280"
                  style="background:white; border-radius:8px; border:2px solid #ddd;">
 
-                <!-- Axe (d) vertical à x=210 -->
-                <line x1="210" y1="10" x2="210" y2="270" stroke="#333" stroke-width="2"/>
-                <text x="214" y="24" font-size="15" fill="#333">(d)</text>
+                <!-- Axe (d) oblique -->
+                <line x1="320" y1="20" x2="60" y2="260" stroke="#333" stroke-width="2.5"/>
+                <text x="322" y="18" font-size="16" fill="#333" font-weight="bold">(d)</text>
 
-                <!-- Triangle ABC (gauche) -->
-                <!-- A=(80,40), B=(50,230), C=(170,230) -->
-                <polygon points="80,40 50,230 170,230"
-                         fill="rgba(41,128,185,0.12)" stroke="#2980b9" stroke-width="2"/>
-                <!-- Croix et labels -->
-                <line x1="74" y1="34" x2="86" y2="46" stroke="#2980b9" stroke-width="2"/>
-                <line x1="86" y1="34" x2="74" y2="46" stroke="#2980b9" stroke-width="2"/>
-                <text x="62" y="34" font-size="16" font-weight="bold" fill="#2980b9">A</text>
-
-                <line x1="44" y1="224" x2="56" y2="236" stroke="#2980b9" stroke-width="2"/>
-                <line x1="56" y1="224" x2="44" y2="236" stroke="#2980b9" stroke-width="2"/>
-                <text x="28" y="248" font-size="16" font-weight="bold" fill="#2980b9">B</text>
-
-                <line x1="164" y1="224" x2="176" y2="236" stroke="#2980b9" stroke-width="2"/>
-                <line x1="176" y1="224" x2="164" y2="236" stroke="#2980b9" stroke-width="2"/>
-                <text x="172" y="248" font-size="16" font-weight="bold" fill="#2980b9">C</text>
-
-                <!-- Traits perpendiculaires (pointillés horizontaux) -->
-                <line x1="80" y1="40"  x2="340" y2="40"  stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
-                <line x1="50" y1="230" x2="370" y2="230" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
-                <line x1="170" y1="230" x2="250" y2="230" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
-
-                <!-- Marques égalité AA' -->
-                <line x1="143" y1="34" x2="149" y2="46" stroke="#555" stroke-width="1.5"/>
-                <line x1="149" y1="34" x2="143" y2="46" stroke="#555" stroke-width="1.5"/>
-                <line x1="271" y1="34" x2="277" y2="46" stroke="#555" stroke-width="1.5"/>
-                <line x1="277" y1="34" x2="271" y2="46" stroke="#555" stroke-width="1.5"/>
-
-                <!-- Marques égalité BB' -->
-                <line x1="126" y1="224" x2="132" y2="236" stroke="#555" stroke-width="1.5"/>
-                <line x1="132" y1="224" x2="126" y2="236" stroke="#555" stroke-width="1.5"/>
-                <line x1="284" y1="224" x2="290" y2="236" stroke="#555" stroke-width="1.5"/>
-                <line x1="290" y1="224" x2="284" y2="236" stroke="#555" stroke-width="1.5"/>
-
-                <!-- Marques égalité CC' -->
-                <line x1="186" y1="224" x2="192" y2="236" stroke="#555" stroke-width="1.5"/>
-                <line x1="192" y1="224" x2="186" y2="236" stroke="#555" stroke-width="1.5"/>
-                <line x1="228" y1="224" x2="234" y2="236" stroke="#555" stroke-width="1.5"/>
-                <line x1="234" y1="224" x2="228" y2="236" stroke="#555" stroke-width="1.5"/>
-
-                <!-- Triangle A'B'C' (droite — symétrique par rapport à x=210) -->
-                <!-- A'=(340,40), B'=(370,230), C'=(250,230) -->
-                <polygon points="340,40 370,230 250,230"
-                         fill="rgba(231,76,60,0.12)" stroke="#e74c3c" stroke-width="2"/>
-                <line x1="334" y1="34" x2="346" y2="46" stroke="#e74c3c" stroke-width="2"/>
-                <line x1="346" y1="34" x2="334" y2="46" stroke="#e74c3c" stroke-width="2"/>
-                <text x="350" y="34" font-size="16" font-weight="bold" fill="#e74c3c">A'</text>
-
-                <line x1="364" y1="224" x2="376" y2="236" stroke="#e74c3c" stroke-width="2"/>
-                <line x1="376" y1="224" x2="364" y2="236" stroke="#e74c3c" stroke-width="2"/>
-                <text x="378" y="248" font-size="16" font-weight="bold" fill="#e74c3c">B'</text>
-
-                <line x1="244" y1="224" x2="256" y2="236" stroke="#e74c3c" stroke-width="2"/>
-                <line x1="256" y1="224" x2="244" y2="236" stroke="#e74c3c" stroke-width="2"/>
-                <text x="226" y="248" font-size="16" font-weight="bold" fill="#e74c3c">C'</text>
+                <!-- Triangle ABC -->
+                <polygon points="220,80 330,120 300,220"
+                         fill="rgba(41,128,185,0.15)" stroke="#2980b9" stroke-width="2.5"/>
+                <text x="222" y="74" font-size="18" font-weight="bold" fill="#2980b9">A</text>
+                <text x="334" y="122" font-size="18" font-weight="bold" fill="#2980b9">B</text>
+                <text x="304" y="236" font-size="18" font-weight="bold" fill="#2980b9">C</text>
 
             </svg>
         </div>
         On construit les images A', B' et C' de chaque sommet, puis on relie ces points.
-        Les figures F₁ et F₂ sont symétriques par rapport à (d).
     </div>
 
     <h3>2) Symétrique d'un cercle</h3>
@@ -339,43 +294,30 @@
     </div>
 
     <div class="example">
-        <strong>Exemple :</strong>
+        <strong>Exemple :</strong> Construire le symétrique du cercle (C) par rapport à (d).<br>
         <div class="img-center" style="margin-top:10px;">
-            <svg width="400" height="230" viewBox="0 0 400 230"
+            <!--
+                Axe (d) oblique : de (80,20) à (340,240)
+                Cercle (C) : centre O=(270,60), rayon=45
+                (O est à droite de l'axe)
+            -->
+            <svg width="420" height="280" viewBox="0 0 420 280"
                  style="background:white; border-radius:8px; border:2px solid #ddd;">
 
-                <!-- Axe (d) vertical à x=200 -->
-                <line x1="200" y1="10" x2="200" y2="220" stroke="#333" stroke-width="2"/>
-                <text x="204" y="24" font-size="15" fill="#333">(d)</text>
+                <!-- Axe (d) oblique -->
+                <line x1="80" y1="20" x2="340" y2="240" stroke="#333" stroke-width="2.5"/>
+                <text x="344" y="242" font-size="16" fill="#333" font-weight="bold">(d)</text>
 
-                <!-- Cercle (C) : centre O=(95,115), rayon=60 -->
-                <circle cx="95" cy="115" r="60"
-                        fill="rgba(41,128,185,0.10)" stroke="#2980b9" stroke-width="2"/>
-                <circle cx="95" cy="115" r="3" fill="#2980b9"/>
-                <text x="76" y="112" font-size="14" font-weight="bold" fill="#2980b9">O</text>
-                <text x="30" y="64" font-size="14" fill="#2980b9">(C)</text>
-
-                <!-- Cercle (C') : centre O'=(305,115), rayon=60 -->
-                <circle cx="305" cy="115" r="60"
-                        fill="rgba(231,76,60,0.10)" stroke="#e74c3c" stroke-width="2"/>
-                <circle cx="305" cy="115" r="3" fill="#e74c3c"/>
-                <text x="310" y="112" font-size="14" font-weight="bold" fill="#e74c3c">O'</text>
-                <text x="348" y="64" font-size="14" fill="#e74c3c">(C')</text>
-
-                <!-- Trait OO' et angle droit sur (d) -->
-                <line x1="95" y1="115" x2="305" y2="115"
-                      stroke="#aaa" stroke-width="1.2" stroke-dasharray="4,3"/>
-                <rect x="192" y="107" width="16" height="16"
-                      fill="white" stroke="#555" stroke-width="1.5"/>
-
-                <!-- Marques égalité OI = IO' -->
-                <line x1="144" y1="109" x2="150" y2="121" stroke="#555" stroke-width="1.8"/>
-                <line x1="250" y1="109" x2="256" y2="121" stroke="#555" stroke-width="1.8"/>
+                <!-- Cercle (C) -->
+                <circle cx="310" cy="80" r="50"
+                        fill="rgba(41,128,185,0.15)" stroke="#2980b9" stroke-width="2.5"/>
+                <circle cx="310" cy="80" r="4" fill="#2980b9"/>
+                <text x="314" y="77" font-size="16" font-weight="bold" fill="#2980b9">O</text>
+                <text x="326" y="48" font-size="16" fill="#2980b9" font-weight="bold">(C)</text>
 
             </svg>
         </div>
-        Les cercles (C) et (C') ont le <strong>même rayon</strong>.
-        Les centres O et O' sont symétriques par rapport à (d).
+        Le cercle symétrique a pour centre O' (symétrique de O) et a le <strong>même rayon</strong>.
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
