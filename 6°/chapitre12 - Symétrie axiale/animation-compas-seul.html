@@ -83,11 +83,13 @@
 
         <!-- ══ ÉTAPE 1 : points A et B sur (d) ══ -->
         <g id="ptA" opacity="0">
-            <circle cx="342" cy="84" r="5" fill="#888"/>
+            <line x1="337" y1="79" x2="347" y2="89" stroke="#888" stroke-width="2.5"/>
+            <line x1="347" y1="79" x2="337" y2="89" stroke="#888" stroke-width="2.5"/>
             <text x="350" y="82" font-size="18" fill="#888" font-weight="bold">A</text>
         </g>
         <g id="ptB" opacity="0">
-            <circle cx="481" cy="361" r="5" fill="#888"/>
+            <line x1="476" y1="356" x2="486" y2="366" stroke="#888" stroke-width="2.5"/>
+            <line x1="486" y1="356" x2="476" y2="366" stroke="#888" stroke-width="2.5"/>
             <text x="489" y="375" font-size="18" fill="#888" font-weight="bold">B</text>
         </g>
 
@@ -181,6 +183,20 @@ function setCompass(tip, pen) {
     el('compassPencilPoint').setAttribute('cy', pen.y);
 }
 
+// Pivot du compas : pointe fixe, mine suit un ARC de cercle (écartement constant)
+async function compassPivot(tip, radius, a1, a2, duration) {
+    const N = 50;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        setCompass(tip, {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        });
+        await sleep(duration / N);
+    }
+}
+
 async function compassOpen(tip, target, duration) {
     const N = 30;
     for (let i = 0; i <= N; i++) {
@@ -246,21 +262,17 @@ async function nextStep() {
     //   → pivote vers M', trace un court arc autour de M' (±0.3 rad)
     else if (currentStep === 1) {
         txt.innerHTML = stepTexts[2];
-        el('compass').style.opacity = '1';
         setCompass(A, A);
+        el('compass').style.opacity = '1';
         await sleep(400);
-        await compassOpen(A, M, 1200);   // montre le rayon AM
+        await compassOpen(A, M, 1200);   // prise de l'écartement AM
         await sleep(700);
 
         const half_A  = 0.30;
         const aA_start = angA_Mp - half_A;
         const aA_end   = angA_Mp + half_A;
-        const arcA_start = {
-            x: A.x + R_A * Math.cos(aA_start),
-            y: A.y + R_A * Math.sin(aA_start)
-        };
-        // Pivote vers le départ du petit arc (même rayon)
-        await compassMove(A, M, A, arcA_start, 1000);
+        // Pivote vers le départ du petit arc (écartement CONSTANT — arc angulaire)
+        await compassPivot(A, R_A, angA_M, aA_start, 1000);
         await sleep(300);
         // Petit arc autour de M'
         await compassSweep('arc1', A, R_A, aA_start, aA_end, 1400);
@@ -273,23 +285,30 @@ async function nextStep() {
     //   → pivote vers M', trace un court arc autour de M' (±0.3 rad)
     else if (currentStep === 2) {
         txt.innerHTML = stepTexts[3];
-        const penAfterArcA = {
-            x: A.x + R_A * Math.cos(angA_Mp + 0.30),
-            y: A.y + R_A * Math.sin(angA_Mp + 0.30)
-        };
-        // Déplace la pointe de A vers B, mine revient vers M
-        await compassMove(A, penAfterArcA, B, M, 1400);
+
+        // 1. Déplacer le compas de A vers B, écartement R_A constant
+        //    (même direction que la fin de l'arc A — compas jamais refermé)
+        const angEndA = angA_Mp + 0.30;
+        const dxA = Math.cos(angEndA), dyA = Math.sin(angEndA);
+        const N_t = 40;
+        for (let i = 0; i <= N_t; i++) {
+            const t = i / N_t;
+            const tip = { x: A.x + (B.x - A.x) * t, y: A.y + (B.y - A.y) * t };
+            setCompass(tip, { x: tip.x + R_A * dxA, y: tip.y + R_A * dyA });
+            await sleep(1000 / N_t);
+        }
+        await sleep(300);
+
+        // 2. En B, prendre l'écartement BM : mine glisse de sa direction courante vers M
+        const penAtB = { x: B.x + R_A * dxA, y: B.y + R_A * dyA };
+        await compassMove(B, penAtB, B, M, 800);
         await sleep(500);
 
         const half_B  = 0.30;
         const aB_start = angB_Mp - half_B;
         const aB_end   = angB_Mp + half_B;
-        const arcB_start = {
-            x: B.x + R_B * Math.cos(aB_start),
-            y: B.y + R_B * Math.sin(aB_start)
-        };
-        // Pivote vers le départ du petit arc
-        await compassMove(B, M, B, arcB_start, 1000);
+        // Pivote vers le départ du petit arc (écartement CONSTANT — arc angulaire)
+        await compassPivot(B, R_B, angB_M, aB_start, 1000);
         await sleep(300);
         // Petit arc autour de M'
         await compassSweep('arc2', B, R_B, aB_start, aB_end, 1400);

@@ -109,7 +109,7 @@
         </g>
 
         <!-- ══ ÉTAPE 2 : perpendiculaire M→I→M' ══ -->
-        <line id="perpLine" x1="200" y1="300" x2="600" y2="100"
+        <line id="perpLine" x1="164" y1="318" x2="636" y2="82"
               stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,3" opacity="0"/>
 
         <!-- ══ ÉTAPE 3 : angle droit en I + label O ══ -->
@@ -234,6 +234,20 @@ function setCompass(tip, pen) {
     el('compassPencilPoint').setAttribute('cy', pen.y);
 }
 
+// Pivot du compas : pointe fixe, mine suit un ARC de cercle (écartement constant)
+async function compassPivot(tip, radius, a1, a2, duration) {
+    const N = 50;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        setCompass(tip, {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        });
+        await sleep(duration / N);
+    }
+}
+
 async function compassOpen(tip, target, duration) {
     const N = 30;
     for (let i = 0; i <= N; i++) {
@@ -306,23 +320,23 @@ async function nextStep() {
         currentStep = 2;
     }
 
-    // 3 : marquer O, ranger équerre
+    // 3 : ranger équerre, puis marquer O
     else if (currentStep === 2) {
         txt.innerHTML = stepTexts[3];
+        el('setSquare').style.opacity = '0';
+        await sleep(700);
         el('squareO').style.opacity = '1';
         el('labelO').style.opacity  = '1';
-        await sleep(700);
-        el('setSquare').style.opacity = '0';
         await sleep(600);
         currentStep = 3;
     }
 
-    // 4 : compas s'ouvre de I à M (montre l'écartement OM)
+    // 4 : compas s'ouvre de O vers M (prise de l'écartement OM)
     else if (currentStep === 3) {
         txt.innerHTML = stepTexts[4];
-        el('compass').style.opacity = '1';
         setCompass(I, I);
-        await sleep(500);
+        el('compass').style.opacity = '1';
+        await sleep(400);
         await compassOpen(I, M, 1400);
         await sleep(800);
         currentStep = 4;
@@ -337,12 +351,8 @@ async function nextStep() {
         const half  = 0.28;
         const aStart = angMp - half;
         const aEnd   = angMp + half;
-        const arcStart = {
-            x: I.x + RADIUS * Math.cos(aStart),
-            y: I.y + RADIUS * Math.sin(aStart)
-        };
-        // Fait pivoter la mine de M vers le départ de l'arc (même rayon)
-        await compassMove(I, M, I, arcStart, 1200);
+        // Fait pivoter la mine de M vers le départ de l'arc (écartement CONSTANT)
+        await compassPivot(I, RADIUS, angM, aStart, 1200);
         await sleep(300);
         // Trace seulement le petit arc autour de M'
         await compassSweep(I, RADIUS, aStart, aEnd, 1400);

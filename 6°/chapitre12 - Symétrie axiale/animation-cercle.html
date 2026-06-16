@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Symétrique d'un cercle — compas</title>
+    <style>
+        body { margin:0; padding:0; background:#fafafa;
+               font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+        .container { max-width:1220px; margin:0 auto; padding:10px; }
+        .step-text {
+            background:#e3f2fd; border-left:5px solid #2196f3;
+            padding:15px 20px; margin:15px 0; color:#1565c0;
+            font-size:17px; min-height:60px; font-weight:500;
+            display:flex; align-items:center;
+        }
+        svg { display:block; margin:0 auto; background:#fafafa;
+              border:2px solid #ddd; border-radius:8px; }
+        .controls { text-align:center; margin:20px 0; }
+        button {
+            background:#3498db; color:white; border:none;
+            padding:14px 28px; margin:8px; border-radius:6px;
+            cursor:pointer; font-size:17px; font-weight:bold;
+            box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.3s;
+        }
+        button:hover { background:#2980b9; transform:translateY(-2px); }
+        button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+        button.reset { background:#e74c3c; }
+        button.reset:hover { background:#c0392b; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        Cliquez sur « Étape suivante » pour voir la construction étape par étape.
+    </div>
+
+    <!--
+    ═══════════════════════════════════════════════════════════════
+    GÉOMÉTRIE  —  axe (d) : direction (1,2), passe par P0=(300,240)
+    Point de l'axe = (300+t, 240+2t)
+
+    Axe visible : t=-100 → (200,40)  à  t=100 → (400,440)
+    P1  t=-40  = (260,160)
+    P2  t= 80  = (380,400)
+
+    Cercle : centre O=(434,173),  rayon r=60
+    Pied de la perp. depuis O : P0=(300,240)  (t_O = 0 exactement)
+    Symétrique : O'=(166,307)  (r'=r=60)
+
+    Rayons (vérifiés) :
+      R1 = dist(P1,O)  = √(174²+13²) ≈ 174.5
+      R2 = dist(P2,O)  = √(54²+227²) ≈ 233.3
+      dist(P1,O') = 174.5 ✓    dist(P2,O') = 233.3 ✓
+
+    Arcs (±0.30 rad autour de l'angle vers O') :
+      Arc 1 : centre P1, angle vers O' ≈ 2.139 rad → [1.839 ; 2.439]
+      Arc 2 : centre P2, angle vers O' ≈ -2.732 rad → [-3.032 ; -2.432]
+      Pivot arc 1 : ang(P1→O)≈0.0747, puis décroît vers arcStart=1.839
+      Pivot arc 2 : ang(P2→O)≈-1.338, puis décroît vers arcStart=-3.032
+    ═══════════════════════════════════════════════════════════════
+    -->
+
+    <svg id="anim" width="950" height="651" viewBox="0 0 700 480">
+
+        <!-- ══ TOUJOURS VISIBLES ══ -->
+
+        <!-- Axe (d) -->
+        <line x1="200" y1="40" x2="400" y2="440"
+              stroke="#333" stroke-width="2.5"/>
+        <text x="406" y="440" font-size="18" fill="#333" font-weight="bold">(d)</text>
+
+        <!-- Cercle O -->
+        <circle cx="434" cy="173" r="60"
+                fill="rgba(41,128,185,0.15)" stroke="#2980b9" stroke-width="2.5"/>
+        <!-- Centre O (croix) -->
+        <line x1="429" y1="168" x2="439" y2="178" stroke="#2980b9" stroke-width="2.5"/>
+        <line x1="439" y1="168" x2="429" y2="178" stroke="#2980b9" stroke-width="2.5"/>
+        <text x="443" y="167" font-size="19" fill="#2980b9" font-weight="bold">O</text>
+
+        <!-- ══ ÉTAPE 1 : P1, P2 sur (d) ══ -->
+        <g id="ptP1" opacity="0">
+            <line x1="255" y1="155" x2="265" y2="165" stroke="#e67e22" stroke-width="2.5"/>
+            <line x1="265" y1="155" x2="255" y2="165" stroke="#e67e22" stroke-width="2.5"/>
+            <text x="268" y="153" font-size="17" fill="#e67e22" font-weight="bold">P₁</text>
+        </g>
+        <g id="ptP2" opacity="0">
+            <line x1="375" y1="395" x2="385" y2="405" stroke="#e67e22" stroke-width="2.5"/>
+            <line x1="385" y1="395" x2="375" y2="405" stroke="#e67e22" stroke-width="2.5"/>
+            <text x="389" y="403" font-size="17" fill="#e67e22" font-weight="bold">P₂</text>
+        </g>
+
+        <!-- ══ ARCS (dessinés par JS) ══ -->
+        <path id="arc1" d="" stroke="#e74c3c" stroke-width="2.5" fill="none" opacity="0"/>
+        <path id="arc2" d="" stroke="#27ae60" stroke-width="2.5" fill="none" opacity="0"/>
+
+        <!-- ══ POINT O' ══ -->
+        <g id="ptOp" opacity="0">
+            <line x1="161" y1="302" x2="171" y2="312" stroke="#e74c3c" stroke-width="3"/>
+            <line x1="171" y1="302" x2="161" y2="312" stroke="#e74c3c" stroke-width="3"/>
+            <text x="175" y="303" font-size="19" fill="#e74c3c" font-weight="bold">O'</text>
+        </g>
+
+        <!-- ══ CERCLE O' (tracé progressivement par JS) ══ -->
+        <path id="circleOpStroke" d="" stroke="#e74c3c" stroke-width="2.5"
+              fill="none" opacity="0"/>
+        <!-- Remplissage final (apparaît quand le cercle est complet) -->
+        <circle id="circleOpFill" cx="166" cy="307" r="60"
+                fill="rgba(231,76,60,0.15)" stroke="none" opacity="0"/>
+
+        <!-- ══ COMPAS ══ -->
+        <g id="compass" opacity="0">
+            <circle id="compassHinge" cx="0" cy="0" r="10"
+                    fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+            <line id="compassPointBranch" x1="0" y1="0" x2="-5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <circle id="compassPointTip" cx="-5" cy="60" r="6"
+                    fill="#222" stroke="#000" stroke-width="2"/>
+            <line id="compassPencilBranch" x1="0" y1="0" x2="5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <rect id="compassPencilBody" x="0" y="50" width="10" height="25"
+                  fill="#ff4444" stroke="#cc0000" stroke-width="2" rx="2"/>
+            <polygon id="compassPencilTip" points="5,75 0,85 10,85" fill="#333"/>
+            <circle id="compassPencilPoint" cx="5" cy="85" r="3" fill="#000"/>
+        </g>
+
+    </svg>
+
+    <div class="controls">
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+</div>
+
+<script>
+// ── Points ────────────────────────────────────────────────────
+const P1 = {x:260, y:160};
+const P2 = {x:380, y:400};
+const O  = {x:434, y:173};
+const Op = {x:166, y:307};
+const R_CIRCLE = 60;   // rayon du cercle
+
+// Rayons (dist de chaque point d'axe à O)
+const R1 = Math.hypot(O.x-P1.x, O.y-P1.y);   // ≈ 174.5
+const R2 = Math.hypot(O.x-P2.x, O.y-P2.y);   // ≈ 233.3
+
+// Angles de P1 et P2 vers O (pour compassOpen)
+const ang1_O = Math.atan2(O.y-P1.y, O.x-P1.x);   // ≈  0.0747 rad
+const ang2_O = Math.atan2(O.y-P2.y, O.x-P2.x);   // ≈ -1.338  rad
+
+// Angles de P1 et P2 vers O' (centre de chaque arc)
+const ang1_Op = Math.atan2(Op.y-P1.y, Op.x-P1.x); // ≈  2.139 rad
+const ang2_Op = Math.atan2(Op.y-P2.y, Op.x-P2.x); // ≈ -2.732 rad
+
+let currentStep = 0;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour voir la construction étape par étape.',
+    '<strong style="color:#e67e22;">1.</strong> Je place deux points P₁ et P₂ sur l\'axe (d).',
+    '<strong style="color:#e74c3c;">2.</strong> J\'ouvre le compas de P₁ à O et je trace un arc de cercle (rouge).',
+    '<strong style="color:#27ae60;">3.</strong> J\'ouvre le compas de P₂ à O et je trace un arc de cercle (vert). Les deux arcs se coupent en O\', le symétrique de O par rapport à (d).',
+    '<strong style="color:#27ae60;">4.</strong> Le symétrique du cercle a pour centre O\' et le même rayon que le cercle de départ. ✓'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const el = id => document.getElementById(id);
+
+// ── Fonctions compas ─────────────────────────────────────────
+function setCompass(tip, pen) {
+    const hx = (tip.x+pen.x)/2, hy = (tip.y+pen.y)/2;
+    el('compassHinge').setAttribute('cx', hx);
+    el('compassHinge').setAttribute('cy', hy);
+    el('compassPointBranch').setAttribute('x1', hx);
+    el('compassPointBranch').setAttribute('y1', hy);
+    el('compassPointBranch').setAttribute('x2', tip.x);
+    el('compassPointBranch').setAttribute('y2', tip.y);
+    el('compassPointTip').setAttribute('cx', tip.x);
+    el('compassPointTip').setAttribute('cy', tip.y);
+    el('compassPencilBranch').setAttribute('x1', hx);
+    el('compassPencilBranch').setAttribute('y1', hy);
+    el('compassPencilBranch').setAttribute('x2', pen.x);
+    el('compassPencilBranch').setAttribute('y2', pen.y);
+    const ang = Math.atan2(pen.y-hy, pen.x-hx)*180/Math.PI+90;
+    el('compassPencilBody').setAttribute('transform',
+        `translate(${pen.x},${pen.y-15}) rotate(${ang})`);
+    el('compassPencilTip').setAttribute('transform',
+        `translate(${pen.x-5},${pen.y}) rotate(${ang} 5 0)`);
+    el('compassPencilPoint').setAttribute('cx', pen.x);
+    el('compassPencilPoint').setAttribute('cy', pen.y);
+}
+
+async function compassOpen(tip, target, duration) {
+    const N = 30;
+    for (let i = 0; i <= N; i++) {
+        const t = i/N;
+        setCompass(tip, {x: tip.x+(target.x-tip.x)*t, y: tip.y+(target.y-tip.y)*t});
+        await sleep(duration/N);
+    }
+}
+
+async function compassPivot(tip, radius, a1, a2, duration) {
+    const N = 50;
+    for (let i = 0; i <= N; i++) {
+        const angle = a1 + (a2-a1)*i/N;
+        setCompass(tip, {x: tip.x+radius*Math.cos(angle), y: tip.y+radius*Math.sin(angle)});
+        await sleep(duration/N);
+    }
+}
+
+async function compassSweep(arcId, tip, radius, a1, a2, duration) {
+    const N = 70;
+    let path = '';
+    for (let i = 0; i <= N; i++) {
+        const angle = a1 + (a2-a1)*i/N;
+        const pen = {x: tip.x+radius*Math.cos(angle), y: tip.y+radius*Math.sin(angle)};
+        if (i === 0) path = `M ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        else         path += ` L ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        setCompass(tip, pen);
+        el(arcId).setAttribute('d', path);
+        el(arcId).style.opacity = '1';
+        await sleep(duration/N);
+    }
+}
+
+// Tracé progressif du cercle symétrique (de haut en bas en continu)
+async function drawCircle(pathId, cx, cy, r, duration) {
+    const N = 90;
+    let path = '';
+    for (let i = 0; i <= N; i++) {
+        const angle = -Math.PI/2 + 2*Math.PI*i/N;   // commence en haut
+        const x = cx + r*Math.cos(angle);
+        const y = cy + r*Math.sin(angle);
+        if (i === 0) path = `M ${x.toFixed(1)} ${y.toFixed(1)}`;
+        else         path += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+        el(pathId).setAttribute('d', path);
+        el(pathId).style.opacity = '1';
+        await sleep(duration/N);
+    }
+    el(pathId).setAttribute('d', path + ' Z');   // ferme le tracé
+}
+
+// ── Gestion des étapes ───────────────────────────────────────
+async function nextStep() {
+    const btn = el('nextBtn');
+    const txt = el('stepText');
+    if (currentStep >= 4) return;
+    btn.disabled = true;
+
+    // 1. Placer P1 et P2
+    if (currentStep === 0) {
+        txt.innerHTML = stepTexts[1];
+        el('ptP1').style.opacity = '1';
+        await sleep(500);
+        el('ptP2').style.opacity = '1';
+        await sleep(800);
+        currentStep = 1;
+    }
+
+    // 2. Arc de centre P1 (rouge)
+    else if (currentStep === 1) {
+        txt.innerHTML = stepTexts[2];
+        const HALF = 0.30;
+        const a1s = ang1_Op - HALF;
+        const a1e = ang1_Op + HALF;
+
+        setCompass(P1, P1);
+        el('compass').style.opacity = '1';
+        await sleep(300);
+        await compassOpen(P1, O, 1200);          // prise de l'écartement P1O
+        await sleep(700);
+        await compassPivot(P1, R1, ang1_O, a1s, 1000);  // pivot vers départ d'arc
+        await sleep(300);
+        await compassSweep('arc1', P1, R1, a1s, a1e, 1400);
+        await sleep(700);
+        el('compass').style.opacity = '0';
+        await sleep(400);
+        currentStep = 2;
+    }
+
+    // 3. Arc de centre P2 (vert) → O' apparaît
+    else if (currentStep === 2) {
+        txt.innerHTML = stepTexts[3];
+        const HALF = 0.30;
+        const a2s = ang2_Op - HALF;
+        const a2e = ang2_Op + HALF;
+
+        setCompass(P2, P2);
+        el('compass').style.opacity = '1';
+        await sleep(300);
+        await compassOpen(P2, O, 1200);          // prise de l'écartement P2O
+        await sleep(700);
+        await compassPivot(P2, R2, ang2_O, a2s, 1000);  // pivot vers départ d'arc
+        await sleep(300);
+        await compassSweep('arc2', P2, R2, a2s, a2e, 1400);
+        await sleep(700);
+        el('compass').style.opacity = '0';
+        await sleep(400);
+        el('ptOp').style.opacity = '1';
+        await sleep(700);
+        currentStep = 3;
+    }
+
+    // 4. Tracer le cercle symétrique
+    else if (currentStep === 3) {
+        txt.innerHTML = stepTexts[4];
+        txt.style.background      = '#c8e6c9';
+        txt.style.borderLeftColor = '#4caf50';
+        txt.style.color           = '#2e7d32';
+
+        // Le compas s'ouvre à O' jusqu'au même écartement (rayon du cercle)
+        const penRef = {x: Op.x, y: Op.y - R_CIRCLE};  // pointe en haut du cercle
+        setCompass(Op, Op);
+        el('compass').style.opacity = '1';
+        await sleep(300);
+        await compassOpen(Op, penRef, 800);   // montre le rayon = r du cercle original
+        await sleep(600);
+        el('compass').style.opacity = '0';
+        await sleep(300);
+
+        // Tracé progressif du cercle
+        await drawCircle('circleOpStroke', Op.x, Op.y, R_CIRCLE, 1800);
+        el('circleOpFill').style.opacity = '1';   // remplissage transparent
+        await sleep(500);
+        currentStep = 4;
+        btn.textContent = '✓ Terminé';
+    }
+
+    btn.disabled = false;
+}
+
+// ── Remise à zéro ─────────────────────────────────────────────
+function resetAnimation() {
+    currentStep = 0;
+    el('nextBtn').textContent = '▶ Étape suivante';
+    el('nextBtn').disabled = false;
+
+    ['ptP1','ptP2','ptOp','compass','circleOpFill'].forEach(id => {
+        el(id).style.opacity = '0';
+    });
+    ['arc1','arc2','circleOpStroke'].forEach(id => {
+        el(id).setAttribute('d', '');
+        el(id).style.opacity = '0';
+    });
+
+    const txt = el('stepText');
+    txt.innerHTML             = stepTexts[0];
+    txt.style.background      = '#e3f2fd';
+    txt.style.borderLeftColor = '#2196f3';
+    txt.style.color           = '#1565c0';
+}
+</script>
+</body>
+</html>
