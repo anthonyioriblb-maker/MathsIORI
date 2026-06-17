@@ -259,10 +259,33 @@
 
     <div class="example">
         <strong>Exemple :</strong> Construire l'image A'B'C' du triangle ABC par la symétrie d'axe (d).<br><br>
+        <div class="img-center">
+            <!--
+                Axe (d) oblique : de (320,20) à (60,260)
+                Direction : (-260, 240), normalisée : u=(-0.734, 0.679)
+                Triangle ABC à droite de l'axe :
+                  A=(260,40), B=(370,80), C=(340,180)
+            -->
+            <svg width="420" height="280" viewBox="0 0 420 280"
+                 style="background:white; border-radius:8px; border:2px solid #ddd;">
+
+                <!-- Axe (d) oblique -->
+                <line x1="320" y1="20" x2="60" y2="260" stroke="#333" stroke-width="2.5"/>
+                <text x="322" y="18" font-size="16" fill="#333" font-weight="bold">(d)</text>
+
+                <!-- Triangle ABC -->
+                <polygon points="220,80 330,120 300,220"
+                         fill="rgba(41,128,185,0.15)" stroke="#2980b9" stroke-width="2.5"/>
+                <text x="222" y="74" font-size="18" font-weight="bold" fill="#2980b9">A</text>
+                <text x="334" y="122" font-size="18" font-weight="bold" fill="#2980b9">B</text>
+                <text x="304" y="236" font-size="18" font-weight="bold" fill="#2980b9">C</text>
+
+            </svg>
+        </div>
         On construit les images A', B' et C' de chaque sommet, puis on relie ces points.
         <div class="img-center" style="margin-top:15px;">
             <iframe src="animation-polygone.html" width="1040" height="750"
-                    style="border:none; border-radius:8px; display:block; max-width:100%;" scrolling="no"></iframe>
+                    style="border:none; border-radius:8px;" scrolling="no"></iframe>
         </div>
     </div>
 
@@ -276,10 +299,33 @@
 
     <div class="example">
         <strong>Exemple :</strong> Construire le symétrique du cercle (C) par rapport à (d).<br>
+        <div class="img-center" style="margin-top:10px;">
+            <!--
+                Axe (d) oblique : de (80,20) à (340,240)
+                Cercle (C) : centre O=(270,60), rayon=45
+                (O est à droite de l'axe)
+            -->
+            <svg width="420" height="280" viewBox="0 0 420 280"
+                 style="background:white; border-radius:8px; border:2px solid #ddd;">
+
+                <!-- Axe (d) oblique -->
+                <line x1="80" y1="20" x2="340" y2="240" stroke="#333" stroke-width="2.5"/>
+                <text x="344" y="242" font-size="16" fill="#333" font-weight="bold">(d)</text>
+
+                <!-- Cercle (C) -->
+                <circle cx="310" cy="80" r="50"
+                        fill="rgba(41,128,185,0.15)" stroke="#2980b9" stroke-width="2.5"/>
+                <line x1="305" y1="75" x2="315" y2="85" stroke="#2980b9" stroke-width="2"/>
+                <line x1="315" y1="75" x2="305" y2="85" stroke="#2980b9" stroke-width="2"/>
+                <text x="314" y="77" font-size="16" font-weight="bold" fill="#2980b9">O</text>
+                <text x="326" y="48" font-size="16" fill="#2980b9" font-weight="bold">(C)</text>
+
+            </svg>
+        </div>
         Le cercle symétrique a pour centre O' (symétrique de O) et a le <strong>même rayon</strong>.
         <div class="img-center" style="margin-top:15px;">
             <iframe src="animation-cercle.html" width="950" height="720"
-                    style="border:none; border-radius:8px; display:block; max-width:100%;" scrolling="no"></iframe>
+                    style="border:none; border-radius:8px;" scrolling="no"></iframe>
         </div>
     </div>
 

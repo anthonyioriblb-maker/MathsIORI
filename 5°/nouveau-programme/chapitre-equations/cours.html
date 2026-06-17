@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Équations simples</title>
+    <link rel="stylesheet" href="../../../styles.css?v=20260616">
+    <style>
+        .balance-wrap {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .plateau {
+            background: #e8f4fd;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 12px 24px;
+            min-width: 100px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .egal-sign {
+            font-size: 2em;
+            font-weight: bold;
+            color: #e74c3c;
+            padding-bottom: 10px;
+        }
+        .methode-box {
+            background: #fff9e6;
+            border-left: 4px solid #f39c12;
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 14px 0;
+        }
+        .etapes {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            margin: 12px 0;
+        }
+        .etape {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .etape-num {
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            flex-shrink: 0;
+        }
+        .ex-ligne {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        .ex-ligne input {
+            width: 80px;
+            font-size: 1.05em;
+            padding: 6px 10px;
+            border: 2px solid #999;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .ex-ligne input.ok  { border-color: #27ae60; background: #eafaf1; }
+        .ex-ligne input.err { border-color: #e74c3c; background: #fdecea; }
+        .feedback.ok  { color: #27ae60; font-weight: bold; }
+        .feedback.err { color: #e74c3c; font-weight: bold; }
+        .verif-box {
+            background: #f0fff4;
+            border: 2px solid #27ae60;
+            border-radius: 8px;
+            padding: 10px 16px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <a href="../../classe-5e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Équations simples ✨</h1>
+    <p style="font-style:italic; color:#555; margin-left:20px;">Nouveau programme cycle 4 · BO 5 mars 2026</p>
+
+    <!-- ===================================================== -->
+    <h2>1. Qu'est-ce qu'une équation ?</h2>
+    <!-- ===================================================== -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Une <span style="color:red;">équation</span> est une égalité qui contient une ou plusieurs <span style="color:red;">inconnues</span> (représentées par des lettres).<br><br>
+        <strong>Résoudre</strong> une équation, c'est trouver la valeur (ou les valeurs) de l'inconnue qui rend l'égalité vraie.<br><br>
+        Cette valeur s'appelle la <span style="color:red;">solution</span> de l'équation.
+    </div>
+
+    <div class="example">
+        <strong>Exemples d'équations :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item">
+                x + 5 = 12<br>
+                <span style="font-size:0.85em; color:#666;">L'inconnue est x</span>
+            </div>
+            <div class="exemple-item">
+                3a = 15<br>
+                <span style="font-size:0.85em; color:#666;">L'inconnue est a</span>
+            </div>
+            <div class="exemple-item">
+                n − 4 = 7<br>
+                <span style="font-size:0.85em; color:#666;">L'inconnue est n</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Analogie de la balance :</strong><br><br>
+        Une équation, c'est comme une balance en équilibre :<br>
+        ce qu'il y a à gauche du = est toujours égal à ce qu'il y a à droite.
+
+        <div class="balance-wrap">
+            <div class="plateau">x + 5</div>
+            <div class="egal-sign">=</div>
+            <div class="plateau">12</div>
+        </div>
+        Pour trouver x, on cherche quelle valeur met la balance en équilibre.
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>2. Vérifier une solution</h2>
+    <!-- ===================================================== -->
+
+    <div class="important">
+        <span style="color:red;">Méthode — vérification :</span>
+        Pour vérifier qu'une valeur est solution d'une équation, on la <strong>substitue</strong> à l'inconnue et on vérifie que l'égalité est vraie.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> L'équation est x + 5 = 12. Est-ce que x = 7 est une solution ?<br><br>
+        <div class="verif-box">
+            On remplace x par 7 :<br>
+            7 + 5 = 12 ✓<br>
+            L'égalité est vraie : <strong>x = 7 est bien la solution.</strong>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Contre-exemple :</strong> L'équation est 3a = 15. Est-ce que a = 4 est une solution ?<br><br>
+        <div class="verif-box">
+            On remplace a par 4 :<br>
+            3 × 4 = 12 ≠ 15 ✗<br>
+            L'égalité est fausse : <strong>a = 4 n'est pas la solution.</strong>
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>3. Résoudre x + b = c</h2>
+    <!-- ===================================================== -->
+
+    <div class="important">
+        <span style="color:red;">Propriété :</span>
+        Pour résoudre <strong>x + b = c</strong>, on <strong>soustrait b des deux membres</strong> :<br><br>
+        <div style="text-align:center; font-size:1.2em;">
+            x + b = c &nbsp; ⟺ &nbsp; x = c − b
+        </div>
+        <br>
+        <em>Méthode arithmétique : l'inconnue est le nombre auquel on a ajouté b pour obtenir c.
+        Il suffit donc de calculer c − b.</em>
+    </div>
+
+    <div class="methode-box">
+        <strong>Méthode en 3 étapes :</strong>
+        <div class="etapes">
+            <div class="etape">
+                <div class="etape-num">1</div>
+                Repérer b et c dans l'équation x + b = c.
+            </div>
+            <div class="etape">
+                <div class="etape-num">2</div>
+                Calculer x = c − b.
+            </div>
+            <div class="etape">
+                <div class="etape-num">3</div>
+                Vérifier en remplaçant x dans l'équation.
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong> Résoudre x + 5 = 12.
+        <div class="calcul-detail">
+            x + 5 = 12<br>
+            x = 12 − 5<br>
+            x = 7<br><br>
+            <span style="color:#27ae60;">Vérification : 7 + 5 = 12 ✓</span>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 :</strong> Résoudre n + 8 = 3.
+        <div class="calcul-detail">
+            n + 8 = 3<br>
+            n = 3 − 8<br>
+            n = −5<br><br>
+            <span style="color:#27ae60;">Vérification : −5 + 8 = 3 ✓</span>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 3 :</strong> Résoudre t − 4 = 11.
+        <div class="calcul-detail">
+            t − 4 = 11<br>
+            (on peut écrire : t + (−4) = 11, donc t = 11 − (−4) = 11 + 4)<br>
+            t = 15<br><br>
+            <span style="color:#27ae60;">Vérification : 15 − 4 = 11 ✓</span>
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>4. Résoudre ax = c</h2>
+    <!-- ===================================================== -->
+
+    <div class="important">
+        <span style="color:red;">Propriété :</span>
+        Pour résoudre <strong>ax = c</strong> (avec a ≠ 0), on <strong>divise les deux membres par a</strong> :<br><br>
+        <div style="text-align:center; font-size:1.2em;">
+            ax = c &nbsp; ⟺ &nbsp; x = c ÷ a
+        </div>
+        <br>
+        <em>Méthode arithmétique : l'inconnue est le nombre par lequel on a multiplié a pour obtenir c.
+        Il suffit donc de calculer c ÷ a.</em>
+    </div>
+
+    <div class="methode-box">
+        <strong>Méthode en 3 étapes :</strong>
+        <div class="etapes">
+            <div class="etape">
+                <div class="etape-num">1</div>
+                Repérer a et c dans l'équation ax = c.
+            </div>
+            <div class="etape">
+                <div class="etape-num">2</div>
+                Calculer x = c ÷ a.
+            </div>
+            <div class="etape">
+                <div class="etape-num">3</div>
+                Vérifier en remplaçant x dans l'équation.
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong> Résoudre 3x = 15.
+        <div class="calcul-detail">
+            3x = 15<br>
+            x = 15 ÷ 3<br>
+            x = 5<br><br>
+            <span style="color:#27ae60;">Vérification : 3 × 5 = 15 ✓</span>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 :</strong> Résoudre 4a = 22.
+        <div class="calcul-detail">
+            4a = 22<br>
+            a = 22 ÷ 4<br>
+            a = 5,5<br><br>
+            <span style="color:#27ae60;">Vérification : 4 × 5,5 = 22 ✓</span>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 3 (résultat fractionnaire) :</strong> Résoudre 7x = 3.
+        <div class="calcul-detail">
+            7x = 3<br>
+            x = 3 ÷ 7 = <span class="fraction"><span class="numerateur">3</span><span class="denominateur">7</span></span><br><br>
+            <span style="color:#27ae60;">Vérification : 7 × <span class="fraction"><span class="numerateur">3</span><span class="denominateur">7</span></span> = 3 ✓</span>
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>5. Exercices interactifs</h2>
+    <!-- ===================================================== -->
+
+    <h3>Type x + b = c</h3>
+
+    <div class="example">
+        <strong>Exercice 1 :</strong> Résous les équations suivantes.
+        <br><br>
+        <div class="ex-ligne">a) x + 3 = 10 &nbsp;→&nbsp; x = <input type="text" id="e1a" placeholder="?"> <span id="fb1a" class="feedback"></span></div>
+        <div class="ex-ligne">b) y + 7 = 20 &nbsp;→&nbsp; y = <input type="text" id="e1b" placeholder="?"> <span id="fb1b" class="feedback"></span></div>
+        <div class="ex-ligne">c) n − 5 = 8  &nbsp;→&nbsp; n = <input type="text" id="e1c" placeholder="?"> <span id="fb1c" class="feedback"></span></div>
+        <div class="ex-ligne">d) t + 12 = 4  &nbsp;→&nbsp; t = <input type="text" id="e1d" placeholder="?"> <span id="fb1d" class="feedback"></span></div>
+        <button onclick="checkEx1()">Vérifier</button>
+        <div id="fb1g" class="feedback" style="margin-top:10px;"></div>
+    </div>
+
+    <h3>Type ax = c</h3>
+
+    <div class="example">
+        <strong>Exercice 2 :</strong> Résous les équations suivantes.
+        <br><br>
+        <div class="ex-ligne">a) 5x = 35 &nbsp;→&nbsp; x = <input type="text" id="e2a" placeholder="?"> <span id="fb2a" class="feedback"></span></div>
+        <div class="ex-ligne">b) 6a = 42 &nbsp;→&nbsp; a = <input type="text" id="e2b" placeholder="?"> <span id="fb2b" class="feedback"></span></div>
+        <div class="ex-ligne">c) 4n = 10 &nbsp;→&nbsp; n = <input type="text" id="e2c" placeholder="?"> <span id="fb2c" class="feedback"></span></div>
+        <div class="ex-ligne">d) 9t = 63 &nbsp;→&nbsp; t = <input type="text" id="e2d" placeholder="?"> <span id="fb2d" class="feedback"></span></div>
+        <button onclick="checkEx2()">Vérifier</button>
+        <div id="fb2g" class="feedback" style="margin-top:10px;"></div>
+    </div>
+
+    <h3>Problème</h3>
+
+    <div class="example">
+        <strong>Exercice 3 :</strong>
+        Léa achète plusieurs stylos à 3 € chacun. Elle paie 21 € en tout.<br>
+        Combien de stylos a-t-elle achetés ?<br><br>
+
+        <em>Aide : On appelle x le nombre de stylos. On peut écrire 3x = 21.</em><br><br>
+
+        x = <input type="text" id="e3" placeholder="?"> stylos
+        <span id="fb3" class="feedback"></span>
+        <br><button onclick="checkEx3()" style="margin-top:8px;">Vérifier</button>
+    </div>
+
+    <script>
+        function showFb(id, ok, msgOk, msgErr) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = ok ? '✓ ' + msgOk : '✗ ' + msgErr;
+            el.className = 'feedback ' + (ok ? 'ok' : 'err');
+            var inp = el.previousElementSibling;
+            if (inp && inp.tagName === 'INPUT') inp.className = ok ? 'ok' : 'err';
+        }
+        function num(id) { return parseFloat(document.getElementById(id).value.trim().replace(',', '.')); }
+
+        function checkEx1() {
+            var ans = [7, 13, 13, -8];
+            var ids = ['e1a','e1b','e1c','e1d'];
+            var fbs = ['fb1a','fb1b','fb1c','fb1d'];
+            var correct = 0;
+            for (var i = 0; i < 4; i++) {
+                var ok = num(ids[i]) === ans[i];
+                if (ok) correct++;
+                showFb(fbs[i], ok, '' + ans[i], 'Réponse : ' + ans[i]);
+            }
+            var g = document.getElementById('fb1g');
+            g.textContent = correct === 4 ? '🎉 Parfait !' : correct + '/4 — Réessaie !';
+            g.className = 'feedback ' + (correct === 4 ? 'ok' : 'err');
+        }
+
+        function checkEx2() {
+            var ans = [7, 7, 2.5, 7];
+            var ids = ['e2a','e2b','e2c','e2d'];
+            var fbs = ['fb2a','fb2b','fb2c','fb2d'];
+            var msgs = ['7', '7', '2,5', '7'];
+            var correct = 0;
+            for (var i = 0; i < 4; i++) {
+                var ok = Math.abs(num(ids[i]) - ans[i]) < 0.01;
+                if (ok) correct++;
+                showFb(fbs[i], ok, msgs[i], 'Réponse : ' + msgs[i]);
+            }
+            var g = document.getElementById('fb2g');
+            g.textContent = correct === 4 ? '🎉 Parfait !' : correct + '/4 — Réessaie !';
+            g.className = 'feedback ' + (correct === 4 ? 'ok' : 'err');
+        }
+
+        function checkEx3() {
+            showFb('fb3', num('e3') === 7, '7 stylos', 'Réponse : 3x=21, donc x=7 stylos');
+        }
+    </script>
+
+</body>
+</html>

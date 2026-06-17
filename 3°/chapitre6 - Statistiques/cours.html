@@ -398,5 +398,137 @@
         <strong>Remarque :</strong> Lorsqu'on regroupe les données en classes, on perd de la précision mais on gagne en lisibilité. Le calcul de la moyenne avec les centres de classe donne une bonne approximation de la moyenne réelle.
     </div>
 
+    <h2>Histogramme</h2>
+
+    <div class="definition">
+        <span style="color: red;">Définition :</span> Un <span style="color: red;">histogramme</span> est un diagramme en barres utilisé pour représenter une série statistique regroupée en <span style="color: red;">classes de même amplitude</span>.<br><br>
+        Contrairement à un diagramme en barres ordinaire :<br>
+        • Les barres sont <strong>accolées</strong> (sans espace entre elles)<br>
+        • L'axe horizontal représente les <strong>valeurs du caractère</strong> (et non les classes numérotées)<br>
+        • La <strong>hauteur</strong> de chaque barre est proportionnelle à l'<strong>effectif</strong> (ou à la fréquence) de la classe
+    </div>
+
+    <div class="remarque">
+        <strong>Condition importante :</strong> L'histogramme s'utilise uniquement lorsque toutes les classes ont la <strong>même amplitude</strong> (même largeur). Si les amplitudes sont différentes, la hauteur des barres n'est plus proportionnelle à l'effectif.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> On reprend l'exemple des tailles des élèves, regroupées en classes de 5 cm.<br><br>
+
+        <table>
+            <tr>
+                <th>Classe (en cm)</th>
+                <th>[150 ; 155[</th>
+                <th>[155 ; 160[</th>
+                <th>[160 ; 165[</th>
+                <th>[165 ; 170[</th>
+                <th>[170 ; 175[</th>
+                <th>[175 ; 180[</th>
+            </tr>
+            <tr>
+                <td>Effectif</td>
+                <td>2</td>
+                <td>4</td>
+                <td>7</td>
+                <td>8</td>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+        </table><br>
+
+        Histogramme correspondant :<br><br>
+
+        <div style="text-align:center; margin: 20px 0;">
+            <svg viewBox="0 0 420 220" width="420" height="220" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; border: 1px solid #ddd; border-radius: 8px; background: #fafafa;">
+                <!-- Axes -->
+                <line x1="50" y1="10" x2="50" y2="170" stroke="#333" stroke-width="2"/>
+                <line x1="50" y1="170" x2="400" y2="170" stroke="#333" stroke-width="2"/>
+
+                <!-- Barres (amplitude 5 cm, 6 classes) -->
+                <!-- Largeur barre = (400-50)/6 = 58.3 -->
+                <!-- Hauteur max = 8 → échelle : 8 eff = 130px → 1 eff = 16.25px -->
+                <!-- [150;155[ eff=2 → h=32.5 -->
+                <rect x="50" y="137.5" width="58" height="32.5" fill="#667eea" stroke="white" stroke-width="1"/>
+                <!-- [155;160[ eff=4 → h=65 -->
+                <rect x="108" y="105" width="58" height="65" fill="#667eea" stroke="white" stroke-width="1"/>
+                <!-- [160;165[ eff=7 → h=113.75 -->
+                <rect x="166" y="56.25" width="58" height="113.75" fill="#764ba2" stroke="white" stroke-width="1"/>
+                <!-- [165;170[ eff=8 → h=130 -->
+                <rect x="224" y="40" width="58" height="130" fill="#764ba2" stroke="white" stroke-width="1"/>
+                <!-- [170;175[ eff=3 → h=48.75 -->
+                <rect x="282" y="121.25" width="58" height="48.75" fill="#667eea" stroke="white" stroke-width="1"/>
+                <!-- [175;180[ eff=3 → h=48.75 -->
+                <rect x="340" y="121.25" width="58" height="48.75" fill="#667eea" stroke="white" stroke-width="1"/>
+
+                <!-- Étiquettes axe X (tailles) -->
+                <text x="50" y="185" text-anchor="middle" font-size="11" fill="#333">150</text>
+                <text x="108" y="185" text-anchor="middle" font-size="11" fill="#333">155</text>
+                <text x="166" y="185" text-anchor="middle" font-size="11" fill="#333">160</text>
+                <text x="224" y="185" text-anchor="middle" font-size="11" fill="#333">165</text>
+                <text x="282" y="185" text-anchor="middle" font-size="11" fill="#333">170</text>
+                <text x="340" y="185" text-anchor="middle" font-size="11" fill="#333">175</text>
+                <text x="398" y="185" text-anchor="middle" font-size="11" fill="#333">180</text>
+
+                <!-- Étiquettes axe Y (effectifs) -->
+                <text x="44" y="173" text-anchor="end" font-size="11" fill="#333">0</text>
+                <text x="44" y="140" text-anchor="end" font-size="11" fill="#333">2</text>
+                <text x="44" y="108" text-anchor="end" font-size="11" fill="#333">4</text>
+                <text x="44" y="75" text-anchor="end" font-size="11" fill="#333">6</text>
+                <text x="44" y="43" text-anchor="end" font-size="11" fill="#333">8</text>
+                <!-- Lignes de référence -->
+                <line x1="48" y1="140" x2="52" y2="140" stroke="#333" stroke-width="1"/>
+                <line x1="48" y1="108" x2="52" y2="108" stroke="#333" stroke-width="1"/>
+                <line x1="48" y1="75" x2="52" y2="75" stroke="#333" stroke-width="1"/>
+                <line x1="48" y1="43" x2="52" y2="43" stroke="#333" stroke-width="1"/>
+
+                <!-- Titre axes -->
+                <text x="225" y="205" text-anchor="middle" font-size="12" fill="#444">Taille (cm)</text>
+                <text x="12" y="90" text-anchor="middle" font-size="12" fill="#444" transform="rotate(-90, 12, 90)">Effectif</text>
+            </svg>
+        </div>
+
+        <strong>Lecture de l'histogramme :</strong><br>
+        • La barre la plus haute correspond à la classe [165 ; 170[ : c'est la classe <strong>modale</strong> (la plus fréquente).<br>
+        • Chaque barre est accolée à la suivante (pas d'espace).<br>
+        • L'axe horizontal est une échelle continue des tailles.
+    </div>
+
+    <div class="method">
+        <strong>Comment construire un histogramme :</strong>
+        <ol>
+            <li>Tracer l'axe horizontal avec une <strong>échelle continue</strong> des valeurs (pas des noms de classes).</li>
+            <li>Tracer l'axe vertical avec une <strong>échelle des effectifs</strong> (ou fréquences).</li>
+            <li>Pour chaque classe, tracer un rectangle dont la base couvre l'intervalle de la classe et la hauteur correspond à l'effectif.</li>
+            <li>Les rectangles sont <strong>accolés</strong> sans espace.</li>
+        </ol>
+    </div>
+
+    <div class="example">
+        <strong>Exercice :</strong> Le tableau suivant donne les notes obtenues par 30 élèves à un contrôle.<br><br>
+
+        <table>
+            <tr>
+                <th>Note</th>
+                <th>[0 ; 5[</th>
+                <th>[5 ; 10[</th>
+                <th>[10 ; 15[</th>
+                <th>[15 ; 20]</th>
+            </tr>
+            <tr>
+                <td>Effectif</td>
+                <td>3</td>
+                <td>8</td>
+                <td>14</td>
+                <td>5</td>
+            </tr>
+        </table><br>
+
+        <ol>
+            <li>Toutes les classes ont-elles la même amplitude ? <strong>Oui</strong>, toutes ont une amplitude de 5.</li>
+            <li>On peut donc représenter ces données par un histogramme.</li>
+            <li>La classe modale est [10 ; 15[ (effectif le plus élevé : 14 élèves).</li>
+        </ol>
+    </div>
+
 </body>
 </html>

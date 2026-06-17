@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Triangles, médiatrice et cercle circonscrit</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        .btn-check{background:#2196f3;color:white;border:none;padding:9px 20px;border-radius:6px;font-size:15px;cursor:pointer;margin-top:8px;}
+        .btn-check:hover{background:#1565c0;}
+        .btn-reset{background:#e0e0e0;color:#333;border:none;padding:9px 20px;border-radius:6px;font-size:15px;cursor:pointer;margin-top:8px;margin-left:6px;}
+        .feedback{margin-top:8px;font-weight:600;font-size:15px;}
+        .ok{color:#2e7d32;} .err{color:#c62828;}
+        input.case-rep{width:70px;font-size:17px;text-align:center;border:2px solid #aaa;border-radius:5px;padding:4px;}
+        input.case-rep:focus{border-color:#2196f3;outline:none;}
+        select.case-sel{font-size:15px;padding:4px 8px;border:2px solid #aaa;border-radius:5px;}
+
+        /* ── Cartes types de triangles ── */
+        .tri-grid{display:flex;flex-wrap:wrap;gap:16px;margin:14px 0;}
+        .tri-card{border:2px solid #ddd;border-radius:10px;padding:14px;background:white;text-align:center;min-width:180px;box-shadow:0 2px 6px rgba(0,0,0,0.07);}
+        .tri-card h4{color:#1565c0;margin-bottom:8px;font-size:14px;}
+        .tri-card p{font-size:12px;color:#333;text-align:left;line-height:1.7;}
+
+        /* ── Animation somme angles ── */
+        #anim-angles{display:block;margin:10px auto;cursor:pointer;}
+        .anim-label{font-size:13px;color:#555;text-align:center;margin-top:4px;}
+    </style>
+</head>
+<body>
+    <a href="../../classe-6e.html" class="home-button" style="margin:20px;">← Retour au choix des chapitres</a>
+    <h1>Triangles, médiatrice et cercle circonscrit</h1>
+
+    <div class="remarque">
+        <strong>Objectif :</strong> connaître les propriétés des triangles (types, somme des angles), construire des triangles, comprendre la médiatrice et le cercle circonscrit.
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <h2>Les types de triangles</h2>
+
+    <h3>Classification selon les côtés</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Un <strong>triangle</strong> est une figure plane délimitée par 3 segments (les <strong>côtés</strong>) réunissant 3 points non alignés (les <strong>sommets</strong>).
+    </div>
+
+    <div class="tri-grid">
+        <!-- Quelconque -->
+        <div class="tri-card">
+            <svg width="130" height="100" viewBox="0 0 130 100">
+                <polygon points="20,85 110,85 50,15" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+                <text x="20" y="95" font-size="11" fill="#333">A</text>
+                <text x="107" y="95" font-size="11" fill="#333">B</text>
+                <text x="46" y="13" font-size="11" fill="#333">C</text>
+            </svg>
+            <h4>Triangle quelconque</h4>
+            <p>Les 3 côtés ont des longueurs <strong>différentes</strong>.<br>Les 3 angles sont différents.</p>
+        </div>
+        <!-- Isocèle -->
+        <div class="tri-card">
+            <svg width="130" height="110" viewBox="0 0 130 110">
+                <polygon points="65,10 10,95 120,95" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                <!-- marques d'égalité -->
+                <line x1="37" y1="52" x2="43" y2="58" stroke="#2e7d32" stroke-width="2"/>
+                <line x1="87" y1="52" x2="93" y2="58" stroke="#2e7d32" stroke-width="2"/>
+                <text x="62" y="8" font-size="11" fill="#333">A</text>
+                <text x="5" y="103" font-size="11" fill="#333">B</text>
+                <text x="117" y="103" font-size="11" fill="#333">C</text>
+            </svg>
+            <h4>Triangle isocèle</h4>
+            <p><strong>2 côtés</strong> ont la même longueur (AB = AC).<br>Les 2 angles à la base sont égaux.</p>
+        </div>
+        <!-- Équilatéral -->
+        <div class="tri-card">
+            <svg width="130" height="110" viewBox="0 0 130 110">
+                <polygon points="65,10 10,100 120,100" fill="#fff9c4" stroke="#f57f17" stroke-width="2"/>
+                <line x1="37" y1="55" x2="43" y2="61" stroke="#f57f17" stroke-width="2"/>
+                <line x1="40" y1="52" x2="46" y2="58" stroke="#f57f17" stroke-width="2"/>
+                <line x1="87" y1="55" x2="93" y2="61" stroke="#f57f17" stroke-width="2"/>
+                <line x1="84" y1="52" x2="90" y2="58" stroke="#f57f17" stroke-width="2"/>
+                <line x1="62" y1="100" x2="68" y2="100" stroke="#f57f17" stroke-width="2"/>
+                <line x1="62" y1="97" x2="68" y2="97" stroke="#f57f17" stroke-width="2"/>
+                <text x="62" y="8" font-size="11" fill="#333">A</text>
+                <text x="3" y="108" font-size="11" fill="#333">B</text>
+                <text x="117" y="108" font-size="11" fill="#333">C</text>
+            </svg>
+            <h4>Triangle équilatéral</h4>
+            <p><strong>3 côtés</strong> égaux.<br>Les <strong>3 angles</strong> valent chacun <strong>60°</strong>.</p>
+        </div>
+    </div>
+
+    <h3>Classification selon les angles</h3>
+
+    <div class="tri-grid">
+        <!-- Rectangle -->
+        <div class="tri-card">
+            <svg width="130" height="110" viewBox="0 0 130 110">
+                <polygon points="20,90 20,20 110,90" fill="#ffccbc" stroke="#bf360c" stroke-width="2"/>
+                <rect x="20" y="78" width="12" height="12" fill="none" stroke="#bf360c" stroke-width="1.5"/>
+                <text x="17" y="108" font-size="11" fill="#333">B</text>
+                <text x="17" y="18" font-size="11" fill="#333">A</text>
+                <text x="107" y="108" font-size="11" fill="#333">C</text>
+            </svg>
+            <h4>Triangle rectangle</h4>
+            <p>Un angle droit (90°). Le côté opposé à l'angle droit est l'<strong>hypoténuse</strong> (le plus long côté).</p>
+        </div>
+        <!-- Obtusangle -->
+        <div class="tri-card">
+            <svg width="130" height="110" viewBox="0 0 130 110">
+                <polygon points="5,90 120,90 95,20" fill="#e1bee7" stroke="#6a1b9a" stroke-width="2"/>
+                <text x="2" y="108" font-size="11" fill="#333">A</text>
+                <text x="117" y="108" font-size="11" fill="#333">B</text>
+                <text x="92" y="18" font-size="11" fill="#333">C</text>
+            </svg>
+            <h4>Triangle obtusangle</h4>
+            <p>Un angle <strong>obtus</strong> (entre 90° et 180°). Les deux autres angles sont aigus.</p>
+        </div>
+        <!-- Acutangle -->
+        <div class="tri-card">
+            <svg width="130" height="110" viewBox="0 0 130 110">
+                <polygon points="30,90 100,90 65,15" fill="#b2ebf2" stroke="#006064" stroke-width="2"/>
+                <text x="27" y="108" font-size="11" fill="#333">A</text>
+                <text x="97" y="108" font-size="11" fill="#333">B</text>
+                <text x="62" y="13" font-size="11" fill="#333">C</text>
+            </svg>
+            <h4>Triangle acutangle</h4>
+            <p>Les <strong>3 angles</strong> sont aigus (chacun inférieur à 90°).</p>
+        </div>
+    </div>
+
+    <!-- ── Exercice types ── -->
+    <div class="example">
+        <strong>À toi !</strong><br>
+        <p>1) Un triangle a un angle de 90° et deux côtés égaux. Comment s'appelle-t-il ?
+        <select class="case-sel" id="type1">
+            <option value="">—</option>
+            <option value="rec-iso">Rectangle isocèle</option>
+            <option value="equi">Équilatéral</option>
+            <option value="quelq">Quelconque obtusangle</option>
+        </select></p>
+        <p>2) Un triangle équilatéral est-il aussi acutangle ?
+        <select class="case-sel" id="type2">
+            <option value="">—</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+        </select></p>
+        <button class="btn-check" onclick="checkTypes()">Vérifier</button>
+        <button class="btn-reset" onclick="document.getElementById('type1').value='';document.getElementById('type2').value='';document.getElementById('fb-types').textContent=''">Effacer</button>
+        <div class="feedback" id="fb-types"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <h2>Somme des angles d'un triangle</h2>
+
+    <h3>La propriété fondamentale</h3>
+
+    <div class="property">
+        <strong>Propriété :</strong> Dans tout triangle, la somme des mesures des trois angles est égale à <strong>180°</strong>.<br>
+        Si le triangle ABC a des angles Â, B̂ et Ĉ, alors :<br>
+        <div style="text-align:center;font-size:1.2em;margin:10px 0;color:#c62828;">
+            <strong>Â + B̂ + Ĉ = 180°</strong>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Démonstration intuitive — déchirer les angles :</strong><br>
+        Si on découpe les 3 angles d'un triangle et qu'on les place côte à côte au même point, ils forment toujours une demi-droite (un angle plat = 180°).<br><br>
+        <canvas id="anim-angles" width="460" height="160"></canvas>
+        <div class="anim-label">Clique sur l'animation pour voir les angles se déplacer.</div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong> Dans un triangle ABC, Â = 50° et B̂ = 70°. Calcule Ĉ.<br><br>
+        <div class="method">
+            Â + B̂ + Ĉ = 180°<br>
+            50° + 70° + Ĉ = 180°<br>
+            120° + Ĉ = 180°<br>
+            Ĉ = 180° − 120° = <strong>60°</strong>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 :</strong> Vérification sur un triangle rectangle.<br>
+        Un angle vaut 90°, un autre vaut 35°. Le troisième vaut : 180° − 90° − 35° = <strong>55°</strong>.
+    </div>
+
+    <!-- ── Exercice somme angles ── -->
+    <div class="example">
+        <strong>À toi !</strong><br>
+        <p>1) Dans un triangle, deux angles mesurent 48° et 65°. Le troisième angle mesure :
+        <input class="case-rep" id="ang1" type="number" placeholder="?"> °</p>
+        <p>2) Un triangle isocèle a un angle au sommet de 40°. Chaque angle à la base mesure :
+        <input class="case-rep" id="ang2" type="number" placeholder="?"> °</p>
+        <p>3) Un triangle équilatéral : chaque angle mesure :
+        <input class="case-rep" id="ang3" type="number" placeholder="?"> °</p>
+        <button class="btn-check" onclick="checkAngles()">Vérifier</button>
+        <button class="btn-reset" onclick="['ang1','ang2','ang3'].forEach(id=>document.getElementById(id).value='');document.getElementById('fb-ang').textContent=''">Effacer</button>
+        <div class="feedback" id="fb-ang"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <h2>La médiatrice d'un segment</h2>
+
+    <h3>Définition et construction</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> La <strong>médiatrice</strong> d'un segment [AB] est la droite <strong>perpendiculaire</strong> à [AB] passant par son <strong>milieu</strong>.
+    </div>
+
+    <div class="property">
+        <strong>Propriété caractéristique :</strong> Un point M appartient à la médiatrice de [AB] <strong>si et seulement si</strong> M est à égale distance de A et de B :<br>
+        <div style="text-align:center;font-size:1.1em;margin:10px 0;">
+            <strong>M ∈ médiatrice(AB) ⟺ MA = MB</strong>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Construction de la médiatrice avec le compas :</strong><br><br>
+        <svg width="420" height="200" viewBox="0 0 420 200" style="display:block;margin:0 auto;">
+            <!-- Segment AB -->
+            <line x1="80" y1="120" x2="340" y2="120" stroke="#333" stroke-width="2.5"/>
+            <circle cx="80" cy="120" r="5" fill="#e53935"/><text x="68" y="140" font-size="14" fill="#e53935" font-weight="bold">A</text>
+            <circle cx="340" cy="120" r="5" fill="#e53935"/><text x="344" y="140" font-size="14" fill="#e53935" font-weight="bold">B</text>
+            <!-- Milieu -->
+            <circle cx="210" cy="120" r="4" fill="#333"/>
+            <text x="206" y="140" font-size="12" fill="#333">I</text>
+            <!-- Arcs de cercle -->
+            <circle cx="80" cy="120" r="140" fill="none" stroke="#42a5f5" stroke-width="1.5" stroke-dasharray="6,4"
+                clip-path="url(#arc-clip)"/>
+            <circle cx="340" cy="120" r="140" fill="none" stroke="#42a5f5" stroke-width="1.5" stroke-dasharray="6,4"
+                clip-path="url(#arc-clip)"/>
+            <defs>
+                <clipPath id="arc-clip">
+                    <rect x="80" y="10" width="260" height="200"/>
+                </clipPath>
+            </defs>
+            <!-- Points d'intersection des arcs -->
+            <circle cx="210" cy="22" r="5" fill="#4caf50"/><text x="216" y="22" font-size="12" fill="#4caf50" font-weight="bold">P</text>
+            <circle cx="210" cy="218" r="5" fill="#4caf50"/>
+            <!-- Médiatrice -->
+            <line x1="210" y1="10" x2="210" y2="190" stroke="#e53935" stroke-width="2.5"/>
+            <!-- Angle droit -->
+            <rect x="210" y="110" width="10" height="10" fill="none" stroke="#333" stroke-width="1.5"/>
+            <!-- Légende -->
+            <text x="220" y="16" font-size="12" fill="#e53935" font-weight="bold">médiatrice de [AB]</text>
+        </svg>
+        <div class="method" style="margin-top:10px;">
+            <strong>Étapes de construction :</strong><br>
+            1. Ouvrir le compas à plus de la moitié de [AB].<br>
+            2. Tracer un arc de cercle centré en A, de part et d'autre de [AB].<br>
+            3. Tracer un arc de cercle centré en B, <strong>avec le même écartement</strong>.<br>
+            4. Relier les deux points d'intersection P et P' : la droite PP' est la médiatrice.
+        </div>
+    </div>
+
+    <!-- ── Exercice médiatrice ── -->
+    <div class="example">
+        <strong>À toi !</strong><br>
+        <p>1) Le milieu de [AB] avec A(1;0) et B(7;0) est le point de coordonnées :
+        x = <input class="case-rep" id="med1" type="number" placeholder="?"> ; y = <input class="case-rep" id="med1b" type="number" placeholder="?"></p>
+        <p>2) M est un point tel que MA = MB = 5 cm. M appartient-il à la médiatrice de [AB] ?
+        <select class="case-sel" id="med2">
+            <option value="">—</option>
+            <option value="oui">Oui</option>
+            <option value="non">Non</option>
+        </select></p>
+        <button class="btn-check" onclick="checkMed()">Vérifier</button>
+        <button class="btn-reset" onclick="['med1','med1b'].forEach(id=>document.getElementById(id).value='');document.getElementById('med2').value='';document.getElementById('fb-med').textContent=''">Effacer</button>
+        <div class="feedback" id="fb-med"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <h2>Le cercle circonscrit à un triangle</h2>
+
+    <h3>Définition</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Le <strong>cercle circonscrit</strong> à un triangle est le cercle qui passe par les <strong>trois sommets</strong> du triangle. Son centre s'appelle le <strong>centre du cercle circonscrit</strong> (ou <strong>circumcentre</strong>).
+    </div>
+
+    <div class="property">
+        <strong>Propriété :</strong> Le centre du cercle circonscrit à un triangle est le point d'intersection des <strong>trois médiatrices</strong> des côtés du triangle.<br>
+        Ce point est à <strong>égale distance des trois sommets</strong>.
+    </div>
+
+    <div class="example">
+        <strong>Illustration :</strong><br><br>
+        <svg width="380" height="280" viewBox="0 0 380 280" style="display:block;margin:0 auto;">
+            <!-- Triangle -->
+            <polygon points="190,30 60,230 320,230" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+            <!-- Sommets -->
+            <circle cx="190" cy="30" r="5" fill="#e53935"/>
+            <circle cx="60"  cy="230" r="5" fill="#e53935"/>
+            <circle cx="320" cy="230" r="5" fill="#e53935"/>
+            <text x="186" y="22" font-size="13" fill="#333" font-weight="bold">A</text>
+            <text x="45"  y="248" font-size="13" fill="#333" font-weight="bold">B</text>
+            <text x="324" y="248" font-size="13" fill="#333" font-weight="bold">C</text>
+            <!-- Médiatrices -->
+            <line x1="125" y1="60"  x2="255" y2="260" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="6,3"/>
+            <line x1="70"  y1="130" x2="330" y2="130" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="6,3"/>
+            <line x1="190" y1="30"  x2="190" y2="260" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="6,3"/>
+            <!-- Centre O (circumcentre du triangle 190,30 / 60,230 / 320,230) -->
+            <!-- Pour un triangle isocèle avec base BC horizontale, O est sur l'axe de symétrie x=190 -->
+            <!-- Calcul : O = (190, h) où h = ??? -->
+            <!-- circumcenter computation:
+                 A=(190,30), B=(60,230), C=(320,230)
+                 Midpoint AB = (125,130), slope AB = (230-30)/(60-190) = 200/-130 = -20/13
+                 Perp slope = 13/20
+                 Med AB: y-130 = (13/20)(x-125) → at x=190: y = 130 + (13/20)*65 = 130+42.25=172.25
+                 By symmetry O=(190, 172) -->
+            <circle cx="190" cy="130" r="103" fill="none" stroke="#4caf50" stroke-width="2"/>
+            <!-- Centre -->
+            <circle cx="190" cy="130" r="6" fill="#e53935"/>
+            <text x="196" y="128" font-size="12" fill="#e53935" font-weight="bold">O</text>
+            <!-- Rayon -->
+            <line x1="190" y1="130" x2="190" y2="30" stroke="#e53935" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="194" y="82" font-size="11" fill="#e53935">R</text>
+        </svg>
+        <p style="text-align:center;font-size:14px;color:#555;">Les 3 médiatrices (en orange) se croisent en O, centre du cercle circonscrit (en vert).</p>
+    </div>
+
+    <div class="example">
+        <strong>Comment construire le cercle circonscrit :</strong>
+        <div class="method">
+            1. Construire la médiatrice du côté [AB].<br>
+            2. Construire la médiatrice du côté [BC].<br>
+            3. Nommer O leur point d'intersection.<br>
+            4. Tracer le cercle de centre O passant par A (rayon = OA).<br>
+            <em>Ce cercle passe automatiquement par B et C aussi.</em>
+        </div>
+    </div>
+
+    <!-- ── Exercice cercle circonscrit ── -->
+    <div class="example">
+        <strong>Exercice de synthèse :</strong><br>
+        <p>1) Dans un triangle rectangle en A, le centre du cercle circonscrit se trouve :
+        <select class="case-sel" id="circ1">
+            <option value="">—</option>
+            <option value="milieu">Sur le milieu de l'hypoténuse</option>
+            <option value="interieur">À l'intérieur du triangle</option>
+            <option value="exterieur">À l'extérieur du triangle</option>
+            <option value="sommet">Sur le sommet A</option>
+        </select></p>
+        <p>2) Si OA = 6 cm et O est le centre du cercle circonscrit à ABC, alors OB = <input class="case-rep" id="circ2" type="number" placeholder="?"> cm et OC = <input class="case-rep" id="circ3" type="number" placeholder="?"> cm.</p>
+        <p>3) Un triangle a ses 3 médiatrices qui se croisent en un point situé à l'extérieur. Ce triangle est :
+        <select class="case-sel" id="circ4">
+            <option value="">—</option>
+            <option value="obtus">Obtusangle</option>
+            <option value="acutangle">Acutangle</option>
+            <option value="rectangle">Rectangle</option>
+        </select></p>
+        <button class="btn-check" onclick="checkCirc()">Vérifier</button>
+        <button class="btn-reset" onclick="['circ2','circ3'].forEach(id=>document.getElementById(id).value='');['circ1','circ4'].forEach(id=>document.getElementById(id).value='');document.getElementById('fb-circ').textContent=''">Effacer</button>
+        <div class="feedback" id="fb-circ"></div>
+    </div>
+
+    <!-- ══════════════════════════ SCRIPTS ══════════════════════════ -->
+    <script>
+    // ── Animation somme angles ──
+    (function(){
+        const canvas=document.getElementById('anim-angles');
+        const ctx=canvas.getContext('2d');
+        let phase=0;
+        function draw(){
+            ctx.clearRect(0,0,460,160);
+            // Triangle original
+            const A={x:40,y:130},B={x:180,y:130},C={x:110,y:30};
+            ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.lineTo(C.x,C.y);ctx.closePath();
+            ctx.fillStyle='#e3f2fd';ctx.fill();ctx.strokeStyle='#1565c0';ctx.lineWidth=2;ctx.stroke();
+            ctx.fillStyle='#333';ctx.font='bold 13px Segoe UI';
+            ctx.fillText('A',A.x-14,A.y+4);ctx.fillText('B',B.x+4,B.y+4);ctx.fillText('C',C.x-4,C.y-8);
+            // Marqueurs d'angles (arcs)
+            ctx.strokeStyle='#e53935';ctx.lineWidth=1.5;
+            ctx.beginPath();ctx.arc(A.x,A.y,22,Math.atan2(C.y-A.y,C.x-A.x),0);ctx.stroke();
+            ctx.strokeStyle='#2e7d32';
+            ctx.beginPath();ctx.arc(B.x,B.y,22,Math.PI,Math.atan2(C.y-B.y,C.x-B.x));ctx.stroke();
+            ctx.strokeStyle='#f57f17';
+            ctx.beginPath();ctx.arc(C.x,C.y,22,Math.atan2(B.y-C.y,B.x-C.x),Math.atan2(A.y-C.y,A.x-C.x));ctx.stroke();
+            // Flèche
+            const t=Math.min(phase/60,1);
+            const targetX=290;
+            // Angle A déplacé
+            if(t>0){
+                ctx.save();ctx.translate(targetX+t*30*(0-1),130);
+                ctx.beginPath();ctx.arc(0,0,22,-0.5,0.5);ctx.strokeStyle='#e53935';ctx.lineWidth=1.5;ctx.stroke();
+                ctx.restore();
+            }
+            // Ligne finale (angle plat)
+            if(t>=1){
+                ctx.beginPath();ctx.moveTo(240,130);ctx.lineTo(400,130);ctx.strokeStyle='#333';ctx.lineWidth=2;ctx.stroke();
+                ctx.fillStyle='#555';ctx.font='13px Segoe UI';ctx.fillText('= 180° (angle plat)',250,120);
+            }
+            // Légende
+            ctx.fillStyle='#555';ctx.font='13px Segoe UI';
+            ctx.fillText('α + β + γ = 180°',230,90);
+        }
+        canvas.addEventListener('click',()=>{phase=phase>0?0:1;});
+        setInterval(()=>{if(phase>0&&phase<61)phase++;draw();},16);
+        draw();
+    })();
+
+    function checkTypes(){
+        const fb=document.getElementById('fb-types');
+        let score=0,msgs=[];
+        if(document.getElementById('type1').value==='rec-iso'){score++;}else{msgs.push('Q1 : isocèle (2 côtés égaux) ET rectangle (90°) → rectangle isocèle');}
+        if(document.getElementById('type2').value==='oui'){score++;}else{msgs.push('Q2 : équilatéral → 3 angles de 60°, tous aigus → acutangle');}
+        if(score===2){fb.textContent='✓ Parfait !';fb.className='feedback ok';}
+        else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
+    }
+    function checkAngles(){
+        const fb=document.getElementById('fb-ang');
+        let score=0,msgs=[];
+        const a1=parseInt(document.getElementById('ang1').value);
+        const a2=parseInt(document.getElementById('ang2').value);
+        const a3=parseInt(document.getElementById('ang3').value);
+        if(a1===67){score++;}else{msgs.push('Q1 : 180−48−65=67°');}
+        if(a2===70){score++;}else{msgs.push('Q2 : (180−40)÷2=70°');}
+        if(a3===60){score++;}else{msgs.push('Q3 : 180÷3=60°');}
+        if(score===3){fb.textContent='✓ Bravo !';fb.className='feedback ok';}
+        else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
+    }
+    function checkMed(){
+        const fb=document.getElementById('fb-med');
+        let score=0,msgs=[];
+        if(parseInt(document.getElementById('med1').value)===4){score++;}else{msgs.push('x=(1+7)÷2=4');}
+        if(parseInt(document.getElementById('med1b').value)===0){score++;}else{msgs.push('y=0 (même hauteur que AB)');}
+        if(document.getElementById('med2').value==='oui'){score++;}else{msgs.push('MA=MB → M sur la médiatrice par définition');}
+        if(score===3){fb.textContent='✓ Parfait !';fb.className='feedback ok';}
+        else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
+    }
+    function checkCirc(){
+        const fb=document.getElementById('fb-circ');
+        let score=0,msgs=[];
+        if(document.getElementById('circ1').value==='milieu'){score++;}else{msgs.push('Q1 : dans un triangle rectangle, le circumcentre est le milieu de l\'hypoténuse');}
+        if(parseInt(document.getElementById('circ2').value)===6){score++;}else{msgs.push('Q2 : OB=OA=6 cm (même rayon)');}
+        if(parseInt(document.getElementById('circ3').value)===6){score++;}else{msgs.push('Q2 : OC=OA=6 cm');}
+        if(document.getElementById('circ4').value==='obtus'){score++;}else{msgs.push('Q3 : circumcentre extérieur → triangle obtusangle');}
+        if(score===4){fb.textContent='✓ Excellent !';fb.className='feedback ok';}
+        else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
+    }
+    </script>
+</body>
+</html>

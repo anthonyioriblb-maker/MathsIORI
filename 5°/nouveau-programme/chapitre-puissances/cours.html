@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Puissances — carré et cube</title>
+    <link rel="stylesheet" href="../../../styles.css?v=20260616">
+    <style>
+        .grid-carres {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+            max-width: 640px;
+        }
+        .grid-carres .cell {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 8px;
+            padding: 10px 6px;
+            text-align: center;
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+        .grid-carres .cell span {
+            display: block;
+            font-size: 0.75em;
+            font-weight: normal;
+            opacity: 0.85;
+        }
+        .grid-cubes {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+            max-width: 500px;
+        }
+        .grid-cubes .cell {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border-radius: 8px;
+            padding: 10px 6px;
+            text-align: center;
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+        .grid-cubes .cell span {
+            display: block;
+            font-size: 0.75em;
+            font-weight: normal;
+            opacity: 0.85;
+        }
+        .viz-carre {
+            display: inline-grid;
+            gap: 3px;
+            margin: 10px 20px;
+            vertical-align: middle;
+        }
+        .viz-cell {
+            width: 28px;
+            height: 28px;
+            background: #667eea;
+            border: 1px solid #4a5bc5;
+            border-radius: 2px;
+        }
+        .viz-cube-wrap {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 10px 20px;
+        }
+        .calc-box {
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            max-width: 480px;
+        }
+        .calc-box input {
+            width: 80px;
+            font-size: 1.1em;
+            padding: 6px 10px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .calc-box button {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .calc-box button:hover { background: #5567d5; }
+        .feedback.ok  { color: #27ae60; font-weight: bold; margin-top: 8px; }
+        .feedback.err { color: #e74c3c; font-weight: bold; margin-top: 8px; }
+        .ex-ligne {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 8px 0;
+            flex-wrap: wrap;
+        }
+        .ex-ligne input {
+            width: 70px;
+            font-size: 1em;
+            padding: 5px 8px;
+            border: 2px solid #999;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .ex-ligne input.ok  { border-color: #27ae60; background: #eafaf1; }
+        .ex-ligne input.err { border-color: #e74c3c; background: #fdecea; }
+    </style>
+</head>
+<body>
+    <a href="../../classe-5e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Les puissances — carré et cube ✨</h1>
+    <p style="font-style:italic; color:#555; margin-left:20px;">Nouveau programme cycle 4 · BO 5 mars 2026</p>
+
+    <!-- ===================================================== -->
+    <h2>1. Le carré d'un nombre</h2>
+    <!-- ===================================================== -->
+
+    <h3>Définition</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Le <span style="color:red;">carré</span> d'un nombre <span class="math">n</span> est le produit de ce nombre par lui-même :<br><br>
+        <div style="text-align:center; font-size:1.3em; font-weight:bold; color:#3a3a8c;">
+            n² = n × n
+        </div>
+        <br>
+        On lit « n au carré » ou « n au exposant 2 ».
+    </div>
+
+    <div class="example">
+        <strong>Visualisation géométrique :</strong><br><br>
+        Le carré d'un nombre correspond à l'<strong>aire d'un carré</strong> de côté <em>n</em>.<br><br>
+
+        <div style="display:inline-block; text-align:center; margin-right:40px;">
+            <div class="viz-carre" style="grid-template-columns: repeat(3,1fr); grid-template-rows: repeat(3,1fr);">
+                <div class="viz-cell"></div><div class="viz-cell"></div><div class="viz-cell"></div>
+                <div class="viz-cell"></div><div class="viz-cell"></div><div class="viz-cell"></div>
+                <div class="viz-cell"></div><div class="viz-cell"></div><div class="viz-cell"></div>
+            </div>
+            <br>3² = 3 × 3 = <strong>9</strong><br>
+            <span style="font-size:0.85em; color:#666;">carré de côté 3 → 9 cases</span>
+        </div>
+
+        <div style="display:inline-block; text-align:center;">
+            <div class="viz-carre" style="grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(4,1fr);">
+                <div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div>
+                <div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div>
+                <div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div>
+                <div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div><div class="viz-cell" style="background:#f5576c;"></div>
+            </div>
+            <br>4² = 4 × 4 = <strong>16</strong><br>
+            <span style="font-size:0.85em; color:#666;">carré de côté 4 → 16 cases</span>
+        </div>
+    </div>
+
+    <h3>Tableau des carrés à connaître</h3>
+
+    <div class="important">
+        <span style="color:red;">À retenir :</span> Les carrés des entiers de 1 à 12.
+    </div>
+
+    <div class="grid-carres">
+        <div class="cell">1² = 1<span>1 × 1</span></div>
+        <div class="cell">2² = 4<span>2 × 2</span></div>
+        <div class="cell">3² = 9<span>3 × 3</span></div>
+        <div class="cell">4² = 16<span>4 × 4</span></div>
+        <div class="cell">5² = 25<span>5 × 5</span></div>
+        <div class="cell">6² = 36<span>6 × 6</span></div>
+        <div class="cell">7² = 49<span>7 × 7</span></div>
+        <div class="cell">8² = 64<span>8 × 8</span></div>
+        <div class="cell">9² = 81<span>9 × 9</span></div>
+        <div class="cell">10² = 100<span>10 × 10</span></div>
+        <div class="cell">11² = 121<span>11 × 11</span></div>
+        <div class="cell">12² = 144<span>12 × 12</span></div>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque — nombres carrés parfaits :</strong><br>
+        1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144 sont appelés des <span style="color:red;"><strong>carrés parfaits</strong></span>
+        car ils sont égaux au carré d'un entier.
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>2. Le cube d'un nombre</h2>
+    <!-- ===================================================== -->
+
+    <h3>Définition</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Le <span style="color:red;">cube</span> d'un nombre <span class="math">n</span> est le produit de ce nombre <strong>trois fois</strong> par lui-même :<br><br>
+        <div style="text-align:center; font-size:1.3em; font-weight:bold; color:#8c3a8c;">
+            n³ = n × n × n
+        </div>
+        <br>
+        On lit « n au cube » ou « n à la puissance 3 ».
+    </div>
+
+    <div class="example">
+        <strong>Visualisation géométrique :</strong><br><br>
+        Le cube d'un nombre correspond au <strong>volume d'un cube</strong> de côté <em>n</em>.<br><br>
+
+        <svg width="180" height="160" viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle; margin-right:30px;">
+            <!-- Cube 3D (2×2×2 = 8 petits cubes) -->
+            <!-- Face avant -->
+            <rect x="40" y="70" width="80" height="80" fill="#a78bfa" stroke="#6d28d9" stroke-width="1.5"/>
+            <!-- Lignes internes face avant -->
+            <line x1="80" y1="70" x2="80" y2="150" stroke="#6d28d9" stroke-width="1"/>
+            <line x1="40" y1="110" x2="120" y2="110" stroke="#6d28d9" stroke-width="1"/>
+            <!-- Face dessus -->
+            <path d="M40,70 L80,30 L160,30 L120,70 Z" fill="#c4b5fd" stroke="#6d28d9" stroke-width="1.5"/>
+            <!-- Lignes internes dessus -->
+            <line x1="80" y1="30" x2="80" y2="70" stroke="#6d28d9" stroke-width="1"/>
+            <line x1="120" y1="30" x2="80" y2="70" stroke="#6d28d9" stroke-width="1"/>
+            <line x1="40" y1="70" x2="120" y2="70" stroke="#6d28d9" stroke-width="1.5"/>
+            <!-- Face droite -->
+            <path d="M120,70 L160,30 L160,110 L120,150 Z" fill="#8b5cf6" stroke="#6d28d9" stroke-width="1.5"/>
+            <!-- Lignes internes droite -->
+            <line x1="160" y1="70" x2="120" y2="110" stroke="#6d28d9" stroke-width="1"/>
+            <line x1="120" y1="110" x2="160" y2="110" stroke="#6d28d9" stroke-width="1"/>
+            <!-- Labels -->
+            <text x="78" y="162" font-size="12" fill="#333" text-anchor="middle">2</text>
+            <text x="22" y="115" font-size="12" fill="#333" text-anchor="middle">2</text>
+            <text x="147" y="25" font-size="12" fill="#333" text-anchor="middle">2</text>
+        </svg>
+
+        2³ = 2 × 2 × 2 = <strong>8</strong> <span style="color:#666;">(volume d'un cube de côté 2)</span>
+    </div>
+
+    <h3>Tableau des cubes à connaître</h3>
+
+    <div class="grid-cubes">
+        <div class="cell">1³ = 1<span>1×1×1</span></div>
+        <div class="cell">2³ = 8<span>2×2×2</span></div>
+        <div class="cell">3³ = 27<span>3×3×3</span></div>
+        <div class="cell">4³ = 64<span>4×4×4</span></div>
+        <div class="cell">5³ = 125<span>5×5×5</span></div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>3. Calculs avec les puissances</h2>
+    <!-- ===================================================== -->
+
+    <div class="important">
+        <span style="color:red;">Priorités opératoires :</span>
+        Les puissances sont calculées <strong>avant</strong> les multiplications et les additions.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item">
+                2 × 3²<br>
+                = 2 × 9<br>
+                = <strong>18</strong>
+            </div>
+            <div class="exemple-item">
+                5² − 3²<br>
+                = 25 − 9<br>
+                = <strong>16</strong>
+            </div>
+            <div class="exemple-item">
+                4² + 2³<br>
+                = 16 + 8<br>
+                = <strong>24</strong>
+            </div>
+            <div class="exemple-item">
+                (3 + 1)²<br>
+                = 4²<br>
+                = <strong>16</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>⚠️ Attention :</strong> (3 + 1)² ≠ 3² + 1²<br>
+        On calcule d'abord ce qui est dans la parenthèse : (3 + 1)² = 4² = 16.<br>
+        Alors que 3² + 1² = 9 + 1 = 10 ≠ 16.
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>4. Racine carrée (introduction)</h2>
+    <!-- ===================================================== -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        La <span style="color:red;">racine carrée</span> d'un nombre positif <span class="math">a</span>, notée <strong>√a</strong>,
+        est le nombre positif dont le carré est <span class="math">a</span>.<br><br>
+        Autrement dit : √a = b signifie que b × b = a (avec b ≥ 0).
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item">√9 = 3<br><span style="font-size:0.85em;">car 3² = 9</span></div>
+            <div class="exemple-item">√25 = 5<br><span style="font-size:0.85em;">car 5² = 25</span></div>
+            <div class="exemple-item">√100 = 10<br><span style="font-size:0.85em;">car 10² = 100</span></div>
+            <div class="exemple-item">√144 = 12<br><span style="font-size:0.85em;">car 12² = 144</span></div>
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> La racine carrée d'un nombre qui n'est pas un carré parfait n'est pas un entier.
+        Par exemple √2 ≈ 1,414… Ce nombre ne peut pas s'écrire comme une fraction.
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>5. Exercices interactifs</h2>
+    <!-- ===================================================== -->
+
+    <h3>Calculer des puissances</h3>
+
+    <div class="example">
+        <strong>Exercice 1 :</strong> Calcule les puissances suivantes.
+        <br><br>
+        <div class="ex-ligne">
+            a) 6² = <input type="text" id="e1a" placeholder="?">
+            <span id="fb1a" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            b) 5³ = <input type="text" id="e1b" placeholder="?">
+            <span id="fb1b" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            c) 11² = <input type="text" id="e1c" placeholder="?">
+            <span id="fb1c" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            d) 3³ = <input type="text" id="e1d" placeholder="?">
+            <span id="fb1d" class="feedback"></span>
+        </div>
+        <button onclick="checkEx1()">Vérifier</button>
+        <div id="fb1g" class="feedback" style="margin-top:10px;"></div>
+    </div>
+
+    <h3>Priorités opératoires</h3>
+
+    <div class="example">
+        <strong>Exercice 2 :</strong> Calcule (sans calculatrice).
+        <br><br>
+        <div class="ex-ligne">
+            a) 3² + 4² = <input type="text" id="e2a" placeholder="?">
+            <span id="fb2a" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            b) 2 × 5² = <input type="text" id="e2b" placeholder="?">
+            <span id="fb2b" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            c) (2 + 3)² = <input type="text" id="e2c" placeholder="?">
+            <span id="fb2c" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            d) 10² − 3³ = <input type="text" id="e2d" placeholder="?">
+            <span id="fb2d" class="feedback"></span>
+        </div>
+        <button onclick="checkEx2()">Vérifier</button>
+    </div>
+
+    <h3>Racines carrées</h3>
+
+    <div class="example">
+        <strong>Exercice 3 :</strong> Donne la racine carrée (résultat entier).
+        <br><br>
+        <div class="ex-ligne">
+            a) √49 = <input type="text" id="e3a" placeholder="?">
+            <span id="fb3a" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            b) √64 = <input type="text" id="e3b" placeholder="?">
+            <span id="fb3b" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            c) √121 = <input type="text" id="e3c" placeholder="?">
+            <span id="fb3c" class="feedback"></span>
+        </div>
+        <button onclick="checkEx3()">Vérifier</button>
+    </div>
+
+    <h3>Calculateur de puissance</h3>
+
+    <div class="calc-box">
+        <strong>Teste n'importe quel carré ou cube :</strong><br><br>
+        n = <input type="number" id="calcN" value="5" min="0" max="100">
+        <button onclick="calcPow()">Calculer</button>
+        <div id="calcResult" style="margin-top:12px; font-size:1.1em;"></div>
+    </div>
+
+    <script>
+        function showFb(id, ok, msgOk, msgErr) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = ok ? '✓ ' + msgOk : '✗ ' + msgErr;
+            el.className = 'feedback ' + (ok ? 'ok' : 'err');
+            var inp = el.previousElementSibling;
+            if (inp && inp.tagName === 'INPUT') {
+                inp.className = ok ? 'ok' : 'err';
+            }
+        }
+
+        function val(id) { return parseInt(document.getElementById(id).value.trim(), 10); }
+
+        function checkEx1() {
+            var answers = [36, 125, 121, 27];
+            var ids = ['e1a','e1b','e1c','e1d'];
+            var fbs = ['fb1a','fb1b','fb1c','fb1d'];
+            var correct = 0;
+            for (var i = 0; i < 4; i++) {
+                var v = val(ids[i]);
+                var ok = v === answers[i];
+                if (ok) correct++;
+                showFb(fbs[i], ok, '' + answers[i], 'Réponse : ' + answers[i]);
+            }
+            var g = document.getElementById('fb1g');
+            g.textContent = correct === 4 ? '🎉 Parfait !' : correct + '/4 — Réessaie !';
+            g.className = 'feedback ' + (correct === 4 ? 'ok' : 'err');
+        }
+
+        function checkEx2() {
+            showFb('fb2a', val('e2a') === 25,  '25',  'Réponse : 3²+4² = 9+16 = 25');
+            showFb('fb2b', val('e2b') === 50,  '50',  'Réponse : 2×5² = 2×25 = 50');
+            showFb('fb2c', val('e2c') === 25,  '25',  'Réponse : (2+3)² = 5² = 25');
+            showFb('fb2d', val('e2d') === 73,  '73',  'Réponse : 100−27 = 73');
+        }
+
+        function checkEx3() {
+            showFb('fb3a', val('e3a') === 7,  '7',  'Réponse : 7 (car 7²=49)');
+            showFb('fb3b', val('e3b') === 8,  '8',  'Réponse : 8 (car 8²=64)');
+            showFb('fb3c', val('e3c') === 11, '11', 'Réponse : 11 (car 11²=121)');
+        }
+
+        function calcPow() {
+            var n = parseFloat(document.getElementById('calcN').value);
+            if (isNaN(n)) { document.getElementById('calcResult').textContent = 'Entier un nombre valide.'; return; }
+            var sq = n * n;
+            var cu = n * n * n;
+            document.getElementById('calcResult').innerHTML =
+                '<strong>' + n + '² = ' + n + ' × ' + n + ' = ' + sq + '</strong><br>' +
+                '<strong>' + n + '³ = ' + n + ' × ' + n + ' × ' + n + ' = ' + cu + '</strong>';
+        }
+    </script>
+
+</body>
+</html>

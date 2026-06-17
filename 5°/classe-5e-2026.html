@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de 5ème — Nouveau programme 2026</title>
+    <link rel="stylesheet" href="../classe-page.css?v=20251120143124">
+    <style>
+        :root {
+            --main-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #667eea;
+            --exercices-color: #f5576c;
+            --quiz-color: #43e97b;
+            --shadow-color: rgba(102, 126, 234, 0.4);
+            --shadow-color-hover: rgba(102, 126, 234, 0.6);
+
+            --chapter-gradient-1:  linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --chapter-gradient-2:  linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --chapter-gradient-3:  linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --chapter-gradient-4:  linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --chapter-gradient-5:  linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --chapter-gradient-6:  linear-gradient(135deg, #0052d4 0%, #4364f7 50%, #6fb1fc 100%);
+            --chapter-gradient-7:  linear-gradient(135deg, #e53935 0%, #e35d5b 100%);
+            --chapter-gradient-8:  linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+            --chapter-gradient-9:  linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            --chapter-gradient-10: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%);
+            --chapter-gradient-11: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            --chapter-gradient-12: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+            --chapter-gradient-13: linear-gradient(135deg, #614385 0%, #516395 100%);
+            --chapter-gradient-14: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+            --chapter-gradient-15: linear-gradient(135deg, #02aab0 0%, #00cdac 100%);
+            --chapter-gradient-16: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);
+            --chapter-gradient-17: linear-gradient(135deg, #396afc 0%, #2948ff 100%);
+            --chapter-gradient-18: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+            --chapter-gradient-19: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+            --chapter-gradient-20: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .banner-nouveau {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 0.95em;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+            margin: 0 auto 18px;
+            max-width: 700px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 5ème — Nouveau programme 2026</h1>
+        <p class="subtitle">Préparation rentrée 2026-2027 · Tous les chapitres</p>
+        <div class="banner-nouveau">✨ Nouveau programme cycle 4 · BO 5 mars 2026 · Contenu en cours de préparation</div>
+
+        <div class="chapters" id="chaptersContainer">
+            <!-- Généré automatiquement par JavaScript -->
+        </div>
+
+        <a href="../index.html" class="home-button">← Retour à l'accueil</a>
+    </div>
+
+    <script>
+        const configChapitres = {
+
+            // ──────────────────────────────────────────────
+            // BLOC 1 : Nombres et calcul
+            // ──────────────────────────────────────────────
+            chapitre1: {
+                disponible: true,
+                titre: "Priorités opératoires",
+                description: "Enchaîner des opérations, distributivité numérique, parenthèses.",
+                emoji: "🧮",
+                cours: { actif: true, fichier: "chapitre1 - Priorites operatoires/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            chapitre2: {
+                disponible: true,
+                titre: "Les nombres relatifs",
+                description: "Opposé, valeur absolue, comparaison, repère du plan.",
+                emoji: "🔢",
+                cours: { actif: true, fichier: "chapitre4 - Les nombres relatifs/cours.html" },
+                exercices: { actif: true, items: [
+                    { titre: "Comparaison de relatifs",            fichier: "chapitre4 - Les nombres relatifs/exercices/exercice.html" },
+                    { titre: "Comparaison de relatifs (correction)", fichier: "chapitre4 - Les nombres relatifs/exercices/correction.html" }
+                ]},
+                quiz: { actif: false, items: [] }
+            },
+
+            chapitre3: {
+                disponible: true,
+                titre: "Opérations avec les relatifs",
+                description: "Addition, soustraction, multiplication et division de nombres relatifs.",
+                emoji: "➕",
+                cours: { actif: true, fichier: "chapitre7- Opérations avec les relatifs/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            chapitre4: {
+                disponible: true,
+                titre: "Puissances — carré et cube ✨",
+                description: "Notation n² et n³, calculs, carrés parfaits, racine carrée.",
+                emoji: "🔋",
+                cours: { actif: true, fichier: "nouveau-programme/chapitre-puissances/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            chapitre5: {
+                disponible: true,
+                titre: "Fractions",
+                description: "Fractions égales, simplification, addition/soustraction (même dénom. ou l'un multiple de l'autre).",
+                emoji: "➗",
+                cours: { actif: true, fichier: "chapitre9 - Fractions/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            chapitre6: {
+                disponible: true,
+                titre: "Fractions — dénominateurs quelconques ✨",
+                description: "PGCD, PPCM, réduction au même dénominateur, opérations sur fractions quelconques.",
+                emoji: "🔣",
+                cours: { actif: true, fichier: "nouveau-programme/chapitre-fractions-pgcd/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            // ──────────────────────────────────────────────
+            // BLOC 2 : Calcul littéral et équations
+            // ──────────────────────────────────────────────
+            chapitre7: {
+                disponible: true,
+                titre: "Calcul littéral",
+                description: "Expressions littérales, formules, distributivité, réduction, tester une égalité.",
+                emoji: "🔡",
+                cours: { actif: true, fichier: "chapitre6 - Calcul litteral/cours.html" },
+                exercices: { actif: true, items: [
+                    { titre: "Feuille d'exercices 1", fichier: "chapitre6 - Calcul litteral/exercices/exercices 1.html" },
+                    { titre: "Feuille d'exercices 2", fichier: "chapitre6 - Calcul litteral/exercices/exercices 2.html" }
+                ]},
+                quiz: { actif: true, items: [
+                    { titre: "Quiz simplification", fichier: "chapitre6 - Calcul litteral/quiz/simplification.html" }
+                ]}
+            },
+
+            chapitre8: {
+                disponible: true,
+                titre: "Équations simples ✨",
+                description: "Inconnue, solution, résoudre ax = c et x + b = c par méthodes arithmétiques.",
+                emoji: "⚖️",
+                cours: { actif: true, fichier: "nouveau-programme/chapitre-equations/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            // ──────────────────────────────────────────────
+            // BLOC 3 : Proportionnalité
+            // ──────────────────────────────────────────────
+            chapitre9: {
+                disponible: true,
+                titre: "Proportionnalité et ratios",
+                description: "Tableaux de proportionnalité, pourcentages, ratios, vitesse.",
+                emoji: "📊",
+                cours: { actif: true, fichier: "chapitre3 - Proportionnalite et ratio/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz: { actif: true, items: [
+                    { titre: "Cas de proportionnalité ?",    fichier: "chapitre3 - Proportionnalite et ratio/quiz/verif-proportionnalite.html" },
+                    { titre: "Calculer une valeur",          fichier: "chapitre3 - Proportionnalite et ratio/quiz/calc-proportionnalite.html" }
+                ]}
+            },
+
+            // ──────────────────────────────────────────────
+            // BLOC 4 : Géométrie
+            // ──────────────────────────────────────────────
+            chapitre10: {
+                disponible: true,
+                titre: "Symétrie centrale",
+                description: "Propriétés de la symétrie centrale, construction du symétrique d'une figure.",
+                emoji: "🔄",
+                cours: { actif: true, fichier: "chapitre2 - La symetrie centrale/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            chapitre11: {
+                disponible: true,
+                titre: "Angles et parallélisme",
+                description: "Angles alternes-internes, angles correspondants, droites parallèles.",
+                emoji: "📐",
+                cours: { actif: true, fichier: "chapitre5 - Angles et parallelisme/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            chapitre12: {
+                disponible: true,
+                titre: "Les triangles",
+                description: "Types de triangles, inégalité triangulaire, somme des angles, médiatrice.",
+                emoji: "🔺",
+                cours: { actif: true, fichier: "chapitre8- Triangles/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            chapitre13: {
+                disponible: true,
+                titre: "Parallélogrammes ✨",
+                description: "Définition, propriétés des côtés et diagonales, rectangle, losange, carré, aire, conversions.",
+                emoji: "◼",
+                cours: { actif: true, fichier: "nouveau-programme/chapitre-parallelogrammes/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            chapitre14: {
+                disponible: true,
+                titre: "Volumes et espace ✨",
+                description: "Pavé droit, cube, prisme, cylindre — patrons, volumes, unités de volume et de capacité.",
+                emoji: "📦",
+                cours: { actif: true, fichier: "nouveau-programme/chapitre-volumes/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            },
+
+            // ──────────────────────────────────────────────
+            // Chapitres futurs (réservés)
+            // ──────────────────────────────────────────────
+            chapitre15: {
+                disponible: false,
+                titre: "Chapitre à venir",
+                description: "Contenu en cours de préparation",
+                emoji: "📚",
+                cours: { actif: false, fichier: "" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
+            }
+        };
+    </script>
+    <script src="../classe-page.js?v=20251120143124"></script>
+</body>
+</html>

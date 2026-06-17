@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Fractions — dénominateurs quelconques</title>
+    <link rel="stylesheet" href="../../../styles.css?v=20260616">
+    <style>
+        /* ── Décomposition animée ── */
+        .decomp-wrap {
+            display: inline-block;
+            vertical-align: top;
+            margin: 5px 24px 5px 0;
+        }
+        .decomp {
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            line-height: 1;
+            position: relative;
+            display: inline-block;
+        }
+        .decomp::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            border-left: 2px solid #333;
+        }
+        .decomp-row {
+            display: flex;
+            align-items: center;
+            height: 1.6em;
+            opacity: 0;
+            transform: translateY(-3px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .decomp-row.visible { opacity: 1; transform: translateY(0); }
+        .decomp-n { min-width: 46px; text-align: right; padding-right: 5px; color: #1565c0; font-weight: bold; }
+        .decomp-d { padding-left: 7px; min-width: 28px; color: #b71c1c; font-weight: bold; opacity: 0; transition: opacity 0.2s; }
+        .decomp-d.visible { opacity: 1; }
+        .decomp-btn {
+            margin-top: 4px;
+            background: #3498db; color: white;
+            border: none; border-radius: 3px;
+            padding: 2px 9px; cursor: pointer; font-size: 11px; display: block;
+        }
+        .decomp-btn:hover:not(:disabled) { background: #217dbb; }
+        .decomp-btn:disabled { background: #aaa; cursor: default; }
+        .decomp-result { margin-top: 4px; font-style: italic; color: #333; font-size: 0.9em; opacity: 0; transition: opacity 0.3s; }
+        .decomp-result.visible { opacity: 1; }
+
+        /* Highlighting facteurs communs */
+        .fc-a { background: #ffe0b2; font-weight: bold; padding: 1px 3px; border-radius: 3px; color: #e65100; }
+        .fc-b { background: #c8e6c9; font-weight: bold; padding: 1px 3px; border-radius: 3px; color: #1b5e20; }
+
+        /* Step-by-step réduction */
+        .step-container { margin: 16px 0; }
+        .step-btn {
+            background: #9b59b6; color: white;
+            border: none; border-radius: 6px;
+            padding: 8px 18px; cursor: pointer; font-size: 1em; margin-bottom: 8px;
+        }
+        .step-btn:hover { background: #8e44ad; }
+        .step-row {
+            opacity: 0; max-height: 0; overflow: hidden;
+            transition: opacity 0.3s, max-height 0.3s;
+            padding: 0 4px;
+        }
+        .step-row.visible { opacity: 1; max-height: 200px; }
+
+        /* Exercices */
+        .ex-ligne { display: flex; align-items: center; gap: 10px; margin: 10px 0; flex-wrap: wrap; }
+        .ex-ligne input {
+            width: 70px; font-size: 1em; padding: 5px 8px;
+            border: 2px solid #999; border-radius: 6px; text-align: center;
+        }
+        .ex-ligne input.ok  { border-color: #27ae60; background: #eafaf1; }
+        .ex-ligne input.err { border-color: #e74c3c; background: #fdecea; }
+        .feedback.ok  { color: #27ae60; font-weight: bold; }
+        .feedback.err { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <a href="../../classe-5e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Fractions — dénominateurs quelconques ✨</h1>
+    <p style="font-style:italic; color:#555; margin-left:20px;">Nouveau programme cycle 4 · BO 5 mars 2026</p>
+
+    <div class="remarque">
+        <strong>Rappel (vu en 5ème — chapitre 9) :</strong>
+        On sait déjà additionner des fractions quand les dénominateurs sont égaux, ou quand l'un est un multiple de l'autre.
+        Dans ce chapitre, on traite le <strong>cas général</strong> : les dénominateurs sont quelconques.
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>1. PGCD — Plus Grand Commun Diviseur</h2>
+    <!-- ===================================================== -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Le <span style="color:red;">PGCD</span> de deux entiers a et b est le plus grand entier qui divise à la fois a et b.
+    </div>
+
+    <h3>Méthode : utiliser la décomposition en facteurs premiers</h3>
+
+    <div class="method">
+        <strong>Méthode :</strong>
+        <ol>
+            <li>Décomposer chaque nombre en produit de facteurs premiers.</li>
+            <li>Repérer les facteurs communs.</li>
+            <li>Le PGCD est le produit de ces facteurs communs (avec la plus petite puissance).</li>
+        </ol>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Calculer le PGCD de 12 et 18.
+        <br><br>
+        <div class="decomp-wrap">
+            <div style="font-size:0.9em; color:#666; margin-bottom:4px;">Décomposition de 12 :</div>
+            <div class="decomp" id="d-p12">
+                <div class="decomp-row"><span class="decomp-n">12</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">6</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">3</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-p12">▶ Suivant</button>
+            <div class="decomp-result" id="r-p12">12 = <span class="fc-a">2</span> × <span class="fc-a">2</span> × <span class="fc-b">3</span></div>
+        </div>
+
+        <div class="decomp-wrap">
+            <div style="font-size:0.9em; color:#666; margin-bottom:4px;">Décomposition de 18 :</div>
+            <div class="decomp" id="d-p18">
+                <div class="decomp-row"><span class="decomp-n">18</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">9</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">3</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-p18">▶ Suivant</button>
+            <div class="decomp-result" id="r-p18">18 = <span class="fc-a">2</span> × <span class="fc-b">3</span> × <span class="fc-b">3</span></div>
+        </div>
+
+        <br>
+        Facteurs communs : <span class="fc-a">2</span> (une fois) et <span class="fc-b">3</span> (une fois).<br><br>
+        <strong>PGCD(12, 18) = 2 × 3 = 6</strong>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>2. PPCM — Plus Petit Commun Multiple</h2>
+    <!-- ===================================================== -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Le <span style="color:red;">PPCM</span> de deux entiers a et b est le plus petit entier (non nul) qui est un multiple à la fois de a et de b.
+    </div>
+
+    <div class="method">
+        <strong>Méthode :</strong> Par décomposition en facteurs premiers :
+        le PPCM est le produit de <strong>tous</strong> les facteurs premiers (communs et non communs)
+        avec la <strong>plus grande puissance</strong>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Calculer le PPCM de 4 et 6.
+        <br><br>
+        4 = <span class="fc-a">2</span> × <span class="fc-a">2</span> = 2²<br>
+        6 = <span class="fc-a">2</span> × <span class="fc-b">3</span><br><br>
+
+        PPCM(4, 6) = 2² × 3 = 4 × 3 = <strong>12</strong><br><br>
+        Vérification : 12 = 3 × 4 ✓ et 12 = 2 × 6 ✓
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 :</strong> PPCM de 6 et 10.
+        <br><br>
+        6  = <span class="fc-a">2</span> × <span class="fc-b">3</span><br>
+        10 = <span class="fc-a">2</span> × <span style="background:#bbdefb; font-weight:bold; padding:1px 3px; border-radius:3px; color:#0d47a1;">5</span><br><br>
+        PPCM(6, 10) = 2 × 3 × 5 = <strong>30</strong><br><br>
+        Vérification : 30 = 5 × 6 ✓ et 30 = 3 × 10 ✓
+    </div>
+
+    <div class="remarque">
+        <strong>Astuce :</strong> Si l'un des deux nombres est multiple de l'autre,
+        le PPCM est simplement le plus grand. Par exemple PPCM(4, 12) = 12.
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>3. Additionner des fractions de dénominateurs quelconques</h2>
+    <!-- ===================================================== -->
+
+    <div class="important">
+        <span style="color:red;">Règle générale :</span>
+        Pour additionner (ou soustraire) deux fractions de dénominateurs quelconques :
+        <ol>
+            <li>Calculer le <strong>PPCM</strong> des deux dénominateurs → c'est le <strong>dénominateur commun</strong>.</li>
+            <li>Réécrire chaque fraction avec ce dénominateur commun.</li>
+            <li>Additionner (ou soustraire) les numérateurs et garder le dénominateur commun.</li>
+            <li>Simplifier si possible.</li>
+        </ol>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong> Calculer
+        <span class="fraction"><span class="numerateur">1</span><span class="denominateur">4</span></span>
+        +
+        <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>
+
+        <div class="step-container">
+            <button class="step-btn" onclick="revealSteps('s1')">▶ Voir la solution étape par étape</button>
+            <div id="s1-1" class="step-row">
+                <div class="calcul-detail">
+                    <strong>Étape 1 :</strong> PPCM(4, 6) = 12 (le dénominateur commun sera 12).
+                </div>
+            </div>
+            <div id="s1-2" class="step-row">
+                <div class="calcul-detail">
+                    <strong>Étape 2 :</strong> Réécrire les fractions avec le dénominateur 12 :<br>
+                    <span class="fraction"><span class="numerateur">1</span><span class="denominateur">4</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">1 × 3</span><span class="denominateur">4 × 3</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">3</span><span class="denominateur">12</span></span>
+                    &nbsp;&nbsp;&nbsp;
+                    <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">1 × 2</span><span class="denominateur">6 × 2</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">2</span><span class="denominateur">12</span></span>
+                </div>
+            </div>
+            <div id="s1-3" class="step-row">
+                <div class="calcul-detail">
+                    <strong>Étape 3 :</strong>
+                    <span class="fraction"><span class="numerateur">3</span><span class="denominateur">12</span></span>
+                    +
+                    <span class="fraction"><span class="numerateur">2</span><span class="denominateur">12</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">3 + 2</span><span class="denominateur">12</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">5</span><span class="denominateur">12</span></span>
+                </div>
+            </div>
+            <div id="s1-4" class="step-row">
+                <div class="calcul-detail">
+                    <strong>Étape 4 :</strong> 5 et 12 n'ont pas de facteur commun (5 est premier, ne divise pas 12).
+                    La fraction est <strong>irréductible</strong>.<br><br>
+                    <strong>Résultat :
+                    <span class="fraction"><span class="numerateur">1</span><span class="denominateur">4</span></span>
+                    +
+                    <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">5</span><span class="denominateur">12</span></span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 :</strong> Calculer
+        <span class="fraction"><span class="numerateur">3</span><span class="denominateur">10</span></span>
+        −
+        <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>
+
+        <div class="step-container">
+            <button class="step-btn" onclick="revealSteps('s2')">▶ Voir la solution étape par étape</button>
+            <div id="s2-1" class="step-row">
+                <div class="calcul-detail">
+                    <strong>Étape 1 :</strong> PPCM(10, 6) = 30.
+                </div>
+            </div>
+            <div id="s2-2" class="step-row">
+                <div class="calcul-detail">
+                    <strong>Étape 2 :</strong>
+                    <span class="fraction"><span class="numerateur">3</span><span class="denominateur">10</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">3 × 3</span><span class="denominateur">10 × 3</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">9</span><span class="denominateur">30</span></span>
+                    &nbsp;&nbsp;&nbsp;
+                    <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">1 × 5</span><span class="denominateur">6 × 5</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">5</span><span class="denominateur">30</span></span>
+                </div>
+            </div>
+            <div id="s2-3" class="step-row">
+                <div class="calcul-detail">
+                    <strong>Étape 3 :</strong>
+                    <span class="fraction"><span class="numerateur">9</span><span class="denominateur">30</span></span>
+                    −
+                    <span class="fraction"><span class="numerateur">5</span><span class="denominateur">30</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">9 − 5</span><span class="denominateur">30</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">4</span><span class="denominateur">30</span></span>
+                </div>
+            </div>
+            <div id="s2-4" class="step-row">
+                <div class="calcul-detail">
+                    <strong>Étape 4 :</strong> Simplifier : PGCD(4, 30) = 2.<br>
+                    <span class="fraction"><span class="numerateur">4</span><span class="denominateur">30</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">4 ÷ 2</span><span class="denominateur">30 ÷ 2</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">2</span><span class="denominateur">15</span></span><br><br>
+                    <strong>Résultat :
+                    <span class="fraction"><span class="numerateur">3</span><span class="denominateur">10</span></span>
+                    −
+                    <span class="fraction"><span class="numerateur">1</span><span class="denominateur">6</span></span>
+                    =
+                    <span class="fraction"><span class="numerateur">2</span><span class="denominateur">15</span></span></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>4. Exercices interactifs</h2>
+    <!-- ===================================================== -->
+
+    <div class="example">
+        <strong>Exercice 1 :</strong> Calcule les additions de fractions. Donne la fraction irréductible.
+        <br><br>
+        <div class="ex-ligne">
+            a)
+            <span class="fraction"><span class="numerateur">1</span><span class="denominateur">3</span></span>
+            +
+            <span class="fraction"><span class="numerateur">1</span><span class="denominateur">5</span></span>
+            = <span style="font-size:1.1em;">
+                <input type="text" id="eaN" placeholder="num" style="width:55px;">
+                / <input type="text" id="eaD" placeholder="dén" style="width:55px;">
+            </span>
+            <span id="fba" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            b)
+            <span class="fraction"><span class="numerateur">5</span><span class="denominateur">6</span></span>
+            −
+            <span class="fraction"><span class="numerateur">1</span><span class="denominateur">4</span></span>
+            = <span style="font-size:1.1em;">
+                <input type="text" id="ebN" placeholder="num" style="width:55px;">
+                / <input type="text" id="ebD" placeholder="dén" style="width:55px;">
+            </span>
+            <span id="fbb" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            c)
+            <span class="fraction"><span class="numerateur">2</span><span class="denominateur">3</span></span>
+            +
+            <span class="fraction"><span class="numerateur">3</span><span class="denominateur">4</span></span>
+            = <span style="font-size:1.1em;">
+                <input type="text" id="ecN" placeholder="num" style="width:55px;">
+                / <input type="text" id="ecD" placeholder="dén" style="width:55px;">
+            </span>
+            <span id="fbc" class="feedback"></span>
+        </div>
+        <div class="ex-ligne">
+            d)
+            <span class="fraction"><span class="numerateur">7</span><span class="denominateur">12</span></span>
+            −
+            <span class="fraction"><span class="numerateur">1</span><span class="denominateur">8</span></span>
+            = <span style="font-size:1.1em;">
+                <input type="text" id="edN" placeholder="num" style="width:55px;">
+                / <input type="text" id="edD" placeholder="dén" style="width:55px;">
+            </span>
+            <span id="fbd" class="feedback"></span>
+        </div>
+        <button onclick="checkFracs()">Vérifier</button>
+        <div id="fbg" class="feedback" style="margin-top:10px;"></div>
+    </div>
+
+    <script>
+        /* ── Décompositions animées ── */
+        document.querySelectorAll('.decomp-btn').forEach(function(btn) {
+            var tid = btn.getAttribute('data-target');
+            var d = document.getElementById(tid);
+            var rows = d.querySelectorAll('.decomp-row');
+            var rid = tid.replace('d-', 'r-');
+            var res = document.getElementById(rid);
+            var cur = 1;
+            rows[0].classList.add('visible');
+            btn.addEventListener('click', function() {
+                rows[cur-1].querySelector('.decomp-d').classList.add('visible');
+                if (cur < rows.length) { rows[cur].classList.add('visible'); cur++; }
+                if (cur >= rows.length) { btn.disabled = true; btn.textContent = '✓ Terminé'; if (res) res.classList.add('visible'); }
+            });
+        });
+
+        /* ── Steps ── */
+        function revealSteps(prefix) {
+            var i = 1;
+            function next() {
+                var el = document.getElementById(prefix + '-' + i);
+                if (!el) return;
+                el.classList.add('visible');
+                i++;
+                if (document.getElementById(prefix + '-' + i)) setTimeout(next, 400);
+            }
+            next();
+        }
+
+        /* ── Exercice fractions ── */
+        function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a; }
+        function reduce(n, d) { var g = gcd(n, d); return [n/g, d/g]; }
+
+        function showFb(id, ok, msgOk, msgErr) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = ok ? '✓ ' + msgOk : '✗ ' + msgErr;
+            el.className = 'feedback ' + (ok ? 'ok' : 'err');
+        }
+
+        function checkFrac(nId, dId, fbId, expectedN, expectedD) {
+            var n = parseInt(document.getElementById(nId).value, 10);
+            var d = parseInt(document.getElementById(dId).value, 10);
+            if (isNaN(n) || isNaN(d) || d === 0) {
+                showFb(fbId, false, '', 'Complète num et dén');
+                return false;
+            }
+            var r = reduce(n, d);
+            var e = reduce(expectedN, expectedD);
+            var ok = r[0] === e[0] && r[1] === e[1];
+            var expStr = e[0] + '/' + e[1];
+            showFb(fbId, ok, expStr, 'Réponse : ' + expStr);
+            return ok;
+        }
+
+        function checkFracs() {
+            /* a) 1/3 + 1/5 = 8/15 */
+            var r1 = checkFrac('eaN','eaD','fba', 8, 15);
+            /* b) 5/6 - 1/4 = 7/12 */
+            var r2 = checkFrac('ebN','ebD','fbb', 7, 12);
+            /* c) 2/3 + 3/4 = 17/12 */
+            var r3 = checkFrac('ecN','ecD','fbc', 17, 12);
+            /* d) 7/12 - 1/8 = 11/24 */
+            var r4 = checkFrac('edN','edD','fbd', 11, 24);
+            var correct = [r1,r2,r3,r4].filter(Boolean).length;
+            var g = document.getElementById('fbg');
+            g.textContent = correct === 4 ? '🎉 Parfait !' : correct + '/4 — Réessaie !';
+            g.className = 'feedback ' + (correct === 4 ? 'ok' : 'err');
+        }
+    </script>
+
+</body>
+</html>

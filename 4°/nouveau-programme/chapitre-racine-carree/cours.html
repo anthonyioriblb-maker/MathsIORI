@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Racine carrée</title>
+    <link rel="stylesheet" href="../../../styles.css?v=20260616">
+    <style>
+        .sqrt-table {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin: 14px 0;
+            max-width: 600px;
+        }
+        .sqrt-table .cell {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #333;
+            border-radius: 8px;
+            padding: 10px 6px;
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .number-line {
+            position: relative;
+            width: 100%;
+            max-width: 620px;
+            height: 60px;
+            margin: 20px 0;
+        }
+        .number-line svg { width: 100%; height: 100%; }
+        .approx-box {
+            background: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin: 12px 0;
+        }
+        .ex-ligne {
+            display: flex; align-items: center; gap: 10px;
+            margin: 10px 0; flex-wrap: wrap;
+        }
+        .ex-ligne input {
+            width: 80px; font-size: 1em; padding: 5px 8px;
+            border: 2px solid #999; border-radius: 6px; text-align: center;
+        }
+        .ex-ligne input.ok  { border-color: #27ae60; background: #eafaf1; }
+        .ex-ligne input.err { border-color: #e74c3c; background: #fdecea; }
+        .feedback.ok  { color: #27ae60; font-weight: bold; }
+        .feedback.err { color: #e74c3c; font-weight: bold; }
+        .calc-step { font-family: monospace; font-size: 1em; margin: 4px 0; }
+
+        .sqrt-calc-box {
+            background: #fff8e1;
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin: 12px 0;
+        }
+        .sqrt-calc-box input[type=number] {
+            width: 90px; font-size: 1.1em; padding: 6px 10px;
+            border: 2px solid #f39c12; border-radius: 6px; text-align: center;
+        }
+        .sqrt-calc-box button {
+            background: #f39c12; color: white;
+            border: none; border-radius: 6px;
+            padding: 8px 16px; font-size: 1em; cursor: pointer; margin-left: 10px;
+        }
+        .sqrt-calc-box button:hover { background: #d68910; }
+    </style>
+</head>
+<body>
+    <a href="../../classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>La racine carrée ✨</h1>
+    <p style="font-style:italic; color:#555; margin-left:20px;">Nouveau programme cycle 4 · BO 5 mars 2026</p>
+
+    <!-- ===================================================== -->
+    <h2>1. Définition et notations</h2>
+    <!-- ===================================================== -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Pour tout nombre <span class="math">a</span> ≥ 0, la <span style="color:red;"><strong>racine carrée</strong></span> de <span class="math">a</span>, notée <strong>√a</strong>, est l'unique nombre positif dont le carré vaut <span class="math">a</span>.<br><br>
+        <div style="text-align:center; font-size:1.3em; font-weight:bold; color:#333;">
+            √a = b &nbsp;⟺&nbsp; b² = a &nbsp; (avec b ≥ 0)
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong>
+        <ul>
+            <li>√ est appelé <strong>radical</strong>.</li>
+            <li>La racine carrée d'un nombre négatif n'existe pas dans l'ensemble des réels.</li>
+            <li>√0 = 0 et √1 = 1.</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item">√9 = 3<br><span style="color:#666; font-size:0.85em;">car 3² = 9</span></div>
+            <div class="exemple-item">√25 = 5<br><span style="color:#666; font-size:0.85em;">car 5² = 25</span></div>
+            <div class="exemple-item">√0,49 = 0,7<br><span style="color:#666; font-size:0.85em;">car 0,7² = 0,49</span></div>
+            <div class="exemple-item">√<span class="fraction"><span class="numerateur">1</span><span class="denominateur">4</span></span> = <span class="fraction"><span class="numerateur">1</span><span class="denominateur">2</span></span><br><span style="color:#666; font-size:0.85em;">car (½)² = ¼</span></div>
+        </div>
+    </div>
+
+    <h3>Tableau des racines carrées à connaître</h3>
+
+    <div class="sqrt-table">
+        <div class="cell">√1 = 1</div>
+        <div class="cell">√4 = 2</div>
+        <div class="cell">√9 = 3</div>
+        <div class="cell">√16 = 4</div>
+        <div class="cell">√25 = 5</div>
+        <div class="cell">√36 = 6</div>
+        <div class="cell">√49 = 7</div>
+        <div class="cell">√64 = 8</div>
+        <div class="cell">√81 = 9</div>
+        <div class="cell">√100 = 10</div>
+        <div class="cell">√121 = 11</div>
+        <div class="cell">√144 = 12</div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>2. Propriétés de calcul</h2>
+    <!-- ===================================================== -->
+
+    <div class="important">
+        <span style="color:red;">Propriétés :</span> Pour tous réels <span class="math">a</span> ≥ 0 et <span class="math">b</span> ≥ 0 :<br><br>
+        <div style="display:grid; gap:10px; max-width:500px;">
+            <div style="background:#fff0f0; border:2px solid #e74c3c; border-radius:8px; padding:10px 16px;">
+                <strong>(1)</strong> √(a × b) = √a × √b<br>
+                <span style="color:#666; font-size:0.9em;">la racine d'un produit est le produit des racines</span>
+            </div>
+            <div style="background:#f0fff0; border:2px solid #27ae60; border-radius:8px; padding:10px 16px;">
+                <strong>(2)</strong> (√a)² = a<br>
+                <span style="color:#666; font-size:0.9em;">la racine carrée est l'opération inverse du carré</span>
+            </div>
+            <div style="background:#f0f0ff; border:2px solid #2980b9; border-radius:8px; padding:10px 16px;">
+                <strong>(3)</strong> √(a²) = a &nbsp; (si a ≥ 0)<br>
+                <span style="color:#666; font-size:0.9em;">√(a²) = |a| en général (valeur absolue)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemples — simplifier des racines carrées :</strong>
+        <div class="exemples-colonnes">
+            <div class="exemple-item calc-step">
+                √50<br>
+                = √(25 × 2)<br>
+                = √25 × √2<br>
+                = <strong>5√2</strong>
+            </div>
+            <div class="exemple-item calc-step">
+                √48<br>
+                = √(16 × 3)<br>
+                = √16 × √3<br>
+                = <strong>4√3</strong>
+            </div>
+            <div class="exemple-item calc-step">
+                √(9x²)<br>
+                = √9 × √(x²)<br>
+                = 3 × |x|<br>
+                = <strong>3x</strong> (si x ≥ 0)
+            </div>
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>⚠️ Attention :</strong> √(a + b) ≠ √a + √b en général.<br>
+        Par exemple : √(9 + 16) = √25 = 5, mais √9 + √16 = 3 + 4 = 7 ≠ 5.
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>3. Racines carrées et nombres irrationnels</h2>
+    <!-- ===================================================== -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Un nombre est dit <span style="color:red;"><strong>irrationnel</strong></span> s'il ne peut pas s'écrire sous la forme d'une fraction d'entiers.<br><br>
+        Les racines carrées de nombres entiers qui ne sont pas des carrés parfaits sont irrationnelles.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br><br>
+        √2 ≈ 1,414 213 562… &nbsp; — nombre irrationnel (les décimales ne se répètent jamais)<br>
+        √3 ≈ 1,732 050 808… &nbsp; — nombre irrationnel<br>
+        √5 ≈ 2,236 067 977… &nbsp; — nombre irrationnel<br><br>
+
+        <div class="number-line">
+            <svg viewBox="0 0 600 60" xmlns="http://www.w3.org/2000/svg">
+                <!-- Axe -->
+                <line x1="20" y1="35" x2="580" y2="35" stroke="#333" stroke-width="2"/>
+                <polygon points="580,35 570,30 570,40" fill="#333"/>
+                <!-- Graduations -->
+                <line x1="60" y1="30" x2="60" y2="40" stroke="#333" stroke-width="1.5"/>
+                <text x="60" y="55" text-anchor="middle" font-size="13">0</text>
+                <line x1="180" y1="30" x2="180" y2="40" stroke="#333" stroke-width="1.5"/>
+                <text x="180" y="55" text-anchor="middle" font-size="13">1</text>
+                <line x1="300" y1="30" x2="300" y2="40" stroke="#333" stroke-width="1.5"/>
+                <text x="300" y="55" text-anchor="middle" font-size="13">2</text>
+                <line x1="420" y1="30" x2="420" y2="40" stroke="#333" stroke-width="1.5"/>
+                <text x="420" y="55" text-anchor="middle" font-size="13">3</text>
+                <!-- √2 ≈ 1.414 → position : 60 + 1.414×120 = 229.7 -->
+                <line x1="230" y1="25" x2="230" y2="45" stroke="#e74c3c" stroke-width="2"/>
+                <text x="230" y="18" text-anchor="middle" font-size="12" fill="#e74c3c" font-weight="bold">√2</text>
+                <!-- √3 ≈ 1.732 → position : 60 + 1.732×120 = 267.8 -->
+                <line x1="268" y1="25" x2="268" y2="45" stroke="#2980b9" stroke-width="2"/>
+                <text x="268" y="18" text-anchor="middle" font-size="12" fill="#2980b9" font-weight="bold">√3</text>
+                <!-- √5 ≈ 2.236 → position : 60 + 2.236×120 = 328.3 -->
+                <line x1="328" y1="25" x2="328" y2="45" stroke="#27ae60" stroke-width="2"/>
+                <text x="328" y="18" text-anchor="middle" font-size="12" fill="#27ae60" font-weight="bold">√5</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>4. Approximations et encadrements</h2>
+    <!-- ===================================================== -->
+
+    <div class="method">
+        <strong>Méthode — encadrer √n entre deux entiers :</strong>
+        <ol>
+            <li>Trouver les deux carrés parfaits qui encadrent n.</li>
+            <li>En déduire l'encadrement de √n.</li>
+        </ol>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Encadrer √20 entre deux entiers consécutifs.
+        <div class="calcul-detail calc-step">
+            16 < 20 < 25<br>
+            √16 < √20 < √25<br>
+            4 < √20 < 5<br><br>
+            Donc √20 est compris entre 4 et 5.<br>
+            <span style="color:#27ae60;">Vérification : √20 ≈ 4,472…  ✓</span>
+        </div>
+    </div>
+
+    <div class="approx-box">
+        <strong>Remarque — à la calculatrice :</strong><br>
+        Sur Casio : touche <kbd>√</kbd> puis le nombre.<br>
+        Sur TI : touche <kbd>2nd</kbd> puis <kbd>x²</kbd> puis le nombre.<br><br>
+        Exemple : √20 ≈ <strong>4,472</strong> (arrondi au millième).
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>5. Lien avec le théorème de Pythagore</h2>
+    <!-- ===================================================== -->
+
+    <div class="example">
+        <strong>Exemple :</strong> Dans un triangle rectangle, les deux cathètes mesurent 5 cm et 12 cm. Calculer la longueur de l'hypoténuse.<br><br>
+        <div class="calcul-detail calc-step">
+            D'après Pythagore :<br>
+            hyp² = 5² + 12²<br>
+            hyp² = 25 + 144<br>
+            hyp² = 169<br>
+            hyp = √169 = <strong>13 cm</strong>
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>6. Exercices interactifs</h2>
+    <!-- ===================================================== -->
+
+    <h3>Racines carrées exactes</h3>
+
+    <div class="example">
+        <strong>Exercice 1 :</strong> Calculer.
+        <br><br>
+        <div class="ex-ligne">a) √36 = <input type="text" id="e1a" placeholder="?"> <span id="fb1a" class="feedback"></span></div>
+        <div class="ex-ligne">b) √(0,04) = <input type="text" id="e1b" placeholder="?"> <span id="fb1b" class="feedback"></span></div>
+        <div class="ex-ligne">c) (√7)² = <input type="text" id="e1c" placeholder="?"> <span id="fb1c" class="feedback"></span></div>
+        <div class="ex-ligne">d) √(5²) = <input type="text" id="e1d" placeholder="?"> <span id="fb1d" class="feedback"></span></div>
+        <button onclick="checkEx1()">Vérifier</button>
+        <div id="fb1g" class="feedback" style="margin-top:8px;"></div>
+    </div>
+
+    <h3>Simplifier des racines</h3>
+
+    <div class="example">
+        <strong>Exercice 2 :</strong> Simplifier √72.
+        <br>√72 = √(36 × 2) = <input type="text" id="e2a" placeholder="?" style="width:45px;"> √2
+        <span id="fb2" class="feedback"></span>
+        <br><button onclick="checkEx2()" style="margin-top:8px;">Vérifier</button>
+    </div>
+
+    <h3>Encadrements</h3>
+
+    <div class="example">
+        <strong>Exercice 3 :</strong> Encadrer √30 entre deux entiers consécutifs.
+        <br><br>
+        <input type="text" id="e3a" placeholder="?" style="width:45px;"> < √30 <
+        <input type="text" id="e3b" placeholder="?" style="width:45px;">
+        <span id="fb3" class="feedback"></span>
+        <br><button onclick="checkEx3()" style="margin-top:8px;">Vérifier</button>
+    </div>
+
+    <h3>Calculateur</h3>
+
+    <div class="sqrt-calc-box">
+        <strong>Calculer √n :</strong><br><br>
+        n = <input type="number" id="calcN" value="2" min="0">
+        <button onclick="calcSqrt()">Calculer</button>
+        <div id="calcResult" style="margin-top:10px; font-size:1.1em;"></div>
+    </div>
+
+    <script>
+        function showFb(id, ok, msgOk, msgErr) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = ok ? '✓ ' + msgOk : '✗ ' + msgErr;
+            el.className = 'feedback ' + (ok ? 'ok' : 'err');
+            var inp = el.previousElementSibling;
+            if (inp && inp.tagName === 'INPUT') inp.className = ok ? 'ok' : 'err';
+        }
+        function num(id) { return parseFloat(document.getElementById(id).value.trim().replace(',','.')); }
+
+        function checkEx1() {
+            var ok1 = num('e1a') === 6;         showFb('fb1a', ok1, '6', '6 (car 6²=36)');
+            var ok2 = Math.abs(num('e1b')-0.2)<0.001; showFb('fb1b', ok2, '0,2', '0,2 (car 0,2²=0,04)');
+            var ok3 = num('e1c') === 7;         showFb('fb1c', ok3, '7', '7 — par définition');
+            var ok4 = num('e1d') === 5;         showFb('fb1d', ok4, '5', '5 (car √(5²)=5 si 5≥0)');
+            var c = [ok1,ok2,ok3,ok4].filter(Boolean).length;
+            var g = document.getElementById('fb1g');
+            g.textContent = c===4 ? '🎉 Parfait !' : c+'/4 — Réessaie !';
+            g.className = 'feedback '+(c===4?'ok':'err');
+        }
+
+        function checkEx2() {
+            showFb('fb2', num('e2a')===6, '6 (donc 6√2)', 'Réponse : 6 car √72 = √(36×2) = 6√2');
+        }
+
+        function checkEx3() {
+            // √25=5, √36=6, 25<30<36, so 5<√30<6
+            var a = num('e3a'), b = num('e3b');
+            showFb('fb3', a===5 && b===6, '5 < √30 < 6', 'Réponse : 5 < √30 < 6 (car 5²=25 et 6²=36)');
+        }
+
+        function calcSqrt() {
+            var n = parseFloat(document.getElementById('calcN').value);
+            if (isNaN(n) || n < 0) {
+                document.getElementById('calcResult').textContent = 'Entrer un nombre positif ou nul.';
+                return;
+            }
+            var r = Math.sqrt(n);
+            var isExact = Math.floor(r) === r;
+            var txt = '√' + n + ' = ';
+            if (isExact) txt += r;
+            else txt += '≈ ' + r.toFixed(6) + '… (irrationnel)';
+            document.getElementById('calcResult').innerHTML = '<strong>' + txt + '</strong>';
+        }
+    </script>
+
+</body>
+</html>

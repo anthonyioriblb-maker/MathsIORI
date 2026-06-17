@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Solides et géométrie dans l'espace</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        .btn-check{background:#2196f3;color:white;border:none;padding:9px 20px;border-radius:6px;font-size:15px;cursor:pointer;margin-top:8px;}
+        .btn-check:hover{background:#1565c0;}
+        .btn-reset{background:#e0e0e0;color:#333;border:none;padding:9px 20px;border-radius:6px;font-size:15px;cursor:pointer;margin-top:8px;margin-left:6px;}
+        .feedback{margin-top:8px;font-weight:600;font-size:15px;}
+        .ok{color:#2e7d32;} .err{color:#c62828;}
+        input.case-rep{width:60px;font-size:17px;text-align:center;border:2px solid #aaa;border-radius:5px;padding:4px;}
+        input.case-rep:focus{border-color:#2196f3;outline:none;}
+        select.case-sel{font-size:15px;padding:4px 8px;border:2px solid #aaa;border-radius:5px;}
+
+        /* ── Grille de solides ── */
+        .solides-grid{display:flex;flex-wrap:wrap;gap:18px;margin:14px 0;}
+        .solide-card{
+            border:2px solid #ddd;border-radius:10px;padding:14px 16px;
+            background:white;min-width:190px;text-align:center;
+            box-shadow:0 2px 6px rgba(0,0,0,0.08);
+        }
+        .solide-card h4{color:#1565c0;margin-bottom:8px;font-size:15px;}
+        .solide-card p{font-size:13px;color:#333;text-align:left;line-height:1.6;}
+
+        /* ── Patron interactif ── */
+        .patron-container{text-align:center;margin:14px 0;}
+        .patron-piece{
+            position:absolute;background:#bbdefb;border:2px solid #1565c0;
+            display:flex;align-items:center;justify-content:center;
+            font-size:11px;color:#1565c0;font-weight:600;
+            cursor:move;user-select:none;border-radius:2px;
+        }
+        .patron-zone{position:relative;width:340px;height:260px;border:2px dashed #bbb;border-radius:8px;margin:0 auto;background:#f9f9f9;}
+        .patron-ref{
+            position:absolute;border:2px dashed #42a5f5;background:rgba(66,165,245,0.08);
+            border-radius:2px;
+        }
+
+        /* ── Tableau faces-arêtes-sommets ── */
+        table.tab-solides{border-collapse:collapse;margin:12px 0;}
+        table.tab-solides th{background:#e3f2fd;color:#1565c0;padding:9px 18px;border:1px solid #ccc;}
+        table.tab-solides td{padding:9px 18px;border:1px solid #ccc;text-align:center;font-size:15px;}
+    </style>
+</head>
+<body>
+    <a href="../../classe-6e.html" class="home-button" style="margin:20px;">← Retour au choix des chapitres</a>
+    <h1>Solides et géométrie dans l'espace</h1>
+
+    <div class="remarque">
+        <strong>Objectif :</strong> reconnaître et décrire les solides usuels, comprendre le lien entre un solide (3D) et son patron (2D), construire le patron d'un cube.
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <h2>Les solides usuels</h2>
+
+    <h3>Reconnaître les solides</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Un <strong>solide</strong> est une figure à trois dimensions (3D). Il est délimité par des <strong>faces</strong> (surfaces planes ou courbes), des <strong>arêtes</strong> (segments où deux faces se rencontrent) et des <strong>sommets</strong> (points où plusieurs arêtes se rejoignent).
+    </div>
+
+    <div class="solides-grid">
+
+        <!-- Cube -->
+        <div class="solide-card">
+            <svg width="110" height="100" viewBox="0 0 110 100">
+                <!-- Face avant -->
+                <polygon points="20,30 70,30 70,80 20,80" fill="#bbdefb" stroke="#1565c0" stroke-width="2"/>
+                <!-- Face supérieure -->
+                <polygon points="20,30 40,10 90,10 70,30" fill="#90caf9" stroke="#1565c0" stroke-width="2"/>
+                <!-- Face droite -->
+                <polygon points="70,30 90,10 90,60 70,80" fill="#64b5f6" stroke="#1565c0" stroke-width="2"/>
+                <!-- Arêtes cachées -->
+                <line x1="20" y1="80" x2="40" y2="60" stroke="#1565c0" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="40" y1="10" x2="40" y2="60" stroke="#1565c0" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="40" y1="60" x2="90" y2="60" stroke="#1565c0" stroke-width="1" stroke-dasharray="4,3"/>
+            </svg>
+            <h4>Cube</h4>
+            <p>• 6 faces carrées<br>• 12 arêtes (toutes égales)<br>• 8 sommets</p>
+        </div>
+
+        <!-- Pavé droit (cuboid) -->
+        <div class="solide-card">
+            <svg width="130" height="100" viewBox="0 0 130 100">
+                <polygon points="10,40 80,40 80,80 10,80" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                <polygon points="10,40 28,20 98,20 80,40" fill="#a5d6a7" stroke="#2e7d32" stroke-width="2"/>
+                <polygon points="80,40 98,20 98,60 80,80" fill="#81c784" stroke="#2e7d32" stroke-width="2"/>
+                <line x1="10" y1="80" x2="28" y2="60" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="28" y1="20" x2="28" y2="60" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="28" y1="60" x2="98" y2="60" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3"/>
+            </svg>
+            <h4>Pavé droit (rectangulaire)</h4>
+            <p>• 6 faces rectangulaires<br>• 12 arêtes<br>• 8 sommets</p>
+        </div>
+
+        <!-- Prisme -->
+        <div class="solide-card">
+            <svg width="120" height="100" viewBox="0 0 120 100">
+                <!-- Base triangulaire avant -->
+                <polygon points="10,80 60,80 35,40" fill="#fff9c4" stroke="#f57f17" stroke-width="2"/>
+                <!-- Face droite -->
+                <polygon points="60,80 80,60 55,20 35,40" fill="#fff176" stroke="#f57f17" stroke-width="2"/>
+                <!-- Face supérieure oblique -->
+                <polygon points="35,40 55,20 30,20 10,40" fill="#ffee58" stroke="#f57f17" stroke-width="2"/>
+                <!-- Face gauche (cachée) -->
+                <line x1="10" y1="80" x2="10" y2="40" stroke="#f57f17" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="10" y1="40" x2="30" y2="20" stroke="#f57f17" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <line x1="30" y1="20" x2="55" y2="20" stroke="#f57f17" stroke-width="1.5"/>
+                <line x1="55" y1="20" x2="80" y2="60" stroke="#f57f17" stroke-width="1.5"/>
+                <line x1="80" y1="60" x2="60" y2="80" stroke="#f57f17" stroke-width="1.5"/>
+            </svg>
+            <h4>Prisme droit (base triangulaire)</h4>
+            <p>• 5 faces : 2 triangles + 3 rectangles<br>• 9 arêtes<br>• 6 sommets</p>
+        </div>
+
+        <!-- Pyramide -->
+        <div class="solide-card">
+            <svg width="110" height="100" viewBox="0 0 110 100">
+                <polygon points="55,10 10,80 100,80" fill="#ffccbc" stroke="#bf360c" stroke-width="2"/>
+                <polygon points="55,10 100,80 85,65" fill="#ffab91" stroke="#bf360c" stroke-width="2"/>
+                <line x1="10" y1="80" x2="85" y2="65" stroke="#bf360c" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="55" y1="10" x2="50" y2="72" stroke="#bf360c" stroke-width="1" stroke-dasharray="4,3"/>
+                <ellipse cx="55" cy="77" rx="45" ry="8" fill="none" stroke="#bf360c" stroke-width="1.5" stroke-dasharray="4,3"/>
+            </svg>
+            <h4>Pyramide à base carrée</h4>
+            <p>• 5 faces : 1 carré + 4 triangles<br>• 8 arêtes<br>• 5 sommets</p>
+        </div>
+
+        <!-- Cylindre -->
+        <div class="solide-card">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+                <rect x="20" y="30" width="60" height="50" fill="#e1bee7" stroke="#6a1b9a" stroke-width="2"/>
+                <ellipse cx="50" cy="30" rx="30" ry="10" fill="#ce93d8" stroke="#6a1b9a" stroke-width="2"/>
+                <ellipse cx="50" cy="80" rx="30" ry="10" fill="#ba68c8" stroke="#6a1b9a" stroke-width="2"/>
+            </svg>
+            <h4>Cylindre</h4>
+            <p>• 2 faces circulaires (bases)<br>• 1 face courbe (latérale)<br>• Pas de sommet, pas d'arête</p>
+        </div>
+
+        <!-- Cône -->
+        <div class="solide-card">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+                <polygon points="50,10 15,82 85,82" fill="#b2ebf2" stroke="#006064" stroke-width="2"/>
+                <ellipse cx="50" cy="80" rx="35" ry="10" fill="#80deea" stroke="#006064" stroke-width="2"/>
+            </svg>
+            <h4>Cône</h4>
+            <p>• 1 face circulaire (base)<br>• 1 face courbe (latérale)<br>• 1 sommet (apex)</p>
+        </div>
+
+        <!-- Sphère -->
+        <div class="solide-card">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+                <defs>
+                    <radialGradient id="sph" cx="38%" cy="35%">
+                        <stop offset="0%" stop-color="#fff"/>
+                        <stop offset="100%" stop-color="#ef9a9a"/>
+                    </radialGradient>
+                </defs>
+                <circle cx="50" cy="50" r="40" fill="url(#sph)" stroke="#c62828" stroke-width="2"/>
+                <ellipse cx="50" cy="50" rx="40" ry="14" fill="none" stroke="#c62828" stroke-width="1.5" stroke-dasharray="5,3"/>
+            </svg>
+            <h4>Sphère</h4>
+            <p>• 1 seule face courbe<br>• Pas d'arête, pas de sommet<br>• Tous les points sont à égale distance du centre</p>
+        </div>
+
+    </div>
+
+    <h3>Tableau récapitulatif (polyèdres)</h3>
+    <table class="tab-solides">
+        <tr>
+            <th>Solide</th><th>Faces</th><th>Arêtes</th><th>Sommets</th>
+        </tr>
+        <tr><td>Cube</td><td>6</td><td>12</td><td>8</td></tr>
+        <tr><td>Pavé droit</td><td>6</td><td>12</td><td>8</td></tr>
+        <tr><td>Prisme (base triangle)</td><td>5</td><td>9</td><td>6</td></tr>
+        <tr><td>Pyramide (base carrée)</td><td>5</td><td>8</td><td>5</td></tr>
+        <tr><td>Tétraèdre (pyramide triangulaire)</td><td>4</td><td>6</td><td>4</td></tr>
+    </table>
+
+    <div class="property">
+        <strong>Formule d'Euler :</strong> Pour tout polyèdre : <strong>S − A + F = 2</strong> (Sommets − Arêtes + Faces = 2)<br>
+        <em>Exemple pour le cube : 8 − 12 + 6 = 2 ✓</em>
+    </div>
+
+    <!-- ── Exercice reconnaître ── -->
+    <div class="example">
+        <strong>À toi !</strong> Réponds aux questions sur ces solides.<br><br>
+        <p>1) Un solide a 4 faces triangulaires et 4 sommets. Quel est-il ?
+        <select class="case-sel" id="reco1">
+            <option value="">— choisir —</option>
+            <option value="tetraedre">Tétraèdre</option>
+            <option value="pyramide">Pyramide à base carrée</option>
+            <option value="prisme">Prisme</option>
+            <option value="cube">Cube</option>
+        </select></p>
+        <p>2) Un prisme à base triangulaire a combien d'arêtes ?
+        <input class="case-rep" id="reco2" type="number" placeholder="?"></p>
+        <p>3) Vrai ou faux : la sphère est un polyèdre.
+        <select class="case-sel" id="reco3">
+            <option value="">— choisir —</option>
+            <option value="faux">Faux</option>
+            <option value="vrai">Vrai</option>
+        </select></p>
+        <button class="btn-check" onclick="checkReco()">Vérifier</button>
+        <button class="btn-reset" onclick="document.getElementById('reco1').value='';document.getElementById('reco2').value='';document.getElementById('reco3').value='';document.getElementById('fb-reco').textContent=''">Effacer</button>
+        <div class="feedback" id="fb-reco"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <h2>Du solide au patron</h2>
+
+    <h3>Qu'est-ce qu'un patron ?</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Le <strong>patron</strong> d'un solide est une figure plane (2D) que l'on peut découper et plier pour reconstituer le solide. Un même solide peut avoir plusieurs patrons différents.
+    </div>
+
+    <h3>Patron du cube</h3>
+
+    <div class="example">
+        <strong>Le cube a 6 faces carrées.</strong> Son patron est donc composé de 6 carrés reliés.<br>
+        Il existe <strong>11 patrons différents</strong> pour le cube. En voici quelques-uns :<br><br>
+
+        <!-- 3 patrons de cube en SVG -->
+        <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start;margin:10px 0;">
+
+            <!-- Patron 1 : croix classique -->
+            <div style="text-align:center;">
+                <svg width="150" height="180" viewBox="0 0 150 180">
+                    <g fill="#bbdefb" stroke="#1565c0" stroke-width="2">
+                        <!-- colonne centrale -->
+                        <rect x="50" y="10"  width="40" height="40"/>
+                        <rect x="50" y="50"  width="40" height="40"/>
+                        <rect x="50" y="90"  width="40" height="40"/>
+                        <rect x="50" y="130" width="40" height="40"/>
+                        <!-- bras -->
+                        <rect x="10"  y="50" width="40" height="40"/>
+                        <rect x="90"  y="50" width="40" height="40"/>
+                    </g>
+                    <text x="75" y="145" text-anchor="middle" font-size="9" fill="#555">Patron n°1</text>
+                </svg>
+            </div>
+
+            <!-- Patron 2 : L -->
+            <div style="text-align:center;">
+                <svg width="180" height="150" viewBox="0 0 180 150">
+                    <g fill="#c8e6c9" stroke="#2e7d32" stroke-width="2">
+                        <rect x="10"  y="10" width="40" height="40"/>
+                        <rect x="10"  y="50" width="40" height="40"/>
+                        <rect x="50"  y="50" width="40" height="40"/>
+                        <rect x="90"  y="50" width="40" height="40"/>
+                        <rect x="130" y="50" width="40" height="40"/>
+                        <rect x="10"  y="90" width="40" height="40"/>
+                    </g>
+                    <text x="90" y="145" text-anchor="middle" font-size="9" fill="#555">Patron n°2</text>
+                </svg>
+            </div>
+
+            <!-- Patron 3 : T -->
+            <div style="text-align:center;">
+                <svg width="200" height="140" viewBox="0 0 200 140">
+                    <g fill="#fff9c4" stroke="#f57f17" stroke-width="2">
+                        <rect x="10"  y="10" width="40" height="40"/>
+                        <rect x="50"  y="10" width="40" height="40"/>
+                        <rect x="90"  y="10" width="40" height="40"/>
+                        <rect x="130" y="10" width="40" height="40"/>
+                        <rect x="50"  y="50" width="40" height="40"/>
+                        <rect x="50"  y="90" width="40" height="40"/>
+                    </g>
+                    <text x="100" y="135" text-anchor="middle" font-size="9" fill="#555">Patron n°3</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="property">
+        <strong>Comment vérifier qu'un patron est celui d'un cube ?</strong><br>
+        <ul style="margin-left:20px;margin-top:6px;line-height:2;">
+            <li>Il doit y avoir exactement <strong>6 carrés de même taille</strong>.</li>
+            <li>Quand on plie, <strong>chaque face doit recouvrir exactement une face</strong> sans chevauchement.</li>
+            <li>Les faces opposées ne doivent pas se toucher dans le patron.</li>
+        </ul>
+    </div>
+
+    <!-- ── Exercice patron ── -->
+    <div class="example">
+        <strong>À toi !</strong> Parmi ces figures, lesquelles sont des patrons valides du cube ? (Oui / Non)<br><br>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">
+
+            <!-- Figure A : valide (croix) -->
+            <div style="text-align:center;">
+                <svg width="130" height="160" viewBox="0 0 130 160">
+                    <g fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5">
+                        <rect x="45" y="5"  width="35" height="35"/>
+                        <rect x="45" y="40" width="35" height="35"/>
+                        <rect x="45" y="75" width="35" height="35"/>
+                        <rect x="45" y="110" width="35" height="35"/>
+                        <rect x="10" y="40" width="35" height="35"/>
+                        <rect x="80" y="40" width="35" height="35"/>
+                    </g>
+                </svg>
+                <p style="font-size:14px;font-weight:600;">Figure A</p>
+                <select class="case-sel" id="pat-a">
+                    <option value="">—</option>
+                    <option value="oui">Oui</option>
+                    <option value="non">Non</option>
+                </select>
+            </div>
+
+            <!-- Figure B : invalide (ligne droite) -->
+            <div style="text-align:center;">
+                <svg width="230" height="60" viewBox="0 0 230 60">
+                    <g fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5">
+                        <rect x="5"   y="10" width="35" height="35"/>
+                        <rect x="40"  y="10" width="35" height="35"/>
+                        <rect x="75"  y="10" width="35" height="35"/>
+                        <rect x="110" y="10" width="35" height="35"/>
+                        <rect x="145" y="10" width="35" height="35"/>
+                        <rect x="180" y="10" width="35" height="35"/>
+                    </g>
+                </svg>
+                <p style="font-size:14px;font-weight:600;">Figure B</p>
+                <select class="case-sel" id="pat-b">
+                    <option value="">—</option>
+                    <option value="oui">Oui</option>
+                    <option value="non">Non</option>
+                </select>
+            </div>
+
+            <!-- Figure C : valide (T inversé) -->
+            <div style="text-align:center;">
+                <svg width="120" height="160" viewBox="0 0 120 160">
+                    <g fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5">
+                        <rect x="5"  y="5"   width="35" height="35"/>
+                        <rect x="40" y="5"   width="35" height="35"/>
+                        <rect x="75" y="5"   width="35" height="35"/>
+                        <rect x="5"  y="40"  width="35" height="35"/>
+                        <rect x="5"  y="75"  width="35" height="35"/>
+                        <rect x="5"  y="110" width="35" height="35"/>
+                    </g>
+                </svg>
+                <p style="font-size:14px;font-weight:600;">Figure C</p>
+                <select class="case-sel" id="pat-c">
+                    <option value="">—</option>
+                    <option value="oui">Oui</option>
+                    <option value="non">Non</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn-check" onclick="checkPatron()" style="margin-top:14px;">Vérifier</button>
+        <button class="btn-reset" onclick="['pat-a','pat-b','pat-c'].forEach(id=>document.getElementById(id).value='');document.getElementById('fb-patron').textContent=''">Effacer</button>
+        <div class="feedback" id="fb-patron"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <h2>Raisonner sur les faces d'un solide</h2>
+
+    <h3>De la 3D à la 2D</h3>
+
+    <div class="example">
+        <strong>Exemple :</strong> Je tiens une boîte cubique dans mes mains. Je vois au maximum 3 faces à la fois. Comment savoir combien elle en a en tout ?<br><br>
+        <div class="method">
+            <strong>Démarche :</strong><br>
+            1. Je compte les faces que je vois : <strong>3 faces</strong> (avant, dessus, droite).<br>
+            2. Je sais que le cube a une face opposée à chacune : +3 faces cachées.<br>
+            3. Total : 3 + 3 = <strong>6 faces</strong>.<br><br>
+            <em>Raisonner sur un solide, c'est aussi penser aux faces qu'on ne voit pas !</em>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Problème :</strong> Un cube est peint en rouge sur toutes ses faces. On le coupe ensuite en 8 petits cubes égaux (2×2×2). Combien de petits cubes ont exactement 3 faces rouges ?<br><br>
+        <div class="method">
+            Les petits cubes aux <strong>coins</strong> du grand cube ont 3 faces peintes. Il y a 8 coins dans un cube → <strong>8 petits cubes</strong> ont 3 faces rouges.
+        </div>
+    </div>
+
+    <!-- ── Exercice synthèse ── -->
+    <div class="example">
+        <strong>Bilan :</strong> Réponds à ces questions.<br><br>
+        <p>1) Un cube est peint en bleu. On le coupe en 27 petits cubes (3×3×3). Combien de petits cubes n'ont aucune face bleue ?
+        <input class="case-rep" id="cube3-a" type="number" placeholder="?"></p>
+        <p>2) Vrai ou faux : un prisme à base rectangulaire et un pavé droit ont le même nombre de faces.
+        <select class="case-sel" id="cube3-b">
+            <option value="">—</option>
+            <option value="vrai">Vrai</option>
+            <option value="faux">Faux</option>
+        </select></p>
+        <button class="btn-check" onclick="checkBilan()">Vérifier</button>
+        <button class="btn-reset" onclick="document.getElementById('cube3-a').value='';document.getElementById('cube3-b').value='';document.getElementById('fb-bilan').textContent=''">Effacer</button>
+        <div class="feedback" id="fb-bilan"></div>
+    </div>
+
+    <script>
+    function checkReco(){
+        const fb=document.getElementById('fb-reco');
+        let score=0,msgs=[];
+        if(document.getElementById('reco1').value==='tetraedre'){score++;}else{msgs.push('Q1 : 4 faces triangulaires + 4 sommets → tétraèdre');}
+        if(parseInt(document.getElementById('reco2').value)===9){score++;}else{msgs.push('Q2 : prisme triangulaire → 9 arêtes');}
+        if(document.getElementById('reco3').value==='faux'){score++;}else{msgs.push('Q3 : la sphère a une face courbe, ce n\'est pas un polyèdre');}
+        if(score===3){fb.textContent='✓ Parfait !';fb.className='feedback ok';}
+        else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
+    }
+    function checkPatron(){
+        const fb=document.getElementById('fb-patron');
+        let score=0,msgs=[];
+        if(document.getElementById('pat-a').value==='oui'){score++;}else{msgs.push('A : valide (croix classique)');}
+        if(document.getElementById('pat-b').value==='non'){score++;}else{msgs.push('B : invalide (en ligne droite, les faces se chevauchent en pliant)');}
+        if(document.getElementById('pat-c').value==='oui'){score++;}else{msgs.push('C : valide');}
+        if(score===3){fb.textContent='✓ Bravo !';fb.className='feedback ok';}
+        else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
+    }
+    function checkBilan(){
+        const fb=document.getElementById('fb-bilan');
+        let score=0,msgs=[];
+        if(parseInt(document.getElementById('cube3-a').value)===1){score++;}else{msgs.push('Q1 : seul le cube central (1 cube) n\'a aucune face peinte');}
+        if(document.getElementById('cube3-b').value==='vrai'){score++;}else{msgs.push('Q2 : vrai, les deux ont 6 faces rectangulaires');}
+        if(score===2){fb.textContent='✓ Excellent !';fb.className='feedback ok';}
+        else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
+    }
+    </script>
+</body>
+</html>
