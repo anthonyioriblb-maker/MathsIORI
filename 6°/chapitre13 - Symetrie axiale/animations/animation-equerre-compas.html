@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Symétrique d'un point — équerre et compas</title>
+    <style>
+        body { margin:0; padding:0; background:#fafafa;
+               font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+        .container { max-width: 100%; margin:0 auto; padding: 20px 30px; }
+        .step-text {
+            background:#e3f2fd; border-left:5px solid #2196f3;
+            padding:15px 20px; margin:15px 0; color:#1565c0;
+            font-size:17px; min-height:60px; font-weight:500;
+            display:flex; align-items:center;
+        }
+        svg { display:block; margin:0 auto; background:#fafafa;
+              border:2px solid #ddd; border-radius:8px; }
+        .controls { text-align:center; margin:20px 0; }
+        button {
+            background:#3498db; color:white; border:none;
+            padding:14px 28px; margin:8px; border-radius:6px;
+            cursor:pointer; font-size:17px; font-weight:bold;
+            box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.3s;
+        }
+        button:hover { background:#2980b9; transform:translateY(-2px); }
+        button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+        button.reset { background:#e74c3c; }
+        button.reset:hover { background:#c0392b; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        Cliquez sur « Étape suivante » pour voir la construction étape par étape.
+    </div>
+
+    <!--
+    ═══════════════════════════════════════════════════════
+    GÉOMÉTRIE (axe oblique, direction (1,2)/√5 ≈ 63.4°)
+    ═══════════════════════════════════════════════════════
+    (d) : direction u=(1/√5, 2/√5)=(0.4472, 0.8944)
+          passe par I=(400,200)
+          de (311,21) à (516,433)
+
+    M  = (200, 300)   (à gauche de (d))
+    M' = (600, 100)   (à droite de (d), symétrique de M)
+    I  = (400, 200)   (pied de la perpendiculaire de M sur (d))
+
+    Vérif: I = projection de M sur (d)
+      VM = M-P0 avec P0=(311,21), d=(205,412), |d|²=205²+412²=42025+169744=211769
+      t = (VM·d)/|d|² = ((200-311)*205+(300-21)*412)/211769
+        = (-111*205+279*412)/211769
+        = (-22755+114948)/211769 = 92193/211769 ≈ 0.4353
+      I = (311+0.4353*205, 21+0.4353*412) = (311+89.2, 21+179.3) = (400.2,200.3) ≈ (400,200) ✓
+    M' = 2I-M = (800-200, 400-300) = (600,100) ✓
+    IM = √((400-200)²+(200-300)²) = √(40000+10000) = √50000 ≈ 223.6
+
+    Équerre : angle droit en (0,0) local, rotation 63.4°
+      Leg1 (local +x, direction de (d)) : to (200,0)
+        → screen offset (89.4, 178.8) → tip at (489,379) [sur (d)] ✓
+      Leg2 (local +y, direction vers M) : to (0,224)
+        → screen offset (-200,100) → tip at (200,300) = M ✓
+        (car local +y rotated 63.4° = (-sin63.4°,cos63.4°) = (-0.894,0.447),
+         times 224 = (-200.2, 100.1) ≈ (-200,100), I+(-200,100)=(200,300)=M ✓)
+      Triangle: (0,0)→(200,0)→(0,224)
+      Angle droit marker in local: (18,0)→(18,18)→(0,18)
+
+    Slide: de (346,93) à (400,200) [= I - 120*u_d à I]
+      120*u_d = (53.7,107.3)
+
+    Compas sweep (tip à I=(400,200), r=223.6) :
+      angle vers M  = atan2(300-200,200-400) = atan2(100,-200) ≈ 2.678 rad
+      angle vers M' = atan2(100-200,600-400) = atan2(-100,200) ≈ -0.464 rad
+      Sweep CROISSANT : a1=2.678 → a2=2π-0.464=5.820
+        passe par π (gauche, x=176,y=200) puis 3π/2 (bas, x=400,y=424) puis M'
+
+    Marques égalité :
+      milieu IM  = (300,250), tick ⊥ IM, direction de (d) = ±(0.447,0.894)
+      milieu IM' = (500,150), tick ⊥ IM'
+    ═══════════════════════════════════════════════════════
+    -->
+
+    <svg id="anim" width="1200" height="649" viewBox="0 0 850 460">
+
+        <!-- ══ TOUJOURS VISIBLES ══ -->
+        <!-- Axe (d) oblique -->
+        <line x1="311" y1="21" x2="516" y2="433"
+              stroke="#333" stroke-width="2.5"/>
+        <text x="520" y="437" font-size="18" fill="#333" font-weight="bold">(d)</text>
+
+        <!-- Point M -->
+        <line x1="194" y1="294" x2="206" y2="306" stroke="#2980b9" stroke-width="3"/>
+        <line x1="206" y1="294" x2="194" y2="306" stroke="#2980b9" stroke-width="3"/>
+        <text x="170" y="298" font-size="22" fill="#2980b9" font-weight="bold">M</text>
+
+        <!-- ══ ÉTAPE 1 : ÉQUERRE ══ -->
+        <!--
+            Triangle local : (0,0) (200,0) (0,224)
+            Rotation 63.4°. Slide de translate(346,93) à translate(400,200).
+        -->
+        <g id="setSquare" opacity="0" transform="translate(346,93) rotate(63.4)">
+            <polygon points="0,0 200,0 0,224"
+                     fill="rgba(100,180,255,0.25)" stroke="#2980b9"
+                     stroke-width="2.5" stroke-linejoin="round"/>
+            <!-- Angle droit en (0,0) local -->
+            <polyline points="18,0 18,18 0,18"
+                      fill="none" stroke="#2980b9" stroke-width="1.8"/>
+        </g>
+
+        <!-- ══ ÉTAPE 2 : perpendiculaire M→I→M' ══ -->
+        <line id="perpLine" x1="164" y1="318" x2="636" y2="82"
+              stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,3" opacity="0"/>
+
+        <!-- ══ ÉTAPE 3 : angle droit en I + label O ══ -->
+        <!--
+            I=(400,200). Côtés du carré :
+              I + 14*(0.447,0.894) = (406.3, 212.5)
+              I + 14*(0.447,0.894) + 14*(-0.894,0.447) = (406.3-12.5, 212.5+6.3) = (393.8,218.8)
+              I + 14*(-0.894,0.447) = (387.5, 206.3)
+        -->
+        <polyline id="squareO"
+                  points="406,213 394,219 388,206"
+                  fill="none" stroke="#555" stroke-width="1.8" opacity="0"/>
+        <text id="labelO" x="412" y="196" font-size="16" fill="#555" opacity="0">O</text>
+
+        <!-- ══ ARC du compas (tracé progressivement) ══ -->
+        <path id="arcCompas" d="" stroke="#27ae60" stroke-width="2.5"
+              fill="none" opacity="0"/>
+
+        <!-- ══ MARQUES égalité ══ -->
+        <g id="marks" opacity="0">
+            <!-- Tick sur IM : milieu (300,250), direction ⊥ = (0.447,0.894), long=12 -->
+            <line x1="297" y1="244" x2="303" y2="256" stroke="#555" stroke-width="2.5"/>
+            <!-- Tick sur IM' : milieu (500,150) -->
+            <line x1="497" y1="144" x2="503" y2="156" stroke="#555" stroke-width="2.5"/>
+        </g>
+
+        <!-- ══ POINT M' ══ -->
+        <g id="pointMp" opacity="0">
+            <line x1="594" y1="94" x2="606" y2="106" stroke="#e74c3c" stroke-width="3"/>
+            <line x1="606" y1="94" x2="594" y2="106" stroke="#e74c3c" stroke-width="3"/>
+            <text x="612" y="98" font-size="22" fill="#e74c3c" font-weight="bold">M'</text>
+        </g>
+
+        <!-- ══ COMPAS ══ -->
+        <g id="compass" opacity="0">
+            <circle id="compassHinge" cx="0" cy="0" r="10"
+                    fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+            <line id="compassPointBranch" x1="0" y1="0" x2="-5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <circle id="compassPointTip" cx="-5" cy="60" r="6"
+                    fill="#222" stroke="#000" stroke-width="2"/>
+            <line id="compassPencilBranch" x1="0" y1="0" x2="5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <rect id="compassPencilBody" x="0" y="50" width="10" height="25"
+                  fill="#ff4444" stroke="#cc0000" stroke-width="2" rx="2"/>
+            <polygon id="compassPencilTip" points="5,75 0,85 10,85" fill="#333"/>
+            <circle id="compassPencilPoint" cx="5" cy="85" r="3" fill="#000"/>
+        </g>
+
+    </svg>
+
+    <div class="controls">
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+</div>
+
+<script>
+const I  = {x:400, y:200};
+const M  = {x:200, y:300};
+const Mp = {x:600, y:100};
+const RADIUS = 223.6;
+
+// Angle vers M et M' depuis I
+const angM  = Math.atan2(M.y  - I.y, M.x  - I.x);  // ≈ 2.678 rad (153.4°)
+const angMp = Math.atan2(Mp.y - I.y, Mp.x - I.x);  // ≈ -0.464 rad (-26.6°)
+
+// Positions de l'équerre
+const EQ_START = {x:346, y:93};
+const EQ_END   = {x:400, y:200};  // = I
+const EQ_ANGLE = 63.4;             // degrés (angle de (d) par rapport à l'horizontale)
+
+let currentStep = 0;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour voir la construction étape par étape.',
+    '<strong style="color:#2980b9;font-size:20px;">1.</strong> Je place un côté de l\'équerre le long de (d) et je fais glisser jusqu\'à ce que l\'autre côté passe par M.',
+    '<strong style="color:#e74c3c;font-size:20px;">2.</strong> Je trace la perpendiculaire à (d) passant par M. Elle coupe (d) en O.',
+    '<strong style="color:#555;font-size:20px;">3.</strong> Je marque le pied O. L\'équerre a servi, je la range.',
+    '<strong style="color:#27ae60;font-size:20px;">4.</strong> J\'ouvre le compas à l\'écartement OM (pointe en O, mine en M).',
+    '<strong style="color:#27ae60;font-size:20px;">5.</strong> Je trace l\'arc de l\'autre côté de (d) en conservant le même écartement : j\'obtiens M\' avec OM\' = OM.',
+    '<strong style="color:#27ae60;font-size:20px;">6.</strong> M\' est le symétrique de M par rapport à (d). ✓'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const el = id => document.getElementById(id);
+
+// ── Équerre ──────────────────────────────────────────────
+async function slideSquare(from, to, duration) {
+    const N = 50;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const x = from.x + (to.x - from.x) * t;
+        const y = from.y + (to.y - from.y) * t;
+        el('setSquare').setAttribute('transform',
+            `translate(${x},${y}) rotate(${EQ_ANGLE})`);
+        await sleep(duration / N);
+    }
+}
+
+// ── Compas ───────────────────────────────────────────────
+function setCompass(tip, pen) {
+    const hx = (tip.x + pen.x) / 2, hy = (tip.y + pen.y) / 2;
+    el('compassHinge').setAttribute('cx', hx);
+    el('compassHinge').setAttribute('cy', hy);
+    el('compassPointBranch').setAttribute('x1', hx);
+    el('compassPointBranch').setAttribute('y1', hy);
+    el('compassPointBranch').setAttribute('x2', tip.x);
+    el('compassPointBranch').setAttribute('y2', tip.y);
+    el('compassPointTip').setAttribute('cx', tip.x);
+    el('compassPointTip').setAttribute('cy', tip.y);
+    el('compassPencilBranch').setAttribute('x1', hx);
+    el('compassPencilBranch').setAttribute('y1', hy);
+    el('compassPencilBranch').setAttribute('x2', pen.x);
+    el('compassPencilBranch').setAttribute('y2', pen.y);
+    const ang = Math.atan2(pen.y - hy, pen.x - hx) * 180 / Math.PI + 90;
+    el('compassPencilBody').setAttribute('transform',
+        `translate(${pen.x},${pen.y - 15}) rotate(${ang})`);
+    el('compassPencilTip').setAttribute('transform',
+        `translate(${pen.x - 5},${pen.y}) rotate(${ang} 5 0)`);
+    el('compassPencilPoint').setAttribute('cx', pen.x);
+    el('compassPencilPoint').setAttribute('cy', pen.y);
+}
+
+// Pivot du compas : pointe fixe, mine suit un ARC de cercle (écartement constant)
+async function compassPivot(tip, radius, a1, a2, duration) {
+    const N = 50;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        setCompass(tip, {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        });
+        await sleep(duration / N);
+    }
+}
+
+async function compassOpen(tip, target, duration) {
+    const N = 30;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        setCompass(tip, {
+            x: tip.x + (target.x - tip.x) * t,
+            y: tip.y + (target.y - tip.y) * t
+        });
+        await sleep(duration / N);
+    }
+}
+
+// Déplace tip de t1→t2 ET pencil de p1→p2 simultanément
+async function compassMove(t1, p1, t2, p2, duration) {
+    const N = 40;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        setCompass(
+            {x: t1.x + (t2.x - t1.x) * t, y: t1.y + (t2.y - t1.y) * t},
+            {x: p1.x + (p2.x - p1.x) * t, y: p1.y + (p2.y - p1.y) * t}
+        );
+        await sleep(duration / N);
+    }
+}
+
+// Sweep du compas + dessin progressif de l'arc
+async function compassSweep(tip, radius, a1, a2, duration) {
+    const N = 80;
+    let path = '';
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        const pen = {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        };
+        if (i === 0) path = `M ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        else         path += ` L ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        setCompass(tip, pen);
+        el('arcCompas').setAttribute('d', path);
+        el('arcCompas').style.opacity = '1';
+        await sleep(duration / N);
+    }
+}
+
+// ── ÉTAPES ───────────────────────────────────────────────
+async function nextStep() {
+    const txt = el('stepText');
+    const btn = el('nextBtn');
+    if (currentStep >= 6) return;
+    btn.disabled = true;
+
+    // 1 : équerre glisse le long de (d) jusqu'à aligner avec M
+    if (currentStep === 0) {
+        txt.innerHTML = stepTexts[1];
+        el('setSquare').setAttribute('transform',
+            `translate(${EQ_START.x},${EQ_START.y}) rotate(${EQ_ANGLE})`);
+        el('setSquare').style.opacity = '1';
+        await sleep(600);
+        await slideSquare(EQ_START, EQ_END, 2200);
+        await sleep(800);
+        currentStep = 1;
+    }
+
+    // 2 : perpendiculaire tracée
+    else if (currentStep === 1) {
+        txt.innerHTML = stepTexts[2];
+        el('perpLine').style.opacity = '1';
+        await sleep(1200);
+        currentStep = 2;
+    }
+
+    // 3 : ranger équerre, puis marquer O
+    else if (currentStep === 2) {
+        txt.innerHTML = stepTexts[3];
+        el('setSquare').style.opacity = '0';
+        await sleep(700);
+        el('squareO').style.opacity = '1';
+        el('labelO').style.opacity  = '1';
+        await sleep(600);
+        currentStep = 3;
+    }
+
+    // 4 : compas s'ouvre de O vers M (prise de l'écartement OM)
+    else if (currentStep === 3) {
+        txt.innerHTML = stepTexts[4];
+        setCompass(I, I);
+        el('compass').style.opacity = '1';
+        await sleep(400);
+        await compassOpen(I, M, 1400);
+        await sleep(800);
+        currentStep = 4;
+    }
+
+    // 5 : compas tourne vers M', trace un petit arc autour de M'
+    //   Le compas reste à I, même rayon OM.
+    //   On fait pivoter la mine de la position M vers le côté M',
+    //   puis on trace un court arc (±0.25 rad ≈ ±14°) autour de angMp.
+    else if (currentStep === 4) {
+        txt.innerHTML = stepTexts[5];
+        const half  = 0.28;
+        const aStart = angMp - half;
+        const aEnd   = angMp + half;
+        // Fait pivoter la mine de M vers le départ de l'arc (écartement CONSTANT)
+        await compassPivot(I, RADIUS, angM, aStart, 1200);
+        await sleep(300);
+        // Trace seulement le petit arc autour de M'
+        await compassSweep(I, RADIUS, aStart, aEnd, 1400);
+        await sleep(800);
+        currentStep = 5;
+    }
+
+    // 6 : M' + marques, compas disparaît
+    else if (currentStep === 5) {
+        txt.innerHTML = stepTexts[6];
+        txt.style.background      = '#c8e6c9';
+        txt.style.borderLeftColor = '#4caf50';
+        txt.style.color           = '#2e7d32';
+        el('compass').style.opacity = '0';
+        await sleep(400);
+        el('pointMp').style.opacity = '1';
+        await sleep(600);
+        el('marks').style.opacity = '1';
+        await sleep(400);
+        currentStep = 6;
+        btn.textContent = '✓ Terminé';
+    }
+
+    btn.disabled = false;
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetAnimation() {
+    ['setSquare','perpLine','squareO','labelO',
+     'arcCompas','marks','pointMp','compass'].forEach(id => {
+        el(id).style.opacity = '0';
+    });
+    el('arcCompas').setAttribute('d', '');
+    el('setSquare').setAttribute('transform',
+        `translate(${EQ_START.x},${EQ_START.y}) rotate(${EQ_ANGLE})`);
+
+    const txt = el('stepText');
+    txt.innerHTML             = stepTexts[0];
+    txt.style.background      = '#e3f2fd';
+    txt.style.borderLeftColor = '#2196f3';
+    txt.style.color           = '#1565c0';
+
+    const btn = el('nextBtn');
+    btn.textContent = '▶ Étape suivante';
+    btn.disabled    = false;
+    currentStep     = 0;
+}
+</script>
+</body>
+</html>

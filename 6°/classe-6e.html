@@ -6,646 +6,254 @@
     <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cours de 6ème</title>
+    <title>Cours de 6ème — Nouveau programme 2025</title>
     <link rel="stylesheet" href="../classe-page.css?v=20251120143124">
     <style>
         :root {
-            --main-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --primary-color: #667eea;
+            --main-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --primary-color: #11998e;
             --exercices-color: #f5576c;
             --quiz-color: #43e97b;
-            --shadow-color: rgba(102, 126, 234, 0.4);
-            --shadow-color-hover: rgba(102, 126, 234, 0.6);
+            --shadow-color: rgba(17, 153, 142, 0.4);
+            --shadow-color-hover: rgba(17, 153, 142, 0.6);
 
-            --chapter-gradient-1: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --chapter-gradient-2: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --chapter-gradient-3: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --chapter-gradient-4: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            --chapter-gradient-5: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            --chapter-gradient-6: linear-gradient(135deg, #0aeadf 0%, #d43668 100%);
-            --chapter-gradient-7: linear-gradient(135deg, #e53935 0%, #e35d5b 100%);
-            --chapter-gradient-8: linear-gradient(135deg, #005c97 0%, #363795 100%);
-            --chapter-gradient-9: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            --chapter-gradient-1:  linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --chapter-gradient-2:  linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --chapter-gradient-3:  linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --chapter-gradient-4:  linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --chapter-gradient-5:  linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --chapter-gradient-6:  linear-gradient(135deg, #0aeadf 0%, #d43668 100%);
+            --chapter-gradient-7:  linear-gradient(135deg, #e53935 0%, #e35d5b 100%);
+            --chapter-gradient-8:  linear-gradient(135deg, #005c97 0%, #363795 100%);
+            --chapter-gradient-9:  linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
             --chapter-gradient-10: linear-gradient(135deg, #1d976c 0%, #93f9b9 100%);
             --chapter-gradient-11: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
             --chapter-gradient-12: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
-            --chapter-gradient-13: linear-gradient(135deg, #cc2b5e 0%, #753a88 100%);
-            --chapter-gradient-14: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
-            --chapter-gradient-15: linear-gradient(135deg, #614385 0%, #516395 100%);
-            --chapter-gradient-16: linear-gradient(135deg, #eecda3 0%, #ef629f 100%);
-            --chapter-gradient-17: linear-gradient(135deg, #02aab0 0%, #00cdac 100%);
-            --chapter-gradient-18: linear-gradient(135deg, #d31027 0%, #ea384d 100%);
-            --chapter-gradient-19: linear-gradient(135deg, #396afc 0%, #2948ff 100%);
-            --chapter-gradient-20: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
-            --chapter-gradient-21: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
-            --chapter-gradient-22: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
-            --chapter-gradient-23: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);
-            --chapter-gradient-24: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            --chapter-gradient-25: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
-            --chapter-gradient-26: linear-gradient(135deg, #4568dc 0%, #b06ab3 100%);
-            --chapter-gradient-27: linear-gradient(135deg, #0f9b0f 0%, #64d864 100%);
-            --chapter-gradient-28: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%);
-            --chapter-gradient-29: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
-            --chapter-gradient-30: linear-gradient(135deg, #f12711 0%, #f5af19 100%);
+            --chapter-gradient-13: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+            --chapter-gradient-14: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+            --chapter-gradient-15: linear-gradient(135deg, #02aab0 0%, #00cdac 100%);
+            --chapter-gradient-16: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);
+            --chapter-gradient-17: linear-gradient(135deg, #396afc 0%, #2948ff 100%);
+            --chapter-gradient-18: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+            --chapter-gradient-19: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+            --chapter-gradient-20: linear-gradient(135deg, #614385 0%, #516395 100%);
+        }
+
+        .banner-nouveau {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 0.95em;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+            margin: 0 auto 18px;
+            max-width: 700px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎓 Cours de 6ème</h1>
-        <p class="subtitle">Choisis ton chapitre et apprends en t'amusant !</p>
-       
+        <h1>🎓 6ème — Nouveau programme 2025</h1>
+        <p class="subtitle">Préparation rentrée 2026-2027 · Tous les chapitres</p>
+        <div class="banner-nouveau">✨ Nouveau programme cycle 3 · BO avril 2025 · Contenu en cours de préparation</div>
+
         <div class="chapters" id="chaptersContainer">
-            <!-- Les chapitres seront générés automatiquement par JavaScript -->
+            <!-- Généré automatiquement par JavaScript -->
         </div>
-       
+
         <a href="../index.html" class="home-button">← Retour à l'accueil</a>
     </div>
 
     <script>
-        // Configuration des chapitres pour la 6ème
         const configChapitres = {
+
             chapitre1: {
                 disponible: true,
                 titre: "Les nombres entiers",
-                description: "Découvre les nombres entiers et leurs propriétés",
+                description: "Lire, écrire, comparer et ordonner les entiers. Multiples et diviseurs.",
                 emoji: "🌟",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre1 - Les nombres entiers/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: [
-                        { titre: "Exercices faciles", fichier: "chapitre1 - Les nombres entiers/exercices/faciles.html" },
-                        { titre: "Exercices moyens", fichier: "chapitre1 - Les nombres entiers/exercices/moyens.html" },
-                        { titre: "Exercices difficiles", fichier: "chapitre1 - Les nombres entiers/exercices/difficiles.html" }
-                    ]
-                },
-                quiz: {
-                    actif: false,
-                    items: [
-                        { titre: "Quiz niveau 1", fichier: "chapitre1 - Les nombres entiers/quiz/quiz1.html" },
-                        { titre: "Quiz niveau 2", fichier: "chapitre1 - Les nombres entiers/quiz/quiz2.html" },
-                        { titre: "Quiz final", fichier: "chapitre1 - Les nombres entiers/quiz/quiz-final.html" }
-                    ]
-                }
+                cours:     { actif: true,  fichier: "chapitre01 - Les nombres entiers/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre2: {
                 disponible: true,
-                titre: "Les bases de géométrie",
-                description: "Découvre les points, les droites et tout ce qui compose la géométrie",
-                emoji: "🎮",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre2 - Les bases de geometrie/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: [
-                        { titre: "Points et droites", fichier: "chapitre2 - Les bases de geometrie/exercices/points-droites.html" },
-                        { titre: "Angles", fichier: "chapitre2 - Les bases de geometrie/exercices/angles.html" },
-                        { titre: "Figures géométriques", fichier: "chapitre2 - Les bases de geometrie/exercices/figures.html" }
-                    ]
-                },
-                quiz: {
-                    actif: false,
-                    items: [
-                        { titre: "Quiz géométrie de base", fichier: "chapitre2 - Les bases de geometrie/quiz/quiz1.html" },
-                        { titre: "Quiz avancé", fichier: "chapitre2 - Les bases de geometrie/quiz/quiz2.html" }
-                    ]
-                }
+                titre: "Gestion de données",
+                description: "Tableaux, diagrammes, moyennes et lecture de graphiques.",
+                emoji: "📈",
+                cours:     { actif: true,  fichier: "chapitre02 - Gestion de donnees/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre3: {
                 disponible: true,
-                titre: "Les nombres décimaux",
-                description: "Maîtrise les virgules et les nombres décimaux",
-                emoji: "🔢",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre3 - Les nombres decimaux/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: [
-                        { titre: "Lire et écrire", fichier: "chapitre3 - Les nombres decimaux/exercices/lire-ecrire.html" },
-                        { titre: "Comparer", fichier: "chapitre3 - Les nombres decimaux/exercices/comparer.html" },
-                        { titre: "Calculs", fichier: "chapitre3 - Les nombres decimaux/exercices/calculs.html" }
-                    ]
-                },
-                quiz: {
-                    actif: true,
-                    items: [
-                        { titre: "Quiz quel est le chiffre/nombre de?", fichier: "chapitre3 - Les nombres decimaux/quiz/nombre-de.html" },
-                        { titre: "Quiz comparaison", fichier: "chapitre3 - Les nombres decimaux/quiz/comparaison.html" },
-                        { titre: "Quiz encadrer et intercaler", fichier: "chapitre3 - Les nombres decimaux/quiz/encadrer-intercaler.html" }
-                    ]
-                }
+                titre: "Bases de géométrie",
+                description: "Points, droites, demi-droites, segments, médiatrice et propriétés.",
+                emoji: "📐",
+                cours:     { actif: true,  fichier: "chapitre03 - Bases de geometrie/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: true,  items: [
+                    { titre: "Quiz bases de géométrie", fichier: "chapitre03 - Bases de geometrie/quiz/quiz.html" }
+                ]}
             },
+
             chapitre4: {
                 disponible: true,
-                titre: "Gestion de données",
-                description: "bientot tu sauras creer et lire des tableaux et des graphiques",
-                emoji: "📚",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre4 - Gestion de donnees/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                titre: "Les nombres décimaux",
+                description: "Lire, écrire, comparer et calculer avec les décimaux.",
+                emoji: "🔢",
+                cours:     { actif: true,  fichier: "chapitre04 - Les nombres decimaux/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: true,  items: [
+                    { titre: "Quiz comparaison",            fichier: "chapitre04 - Les nombres decimaux/quiz/comparaison.html" },
+                    { titre: "Quiz encadrer et intercaler", fichier: "chapitre04 - Les nombres decimaux/quiz/encadrer-intercaler.html" },
+                    { titre: "Quiz nombre de...",           fichier: "chapitre04 - Les nombres decimaux/quiz/nombre-de.html" }
+                ]}
             },
+
             chapitre5: {
                 disponible: true,
                 titre: "Droites parallèles et perpendiculaires",
-                description: "Apprends à construire des droites parallèles et perpendiculaires",
-                emoji: "📐",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre5 - Droites paralleles et perpendiculaires/cours.html"
-                },
-                exercices: {
-                    actif: true,
-                    items: [
-                        { titre: "Exercices du chapitre", fichier: "chapitre5 - Droites paralleles et perpendiculaires/exercices/exercice.html" }
-                    ]
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                description: "Construire et reconnaître des droites parallèles et perpendiculaires.",
+                emoji: "📏",
+                cours:     { actif: true,  fichier: "chapitre05 - Droites paralleles et perpendiculaires/cours.html" },
+                exercices: { actif: true,  items: [
+                    { titre: "Exercices du chapitre", fichier: "chapitre05 - Droites paralleles et perpendiculaires/exercices/exercice.html" }
+                ]},
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre6: {
                 disponible: true,
-                titre: "Fractions partie 1",
-                description: "Apprends les bases des fractions",
-                emoji: "📐",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre6 - Fractions partie 1/cours.html"
-                },
-                exercices: {
-                    actif: true,
-                    items: [
-                        { titre: "Comparaison", fichier: "chapitre6 - Fractions partie 1/exercices/exercice.html" },
-                        { titre: "Comparaison correction", fichier: "chapitre6 - Fractions partie 1/exercices/correction.html" }
-                    ]
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                titre: "Opérations",
+                description: "Addition, soustraction, multiplication, division — priorités opératoires.",
+                emoji: "➕",
+                cours:     { actif: true,  fichier: "chapitre06 - Operations/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre7: {
                 disponible: true,
-                titre: "Proportionnalité",
-                description: "Apprends les bases de la proportionnalité",
-                emoji: "📚",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre7 - Proportionnalite/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: true,
-                    items: [
-                        { titre: "Quiz proportionnalité", fichier: "chapitre7 - Proportionnalite/quiz/verif-proportionnalite.html" }
-                    ]
-                },
-                evenement: {
-                    actif: true,
-                    titre: "Evaluation de mercredi!!!!",
-                   items: [
-        { titre: "Évaluation exemple", fichier: "chapitre7 - Proportionnalite/devoirs/evaluation_proportionnalite_exemple.html" },
-        { titre: "Correction", fichier: "chapitre7 - Proportionnalite/devoirs/correction_proportionnalite_exemple.html" }
-    ]
-                },
+                titre: "Les angles",
+                description: "Mesurer, tracer, classer les angles. Bissectrice. Somme des angles d'un triangle.",
+                emoji: "🔺",
+                cours:     { actif: true,  fichier: "chapitre07 - Les angles/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
-                
+
             chapitre8: {
                 disponible: true,
-                titre: "Cercles et disques",
-                description: "Apprends à tracer des cercles et des disques et leurs propriétés",
-                emoji: "📚",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre8 - Cercles et disques/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                titre: "Fractions — Partie 1",
+                description: "Écriture fractionnaire, comparaison, encadrement, addition même dénominateur, multiplication par un entier.",
+                emoji: "½",
+                cours:     { actif: true,  fichier: "chapitre08 - Fractions partie 1/cours.html" },
+                exercices: { actif: true,  items: [
+                    { titre: "Comparaison",            fichier: "chapitre08 - Fractions partie 1/exercices/exercice.html" },
+                    { titre: "Comparaison correction", fichier: "chapitre08 - Fractions partie 1/exercices/correction.html" }
+                ]},
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre9: {
                 disponible: true,
-                titre: "Opérations",
-                description: "Revois les différentes opérations et leurs propriétés",
-                emoji: "🔢",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre9 - Opérations/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                titre: "Triangles ✨",
+                description: "Types de triangles, somme des angles, médiatrice et cercle circonscrit.",
+                emoji: "🔷",
+                cours:     { actif: true,  fichier: "chapitre09 - Triangles/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre10: {
                 disponible: true,
-                titre: "Les angles",
-                description: "Mesurer, tracer et classer les angles avec le rapporteur",
-                emoji: "📐",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre10 - Les angles/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                titre: "Proportionnalité",
+                description: "Tableaux de proportionnalité, méthode de l'unité, pourcentages, échelles.",
+                emoji: "📊",
+                cours:     { actif: true,  fichier: "chapitre10 - Proportionnalite/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: true,  items: [
+                    { titre: "Quiz proportionnalité", fichier: "chapitre10 - Proportionnalite/quiz/verif-proportionnalite.html" }
+                ]}
             },
+
             chapitre11: {
                 disponible: true,
-                titre: "Fractions partie 2",
-                description: "Fraction d'une quantité, somme et différence de fractions",
-                emoji: "➗",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre11 - Fractions partie 2/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                titre: "Cercles et disques",
+                description: "Définitions, propriétés, périmètre du cercle.",
+                emoji: "⭕",
+                cours:     { actif: true,  fichier: "chapitre11 - Cercles et disques/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre12: {
                 disponible: true,
-                titre: "La symétrie axiale",
-                description: "Figures symétriques, axes de symétrie, construction du symétrique d'un point et d'une figure",
-                emoji: "🪞",
-                cours: {
-                    actif: true,
-                    fichier: "chapitre12 - Symétrie axiale/cours.html"
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                titre: "Fractions — Partie 2",
+                description: "Fraction d'une quantité, addition et soustraction de fractions (dénominateurs différents).",
+                emoji: "➗",
+                cours:     { actif: true,  fichier: "chapitre12 - Fractions partie 2/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre13: {
-                disponible: false,
-                titre: "Chapitre 13",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                disponible: true,
+                titre: "Symétrie axiale",
+                description: "Figures symétriques, axes de symétrie, construction du symétrique.",
+                emoji: "🪞",
+                cours:     { actif: true,  fichier: "chapitre13 - Symetrie axiale/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre14: {
-                disponible: false,
-                titre: "Chapitre 14",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                disponible: true,
+                titre: "Solides ✨",
+                description: "Cube, pavé, prisme, pyramide, cylindre, cône, sphère. Formule d'Euler. Patrons.",
+                emoji: "🎲",
+                cours:     { actif: true,  fichier: "chapitre14 - Solides/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre15: {
-                disponible: false,
-                titre: "Chapitre 15",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                disponible: true,
+                titre: "Pré-algèbre ✨",
+                description: "Schémas en barres, balances en équilibre, suites de motifs, opérations à trous.",
+                emoji: "⚖️",
+                cours:     { actif: true,  fichier: "chapitre15 - Pre-algebre/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre16: {
-                disponible: false,
-                titre: "Chapitre 16",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                disponible: true,
+                titre: "Probabilités ✨",
+                description: "Expériences aléatoires, vocabulaire, équiprobabilité, fréquences, simulation.",
+                emoji: "🎰",
+                cours:     { actif: true,  fichier: "chapitre16 - Probabilites/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             },
+
             chapitre17: {
-                disponible: false,
-                titre: "Chapitre 17",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre18: {
-                disponible: false,
-                titre: "Chapitre 18",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre19: {
-                disponible: false,
-                titre: "Chapitre 19",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre20: {
-                disponible: false,
-                titre: "Chapitre 20",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre21: {
-                disponible: false,
-                titre: "Chapitre 21",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre22: {
-                disponible: false,
-                titre: "Chapitre 22",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre23: {
-                disponible: false,
-                titre: "Chapitre 23",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre24: {
-                disponible: false,
-                titre: "Chapitre 24",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre25: {
-                disponible: false,
-                titre: "Chapitre 25",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre26: {
-                disponible: false,
-                titre: "Chapitre 26",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre27: {
-                disponible: false,
-                titre: "Chapitre 27",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre28: {
-                disponible: false,
-                titre: "Chapitre 28",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre29: {
-                disponible: false,
-                titre: "Chapitre 29",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
-            },
-            chapitre30: {
-                disponible: false,
-                titre: "Chapitre 30",
-                description: "Contenu en cours de préparation",
-                emoji: "📚",
-                cours: {
-                    actif: false,
-                    fichier: ""
-                },
-                exercices: {
-                    actif: false,
-                    items: []
-                },
-                quiz: {
-                    actif: false,
-                    items: []
-                }
+                disponible: true,
+                titre: "Pensée informatique ✨",
+                description: "Séquences, boucles, algorithmes en langage naturel, tortue Logo.",
+                emoji: "🤖",
+                cours:     { actif: true,  fichier: "chapitre17 - Pensee informatique/cours.html" },
+                exercices: { actif: false, items: [] },
+                quiz:      { actif: false, items: [] }
             }
         };
     </script>
     <script src="../classe-page.js?v=20251120143124"></script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

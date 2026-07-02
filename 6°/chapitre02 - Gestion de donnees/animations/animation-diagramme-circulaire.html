@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Construction du diagramme circulaire</title>
+<style>
+  body { margin:0; padding:0; background:#fafafa;
+         font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+  .container { max-width: 100%; margin:0 auto; padding: 20px 30px; }
+  .step-text {
+    background:#e3f2fd; border-left:5px solid #2196f3;
+    padding:15px 20px; margin:15px 0; color:#1565c0;
+    font-size:17px; min-height:60px; font-weight:500;
+    display:flex; align-items:center;
+  }
+  svg { display:block; margin:0 auto; background:#fafafa;
+        border:2px solid #ddd; border-radius:8px; }
+  .controls { text-align:center; margin:20px 0; }
+  button {
+    background:#3498db; color:white; border:none;
+    padding:14px 28px; margin:8px; border-radius:6px;
+    cursor:pointer; font-size:17px; font-weight:bold;
+    box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.3s;
+  }
+  button:hover { background:#2980b9; transform:translateY(-2px); }
+  button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+  button.reset { background:#e74c3c; }
+  button.reset:hover { background:#c0392b; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="step-text" id="stepText">
+    Cliquez sur « Étape suivante » pour construire le diagramme circulaire.
+  </div>
+
+  <svg id="anim" width="930" height="540" viewBox="0 0 930 540">
+
+    <!-- ══ LÉGENDE ══ -->
+    <text x="630" y="50" font-size="13" font-weight="bold" fill="#333">Loisirs préférés de 24 élèves</text>
+    <rect x="630" y="62"  width="14" height="14" fill="#4e79a7" rx="2"/>
+    <text x="652" y="73"  font-size="12" fill="#333">Sport : 8 élèves</text>
+    <rect x="630" y="82"  width="14" height="14" fill="#f28e2b" rx="2"/>
+    <text x="652" y="93"  font-size="12" fill="#333">Cinéma : 5 élèves</text>
+    <rect x="630" y="102" width="14" height="14" fill="#76b7b2" rx="2"/>
+    <text x="652" y="113" font-size="12" fill="#333">Lecture : 6 élèves</text>
+    <rect x="630" y="122" width="14" height="14" fill="#59a14f" rx="2"/>
+    <text x="652" y="133" font-size="12" fill="#333">Télévision : 2 élèves</text>
+    <rect x="630" y="142" width="14" height="14" fill="#edc948" rx="2"/>
+    <text x="652" y="153" font-size="12" fill="#333">Jeu vidéo : 3 élèves</text>
+
+    <!-- ══ CENTRE DU DISQUE ══ -->
+    <circle id="centerDot"   cx="400" cy="290" r="3" fill="#333" opacity="0"/>
+    <text   id="centerLabel" x="408"  y="296"  font-size="14" fill="#333" font-weight="bold" opacity="0">O</text>
+
+    <!-- ══ SECTEURS ══ -->
+    <path id="sec-sport"   d="" fill="#4e79a7" opacity="0" stroke="white" stroke-width="1.5"/>
+    <path id="sec-cinema"  d="" fill="#f28e2b" opacity="0" stroke="white" stroke-width="1.5"/>
+    <path id="sec-lecture" d="" fill="#76b7b2" opacity="0" stroke="white" stroke-width="1.5"/>
+    <path id="sec-tv"      d="" fill="#59a14f" opacity="0" stroke="white" stroke-width="1.5"/>
+    <path id="sec-jv"      d="" fill="#edc948" opacity="0" stroke="white" stroke-width="1.5"/>
+
+    <!-- Labels des secteurs (angle seulement) -->
+    <text id="lbl-sport"   font-size="13" fill="white"   font-weight="bold" text-anchor="middle" opacity="0">120°</text>
+    <text id="lbl-cinema"  font-size="13" fill="white"   font-weight="bold" text-anchor="middle" opacity="0">75°</text>
+    <text id="lbl-lecture" font-size="13" fill="white"   font-weight="bold" text-anchor="middle" opacity="0">90°</text>
+    <text id="lbl-tv"      font-size="11" fill="#1a3a1a" font-weight="bold" text-anchor="middle" opacity="0">30°</text>
+    <text id="lbl-jv"      font-size="11" fill="#333"    font-weight="bold" text-anchor="middle" opacity="0">45°</text>
+
+    <!-- Cercle du disque (tracé par le compas) -->
+    <circle id="cercle" cx="400" cy="290" r="160" fill="none" stroke="#333"
+            stroke-width="2" opacity="0"/>
+
+    <!-- Rayons -->
+    <line id="rayon0" x1="400" y1="290" x2="560" y2="290" stroke="#555" stroke-width="1.8" opacity="0"/>
+    <line id="rayon1" x1="400" y1="290" x2="320" y2="151" stroke="#555" stroke-width="1.8" opacity="0"/>
+    <line id="rayon2" x1="400" y1="290" x2="246" y2="331" stroke="#555" stroke-width="1.8" opacity="0"/>
+    <line id="rayon3" x1="400" y1="290" x2="441" y2="445" stroke="#555" stroke-width="1.8" opacity="0"/>
+    <line id="rayon4" x1="400" y1="290" x2="513" y2="403" stroke="#555" stroke-width="1.8" opacity="0"/>
+
+    <!-- ══ RAPPORTEUR (centré en O = 400,290 ; rayon 120) ══ -->
+    <g id="rapporteur" opacity="0" transform="rotate(0, 400, 290)">
+      <!-- Corps demi-cercle -->
+      <path d="M 280 290 A 120 120 0 0 1 520 290 Z"
+            fill="rgba(120,228,235,0.82)" stroke="#0a8090" stroke-width="2"/>
+      <!-- Base -->
+      <line x1="280" y1="290" x2="520" y2="290" stroke="#0a8090" stroke-width="1.5"/>
+      <!-- Poignée -->
+      <rect x="390" y="289" width="20" height="11" rx="4"
+            fill="rgba(80,200,215,0.9)" stroke="#0a8090"/>
+      <!-- Croix de centrage -->
+      <circle cx="400" cy="290" r="8" fill="white" stroke="#0a8090" stroke-width="1.5"/>
+      <circle cx="400" cy="290" r="2" fill="#222"/>
+      <line x1="400" y1="282" x2="400" y2="298" stroke="#0a8090" stroke-width="1"/>
+      <line x1="392" y1="290" x2="408" y2="290" stroke="#0a8090" stroke-width="1"/>
+      <!-- Ticks et labels (générés par JS) -->
+      <g id="rapTicks"></g>
+      <g id="rapLabels"></g>
+      <g id="rapLabels2"></g>
+      <!-- Case 90° -->
+      <rect x="384" y="165" width="32" height="17" rx="3" fill="black"/>
+      <text x="400" y="177" text-anchor="middle" font-size="11" fill="white" font-weight="bold">90°</text>
+      <!-- Labels extrémités -->
+      <text x="522" y="302" font-size="10" fill="#1565c0" font-weight="bold">0</text>
+      <text x="520" y="288" font-size="8"  fill="#c0392b">180</text>
+      <text x="248" y="302" font-size="10" fill="#1565c0" font-weight="bold">180</text>
+      <text x="256" y="288" font-size="8"  fill="#c0392b">0</text>
+      <!-- Marque de l'angle cible -->
+      <line   id="rapMark"      x1="400" y1="290" x2="400" y2="290"
+              stroke="#e74c3c" stroke-width="3" stroke-dasharray="6,3" opacity="0"/>
+      <circle id="rapDot"       cx="400" cy="290" r="5" fill="#e74c3c" opacity="0"/>
+      <text   id="rapLabelText" x="400"  y="290"
+              font-size="16" fill="#e74c3c" font-weight="bold" opacity="0" text-anchor="middle"></text>
+    </g>
+
+    <!-- ══ COMPAS ══ -->
+    <g id="compass" opacity="0">
+      <circle  id="compassHinge"       cx="0" cy="0" r="10" fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+      <line    id="compassPointBranch" x1="0" y1="0" x2="-5" y2="60" stroke="#ff8c00" stroke-width="6"/>
+      <circle  id="compassPointTip"    cx="-5" cy="60" r="6" fill="#222" stroke="#000" stroke-width="2"/>
+      <line    id="compassPencilBranch" x1="0" y1="0" x2="5" y2="60" stroke="#ff8c00" stroke-width="6"/>
+      <rect    id="compassPencilBody"  x="0" y="50" width="10" height="25" fill="#ff4444" stroke="#cc0000" stroke-width="2" rx="2"/>
+      <polygon id="compassPencilTip"   points="5,75 0,85 10,85" fill="#333"/>
+      <circle  id="compassPencilPoint" cx="5" cy="85" r="3" fill="#000"/>
+    </g>
+
+  </svg>
+
+  <div class="controls">
+    <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+    <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+  </div>
+</div>
+
+<script>
+// ─── Constantes ───────────────────────────────────────────────────────────────
+const CX = 400, CY = 290, R = 160, RAP_R = 120;
+const NS = 'http://www.w3.org/2000/svg';
+const el = id => document.getElementById(id);
+
+// Données du cours
+const sectors = [
+  { name:"Sport",      angle:120 },
+  { name:"Cinéma",     angle:75  },
+  { name:"Lecture",    angle:90  },
+  { name:"Télévision", angle:30  },
+  { name:"Jeu vidéo",  angle:45  },
+];
+
+// Angles cumulés (sens trigo = CCW depuis l'est)
+const cumAngles = [0];
+sectors.forEach(s => cumAngles.push(cumAngles[cumAngles.length - 1] + s.angle));
+
+// ─── Géométrie ────────────────────────────────────────────────────────────────
+// Point sur le cercle à l'angle α CCW (degrés) depuis l'est
+function ptCercle(degCCW, rayon) {
+  const rad = degCCW * Math.PI / 180;
+  return { x: CX + rayon * Math.cos(rad), y: CY - rayon * Math.sin(rad) };
+}
+
+// Milieu d'un secteur (pour label)
+function ptMilieu(startDeg, angleDeg) {
+  return ptCercle(startDeg + angleDeg / 2, R * 0.62);
+}
+
+// ─── Utilitaires ─────────────────────────────────────────────────────────────
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const setStepText = t => el('stepText').textContent = t;
+
+// ─── Compas ──────────────────────────────────────────────────────────────────
+function setCompass(tip, pen) {
+  const hx = (tip.x + pen.x) / 2, hy = (tip.y + pen.y) / 2;
+  el('compassHinge').setAttribute('cx', hx);
+  el('compassHinge').setAttribute('cy', hy);
+  el('compassPointBranch').setAttribute('x1', hx); el('compassPointBranch').setAttribute('y1', hy);
+  el('compassPointBranch').setAttribute('x2', tip.x); el('compassPointBranch').setAttribute('y2', tip.y);
+  el('compassPointTip').setAttribute('cx', tip.x); el('compassPointTip').setAttribute('cy', tip.y);
+  el('compassPencilBranch').setAttribute('x1', hx); el('compassPencilBranch').setAttribute('y1', hy);
+  el('compassPencilBranch').setAttribute('x2', pen.x); el('compassPencilBranch').setAttribute('y2', pen.y);
+  const ang = Math.atan2(pen.y - hy, pen.x - hx) * 180 / Math.PI + 90;
+  el('compassPencilBody').setAttribute('transform', `translate(${pen.x},${pen.y - 15}) rotate(${ang})`);
+  el('compassPencilTip').setAttribute('transform', `translate(${pen.x - 5},${pen.y}) rotate(${ang} 5 0)`);
+  el('compassPencilPoint').setAttribute('cx', pen.x);
+  el('compassPencilPoint').setAttribute('cy', pen.y);
+}
+
+async function compassPivot(tip, radius, a1, a2, duration) {
+  const N = 70;
+  const circ = 2 * Math.PI * R;
+  for (let i = 0; i <= N; i++) {
+    const t = i / N;
+    const angle = a1 + (a2 - a1) * t;
+    setCompass(tip, { x: tip.x + radius * Math.cos(angle), y: tip.y + radius * Math.sin(angle) });
+    el('cercle').style.strokeDashoffset = (circ * (1 - t)).toFixed(1);
+    await sleep(duration / N);
+  }
+}
+
+// ─── Rapporteur ──────────────────────────────────────────────────────────────
+function buildRapporteur() {
+  const gT = el('rapTicks'), gL = el('rapLabels'), gL2 = el('rapLabels2');
+  gT.innerHTML = ''; gL.innerHTML = ''; gL2.innerHTML = '';
+
+  for (let deg = 0; deg <= 180; deg++) {
+    const rad = deg * Math.PI / 180;
+    const xo = CX + RAP_R * Math.cos(rad), yo = CY - RAP_R * Math.sin(rad);
+    let len = 3;
+    if (deg % 5 === 0) len = 5;
+    if (deg % 10 === 0) len = 9;
+    const xi = CX + (RAP_R - len) * Math.cos(rad), yi = CY - (RAP_R - len) * Math.sin(rad);
+    const ln = document.createElementNS(NS, 'line');
+    ln.setAttribute('x1', xo.toFixed(1)); ln.setAttribute('y1', yo.toFixed(1));
+    ln.setAttribute('x2', xi.toFixed(1)); ln.setAttribute('y2', yi.toFixed(1));
+    ln.setAttribute('stroke', '#1a6070');
+    ln.setAttribute('stroke-width', deg % 10 === 0 ? '1.4' : deg % 5 === 0 ? '0.9' : '0.5');
+    gT.appendChild(ln);
+  }
+
+  for (let deg = 10; deg <= 170; deg += 10) {
+    if (deg === 90) continue;
+    const rad = deg * Math.PI / 180;
+    const lx = CX + (RAP_R - 17) * Math.cos(rad), ly = CY - (RAP_R - 17) * Math.sin(rad);
+    const t1 = document.createElementNS(NS, 'text');
+    t1.setAttribute('x', lx.toFixed(1)); t1.setAttribute('y', (ly + 3.5).toFixed(1));
+    t1.setAttribute('font-size', '9'); t1.setAttribute('fill', '#1a4a8a');
+    t1.setAttribute('text-anchor', 'middle'); t1.textContent = deg;
+    gL.appendChild(t1);
+    const lx2 = CX + (RAP_R - 27) * Math.cos(rad), ly2 = CY - (RAP_R - 27) * Math.sin(rad);
+    const t2 = document.createElementNS(NS, 'text');
+    t2.setAttribute('x', lx2.toFixed(1)); t2.setAttribute('y', (ly2 + 3).toFixed(1));
+    t2.setAttribute('font-size', '8'); t2.setAttribute('fill', '#b03020');
+    t2.setAttribute('text-anchor', 'middle'); t2.textContent = 180 - deg;
+    gL2.appendChild(t2);
+  }
+}
+
+// Orienter le rapporteur : son 0° pointe vers refDeg CCW depuis est
+function setRapporteurAngle(refDeg) {
+  el('rapporteur').setAttribute('transform', `rotate(${-refDeg}, ${CX}, ${CY})`);
+}
+
+// Surligner l'angle targetDeg sur le rapporteur
+// refDeg = rotation du groupe → contre-rotation du label pour le garder lisible
+function showRapMark(targetDeg, refDeg) {
+  const rad = targetDeg * Math.PI / 180;
+  const x2 = CX + RAP_R * Math.cos(rad), y2 = CY - RAP_R * Math.sin(rad);
+  el('rapMark').setAttribute('x1', CX); el('rapMark').setAttribute('y1', CY);
+  el('rapMark').setAttribute('x2', x2.toFixed(1)); el('rapMark').setAttribute('y2', y2.toFixed(1));
+  el('rapDot').setAttribute('cx', x2.toFixed(1)); el('rapDot').setAttribute('cy', y2.toFixed(1));
+  const lx = CX + (RAP_R * 0.78) * Math.cos(rad), ly = CY - (RAP_R * 0.78) * Math.sin(rad);
+  const lyt = ly + 5;
+  el('rapLabelText').setAttribute('x', lx.toFixed(1));
+  el('rapLabelText').setAttribute('y', lyt.toFixed(1));
+  el('rapLabelText').setAttribute('transform', `rotate(${refDeg}, ${lx.toFixed(1)}, ${lyt.toFixed(1)})`);
+  el('rapLabelText').textContent = targetDeg + '°';
+  ['rapMark','rapDot','rapLabelText'].forEach(id => el(id).setAttribute('opacity','1'));
+}
+
+function hideRapMark() {
+  ['rapMark','rapDot','rapLabelText'].forEach(id => el(id).setAttribute('opacity','0'));
+}
+
+// ─── Secteurs ────────────────────────────────────────────────────────────────
+function drawSector(idx, startDeg, angleDeg) {
+  const secIds = ['sec-sport','sec-cinema','sec-lecture','sec-tv','sec-jv'];
+  const lblIds = ['lbl-sport','lbl-cinema','lbl-lecture','lbl-tv','lbl-jv'];
+  const p1 = ptCercle(startDeg, R), p2 = ptCercle(startDeg + angleDeg, R);
+  const largeArc = angleDeg > 180 ? 1 : 0;
+  const d = `M ${CX} ${CY} L ${p1.x.toFixed(1)} ${p1.y.toFixed(1)} `
+          + `A ${R} ${R} 0 ${largeArc} 0 ${p2.x.toFixed(1)} ${p2.y.toFixed(1)} Z`;
+  el(secIds[idx]).setAttribute('d', d);
+  el(secIds[idx]).setAttribute('opacity', '0.88');
+  const mp = ptMilieu(startDeg, angleDeg);
+  el(lblIds[idx]).setAttribute('x', mp.x.toFixed(1));
+  el(lblIds[idx]).setAttribute('y', (mp.y + 5).toFixed(1));
+  el(lblIds[idx]).setAttribute('opacity', '1');
+}
+
+// ─── Scénario ────────────────────────────────────────────────────────────────
+let step = 0, running = false;
+
+async function nextStep() {
+  if (running) return;
+  running = true; el('nextBtn').disabled = true;
+  step++;
+  if      (step === 1) await etape1_cercle();
+  else if (step === 2) await etape2_rayonDepart();
+  else if (step <= 7)  await etapeSecteur(step - 3);
+  else if (step === 8) await etapeFinale();
+  if (step < 8) el('nextBtn').disabled = false;
+  running = false;
+}
+
+async function etape1_cercle() {
+  setStepText("On place la pointe du compas en O et on trace le cercle.");
+  el('centerDot').setAttribute('opacity', '1');
+  el('centerLabel').setAttribute('opacity', '1');
+  el('compass').setAttribute('opacity', '1');
+  const circ = 2 * Math.PI * R;
+  el('cercle').style.strokeDasharray = circ.toFixed(1);
+  el('cercle').style.strokeDashoffset = circ.toFixed(1);
+  el('cercle').setAttribute('opacity', '1');
+  setCompass({ x: CX, y: CY }, { x: CX + R, y: CY });
+  await sleep(500);
+  await compassPivot({ x: CX, y: CY }, R, 0, 2 * Math.PI, 3200);
+  el('cercle').style.strokeDashoffset = '0';
+  el('compass').setAttribute('opacity', '0');
+}
+
+async function etape2_rayonDepart() {
+  setStepText("On trace le rayon de départ (vers la droite).");
+  el('rayon0').setAttribute('opacity', '1');
+  await sleep(400);
+}
+
+async function etapeSecteur(idx) {
+  const s = sectors[idx];
+  const startDeg = cumAngles[idx];
+  const rayonIds = ['rayon1','rayon2','rayon3','rayon4'];
+  setStepText(`${s.name} : on place le rapporteur, on repère ${s.angle}° et on trace le rayon.`);
+  setRapporteurAngle(startDeg);
+  el('rapporteur').setAttribute('opacity', '1');
+  await sleep(700);
+  showRapMark(s.angle, startDeg);
+  await sleep(1400);
+  hideRapMark();
+  el('rapporteur').setAttribute('opacity', '0');
+  await sleep(200);
+  drawSector(idx, startDeg, s.angle);
+  if (idx < rayonIds.length) el(rayonIds[idx]).setAttribute('opacity', '1');
+  await sleep(300);
+}
+
+async function etapeFinale() {
+  setStepText("Le diagramme circulaire est terminé ! Chaque secteur représente une catégorie de loisirs.");
+  el('nextBtn').disabled = true;
+}
+
+function resetAnimation() {
+  step = 0; running = false;
+  setStepText("Cliquez sur « Étape suivante » pour construire le diagramme circulaire.");
+  el('nextBtn').disabled = false;
+  ['centerDot','centerLabel','compass','cercle',
+   'rayon0','rayon1','rayon2','rayon3','rayon4','rapporteur',
+   'sec-sport','sec-cinema','sec-lecture','sec-tv','sec-jv',
+   'lbl-sport','lbl-cinema','lbl-lecture','lbl-tv','lbl-jv',
+   'rapMark','rapDot','rapLabelText'
+  ].forEach(id => { const e = el(id); if (e) e.setAttribute('opacity','0'); });
+  el('cercle').style.strokeDashoffset = (2 * Math.PI * R).toFixed(1);
+}
+
+// Init
+buildRapporteur();
+</script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : La symétrie axiale</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .btn-anim {
+            background: #2196f3; color: white; border: none;
+            padding: 10px 22px; border-radius: 6px; font-size: 16px;
+            cursor: pointer; margin: 4px;
+        }
+        .btn-anim:hover { background: #1565c0; }
+        .btn-reset-anim {
+            background: #e0e0e0; color: #333; border: none;
+            padding: 10px 22px; border-radius: 6px; font-size: 16px;
+            cursor: pointer; margin: 4px;
+        }
+        .img-center { text-align: center; }
+        .img-center img { max-width: 100%; height: auto; border-radius: 6px; }
+        /* Conteneur relatif pour superposer SVG sur image */
+        .overlay-wrap {
+            position: relative;
+            display: inline-block;
+        }
+        .overlay-wrap img { display: block; }
+        .overlay-wrap svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+        /* Cartes côte à côte */
+        .cartes-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        .carte-item {
+            text-align: center;
+        }
+        .carte-item img {
+            height: 180px;
+            width: auto;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .carte-item p {
+            font-size: 14px;
+            color: #555;
+            margin: 6px 0 0 0;
+        }
+        /* Transitions animation construction */
+        .anim-elem { opacity: 0; transition: opacity 0.5s; }
+        .anim-elem.visible { opacity: 1; }
+    </style>
+</head>
+<body>
+    <a href="../classe-6.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre 13 : La symétrie axiale</h1>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Figures symétriques et axes de symétrie</h2>
+
+    <h3>Figures symétriques</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Deux figures sont <strong>symétriques par rapport à une droite (d)</strong> si ces deux figures se superposent par pliage le long de cette droite.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Les deux pingouins ci-dessous sont symétriques par rapport à la droite (d).<br><br>
+        <!-- Image réelle + axe (d) superposé -->
+        <div class="img-center">
+            <div class="overlay-wrap" style="width:320px;">
+                <img src="images/sym_fiche1.png" alt="deux pingouins symétriques" style="width:320px;">
+                <!-- (d) est la droite verticale passant entre les deux pingouins.
+                     Dans l'image (348×246 px affichée en 320px), les pingouins sont
+                     à gauche-haut et droite-bas. Les deux petits cercles indiquent
+                     les points de la droite : ~(105,82) et ~(242,162) dans l'image originale,
+                     soit ~(97,75) et ~(222,149) en 320px large. -->
+                <!--
+                    Pingouins à env. (75,80) et (225,155) dans l'affichage 320×227.
+                    Milieu : (150, 117).
+                    Direction du segment : (150, 75) → direction perp. : (-1, 2) normalisée.
+                    Axe : (150, 117) ± t*(-0.447, 0.894)
+                      t=−115 → (201, 14)
+                      t=+115 → (99,  220)
+                -->
+                <svg viewBox="0 0 320 227" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="201" y1="10" x2="97" y2="225"
+                          stroke="#e74c3c" stroke-width="2.5"/>
+                    <text x="78" y="224" font-size="15" fill="#e74c3c" font-weight="bold">(d)</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <h3>Axe de symétrie d'une figure</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        Une droite (d) est un <strong>axe de symétrie</strong> d'une figure, si les deux parties de la figure se superposent par pliage le long de la droite (d).
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Voici trois figures. Observer leur(s) axe(s) de symétrie.<br><br>
+        <div class="cartes-row">
+            <div class="carte-item">
+                <img src="images/sym_fiche3.png" alt="5 de cœur - 1 axe">
+                <p><strong>ℱ₁</strong> a <strong>1 axe</strong> de symétrie</p>
+            </div>
+            <div class="carte-item">
+                <img src="images/sym_fiche4.png" alt="10 de trèfle - 2 axes">
+                <p><strong>ℱ₂</strong> a <strong>2 axes</strong> de symétrie</p>
+            </div>
+            <div class="carte-item">
+                <img src="images/sym_fiche5.png" alt="Roi de carreau - 0 axe">
+                <p><strong>ℱ₃</strong> <strong>n'a pas</strong> d'axe de symétrie</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Construction du symétrique d'un point</h2>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span>
+        On dit que deux points A et A' sont <strong>symétriques par rapport à une droite (d)</strong> lorsque :
+        <ul>
+            <li>le segment [AA'] est <strong>perpendiculaire</strong> à (d),</li>
+            <li>A et A' sont à <strong>égale distance</strong> de (d).</li>
+        </ul>
+        La droite (d) est appelée <strong>axe de symétrie</strong>.
+    </div>
+
+    <div class="property">
+        <span style="color:blue;"><strong>Propriété :</strong></span>
+        Dire que A' est le symétrique du point A par rapport à la droite (d) revient à dire que la droite (d) est la <strong>médiatrice</strong> du segment [AA'].
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Si le point A se trouve sur la droite (d), alors A et son symétrique A' sont <strong>confondus</strong>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong>
+        <div class="img-center" style="margin-top:10px;">
+            <!--
+                (Δ) oblique. A en haut-gauche, A' en bas-droite.
+                I = pied de la perpendiculaire (sur (Δ)).
+                B est sur (Δ) : son symétrique est lui-même.
+            -->
+            <!--
+                (Δ) de (20,120) à (360,80) – légèrement pentue.
+                A=(120,50). I=(127,107) pied perp. A'=(134,164).
+                B sur (Δ) : son symétrique est lui-même.
+            -->
+            <svg width="380" height="220" viewBox="0 0 380 220" style="background:white; border-radius:8px; border:2px solid #ddd;">
+
+                <!-- Axe (Δ) -->
+                <line x1="20" y1="120" x2="360" y2="80" stroke="#333" stroke-width="2"/>
+                <text x="362" y="82" font-size="15" fill="#333">(Δ)</text>
+
+                <!-- Point A=(120,50) -->
+                <line x1="114" y1="44" x2="126" y2="56" stroke="#2980b9" stroke-width="2.5"/>
+                <line x1="126" y1="44" x2="114" y2="56" stroke="#2980b9" stroke-width="2.5"/>
+                <text x="100" y="46" font-size="16" font-weight="bold" fill="#2980b9">A</text>
+
+                <!-- Pied I=(127,107) -->
+                <!-- Perpendiculaire AI : de A=(120,50) à A'=(134,164) -->
+                <line x1="120" y1="50" x2="134" y2="164"
+                      stroke="#888" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+                <!-- Petit carré en I=(127,107) -->
+                <!-- Tangente à (Δ) : direction (340,-40), norme≈342.2 → u=(0.993,-0.117) -->
+                <!-- Normale : n=(0.117,0.993) -->
+                <!-- Carré de côté 8 : coins I±4u±4n -->
+                <!-- u*4=(3.97,-0.47), n*4=(0.47,3.97) -->
+                <!-- coin1 = I+u*4+n*4 = (127+3.97+0.47, 107-0.47+3.97) = (131.4, 110.5) -->
+                <!-- coin2 = I+u*4-n*4 = (131.4, 103.1) -->
+                <!-- coin3 = I-u*4-n*4 = (122.6, 103.6) -->
+                <!-- coin4 = I-u*4+n*4 = (123.1, 110.6) Hmm compliqué, on fait simple : -->
+                <!-- Carré angle droit en I=(127,107) aligné sur (Δ) -->
+                <!-- u=(0.9937,−0.1169), perp vers A=(−0.1169,−0.9937), côté 9px -->
+                <!-- P1=I, P2=I+9u, P3=I+9u+9p, P4=I+9p -->
+                <polygon points="127,107 136,106 135,97 126,98"
+                         fill="none" stroke="#555" stroke-width="1.5"/>
+                <text x="136" y="102" font-size="14" fill="#555">I</text>
+
+                <!-- Marques égalité AI = IA' -->
+                <!-- Milieu de AI : ((120+127)/2,(50+107)/2)=(123.5,78.5) -->
+                <line x1="118" y1="76" x2="130" y2="82" stroke="#555" stroke-width="2"/>
+                <!-- Milieu de IA' : ((127+134)/2,(107+164)/2)=(130.5,135.5) -->
+                <line x1="125" y1="133" x2="137" y2="139" stroke="#555" stroke-width="2"/>
+
+                <!-- Point A'=(134,164) -->
+                <line x1="128" y1="158" x2="140" y2="170" stroke="#e74c3c" stroke-width="2.5"/>
+                <line x1="140" y1="158" x2="128" y2="170" stroke="#e74c3c" stroke-width="2.5"/>
+                <text x="144" y="172" font-size="16" font-weight="bold" fill="#e74c3c">A'</text>
+
+                <!-- Point B sur (Δ) : t=0.6 → (20+204,120-24)=(224,96) -->
+                <line x1="218" y1="90" x2="230" y2="102" stroke="#27ae60" stroke-width="2"/>
+                <line x1="230" y1="90" x2="218" y2="102" stroke="#27ae60" stroke-width="2"/>
+                <text x="234" y="100" font-size="14" fill="#27ae60">B</text>
+            </svg>
+        </div>
+        <ul>
+            <li>A' est le symétrique de A par rapport à (Δ).</li>
+            <li>B appartient à la droite (Δ) : son symétrique par rapport à (Δ) est lui-même.</li>
+        </ul>
+    </div>
+
+    <h3>Construction avec l'équerre et le compas</h3>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour construire le symétrique du point M par rapport à la droite (d) :<br>
+        <ol>
+            <li>Je place un côté de l'angle droit de l'équerre le long de (d), puis je fais glisser l'équerre jusqu'à ce que l'autre côté passe par M.</li>
+            <li>Je trace la perpendiculaire à (d) passant par M. Elle coupe (d) en O.</li>
+            <li>Sur cette perpendiculaire, je place M' tel que <strong>OM = OM'</strong> à l'aide du compas.</li>
+        </ol>
+        <iframe src="animations/animation-equerre-compas.html" width="1220" height="960"
+                style="border:none; border-radius:5px; box-shadow:0 2px 10px rgba(0,0,0,0.1); overflow:hidden; display:block; max-width:100%;"></iframe>
+    </div>
+
+    <h3>Construction avec le compas seulement</h3>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour construire le symétrique du point M par rapport à la droite (d) au compas seulement :
+        <ol>
+            <li>Je place deux points A et B sur (d).</li>
+            <li>Je trace un arc de cercle de <strong>centre A</strong> passant par M.</li>
+            <li>Je trace un arc de cercle de <strong>centre B</strong> passant par M.</li>
+            <li>Les deux arcs se coupent en <strong>M'</strong>, symétrique de M par rapport à (d).</li>
+        </ol>
+        <iframe src="animations/animation-compas-seul.html" width="1220" height="960"
+                style="border:none; border-radius:5px; box-shadow:0 2px 10px rgba(0,0,0,0.1); overflow:hidden; display:block; max-width:100%;"></iframe>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Construction du symétrique d'une figure</h2>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour tracer la figure symétrique d'une figure donnée, on choisit plusieurs points de cette figure (sommets, centre…) et on trace le symétrique de chacun de ces points par rapport à l'axe, avec la méthode de son choix.
+    </div>
+
+    <h3>Symétrique d'un polygone</h3>
+
+    <div class="example">
+        <strong>Exemple :</strong> Construire l'image A'B'C' du triangle ABC par la symétrie d'axe (d).<br><br>
+        On construit les images A', B' et C' de chaque sommet, puis on relie ces points.
+        <div class="img-center" style="margin-top:15px;">
+            <iframe src="animations/animation-polygone.html" width="1040" height="750"
+                    style="border:none; border-radius:8px; display:block; max-width:100%;" scrolling="no"></iframe>
+        </div>
+    </div>
+
+    <h3>Symétrique d'un cercle</h3>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour construire le symétrique d'un cercle de centre O par rapport à (d),
+        on construit d'abord l'image O' du centre O.
+        Le cercle symétrique a pour centre O' et a le <strong>même rayon</strong>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Construire le symétrique du cercle (C) par rapport à (d).<br>
+        Le cercle symétrique a pour centre O' (symétrique de O) et a le <strong>même rayon</strong>.
+        <div class="img-center" style="margin-top:15px;">
+            <iframe src="animations/animation-cercle.html" width="950" height="720"
+                    style="border:none; border-radius:8px; display:block; max-width:100%;" scrolling="no"></iframe>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <h2>Propriétés de la symétrie axiale</h2>
+
+    <div class="property">
+        <span style="color:blue;"><strong>Propriétés :</strong></span>
+        La symétrie axiale conserve :
+        <ul>
+            <li>les <strong>longueurs</strong> : le symétrique d'un segment est un segment de même longueur ;</li>
+            <li>les <strong>angles</strong> : deux angles symétriques ont la même mesure ;</li>
+            <li>l'<strong>alignement</strong> : les symétriques de points alignés sont des points alignés ;</li>
+            <li>les <strong>cercles</strong> : le symétrique d'un cercle est un cercle de même rayon ;</li>
+            <li>l'<strong>aire</strong> : deux figures symétriques ont la même aire.</li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong>
+        Les triangles ABC et A'B'C' sont symétriques par rapport à la droite (d).
+        Le triangle ABC est rectangle en B. Quelle est la nature du triangle A'B'C' ?<br><br>
+        <div class="img-center">
+            <svg width="420" height="220" viewBox="0 0 420 220"
+                 style="background:white; border-radius:8px; border:2px solid #ddd;">
+
+                <!-- Axe (d) vertical à x=210 -->
+                <line x1="210" y1="5" x2="210" y2="215" stroke="#333" stroke-width="2"/>
+                <text x="214" y="20" font-size="15" fill="#333">(d)</text>
+
+                <!-- Triangle ABC rectangle en B -->
+                <!-- A=(70,40), B=(70,185), C=(180,185) -->
+                <polygon points="70,40 70,185 180,185"
+                         fill="rgba(41,128,185,0.12)" stroke="#2980b9" stroke-width="2"/>
+                <!-- Labels -->
+                <text x="52" y="36" font-size="15" font-weight="bold" fill="#2980b9">A</text>
+                <text x="44" y="202" font-size="15" font-weight="bold" fill="#2980b9">B</text>
+                <text x="182" y="202" font-size="15" font-weight="bold" fill="#2980b9">C</text>
+                <!-- Angle droit en B -->
+                <rect x="70" y="169" width="16" height="16"
+                      fill="none" stroke="#2980b9" stroke-width="1.8"/>
+                <text x="88" y="166" font-size="12" fill="#27ae60">90°</text>
+
+                <!-- Triangle A'B'C' symétrique -->
+                <!-- A'=(350,40), B'=(350,185), C'=(240,185) -->
+                <polygon points="350,40 350,185 240,185"
+                         fill="rgba(231,76,60,0.12)" stroke="#e74c3c" stroke-width="2"/>
+                <text x="354" y="36" font-size="15" font-weight="bold" fill="#e74c3c">A'</text>
+                <text x="354" y="202" font-size="15" font-weight="bold" fill="#e74c3c">B'</text>
+                <text x="218" y="202" font-size="15" font-weight="bold" fill="#e74c3c">C'</text>
+                <!-- Angle droit en B' -->
+                <rect x="334" y="169" width="16" height="16"
+                      fill="none" stroke="#e74c3c" stroke-width="1.8"/>
+                <text x="308" y="166" font-size="12" fill="#e74c3c">90°</text>
+
+            </svg>
+        </div>
+
+        <div class="calcul-detail" style="margin-top:12px;">
+            Les angles <strong>ABC</strong> et <strong>A'B'C'</strong> sont symétriques par rapport à (d), donc ils ont la même mesure.<br>
+            Or <strong>ABC = 90°</strong>, donc <strong>A'B'C' = 90°</strong>.<br>
+            Un triangle qui possède un angle droit est un triangle rectangle.<br>
+            On en déduit que le triangle A'B'C' est <strong>rectangle en B'</strong>.
+        </div>
+    </div>
+
+    <script>
+    // Les animations sont dans les iframes séparées.
+    // Ce script est conservé vide pour compatibilité.
+    void(0);
+    /*
+    */
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Animation – Décomposition d'un nombre entier</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    color: #1a237e;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .subtitle {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* ── Tableau de numération ── */
+  .tableau-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 18px 20px 10px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    overflow-x: auto;
+  }
+  table.tableau {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 560px;
+  }
+  table.tableau th, table.tableau td {
+    border: 2px solid #ccc;
+    text-align: center;
+    padding: 10px 6px;
+    font-size: 1rem;
+    transition: background 0.4s, color 0.4s, transform 0.3s;
+  }
+  /* Classes des colonnes */
+  .col-millions   { background: #e8eaf6; }
+  .col-centmilles { background: #fce4ec; }
+  .col-dimilles   { background: #fce4ec; }
+  .col-milles     { background: #fce4ec; }
+  .col-centaines  { background: #e8f5e9; }
+  .col-dizaines   { background: #e8f5e9; }
+  .col-unites     { background: #e8f5e9; }
+
+  /* En-têtes de groupe */
+  .grp-millions  { background: #3f51b5; color: white; border-radius: 4px 0 0 0; }
+  .grp-milles    { background: #e91e63; color: white; }
+  .grp-unites    { background: #4caf50; color: white; border-radius: 0 4px 0 0; }
+
+  table.tableau th.label { font-size: 0.82rem; font-weight: 600; color: #333; }
+
+  /* Cellule chiffre highlight */
+  .highlight-millions  { background: #3f51b5 !important; color: white !important; transform: scale(1.15); border-radius: 4px; font-weight: bold; }
+  .highlight-centmilles{ background: #e91e63 !important; color: white !important; transform: scale(1.15); border-radius: 4px; font-weight: bold; }
+  .highlight-dimilles  { background: #e91e63 !important; color: white !important; transform: scale(1.15); border-radius: 4px; font-weight: bold; }
+  .highlight-milles    { background: #e91e63 !important; color: white !important; transform: scale(1.15); border-radius: 4px; font-weight: bold; }
+  .highlight-centaines { background: #4caf50 !important; color: white !important; transform: scale(1.15); border-radius: 4px; font-weight: bold; }
+  .highlight-dizaines  { background: #ff9800 !important; color: white !important; transform: scale(1.15); border-radius: 4px; font-weight: bold; }
+  .highlight-unites    { background: #9c27b0 !important; color: white !important; transform: scale(1.15); border-radius: 4px; font-weight: bold; }
+
+  /* ── Nombre affiché ── */
+  .nombre-display {
+    font-size: 2.2rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    min-height: 3rem;
+  }
+  .nombre-display .chiffre {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 6px;
+    transition: all 0.35s;
+  }
+  .chiffre.hl-millions  { background: #3f51b5; color: white; transform: translateY(-6px); box-shadow: 0 4px 8px rgba(63,81,181,0.4); }
+  .chiffre.hl-centmilles{ background: #e91e63; color: white; transform: translateY(-6px); box-shadow: 0 4px 8px rgba(233,30,99,0.4); }
+  .chiffre.hl-dimilles  { background: #e91e63; color: white; transform: translateY(-6px); box-shadow: 0 4px 8px rgba(233,30,99,0.4); }
+  .chiffre.hl-milles    { background: #e91e63; color: white; transform: translateY(-6px); box-shadow: 0 4px 8px rgba(233,30,99,0.4); }
+  .chiffre.hl-centaines { background: #4caf50; color: white; transform: translateY(-6px); box-shadow: 0 4px 8px rgba(76,175,80,0.4); }
+  .chiffre.hl-dizaines  { background: #ff9800; color: white; transform: translateY(-6px); box-shadow: 0 4px 8px rgba(255,152,0,0.4); }
+  .chiffre.hl-unites    { background: #9c27b0; color: white; transform: translateY(-6px); box-shadow: 0 4px 8px rgba(156,39,176,0.4); }
+
+  /* ── Zone décomposition ── */
+  .decompo-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 18px 24px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    min-height: 100px;
+  }
+  .decompo-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .decompo-ligne {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    min-height: 2rem;
+    flex-wrap: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    overflow-x: visible;
+  }
+  .term {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s, transform 0.4s;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .term.visible { opacity: 1; transform: translateY(0); }
+
+  .term-millions   { background: #e8eaf6; color: #3f51b5; border: 2px solid #3f51b5; }
+  .term-centmilles { background: #fce4ec; color: #e91e63; border: 2px solid #e91e63; }
+  .term-dimilles   { background: #fce4ec; color: #ad1457; border: 2px solid #ad1457; }
+  .term-milles     { background: #fce4ec; color: #880e4f; border: 2px solid #880e4f; }
+  .term-centaines  { background: #e8f5e9; color: #2e7d32; border: 2px solid #4caf50; }
+  .term-dizaines   { background: #fff3e0; color: #e65100; border: 2px solid #ff9800; }
+  .term-unites     { background: #f3e5f5; color: #6a1b9a; border: 2px solid #9c27b0; }
+  .term-op         { background: transparent; color: #666; border: none; font-size: 1.4rem; padding: 4px 2px; }
+  .term-egal       { background: transparent; color: #333; border: none; font-size: 1.4rem; padding: 4px 2px; font-weight: bold; }
+
+  /* ── Message étape ── */
+  .step-box {
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    font-size: 1rem;
+    color: #1565c0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 60px;
+    display: block;
+    margin-bottom: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    transition: all 0.3s;
+  }
+
+  /* ── Contrôles ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  button {
+    padding: 13px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; box-shadow: none; }
+  #btnSuivant   { background: #2196f3; color: white; }
+  #btnPrecedent { background: #ff9800; color: white; }
+  #btnReset     { background: #f44336; color: white; }
+  #btnAuto      { background: #4caf50; color: white; }
+
+  /* ── Légende couleurs ── */
+  .legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .legende-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 600;
+  }
+  .legende-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+  }
+
+  /* ── Barre de progression ── */
+  .progress-bar-wrap {
+    width: 100%; max-width: 100%;
+    background: #e0e0e0;
+    border-radius: 8px;
+    height: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #2196f3, #4caf50);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.4s;
+  }
+</style>
+</head>
+<body>
+
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- Tableau de numération -->
+<div class="tableau-wrap">
+  <div class="nombre-display" id="nombreDisplay" style="display:none"></div>
+  <table class="tableau">
+    <thead>
+      <tr>
+        <th class="grp-millions"  colspan="1">Millions</th>
+        <th class="grp-milles"    colspan="3">Milliers</th>
+        <th class="grp-unites"    colspan="3">Unités simples</th>
+      </tr>
+      <tr>
+        <th class="label col-millions">millions</th>
+        <th class="label col-centmilles">centaines de milliers</th>
+        <th class="label col-dimilles">dizaines de milliers</th>
+        <th class="label col-milles">milliers</th>
+        <th class="label col-centaines">centaines</th>
+        <th class="label col-dizaines">dizaines</th>
+        <th class="label col-unites">unités</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="td-millions"   class="col-millions">4</td>
+        <td id="td-centmilles" class="col-centmilles">7</td>
+        <td id="td-dimilles"   class="col-dimilles">0</td>
+        <td id="td-milles"     class="col-milles">5</td>
+        <td id="td-centaines"  class="col-centaines">2</td>
+        <td id="td-dizaines"   class="col-dizaines">3</td>
+        <td id="td-unites"     class="col-unites">2</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Décomposition -->
+<div class="decompo-wrap">
+  <div class="decompo-title" style="display:none">Décomposition :</div>
+  <div class="decompo-ligne" id="decompoLigne"></div>
+</div>
+
+<!-- Message étape -->
+<div class="step-box" id="stepBox"></div>
+
+<!-- Contrôles -->
+<div class="controls">
+  <button id="btnReset"    onclick="reset()">↺ Recommencer</button>
+  <button id="btnPrecedent" onclick="precedent()" disabled>◀ Étape précédente</button>
+  <button id="btnSuivant"  onclick="suivant()">Étape suivante ▶</button>
+  <button id="btnAuto"     onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<script>
+  const NOMBRE = '4 705 232';
+  const NOMBRE_RAW = 4705232;
+
+  // Données de chaque étape
+  const rangs = [
+    {
+      id: 'millions',
+      chiffre: '4',
+      label: 'millions',
+      classe: 'hl-millions',
+      tdId: 'td-millions',
+      hlClass: 'highlight-millions',
+      termClass: 'term-millions',
+      valeur: '4 × 1 000 000',
+      msg: '🔵 Le chiffre&nbsp;<strong>4</strong>&nbsp;est en position des&nbsp;<strong>millions</strong>. Il représente&nbsp;<strong>4 × 1 000 000 = 4 000 000</strong>.',
+    },
+    {
+      id: 'centmilles',
+      chiffre: '7',
+      label: 'centaines de milliers',
+      classe: 'hl-centmilles',
+      tdId: 'td-centmilles',
+      hlClass: 'highlight-centmilles',
+      termClass: 'term-centmilles',
+      valeur: '7 × 100 000',
+      msg: '🩷 Le chiffre&nbsp;<strong>7</strong>&nbsp;est en position des&nbsp;<strong>centaines de milliers</strong>. Il représente&nbsp;<strong>7 × 100 000 = 700 000</strong>.',
+    },
+    {
+      id: 'dimilles',
+      chiffre: '0',
+      label: 'dizaines de milliers',
+      classe: 'hl-dimilles',
+      tdId: 'td-dimilles',
+      hlClass: 'highlight-dimilles',
+      termClass: 'term-dimilles',
+      valeur: '0 × 10 000',
+      msg: '🩷 Le chiffre&nbsp;<strong>0</strong>&nbsp;est en position des&nbsp;<strong>dizaines de milliers</strong>. Il représente&nbsp;<strong>0 × 10 000 = 0</strong>. (On peut l\'omettre dans la décomposition.)',
+    },
+    {
+      id: 'milles',
+      chiffre: '5',
+      label: 'milliers',
+      classe: 'hl-milles',
+      tdId: 'td-milles',
+      hlClass: 'highlight-milles',
+      termClass: 'term-milles',
+      valeur: '5 × 1 000',
+      msg: '🩷 Le chiffre&nbsp;<strong>5</strong>&nbsp;est en position des&nbsp;<strong>milliers</strong>. Il représente&nbsp;<strong>5 × 1 000 = 5 000</strong>.',
+    },
+    {
+      id: 'centaines',
+      chiffre: '2',
+      label: 'centaines',
+      classe: 'hl-centaines',
+      tdId: 'td-centaines',
+      hlClass: 'highlight-centaines',
+      termClass: 'term-centaines',
+      valeur: '2 × 100',
+      msg: '🟢 Le chiffre&nbsp;<strong>2</strong>&nbsp;est en position des&nbsp;<strong>centaines</strong>. Il représente&nbsp;<strong>2 × 100 = 200</strong>.',
+    },
+    {
+      id: 'dizaines',
+      chiffre: '3',
+      label: 'dizaines',
+      classe: 'hl-dizaines',
+      tdId: 'td-dizaines',
+      hlClass: 'highlight-dizaines',
+      termClass: 'term-dizaines',
+      valeur: '3 × 10',
+      msg: '🟠 Le chiffre&nbsp;<strong>3</strong>&nbsp;est en position des&nbsp;<strong>dizaines</strong>. Il représente&nbsp;<strong>3 × 10 = 30</strong>.',
+    },
+    {
+      id: 'unites',
+      chiffre: '2',
+      label: 'unités',
+      classe: 'hl-unites',
+      tdId: 'td-unites',
+      hlClass: 'highlight-unites',
+      termClass: 'term-unites',
+      valeur: '2 × 1',
+      msg: '🟣 Le chiffre&nbsp;<strong>2</strong>&nbsp;est en position des&nbsp;<strong>unités</strong>. Il représente&nbsp;<strong>2 × 1 = 2</strong>.',
+    },
+  ];
+
+  let etape = -1;
+  let autoTimer = null;
+  let autoMode = false;
+
+  // Construction initiale du nombre affiché
+  function buildNombreDisplay() {
+    // Chiffres dans l'ordre: 4 7 0 5 2 3 2 (avec espaces visuels)
+    const display = document.getElementById('nombreDisplay');
+    const parts = [
+      { c: '4', id: 'c-millions' },
+      { c: ' ', id: null },   // espace
+      { c: '7', id: 'c-centmilles' },
+      { c: '0', id: 'c-dimilles' },
+      { c: '5', id: 'c-milles' },
+      { c: ' ', id: null },   // espace
+      { c: '2', id: 'c-centaines' },
+      { c: '3', id: 'c-dizaines' },
+      { c: '2', id: 'c-unites' },
+    ];
+    display.innerHTML = parts.map(p => {
+      if (p.id) return `<span class="chiffre" id="${p.id}">${p.c}</span>`;
+      return `<span style="display:inline-block;width:10px"></span>`;
+    }).join('');
+  }
+
+  function buildDecompoLigne() {
+    const ligne = document.getElementById('decompoLigne');
+    // Nombre = opérandes
+    let html = `<span class="term term-egal" id="term-nombre">${NOMBRE}</span>`;
+    html += `<span class="term term-egal" id="term-egal">=</span>`;
+    // Un terme par rang
+    rangs.forEach((r, i) => {
+      if (i > 0) html += `<span class="term term-op" id="term-op-${i}">+</span>`;
+      html += `<span class="term ${r.termClass}" id="term-${r.id}">(${r.valeur})</span>`;
+    });
+    ligne.innerHTML = html;
+  }
+
+  function reset() {
+    stopAuto();
+    etape = -1;
+
+    // Retirer tous les highlights du tableau
+    rangs.forEach(r => {
+      document.getElementById(r.tdId).className = 'col-' + r.id.replace('centmilles','centmilles').replace('dimilles','dimilles').replace('milles','milles');
+    });
+    // Correction des classes de colonnes
+    const cols = ['millions','centmilles','dimilles','milles','centaines','dizaines','unites'];
+    cols.forEach(c => {
+      const td = document.getElementById('td-' + c);
+      td.className = 'col-' + c;
+    });
+
+    // Retirer highlights chiffres
+    rangs.forEach(r => {
+      const el = document.getElementById('c-' + r.id);
+      if (el) el.className = 'chiffre';
+    });
+
+    // Cacher tous les termes de décomposition
+    rangs.forEach((r, i) => {
+      const t = document.getElementById('term-' + r.id);
+      if (t) t.classList.remove('visible');
+      const op = document.getElementById('term-op-' + i);
+      if (op) op.classList.remove('visible');
+    });
+
+    document.getElementById('stepBox').innerHTML = '';
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('btnSuivant').disabled = false;
+    document.getElementById('btnPrecedent').disabled = true;
+  }
+
+  function precedent() {
+    if (etape <= 0) return;
+    stopAuto();
+
+    // Retirer highlight de l'étape courante
+    const curr = rangs[etape];
+    if (curr) {
+      document.getElementById(curr.tdId).className = 'col-' + curr.id;
+      const currC = document.getElementById('c-' + curr.id);
+      if (currC) currC.className = 'chiffre';
+      const termEl = document.getElementById('term-' + curr.id);
+      if (termEl) termEl.classList.remove('visible');
+      const opEl = document.getElementById('term-op-' + etape);
+      if (opEl) opEl.classList.remove('visible');
+    }
+
+    etape--;
+
+    if (etape < 0) {
+      document.getElementById('stepBox').innerHTML = '';
+      document.getElementById('progressBar').style.width = '0%';
+      document.getElementById('btnPrecedent').disabled = true;
+      document.getElementById('btnSuivant').disabled = false;
+      return;
+    }
+
+    const r = rangs[etape];
+    document.getElementById(r.tdId).className = 'col-' + r.id + ' ' + r.hlClass;
+    const chiffreEl = document.getElementById('c-' + r.id);
+    if (chiffreEl) chiffreEl.className = 'chiffre ' + r.classe;
+    document.getElementById('stepBox').innerHTML = r.msg;
+    document.getElementById('progressBar').style.width = ((etape + 1) / rangs.length * 100) + '%';
+    document.getElementById('btnSuivant').disabled = false;
+    document.getElementById('btnPrecedent').disabled = (etape <= 0);
+  }
+
+  function suivant() {
+    etape++;
+    if (etape >= rangs.length) {
+      // Fin
+      stopAuto();
+      document.getElementById('stepBox').innerHTML = '✅ <strong>Décomposition complète !</strong><br>4 705 232 = (4 × 1 000 000) + (7 × 100 000) + (0 × 10 000) + (5 × 1 000) + (2 × 100) + (3 × 10) + (2 × 1)';
+      document.getElementById('btnSuivant').disabled = true;
+      document.getElementById('progressBar').style.width = '100%';
+      return;
+    }
+
+    const r = rangs[etape];
+
+    // 1. Retirer le highlight précédent du tableau
+    if (etape > 0) {
+      const prev = rangs[etape - 1];
+      document.getElementById(prev.tdId).className = 'col-' + prev.id;
+      const prevC = document.getElementById('c-' + prev.id);
+      if (prevC) prevC.className = 'chiffre';
+    }
+
+    // 2. Highlighter la cellule du tableau
+    document.getElementById(r.tdId).className = 'col-' + r.id + ' ' + r.hlClass;
+
+    // 3. Highlighter le chiffre dans le nombre affiché
+    const chiffreEl = document.getElementById('c-' + r.id);
+    if (chiffreEl) chiffreEl.className = 'chiffre ' + r.classe;
+
+    // 4. Révéler le terme de décomposition
+    const termEl = document.getElementById('term-' + r.id);
+    if (termEl) termEl.classList.add('visible');
+    if (etape > 0) {
+      const opEl = document.getElementById('term-op-' + etape);
+      if (opEl) opEl.classList.add('visible');
+    }
+
+    // 5. Message
+    document.getElementById('stepBox').innerHTML = r.msg;
+
+    // 6. Barre de progression
+    document.getElementById('progressBar').style.width = ((etape + 1) / rangs.length * 100) + '%';
+    document.getElementById('btnPrecedent').disabled = false;
+  }
+
+  function toggleAuto() {
+    if (autoMode) {
+      stopAuto();
+    } else {
+      autoMode = true;
+      document.getElementById('btnAuto').textContent = '⏸ Pause';
+      document.getElementById('btnAuto').style.background = '#ff9800';
+      autoTimer = setInterval(() => {
+        if (etape >= rangs.length - 1) {
+          suivant();
+          stopAuto();
+        } else {
+          suivant();
+        }
+      }, 2200);
+    }
+  }
+
+  function stopAuto() {
+    autoMode = false;
+    clearInterval(autoTimer);
+    autoTimer = null;
+    document.getElementById('btnAuto').textContent = '⏵ Automatique';
+    document.getElementById('btnAuto').style.background = '#4caf50';
+  }
+
+  // Init
+  buildNombreDisplay();
+  buildDecompoLigne();
+
+  // Afficher le nombre et le signe =
+  document.getElementById('term-nombre').classList.add('visible');
+  document.getElementById('term-egal').classList.add('visible');
+</script>
+</body>
+</html>

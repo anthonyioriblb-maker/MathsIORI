@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Symétrique d'un point — compas seul</title>
+    <style>
+        body { margin:0; padding:0; background:#fafafa;
+               font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+        .container { max-width: 100%; margin:0 auto; padding: 20px 30px; }
+        .step-text {
+            background:#e3f2fd; border-left:5px solid #2196f3;
+            padding:15px 20px; margin:15px 0; color:#1565c0;
+            font-size:17px; min-height:60px; font-weight:500;
+            display:flex; align-items:center;
+        }
+        svg { display:block; margin:0 auto; background:#fafafa;
+              border:2px solid #ddd; border-radius:8px; }
+        .controls { text-align:center; margin:20px 0; }
+        button {
+            background:#3498db; color:white; border:none;
+            padding:14px 28px; margin:8px; border-radius:6px;
+            cursor:pointer; font-size:17px; font-weight:bold;
+            box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.3s;
+        }
+        button:hover { background:#2980b9; transform:translateY(-2px); }
+        button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+        button.reset { background:#e74c3c; }
+        button.reset:hover { background:#c0392b; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        Cliquez sur « Étape suivante » pour voir la construction étape par étape.
+    </div>
+
+    <!--
+    ═══════════════════════════════════════════════════════
+    GÉOMÉTRIE (axe oblique, même config que équerre+compas)
+    ═══════════════════════════════════════════════════════
+    (d) : direction u=(1/√5, 2/√5), passe par I=(400,200)
+    M  = (200,300)    M' = (600,100)
+
+    A = I - 130*u = (400-58.1, 200-116.2) = (342,84)   sur (d)
+    B = I + 180*u = (400+80.5, 200+161.0) = (481,361)  sur (d)
+
+    r_A = AM  = √((200-342)²+(300-84)²)  = √(142²+216²) = √(20164+46656) = √66820 ≈ 258.5
+    r_B = BM  = √((200-481)²+(300-361)²) = √(281²+61²)  = √(78961+3721)  = √82682 ≈ 287.5
+
+    Vérif:
+    AM' = √((600-342)²+(100-84)²) = √(258²+16²) = √(66564+256) = √66820 ≈ 258.5 ✓
+    BM' = √((600-481)²+(100-361)²)= √(119²+261²)= √(14161+68121)= √82282 ≈ 286.8 ≈ r_B ✓
+
+    Arc A (centre A=(342,84), r=258.5) :
+      angle→M  = atan2(300-84, 200-342) = atan2( 216,-142) ≈  2.152 rad (123.3°)
+      angle→M' = atan2(100-84, 600-342) = atan2(  16, 258) ≈  0.062 rad (  3.5°)
+      Sweep DÉCROISSANT de 2.152 → 0.062 (≈120°, passe par bas)
+      Midpoint ≈ 1.107 rad → (342+258.5*cos1.107, 84+258.5*sin1.107)
+                            = (342+114, 84+231) = (456,315) ✓ visible
+
+    Arc B (centre B=(481,361), r=287.5) :
+      angle→M  = atan2(300-361,200-481) = atan2(-61,-281) ≈ -2.932 rad (-168°)
+      angle→M' = atan2(100-361,600-481) = atan2(-261, 119) ≈ -1.144 rad (-65.5°)
+      Sweep CROISSANT de -2.932 → -1.144 (≈102°, passe par le haut)
+      Midpoint ≈ -2.038 rad → (481+287.5*cos(-2.038), 361+287.5*sin(-2.038))
+                             = (481-129, 361-257) = (352,104) ✓ visible
+    ═══════════════════════════════════════════════════════
+    -->
+
+    <svg id="anim" width="1200" height="649" viewBox="0 0 850 460">
+
+        <!-- ══ TOUJOURS VISIBLES ══ -->
+        <!-- Axe (d) oblique -->
+        <line x1="311" y1="21" x2="516" y2="433"
+              stroke="#333" stroke-width="2.5"/>
+        <text x="520" y="437" font-size="18" fill="#333" font-weight="bold">(d)</text>
+
+        <!-- Point M -->
+        <line x1="194" y1="294" x2="206" y2="306" stroke="#2980b9" stroke-width="3"/>
+        <line x1="206" y1="294" x2="194" y2="306" stroke="#2980b9" stroke-width="3"/>
+        <text x="170" y="298" font-size="22" fill="#2980b9" font-weight="bold">M</text>
+
+        <!-- ══ ÉTAPE 1 : points A et B sur (d) ══ -->
+        <g id="ptA" opacity="0">
+            <line x1="337" y1="79" x2="347" y2="89" stroke="#888" stroke-width="2.5"/>
+            <line x1="347" y1="79" x2="337" y2="89" stroke="#888" stroke-width="2.5"/>
+            <text x="350" y="82" font-size="18" fill="#888" font-weight="bold">A</text>
+        </g>
+        <g id="ptB" opacity="0">
+            <line x1="476" y1="356" x2="486" y2="366" stroke="#888" stroke-width="2.5"/>
+            <line x1="486" y1="356" x2="476" y2="366" stroke="#888" stroke-width="2.5"/>
+            <text x="489" y="375" font-size="18" fill="#888" font-weight="bold">B</text>
+        </g>
+
+        <!-- ══ ARC 1 (rouge, centre A) ══ -->
+        <path id="arc1" d="" stroke="#e74c3c" stroke-width="2.5" fill="none" opacity="0"/>
+
+        <!-- ══ ARC 2 (vert, centre B) ══ -->
+        <path id="arc2" d="" stroke="#27ae60" stroke-width="2.5" fill="none" opacity="0"/>
+
+        <!-- ══ POINT M' ══ -->
+        <g id="pointMp" opacity="0">
+            <line x1="594" y1="94" x2="606" y2="106" stroke="#e74c3c" stroke-width="3"/>
+            <line x1="606" y1="94" x2="594" y2="106" stroke="#e74c3c" stroke-width="3"/>
+            <text x="612" y="98" font-size="22" fill="#e74c3c" font-weight="bold">M'</text>
+        </g>
+
+        <!-- ══ COMPAS ══ -->
+        <g id="compass" opacity="0">
+            <circle id="compassHinge" cx="0" cy="0" r="10"
+                    fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+            <line id="compassPointBranch" x1="0" y1="0" x2="-5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <circle id="compassPointTip" cx="-5" cy="60" r="6"
+                    fill="#222" stroke="#000" stroke-width="2"/>
+            <line id="compassPencilBranch" x1="0" y1="0" x2="5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <rect id="compassPencilBody" x="0" y="50" width="10" height="25"
+                  fill="#ff4444" stroke="#cc0000" stroke-width="2" rx="2"/>
+            <polygon id="compassPencilTip" points="5,75 0,85 10,85" fill="#333"/>
+            <circle id="compassPencilPoint" cx="5" cy="85" r="3" fill="#000"/>
+        </g>
+
+    </svg>
+
+    <div class="controls">
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+</div>
+
+<script>
+// ── Coordonnées ──────────────────────────────────────────
+const A  = {x:342, y:84};
+const B  = {x:481, y:361};
+const M  = {x:200, y:300};
+const Mp = {x:600, y:100};
+
+const R_A = Math.hypot(M.x - A.x, M.y - A.y);  // ≈ 258.5
+const R_B = Math.hypot(M.x - B.x, M.y - B.y);  // ≈ 287.5
+
+// Angles de départ (vers M) et d'arrivée (vers M') pour chaque arc
+const angA_M  = Math.atan2(M.y  - A.y, M.x  - A.x);   // ≈  2.152 rad
+const angA_Mp = Math.atan2(Mp.y - A.y, Mp.x - A.x);   // ≈  0.062 rad
+const angB_M  = Math.atan2(M.y  - B.y, M.x  - B.x);   // ≈ -2.932 rad
+const angB_Mp = Math.atan2(Mp.y - B.y, Mp.x - B.x);   // ≈ -1.144 rad
+
+let currentStep = 0;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour voir la construction étape par étape.',
+    '<strong style="color:#555;font-size:20px;">1.</strong> Je place deux points A et B sur la droite (d).',
+    '<strong style="color:#e74c3c;font-size:20px;">2.</strong> Je trace un arc de cercle de <strong>centre A</strong> passant par M.',
+    '<strong style="color:#27ae60;font-size:20px;">3.</strong> Je trace un arc de cercle de <strong>centre B</strong> passant par M.',
+    '<strong style="color:#27ae60;font-size:20px;">4.</strong> Les deux arcs se coupent en M\'. M\' est le symétrique de M par rapport à (d). ✓'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const el = id => document.getElementById(id);
+
+// ── Compas ───────────────────────────────────────────────
+function setCompass(tip, pen) {
+    const hx = (tip.x + pen.x) / 2, hy = (tip.y + pen.y) / 2;
+    el('compassHinge').setAttribute('cx', hx);
+    el('compassHinge').setAttribute('cy', hy);
+    el('compassPointBranch').setAttribute('x1', hx);
+    el('compassPointBranch').setAttribute('y1', hy);
+    el('compassPointBranch').setAttribute('x2', tip.x);
+    el('compassPointBranch').setAttribute('y2', tip.y);
+    el('compassPointTip').setAttribute('cx', tip.x);
+    el('compassPointTip').setAttribute('cy', tip.y);
+    el('compassPencilBranch').setAttribute('x1', hx);
+    el('compassPencilBranch').setAttribute('y1', hy);
+    el('compassPencilBranch').setAttribute('x2', pen.x);
+    el('compassPencilBranch').setAttribute('y2', pen.y);
+    const ang = Math.atan2(pen.y - hy, pen.x - hx) * 180 / Math.PI + 90;
+    el('compassPencilBody').setAttribute('transform',
+        `translate(${pen.x},${pen.y - 15}) rotate(${ang})`);
+    el('compassPencilTip').setAttribute('transform',
+        `translate(${pen.x - 5},${pen.y}) rotate(${ang} 5 0)`);
+    el('compassPencilPoint').setAttribute('cx', pen.x);
+    el('compassPencilPoint').setAttribute('cy', pen.y);
+}
+
+// Pivot du compas : pointe fixe, mine suit un ARC de cercle (écartement constant)
+async function compassPivot(tip, radius, a1, a2, duration) {
+    const N = 50;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        setCompass(tip, {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        });
+        await sleep(duration / N);
+    }
+}
+
+async function compassOpen(tip, target, duration) {
+    const N = 30;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        setCompass(tip, {
+            x: tip.x + (target.x - tip.x) * t,
+            y: tip.y + (target.y - tip.y) * t
+        });
+        await sleep(duration / N);
+    }
+}
+
+async function compassMove(t1, p1, t2, p2, duration) {
+    const N = 40;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        setCompass(
+            {x: t1.x + (t2.x - t1.x) * t, y: t1.y + (t2.y - t1.y) * t},
+            {x: p1.x + (p2.x - p1.x) * t, y: p1.y + (p2.y - p1.y) * t}
+        );
+        await sleep(duration / N);
+    }
+}
+
+// Sweep du compas + dessin progressif de l'arc
+async function compassSweep(arcId, tip, radius, a1, a2, duration) {
+    const N = 70;
+    let path = '';
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        const pen = {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        };
+        if (i === 0) path = `M ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        else         path += ` L ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        setCompass(tip, pen);
+        el(arcId).setAttribute('d', path);
+        el(arcId).style.opacity = '1';
+        await sleep(duration / N);
+    }
+}
+
+// ── ÉTAPES ───────────────────────────────────────────────
+async function nextStep() {
+    const txt = el('stepText');
+    const btn = el('nextBtn');
+    if (currentStep >= 4) return;
+    btn.disabled = true;
+
+    // 1 : placer A et B
+    if (currentStep === 0) {
+        txt.innerHTML = stepTexts[1];
+        el('ptA').style.opacity = '1';
+        el('ptB').style.opacity = '1';
+        await sleep(1200);
+        currentStep = 1;
+    }
+
+    // 2 : compas centre A
+    //   → ouvre jusqu'à M (montre le rayon AM)
+    //   → pivote vers M', trace un court arc autour de M' (±0.3 rad)
+    else if (currentStep === 1) {
+        txt.innerHTML = stepTexts[2];
+        setCompass(A, A);
+        el('compass').style.opacity = '1';
+        await sleep(400);
+        await compassOpen(A, M, 1200);   // prise de l'écartement AM
+        await sleep(700);
+
+        const half_A  = 0.30;
+        const aA_start = angA_Mp - half_A;
+        const aA_end   = angA_Mp + half_A;
+        // Pivote vers le départ du petit arc (écartement CONSTANT — arc angulaire)
+        await compassPivot(A, R_A, angA_M, aA_start, 1000);
+        await sleep(300);
+        // Petit arc autour de M'
+        await compassSweep('arc1', A, R_A, aA_start, aA_end, 1400);
+        await sleep(800);
+        currentStep = 2;
+    }
+
+    // 3 : compas passe en B
+    //   → ouvre jusqu'à M (montre le rayon BM)
+    //   → pivote vers M', trace un court arc autour de M' (±0.3 rad)
+    else if (currentStep === 2) {
+        txt.innerHTML = stepTexts[3];
+
+        // 1. Déplacer le compas de A vers B, écartement R_A constant
+        //    (même direction que la fin de l'arc A — compas jamais refermé)
+        const angEndA = angA_Mp + 0.30;
+        const dxA = Math.cos(angEndA), dyA = Math.sin(angEndA);
+        const N_t = 40;
+        for (let i = 0; i <= N_t; i++) {
+            const t = i / N_t;
+            const tip = { x: A.x + (B.x - A.x) * t, y: A.y + (B.y - A.y) * t };
+            setCompass(tip, { x: tip.x + R_A * dxA, y: tip.y + R_A * dyA });
+            await sleep(1000 / N_t);
+        }
+        await sleep(300);
+
+        // 2. En B, prendre l'écartement BM : mine glisse de sa direction courante vers M
+        const penAtB = { x: B.x + R_A * dxA, y: B.y + R_A * dyA };
+        await compassMove(B, penAtB, B, M, 800);
+        await sleep(500);
+
+        const half_B  = 0.30;
+        const aB_start = angB_Mp - half_B;
+        const aB_end   = angB_Mp + half_B;
+        // Pivote vers le départ du petit arc (écartement CONSTANT — arc angulaire)
+        await compassPivot(B, R_B, angB_M, aB_start, 1000);
+        await sleep(300);
+        // Petit arc autour de M'
+        await compassSweep('arc2', B, R_B, aB_start, aB_end, 1400);
+        await sleep(800);
+        currentStep = 3;
+    }
+
+    // 4 : M' apparaît, compas disparaît
+    else if (currentStep === 3) {
+        txt.innerHTML = stepTexts[4];
+        txt.style.background      = '#c8e6c9';
+        txt.style.borderLeftColor = '#4caf50';
+        txt.style.color           = '#2e7d32';
+        el('compass').style.opacity = '0';
+        await sleep(400);
+        el('pointMp').style.opacity = '1';
+        await sleep(400);
+        currentStep = 4;
+        btn.textContent = '✓ Terminé';
+    }
+
+    btn.disabled = false;
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetAnimation() {
+    ['ptA','ptB','arc1','arc2','pointMp','compass'].forEach(id => {
+        el(id).style.opacity = '0';
+    });
+    ['arc1','arc2'].forEach(id => el(id).setAttribute('d', ''));
+
+    const txt = el('stepText');
+    txt.innerHTML             = stepTexts[0];
+    txt.style.background      = '#e3f2fd';
+    txt.style.borderLeftColor = '#2196f3';
+    txt.style.color           = '#1565c0';
+
+    const btn = el('nextBtn');
+    btn.textContent = '▶ Étape suivante';
+    btn.disabled    = false;
+    currentStep     = 0;
+}
+</script>
+</body>
+</html>

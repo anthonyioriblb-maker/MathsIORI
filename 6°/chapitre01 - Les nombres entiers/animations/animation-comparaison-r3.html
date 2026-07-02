@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparaison – Règle 3</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20px 30px;
+}
+
+.compare-wrap {
+  background: white; border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  padding: 24px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  margin-bottom: 14px;
+}
+
+.nombres-row {
+  display: flex; align-items: center; gap: 30px; flex-wrap: wrap; justify-content: center;
+}
+
+.nombre-bloc {
+  display: flex; align-items: flex-end; gap: 0;
+  padding: 10px 18px; background: #f5f5f5;
+  border-radius: 10px; border: 3px solid #ddd;
+  transition: all 0.4s; justify-content: center;
+}
+.nombre-bloc.equal { border-color: #9c27b0; background: #f3e5f5; }
+
+.chiffre-box { display: inline-flex; flex-direction: column; align-items: center; margin: 0 5px; }
+.chiffre-val {
+  font-size: 2.2rem; font-weight: bold; color: #333;
+  width: 42px; text-align: center; line-height: 1;
+  transition: all 0.35s; border-radius: 6px; padding: 2px;
+}
+.chiffre-val.hl-equal { background: #9c27b0; color: white; transform: scale(1.2); box-shadow: 0 3px 8px rgba(156,39,176,0.4); }
+.chiffre-val.hl-done  { background: #ce93d8; color: white; }
+.chiffre-label { font-size: 0.62rem; color: #999; margin-top: 3px; font-weight: 600; }
+
+.symbole-comp {
+  font-size: 3.5rem; font-weight: bold;
+  opacity: 0; transform: scale(0.5); transition: all 0.5s;
+  min-width: 60px; text-align: center;
+}
+.symbole-comp.visible { opacity: 1; transform: scale(1); }
+.symbole-comp.eq { color: #9c27b0; }
+
+.conclusion {
+  font-size: 1.6rem; font-weight: bold; text-align: center;
+  opacity: 0; transform: scale(0.8); transition: all 0.5s;
+  padding: 10px 24px; border-radius: 10px;
+}
+.conclusion.visible { opacity: 1; transform: scale(1); }
+
+.step-box {
+  background: #e3f2fd; border-left: 5px solid #2196f3;
+  padding: 14px 20px; border-radius: 0 8px 8px 0;
+  font-size: 1rem; color: #1565c0; width: 100%;
+  min-height: 52px; display: block; line-height: 1.6;
+  font-weight: 500; margin-bottom: 14px;
+}
+
+.progress-bar-wrap { width: 100%; background: #e0e0e0; border-radius: 8px; height: 8px; margin-bottom: 14px; overflow: hidden; }
+.progress-bar { height: 8px; background: linear-gradient(90deg, #9c27b0, #ce93d8); border-radius: 8px; width: 0%; transition: width 0.4s; }
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+button {
+  padding: 11px 22px; border: none; border-radius: 8px;
+  font-size: 0.95rem; font-weight: bold; cursor: pointer;
+  transition: all 0.25s; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+button:hover { transform: translateY(-2px); }
+button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; }
+#btnReset { background: #f44336; color: white; }
+#btnPrev  { background: #ff9800; color: white; }
+#btnNext  { background: #9c27b0; color: white; }
+#btnAuto  { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="compare-wrap">
+  <div class="nombres-row">
+    <div class="nombre-bloc" id="blocA">
+      <div class="chiffre-box"><div class="chiffre-val" id="cA0">2</div><div class="chiffre-label">centaines</div></div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cA1">3</div><div class="chiffre-label">dizaines</div></div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cA2">4</div><div class="chiffre-label">unités</div></div>
+    </div>
+    <div class="symbole-comp" id="symbole"></div>
+    <div class="nombre-bloc" id="blocB">
+      <div class="chiffre-box"><div class="chiffre-val" id="cB0">2</div><div class="chiffre-label">centaines</div></div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cB1">3</div><div class="chiffre-label">dizaines</div></div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cB2">4</div><div class="chiffre-label">unités</div></div>
+    </div>
+  </div>
+  <div class="conclusion" id="conclusion">234 = 234</div>
+</div>
+
+<div class="step-box" id="stepBox"></div>
+
+<div class="controls">
+  <button id="btnReset" onclick="reset()">↺ Recommencer</button>
+  <button id="btnPrev"  onclick="prev()" disabled>◀ Précédente</button>
+  <button id="btnNext"  onclick="next()">Suivante ▶</button>
+  <button id="btnAuto"  onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<script>
+const steps = [
+  { msg: 'On compare les 3 chiffres un à un, en partant de la gauche.', pos: -1 },
+  { msg: 'Chiffre 1 : <strong>2 = 2</strong> ✓', pos: 0 },
+  { msg: 'Chiffre 2 : <strong>3 = 3</strong> ✓', pos: 1 },
+  { msg: 'Chiffre 3 : <strong>4 = 4</strong> ✓', pos: 2 },
+  { msg: '✅ Tous les chiffres sont identiques. <strong>234 = 234</strong>.', pos: 'final' }
+];
+
+let etape = -1, autoMode = false, autoTimer = null;
+
+function clearHighlights() {
+  for (let i = 0; i < 3; i++) {
+    document.getElementById('cA' + i).className = 'chiffre-val';
+    document.getElementById('cB' + i).className = 'chiffre-val';
+    document.getElementById('cA' + i).style.opacity = '1';
+    document.getElementById('cB' + i).style.opacity = '1';
+  }
+  document.getElementById('blocA').className = 'nombre-bloc';
+  document.getElementById('blocB').className = 'nombre-bloc';
+  document.getElementById('symbole').className = 'symbole-comp';
+  document.getElementById('symbole').textContent = '';
+  document.getElementById('conclusion').classList.remove('visible');
+}
+
+function applyStep(i) {
+  const s = steps[i];
+  document.getElementById('stepBox').innerHTML = s.msg;
+  document.getElementById('progressBar').style.width = ((i + 1) / steps.length * 100) + '%';
+  document.getElementById('btnPrev').disabled = (i <= 0);
+  document.getElementById('btnNext').disabled = (i >= steps.length - 1);
+
+  clearHighlights();
+
+  if (typeof s.pos === 'number' && s.pos >= 0) {
+    // Chiffre courant en violet vif
+    document.getElementById('cA' + s.pos).className = 'chiffre-val hl-equal';
+    document.getElementById('cB' + s.pos).className = 'chiffre-val hl-equal';
+    // Chiffres déjà comparés en violet clair
+    for (let j = 0; j < s.pos; j++) {
+      document.getElementById('cA' + j).className = 'chiffre-val hl-done';
+      document.getElementById('cB' + j).className = 'chiffre-val hl-done';
+    }
+  }
+
+  if (s.pos === 'final') {
+    for (let j = 0; j < 3; j++) {
+      document.getElementById('cA' + j).className = 'chiffre-val hl-equal';
+      document.getElementById('cB' + j).className = 'chiffre-val hl-equal';
+    }
+    document.getElementById('blocA').classList.add('equal');
+    document.getElementById('blocB').classList.add('equal');
+    const sym = document.getElementById('symbole');
+    sym.textContent = '='; sym.className = 'symbole-comp visible eq';
+    const conclu = document.getElementById('conclusion');
+    conclu.style.color = '#9c27b0'; conclu.style.border = '3px solid #9c27b0';
+    conclu.classList.add('visible');
+    stopAuto();
+  }
+}
+
+function reset() {
+  stopAuto(); etape = -1;
+  document.getElementById('stepBox').innerHTML = '';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('btnPrev').disabled = true;
+  document.getElementById('btnNext').disabled = false;
+  clearHighlights();
+}
+
+function next() {
+  if (etape < steps.length - 1) { etape++; applyStep(etape); }
+  if (etape >= steps.length - 1) stopAuto();
+}
+function prev() {
+  if (etape > 0) { etape--; applyStep(etape); }
+}
+
+function toggleAuto() {
+  if (autoMode) { stopAuto(); return; }
+  autoMode = true;
+  document.getElementById('btnAuto').textContent = '⏸ Pause';
+  document.getElementById('btnAuto').style.background = '#ff9800';
+  autoTimer = setInterval(() => { if (etape >= steps.length - 1) { next(); stopAuto(); } else { next(); } }, 2000);
+}
+function stopAuto() {
+  autoMode = false; clearInterval(autoTimer); autoTimer = null;
+  document.getElementById('btnAuto').textContent = '⏵ Automatique';
+  document.getElementById('btnAuto').style.background = '#4caf50';
+}
+</script>
+</body>
+</html>

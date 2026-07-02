@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation – Comparer des nombres entiers</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+  }
+
+  h1 { font-size: 1.5rem; color: #1a237e; margin-bottom: 4px; text-align: center; }
+  .subtitle { font-size: 0.95rem; color: #555; margin-bottom: 18px; text-align: center; }
+
+  /* ── Onglets règles ── */
+  .tabs {
+    display: flex; gap: 8px; margin-bottom: 18px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .tab-btn {
+    padding: 10px 22px; border: none; border-radius: 8px;
+    font-size: 0.95rem; font-weight: bold; cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  }
+  .tab-btn.active { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .tab-btn:not(.active) { opacity: 0.6; }
+  .tab-r1 { background: #2196f3; color: white; }
+  .tab-r2 { background: #4caf50; color: white; }
+  .tab-r3 { background: #9c27b0; color: white; }
+
+  /* ── Carte règle ── */
+  .regle-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 20px 30px;
+    width: 100%; max-width: 100%;
+    margin-bottom: 16px;
+  }
+  .regle-titre {
+    font-size: 1.05rem; font-weight: 700;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .regle-badge {
+    display: inline-block; padding: 3px 10px;
+    border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: white;
+  }
+  .regle-texte {
+    font-size: 0.95rem; color: #444; line-height: 1.5;
+  }
+
+  /* ── Zone de comparaison ── */
+  .compare-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 20px 30px;
+    width: 100%; max-width: 100%;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* Nombres affichés avec chiffres individuels */
+  .nombres-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .nombre-bloc {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    padding: 10px 14px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    border: 3px solid #ddd;
+    transition: border-color 0.4s;
+    min-width: 80px;
+    justify-content: center;
+  }
+  .nombre-bloc.winner { border-color: #4caf50; background: #e8f5e9; }
+  .nombre-bloc.loser  { border-color: #f44336; background: #ffebee; }
+  .nombre-bloc.equal  { border-color: #9c27b0; background: #f3e5f5; }
+
+  .chiffre-box {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 3px;
+  }
+  .chiffre-val {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    width: 36px;
+    text-align: center;
+    line-height: 1;
+    transition: all 0.35s;
+    border-radius: 6px;
+    padding: 2px;
+  }
+  .chiffre-val.hl-compare {
+    background: #2196f3;
+    color: white;
+    transform: scale(1.2);
+    box-shadow: 0 3px 8px rgba(33,150,243,0.4);
+  }
+  .chiffre-val.hl-win {
+    background: #4caf50;
+    color: white;
+    transform: scale(1.2) translateY(-4px);
+    box-shadow: 0 4px 10px rgba(76,175,80,0.5);
+  }
+  .chiffre-val.hl-lose {
+    background: #f44336;
+    color: white;
+    transform: scale(1.2) translateY(-4px);
+    box-shadow: 0 4px 10px rgba(244,67,54,0.5);
+  }
+  .chiffre-val.hl-equal {
+    background: #9c27b0;
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 3px 8px rgba(156,39,176,0.4);
+  }
+  .chiffre-label {
+    font-size: 0.62rem;
+    color: #999;
+    margin-top: 3px;
+    text-align: center;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+  .chiffre-label.hl { color: #1565c0; }
+
+  /* Flèche indiquant le chiffre comparé */
+  .arrow-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    min-height: 24px;
+    justify-content: center;
+  }
+  .arrow-cell {
+    width: 42px;
+    text-align: center;
+    font-size: 1rem;
+    color: #2196f3;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .arrow-cell.visible { opacity: 1; }
+
+  /* Symbole de comparaison central */
+  .symbole-comp {
+    font-size: 3rem;
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.5s;
+    min-width: 60px;
+    text-align: center;
+  }
+  .symbole-comp.visible { opacity: 1; transform: scale(1); }
+  .symbole-comp.gt { color: #4caf50; }
+  .symbole-comp.lt { color: #f44336; }
+  .symbole-comp.eq { color: #9c27b0; }
+
+  /* Nombre de chiffres (règle 1) */
+  .nb-chiffres-row {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .nb-chiffres-bloc {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.4s;
+    transform: translateY(10px);
+  }
+  .nb-chiffres-bloc.visible { opacity: 1; transform: translateY(0); }
+  .nb-chiffres-val {
+    font-size: 2rem;
+    font-weight: bold;
+    display: block;
+  }
+
+  /* ── Message étape ── */
+  .step-box {
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    font-size: 1rem;
+    color: #1565c0;
+    width: 100%; max-width: 100%;
+    min-height: 60px;
+    display: block;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  /* ── Conclusion ── */
+  .conclusion {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.5s;
+    transform: scale(0.8);
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+  .conclusion.visible { opacity: 1; transform: scale(1); }
+
+  /* ── Contrôles ── */
+  .controls {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    justify-content: center; margin-bottom: 20px;
+  }
+  button {
+    padding: 12px 26px; border: none; border-radius: 8px;
+    font-size: 1rem; font-weight: bold; cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  button:hover { transform: translateY(-2px); }
+  button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; }
+  #btnSuivant { background: #2196f3; color: white; }
+  #btnReset   { background: #f44336; color: white; }
+  #btnAuto    { background: #4caf50; color: white; }
+
+  /* ── Progression ── */
+  .progress-bar-wrap { width: 100%; max-width: 100%; background: #e0e0e0; border-radius: 8px; height: 8px; margin-bottom: 18px; overflow: hidden; }
+  .progress-bar { height: 8px; background: linear-gradient(90deg, #2196f3, #4caf50); border-radius: 8px; width: 0%; transition: width 0.4s; }
+
+  /* ── Sélecteur d'exemple ── */
+  .exemple-select {
+    font-size: 1rem; padding: 8px 14px; border-radius: 8px;
+    border: 2px solid #2196f3; color: #1565c0; font-weight: 600;
+    background: white; cursor: pointer; margin-bottom: 14px;
+  }
+
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+
+<h1>Comparer des nombres entiers</h1>
+<p class="subtitle">Chapitre 1 – 6ème</p>
+
+<!-- Onglets -->
+<div class="tabs">
+  <button class="tab-btn tab-r1 active" onclick="chargerRegle(1)">Règle 1 – Nombre de chiffres</button>
+  <button class="tab-btn tab-r2"        onclick="chargerRegle(2)">Règle 2 – Comparaison chiffre à chiffre</button>
+  <button class="tab-btn tab-r3"        onclick="chargerRegle(3)">Règle 3 – Nombres égaux</button>
+</div>
+
+<!-- Carte règle -->
+<div class="regle-card" id="regleCard">
+  <div class="regle-titre">
+    <span class="regle-badge" id="regleBadge">Règle 1</span>
+    <span id="regleTitre"></span>
+  </div>
+  <div class="regle-texte" id="regleTexte"></div>
+</div>
+
+<!-- Sélecteur exemple -->
+<select class="exemple-select" id="exempleSelect" onchange="changerExemple()">
+</select>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- Zone de comparaison -->
+<div class="compare-wrap" id="compareWrap">
+  <!-- Rempli dynamiquement -->
+</div>
+
+<!-- Message étape -->
+<div class="step-box" id="stepBox"></div>
+
+<!-- Contrôles -->
+<div class="controls">
+  <button id="btnReset"   onclick="reset()">↺ Recommencer</button>
+  <button id="btnSuivant" onclick="suivant()">Étape suivante ▶</button>
+  <button id="btnAuto"    onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<script>
+/* ============================================================
+   DONNÉES
+   ============================================================ */
+const REGLES = {
+  1: {
+    badge: 'Règle 1',
+    titre: 'Plus de chiffres = plus grand',
+    texte: 'Le nombre entier qui possède le <strong>plus de chiffres</strong> est le <strong>plus grand</strong>.',
+    couleur: '#2196f3',
+    exemples: [
+      { a: '537',  b: '89',   label: '537 et 89' },
+      { a: '1024', b: '987',  label: '1024 et 987' },
+      { a: '10',   b: '9',    label: '10 et 9' },
+    ]
+  },
+  2: {
+    badge: 'Règle 2',
+    titre: 'Même nombre de chiffres → comparer chiffre à chiffre',
+    texte: 'Si les nombres ont le <strong>même nombre de chiffres</strong>, on compare chaque chiffre de <strong>gauche à droite</strong>. Dès qu\'un chiffre diffère, on conclut.',
+    couleur: '#4caf50',
+    exemples: [
+      { a: '3546', b: '3527', label: '3 546 et 3 527' },
+      { a: '72',   b: '68',   label: '72 et 68' },
+      { a: '4193', b: '4198', label: '4 193 et 4 198' },
+    ]
+  },
+  3: {
+    badge: 'Règle 3',
+    titre: 'Tous les chiffres identiques → égalité',
+    texte: 'Si <strong>tous les chiffres sont identiques</strong>, les deux nombres sont <strong>égaux</strong>.',
+    couleur: '#9c27b0',
+    exemples: [
+      { a: '234',  b: '234',  label: '234 et 234' },
+      { a: '51',   b: '51',   label: '51 et 51' },
+      { a: '1000', b: '1000', label: '1 000 et 1 000' },
+    ]
+  }
+};
+
+const LABELS = ['millions','c.milliers','d.milliers','milliers','centaines','dizaines','unités'];
+
+let regleCourante = 1;
+let exempleCourant = 0;
+let etape = -1;
+let steps = [];
+let autoMode = false;
+let autoTimer = null;
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function chargerRegle(r) {
+  regleCourante = r;
+  exempleCourant = 0;
+
+  // Onglets
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === r - 1);
+  });
+
+  // Carte règle
+  const reg = REGLES[r];
+  const badge = document.getElementById('regleBadge');
+  badge.textContent = reg.badge;
+  badge.style.background = reg.couleur;
+  document.getElementById('regleTitre').textContent = reg.titre;
+  document.getElementById('regleTexte').innerHTML = reg.texte;
+
+  // Select
+  const sel = document.getElementById('exempleSelect');
+  sel.innerHTML = '';
+  reg.exemples.forEach((ex, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = 'Exemple : ' + ex.label;
+    sel.appendChild(opt);
+  });
+
+  loadExemple();
+}
+
+function changerExemple() {
+  exempleCourant = parseInt(document.getElementById('exempleSelect').value);
+  loadExemple();
+}
+
+function loadExemple() {
+  stopAuto();
+  etape = -1;
+  steps = buildSteps(regleCourante, exempleCourant);
+  buildUI();
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('btnSuivant').disabled = false;
+  document.getElementById('stepBox').innerHTML = 'Cliquez sur <strong>&nbsp;Étape suivante&nbsp;</strong> pour commencer.';
+}
+
+/* ============================================================
+   CONSTRUCTION DES ÉTAPES
+   ============================================================ */
+function buildSteps(r, eIdx) {
+  const ex = REGLES[r].exemples[eIdx];
+  const A = ex.a.split('');
+  const B = ex.b.split('');
+
+  if (r === 1) {
+    return [
+      {
+        msg: `On compte le nombre de chiffres de chaque nombre.<br><strong>${ex.a}</strong> possède <strong>${A.length} chiffre${A.length>1?'s':''}</strong> et <strong>${ex.b}</strong> possède <strong>${B.length} chiffre${B.length>1?'s':''}</strong>.`,
+        action: 'showCount',
+        nA: A.length, nB: B.length
+      },
+      {
+        msg: buildConcluMsg(r, ex.a, ex.b, A.length, B.length),
+        action: 'showResult',
+        nA: A.length, nB: B.length,
+        symbole: A.length > B.length ? '>' : A.length < B.length ? '<' : '='
+      }
+    ];
+  }
+
+  if (r === 2) {
+    const steps = [{
+      msg: `Les deux nombres ont <strong>${A.length} chiffres</strong>. On les compare chiffre à chiffre, de gauche à droite.`,
+      action: 'init2',
+    }];
+    for (let i = 0; i < A.length; i++) {
+      if (A[i] === B[i]) {
+        steps.push({
+          msg: `Position ${i+1} : <strong>${A[i]} = ${B[i]}</strong> → égaux, on passe au chiffre suivant.`,
+          action: 'compare2',
+          pos: i, result: 'eq'
+        });
+      } else {
+        steps.push({
+          msg: `Position ${i+1} : <strong>${A[i]} ${A[i]>B[i]?'>':'<'} ${B[i]}</strong> → on peut conclure !`,
+          action: 'compare2',
+          pos: i, result: A[i] > B[i] ? 'win' : 'lose'
+        });
+        steps.push({
+          msg: buildConcluMsg(r, ex.a, ex.b, A.length, B.length, A[i], B[i], i),
+          action: 'showResult2',
+          pos: i,
+          symbole: A[i] > B[i] ? '>' : '<'
+        });
+        return steps;
+      }
+    }
+    // Tous égaux → vers règle 3
+    steps.push({
+      msg: buildConcluMsg(r, ex.a, ex.b, A.length, B.length),
+      action: 'showResult2',
+      symbole: '='
+    });
+    return steps;
+  }
+
+  if (r === 3) {
+    const stepList = [{
+      msg: `On compare les ${A.length} chiffres un à un.`,
+      action: 'init3'
+    }];
+    for (let i = 0; i < A.length; i++) {
+      stepList.push({
+        msg: `Chiffre ${i+1} : <strong>${A[i]} = ${B[i]}</strong> ✓`,
+        action: 'compare3',
+        pos: i
+      });
+    }
+    stepList.push({
+      msg: `Tous les chiffres sont identiques. <strong>${ex.a} = ${ex.b}</strong>`,
+      action: 'showResult3',
+      symbole: '='
+    });
+    return stepList;
+  }
+}
+
+function buildConcluMsg(r, a, b, nA, nB, chA, chB, pos) {
+  if (r === 1) {
+    if (nA > nB) return `✅ <strong>${a}</strong> a plus de chiffres que <strong>${b}</strong>. Donc <strong>${a} > ${b}</strong>.`;
+    if (nA < nB) return `✅ <strong>${b}</strong> a plus de chiffres que <strong>${a}</strong>. Donc <strong>${a} < ${b}</strong>.`;
+    return `Les deux nombres ont le même nombre de chiffres.`;
+  }
+  if (r === 2) {
+    if (chA === undefined) return `✅ Tous les chiffres sont identiques. <strong>${a} = ${b}</strong>.`;
+    if (chA > chB) return `✅ Dès la position ${pos+1}, <strong>${chA} > ${chB}</strong>. Donc <strong>${a} > ${b}</strong>.`;
+    return `✅ Dès la position ${pos+1}, <strong>${chA} < ${chB}</strong>. Donc <strong>${a} < ${b}</strong>.`;
+  }
+}
+
+/* ============================================================
+   CONSTRUCTION DE L'UI
+   ============================================================ */
+function buildUI() {
+  const ex = REGLES[regleCourante].exemples[exempleCourant];
+  const A = ex.a.split('');
+  const B = ex.b.split('');
+  const wrap = document.getElementById('compareWrap');
+  const maxLen = Math.max(A.length, B.length);
+  const labels = LABELS.slice(LABELS.length - maxLen);
+
+  // Pad A & B à gauche
+  const Ap = A.length < maxLen ? Array(maxLen - A.length).fill('') : A.slice();
+  const Bp = B.length < maxLen ? Array(maxLen - B.length).fill('') : B.slice();
+
+  if (regleCourante === 1) {
+    wrap.innerHTML = `
+      <div class="nombres-row">
+        <div class="nombre-bloc" id="blocA">${buildChiffreBoxes(Ap, 'A', labels)}</div>
+        <div class="symbole-comp" id="symboleComp"></div>
+        <div class="nombre-bloc" id="blocB">${buildChiffreBoxes(Bp, 'B', labels)}</div>
+      </div>
+      <div class="nb-chiffres-row">
+        <div class="nb-chiffres-bloc" id="countA">
+          <span class="nb-chiffres-val" style="color:#2196f3">${A.length}</span>
+          <span>chiffre${A.length>1?'s':''}</span>
+        </div>
+        <div class="nb-chiffres-bloc" id="countB">
+          <span class="nb-chiffres-val" style="color:#e91e63">${B.length}</span>
+          <span>chiffre${B.length>1?'s':''}</span>
+        </div>
+      </div>
+      <div class="conclusion" id="conclusion"></div>
+    `;
+  } else {
+    wrap.innerHTML = `
+      <div class="nombres-row">
+        <div class="nombre-bloc" id="blocA">${buildChiffreBoxes(Ap, 'A', labels)}</div>
+        <div class="symbole-comp" id="symboleComp"></div>
+        <div class="nombre-bloc" id="blocB">${buildChiffreBoxes(Bp, 'B', labels)}</div>
+      </div>
+      <div class="conclusion" id="conclusion"></div>
+    `;
+  }
+}
+
+function buildChiffreBoxes(digits, side, labels) {
+  return digits.map((d, i) => `
+    <div class="chiffre-box">
+      <div class="chiffre-val" id="cv-${side}-${i}">${d}</div>
+      <div class="chiffre-label" id="cl-${side}-${i}">${d !== '' ? labels[i] : ''}</div>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   LOGIQUE ÉTAPES
+   ============================================================ */
+function reset() {
+  stopAuto();
+  loadExemple();
+}
+
+function suivant() {
+  etape++;
+  if (etape >= steps.length) {
+    stopAuto();
+    document.getElementById('btnSuivant').disabled = true;
+    return;
+  }
+
+  const s = steps[etape];
+  document.getElementById('stepBox').innerHTML = s.msg;
+  document.getElementById('progressBar').style.width = ((etape + 1) / steps.length * 100) + '%';
+
+  const ex = REGLES[regleCourante].exemples[exempleCourant];
+  const A = ex.a.split('');
+  const B = ex.b.split('');
+  const maxLen = Math.max(A.length, B.length);
+
+  if (s.action === 'showCount') {
+    // Highlight chiffres + montrer compteurs
+    A.forEach((_, i) => {
+      const idx = maxLen - A.length + i;
+      document.getElementById('cv-A-' + idx).classList.add('hl-compare');
+    });
+    B.forEach((_, i) => {
+      const idx = maxLen - B.length + i;
+      document.getElementById('cv-B-' + idx).classList.add('hl-compare');
+    });
+    document.getElementById('countA').classList.add('visible');
+    document.getElementById('countB').classList.add('visible');
+  }
+
+  if (s.action === 'showResult') {
+    const sym = document.getElementById('symboleComp');
+    sym.textContent = s.symbole;
+    sym.className = 'symbole-comp visible ' + (s.symbole === '>' ? 'gt' : s.symbole === '<' ? 'lt' : 'eq');
+
+    const blocA = document.getElementById('blocA');
+    const blocB = document.getElementById('blocB');
+    if (s.nA > s.nB) { blocA.classList.add('winner'); blocB.classList.add('loser'); }
+    else if (s.nA < s.nB) { blocB.classList.add('winner'); blocA.classList.add('loser'); }
+    else { blocA.classList.add('equal'); blocB.classList.add('equal'); }
+
+    showConclusion(s.symbole, ex.a, ex.b);
+    document.getElementById('btnSuivant').disabled = true;
+    stopAuto();
+  }
+
+  if (s.action === 'init2') {
+    // Rien de visuel en plus
+  }
+
+  if (s.action === 'compare2') {
+    const idxA = maxLen - A.length + s.pos;
+    const idxB = maxLen - B.length + s.pos;
+    const cvA = document.getElementById('cv-A-' + idxA);
+    const cvB = document.getElementById('cv-B-' + idxB);
+
+    // Retirer highlights précédents
+    document.querySelectorAll('.chiffre-val').forEach(el => {
+      el.classList.remove('hl-compare','hl-win','hl-lose','hl-equal');
+    });
+
+    if (s.result === 'eq') {
+      cvA.classList.add('hl-equal');
+      cvB.classList.add('hl-equal');
+    } else if (s.result === 'win') {
+      cvA.classList.add('hl-win');
+      cvB.classList.add('hl-lose');
+    } else {
+      cvA.classList.add('hl-lose');
+      cvB.classList.add('hl-win');
+    }
+  }
+
+  if (s.action === 'showResult2') {
+    const sym = document.getElementById('symboleComp');
+    sym.textContent = s.symbole;
+    sym.className = 'symbole-comp visible ' + (s.symbole === '>' ? 'gt' : s.symbole === '<' ? 'lt' : 'eq');
+
+    const blocA = document.getElementById('blocA');
+    const blocB = document.getElementById('blocB');
+    if (s.symbole === '>') { blocA.classList.add('winner'); blocB.classList.add('loser'); }
+    else if (s.symbole === '<') { blocB.classList.add('winner'); blocA.classList.add('loser'); }
+    else { blocA.classList.add('equal'); blocB.classList.add('equal'); }
+
+    showConclusion(s.symbole, ex.a, ex.b);
+    document.getElementById('btnSuivant').disabled = true;
+    stopAuto();
+  }
+
+  if (s.action === 'init3') {
+    // rien
+  }
+  if (s.action === 'compare3') {
+    document.querySelectorAll('.chiffre-val').forEach(el => el.classList.remove('hl-compare','hl-equal'));
+    const cvA = document.getElementById('cv-A-' + s.pos);
+    const cvB = document.getElementById('cv-B-' + s.pos);
+    if (cvA) cvA.classList.add('hl-equal');
+    if (cvB) cvB.classList.add('hl-equal');
+  }
+  if (s.action === 'showResult3') {
+    const sym = document.getElementById('symboleComp');
+    sym.textContent = '=';
+    sym.className = 'symbole-comp visible eq';
+    document.getElementById('blocA').classList.add('equal');
+    document.getElementById('blocB').classList.add('equal');
+    showConclusion('=', ex.a, ex.b);
+    document.getElementById('btnSuivant').disabled = true;
+    stopAuto();
+  }
+}
+
+function showConclusion(sym, a, b) {
+  const el = document.getElementById('conclusion');
+  const couleur = sym === '>' ? '#4caf50' : sym === '<' ? '#f44336' : '#9c27b0';
+  el.innerHTML = `${a} <span style="font-size:2rem">${sym}</span> ${b}`;
+  el.style.color = couleur;
+  el.style.border = `3px solid ${couleur}`;
+  el.classList.add('visible');
+}
+
+/* ============================================================
+   AUTO
+   ============================================================ */
+function toggleAuto() {
+  if (autoMode) {
+    stopAuto();
+  } else {
+    autoMode = true;
+    document.getElementById('btnAuto').textContent = '⏸ Pause';
+    document.getElementById('btnAuto').style.background = '#ff9800';
+    autoTimer = setInterval(() => {
+      if (etape >= steps.length - 1) {
+        suivant(); stopAuto();
+      } else {
+        suivant();
+      }
+    }, 2200);
+  }
+}
+
+function stopAuto() {
+  autoMode = false;
+  clearInterval(autoTimer);
+  autoTimer = null;
+  document.getElementById('btnAuto').textContent = '⏵ Automatique';
+  document.getElementById('btnAuto').style.background = '#4caf50';
+}
+
+/* ============================================================
+   LANCEMENT
+   ============================================================ */
+chargerRegle(1);
+</script>
+</body>
+</html>
