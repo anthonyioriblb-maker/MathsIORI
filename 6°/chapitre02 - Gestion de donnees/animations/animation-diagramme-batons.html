@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Animation – Diagramme en bâtons</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+  }
+
+  /* ── Barre de progression ── */
+  .progress-bar-wrap {
+    width: 100%; max-width: 100%;
+    background: #e0e0e0;
+    border-radius: 8px;
+    height: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #2196f3, #4caf50);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.4s;
+  }
+
+  /* ── Graphique ── */
+  .chart-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 14px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+  }
+  svg#chart { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+  .bar {
+    fill: #4472c4;
+    transition: y 0.7s ease-out, height 0.7s ease-out;
+  }
+  .bar-val {
+    font-size: 18px;
+    font-weight: bold;
+    fill: #1a3a6b;
+    text-anchor: middle;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .bar-val.val-show { opacity: 1; }
+
+  /* ── Message étape ── */
+  .step-box {
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    font-size: 1rem;
+    color: #1565c0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    transition: all 0.3s;
+  }
+
+  /* ── Contrôles ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  button {
+    padding: 13px 26px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; box-shadow: none; }
+  #btnSuivant   { background: #2196f3; color: white; }
+  #btnPrecedent { background: #ff9800; color: white; }
+  #btnReset     { background: #f44336; color: white; }
+  #btnAuto      { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="chart-wrap">
+  <svg id="chart" width="700" height="430" viewBox="0 0 700 430">
+    <text x="350" y="26" text-anchor="middle" font-size="22" font-weight="bold" fill="#111">Répartition des élèves selon leur loisir préféré</text>
+
+    <!-- Grille et graduations (générées par JS) -->
+    <g id="grille"></g>
+
+    <!-- Axes -->
+    <line x1="90" y1="30" x2="90" y2="340" stroke="black" stroke-width="2"/>
+    <line x1="90" y1="340" x2="660" y2="340" stroke="black" stroke-width="2"/>
+
+    <!-- Titres des axes -->
+    <text x="375" y="402" text-anchor="middle" font-size="17" font-weight="bold" fill="#111">Loisir préféré</text>
+    <text x="26" y="185" text-anchor="middle" font-size="17" font-weight="bold" fill="#111" transform="rotate(-90 26 185)">Nombre d'élèves</text>
+
+    <!-- Bâtons (générés par JS) -->
+    <g id="bars"></g>
+
+    <!-- Étiquettes des catégories -->
+    <g id="catLabels"></g>
+  </svg>
+</div>
+
+<div class="step-box"><span id="stepBox">Cliquez sur « Étape suivante » pour construire le diagramme bâton par bâton.</span></div>
+
+<div class="controls">
+  <button id="btnReset"     onclick="reset()">↺ Recommencer</button>
+  <button id="btnPrecedent" onclick="precedent()" disabled>◀ Étape précédente</button>
+  <button id="btnSuivant"   onclick="suivant()">Étape suivante ▶</button>
+  <button id="btnAuto"      onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<script>
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = id => document.getElementById(id);
+
+  const CHART_TOP = 30, CHART_BOTTOM = 340, CHART_LEFT = 90, CHART_RIGHT = 660;
+  const MAX_VAL = 9;
+  const UNIT_H = (CHART_BOTTOM - CHART_TOP) / MAX_VAL;
+  const yForVal = v => CHART_BOTTOM - v * UNIT_H;
+
+  const data = [
+    { name: 'Sport',      val: 8 },
+    { name: 'Cinéma',     val: 5 },
+    { name: 'Lecture',    val: 6 },
+    { name: 'Télévision', val: 2 },
+    { name: 'Jeu vidéo',  val: 3 },
+  ];
+
+  const slotWidth = (CHART_RIGHT - CHART_LEFT) / data.length;
+  const barWidth = 44;
+  const barX = i => CHART_LEFT + i * slotWidth + (slotWidth - barWidth) / 2;
+
+  const steps = [
+    { msg: 'On trace un bâton de hauteur <strong>8</strong> pour le Sport : 8 élèves l\'ont choisi comme loisir préféré.' },
+    { msg: 'On trace un bâton de hauteur <strong>5</strong> pour le Cinéma.' },
+    { msg: 'On trace un bâton de hauteur <strong>6</strong> pour la Lecture.' },
+    { msg: 'On trace un bâton de hauteur <strong>2</strong> pour la Télévision.' },
+    { msg: 'On trace un bâton de hauteur <strong>3</strong> pour le Jeu vidéo. Le diagramme est terminé : plus le bâton est haut, plus le loisir est choisi.' },
+  ];
+
+  // ── Construction de la grille ──
+  function buildGrille() {
+    const g = el('grille');
+    g.innerHTML = '';
+    for (let v = 0; v <= MAX_VAL; v++) {
+      const y = yForVal(v);
+      if (v > 0) {
+        const line = document.createElementNS(NS, 'line');
+        line.setAttribute('x1', CHART_LEFT); line.setAttribute('x2', CHART_RIGHT);
+        line.setAttribute('y1', y); line.setAttribute('y2', y);
+        line.setAttribute('stroke', '#ddd'); line.setAttribute('stroke-width', '1');
+        g.appendChild(line);
+      }
+      const label = document.createElementNS(NS, 'text');
+      label.setAttribute('x', CHART_LEFT - 12); label.setAttribute('y', y + 5);
+      label.setAttribute('text-anchor', 'end'); label.setAttribute('font-size', '15');
+      label.setAttribute('fill', '#333');
+      label.textContent = v;
+      g.appendChild(label);
+    }
+  }
+
+  // ── Construction des bâtons (hauteur 0 au départ) ──
+  function buildBars() {
+    const gBars = el('bars');
+    const gLabels = el('catLabels');
+    gBars.innerHTML = '';
+    gLabels.innerHTML = '';
+    data.forEach((d, i) => {
+      const rect = document.createElementNS(NS, 'rect');
+      rect.setAttribute('id', 'bar' + i);
+      rect.setAttribute('class', 'bar');
+      rect.setAttribute('x', barX(i));
+      rect.setAttribute('width', barWidth);
+      rect.setAttribute('y', CHART_BOTTOM);
+      rect.setAttribute('height', 0);
+      rect.setAttribute('rx', 2);
+      gBars.appendChild(rect);
+
+      const val = document.createElementNS(NS, 'text');
+      val.setAttribute('id', 'val' + i);
+      val.setAttribute('class', 'bar-val');
+      val.setAttribute('x', barX(i) + barWidth / 2);
+      val.setAttribute('y', yForVal(d.val) - 10);
+      val.textContent = d.val;
+      gBars.appendChild(val);
+
+      const catLabel = document.createElementNS(NS, 'text');
+      catLabel.setAttribute('x', barX(i) + barWidth / 2);
+      catLabel.setAttribute('y', CHART_BOTTOM + 28);
+      catLabel.setAttribute('text-anchor', 'middle');
+      catLabel.setAttribute('font-size', '16');
+      catLabel.setAttribute('font-weight', '600');
+      catLabel.setAttribute('fill', '#111');
+      catLabel.textContent = d.name;
+      gLabels.appendChild(catLabel);
+    });
+  }
+
+  function showBar(i, on) {
+    const rect = el('bar' + i);
+    const val = el('val' + i);
+    const d = data[i];
+    if (on) {
+      rect.setAttribute('y', yForVal(d.val));
+      rect.setAttribute('height', CHART_BOTTOM - yForVal(d.val));
+      val.classList.add('val-show');
+    } else {
+      rect.setAttribute('y', CHART_BOTTOM);
+      rect.setAttribute('height', 0);
+      val.classList.remove('val-show');
+    }
+  }
+
+  let etape = -1;
+  let autoTimer = null;
+  let autoMode = false;
+
+  function setProgress() {
+    el('progressBar').style.width = (((etape + 1) / steps.length) * 100) + '%';
+  }
+
+  function suivant() {
+    if (etape >= steps.length - 1) return;
+    etape++;
+    showBar(etape, true);
+    el('stepBox').innerHTML = steps[etape].msg;
+    setProgress();
+    el('btnPrecedent').disabled = false;
+    if (etape === steps.length - 1) {
+      el('btnSuivant').disabled = true;
+      stopAuto();
+    }
+  }
+
+  function precedent() {
+    if (etape < 0) return;
+    stopAuto();
+    showBar(etape, false);
+    etape--;
+    if (etape < 0) {
+      el('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour construire le diagramme bâton par bâton.';
+      el('btnPrecedent').disabled = true;
+    } else {
+      el('stepBox').innerHTML = steps[etape].msg;
+    }
+    setProgress();
+    el('btnSuivant').disabled = false;
+  }
+
+  function reset() {
+    stopAuto();
+    while (etape >= 0) { showBar(etape, false); etape--; }
+    etape = -1;
+    el('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour construire le diagramme bâton par bâton.';
+    el('progressBar').style.width = '0%';
+    el('btnSuivant').disabled = false;
+    el('btnPrecedent').disabled = true;
+  }
+
+  function toggleAuto() {
+    if (autoMode) {
+      stopAuto();
+    } else {
+      autoMode = true;
+      el('btnAuto').textContent = '⏸ Pause';
+      el('btnAuto').style.background = '#ff9800';
+      autoTimer = setInterval(() => {
+        if (etape >= steps.length - 1) {
+          stopAuto();
+        } else {
+          suivant();
+        }
+      }, 1900);
+    }
+  }
+
+  function stopAuto() {
+    autoMode = false;
+    clearInterval(autoTimer);
+    autoTimer = null;
+    el('btnAuto').textContent = '⏵ Automatique';
+    el('btnAuto').style.background = '#4caf50';
+  }
+
+  // Init
+  buildGrille();
+  buildBars();
+
+  // ── Signale la hauteur réelle au parent pour un redimensionnement automatique de l'iframe (plus jamais de barre de défilement) ──
+  function reportHeight() {
+    const h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'iframe-resize', height: h }, '*');
+  }
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  if (window.ResizeObserver) {
+    new ResizeObserver(reportHeight).observe(document.body);
+  }
+  setTimeout(reportHeight, 300);
+</script>
+</body>
+</html>

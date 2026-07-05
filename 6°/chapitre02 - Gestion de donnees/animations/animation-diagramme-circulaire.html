@@ -29,28 +29,43 @@
   button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
   button.reset { background:#e74c3c; }
   button.reset:hover { background:#c0392b; }
+  button.auto { background:#4caf50; }
+  button.auto:hover { background:#3d8b40; }
+  .leg-item { transition: opacity 0.6s ease; }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="step-text" id="stepText">
+  <div class="step-text"><span id="stepText">
     Cliquez sur « Étape suivante » pour construire le diagramme circulaire.
-  </div>
+  </span></div>
 
   <svg id="anim" width="930" height="540" viewBox="0 0 930 540">
 
-    <!-- ══ LÉGENDE ══ -->
-    <text x="630" y="50" font-size="13" font-weight="bold" fill="#333">Loisirs préférés de 24 élèves</text>
-    <rect x="630" y="62"  width="14" height="14" fill="#4e79a7" rx="2"/>
-    <text x="652" y="73"  font-size="12" fill="#333">Sport : 8 élèves</text>
-    <rect x="630" y="82"  width="14" height="14" fill="#f28e2b" rx="2"/>
-    <text x="652" y="93"  font-size="12" fill="#333">Cinéma : 5 élèves</text>
-    <rect x="630" y="102" width="14" height="14" fill="#76b7b2" rx="2"/>
-    <text x="652" y="113" font-size="12" fill="#333">Lecture : 6 élèves</text>
-    <rect x="630" y="122" width="14" height="14" fill="#59a14f" rx="2"/>
-    <text x="652" y="133" font-size="12" fill="#333">Télévision : 2 élèves</text>
-    <rect x="630" y="142" width="14" height="14" fill="#edc948" rx="2"/>
-    <text x="652" y="153" font-size="12" fill="#333">Jeu vidéo : 3 élèves</text>
+    <!-- ══ LÉGENDE (apparaît progressivement, en même temps que chaque secteur) ══ -->
+    <g id="legHeader" class="leg-item" opacity="0">
+      <text x="625" y="46" font-size="17" font-weight="bold" fill="#222">Loisirs préférés de 24 élèves</text>
+    </g>
+    <g id="leg-sport" class="leg-item" opacity="0">
+      <rect x="630" y="62"  width="20" height="20" fill="#4e79a7" rx="3"/>
+      <text x="658" y="77"  font-size="16" fill="#222">Sport : 8</text>
+    </g>
+    <g id="leg-cinema" class="leg-item" opacity="0">
+      <rect x="630" y="94"  width="20" height="20" fill="#f28e2b" rx="3"/>
+      <text x="658" y="109" font-size="16" fill="#222">Cinéma : 5</text>
+    </g>
+    <g id="leg-lecture" class="leg-item" opacity="0">
+      <rect x="630" y="126" width="20" height="20" fill="#76b7b2" rx="3"/>
+      <text x="658" y="141" font-size="16" fill="#222">Lecture : 6</text>
+    </g>
+    <g id="leg-tv" class="leg-item" opacity="0">
+      <rect x="630" y="158" width="20" height="20" fill="#59a14f" rx="3"/>
+      <text x="658" y="173" font-size="16" fill="#222">Télévision : 2</text>
+    </g>
+    <g id="leg-jv" class="leg-item" opacity="0">
+      <rect x="630" y="190" width="20" height="20" fill="#edc948" rx="3"/>
+      <text x="658" y="205" font-size="16" fill="#222">Jeu vidéo : 3</text>
+    </g>
 
     <!-- ══ CENTRE DU DISQUE ══ -->
     <circle id="centerDot"   cx="400" cy="290" r="3" fill="#333" opacity="0"/>
@@ -130,8 +145,9 @@
   </svg>
 
   <div class="controls">
-    <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
     <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+    <button id="autoBtn" class="auto" onclick="toggleAuto()">⏵ Automatique</button>
   </div>
 </div>
 
@@ -267,6 +283,7 @@ function hideRapMark() {
 function drawSector(idx, startDeg, angleDeg) {
   const secIds = ['sec-sport','sec-cinema','sec-lecture','sec-tv','sec-jv'];
   const lblIds = ['lbl-sport','lbl-cinema','lbl-lecture','lbl-tv','lbl-jv'];
+  const legIds = ['leg-sport','leg-cinema','leg-lecture','leg-tv','leg-jv'];
   const p1 = ptCercle(startDeg, R), p2 = ptCercle(startDeg + angleDeg, R);
   const largeArc = angleDeg > 180 ? 1 : 0;
   const d = `M ${CX} ${CY} L ${p1.x.toFixed(1)} ${p1.y.toFixed(1)} `
@@ -277,6 +294,9 @@ function drawSector(idx, startDeg, angleDeg) {
   el(lblIds[idx]).setAttribute('x', mp.x.toFixed(1));
   el(lblIds[idx]).setAttribute('y', (mp.y + 5).toFixed(1));
   el(lblIds[idx]).setAttribute('opacity', '1');
+  // La légende apparaît au fur et à mesure de la construction, en même temps que chaque secteur
+  if (idx === 0) el('legHeader').setAttribute('opacity', '1');
+  el(legIds[idx]).setAttribute('opacity', '1');
 }
 
 // ─── Scénario ────────────────────────────────────────────────────────────────
@@ -320,7 +340,11 @@ async function etapeSecteur(idx) {
   const s = sectors[idx];
   const startDeg = cumAngles[idx];
   const rayonIds = ['rayon1','rayon2','rayon3','rayon4'];
-  setStepText(`${s.name} : on place le rapporteur, on repère ${s.angle}° et on trace le rayon.`);
+  if (idx === sectors.length - 1) {
+    setStepText(`${s.name} : on vérifie qu'il reste ${s.angle}°.`);
+  } else {
+    setStepText(`${s.name} : on place le rapporteur, on repère ${s.angle}° et on trace le rayon.`);
+  }
   setRapporteurAngle(startDeg);
   el('rapporteur').setAttribute('opacity', '1');
   await sleep(700);
@@ -340,6 +364,7 @@ async function etapeFinale() {
 }
 
 function resetAnimation() {
+  stopAuto();
   step = 0; running = false;
   setStepText("Cliquez sur « Étape suivante » pour construire le diagramme circulaire.");
   el('nextBtn').disabled = false;
@@ -347,10 +372,45 @@ function resetAnimation() {
    'rayon0','rayon1','rayon2','rayon3','rayon4','rapporteur',
    'sec-sport','sec-cinema','sec-lecture','sec-tv','sec-jv',
    'lbl-sport','lbl-cinema','lbl-lecture','lbl-tv','lbl-jv',
-   'rapMark','rapDot','rapLabelText'
+   'rapMark','rapDot','rapLabelText',
+   'legHeader','leg-sport','leg-cinema','leg-lecture','leg-tv','leg-jv'
   ].forEach(id => { const e = el(id); if (e) e.setAttribute('opacity','0'); });
   el('cercle').style.strokeDashoffset = (2 * Math.PI * R).toFixed(1);
 }
+
+// ─── Lecture automatique ────────────────────────────────────────────────────
+let autoMode = false;
+
+async function toggleAuto() {
+  if (autoMode) { stopAuto(); return; }
+  autoMode = true;
+  el('autoBtn').textContent = '⏸ Pause';
+  el('autoBtn').style.background = '#ff9800';
+  while (autoMode && step < 8) {
+    await nextStep();
+    if (!autoMode) return;
+    await sleep(600);
+  }
+  stopAuto();
+}
+
+function stopAuto() {
+  autoMode = false;
+  el('autoBtn').textContent = '⏵ Automatique';
+  el('autoBtn').style.background = '#4caf50';
+}
+
+// ── Signale la hauteur réelle au parent pour un redimensionnement automatique de l'iframe (plus jamais de barre de défilement) ──
+function reportHeight() {
+  const h = document.documentElement.scrollHeight;
+  window.parent.postMessage({ type: 'iframe-resize', height: h }, '*');
+}
+window.addEventListener('load', reportHeight);
+window.addEventListener('resize', reportHeight);
+if (window.ResizeObserver) {
+  new ResizeObserver(reportHeight).observe(document.body);
+}
+setTimeout(reportHeight, 300);
 
 // Init
 buildRapporteur();

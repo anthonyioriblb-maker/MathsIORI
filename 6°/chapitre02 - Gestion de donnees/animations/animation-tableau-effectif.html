@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Animation – Tableau à simple entrée (effectif)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+  }
+
+  /* ── Barre de progression ── */
+  .progress-bar-wrap {
+    width: 100%; max-width: 100%;
+    background: #e0e0e0;
+    border-radius: 8px;
+    height: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #2196f3, #4caf50);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.4s;
+  }
+
+  /* ── Tableau ── */
+  .tableau-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 18px 20px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    overflow-x: auto;
+  }
+  table.tableau {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 560px;
+  }
+  table.tableau th, table.tableau td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px 8px;
+    font-size: 1.05rem;
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  table.tableau th.cell-show, table.tableau td.cell-show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  table.tableau th {
+    background-color: #D3D3D3;
+    color: black;
+    font-weight: bold;
+  }
+  table.tableau td.effectif-label { font-weight: 600; }
+  .mark {
+    background-color: yellow;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  @keyframes pulseSync {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(1.4); }
+    65%  { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+  .pulse-sync { animation: pulseSync 0.6s ease; }
+
+  /* ── Zone explication ── */
+  .explication-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 16px 20px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+  }
+  #explication {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #explication.cell-show { opacity: 1; transform: translateY(0); }
+
+  /* ── Message étape ── */
+  .step-box {
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    font-size: 1rem;
+    color: #1565c0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    transition: all 0.3s;
+  }
+
+  /* ── Contrôles ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  button {
+    padding: 13px 26px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; box-shadow: none; }
+  #btnSuivant   { background: #2196f3; color: white; }
+  #btnPrecedent { background: #ff9800; color: white; }
+  #btnReset     { background: #f44336; color: white; }
+  #btnAuto      { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="tableau-wrap">
+  <table class="tableau">
+    <tr>
+      <th id="cell-0">Loisir préféré</th>
+      <th id="cell-1">Sport</th>
+      <th id="cell-2">Cinéma</th>
+      <th id="cell-3">Lecture</th>
+      <th id="cell-4">Télévision</th>
+      <th id="cell-5">Jeu vidéo</th>
+      <th id="cell-6">Total</th>
+    </tr>
+    <tr>
+      <td id="cell-7" class="effectif-label">Effectif</td>
+      <td id="cell-8">8</td>
+      <td id="cell-9">5</td>
+      <td id="cell-10"><span class="mark" id="numLecture">6</span></td>
+      <td id="cell-11">2</td>
+      <td id="cell-12">3</td>
+      <td id="cell-13"><strong>24</strong></td>
+    </tr>
+  </table>
+</div>
+
+<div class="explication-wrap">
+  <div id="explication">L'<span style="color:#e74c3c;">effectif</span> est ici le nombre d'élèves ayant la lecture comme loisir préféré, ils sont <span class="mark">6</span> dans cette classe.</div>
+</div>
+
+<div class="step-box"><span id="stepBox">Cliquez sur « Étape suivante » pour construire le tableau case par case.</span></div>
+
+<div class="controls">
+  <button id="btnReset"     onclick="reset()">↺ Recommencer</button>
+  <button id="btnPrecedent" onclick="precedent()" disabled>◀ Étape précédente</button>
+  <button id="btnSuivant"   onclick="suivant()">Étape suivante ▶</button>
+  <button id="btnAuto"      onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<script>
+  const steps = [
+    { id: 'cell-0',  msg: 'On prépare l\'en-tête du tableau avec la catégorie étudiée : « Loisir préféré ».' },
+    { id: 'cell-1',  msg: 'Première colonne : « Sport ».' },
+    { id: 'cell-2',  msg: 'Deuxième colonne : « Cinéma ».' },
+    { id: 'cell-3',  msg: 'Troisième colonne : « Lecture ».' },
+    { id: 'cell-4',  msg: 'Quatrième colonne : « Télévision ».' },
+    { id: 'cell-5',  msg: 'Cinquième colonne : « Jeu vidéo ».' },
+    { id: 'cell-6',  msg: 'Dernière colonne : « Total », qui indiquera le nombre total d\'élèves interrogés.' },
+    { id: 'cell-7',  msg: 'On ajoute la deuxième ligne, « Effectif », qui va contenir le nombre d\'élèves pour chaque loisir.' },
+    { id: 'cell-8',  msg: '8 élèves ont choisi le Sport comme loisir préféré.' },
+    { id: 'cell-9',  msg: '5 élèves ont choisi le Cinéma comme loisir préféré.' },
+    { id: 'cell-10', msg: '6 élèves ont choisi la Lecture : c\'est <strong>l\'effectif de cette catégorie</strong>, on le met en évidence.', sync: true },
+    { id: 'cell-11', msg: '2 élèves ont choisi la Télévision comme loisir préféré.' },
+    { id: 'cell-12', msg: '3 élèves ont choisi le Jeu vidéo comme loisir préféré.' },
+    { id: 'cell-13', msg: 'Au total, 24 élèves ont été interrogés : 8 + 5 + 6 + 2 + 3 = 24.' },
+  ];
+
+  let etape = -1;
+  let autoTimer = null;
+  let autoMode = false;
+
+  function setProgress() {
+    document.getElementById('progressBar').style.width = (((etape + 1) / steps.length) * 100) + '%';
+  }
+
+  function applyStep(i, on) {
+    const s = steps[i];
+    const el = document.getElementById(s.id);
+    if (on) el.classList.add('cell-show'); else el.classList.remove('cell-show');
+    if (s.sync) {
+      const expl = document.getElementById('explication');
+      const num = document.getElementById('numLecture');
+      if (on) {
+        expl.classList.add('cell-show');
+        num.classList.remove('pulse-sync');
+        void num.offsetWidth;
+        num.classList.add('pulse-sync');
+      } else {
+        expl.classList.remove('cell-show');
+        num.classList.remove('pulse-sync');
+      }
+    }
+  }
+
+  function suivant() {
+    if (etape >= steps.length - 1) return;
+    etape++;
+    applyStep(etape, true);
+    document.getElementById('stepBox').innerHTML = steps[etape].msg;
+    setProgress();
+    document.getElementById('btnPrecedent').disabled = false;
+    if (etape === steps.length - 1) {
+      document.getElementById('btnSuivant').disabled = true;
+      stopAuto();
+    }
+  }
+
+  function precedent() {
+    if (etape < 0) return;
+    stopAuto();
+    applyStep(etape, false);
+    etape--;
+    if (etape < 0) {
+      document.getElementById('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour construire le tableau case par case.';
+      document.getElementById('btnPrecedent').disabled = true;
+    } else {
+      document.getElementById('stepBox').innerHTML = steps[etape].msg;
+    }
+    setProgress();
+    document.getElementById('btnSuivant').disabled = false;
+  }
+
+  function reset() {
+    stopAuto();
+    while (etape >= 0) { applyStep(etape, false); etape--; }
+    etape = -1;
+    document.getElementById('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour construire le tableau case par case.';
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('btnSuivant').disabled = false;
+    document.getElementById('btnPrecedent').disabled = true;
+  }
+
+  function toggleAuto() {
+    if (autoMode) {
+      stopAuto();
+    } else {
+      autoMode = true;
+      document.getElementById('btnAuto').textContent = '⏸ Pause';
+      document.getElementById('btnAuto').style.background = '#ff9800';
+      autoTimer = setInterval(() => {
+        if (etape >= steps.length - 1) {
+          stopAuto();
+        } else {
+          suivant();
+        }
+      }, 1700);
+    }
+  }
+
+  function stopAuto() {
+    autoMode = false;
+    clearInterval(autoTimer);
+    autoTimer = null;
+    document.getElementById('btnAuto').textContent = '⏵ Automatique';
+    document.getElementById('btnAuto').style.background = '#4caf50';
+  }
+
+  // ── Signale la hauteur réelle au parent pour un redimensionnement automatique de l'iframe (plus jamais de barre de défilement) ──
+  function reportHeight() {
+    const h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'iframe-resize', height: h }, '*');
+  }
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  if (window.ResizeObserver) {
+    new ResizeObserver(reportHeight).observe(document.body);
+  }
+  setTimeout(reportHeight, 300);
+</script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Animation – Tableau à double entrée</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+  }
+
+  /* ── Barre de progression ── */
+  .progress-bar-wrap {
+    width: 100%; max-width: 100%;
+    background: #e0e0e0;
+    border-radius: 8px;
+    height: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #2196f3, #4caf50);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.4s;
+  }
+
+  /* ── Tableau : apparaît d'un coup ── */
+  .tableau-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 18px 20px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    overflow-x: auto;
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .tableau-wrap.table-show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  table.tableau {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 560px;
+  }
+  table.tableau th, table.tableau td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px 8px;
+    font-size: 1.05rem;
+  }
+  table.tableau th {
+    background-color: #D3D3D3;
+    color: black;
+    font-weight: bold;
+  }
+
+  /* Pastilles de valeurs : la couleur apparaît progressivement */
+  .val {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 5px;
+    transition: background-color 0.5s ease, transform 0.4s ease;
+  }
+  .mark-blue.val-active   { background-color: lightblue;  font-weight: bold; }
+  .mark-green.val-active  { background-color: lightgreen; font-weight: bold; }
+  .mark-pink.val-active   { background-color: plum;       font-weight: bold; }
+  .mark-orange.val-active { background-color: orange;     font-weight: bold; }
+  .val.pulse-sync { animation: pulseSync 0.6s ease; }
+  @keyframes pulseSync {
+    0%   { transform: scale(1); }
+    35%  { transform: scale(1.35); }
+    65%  { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  /* ── Liste des conclusions ── */
+  .conclusion-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 16px 24px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+  }
+  .conclusion-wrap .intro {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .conclusion-wrap .intro.cell-show { opacity: 1; transform: translateY(0); }
+  ul.conclusions { list-style: disc; margin-left: 22px; }
+  ul.conclusions li {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  ul.conclusions li.cell-show { opacity: 1; transform: translateY(0); }
+  .mark-blue   { background-color: lightblue;  font-weight: bold; padding: 2px 6px; border-radius: 4px; }
+  .mark-green  { background-color: lightgreen; font-weight: bold; padding: 2px 6px; border-radius: 4px; }
+  .mark-pink   { background-color: plum;       font-weight: bold; padding: 2px 6px; border-radius: 4px; }
+  .mark-orange { background-color: orange;     font-weight: bold; padding: 2px 6px; border-radius: 4px; }
+
+  /* ── Message étape ── */
+  .step-box {
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    font-size: 1rem;
+    color: #1565c0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    transition: all 0.3s;
+  }
+
+  /* ── Contrôles ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  button {
+    padding: 13px 26px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; box-shadow: none; }
+  #btnSuivant   { background: #2196f3; color: white; }
+  #btnPrecedent { background: #ff9800; color: white; }
+  #btnReset     { background: #f44336; color: white; }
+  #btnAuto      { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="tableau-wrap" id="tableauWrap">
+  <table class="tableau">
+    <tr>
+      <th></th>
+      <th colspan="5">Loisir préféré</th>
+    </tr>
+    <tr>
+      <th>Sexe</th>
+      <th>Sport</th>
+      <th>Cinéma</th>
+      <th>Lecture</th>
+      <th>Télévision</th>
+      <th>Jeu vidéo</th>
+    </tr>
+    <tr>
+      <td><strong>Fille</strong></td>
+      <td><span class="val mark-blue" id="v-fille-sport">4</span></td>
+      <td><span class="val mark-pink" id="v-fille-cinema">2</span></td>
+      <td><span class="val">4</span></td>
+      <td><span class="val">0</span></td>
+      <td><span class="val">1</span></td>
+    </tr>
+    <tr>
+      <td><strong>Garçon</strong></td>
+      <td><span class="val mark-blue" id="v-garcon-sport">4</span></td>
+      <td><span class="val">3</span></td>
+      <td><span class="val">2</span></td>
+      <td><span class="val">2</span></td>
+      <td><span class="val mark-orange" id="v-garcon-jv">2</span></td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><span class="val mark-green" id="v-total-sport">8</span></td>
+      <td><span class="val">5</span></td>
+      <td><span class="val">6</span></td>
+      <td><span class="val">2</span></td>
+      <td><span class="val">3</span></td>
+    </tr>
+  </table>
+</div>
+
+<div class="conclusion-wrap">
+  <div class="intro" id="intro">Grâce à ce tableau à double entrée on peut dire que :</div>
+  <ul class="conclusions">
+    <li id="li-1"><span class="mark-green">8</span> élèves de la classe préfèrent le sport.</li>
+    <li id="li-2"><span class="mark-blue">Il y a autant de filles que de garçons qui préfèrent le sport.</span></li>
+    <li id="li-3"><span class="mark-orange">2</span> garçons de la classe préfèrent le jeu vidéo.</li>
+    <li id="li-4"><span class="mark-pink">2</span> filles de la classe préfèrent le cinéma.</li>
+  </ul>
+</div>
+
+<div class="step-box"><span id="stepBox">Cliquez sur « Étape suivante » pour afficher le tableau.</span></div>
+
+<div class="controls">
+  <button id="btnReset"     onclick="reset()">↺ Recommencer</button>
+  <button id="btnPrecedent" onclick="precedent()" disabled>◀ Étape précédente</button>
+  <button id="btnSuivant"   onclick="suivant()">Étape suivante ▶</button>
+  <button id="btnAuto"      onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<script>
+  // Étape 0 : le tableau entier apparaît d'un coup.
+  // Étapes 1 à 4 : les couleurs sont ajoutées une par une, en même temps que la conclusion correspondante.
+  const steps = [
+    {
+      type: 'table',
+      msg: 'Voici le tableau à double entrée complet, avec les effectifs de chaque catégorie.'
+    },
+    {
+      type: 'highlight',
+      cells: ['v-total-sport'],
+      li: 'li-1',
+      msg: 'On regarde le total de la colonne Sport : <strong>8 élèves de la classe préfèrent le sport</strong>.'
+    },
+    {
+      type: 'highlight',
+      cells: ['v-fille-sport', 'v-garcon-sport'],
+      li: 'li-2',
+      msg: 'On compare les deux effectifs de la colonne Sport : <strong>4 filles et 4 garçons</strong>, il y a donc autant de filles que de garçons qui préfèrent le sport.'
+    },
+    {
+      type: 'highlight',
+      cells: ['v-garcon-jv'],
+      li: 'li-3',
+      msg: 'Sur la ligne Garçon, colonne Jeu vidéo : <strong>2 garçons de la classe préfèrent le jeu vidéo</strong>.'
+    },
+    {
+      type: 'highlight',
+      cells: ['v-fille-cinema'],
+      li: 'li-4',
+      msg: 'Sur la ligne Fille, colonne Cinéma : <strong>2 filles de la classe préfèrent le cinéma</strong>.'
+    },
+  ];
+
+  let etape = -1;
+  let autoTimer = null;
+  let autoMode = false;
+
+  function setProgress() {
+    document.getElementById('progressBar').style.width = (((etape + 1) / steps.length) * 100) + '%';
+  }
+
+  function applyStep(i, on) {
+    const s = steps[i];
+    if (s.type === 'table') {
+      const wrap = document.getElementById('tableauWrap');
+      const intro = document.getElementById('intro');
+      if (on) { wrap.classList.add('table-show'); intro.classList.add('cell-show'); }
+      else { wrap.classList.remove('table-show'); intro.classList.remove('cell-show'); }
+    } else {
+      const li = document.getElementById(s.li);
+      if (on) {
+        li.classList.add('cell-show');
+        s.cells.forEach(id => {
+          const el = document.getElementById(id);
+          el.classList.add('val-active');
+          el.classList.remove('pulse-sync');
+          void el.offsetWidth;
+          el.classList.add('pulse-sync');
+        });
+      } else {
+        li.classList.remove('cell-show');
+        s.cells.forEach(id => {
+          const el = document.getElementById(id);
+          el.classList.remove('val-active');
+          el.classList.remove('pulse-sync');
+        });
+      }
+    }
+  }
+
+  function suivant() {
+    if (etape >= steps.length - 1) return;
+    etape++;
+    applyStep(etape, true);
+    document.getElementById('stepBox').innerHTML = steps[etape].msg;
+    setProgress();
+    document.getElementById('btnPrecedent').disabled = false;
+    if (etape === steps.length - 1) {
+      document.getElementById('btnSuivant').disabled = true;
+      stopAuto();
+    }
+  }
+
+  function precedent() {
+    if (etape < 0) return;
+    stopAuto();
+    applyStep(etape, false);
+    etape--;
+    if (etape < 0) {
+      document.getElementById('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour afficher le tableau.';
+      document.getElementById('btnPrecedent').disabled = true;
+    } else {
+      document.getElementById('stepBox').innerHTML = steps[etape].msg;
+    }
+    setProgress();
+    document.getElementById('btnSuivant').disabled = false;
+  }
+
+  function reset() {
+    stopAuto();
+    while (etape >= 0) { applyStep(etape, false); etape--; }
+    etape = -1;
+    document.getElementById('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour afficher le tableau.';
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('btnSuivant').disabled = false;
+    document.getElementById('btnPrecedent').disabled = true;
+  }
+
+  function toggleAuto() {
+    if (autoMode) {
+      stopAuto();
+    } else {
+      autoMode = true;
+      document.getElementById('btnAuto').textContent = '⏸ Pause';
+      document.getElementById('btnAuto').style.background = '#ff9800';
+      autoTimer = setInterval(() => {
+        if (etape >= steps.length - 1) {
+          stopAuto();
+        } else {
+          suivant();
+        }
+      }, 1800);
+    }
+  }
+
+  function stopAuto() {
+    autoMode = false;
+    clearInterval(autoTimer);
+    autoTimer = null;
+    document.getElementById('btnAuto').textContent = '⏵ Automatique';
+    document.getElementById('btnAuto').style.background = '#4caf50';
+  }
+
+  // ── Signale la hauteur réelle au parent pour un redimensionnement automatique de l'iframe (plus jamais de barre de défilement) ──
+  function reportHeight() {
+    const h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'iframe-resize', height: h }, '*');
+  }
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  if (window.ResizeObserver) {
+    new ResizeObserver(reportHeight).observe(document.body);
+  }
+  setTimeout(reportHeight, 300);
+</script>
+</body>
+</html>

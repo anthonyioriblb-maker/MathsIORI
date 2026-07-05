@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Animation – Courbe d'évolution de la température</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+  }
+
+  /* ── Barre de progression ── */
+  .progress-bar-wrap {
+    width: 100%; max-width: 100%;
+    background: #e0e0e0;
+    border-radius: 8px;
+    height: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #2196f3, #4caf50);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.4s;
+  }
+
+  /* ── Graphique ── */
+  .chart-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 14px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    overflow-x: auto;
+  }
+  svg#chart { display: block; margin: 0 auto; min-width: 780px; }
+
+  .point-mark {
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .point-mark.point-show { opacity: 1; transform: scale(1); }
+
+  .curve-path {
+    fill: none;
+    stroke: #111;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dashoffset 3.2s ease-in-out;
+  }
+
+  /* ── Message étape ── */
+  .step-box {
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    font-size: 1rem;
+    color: #1565c0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    transition: all 0.3s;
+  }
+
+  /* ── Contrôles ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  button {
+    padding: 13px 26px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; box-shadow: none; }
+  #btnSuivant   { background: #2196f3; color: white; }
+  #btnPrecedent { background: #ff9800; color: white; }
+  #btnReset     { background: #f44336; color: white; }
+  #btnAuto      { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="chart-wrap">
+  <svg id="chart" width="1000" height="610" viewBox="0 0 1000 610">
+    <text x="500" y="20" text-anchor="middle" font-size="19" font-weight="bold" fill="#111">Évolution de la température en fonction du temps</text>
+
+    <defs>
+      <marker id="arrowAxis" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+        <polygon points="0 0, 7 3, 0 6" fill="#111"/>
+      </marker>
+    </defs>
+
+    <!-- Grille (générée par JS) -->
+    <g id="grille"></g>
+
+    <!-- Axes -->
+    <line id="axeY" x1="0" y1="0" x2="0" y2="0" stroke="#111" stroke-width="2.2" marker-end="url(#arrowAxis)"/>
+    <line id="axeX" x1="0" y1="0" x2="0" y2="0" stroke="#111" stroke-width="2.2" marker-end="url(#arrowAxis)"/>
+
+    <!-- Étiquettes (générées par JS) -->
+    <g id="labelsY"></g>
+    <g id="labelsX"></g>
+
+    <!-- Courbe tracée à main levée -->
+    <path id="coursePath" class="curve-path" d=""/>
+
+    <!-- Points (générés par JS) -->
+    <g id="points"></g>
+  </svg>
+</div>
+
+<div class="step-box"><span id="stepBox">Cliquez sur « Étape suivante » pour placer les points un par un.</span></div>
+
+<div class="controls">
+  <button id="btnReset"     onclick="reset()">↺ Recommencer</button>
+  <button id="btnPrecedent" onclick="precedent()" disabled>◀ Étape précédente</button>
+  <button id="btnSuivant"   onclick="suivant()">Étape suivante ▶</button>
+  <button id="btnAuto"      onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<script>
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = id => document.getElementById(id);
+
+  const CHART_LEFT = 55, CHART_RIGHT = 970, CHART_TOP = 32, CHART_BOTTOM = 560;
+  const MAX_HOUR = 23, MAX_TEMP = 29;
+
+  const temps = [4, 5, 7, 7, 7, 10, 13, 15, 17, 20, 21, 23, 25, 27, 27, 27, 25, 22, 20, 16, 15, 11, 8, 5];
+
+  const xForHour = h => CHART_LEFT + (h / MAX_HOUR) * (CHART_RIGHT - CHART_LEFT);
+  const yForTemp = t => CHART_BOTTOM - (t / MAX_TEMP) * (CHART_BOTTOM - CHART_TOP);
+
+  // Petit générateur pseudo-aléatoire déterministe (pour un tracé "à main levée" légèrement irrégulier)
+  function pseudoRand(i) {
+    const x = Math.sin(i * 12.9898) * 43758.5453;
+    return x - Math.floor(x);
+  }
+
+  // ── Grille, axes et étiquettes ──
+  function buildAxes() {
+    const g = el('grille');
+    for (let h = 0; h <= MAX_HOUR; h++) {
+      const x = xForHour(h);
+      const line = document.createElementNS(NS, 'line');
+      line.setAttribute('x1', x); line.setAttribute('x2', x);
+      line.setAttribute('y1', CHART_TOP); line.setAttribute('y2', CHART_BOTTOM);
+      line.setAttribute('stroke', '#ccc'); line.setAttribute('stroke-width', '1');
+      line.setAttribute('stroke-dasharray', '3,3');
+      g.appendChild(line);
+
+      const label = document.createElementNS(NS, 'text');
+      label.setAttribute('x', x); label.setAttribute('y', CHART_BOTTOM + 22);
+      label.setAttribute('text-anchor', 'middle'); label.setAttribute('font-size', '14');
+      label.setAttribute('fill', '#333');
+      label.textContent = h;
+      el('labelsX').appendChild(label);
+    }
+    for (let t = 0; t <= MAX_TEMP; t++) {
+      const y = yForTemp(t);
+      const line = document.createElementNS(NS, 'line');
+      line.setAttribute('x1', CHART_LEFT); line.setAttribute('x2', CHART_RIGHT);
+      line.setAttribute('y1', y); line.setAttribute('y2', y);
+      line.setAttribute('stroke', '#ccc'); line.setAttribute('stroke-width', '1');
+      line.setAttribute('stroke-dasharray', '3,3');
+      g.appendChild(line);
+
+      const label = document.createElementNS(NS, 'text');
+      label.setAttribute('x', CHART_LEFT - 10); label.setAttribute('y', y + 4);
+      label.setAttribute('text-anchor', 'end'); label.setAttribute('font-size', '13');
+      label.setAttribute('fill', '#333');
+      label.textContent = t;
+      el('labelsY').appendChild(label);
+    }
+
+    el('axeY').setAttribute('x1', CHART_LEFT); el('axeY').setAttribute('y1', CHART_BOTTOM + 18);
+    el('axeY').setAttribute('x2', CHART_LEFT); el('axeY').setAttribute('y2', CHART_TOP - 18);
+    el('axeX').setAttribute('x1', CHART_LEFT - 18); el('axeX').setAttribute('y1', CHART_BOTTOM);
+    el('axeX').setAttribute('x2', CHART_RIGHT + 18); el('axeX').setAttribute('y2', CHART_BOTTOM);
+  }
+
+  // ── Points (croix en X) ──
+  function buildPoints() {
+    const g = el('points');
+    temps.forEach((t, i) => {
+      const cx = xForHour(i), cy = yForTemp(t);
+      const pt = document.createElementNS(NS, 'g');
+      pt.setAttribute('id', 'pt' + i);
+      pt.setAttribute('class', 'point-mark');
+      pt.style.transformOrigin = cx + 'px ' + cy + 'px';
+
+      const l1 = document.createElementNS(NS, 'line');
+      l1.setAttribute('x1', cx - 7); l1.setAttribute('y1', cy - 7);
+      l1.setAttribute('x2', cx + 7); l1.setAttribute('y2', cy + 7);
+      l1.setAttribute('stroke', '#111'); l1.setAttribute('stroke-width', '3'); l1.setAttribute('stroke-linecap', 'round');
+
+      const l2 = document.createElementNS(NS, 'line');
+      l2.setAttribute('x1', cx - 7); l2.setAttribute('y1', cy + 7);
+      l2.setAttribute('x2', cx + 7); l2.setAttribute('y2', cy - 7);
+      l2.setAttribute('stroke', '#111'); l2.setAttribute('stroke-width', '3'); l2.setAttribute('stroke-linecap', 'round');
+
+      pt.appendChild(l1); pt.appendChild(l2);
+      g.appendChild(pt);
+    });
+  }
+
+  // ── Courbe à main levée (spline de Catmull-Rom + léger tremblé) ──
+  function catmullRom2bezier(points) {
+    let d = `M ${points[0][0].toFixed(1)} ${points[0][1].toFixed(1)}`;
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[i === 0 ? i : i - 1];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
+      const cp1x = p1[0] + (p2[0] - p0[0]) / 6;
+      const cp1y = p1[1] + (p2[1] - p0[1]) / 6;
+      const cp2x = p2[0] - (p3[0] - p1[0]) / 6;
+      const cp2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+    }
+    return d;
+  }
+
+  function buildCurve() {
+    const points = temps.map((t, i) => {
+      const jitterX = (pseudoRand(i) - 0.5) * 2;
+      const jitterY = (pseudoRand(i + 50) - 0.5) * 3;
+      return [xForHour(i) + jitterX, yForTemp(t) + jitterY];
+    });
+    // Les points de départ et d'arrivée restent exacts (pas de tremblé) pour bien s'ancrer sur la grille
+    points[0] = [xForHour(0), yForTemp(temps[0])];
+    points[points.length - 1] = [xForHour(temps.length - 1), yForTemp(temps[temps.length - 1])];
+
+    const path = el('coursePath');
+    // On coupe la transition CSS le temps de placer l'état initial (masqué),
+    // sinon le navigateur anime ce tout premier réglage et la courbe semble
+    // "disparaître" au chargement au lieu d'être simplement invisible dès le départ.
+    path.style.transition = 'none';
+    path.setAttribute('d', catmullRom2bezier(points));
+    const len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+    path.getBoundingClientRect(); // force le navigateur à appliquer l'état avant de réactiver la transition
+    path.style.transition = '';
+  }
+
+  function showCurve(on) {
+    const path = el('coursePath');
+    const len = path.getTotalLength();
+    path.style.strokeDashoffset = on ? 0 : len;
+  }
+
+  // ── Scénario ──
+  const steps = [];
+  temps.forEach((t, i) => {
+    steps.push({ type: 'point', index: i, msg: `On place le point correspondant à <strong>${i}h : ${t}°C</strong>.` });
+  });
+  steps.push({ type: 'curve', msg: 'On relie tous les points par une courbe tracée à main levée : c\'est la courbe d\'évolution de la température.' });
+
+  let etape = -1;
+  let autoTimer = null;
+  let autoMode = false;
+
+  function setProgress() {
+    el('progressBar').style.width = (((etape + 1) / steps.length) * 100) + '%';
+  }
+
+  function applyStep(i, on) {
+    const s = steps[i];
+    if (s.type === 'point') {
+      const pt = el('pt' + s.index);
+      if (on) pt.classList.add('point-show'); else pt.classList.remove('point-show');
+    } else {
+      showCurve(on);
+    }
+  }
+
+  function suivant() {
+    if (etape >= steps.length - 1) return;
+    etape++;
+    applyStep(etape, true);
+    el('stepBox').innerHTML = steps[etape].msg;
+    setProgress();
+    el('btnPrecedent').disabled = false;
+    if (etape === steps.length - 1) {
+      el('btnSuivant').disabled = true;
+      stopAuto();
+    }
+  }
+
+  function precedent() {
+    if (etape < 0) return;
+    stopAuto();
+    applyStep(etape, false);
+    etape--;
+    if (etape < 0) {
+      el('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour placer les points un par un.';
+      el('btnPrecedent').disabled = true;
+    } else {
+      el('stepBox').innerHTML = steps[etape].msg;
+    }
+    setProgress();
+    el('btnSuivant').disabled = false;
+  }
+
+  function reset() {
+    stopAuto();
+    while (etape >= 0) { applyStep(etape, false); etape--; }
+    etape = -1;
+    el('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour placer les points un par un.';
+    el('progressBar').style.width = '0%';
+    el('btnSuivant').disabled = false;
+    el('btnPrecedent').disabled = true;
+  }
+
+  function toggleAuto() {
+    if (autoMode) {
+      stopAuto();
+    } else {
+      autoMode = true;
+      el('btnAuto').textContent = '⏸ Pause';
+      el('btnAuto').style.background = '#ff9800';
+      autoTimer = setInterval(() => {
+        if (etape >= steps.length - 1) {
+          stopAuto();
+        } else {
+          suivant();
+        }
+      }, 320);
+    }
+  }
+
+  function stopAuto() {
+    autoMode = false;
+    clearInterval(autoTimer);
+    autoTimer = null;
+    el('btnAuto').textContent = '⏵ Automatique';
+    el('btnAuto').style.background = '#4caf50';
+  }
+
+  // ── Signale la hauteur réelle au parent pour un redimensionnement automatique de l'iframe (plus jamais de barre de défilement) ──
+  function reportHeight() {
+    const h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ type: 'iframe-resize', height: h }, '*');
+  }
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  if (window.ResizeObserver) {
+    new ResizeObserver(reportHeight).observe(document.body);
+  }
+  setTimeout(reportHeight, 300);
+
+  // Init
+  buildAxes();
+  buildPoints();
+  buildCurve();
+</script>
+</body>
+</html>
