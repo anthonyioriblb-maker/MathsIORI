@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angles formés par deux droites sécantes</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20px 30px;
+}
+
+.wrap {
+  background: white; border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  padding: 24px; width: 100%; max-width: 640px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  margin-bottom: 14px;
+}
+
+svg { max-width: 100%; height: auto; }
+
+.angle { position: relative; display: inline-block; }
+.angle::before {
+  content: '^';
+  position: absolute;
+  top: -0.5em;
+  left: 50%;
+  transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
+  font-size: 1.5em;
+  font-weight: 300;
+}
+
+.name-box {
+  min-height: 56px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; font-weight: bold; gap: 10px; padding: 6px 20px;
+  border-radius: 8px; background: #f5f5f5;
+}
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+button {
+  padding: 11px 22px; border: none; border-radius: 8px;
+  font-size: 0.95rem; font-weight: bold; cursor: pointer;
+  transition: all 0.25s; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+button:hover { transform: translateY(-2px); }
+button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; }
+#btnReset { background: #f44336; color: white; }
+#btnPrev  { background: #ff9800; color: white; }
+#btnNext  { background: #2196f3; color: white; }
+#btnAuto  { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <svg viewBox="0 0 500 460" xmlns="http://www.w3.org/2000/svg">
+    <g id="linesGroup"></g>
+    <g id="crossesGroup"></g>
+    <g id="arcsGroup"></g>
+    <g id="pointsGroup"></g>
+  </svg>
+</div>
+
+<div class="name-box" id="angleName"></div>
+
+<div class="controls" style="margin-top:14px;">
+  <button id="btnReset" onclick="reset()">↺ Recommencer</button>
+  <button id="btnPrev"  onclick="prev()" disabled>◀ Précédente</button>
+  <button id="btnNext"  onclick="next()">Suivante ▶</button>
+  <button id="btnAuto"  onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<p style="font-size:0.85rem;color:#777;margin-top:12px;text-align:center;">Le sommet E est toujours au milieu du nom de l'angle.</p>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const E = { x: 250, y: 230 };
+const pts = { B: {x:410,y:80}, A: {x:90,y:380}, D: {x:410,y:340}, C: {x:90,y:120} };
+const colors = { BC: 'red', BD: 'blue', AD: 'black', AC: 'green' };
+const order = ['BC', 'BD', 'AD', 'AC'];
+
+function mk(tag, attrs) {
+  const el = document.createElementNS(NS, tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+function drawCross(group, p, color) {
+  const s = 6;
+  group.appendChild(mk('line', { x1: p.x - s, y1: p.y - s, x2: p.x + s, y2: p.y + s, stroke: color, 'stroke-width': 2 }));
+  group.appendChild(mk('line', { x1: p.x - s, y1: p.y + s, x2: p.x + s, y2: p.y - s, stroke: color, 'stroke-width': 2 }));
+}
+
+const linesGroup = document.getElementById('linesGroup');
+const crossesGroup = document.getElementById('crossesGroup');
+const pointsGroup = document.getElementById('pointsGroup');
+
+function drawLine(k1, k2) {
+  linesGroup.appendChild(mk('line', { x1: pts[k1].x, y1: pts[k1].y, x2: pts[k2].x, y2: pts[k2].y, stroke: '#555', 'stroke-width': 2 }));
+}
+drawLine('A', 'B');
+drawLine('C', 'D');
+
+drawCross(crossesGroup, E, '#333');
+const eLabel = mk('text', { x: E.x - 16, y: E.y + 4, 'font-size': 16, 'font-weight': 'bold', fill: '#333' });
+eLabel.textContent = 'E';
+pointsGroup.appendChild(eLabel);
+
+['A', 'B', 'C', 'D'].forEach(key => {
+  const p = pts[key];
+  drawCross(crossesGroup, p, '#555');
+  const lx = p.x + (p.x > E.x ? 14 : -24);
+  const ly = p.y + (p.y > E.y ? 18 : -8);
+  const t = mk('text', { x: lx, y: ly, 'font-size': 17, 'font-weight': 'bold', fill: '#333' });
+  t.textContent = key;
+  pointsGroup.appendChild(t);
+});
+
+const angs = {};
+Object.keys(pts).forEach(k => { angs[k] = Math.atan2(pts[k].y - E.y, pts[k].x - E.x); });
+const arr = Object.keys(pts).map(k => ({ k, a: angs[k] })).sort((u, v) => u.a - v.a);
+
+const pairs = {};
+for (let i = 0; i < 4; i++) {
+  const p1 = arr[i], p2 = arr[(i + 1) % 4];
+  const t1 = p1.a, t2 = (i < 3) ? p2.a : p2.a + 2 * Math.PI;
+  const key = [p1.k, p2.k].sort().join('');
+  pairs[key] = { t1, t2, n1: p1.k, n2: p2.k };
+}
+
+const R_ARC = 42;
+function arcPath(t1, t2) {
+  const x1 = E.x + R_ARC * Math.cos(t1), y1 = E.y + R_ARC * Math.sin(t1);
+  const x2 = E.x + R_ARC * Math.cos(t2), y2 = E.y + R_ARC * Math.sin(t2);
+  return `M ${x1} ${y1} A ${R_ARC} ${R_ARC} 0 0 1 ${x2} ${y2}`;
+}
+
+const arcsGroup = document.getElementById('arcsGroup');
+const steps = order.map((key, idx) => {
+  const pr = pairs[key];
+  return { id: 'arc' + idx, color: colors[key], d: arcPath(pr.t1, pr.t2), n1: pr.n1, n2: pr.n2 };
+});
+
+steps.forEach(s => {
+  const path = mk('path', { id: s.id, d: s.d, stroke: s.color, fill: 'none', 'stroke-width': 4, 'stroke-linecap': 'round' });
+  arcsGroup.appendChild(path);
+  const len = path.getTotalLength();
+  path.style.strokeDasharray = len;
+  path.style.strokeDashoffset = len;
+  path.style.transition = 'stroke-dashoffset 0.6s ease, opacity 0.3s ease';
+  path.style.opacity = '0.18';
+});
+
+function hatLabel(letters, color) {
+  return `<span class="angle" style="color:${color}">${letters}</span>`;
+}
+
+let current = -1, autoMode = false, autoTimer = null;
+const nameEl = document.getElementById('angleName');
+const btnPrev = document.getElementById('btnPrev');
+const btnNext = document.getElementById('btnNext');
+const btnAuto = document.getElementById('btnAuto');
+
+function applyStep() {
+  steps.forEach((s, idx) => {
+    const el = document.getElementById(s.id);
+    const len = el.getTotalLength();
+    const active = idx === current;
+    el.style.strokeDashoffset = active ? 0 : len;
+    el.style.opacity = active ? '1' : '0.18';
+  });
+  if (current === -1) {
+    nameEl.innerHTML = '';
+    btnPrev.disabled = true;
+  } else {
+    const s = steps[current];
+    nameEl.innerHTML = hatLabel(s.n1 + 'E' + s.n2, s.color) + '<span style="color:#777;font-weight:normal;">ou</span>' + hatLabel(s.n2 + 'E' + s.n1, s.color);
+    btnPrev.disabled = false;
+  }
+  btnNext.disabled = (current >= steps.length - 1);
+}
+
+function reset() {
+  stopAuto();
+  current = -1;
+  applyStep();
+}
+function next() {
+  if (current < steps.length - 1) { current++; applyStep(); }
+  if (current >= steps.length - 1) stopAuto();
+}
+function prev() {
+  if (current > 0) { current--; applyStep(); }
+}
+function toggleAuto() {
+  if (autoMode) { stopAuto(); return; }
+  autoMode = true;
+  btnAuto.textContent = '⏸ Pause';
+  btnAuto.style.background = '#ff9800';
+  autoTimer = setInterval(() => { if (current >= steps.length - 1) { stopAuto(); } else { next(); } }, 2200);
+}
+function stopAuto() {
+  autoMode = false; clearInterval(autoTimer); autoTimer = null;
+  btnAuto.textContent = '⏵ Automatique';
+  btnAuto.style.background = '#4caf50';
+}
+
+applyStep();
+</script>
+</body>
+</html>
