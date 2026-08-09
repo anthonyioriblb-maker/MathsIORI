@@ -65,9 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `;
-        } else if (chapitre.exercices) {
-            exercicesBtn = `<span class="action-button exercices disabled">✏️ Exercices</span>`;
         }
+        // Si aucun exercice actif n'existe, on n'affiche rien (pas d'icône grisée)
 
         // Menu déroulant quiz ou correction (pour Scratch)
         let quizBtn = '';
@@ -93,9 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             `;
-        } else if (chapitre.quiz) {
-            quizBtn = `<span class="action-button quiz disabled">🎯 Quiz</span>`;
         }
+        // Si aucun quiz actif n'existe, on n'affiche rien (pas d'icône grisée)
 
         // Bouton événement
         let evenementBtn = '';
