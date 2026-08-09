@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Construction d'un triangle connaissant ses trois côtés</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: white;
+        padding: 10px;
+    }
+    .btn-anim {
+        background: #2196f3; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-anim:hover { background: #1565c0; }
+    .btn-anim:disabled { background: #b0bec5; cursor: default; }
+    .btn-reset {
+        background: #e74c3c; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-reset:hover { background: #c0392b; }
+    .btn-auto {
+        background: #4caf50; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-auto:hover { background: #388e3c; }
+    .step-box {
+        background: #e3f2fd; border-left: 5px solid #2196f3;
+        padding: 12px 18px; margin-bottom: 8px; color: #1565c0;
+        font-size: 16px; font-weight: 500; min-height: 54px;
+        display: flex; align-items: center; line-height: 1.6;
+    }
+    .svg-wrap {
+        text-align: center; background: white; padding: 6px;
+        border-radius: 5px; border: 2px solid #ddd;
+    }
+</style>
+</head>
+<body>
+
+<div class="step-box"><span id="stepText">Cliquez sur « Étape suivante » pour voir la construction.</span></div>
+<div class="svg-wrap">
+    <svg id="triSVG" width="580" height="360" viewBox="0 0 580 360" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+        <g id="groupAB_tri" opacity="0">
+            <line id="segAB_tri" x1="90" y1="320" x2="90" y2="320" stroke="black" stroke-width="2.5"/>
+            <line x1="85"  y1="315" x2="95"  y2="325" stroke="black" stroke-width="2.5"/>
+            <line x1="95"  y1="315" x2="85"  y2="325" stroke="black" stroke-width="2.5"/>
+            <text x="68"  y="318" font-size="20" font-weight="bold">A</text>
+            <line x1="415" y1="315" x2="425" y2="325" stroke="black" stroke-width="2.5"/>
+            <line x1="425" y1="315" x2="415" y2="325" stroke="black" stroke-width="2.5"/>
+            <text x="430" y="318" font-size="20" font-weight="bold">B</text>
+            <text x="255" y="340" text-anchor="middle" font-size="15" fill="#333">AB = 6 cm</text>
+        </g>
+        <path id="arcB_tri" d="" stroke="#e74c3c" stroke-width="2.5" fill="none" stroke-dasharray="7,4" opacity="0"/>
+        <path id="arcA_tri" d="" stroke="#3498db" stroke-width="2.5" fill="none" stroke-dasharray="7,4" opacity="0"/>
+        <text id="labelBC" x="442" y="220" font-size="14" fill="#e74c3c" opacity="0">BC = 4,5 cm</text>
+        <text id="labelAC" x="130" y="188" font-size="14" fill="#3498db" opacity="0">AC = 5 cm</text>
+        <!-- Point C : toujours une croix, jamais un cercle -->
+        <g id="pointC_tri" opacity="0">
+            <line x1="272" y1="113" x2="282" y2="123" stroke="black" stroke-width="2.5"/>
+            <line x1="282" y1="113" x2="272" y2="123" stroke="black" stroke-width="2.5"/>
+            <text x="288" y="113" font-size="20" font-weight="bold">C</text>
+        </g>
+        <line id="sideBC" x1="420" y1="320" x2="277" y2="118" stroke="black" stroke-width="2.5" opacity="0"/>
+        <line id="sideAC" x1="90"  y1="320" x2="277" y2="118" stroke="black" stroke-width="2.5" opacity="0"/>
+        <g id="compassTri" opacity="0">
+            <circle id="cHinge" cx="0" cy="0" r="10" fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+            <line id="cPointBranch" x1="0" y1="0" x2="-5" y2="60" stroke="#ff8c00" stroke-width="6"/>
+            <circle id="cPointTip"  cx="-5" cy="60" r="6" fill="#222" stroke="#000" stroke-width="2"/>
+            <line id="cPencilBranch" x1="0" y1="0" x2="5" y2="60" stroke="#ff8c00" stroke-width="6"/>
+            <rect id="cPencilBody" x="0" y="50" width="10" height="22" fill="#ff4444" stroke="#cc0000" stroke-width="2" rx="2"/>
+            <polygon id="cPencilTip" points="5,72 0,82 10,82" fill="#333"/>
+            <circle id="cPencilPoint" cx="5" cy="82" r="3" fill="#000"/>
+        </g>
+        <g id="rul1" opacity="0" transform="translate(0,-200)"></g>
+    </svg>
+</div>
+<div style="text-align:center; margin-top:10px;">
+    <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="btnNext" onclick="nextStep()">Étape suivante ▶</button>
+    <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation()">Recommencer ↺</button>
+</div>
+
+<script>
+// Points clés (px, échelle 55px/cm)
+const A = {x:90,  y:320};
+const B = {x:420, y:320};
+const C = {x:277, y:118}; // BC=4,5cm=247.5px, AC=5cm=275px
+const R_BC = 247.5, R_AC = 275;
+const aC_fromB = Math.atan2(C.y-B.y, C.x-B.x);
+const aC_fromA = Math.atan2(C.y-A.y, C.x-A.x);
+
+const texts = [
+    'Cliquez sur « Étape suivante » pour voir la construction.',
+    "Étape 1 – On trace le segment [AB] de longueur 6 cm à la règle.",
+    "Étape 2 – On ouvre le compas à l'écartement BC = 4,5 cm. On pose la pointe en B et on trace un arc de cercle.",
+    "Étape 3 – On ouvre le compas à l'écartement AC = 5 cm. On pose la pointe en A et on trace un arc de cercle.",
+    "Étape 4 – Le point C est à l'intersection des deux arcs. On trace les côtés [BC] et [AC] pour compléter le triangle."
+];
+let step = 0;
+let animating = false;
+let autoTimer = null;
+
+function sleep(ms) { return new Promise(r => setTimeout(r,ms)); }
+function show(id){ document.getElementById(id).style.opacity='1'; }
+function hide(id){ document.getElementById(id).style.opacity='0'; }
+
+/* ── Règle ── */
+function buildRuler(gId, x0, yBottom, nCm, pxPerCm) {
+    const g = document.getElementById(gId);
+    const NS = 'http://www.w3.org/2000/svg';
+    const h = 38, yTop = yBottom - h;
+    const totalW = nCm * pxPerCm + 24;
+    const xStart = x0 - 8;
+    const rect = document.createElementNS(NS,'rect');
+    rect.setAttribute('x', xStart); rect.setAttribute('y', yTop);
+    rect.setAttribute('width', totalW); rect.setAttribute('height', h);
+    rect.setAttribute('rx','3');
+    rect.setAttribute('fill','rgba(215,235,255,0.93)');
+    rect.setAttribute('stroke','#4488bb'); rect.setAttribute('stroke-width','1.8');
+    g.appendChild(rect);
+    const edge = document.createElementNS(NS,'line');
+    edge.setAttribute('x1', xStart); edge.setAttribute('y1', yBottom);
+    edge.setAttribute('x2', (xStart+totalW).toString()); edge.setAttribute('y2', yBottom);
+    edge.setAttribute('stroke','#2266aa'); edge.setAttribute('stroke-width','2.5');
+    g.appendChild(edge);
+    const shine = document.createElementNS(NS,'line');
+    shine.setAttribute('x1',(xStart+4).toString()); shine.setAttribute('y1',(yTop+4).toString());
+    shine.setAttribute('x2',(xStart+totalW-4).toString()); shine.setAttribute('y2',(yTop+4).toString());
+    shine.setAttribute('stroke','rgba(255,255,255,0.65)'); shine.setAttribute('stroke-width','3');
+    shine.setAttribute('stroke-linecap','round');
+    g.appendChild(shine);
+    const totalMm = nCm * 10;
+    for (let mm = 0; mm <= totalMm; mm++) {
+        const x = x0 + mm * pxPerCm / 10;
+        let tickH, sw, col;
+        if (mm % 10 === 0)     { tickH=20; sw=1.6; col='#223'; }
+        else if (mm % 5 === 0) { tickH=14; sw=1.2; col='#446'; }
+        else                   { tickH=7;  sw=0.8; col='#779'; }
+        const ln = document.createElementNS(NS,'line');
+        ln.setAttribute('x1', x.toFixed(1)); ln.setAttribute('y1', (yBottom-tickH).toString());
+        ln.setAttribute('x2', x.toFixed(1)); ln.setAttribute('y2', yBottom.toString());
+        ln.setAttribute('stroke',col); ln.setAttribute('stroke-width', sw.toString());
+        g.appendChild(ln);
+        if (mm % 10 === 0 && mm > 0) {
+            const tx = document.createElementNS(NS,'text');
+            tx.setAttribute('x', x.toFixed(1)); tx.setAttribute('y', (yTop+16).toString());
+            tx.setAttribute('text-anchor','middle');
+            tx.setAttribute('font-size','13'); tx.setAttribute('font-weight','bold');
+            tx.setAttribute('fill','#223');
+            tx.textContent = String(mm/10);
+            g.appendChild(tx);
+        }
+    }
+}
+buildRuler('rul1', 90, 320, 6, 55);
+
+async function slideRuler(gId, dyFrom, dyTo, dur) {
+    const g = document.getElementById(gId);
+    g.style.opacity = '1';
+    const N = 28;
+    for (let i = 0; i <= N; i++) {
+        const dy = dyFrom + (dyTo - dyFrom) * i / N;
+        g.setAttribute('transform', `translate(0,${dy.toFixed(1)})`);
+        await sleep(dur / N);
+    }
+    if (dyTo < 0) g.style.opacity = '0';
+}
+
+/* ── Compas ── */
+function setCompassPos(pt, pencilEnd) {
+    const hx = (pt.x + pencilEnd.x)/2;
+    const hy = (pt.y + pencilEnd.y)/2;
+    document.getElementById('cHinge').setAttribute('cx', hx);
+    document.getElementById('cHinge').setAttribute('cy', hy);
+    const pb = document.getElementById('cPointBranch');
+    pb.setAttribute('x1', hx); pb.setAttribute('y1', hy);
+    pb.setAttribute('x2', pt.x); pb.setAttribute('y2', pt.y);
+    document.getElementById('cPointTip').setAttribute('cx', pt.x);
+    document.getElementById('cPointTip').setAttribute('cy', pt.y);
+    const pen = document.getElementById('cPencilBranch');
+    pen.setAttribute('x1', hx); pen.setAttribute('y1', hy);
+    pen.setAttribute('x2', pencilEnd.x); pen.setAttribute('y2', pencilEnd.y);
+    const ang = Math.atan2(pencilEnd.y - hy, pencilEnd.x - hx);
+    document.getElementById('cPencilBody').setAttribute('transform',
+        `translate(${pencilEnd.x},${pencilEnd.y-13}) rotate(${ang*180/Math.PI+90})`);
+    document.getElementById('cPencilTip').setAttribute('transform',
+        `translate(${pencilEnd.x-5},${pencilEnd.y}) rotate(${ang*180/Math.PI+90} 5 0)`);
+    document.getElementById('cPencilPoint').setAttribute('cx', pencilEnd.x);
+    document.getElementById('cPencilPoint').setAttribute('cy', pencilEnd.y);
+}
+async function animOpen(center, target, dur) {
+    const s=30;
+    for(let i=0;i<=s;i++){
+        const t=i/s;
+        setCompassPos(center,{x:center.x+(target.x-center.x)*t, y:center.y+(target.y-center.y)*t});
+        await sleep(dur/s);
+    }
+}
+async function animMove(fp,fe,tp,te,dur) {
+    const s=40;
+    for(let i=0;i<=s;i++){
+        const t=i/s;
+        setCompassPos(
+            {x:fp.x+(tp.x-fp.x)*t, y:fp.y+(tp.y-fp.y)*t},
+            {x:fe.x+(te.x-fe.x)*t, y:fe.y+(te.y-fe.y)*t}
+        );
+        await sleep(dur/s);
+    }
+}
+function drawArcPath(id, cx, cy, r, a0, a1, n) {
+    let d='';
+    for(let i=0;i<=n;i++){
+        const a=a0+(a1-a0)*i/n;
+        const x=cx+r*Math.cos(a);
+        const y=cy+r*Math.sin(a);
+        d += (i===0?'M ':'L ')+x.toFixed(1)+' '+y.toFixed(1)+' ';
+    }
+    const el=document.getElementById(id);
+    el.setAttribute('d',d);
+    el.style.opacity='1';
+}
+
+function updateButtons() {
+    const btnPrec = document.getElementById('btnPrec');
+    const btnNext = document.getElementById('btnNext');
+    if (btnPrec) btnPrec.disabled = (step <= 0);
+    if (btnNext) {
+        if (step >= 4) {
+            btnNext.disabled = true;
+            btnNext.textContent = '— Fin —';
+            btnNext.style.background = '#888';
+        } else {
+            btnNext.disabled = false;
+            btnNext.textContent = 'Étape suivante ▶';
+            btnNext.style.background = '';
+        }
+    }
+}
+
+/* ── Avance animée d'une étape (comportement d'origine, inchangé) ── */
+async function advanceStep() {
+    if (animating || step >= 4) return;
+    animating = true;
+    document.getElementById('btnNext').disabled = true;
+    const compass = document.getElementById('compassTri');
+
+    if (step === 0) {
+        document.getElementById('stepText').textContent = texts[1];
+        await slideRuler('rul1', -200, 0, 500);
+        await sleep(200);
+        show('groupAB_tri');
+        const seg = document.getElementById('segAB_tri');
+        const N = 40;
+        for(let i=0; i<=N; i++){
+            seg.setAttribute('x2', (A.x + (B.x-A.x)*i/N).toFixed(1));
+            await sleep(700/N);
+        }
+        await sleep(300);
+        await slideRuler('rul1', 0, -200, 400);
+        step=1;
+
+    } else if (step === 1) {
+        document.getElementById('stepText').textContent = texts[2];
+        compass.style.opacity = '1';
+        setCompassPos(B, B);
+        await sleep(400);
+        await animOpen(B, C, 1400);
+        await sleep(400);
+        drawArcPath('arcB_tri', B.x, B.y, R_BC, aC_fromB-0.45, aC_fromB+0.45, 60);
+        show('labelBC');
+        await sleep(800);
+        step=2;
+
+    } else if (step === 2) {
+        document.getElementById('stepText').textContent = texts[3];
+        const pencilBC = {x: B.x + R_BC*Math.cos(aC_fromB), y: B.y + R_BC*Math.sin(aC_fromB)};
+        const pencilAC = {x: A.x + R_AC*Math.cos(aC_fromA), y: A.y + R_AC*Math.sin(aC_fromA)};
+        await animMove(B, pencilBC, A, A, 1000);
+        await sleep(300);
+        await animOpen(A, pencilAC, 1200);
+        await sleep(400);
+        drawArcPath('arcA_tri', A.x, A.y, R_AC, aC_fromA-0.45, aC_fromA+0.45, 60);
+        show('labelAC');
+        await sleep(800);
+        step=3;
+
+    } else if (step === 3) {
+        document.getElementById('stepText').textContent = texts[4];
+        compass.style.opacity = '0';
+        await sleep(400);
+        show('pointC_tri');
+        await sleep(600);
+        show('sideBC');
+        show('sideAC');
+        step=4;
+    }
+    animating = false;
+    updateButtons();
+}
+
+/* ── Reconstruction instantanée de l'état à l'étape n (utilisé par « précédent ») ── */
+function renderStep(n) {
+    hide('groupAB_tri'); document.getElementById('segAB_tri').setAttribute('x2', A.x.toString());
+    hide('arcB_tri'); document.getElementById('arcB_tri').setAttribute('d','');
+    hide('arcA_tri'); document.getElementById('arcA_tri').setAttribute('d','');
+    hide('labelBC'); hide('labelAC');
+    hide('pointC_tri'); hide('sideBC'); hide('sideAC');
+    hide('compassTri');
+    document.getElementById('rul1').style.opacity = '0';
+    document.getElementById('rul1').setAttribute('transform','translate(0,-200)');
+
+    document.getElementById('stepText').textContent = texts[n];
+    if (n >= 1) {
+        show('groupAB_tri');
+        document.getElementById('segAB_tri').setAttribute('x2', B.x.toString());
+    }
+    if (n >= 2) {
+        drawArcPath('arcB_tri', B.x, B.y, R_BC, aC_fromB-0.45, aC_fromB+0.45, 60);
+        show('labelBC');
+    }
+    if (n >= 3) {
+        drawArcPath('arcA_tri', A.x, A.y, R_AC, aC_fromA-0.45, aC_fromA+0.45, 60);
+        show('labelAC');
+    }
+    if (n === 2) {
+        show('compassTri');
+        const pencilBC = {x: B.x + R_BC*Math.cos(aC_fromB), y: B.y + R_BC*Math.sin(aC_fromB)};
+        setCompassPos(B, pencilBC);
+    }
+    if (n === 3) {
+        show('compassTri');
+        const pencilAC = {x: A.x + R_AC*Math.cos(aC_fromA), y: A.y + R_AC*Math.sin(aC_fromA)};
+        setCompassPos(A, pencilAC);
+    }
+    if (n >= 4) {
+        show('pointC_tri'); show('sideBC'); show('sideAC');
+    }
+    step = n;
+    updateButtons();
+}
+
+function nextStep() {
+    stopAuto();
+    advanceStep();
+}
+function prevStep() {
+    stopAuto();
+    if (step > 0) renderStep(step - 1);
+}
+function resetAnimation() {
+    stopAuto();
+    animating = false;
+    renderStep(0);
+}
+function toggleAuto() {
+    const btn = document.getElementById('btnAuto');
+    if (autoTimer) { stopAuto(); return; }
+    if (step >= 4) renderStep(0);
+    btn.textContent = '⏸ Pause';
+    btn.style.background = '#ff9800';
+    autoTimer = setInterval(() => {
+        if (step >= 4 || animating) { if (step>=4) stopAuto(); return; }
+        advanceStep();
+    }, 3200);
+}
+function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+    const btn = document.getElementById('btnAuto');
+    if (btn) { btn.textContent = '⏵ Automatique'; btn.style.background = ''; }
+}
+</script>
+</body>
+</html>

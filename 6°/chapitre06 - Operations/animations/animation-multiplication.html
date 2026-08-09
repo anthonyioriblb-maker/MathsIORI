@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Poser une multiplication</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20px 30px;
+}
+
+.wrap {
+  background: white; border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  padding: 20px; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  margin-bottom: 14px;
+}
+
+.step-text {
+  background: #e3f2fd; border-left: 5px solid #2196f3;
+  padding: 14px 20px; border-radius: 0 8px 8px 0;
+  font-size: 1rem; color: #1565c0; width: 100%;
+  min-height: 52px; display: block; line-height: 1.6;
+  font-weight: 500; margin-bottom: 14px;
+}
+
+.operation-posee {
+    font-family: 'Courier New', monospace;
+    font-size: 2em;
+    line-height: 1.1;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    margin: 10px auto;
+}
+
+.ligne-operation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 28px;
+    position: relative;
+}
+
+.chiffre {
+    width: 35px;
+    text-align: center;
+    display: inline-block;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.chiffre.visible { opacity: 1; }
+
+.chiffre.resultat {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.symbole {
+    width: 40px;
+    text-align: center;
+    display: inline-block;
+    opacity: 0;
+}
+
+.symbole.visible { opacity: 1; }
+
+.ligne-separation {
+    height: 3px;
+    background-color: black;
+    margin: 1px 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 240px;
+    margin-left: auto;
+}
+
+.ligne-separation.visible { opacity: 1; }
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+button {
+  padding: 11px 22px; border: none; border-radius: 8px;
+  font-size: 0.95rem; font-weight: bold; cursor: pointer;
+  transition: all 0.25s; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+button:hover { transform: translateY(-2px); }
+button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; }
+#btnReset { background: #f44336; color: white; }
+#btnNext  { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="step-text" id="stepText">
+    Cliquez sur « Étape suivante » pour démarrer l'animation
+  </div>
+
+  <div class="operation-posee" id="multiplicationOp" style="position: relative;">
+    <!-- Ligne 1 : premier nombre -->
+    <div class="ligne-operation">
+        <span class="symbole">&nbsp;</span>
+        <span class="chiffre" id="m1_1">&nbsp;</span>
+        <span class="chiffre" id="m1_2">&nbsp;</span>
+        <span class="chiffre" id="m1_3" style="position: relative;">5<span id="m1_v" style="position: absolute; left: 32px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
+        <span class="chiffre" id="m1_4">6</span>
+        <span class="chiffre" id="m1_5">8</span>
+    </div>
+
+    <!-- Ligne 2 : deuxième nombre -->
+    <div class="ligne-operation">
+        <span class="symbole visible">×</span>
+        <span class="chiffre" id="m2_1">&nbsp;</span>
+        <span class="chiffre" id="m2_2">&nbsp;</span>
+        <span class="chiffre" id="m2_3" style="position: relative;">3<span id="m2_v" style="position: absolute; left: 32px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
+        <span class="chiffre" id="m2_4">4</span>
+        <span class="chiffre" id="m2_5">&nbsp;</span>
+    </div>
+
+    <!-- Ligne de séparation 1 -->
+    <div class="ligne-separation" id="ligne_mult1"></div>
+
+    <!-- Ligne 3 : 2272 avec retenues à droite -->
+    <div class="ligne-operation" style="position: relative;">
+        <span class="symbole">&nbsp;</span>
+        <span class="chiffre" id="m3_1">&nbsp;</span>
+        <span class="chiffre" id="m3_2">2</span>
+        <span class="chiffre" id="m3_3">2</span>
+        <span class="chiffre" id="m3_4">7</span>
+        <span class="chiffre" id="m3_5">2</span>
+        <span id="mret_1" style="position: absolute; right: -35px; top: 8px; font-size: 0.6em; color: #e74c3c; opacity: 0;">³</span>
+        <span id="mret_2" style="position: absolute; right: -45px; top: 8px; font-size: 0.6em; color: #e74c3c; opacity: 0;">²</span>
+    </div>
+
+    <!-- Ligne 4 : 17040 avec retenues à droite -->
+    <div class="ligne-operation" style="position: relative;">
+        <span class="symbole visible">+</span>
+        <span class="chiffre" id="m4_1">1</span>
+        <span class="chiffre" id="m4_2">7</span>
+        <span class="chiffre" id="m4_3">0</span>
+        <span class="chiffre" id="m4_4">4</span>
+        <span class="chiffre" id="m4_5">0</span>
+        <span id="mret_3" style="position: absolute; right: -35px; top: 8px; font-size: 0.6em; color: #e74c3c; opacity: 0;">²</span>
+        <span id="mret_4" style="position: absolute; right: -45px; top: 8px; font-size: 0.6em; color: #e74c3c; opacity: 0;">¹</span>
+    </div>
+
+    <!-- Ligne de séparation 2 -->
+    <div class="ligne-separation" id="ligne_mult2"></div>
+
+    <!-- Résultat -->
+    <div class="ligne-operation">
+        <span class="symbole">&nbsp;</span>
+        <span class="chiffre resultat" id="mres_1">1</span>
+        <span class="chiffre resultat" id="mres_2" style="position: relative;">9<span id="mres_v" style="position: absolute; left: 32px; top: 0; opacity: 0; transition: opacity 0.5s;">,</span></span>
+        <span class="chiffre resultat" id="mres_3">3</span>
+        <span class="chiffre resultat" id="mres_4">1</span>
+        <span class="chiffre resultat" id="mres_5">2</span>
+    </div>
+
+    <!-- Cadres pour entourer ,68 et ,4 -->
+    <div id="cadre_68" style="position: absolute; border: 2px solid #e74c3c; border-radius: 5px; pointer-events: none; opacity: 0; transition: opacity 0.5s;"></div>
+    <div id="cadre_4" style="position: absolute; border: 2px solid #e74c3c; border-radius: 5px; pointer-events: none; opacity: 0; transition: opacity 0.5s;"></div>
+
+    <div style="margin-top: 20px; font-size: 0.6em; color: #e74c3c; opacity: 0; transition: opacity 0.5s;" id="virgule_expl">
+        <span id="fleche_virg">2 + 1 = 3 chiffres après la virgule</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="btnNext" onclick="nextStep()">▶ Étape suivante</button>
+    <button id="btnReset" onclick="resetAnimation()">🔄 Recommencer</button>
+  </div>
+</div>
+
+<script>
+let step = 0;
+
+function nextStep() {
+    const stepText = document.getElementById('stepText');
+
+    switch (step) {
+        case 0:
+            ['m1_3', 'm1_4', 'm1_5', 'm2_3', 'm2_4'].forEach(id => {
+                document.getElementById(id).classList.add('visible');
+            });
+            document.getElementById('m1_v').style.opacity = '1';
+            document.getElementById('m2_v').style.opacity = '1';
+            stepText.innerHTML = 'On pose la multiplication. 5,68 a 2 chiffres après la virgule, 3,4 en a 1';
+            break;
+        case 1:
+            document.getElementById('ligne_mult1').classList.add('visible');
+            stepText.innerHTML = 'On multiplie 568 par 4 : 8×4 = 32 (je pose 2, retenue 3)';
+            document.getElementById('m3_5').classList.add('visible');
+            document.getElementById('mret_1').style.opacity = '1';
+            break;
+        case 2:
+            stepText.innerHTML = '6×4 = 24, +3 = 27 (je pose 7, retenue 2)';
+            document.getElementById('m3_4').classList.add('visible');
+            document.getElementById('mret_2').style.opacity = '1';
+            break;
+        case 3:
+            stepText.innerHTML = '5×4 = 20, +2 = 22 (je pose 22)';
+            document.getElementById('m3_3').classList.add('visible');
+            document.getElementById('m3_2').classList.add('visible');
+            break;
+        case 4:
+            stepText.innerHTML = 'On multiplie 568 par 3 (décalé d\'un rang, donc on ajoute un 0 à droite) : 8×3 = 24 (je pose 4, retenue 2)';
+            document.getElementById('m4_5').classList.add('visible');
+            document.getElementById('m4_4').classList.add('visible');
+            document.getElementById('mret_3').style.opacity = '1';
+            break;
+        case 5:
+            stepText.innerHTML = '6×3 = 18, +2 = 20 (je pose 0, retenue 2)';
+            document.getElementById('m4_3').classList.add('visible');
+            document.getElementById('mret_4').style.opacity = '1';
+            break;
+        case 6:
+            stepText.innerHTML = '5×3 = 15, +2 = 17 (je pose 17)';
+            document.getElementById('m4_2').classList.add('visible');
+            document.getElementById('m4_1').classList.add('visible');
+            break;
+        case 7:
+            document.getElementById('ligne_mult2').classList.add('visible');
+            stepText.innerHTML = 'On additionne les deux lignes : 2';
+            document.getElementById('mres_5').classList.add('visible');
+            break;
+        case 8:
+            stepText.innerHTML = '7 + 4 = 11 (je pose 1, retenue 1)';
+            document.getElementById('mres_4').classList.add('visible');
+            break;
+        case 9:
+            stepText.innerHTML = '2 + 0 + 1 = 3 (je pose 3)';
+            document.getElementById('mres_3').classList.add('visible');
+            break;
+        case 10:
+            stepText.innerHTML = '2 + 7 = 9 (je pose 9)';
+            document.getElementById('mres_2').classList.add('visible');
+            break;
+        case 11:
+            stepText.innerHTML = '1 (je pose 1)';
+            document.getElementById('mres_1').classList.add('visible');
+            break;
+        case 12:
+            stepText.innerHTML = 'On place la virgule : 2 + 1 = 3 chiffres après la virgule';
+            document.getElementById('mres_v').style.opacity = '1';
+            document.getElementById('virgule_expl').style.opacity = '1';
+
+            const cadre68 = document.getElementById('cadre_68');
+            const m1_4 = document.getElementById('m1_4');
+            const rect68 = m1_4.getBoundingClientRect();
+            const container = document.getElementById('multiplicationOp').getBoundingClientRect();
+            cadre68.style.left = (rect68.left - container.left - 12) + 'px';
+            cadre68.style.top = (rect68.top - container.top + 9) + 'px';
+            cadre68.style.width = '92px';
+            cadre68.style.height = '32px';
+            cadre68.style.opacity = '1';
+
+            const cadre4 = document.getElementById('cadre_4');
+            const m2_4 = document.getElementById('m2_4');
+            const rect4 = m2_4.getBoundingClientRect();
+            cadre4.style.left = (rect4.left - container.left - 12) + 'px';
+            cadre4.style.top = (rect4.top - container.top + 9) + 'px';
+            cadre4.style.width = '52px';
+            cadre4.style.height = '32px';
+            cadre4.style.opacity = '1';
+            break;
+        case 13:
+            stepText.innerHTML = '<strong style="color: #2ecc71;">✓ Résultat : 5,68 × 3,4 = 19,312</strong>';
+            document.getElementById('btnNext').disabled = true;
+            break;
+    }
+    step++;
+}
+
+function resetAnimation() {
+    step = 0;
+    document.getElementById('btnNext').disabled = false;
+    document.getElementById('stepText').innerHTML = 'Cliquez sur « Étape suivante » pour démarrer l\'animation';
+
+    ['m1_3', 'm1_4', 'm1_5', 'm2_3', 'm2_4',
+     'ligne_mult1', 'ligne_mult2',
+     'm3_1', 'm3_2', 'm3_3', 'm3_4', 'm3_5', 'm4_1', 'm4_2', 'm4_3', 'm4_4', 'm4_5',
+     'mres_1', 'mres_2', 'mres_3', 'mres_4', 'mres_5'].forEach(id => {
+        document.getElementById(id).classList.remove('visible');
+    });
+    ['mret_1', 'mret_2', 'mret_3', 'mret_4'].forEach(id => {
+        document.getElementById(id).style.opacity = '0';
+    });
+    ['m1_v', 'm2_v', 'mres_v'].forEach(id => {
+        document.getElementById(id).style.opacity = '0';
+    });
+    document.getElementById('cadre_68').style.opacity = '0';
+    document.getElementById('cadre_4').style.opacity = '0';
+    document.getElementById('virgule_expl').style.opacity = '0';
+}
+</script>
+</body>
+</html>

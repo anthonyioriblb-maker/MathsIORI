@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Mesurer un angle au rapporteur</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: white;
+        padding: 10px;
+    }
+    .btn-anim {
+        background: #2196f3; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-anim:hover { background: #1565c0; }
+    .btn-reset {
+        background: #e74c3c; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-reset:hover { background: #c0392b; }
+    .btn-auto {
+        background: #4caf50; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-auto:hover { background: #388e3c; }
+    .step-box {
+        background: #e3f2fd; border-left: 5px solid #2196f3;
+        padding: 12px 18px; margin-bottom: 8px; color: #1565c0;
+        font-size: 16px; font-weight: 500; min-height: 54px;
+        display: block; line-height: 1.6;
+    }
+    .svg-wrap {
+        text-align: center; background: white; padding: 6px;
+        border-radius: 5px; border: 2px solid #ddd;
+    }
+    .angle {
+        position: relative;
+        display: inline-block;
+    }
+    .angle::before {
+        content: '^';
+        position: absolute;
+        top: -0.5em;
+        left: 50%;
+        transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
+        font-size: 1.5em;
+        font-weight: 300;
+    }
+
+    /* Étape 1 : le rapporteur glisse depuis la droite et arrive posé, pas encore aligné */
+    @keyframes rapArrive {
+        0%   { transform: translate(260px,-70px) rotate(0deg); opacity: 0; }
+        35%  { opacity: 1; }
+        100% { transform: translate(0,0) rotate(-12deg); opacity: 1; }
+    }
+    /* Étape 2 : on pivote doucement le rapporteur pour aligner le 0° sur [OA) */
+    @keyframes rapAlign {
+        0%   { transform: translate(0,0) rotate(-12deg); opacity: 1; }
+        100% { transform: translate(0,0) rotate(0deg);   opacity: 1; }
+    }
+    #rapporteur {
+        transform-origin: 200px 280px;   /* pivot = sommet O */
+    }
+    /* état caché par défaut (avant l'animation) */
+    #rapporteur.rap-hidden { opacity: 0; }
+    #rapporteur.arrive {
+        animation: rapArrive 1.2s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    #rapporteur.aligne {
+        animation: rapAlign 1.4s ease-in-out forwards;
+    }
+    #sweep30 {
+        transition: stroke-dashoffset 1s ease-out;
+    }
+</style>
+</head>
+<body>
+
+<div class="step-box"><span id="stepMes">Cliquez sur « Étape suivante » pour voir comment mesurer l'angle <span class="angle">AOB</span>.</span></div>
+<div class="svg-wrap">
+    <svg id="svgMes" width="580" height="340" viewBox="0 0 580 340" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+
+        <!-- O=(200,280) A=(460,280) B=200+250cos30, 280-250sin30 = (417,155) -->
+
+        <!-- Demi-droite [OA) prolongée au-delà de A -->
+        <line x1="200" y1="280" x2="500" y2="280" stroke="black" stroke-width="2.5"/>
+        <!-- Demi-droite [OB) prolongée au-delà de B -->
+        <line x1="200" y1="280" x2="434" y2="145" stroke="black" stroke-width="2.5"/>
+        <!-- Croix sur O -->
+        <line x1="194" y1="274" x2="206" y2="286" stroke="black" stroke-width="2"/>
+        <line x1="206" y1="274" x2="194" y2="286" stroke="black" stroke-width="2"/>
+        <text x="178" y="282" font-size="20" font-weight="bold">O</text>
+        <!-- Croix A (fin de [OA) à (480,280)) -->
+        <line x1="474" y1="274" x2="486" y2="286" stroke="black" stroke-width="2"/>
+        <line x1="486" y1="274" x2="474" y2="286" stroke="black" stroke-width="2"/>
+        <text x="503" y="300" font-size="20" font-weight="bold">A</text>
+        <!-- Croix B (fin de [OB) à (417,155)) -->
+        <line x1="411" y1="149" x2="423" y2="161" stroke="black" stroke-width="2"/>
+        <line x1="423" y1="149" x2="411" y2="161" stroke="black" stroke-width="2"/>
+        <text x="428" y="143" font-size="20" font-weight="bold">B</text>
+
+        <!-- Rapporteur : arrive depuis la droite avec animation CSS -->
+        <!-- Centré en O=(200,280), rayon=120, base horizontale -->
+        <g id="rapporteur" class="rap-hidden">
+            <!-- Corps cyan -->
+            <path d="M 80 280 A 120 120 0 0 1 320 280 Z" fill="rgba(120,228,235,0.82)" stroke="#0a8090" stroke-width="2"/>
+            <!-- Base -->
+            <line x1="80" y1="280" x2="320" y2="280" stroke="#0a8090" stroke-width="1.5"/>
+            <!-- Poignée centrale -->
+            <rect x="190" y="279" width="20" height="11" rx="4" fill="rgba(80,200,215,0.9)" stroke="#0a8090" stroke-width="1.2"/>
+            <!-- Croix de centrage -->
+            <circle cx="200" cy="280" r="8" fill="white" stroke="#222" stroke-width="1.4"/>
+            <circle cx="200" cy="280" r="2" fill="#222"/>
+            <line x1="192" y1="280" x2="208" y2="280" stroke="#222" stroke-width="1"/>
+            <line x1="200" y1="272" x2="200" y2="288" stroke="#222" stroke-width="1"/>
+            <!-- Ticks et labels générés par JS -->
+            <g id="ticks"></g>
+            <g id="labels"></g>
+            <g id="labels2"></g>
+            <!-- Case 90° noire en haut -->
+            <rect x="184" y="155" width="32" height="17" rx="3" fill="black"/>
+            <text x="200" y="167" text-anchor="middle" font-size="11" fill="white" font-weight="bold">90°</text>
+            <!-- Labels 0/180 aux extrémités -->
+            <text x="322" y="292" font-size="10" fill="#1565c0" font-weight="bold">0</text>
+            <text x="320" y="278" font-size="8"  fill="#c0392b">180</text>
+            <text x="48"  y="292" font-size="10" fill="#1565c0" font-weight="bold">180</text>
+            <text x="56"  y="278" font-size="8"  fill="#c0392b">0</text>
+        </g>
+
+        <!-- Trait de 0° sur OA (caché au départ) -->
+        <line id="zeroline" x1="200" y1="280" x2="340" y2="280" stroke="#ff8c00" stroke-width="2.5" stroke-dasharray="8,4" opacity="0"/>
+
+        <!-- Arc montrant l'angle 30° (caché) -->
+        <path id="arcMes" d="M 280 280 A 80 80 0 0 0 269 240" stroke="#e74c3c" stroke-width="2.5" fill="rgba(231,76,60,0.15)" opacity="0"/>
+
+        <!-- Surlignage 30° sur le rapporteur (caché) -->
+        <!-- 30°: x=200+120*cos30=304, y=280-120*sin30=220 -->
+        <line id="mark30" x1="200" y1="280" x2="304" y2="220" stroke="#e74c3c" stroke-width="3" stroke-dasharray="6,3" opacity="0"/>
+        <circle id="dot30" cx="304" cy="220" r="5" fill="#e74c3c" opacity="0"/>
+
+        <!-- Etiquette 30°, décalée sur le côté du rayon [OB) (pas dessus) et à l'extérieur du disque -->
+        <text id="label30" x="358" y="213" font-size="16" fill="#e74c3c" font-weight="bold" opacity="0">30°</text>
+
+        <!-- Zoom pédagogique : agrandit le VRAI rapporteur (pas un schéma à part) pour montrer qu'on compte depuis 0° -->
+        <g id="zoomInset" opacity="0">
+            <defs>
+                <clipPath id="zoomClip"><rect x="15" y="15" width="190" height="120" rx="10"/></clipPath>
+            </defs>
+            <rect x="15" y="15" width="190" height="120" rx="10" fill="white" stroke="#888" stroke-width="1.5"/>
+            <text x="110" y="28" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">Zoom : on compte depuis 0°</text>
+            <g clip-path="url(#zoomClip)">
+                <!-- Le rapporteur réel et ses graduations, simplement agrandis (même élément, pas une copie dessinée) -->
+                <g transform="translate(110,75) scale(1.1) translate(-270,-245)">
+                    <use href="#rapporteur"/>
+                    <use href="#arcMes"/>
+                    <use href="#mark30"/>
+                    <use href="#dot30"/>
+                    <!-- (le label30 réel — "30°" en rouge — n'est pas repris ici : il est collé sur le rapporteur ;
+                         on le remplace par l'étiquette "30°" ci-dessous, placée à l'extérieur du disque -->
+                    <!-- balayage rouge 0° → 30° : se dessine progressivement pour montrer qu'on compte depuis 0 -->
+                    <path id="sweep30" d="M 320 280 A 120 120 0 0 0 303.9 220" stroke="#e74c3c" stroke-width="4" fill="none"
+                          stroke-dasharray="63" stroke-dashoffset="63"/>
+                    <!-- repères numériques 0/10/20/30 placés À L'EXTÉRIEUR du rapporteur (r=140 > rayon 120), donc lisibles sur fond blanc -->
+                    <text x="345" y="284" font-size="17" fill="#1a4a8a" font-weight="bold">0</text>
+                    <text id="zoomLbl10" x="342.9" y="259.7" font-size="17" fill="#1a4a8a" font-weight="bold" opacity="0">10</text>
+                    <text id="zoomLbl20" x="336.6" y="236.1" font-size="17" fill="#1a4a8a" font-weight="bold" opacity="0">20</text>
+                    <text id="zoomLbl30" x="326.2" y="214" font-size="17" fill="#e74c3c" font-weight="bold" opacity="0">30°</text>
+                </g>
+            </g>
+        </g>
+
+        <!-- Résultat avec chapeau explicite au-dessus du O -->
+        <g id="result" opacity="0">
+            <text x="200" y="60" text-anchor="middle" font-size="20" fill="#c0392b" font-weight="bold">AOB = 30°</text>
+            <!-- chapeau au-dessus du O (lettre du sommet, 2e lettre) -->
+            <path d="M 163 41 L 170 35 L 177 41" stroke="#c0392b" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+        </g>
+    </svg>
+</div>
+<div style="text-align:center; margin-top:10px;">
+    <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" onclick="nextStep()">Étape suivante ▶</button>
+    <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation()">Recommencer ↺</button>
+</div>
+
+<script>
+const texts = [
+    "Cliquez sur « Étape suivante » pour voir comment mesurer l'angle <span class='angle'>AOB</span>.",
+    "Étape 1 : On place le <strong>centre du rapporteur</strong> exactement sur le sommet <strong>O</strong> de l'angle.",
+    "Étape 2 : On aligne la <strong>ligne de base</strong> sur le côté [OA). Le rapporteur a <strong>deux échelles</strong> (0° des deux côtés) : on lit sur celle qui commence à <strong>0°</strong> du côté de [OA).",
+    "Étape 3 : On lit la mesure : le côté [OB) passe par la graduation <strong>30°</strong>. Donc <span class='angle'>AOB</span> = <strong>30°</strong>.",
+    "<span class='angle'>AOB</span> = <strong>30°</strong> — c'est un angle <strong style='color:#e74c3c;'>aigu</strong> (entre 0° et 90°)."
+];
+let step = 0;
+
+/* ── Génère les ticks et labels d'un rapporteur style Maped ──
+   cx,cy = centre  r = rayon  highlightDeg = graduation à surligner (rouge, 0=aucun)
+   ticksId, labelsId, labels2Id = IDs des <g> dans le SVG                          */
+function buildProto(cx, cy, r, highlightDeg, ticksId, labelsId, labels2Id) {
+    const NS = 'http://www.w3.org/2000/svg';
+    const gT  = document.getElementById(ticksId);
+    const gL  = document.getElementById(labelsId);
+    const gL2 = document.getElementById(labels2Id);
+    if (!gT) return;
+
+    for (let deg = 0; deg <= 180; deg++) {
+        const rad = deg * Math.PI / 180;
+        const xo = cx + r * Math.cos(rad);
+        const yo = cy - r * Math.sin(rad);
+        let len = 3;
+        if (deg % 5  === 0) len = 5;
+        if (deg % 10 === 0) len = 9;
+        const xi = cx + (r - len) * Math.cos(rad);
+        const yi = cy - (r - len) * Math.sin(rad);
+        const line = document.createElementNS(NS, 'line');
+        line.setAttribute('x1', xo.toFixed(1)); line.setAttribute('y1', yo.toFixed(1));
+        line.setAttribute('x2', xi.toFixed(1)); line.setAttribute('y2', yi.toFixed(1));
+        line.setAttribute('stroke', '#1a6070');
+        line.setAttribute('stroke-width', deg % 10 === 0 ? '1.4' : deg % 5 === 0 ? '0.9' : '0.5');
+        gT.appendChild(line);
+    }
+
+    for (let deg = 10; deg <= 170; deg += 10) {
+        if (deg === 90) continue;
+        const rad = deg * Math.PI / 180;
+        const lx = cx + (r - 17) * Math.cos(rad);
+        const ly = cy - (r - 17) * Math.sin(rad);
+        const txt = document.createElementNS(NS, 'text');
+        txt.setAttribute('x', lx.toFixed(1));
+        txt.setAttribute('y', (ly + 3.5).toFixed(1));
+        txt.setAttribute('font-size', r >= 110 ? '9' : '8');
+        txt.setAttribute('fill', deg === highlightDeg ? '#e74c3c' : '#1a4a8a');
+        txt.setAttribute('font-weight', deg === highlightDeg ? 'bold' : 'normal');
+        txt.setAttribute('text-anchor', 'middle');
+        txt.textContent = deg;
+        gL.appendChild(txt);
+    }
+
+    for (let deg = 10; deg <= 170; deg += 10) {
+        if (deg === 90) continue;
+        const rad = deg * Math.PI / 180;
+        const lx = cx + (r - 27) * Math.cos(rad);
+        const ly = cy - (r - 27) * Math.sin(rad);
+        const txt = document.createElementNS(NS, 'text');
+        txt.setAttribute('x', lx.toFixed(1));
+        txt.setAttribute('y', (ly + 3).toFixed(1));
+        txt.setAttribute('font-size', r >= 110 ? '8' : '7');
+        txt.setAttribute('fill', (180 - deg) === highlightDeg ? '#e74c3c' : '#b03020');
+        txt.setAttribute('font-weight', (180 - deg) === highlightDeg ? 'bold' : 'normal');
+        txt.setAttribute('text-anchor', 'middle');
+        txt.textContent = 180 - deg;
+        gL2.appendChild(txt);
+    }
+}
+
+function setOpacity(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute('opacity', v);
+}
+
+let autoTimer = null;
+
+function updateButtons() {
+    const btnPrec = document.getElementById('btnPrec');
+    if (btnPrec) btnPrec.disabled = (step <= 0);
+}
+
+function nextStep() {
+    stopAuto();
+    advanceStep();
+}
+
+function advanceStep() {
+    if (step >= 4) return;
+    step++;
+    document.getElementById('stepMes').innerHTML = texts[step];
+    const rap = document.getElementById('rapporteur');
+    if (step === 1) {
+        rap.classList.remove('rap-hidden', 'aligne');
+        void rap.offsetWidth;
+        rap.classList.add('arrive');
+    }
+    if (step === 2) {
+        rap.classList.remove('arrive');
+        void rap.offsetWidth;
+        rap.classList.add('aligne');
+        setOpacity('zeroline', 1);
+    }
+    if (step >= 3) { setOpacity('mark30', 1); setOpacity('dot30', 1); setOpacity('arcMes', 1); setOpacity('label30', 1); }
+    if (step === 3) {
+        // Zoom pédagogique : on montre qu'on compte les degrés à partir de 0°
+        setOpacity('zoomInset', 1);
+        const sweep = document.getElementById('sweep30');
+        sweep.style.strokeDashoffset = '63';
+        void sweep.getBoundingClientRect();
+        sweep.style.strokeDashoffset = '0';
+        setTimeout(() => setOpacity('zoomLbl10', 1), 300);
+        setTimeout(() => setOpacity('zoomLbl20', 1), 600);
+        setTimeout(() => setOpacity('zoomLbl30', 1), 900);
+    }
+    if (step >= 4) {
+        setOpacity('result', 1);
+        setOpacity('zoomInset', 0);
+    }
+    updateButtons();
+}
+
+// Reconstruit instantanément l'état visuel pour l'étape n, sans les animations CSS ni les délais
+// (utilisé par « précédent » et par le retour en arrière de l'automatique)
+function renderStep(n) {
+    stopAuto();
+    const rap = document.getElementById('rapporteur');
+    rap.classList.remove('arrive', 'aligne', 'rap-hidden');
+    rap.style.transform = '';
+    if (n === 0) {
+        rap.classList.add('rap-hidden');
+    } else {
+        rap.style.transform = (n === 1) ? 'rotate(-12deg)' : 'rotate(0deg)';
+    }
+    document.getElementById('stepMes').innerHTML = texts[n];
+    setOpacity('zeroline', n >= 2 ? 1 : 0);
+    setOpacity('mark30', n >= 3 ? 1 : 0);
+    setOpacity('dot30', n >= 3 ? 1 : 0);
+    setOpacity('arcMes', n >= 3 ? 1 : 0);
+    setOpacity('label30', n >= 3 ? 1 : 0);
+    setOpacity('result', n >= 4 ? 1 : 0);
+    setOpacity('zoomInset', 0);
+    setOpacity('zoomLbl10', 0);
+    setOpacity('zoomLbl20', 0);
+    setOpacity('zoomLbl30', 0);
+    const sweep = document.getElementById('sweep30');
+    sweep.style.strokeDashoffset = '63';
+    step = n;
+    updateButtons();
+}
+
+function prevStep() {
+    if (step > 0) renderStep(step - 1);
+}
+
+function resetAnimation() {
+    stopAuto();
+    renderStep(0);
+}
+
+function toggleAuto() {
+    const btn = document.getElementById('btnAuto');
+    if (autoTimer) { stopAuto(); return; }
+    if (step >= 4) renderStep(0);
+    btn.textContent = '⏸ Pause';
+    btn.style.background = '#ff9800';
+    autoTimer = setInterval(() => {
+        if (step >= 4) { stopAuto(); return; }
+        advanceStep();
+    }, 3200);
+}
+
+function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+    const btn = document.getElementById('btnAuto');
+    if (btn) { btn.textContent = '⏵ Automatique'; btn.style.background = ''; }
+}
+
+buildProto(200, 280, 120, 0, 'ticks', 'labels', 'labels2');
+</script>
+</body>
+</html>

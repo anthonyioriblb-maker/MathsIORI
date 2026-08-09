@@ -33,6 +33,10 @@
     <a href="../classe-6.html" class="home-button" style="margin:20px;">← Retour au choix des chapitres</a>
     <h1>Chapitre 9 : Triangles, médiatrice et cercle circonscrit</h1>
 
+    <div class="remarque">
+        <strong>Objectif :</strong> connaître les propriétés des triangles (types, somme des angles), construire des triangles, comprendre la médiatrice et le cercle circonscrit.
+    </div>
+
     <!-- ══════════════════════════════════════════════════════ -->
     <h2>Les types de triangles</h2>
 
@@ -148,23 +152,6 @@
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
-    <h2>Construire un triangle</h2>
-
-    <h3>Connaissant ses trois côtés</h3>
-
-    <div class="example">
-        <strong>Exemple :</strong> Construire un triangle ABC tel que AB = 6 cm, BC = 4,5 cm et AC = 5 cm.<br><br>
-        <iframe src="animations/animation-construction-triangle.html" style="width:100%; max-width:620px; height:560px; border:none; display:block; margin:0 auto;" scrolling="no"></iframe>
-        <div class="method" style="margin-top:10px;">
-            <strong>Protocole de construction :</strong><br>
-            1. Tracer le segment [AB] de longueur 6 cm.<br>
-            2. Régler le compas sur la mesure BC = 4,5 cm. Placer la pointe en B et tracer un arc de cercle.<br>
-            3. Régler le compas sur la mesure AC = 5 cm. Placer la pointe en A et tracer un arc de cercle.<br>
-            4. Le point C est à l'intersection des deux arcs. Tracer les côtés [BC] et [AC].
-        </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════════════ -->
     <h2>Somme des angles d'un triangle</h2>
 
     <h3>La propriété fondamentale</h3>
@@ -230,14 +217,41 @@
     </div>
 
     <div class="example">
-        <strong>Construction de la médiatrice au compas :</strong><br><br>
-        <iframe src="animations/animation-mediatrice-compas.html" style="width:100%; max-width:560px; height:520px; border:none; display:block; margin:0 auto;" scrolling="no"></iframe>
+        <strong>Construction de la médiatrice avec le compas :</strong><br><br>
+        <svg width="420" height="200" viewBox="0 0 420 200" style="display:block;margin:0 auto;">
+            <!-- Segment AB -->
+            <line x1="80" y1="120" x2="340" y2="120" stroke="#333" stroke-width="2.5"/>
+            <circle cx="80" cy="120" r="5" fill="#e53935"/><text x="68" y="140" font-size="14" fill="#e53935" font-weight="bold">A</text>
+            <circle cx="340" cy="120" r="5" fill="#e53935"/><text x="344" y="140" font-size="14" fill="#e53935" font-weight="bold">B</text>
+            <!-- Milieu -->
+            <circle cx="210" cy="120" r="4" fill="#333"/>
+            <text x="206" y="140" font-size="12" fill="#333">I</text>
+            <!-- Arcs de cercle -->
+            <circle cx="80" cy="120" r="140" fill="none" stroke="#42a5f5" stroke-width="1.5" stroke-dasharray="6,4"
+                clip-path="url(#arc-clip)"/>
+            <circle cx="340" cy="120" r="140" fill="none" stroke="#42a5f5" stroke-width="1.5" stroke-dasharray="6,4"
+                clip-path="url(#arc-clip)"/>
+            <defs>
+                <clipPath id="arc-clip">
+                    <rect x="80" y="10" width="260" height="200"/>
+                </clipPath>
+            </defs>
+            <!-- Points d'intersection des arcs -->
+            <circle cx="210" cy="22" r="5" fill="#4caf50"/><text x="216" y="22" font-size="12" fill="#4caf50" font-weight="bold">P</text>
+            <circle cx="210" cy="218" r="5" fill="#4caf50"/>
+            <!-- Médiatrice -->
+            <line x1="210" y1="10" x2="210" y2="190" stroke="#e53935" stroke-width="2.5"/>
+            <!-- Angle droit -->
+            <rect x="210" y="110" width="10" height="10" fill="none" stroke="#333" stroke-width="1.5"/>
+            <!-- Légende -->
+            <text x="220" y="16" font-size="12" fill="#e53935" font-weight="bold">médiatrice de [AB]</text>
+        </svg>
         <div class="method" style="margin-top:10px;">
             <strong>Étapes de construction :</strong><br>
-            1. Tracer le segment [AB].<br>
-            2. Ouvrir le compas à plus de la moitié de [AB]. Pointe sèche en A, tracer un arc de cercle de part et d'autre de [AB].<br>
-            3. Sans changer l'écartement, pointe en B, tracer un second arc.<br>
-            4. La médiatrice passe par les deux points d'intersection des arcs.
+            1. Ouvrir le compas à plus de la moitié de [AB].<br>
+            2. Tracer un arc de cercle centré en A, de part et d'autre de [AB].<br>
+            3. Tracer un arc de cercle centré en B, <strong>avec le même écartement</strong>.<br>
+            4. Relier les deux points d'intersection P et P' : la droite PP' est la médiatrice.
         </div>
     </div>
 

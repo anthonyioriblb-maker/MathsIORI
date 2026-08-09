@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Construction de la médiatrice au compas</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: white;
+        padding: 10px;
+    }
+    .btn-anim {
+        background: #2196f3; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-anim:hover { background: #1565c0; }
+    .btn-anim:disabled { background: #b0bec5; cursor: default; }
+    .btn-reset {
+        background: #e74c3c; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-reset:hover { background: #c0392b; }
+    .btn-auto {
+        background: #4caf50; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-auto:hover { background: #388e3c; }
+    .step-box {
+        background: #e3f2fd; border-left: 5px solid #2196f3;
+        padding: 12px 18px; margin-bottom: 8px; color: #1565c0;
+        font-size: 16px; font-weight: 500; min-height: 54px;
+        display: flex; align-items: center; line-height: 1.6;
+    }
+    .svg-wrap {
+        text-align: center; background: white; padding: 6px;
+        border-radius: 5px; border: 2px solid #ddd;
+    }
+</style>
+</head>
+<body>
+
+<div class="step-box"><span id="stMC">Cliquez sur « Étape suivante » pour voir la construction.</span></div>
+<div class="svg-wrap">
+    <svg id="svgMC" width="530" height="330" viewBox="0 0 530 330" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+        <g id="grpABmc" opacity="0">
+            <line id="segABmc" x1="80" y1="240" x2="80" y2="240" stroke="black" stroke-width="2.5"/>
+            <line x1="75" y1="235" x2="85" y2="245" stroke="black" stroke-width="2"/>
+            <line x1="85" y1="235" x2="75" y2="245" stroke="black" stroke-width="2"/>
+            <text x="60" y="238" font-size="20" font-weight="bold">A</text>
+            <line x1="415" y1="235" x2="425" y2="245" stroke="black" stroke-width="2"/>
+            <line x1="425" y1="235" x2="415" y2="245" stroke="black" stroke-width="2"/>
+            <text x="430" y="238" font-size="20" font-weight="bold">B</text>
+        </g>
+        <path id="arcAmc" d="" stroke="#e74c3c" stroke-width="2" fill="none" stroke-dasharray="6,3" opacity="0"/>
+        <path id="arcBmc" d="" stroke="#3498db" stroke-width="2" fill="none" stroke-dasharray="6,3" opacity="0"/>
+        <!-- Points d'intersection des arcs : toujours une croix, jamais un cercle -->
+        <g id="ptsmc" opacity="0">
+            <line x1="245" y1="175" x2="255" y2="185" stroke="black" stroke-width="2"/>
+            <line x1="255" y1="175" x2="245" y2="185" stroke="black" stroke-width="2"/>
+            <line x1="245" y1="295" x2="255" y2="305" stroke="black" stroke-width="2"/>
+            <line x1="255" y1="295" x2="245" y2="305" stroke="black" stroke-width="2"/>
+        </g>
+        <line id="medmc" x1="250" y1="80" x2="250" y2="310" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="9,4" opacity="0"/>
+        <g id="milmc" opacity="0">
+            <line x1="245" y1="235" x2="255" y2="245" stroke="black" stroke-width="2"/>
+            <line x1="255" y1="235" x2="245" y2="245" stroke="black" stroke-width="2"/>
+            <text x="258" y="258" font-size="15" fill="#555">I</text>
+            <polyline points="250,240 250,228 262,228" stroke="black" stroke-width="1.8" fill="none"/>
+        </g>
+        <g id="cmpMC" opacity="0">
+            <circle id="mcH"  cx="0" cy="0" r="9"  fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+            <line   id="mcPb" x1="0" y1="0" x2="0" y2="50" stroke="#ff8c00" stroke-width="5"/>
+            <circle id="mcPt" cx="0" cy="50" r="5" fill="#222" stroke="#000" stroke-width="1.5"/>
+            <line   id="mcNb" x1="0" y1="0" x2="0" y2="50" stroke="#ff8c00" stroke-width="5"/>
+            <rect   id="mcBd" x="-4" y="44" width="8" height="18" fill="#e74c3c" stroke="#cc0000" stroke-width="1.5" rx="2"/>
+            <polygon id="mcTp" points="0,62 -4,70 4,70" fill="#333"/>
+            <circle  id="mcPp" cx="0" cy="70" r="3" fill="#000"/>
+        </g>
+        <g id="rulMC" opacity="0" transform="translate(0,-150)"></g>
+    </svg>
+</div>
+<div style="text-align:center; margin-top:10px;">
+    <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="btnNext" onclick="nextStep()">Étape suivante ▶</button>
+    <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation()">Recommencer ↺</button>
+</div>
+
+<script>
+const A = {x:80,  y:240};
+const B = {x:420, y:240};
+const r = 180; // rayon > AB/2 = 170
+const P1 = {x:250, y:180}, P2 = {x:250, y:300};
+const aA0 = Math.atan2(P1.y-A.y, P1.x-A.x) - 0.3;
+const aA1 = Math.atan2(P2.y-A.y, P2.x-A.x) + 0.3;
+const aB_P1 = Math.atan2(P1.y-B.y, P1.x-B.x);
+const aB_P2 = Math.atan2(P2.y-B.y, P2.x-B.x);
+
+const texts = [
+    'Cliquez sur « Étape suivante » pour voir la construction.',
+    "Étape 1 – On trace le segment [AB] à la règle.",
+    "Étape 2 – On règle le compas sur un rayon supérieur à la moitié de AB. Pointe sèche en A, on trace un arc au-dessus et en-dessous.",
+    "Étape 3 – Sans changer l'écartement, pointe en B, on trace un second arc.",
+    "Étape 4 – La médiatrice passe par les deux points d'intersection des arcs. On trace la droite."
+];
+let step = 0;
+let animating = false;
+let autoTimer = null;
+
+function sleep(ms) { return new Promise(res => setTimeout(res,ms)); }
+function show(id){ document.getElementById(id).style.opacity='1'; }
+function hide(id){ document.getElementById(id).style.opacity='0'; }
+
+/* ── Règle ── */
+function buildRuler(gId, x0, yBottom, nCm, pxPerCm) {
+    const g = document.getElementById(gId);
+    const NS = 'http://www.w3.org/2000/svg';
+    const h = 38, yTop = yBottom - h;
+    const totalW = nCm * pxPerCm + 24;
+    const xStart = x0 - 8;
+    const rect = document.createElementNS(NS,'rect');
+    rect.setAttribute('x', xStart); rect.setAttribute('y', yTop);
+    rect.setAttribute('width', totalW); rect.setAttribute('height', h);
+    rect.setAttribute('rx','3');
+    rect.setAttribute('fill','rgba(215,235,255,0.93)');
+    rect.setAttribute('stroke','#4488bb'); rect.setAttribute('stroke-width','1.8');
+    g.appendChild(rect);
+    const edge = document.createElementNS(NS,'line');
+    edge.setAttribute('x1', xStart); edge.setAttribute('y1', yBottom);
+    edge.setAttribute('x2', (xStart+totalW).toString()); edge.setAttribute('y2', yBottom);
+    edge.setAttribute('stroke','#2266aa'); edge.setAttribute('stroke-width','2.5');
+    g.appendChild(edge);
+    const shine = document.createElementNS(NS,'line');
+    shine.setAttribute('x1',(xStart+4).toString()); shine.setAttribute('y1',(yTop+4).toString());
+    shine.setAttribute('x2',(xStart+totalW-4).toString()); shine.setAttribute('y2',(yTop+4).toString());
+    shine.setAttribute('stroke','rgba(255,255,255,0.65)'); shine.setAttribute('stroke-width','3');
+    shine.setAttribute('stroke-linecap','round');
+    g.appendChild(shine);
+    const totalMm = nCm * 10;
+    for (let mm = 0; mm <= totalMm; mm++) {
+        const x = x0 + mm * pxPerCm / 10;
+        let tickH, sw, col;
+        if (mm % 10 === 0)     { tickH=22; sw=1.6; col='#223'; }
+        else if (mm % 5 === 0) { tickH=14; sw=1.2; col='#446'; }
+        else                   { tickH=7;  sw=0.8; col='#779'; }
+        const ln = document.createElementNS(NS,'line');
+        ln.setAttribute('x1', x.toFixed(1)); ln.setAttribute('y1', (yBottom-tickH).toString());
+        ln.setAttribute('x2', x.toFixed(1)); ln.setAttribute('y2', yBottom.toString());
+        ln.setAttribute('stroke',col); ln.setAttribute('stroke-width', sw.toString());
+        g.appendChild(ln);
+        if (mm % 10 === 0 && mm > 0) {
+            const tx = document.createElementNS(NS,'text');
+            tx.setAttribute('x', x.toFixed(1)); tx.setAttribute('y', (yTop+16).toString());
+            tx.setAttribute('text-anchor','middle');
+            tx.setAttribute('font-size','13'); tx.setAttribute('font-weight','bold');
+            tx.setAttribute('fill','#223');
+            tx.textContent = String(mm/10);
+            g.appendChild(tx);
+        }
+    }
+}
+buildRuler('rulMC', 80, 240, 7, 50);
+
+async function slideRuler(gId, dyFrom, dyTo, dur) {
+    const g = document.getElementById(gId);
+    g.style.opacity = '1';
+    const N = 28;
+    for (let i = 0; i <= N; i++) {
+        const dy = dyFrom + (dyTo - dyFrom) * i / N;
+        g.setAttribute('transform', `translate(0,${dy.toFixed(1)})`);
+        await sleep(dur / N);
+    }
+    if (dyTo < 0) g.style.opacity = '0';
+}
+
+/* ── Compas ── */
+function setC(dry,pen){
+    const hx=(dry.x+pen.x)/2, hy=(dry.y+pen.y)/2;
+    document.getElementById('mcH').setAttribute('cx',hx);
+    document.getElementById('mcH').setAttribute('cy',hy);
+    const pb=document.getElementById('mcPb');
+    pb.setAttribute('x1',hx); pb.setAttribute('y1',hy);
+    pb.setAttribute('x2',dry.x); pb.setAttribute('y2',dry.y);
+    document.getElementById('mcPt').setAttribute('cx',dry.x);
+    document.getElementById('mcPt').setAttribute('cy',dry.y);
+    const nb=document.getElementById('mcNb');
+    nb.setAttribute('x1',hx); nb.setAttribute('y1',hy);
+    nb.setAttribute('x2',pen.x); nb.setAttribute('y2',pen.y);
+    const ang=Math.atan2(pen.y-hy, pen.x-hx), deg=ang*180/Math.PI;
+    document.getElementById('mcBd').setAttribute('transform',`translate(${pen.x},${pen.y-9}) rotate(${deg+90})`);
+    document.getElementById('mcTp').setAttribute('transform',`translate(${pen.x-4},${pen.y}) rotate(${deg+90} 4 0)`);
+    document.getElementById('mcPp').setAttribute('cx',pen.x);
+    document.getElementById('mcPp').setAttribute('cy',pen.y);
+}
+async function openC(center,target,dur){
+    const N=30;
+    for(let i=0;i<=N;i++){
+        const t=i/N;
+        setC(center,{x:center.x+(target.x-center.x)*t, y:center.y+(target.y-center.y)*t});
+        await sleep(dur/N);
+    }
+}
+async function moveC(fp,fe,tp,te,dur){
+    const N=40;
+    for(let i=0;i<=N;i++){
+        const t=i/N;
+        setC({x:fp.x+(tp.x-fp.x)*t,y:fp.y+(tp.y-fp.y)*t},{x:fe.x+(te.x-fe.x)*t,y:fe.y+(te.y-fe.y)*t});
+        await sleep(dur/N);
+    }
+}
+async function drawArc(pathId,cx,cy,radius,a0,a1,dur){
+    const el=document.getElementById(pathId); el.style.opacity='1';
+    const N=55; let d='';
+    for(let i=0;i<=N;i++){
+        const a=a0+(a1-a0)*i/N;
+        const px=(cx+radius*Math.cos(a)).toFixed(1), py=(cy+radius*Math.sin(a)).toFixed(1);
+        d+=(i===0?'M ':'L ')+px+' '+py+' ';
+        el.setAttribute('d',d);
+        setC({x:cx,y:cy},{x:cx+radius*Math.cos(a),y:cy+radius*Math.sin(a)});
+        if(i<N) await sleep(dur/N);
+    }
+}
+async function drawArcPartial(pathId,cx,cy,radius,a0,a1,dur){
+    const el=document.getElementById(pathId); el.style.opacity='1';
+    const N=25;
+    let d=el.getAttribute('d')||'';
+    for(let i=0;i<=N;i++){
+        const a=a0+(a1-a0)*i/N;
+        const px=(cx+radius*Math.cos(a)).toFixed(1), py=(cy+radius*Math.sin(a)).toFixed(1);
+        d+=(i===0?' M ':' L ')+px+' '+py;
+        el.setAttribute('d',d);
+        setC({x:cx,y:cy},{x:cx+radius*Math.cos(a),y:cy+radius*Math.sin(a)});
+        if(i<N) await sleep(dur/N);
+    }
+}
+/* Version instantanée (sans animation) pour la reconstruction d'état */
+function drawArcInstant(pathId,cx,cy,radius,a0,a1,n){
+    let d='';
+    for(let i=0;i<=n;i++){
+        const a=a0+(a1-a0)*i/n;
+        d += (i===0?'M ':'L ')+(cx+radius*Math.cos(a)).toFixed(1)+' '+(cy+radius*Math.sin(a)).toFixed(1)+' ';
+    }
+    const el=document.getElementById(pathId);
+    el.setAttribute('d',d); el.style.opacity='1';
+}
+function drawArcTwoPartialInstant(pathId,cx,cy,radius,c1,c2,n){
+    let d='';
+    [c1,c2].forEach(c=>{
+        for(let i=0;i<=n;i++){
+            const a=c.a0+(c.a1-c.a0)*i/n;
+            d += (i===0?' M ':' L ')+(cx+radius*Math.cos(a)).toFixed(1)+' '+(cy+radius*Math.sin(a)).toFixed(1);
+        }
+    });
+    const el=document.getElementById(pathId);
+    el.setAttribute('d',d); el.style.opacity='1';
+}
+
+function updateButtons() {
+    const btnPrec = document.getElementById('btnPrec');
+    const btnNext = document.getElementById('btnNext');
+    if (btnPrec) btnPrec.disabled = (step <= 0);
+    if (btnNext) {
+        if (step >= 4) {
+            btnNext.disabled = true;
+            btnNext.textContent = '— Fin —';
+            btnNext.style.background = '#888';
+        } else {
+            btnNext.disabled = false;
+            btnNext.textContent = 'Étape suivante ▶';
+            btnNext.style.background = '';
+        }
+    }
+}
+
+/* ── Avance animée d'une étape (comportement d'origine, inchangé) ── */
+async function advanceStep() {
+    if (animating || step >= 4) return;
+    animating = true;
+    document.getElementById('btnNext').disabled = true;
+
+    if (step === 0) {
+        document.getElementById('stMC').textContent = texts[1];
+        await slideRuler('rulMC', -150, 0, 480);
+        await sleep(200);
+        show('grpABmc');
+        const seg = document.getElementById('segABmc');
+        const N = 40;
+        for(let i=0;i<=N;i++){ seg.setAttribute('x2',(A.x+(B.x-A.x)*i/N).toFixed(1)); await sleep(700/N); }
+        await sleep(300);
+        await slideRuler('rulMC', 0, -150, 380);
+        step = 1;
+
+    } else if (step === 1) {
+        document.getElementById('stMC').textContent = texts[2];
+        const cmp = document.getElementById('cmpMC');
+        cmp.style.opacity = '1';
+        setC(A,A); await sleep(300);
+        await openC(A,P1,1200); await sleep(300);
+        await drawArc('arcAmc', A.x, A.y, r, aA0, aA1, 1400);
+        await sleep(500);
+        step = 2;
+
+    } else if (step === 2) {
+        document.getElementById('stMC').textContent = texts[3];
+        const cmp = document.getElementById('cmpMC');
+        cmp.style.opacity = '1';
+        const penCurr = {x:A.x+r*Math.cos(Math.atan2(P1.y-A.y,P1.x-A.x)), y:A.y+r*Math.sin(Math.atan2(P1.y-A.y,P1.x-A.x))};
+        const angToP1fromB = Math.atan2(P1.y-B.y,P1.x-B.x);
+        const penTarget = {x:B.x+r*Math.cos(angToP1fromB), y:B.y+r*Math.sin(angToP1fromB)};
+        await moveC(A, penCurr, B, penTarget, 900);
+        await sleep(300);
+        await drawArcPartial('arcBmc', B.x, B.y, r, aB_P1-0.35, aB_P1+0.35, 600);
+        await drawArcPartial('arcBmc', B.x, B.y, r, aB_P2-0.35, aB_P2+0.35, 600);
+        await sleep(400);
+        show('ptsmc');
+        await sleep(400);
+        cmp.style.opacity = '0';
+        step = 3;
+
+    } else if (step === 3) {
+        document.getElementById('stMC').textContent = texts[4];
+        show('medmc');
+        await sleep(500);
+        show('milmc');
+        step = 4;
+    }
+    animating = false;
+    updateButtons();
+}
+
+/* ── Reconstruction instantanée de l'état à l'étape n (utilisé par « précédent ») ── */
+function renderStep(n) {
+    hide('grpABmc'); document.getElementById('segABmc').setAttribute('x2', A.x.toString());
+    hide('arcAmc'); document.getElementById('arcAmc').setAttribute('d','');
+    hide('arcBmc'); document.getElementById('arcBmc').setAttribute('d','');
+    hide('ptsmc'); hide('medmc'); hide('milmc'); hide('cmpMC');
+    document.getElementById('rulMC').style.opacity = '0';
+    document.getElementById('rulMC').setAttribute('transform','translate(0,-150)');
+
+    document.getElementById('stMC').textContent = texts[n];
+    if (n >= 1) {
+        show('grpABmc');
+        document.getElementById('segABmc').setAttribute('x2', B.x.toString());
+    }
+    if (n >= 2) {
+        drawArcInstant('arcAmc', A.x, A.y, r, aA0, aA1, 60);
+    }
+    if (n === 2) {
+        show('cmpMC');
+        const pencil = {x:A.x+r*Math.cos(aA1), y:A.y+r*Math.sin(aA1)};
+        setC(A, pencil);
+    }
+    if (n >= 3) {
+        drawArcTwoPartialInstant('arcBmc', B.x, B.y, r,
+            {a0:aB_P1-0.35, a1:aB_P1+0.35}, {a0:aB_P2-0.35, a1:aB_P2+0.35}, 25);
+        show('ptsmc');
+    }
+    if (n >= 4) {
+        show('medmc'); show('milmc');
+    }
+    step = n;
+    updateButtons();
+}
+
+function nextStep() {
+    stopAuto();
+    advanceStep();
+}
+function prevStep() {
+    stopAuto();
+    if (step > 0) renderStep(step - 1);
+}
+function resetAnimation() {
+    stopAuto();
+    animating = false;
+    renderStep(0);
+}
+function toggleAuto() {
+    const btn = document.getElementById('btnAuto');
+    if (autoTimer) { stopAuto(); return; }
+    if (step >= 4) renderStep(0);
+    btn.textContent = '⏸ Pause';
+    btn.style.background = '#ff9800';
+    autoTimer = setInterval(() => {
+        if (step >= 4 || animating) { if (step>=4) stopAuto(); return; }
+        advanceStep();
+    }, 3200);
+}
+function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+    const btn = document.getElementById('btnAuto');
+    if (btn) { btn.textContent = '⏵ Automatique'; btn.style.background = ''; }
+}
+</script>
+</body>
+</html>

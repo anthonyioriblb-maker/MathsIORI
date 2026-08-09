@@ -26,3 +26,23 @@
 → Le modèle de référence utilise `display: block` pour `.step-box`. Si on le remplace par `display: flex; align-items: center;` pour centrer verticalement, les espaces entre le texte et les balises `<strong>` injectées via `innerHTML` disparaissent visuellement (les nœuds de texte ne contenant qu'un espace deviennent des items flex vides et sont ignorés par certains navigateurs).
 → Toujours garder `display: block` sur `.step-box` (le centrage vertical vient de `min-height` + `line-height`, pas de flex).
 → **Audit complet effectué le 19/07/2026** : ce bug préexistait aussi dans `chapitre02 - Gestion de donnees` (4 animations) et `chapitre07 - Les angles/cours.html`, et leurs équivalents dans COURSPRESENTATION. Tous corrigés (`display: block`). Les 24 fichiers `.step-box` du projet (MathsIORI + COURSPRESENTATION) sont désormais conformes.
+
+**6. Boutons obligatoires des animations pas-à-pas (juillet 2026)**
+→ Toute animation `animation-*.html` doit avoir **4 boutons**, dans cet ordre, avec ces couleurs exactes :
+```html
+<button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+<button class="btn-anim" onclick="nextStep()">Étape suivante ▶</button>
+<button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+<button class="btn-reset" onclick="resetAnimation()">Recommencer ↺</button>
+```
+```css
+.btn-reset { background: #e74c3c; color: white; /* ... */ }
+.btn-reset:hover { background: #c0392b; }
+.btn-auto  { background: #4caf50; color: white; /* ... */ }
+.btn-auto:hover { background: #388e3c; }
+```
+→ **Recommencer = rouge** (`#e74c3c`), **Automatique = vert** (`#4caf50`), qui passe en orange (`#ff9800`) + texte `⏸ Pause` pendant la lecture automatique (`toggleAuto()`/`stopAuto()`).
+→ `nextStep()` garde le comportement animé d'origine (CSS keyframes, `setTimeout` en cascade) — ne jamais le modifier pour l'avance normale.
+→ `prevStep()` ne peut pas "rejouer à l'envers" une animation faite de classes CSS/`setTimeout` chaînés (ordre non déterministe, marques qui réapparaissent au mauvais endroit). Utiliser à la place une fonction `renderStep(n)` qui recalcule **instantanément** (sans classes d'animation ni délais) l'état visuel final de l'étape `n`, en repartant de zéro (tout cacher, puis ne montrer que ce qui doit l'être à `n`). `toggleAuto()` relance simplement `nextStep()`/`advanceStep()` à intervalle régulier (adapter la durée à la durée réelle de chaque étape).
+→ Piège rencontré : un élément dont la visibilité ne dépend **que** d'une classe d'animation CSS (ex. `#sweepLine72.sweep-active { animation: ... forwards; }`, sans règle `#sweepLine72 { opacity: 0; }` par défaut) réapparaît à son état de repos (opacité 1 par défaut) si on retire juste la classe dans `renderStep()` — il faut alors le masquer explicitement (`el.style.opacity = '0'`).
+→ Exemples de référence complets : `6°/chapitre07 - Les angles/animations/` (les 6 fichiers) et `6°/chapitre08 - Fractions partie 1/animations/animation-placer-fraction-demi-droite.html`.

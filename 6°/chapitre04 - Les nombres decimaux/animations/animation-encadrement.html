@@ -39,6 +39,7 @@ body {
 }
 .chiffre-val.hl { background: #2196f3; color: white; transform: scale(1.15); box-shadow: 0 3px 8px rgba(33,150,243,0.4); }
 .chiffre-val.fade { opacity: 0.25; }
+.chiffre-val.implicit { border: 2px dashed #bbb; color: #aaa; }
 .chiffre-label { font-size: 0.62rem; color: #999; margin-top: 3px; font-weight: 600; }
 
 .virgule { font-size: 2.2rem; font-weight: bold; color: #333; margin: 0 2px 18px; }
@@ -93,11 +94,12 @@ button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allow
     <div class="chiffre-box"><div class="chiffre-val" id="c2">8</div><div class="chiffre-label">centièmes</div></div>
     <div class="chiffre-box"><div class="chiffre-val" id="c3">8</div><div class="chiffre-label">millièmes</div></div>
     <div class="chiffre-box"><div class="chiffre-val" id="c4">8</div><div class="chiffre-label">dix-millièmes</div></div>
+    <div class="chiffre-box" id="box5" style="opacity:0; transition:opacity 0.4s;"><div class="chiffre-val implicit" id="c5">0</div><div class="chiffre-label">cent-millièmes</div></div>
   </div>
 
   <div class="encadrement-row">
     <div class="borne min" id="borneMin">2</div>
-    <div class="signe">&lt;</div>
+    <div class="signe" id="signeMin">&lt;</div>
     <div class="borne visible" id="borneCentre">2,9888</div>
     <div class="signe">&lt;</div>
     <div class="borne max" id="borneMax">3</div>
@@ -132,13 +134,25 @@ const steps = [
     keep: [0,1,2], min: '2,98', max: '2,99'
   },
   {
-    msg: '✅ Plus on garde de rangs, plus l\'encadrement est <strong>précis</strong> : l\'écart entre les deux bornes devient de plus en plus petit.',
-    keep: [0,1,2], min: '2,98', max: '2,99'
+    msg: 'Encadrement au <strong>millième</strong> : on garde les chiffres jusqu\'aux <strong>millièmes</strong>.',
+    keep: [0,1,2,3], min: '2,988', max: '2,989'
+  },
+  {
+    msg: 'Encadrement au <strong>dix-millième</strong> : on garde les chiffres jusqu\'aux <strong>dix-millièmes</strong>, c\'est-à-dire tous les chiffres de 2,9888. La borne du bas est le dix-millième juste en dessous (<strong>2,9887</strong>), la borne du haut celui juste au-dessus (<strong>2,9889</strong>).',
+    keep: [0,1,2,3,4], min: '2,9887', max: '2,9889'
+  },
+  {
+    msg: 'Le chiffre des <strong>cent-millièmes</strong> n\'est pas écrit : il vaut <strong>0</strong>. On peut quand même continuer à encadrer plus finement en prenant le cent-millième juste en dessous (<strong>2,98879</strong>) et celui juste au-dessus (<strong>2,98881</strong>).',
+    keep: [0,1,2,3,4,5], min: '2,98879', max: '2,98881'
+  },
+  {
+    msg: '✅ Plus on garde de rangs, plus l\'encadrement est <strong>précis</strong> : l\'écart entre les bornes passe de <strong>1</strong> (à l\'unité) à <strong>0,1</strong>, puis <strong>0,01</strong>, <strong>0,001</strong>, et enfin <strong>0,00002</strong> au cent-millième.',
+    keep: [0,1,2,3,4,5], min: '2,98879', max: '2,98881'
   }
 ];
 
 let etape = -1, autoMode = false, autoTimer = null;
-const allIds = ['c0','c1','c2','c3','c4'];
+const allIds = ['c0','c1','c2','c3','c4','c5'];
 
 function applyStep(i) {
   const s = steps[i];
@@ -149,7 +163,7 @@ function applyStep(i) {
 
   allIds.forEach((id, idx) => {
     const el = document.getElementById(id);
-    el.className = 'chiffre-val';
+    el.className = (id === 'c5') ? 'chiffre-val implicit' : 'chiffre-val';
     if (s.keep.length === 0) return;
     if (s.keep.includes(idx)) el.classList.add('hl');
     else el.classList.add('fade');
@@ -161,6 +175,8 @@ function applyStep(i) {
   borneMax.textContent = s.max;
   borneMin.classList.toggle('visible', s.min !== '');
   borneMax.classList.toggle('visible', s.max !== '');
+  document.getElementById('signeMin').textContent = s.eqMin ? '≤' : '<';
+  document.getElementById('box5').style.opacity = s.keep.includes(5) ? '1' : '0';
 
   if (i >= steps.length - 1) stopAuto();
 }
@@ -171,9 +187,11 @@ function reset() {
   document.getElementById('progressBar').style.width = '0%';
   document.getElementById('btnPrev').disabled = true;
   document.getElementById('btnNext').disabled = false;
-  allIds.forEach(id => document.getElementById(id).className = 'chiffre-val');
+  allIds.forEach(id => document.getElementById(id).className = (id === 'c5') ? 'chiffre-val implicit' : 'chiffre-val');
   document.getElementById('borneMin').classList.remove('visible');
   document.getElementById('borneMax').classList.remove('visible');
+  document.getElementById('signeMin').textContent = '<';
+  document.getElementById('box5').style.opacity = '0';
 }
 
 function next() {

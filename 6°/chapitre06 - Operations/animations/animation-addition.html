@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Poser une addition</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20px 30px;
+}
+
+.wrap {
+  background: white; border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  padding: 20px; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  margin-bottom: 14px;
+}
+
+.step-text {
+  background: #e3f2fd; border-left: 5px solid #2196f3;
+  padding: 14px 20px; border-radius: 0 8px 8px 0;
+  font-size: 1rem; color: #1565c0; width: 100%;
+  min-height: 52px; display: block; line-height: 1.6;
+  font-weight: 500; margin-bottom: 14px;
+}
+
+.operation-posee {
+    font-family: 'Courier New', monospace;
+    font-size: 2em;
+    line-height: 1.1;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    margin: 10px auto;
+}
+
+.ligne-operation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 28px;
+    position: relative;
+}
+
+.chiffre {
+    width: 35px;
+    text-align: center;
+    display: inline-block;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.chiffre.visible { opacity: 1; }
+
+.chiffre.resultat {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.symbole {
+    width: 40px;
+    text-align: center;
+    display: inline-block;
+    opacity: 0;
+}
+
+.symbole.visible { opacity: 1; }
+
+.ligne-separation {
+    height: 3px;
+    background-color: black;
+    margin: 1px 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 240px;
+    margin-left: auto;
+}
+
+.ligne-separation.visible { opacity: 1; }
+
+.retenue {
+    position: absolute;
+    top: -25px;
+    font-size: 0.6em;
+    color: #e74c3c;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.retenue.visible { opacity: 1; }
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+button {
+  padding: 11px 22px; border: none; border-radius: 8px;
+  font-size: 0.95rem; font-weight: bold; cursor: pointer;
+  transition: all 0.25s; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+button:hover { transform: translateY(-2px); }
+button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; }
+#btnReset { background: #f44336; color: white; }
+#btnNext  { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="step-text" id="stepText">
+    Cliquez sur « Étape suivante » pour démarrer l'animation
+  </div>
+
+  <div class="operation-posee" id="additionOp">
+    <!-- Ligne 1 -->
+    <div class="ligne-operation">
+        <span class="symbole">&nbsp;</span>
+        <span class="chiffre" id="a1_1">&nbsp;</span>
+        <span class="chiffre" id="a1_2">1</span>
+        <span class="chiffre" id="a1_3">2</span>
+        <span class="chiffre" id="a1_v">,</span>
+        <span class="chiffre" id="a1_4">4</span>
+        <span class="chiffre" id="a1_5">&nbsp;</span>
+        <span class="chiffre" id="a1_6">&nbsp;</span>
+        <span class="retenue" id="ret_1" style="left: 120px;">1</span>
+        <span class="retenue" id="ret_2" style="left: 80px;">1</span>
+    </div>
+
+    <!-- Ligne 2 -->
+    <div class="ligne-operation">
+        <span class="symbole visible" id="a2_plus">+</span>
+        <span class="chiffre" id="a2_1">&nbsp;</span>
+        <span class="chiffre" id="a2_2">&nbsp;</span>
+        <span class="chiffre" id="a2_3">3</span>
+        <span class="chiffre" id="a2_v">,</span>
+        <span class="chiffre" id="a2_4">8</span>
+        <span class="chiffre" id="a2_5">5</span>
+        <span class="chiffre" id="a2_6">9</span>
+    </div>
+
+    <!-- Ligne 3 -->
+    <div class="ligne-operation">
+        <span class="symbole visible" id="a3_plus">+</span>
+        <span class="chiffre" id="a3_1">5</span>
+        <span class="chiffre" id="a3_2">6</span>
+        <span class="chiffre" id="a3_3">7</span>
+        <span class="chiffre" id="a3_v">,</span>
+        <span class="chiffre" id="a3_4">7</span>
+        <span class="chiffre" id="a3_5">&nbsp;</span>
+        <span class="chiffre" id="a3_6">&nbsp;</span>
+    </div>
+
+    <!-- Ligne de séparation -->
+    <div class="ligne-separation" id="ligne_add"></div>
+
+    <!-- Résultat -->
+    <div class="ligne-operation">
+        <span class="symbole">&nbsp;</span>
+        <span class="chiffre resultat" id="res_1">5</span>
+        <span class="chiffre resultat" id="res_2">8</span>
+        <span class="chiffre resultat" id="res_3">3</span>
+        <span class="chiffre resultat" id="res_4">,</span>
+        <span class="chiffre resultat" id="res_5">9</span>
+        <span class="chiffre resultat" id="res_6">5</span>
+        <span class="chiffre resultat" id="res_7">9</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="btnNext" onclick="nextStep()">▶ Étape suivante</button>
+    <button id="btnReset" onclick="resetAnimation()">🔄 Recommencer</button>
+  </div>
+</div>
+
+<script>
+let step = 0;
+
+function nextStep() {
+    const stepText = document.getElementById('stepText');
+
+    switch (step) {
+        case 0:
+            ['a1_2', 'a1_3', 'a1_v', 'a1_4', 'a2_3', 'a2_v', 'a2_4', 'a2_5', 'a2_6',
+             'a3_1', 'a3_2', 'a3_3', 'a3_v', 'a3_4'].forEach(id => {
+                document.getElementById(id).classList.add('visible');
+            });
+            stepText.innerHTML = 'Les nombres sont alignés : virgules, unités, dizaines, centaines...';
+            break;
+        case 1:
+            document.getElementById('ligne_add').classList.add('visible');
+            stepText.innerHTML = 'Colonne de droite (millièmes) : 9 (je pose 9)';
+            document.getElementById('res_7').classList.add('visible');
+            break;
+        case 2:
+            stepText.innerHTML = 'Centièmes : 5 (je pose 5)';
+            document.getElementById('res_6').classList.add('visible');
+            break;
+        case 3:
+            stepText.innerHTML = 'Dixièmes : 4 + 8 + 7 = 19 (je pose 9 et je retiens 1)';
+            document.getElementById('res_5').classList.add('visible');
+            document.getElementById('res_4').classList.add('visible');
+            document.getElementById('ret_1').classList.add('visible');
+            break;
+        case 4:
+            stepText.innerHTML = 'Unités : 2 + 3 + 7 = 12, plus la retenue 1 = 13 (je pose 3 et je retiens 1)';
+            document.getElementById('res_3').classList.add('visible');
+            document.getElementById('ret_2').classList.add('visible');
+            break;
+        case 5:
+            stepText.innerHTML = 'Dizaines : 1 + 6 = 7, plus la retenue 1 = 8 (je pose 8)';
+            document.getElementById('res_2').classList.add('visible');
+            break;
+        case 6:
+            stepText.innerHTML = 'Centaines : 5 (je pose 5)';
+            document.getElementById('res_1').classList.add('visible');
+            break;
+        case 7:
+            stepText.innerHTML = '<strong style="color: #2ecc71;">✓ Résultat : 12,4 + 3,859 + 567,7 = 583,959</strong>';
+            document.getElementById('btnNext').disabled = true;
+            break;
+    }
+    step++;
+}
+
+function resetAnimation() {
+    step = 0;
+    document.getElementById('btnNext').disabled = false;
+    document.getElementById('stepText').innerHTML = 'Cliquez sur « Étape suivante » pour démarrer l\'animation';
+
+    ['a1_2', 'a1_3', 'a1_v', 'a1_4', 'a2_3', 'a2_v', 'a2_4', 'a2_5', 'a2_6',
+     'a3_1', 'a3_2', 'a3_3', 'a3_v', 'a3_4', 'ligne_add',
+     'ret_1', 'ret_2', 'res_1', 'res_2', 'res_3', 'res_4', 'res_5', 'res_6', 'res_7'].forEach(id => {
+        document.getElementById(id).classList.remove('visible');
+    });
+}
+</script>
+</body>
+</html>

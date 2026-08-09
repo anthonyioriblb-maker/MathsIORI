@@ -45,6 +45,7 @@ body {
 .chiffre-val.hl-a { background: #2196f3; color: white; transform: scale(1.15); box-shadow: 0 3px 8px rgba(33,150,243,0.4); }
 .chiffre-val.hl-b { background: #e53935; color: white; transform: scale(1.15); box-shadow: 0 3px 8px rgba(229,57,53,0.4); }
 .chiffre-val.hl-milieu { background: #4caf50; color: white; transform: scale(1.15); box-shadow: 0 3px 8px rgba(76,175,80,0.4); }
+.chiffre-val.implicit { border: 2px dashed #bbb; color: #aaa; }
 .chiffre-label { font-size: 0.62rem; color: #999; margin-top: 3px; font-weight: 600; }
 
 .virgule { font-size: 2.2rem; font-weight: bold; color: #333; margin: 0 2px 18px; }
@@ -87,27 +88,59 @@ button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allow
 <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
 
 <div class="wrap">
-  <div class="nombres-row">
-    <div class="nombre-bloc" id="blocA">
-      <div class="chiffre-box"><div class="chiffre-val" id="cA0">4</div><div class="chiffre-label">unités</div></div>
-      <div class="virgule">,</div>
-      <div class="chiffre-box"><div class="chiffre-val" id="cA1">1</div><div class="chiffre-label">dixièmes</div></div>
+  <div id="ex1">
+    <div class="nombres-row">
+      <div class="nombre-bloc" id="blocA">
+        <div class="chiffre-box"><div class="chiffre-val" id="cA0">4</div><div class="chiffre-label">unités</div></div>
+        <div class="virgule">,</div>
+        <div class="chiffre-box"><div class="chiffre-val" id="cA1">1</div><div class="chiffre-label">dixièmes</div></div>
+      </div>
+      <div class="signe">&lt; ... &lt;</div>
+      <div class="nombre-bloc" id="blocB">
+        <div class="chiffre-box"><div class="chiffre-val" id="cB0">4</div><div class="chiffre-label">unités</div></div>
+        <div class="virgule">,</div>
+        <div class="chiffre-box"><div class="chiffre-val" id="cB1">3</div><div class="chiffre-label">dixièmes</div></div>
+      </div>
     </div>
-    <div class="signe">&lt; ... &lt;</div>
-    <div class="nombre-bloc" id="blocB">
-      <div class="chiffre-box"><div class="chiffre-val" id="cB0">4</div><div class="chiffre-label">unités</div></div>
+
+    <div class="nombre-bloc resultat" id="blocR">
+      <div class="chiffre-box"><div class="chiffre-val" id="cR0">4</div><div class="chiffre-label">unités</div></div>
       <div class="virgule">,</div>
-      <div class="chiffre-box"><div class="chiffre-val" id="cB1">3</div><div class="chiffre-label">dixièmes</div></div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cR1">2</div><div class="chiffre-label">dixièmes</div></div>
     </div>
+
+    <div class="remarque-anim" id="remarque">D'autres réponses conviennent aussi : par exemple 4,15 ou 4,25 (en ajoutant un chiffre des centièmes).</div>
   </div>
 
-  <div class="nombre-bloc resultat" id="blocR">
-    <div class="chiffre-box"><div class="chiffre-val" id="cR0">4</div><div class="chiffre-label">unités</div></div>
-    <div class="virgule">,</div>
-    <div class="chiffre-box"><div class="chiffre-val" id="cR1">2</div><div class="chiffre-label">dixièmes</div></div>
-  </div>
+  <div id="ex2" style="display:none;">
+    <div class="nombres-row">
+      <div class="nombre-bloc" id="blocA2">
+        <div class="chiffre-box"><div class="chiffre-val" id="cA20">7</div><div class="chiffre-label">unités</div></div>
+        <div class="virgule">,</div>
+        <div class="chiffre-box"><div class="chiffre-val" id="cA21">2</div><div class="chiffre-label">dixièmes</div></div>
+        <div class="chiffre-box"><div class="chiffre-val" id="cA22">4</div><div class="chiffre-label">centièmes</div></div>
+        <div class="chiffre-box" id="boxA23" style="opacity:0; transition:opacity 0.4s;"><div class="chiffre-val implicit" id="cA23">0</div><div class="chiffre-label">millièmes</div></div>
+      </div>
+      <div class="signe">&lt; ... &lt;</div>
+      <div class="nombre-bloc" id="blocB2">
+        <div class="chiffre-box"><div class="chiffre-val" id="cB20">7</div><div class="chiffre-label">unités</div></div>
+        <div class="virgule">,</div>
+        <div class="chiffre-box"><div class="chiffre-val" id="cB21">2</div><div class="chiffre-label">dixièmes</div></div>
+        <div class="chiffre-box"><div class="chiffre-val" id="cB22">5</div><div class="chiffre-label">centièmes</div></div>
+        <div class="chiffre-box" id="boxB23" style="opacity:0; transition:opacity 0.4s;"><div class="chiffre-val implicit" id="cB23">0</div><div class="chiffre-label">millièmes</div></div>
+      </div>
+    </div>
 
-  <div class="remarque-anim" id="remarque">D'autres réponses conviennent aussi : par exemple 4,15 ou 4,25 (en ajoutant un chiffre des centièmes).</div>
+    <div class="nombre-bloc resultat" id="blocR2">
+      <div class="chiffre-box"><div class="chiffre-val" id="cR20">7</div><div class="chiffre-label">unités</div></div>
+      <div class="virgule">,</div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cR21">2</div><div class="chiffre-label">dixièmes</div></div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cR22">4</div><div class="chiffre-label">centièmes</div></div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cR23">5</div><div class="chiffre-label">millièmes</div></div>
+    </div>
+
+    <div class="remarque-anim" id="remarque2">D'autres réponses conviennent aussi : tout nombre entre 7,241 et 7,249.</div>
+  </div>
 </div>
 
 <div class="step-box" id="stepBox"></div>
@@ -140,6 +173,26 @@ const steps = [
   {
     msg: 'Quand il n\'y a plus de place au rang des dixièmes (nombres qui se suivent), on ajoute un rang de plus (centièmes) pour trouver de la place.',
     show: 'remarque'
+  },
+  {
+    msg: '<strong>Deuxième exemple :</strong> intercaler un nombre entre <strong>7,24</strong> et <strong>7,25</strong>.',
+    show: 'ex2-none'
+  },
+  {
+    msg: 'On compare rang par rang : les <strong>unités</strong> (7 = 7) et les <strong>dixièmes</strong> (2 = 2) sont égaux.',
+    show: 'ex2-equal'
+  },
+  {
+    msg: 'Au rang des <strong>centièmes</strong> : 7,24 a un <strong>4</strong>, 7,25 a un <strong>5</strong>. Ce sont deux chiffres qui se suivent : il n\'y a pas de place à ce rang !',
+    show: 'ex2-centiemes'
+  },
+  {
+    msg: 'On ajoute alors un rang de plus, les <strong>millièmes</strong> : 7,24 = <strong>7,240</strong> et 7,25 = <strong>7,250</strong>. Il y a maintenant de la place : le <strong>5</strong>.',
+    show: 'ex2-millieme'
+  },
+  {
+    msg: '✅ <strong>7,24 &lt; 7,245 &lt; 7,25</strong> : 7,245 convient.',
+    show: 'ex2-resultat'
   }
 ];
 
@@ -149,6 +202,13 @@ function clearAll() {
   ['cA0','cA1','cB0','cB1'].forEach(id => document.getElementById(id).className = 'chiffre-val');
   document.getElementById('blocR').classList.remove('visible');
   document.getElementById('remarque').classList.remove('visible');
+  ['cA20','cA21','cA22','cB20','cB21','cB22'].forEach(id => document.getElementById(id).className = 'chiffre-val');
+  document.getElementById('boxA23').style.opacity = '0';
+  document.getElementById('boxB23').style.opacity = '0';
+  document.getElementById('cA23').className = 'chiffre-val implicit';
+  document.getElementById('cB23').className = 'chiffre-val implicit';
+  document.getElementById('blocR2').classList.remove('visible');
+  document.getElementById('remarque2').classList.remove('visible');
 }
 
 function applyStep(i) {
@@ -159,6 +219,10 @@ function applyStep(i) {
   document.getElementById('btnNext').disabled = (i >= steps.length - 1);
 
   clearAll();
+
+  const isEx2 = s.show.startsWith('ex2');
+  document.getElementById('ex1').style.display = isEx2 ? 'none' : '';
+  document.getElementById('ex2').style.display = isEx2 ? '' : 'none';
 
   if (s.show === 'equal' || s.show === 'dixiemes' || s.show === 'resultat' || s.show === 'remarque') {
     document.getElementById('cA0').classList.add('hl-equal');
@@ -176,6 +240,27 @@ function applyStep(i) {
     document.getElementById('remarque').classList.add('visible');
     stopAuto();
   }
+
+  if (s.show === 'ex2-equal' || s.show === 'ex2-centiemes' || s.show === 'ex2-millieme' || s.show === 'ex2-resultat') {
+    document.getElementById('cA20').classList.add('hl-equal');
+    document.getElementById('cB20').classList.add('hl-equal');
+    document.getElementById('cA21').classList.add('hl-equal');
+    document.getElementById('cB21').classList.add('hl-equal');
+  }
+  if (s.show === 'ex2-centiemes' || s.show === 'ex2-millieme' || s.show === 'ex2-resultat') {
+    document.getElementById('cA22').classList.add('hl-a');
+    document.getElementById('cB22').classList.add('hl-b');
+  }
+  if (s.show === 'ex2-millieme' || s.show === 'ex2-resultat') {
+    document.getElementById('boxA23').style.opacity = '1';
+    document.getElementById('boxB23').style.opacity = '1';
+  }
+  if (s.show === 'ex2-resultat') {
+    document.getElementById('blocR2').classList.add('visible');
+    document.getElementById('cR23').classList.add('hl-milieu');
+    document.getElementById('remarque2').classList.add('visible');
+    stopAuto();
+  }
 }
 
 function reset() {
@@ -184,6 +269,8 @@ function reset() {
   document.getElementById('progressBar').style.width = '0%';
   document.getElementById('btnPrev').disabled = true;
   document.getElementById('btnNext').disabled = false;
+  document.getElementById('ex1').style.display = '';
+  document.getElementById('ex2').style.display = 'none';
   clearAll();
 }
 

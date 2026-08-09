@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Distance d'un point à une droite</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20px 30px;
+}
+
+.wrap {
+  background: white; border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  padding: 20px; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  margin-bottom: 14px;
+}
+
+svg { display: block; margin: 0 auto; background: #fafafa; border-radius: 8px; }
+
+.step-box {
+  background: #e3f2fd; border-left: 5px solid #2196f3;
+  padding: 14px 20px; border-radius: 0 8px 8px 0;
+  font-size: 1rem; color: #1565c0; width: 100%;
+  min-height: 52px; display: block; line-height: 1.6;
+  font-weight: 500; margin-bottom: 14px;
+}
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+button {
+  padding: 11px 22px; border: none; border-radius: 8px;
+  font-size: 0.95rem; font-weight: bold; cursor: pointer;
+  transition: all 0.25s; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+button:hover { transform: translateY(-2px); }
+button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; }
+#btnReset { background: #f44336; color: white; }
+#btnPlay  { background: #4caf50; color: white; }
+#btnNext  { background: #2196f3; color: white; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="step-box" id="stepBox">
+    <strong>Temps 1 :</strong> le point <strong>M</strong> se déplace sur la droite (d). Observe la distance <strong>AM</strong> : elle varie sans arrêt.
+  </div>
+
+  <svg id="anim" width="700" height="450" viewBox="0 0 700 450">
+    <!-- Droite (d) oblique -->
+    <line x1="96.3" y1="392.3" x2="603.7" y2="207.7" stroke="#333" stroke-width="2.5"/>
+    <text x="608" y="200" font-size="20" fill="#333" font-weight="bold">(d)</text>
+
+    <!-- Point A (fixe) -->
+    <line x1="313.2" y1="209.4" x2="325.2" y2="221.4" stroke="#2980b9" stroke-width="3"/>
+    <line x1="325.2" y1="209.4" x2="313.2" y2="221.4" stroke="#2980b9" stroke-width="3"/>
+    <text x="330" y="213" font-size="22" fill="#2980b9" font-weight="bold">A</text>
+
+    <!-- Segment AM -->
+    <line id="segAM" x1="319.2" y1="215.4" x2="350" y2="300" stroke="#e74c3c" stroke-width="2.5"/>
+
+    <!-- Angle droit en H : symbole de la perpendicularité, apparaît au Temps 2 quand M s'approche de H -->
+    <polyline id="markH" points="363.2,295.2 358.4,282.1 345.2,286.8"
+              fill="none" stroke="#555" stroke-width="1.8" opacity="0"/>
+
+    <!-- Perpendiculaire tracée au préalable, repère fixe que M va rejoindre -->
+    <line id="perpGuide" x1="397.9" y1="431.6" x2="302.1" y2="168.4"
+          stroke="#27ae60" stroke-width="2" stroke-dasharray="6,3" opacity="0"/>
+
+    <!-- Point M (mobile) -->
+    <g id="pointM">
+      <line x1="-6" y1="-6" x2="6" y2="6" stroke="#e67e22" stroke-width="3"/>
+      <line x1="6" y1="-6" x2="-6" y2="6" stroke="#e67e22" stroke-width="3"/>
+      <text x="2" y="24" font-size="22" fill="#e67e22" font-weight="bold">M</text>
+    </g>
+
+    <!-- Étiquette de distance -->
+    <text id="labelAM" x="30" y="30" font-size="20" fill="#e74c3c" font-weight="bold">AM = 5,00 cm</text>
+  </svg>
+
+  <div class="controls">
+    <button id="btnPlay" onclick="togglePlay()">▶ Démarrer</button>
+    <button id="btnNext" onclick="goNext()" disabled>Suivant ▶</button>
+    <button id="btnReset" onclick="resetAnim()">↺ Recommencer</button>
+  </div>
+</div>
+
+<script>
+// Géométrie : (d) oblique à -20°, A fixe, H pied de la perpendiculaire, M mobile sur (d)
+const H = {x:350, y:300};
+const A = {x:319.2, y:215.4};
+const dir = {x: 0.9397, y: -0.3420};   // direction de (d)
+const SCALE = 30;      // px par cm
+const AH = 90;         // distance AH en px (= 3 cm)
+const AMPLITUDE = 120;      // amplitude du va-et-vient de M (px) = 4 cm de chaque côté de H (AM max = 5 cm, triangle 3-4-5)
+const PERIOD1 = 7000;       // Temps 1 : durée d'un aller-retour complet (ms), plus lent (boucle jusqu'au clic sur « Suivant »)
+const PHASE2_DURATION = 6500;  // Temps 2 : durée totale de l'amortissement jusqu'à l'arrêt en H (ms)
+const PHASE2_CYCLES = 2;       // nombre d'allers-retours (amortis) pendant le Temps 2
+const PHASE2_OMEGA = 2 * Math.PI * PHASE2_CYCLES / PHASE2_DURATION; // vitesse angulaire du mouvement amorti
+const PHASE2_GAMMA = Math.log(50) / PHASE2_DURATION;                // taux d'amortissement (amplitude ÷50 en fin de course)
+const PHASE_SHIFT = 0.25;   // décalage de phase : au départ, M est à l'extrémité (AM = 5 cm), pas déjà sur H
+
+function initialOffset() {
+  return AMPLITUDE * Math.sin(2 * Math.PI * PHASE_SHIFT);
+}
+
+const MSG_PHASE1 = '<strong>Temps 1 :</strong> le point <strong>M</strong> se déplace sur la droite (d). Observe la distance <strong>AM</strong> : elle varie sans arrêt. Clique sur « Suivant » quand tu es prêt.';
+const MSG_PHASE2 = '<strong>Temps 2 :</strong> voici la perpendiculaire à (d) passant par A, tracée à l\'avance. Regarde M ralentir en s\'en approchant, jusqu\'à s\'arrêter pile au pied de cette perpendiculaire.';
+const MSG_END    = '✅ La distance la plus courte entre A et la droite (d) est atteinte quand <strong>(AM) est perpendiculaire</strong> à (d) : c\'est la distance AH = 3,00 cm.';
+
+let playing = false;
+let rafId = null;
+let mode = 'phase1';   // 'phase1' | 'phase2' | 'done'
+let elapsed = 0;        // temps écoulé dans le Temps 1 (ms), conservé pendant une pause
+let lastTimestamp = null;
+let phase2Angle0 = 0;   // angle de M (dans le cycle) au moment où le Temps 2 démarre
+let phase2Elapsed = 0;
+let phase2LastTimestamp = null;
+
+function distCm(mx, my) {
+  const dx = mx - A.x, dy = my - A.y;
+  return Math.sqrt(dx*dx + dy*dy) / SCALE;
+}
+
+function render(offsetPx) {
+  const Mx = H.x + offsetPx * dir.x;
+  const My = H.y + offsetPx * dir.y;
+
+  document.getElementById('pointM').setAttribute('transform', `translate(${Mx},${My})`);
+
+  const seg = document.getElementById('segAM');
+  seg.setAttribute('x2', Mx);
+  seg.setAttribute('y2', My);
+
+  const amCm = distCm(Mx, My);
+  // Le repérage "proche de H" (vert) n'est révélé qu'à partir du Temps 2 : en Temps 1, on ne montre pas encore la perpendiculaire.
+  const near = mode !== 'phase1' && Math.abs(offsetPx) < 4;
+
+  seg.setAttribute('stroke', near ? '#27ae60' : '#e74c3c');
+  // Le symbole de l'angle droit en H apparaît dès le Temps 2 et reste affiché en permanence (pas seulement quand M est proche de H).
+  document.getElementById('markH').style.opacity = (mode === 'phase1') ? '0' : '1';
+
+  const label = document.getElementById('labelAM');
+  label.setAttribute('fill', near ? '#27ae60' : '#e74c3c');
+  label.textContent = `AM = ${amCm.toFixed(2).replace('.', ',')} cm`;
+}
+
+function frame(now) {
+  if (mode === 'phase1') {
+    // Temps 1 : va-et-vient continu, en boucle jusqu'au clic sur « Suivant »
+    if (lastTimestamp !== null) elapsed += now - lastTimestamp;
+    lastTimestamp = now;
+    const phase = ((elapsed / PERIOD1) + PHASE_SHIFT) % 1;
+    render(AMPLITUDE * Math.sin(phase * 2 * Math.PI));
+  } else if (mode === 'phase2') {
+    // Temps 2 : M continue à bouger doucement (oscillation amortie) pour qu'on voie encore la distance varier,
+    // tout en se rapprochant de plus en plus du pied de la perpendiculaire, jusqu'à l'arrêt pile en H.
+    if (phase2LastTimestamp !== null) phase2Elapsed += now - phase2LastTimestamp;
+    phase2LastTimestamp = now;
+    const tau = Math.min(phase2Elapsed, PHASE2_DURATION);
+    const envelope = Math.exp(-PHASE2_GAMMA * tau);
+    const angle = phase2Angle0 + PHASE2_OMEGA * tau;
+    render(AMPLITUDE * envelope * Math.sin(angle));
+    if (phase2Elapsed >= PHASE2_DURATION) {
+      mode = 'done';
+      render(0); // arrêt net, pile en H
+      document.getElementById('stepBox').innerHTML = MSG_END;
+      playing = false;
+      const btn = document.getElementById('btnPlay');
+      btn.textContent = '↺ Revoir';
+      btn.style.background = '#4caf50';
+      btn.disabled = true;
+      document.getElementById('btnNext').disabled = true;
+      return;
+    }
+  }
+
+  if (playing) rafId = requestAnimationFrame(frame);
+}
+
+function togglePlay() {
+  const btn = document.getElementById('btnPlay');
+  if (mode === 'done') { resetAnim(); return; }
+  if (playing) {
+    playing = false;
+    cancelAnimationFrame(rafId);
+    lastTimestamp = null;
+    phase2LastTimestamp = null;
+    btn.textContent = '▶ Reprendre';
+    btn.style.background = '#4caf50';
+  } else {
+    playing = true;
+    btn.textContent = '⏸ Pause';
+    btn.style.background = '#ff9800';
+    if (mode === 'phase1') {
+      document.getElementById('btnNext').disabled = false;
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+}
+
+function goNext() {
+  if (mode !== 'phase1') return;
+  // capture l'angle actuel de M pour démarrer l'amortissement exactement à partir de là
+  const phase = ((elapsed / PERIOD1) + PHASE_SHIFT) % 1;
+  phase2Angle0 = phase * 2 * Math.PI;
+  mode = 'phase2';
+  phase2Elapsed = 0;
+  phase2LastTimestamp = null;
+  document.getElementById('btnNext').disabled = true;
+  document.getElementById('perpGuide').style.opacity = '1';
+  document.getElementById('stepBox').innerHTML = MSG_PHASE2;
+
+  if (!playing) {
+    playing = true;
+    const btn = document.getElementById('btnPlay');
+    btn.textContent = '⏸ Pause';
+    btn.style.background = '#ff9800';
+    rafId = requestAnimationFrame(frame);
+  }
+}
+
+function resetAnim() {
+  playing = false;
+  cancelAnimationFrame(rafId);
+  mode = 'phase1';
+  elapsed = 0;
+  lastTimestamp = null;
+  phase2Angle0 = 0;
+  phase2Elapsed = 0;
+  phase2LastTimestamp = null;
+  document.getElementById('perpGuide').style.opacity = '0';
+  document.getElementById('stepBox').innerHTML = MSG_PHASE1;
+  const btn = document.getElementById('btnPlay');
+  btn.textContent = '▶ Démarrer';
+  btn.style.background = '#4caf50';
+  btn.disabled = false;
+  document.getElementById('btnNext').disabled = true;
+  render(initialOffset());
+}
+
+// État initial : M à l'extrémité, pas déjà sur H
+render(initialOffset());
+</script>
+</body>
+</html>

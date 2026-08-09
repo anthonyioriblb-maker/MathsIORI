@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Nommer les angles d'un triangle</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: white;
+        padding: 10px;
+    }
+    .btn-anim {
+        background: #2196f3; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-anim:hover { background: #1565c0; }
+    .btn-reset {
+        background: #e74c3c; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-reset:hover { background: #c0392b; }
+    .btn-auto {
+        background: #4caf50; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-auto:hover { background: #388e3c; }
+    .angle {
+        position: relative;
+        display: inline-block;
+    }
+    .angle::before {
+        content: '^';
+        position: absolute;
+        top: -0.5em;
+        left: 50%;
+        transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
+        font-size: 1.5em;
+        font-weight: 300;
+    }
+</style>
+</head>
+<body>
+
+<div style="text-align:center; background:white; padding:10px; border-radius:5px;">
+    <!--
+        Triangle : A=(60,250)  B=(250,25)  C=(440,250)
+        SVG theta = atan2(dy_screen/r, dx/r), sweep=0 décroissant, sweep=1 croissant
+
+        ── Angle BAC, sommet A ──
+          P_AC=(100,250) → θ=0°   P_AB=(86,219) → θ=−51° (≡309°)
+          Petit arc : θ décroissant de 0° à −51° = sweep=0  ✓ bombe vers l'intérieur (vers y<250)
+
+        ── Angle ABC, sommet B ──
+          P_BA=(227,52) → θ=130°   P_BC=(273,52) → θ=50°
+          Petit arc : θ décroissant de 130° à 50° = sweep=0  ✓ bombe vers y=61 (intérieur)
+
+        ── Angle BCA, sommet C ──
+          P_CA=(400,250) → θ=180°   P_CB=(414,219) → θ=230°
+          Petit arc : θ croissant de 180° à 230° = sweep=1  ✓ bombe vers (404,233) intérieur
+    -->
+    <svg id="svgTriEx" width="500" height="290" viewBox="-15 -15 530 320" style="max-width:100%; height:auto;">
+
+        <!-- Côtés du triangle -->
+        <line x1="60" y1="250" x2="250" y2="25"  stroke="black" stroke-width="2.5"/>
+        <line x1="250" y1="25"  x2="440" y2="250" stroke="black" stroke-width="2.5"/>
+        <line x1="60" y1="250"  x2="440" y2="250" stroke="black" stroke-width="2.5"/>
+
+        <!-- Sommets avec croix -->
+        <line x1="54" y1="244" x2="66" y2="256" stroke="black" stroke-width="2"/>
+        <line x1="66" y1="244" x2="54" y2="256" stroke="black" stroke-width="2"/>
+        <text x="36"  y="265" font-size="22" font-weight="bold" fill="black">A</text>
+        <line x1="244" y1="19" x2="256" y2="31" stroke="black" stroke-width="2"/>
+        <line x1="256" y1="19" x2="244" y2="31" stroke="black" stroke-width="2"/>
+        <text x="240" y="18"  font-size="22" font-weight="bold" fill="black">B</text>
+        <line x1="434" y1="244" x2="446" y2="256" stroke="black" stroke-width="2"/>
+        <line x1="446" y1="244" x2="434" y2="256" stroke="black" stroke-width="2"/>
+        <text x="448" y="265" font-size="22" font-weight="bold" fill="black">C</text>
+
+        <!-- ── Angle BAC (rouge) ── -->
+        <g id="exAngleA" opacity="0" style="transition:opacity 0.6s;">
+            <path d="M 60 250 L 100 250 A 40 40 0 0 0 86 219 Z"
+                  fill="rgba(231,76,60,0.2)" stroke="none"/>
+            <path d="M 100 250 A 40 40 0 0 0 86 219"
+                  stroke="#e74c3c" stroke-width="2.8" fill="none"/>
+            <!-- label : chapeau sur A (lettre du sommet) -->
+            <text x="108" y="248" font-size="15" fill="#e74c3c" font-weight="bold">BAC</text>
+            <path d="M 115 233 L 121 228 L 127 233"
+                  stroke="#e74c3c" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+        </g>
+
+        <!-- ── Angle ABC (bleu) — sweep=0 (θ décroissant 130°→50°) ── -->
+        <g id="exAngleB" opacity="0" style="transition:opacity 0.6s;">
+            <path d="M 250 25 L 227 52 A 36 36 0 0 0 273 52 Z"
+                  fill="rgba(52,152,219,0.2)" stroke="none"/>
+            <path d="M 227 52 A 36 36 0 0 0 273 52"
+                  stroke="#2980b9" stroke-width="2.8" fill="none"/>
+            <!-- label : chapeau sur B (lettre du sommet) -->
+            <text x="230" y="92" font-size="15" fill="#2980b9" font-weight="bold">ABC</text>
+            <path d="M 237 77 L 243 72 L 249 77"
+                  stroke="#2980b9" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+        </g>
+
+        <!-- ── Angle BCA (vert) — sweep=1 (θ croissant 180°→230°) ── -->
+        <g id="exAngleC" opacity="0" style="transition:opacity 0.6s;">
+            <path d="M 440 250 L 400 250 A 40 40 0 0 1 414 219 Z"
+                  fill="rgba(39,174,96,0.2)" stroke="none"/>
+            <path d="M 400 250 A 40 40 0 0 1 414 219"
+                  stroke="#27ae60" stroke-width="2.8" fill="none"/>
+            <!-- label : chapeau sur C (lettre du sommet) -->
+            <text x="364" y="248" font-size="15" fill="#27ae60" font-weight="bold">BCA</text>
+            <path d="M 371 233 L 377 228 L 383 233"
+                  stroke="#27ae60" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+        </g>
+
+    </svg>
+
+    <!-- Message d'état -->
+    <div id="exTxtAngle" style="min-height:28px; font-size:15px; color:#555; font-style:italic; margin:4px 0 8px;">
+        Cliquez sur « Étape suivante » pour faire apparaître les angles.
+    </div>
+
+    <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" onclick="nextStep()">Étape suivante ▶</button>
+    <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation()">Recommencer ↺</button>
+</div>
+
+<div id="exRecap" style="opacity:0; transition:opacity 0.6s; margin-top:8px;">
+Les trois angles sont :
+<span class="angle" style="color:#e74c3c;">BAC</span> (ou <span class="angle" style="color:#e74c3c;">CAB</span>),
+&nbsp;<span class="angle" style="color:#2980b9;">ABC</span> (ou <span class="angle" style="color:#2980b9;">CBA</span>),
+&nbsp;<span class="angle" style="color:#27ae60;">BCA</span> (ou <span class="angle" style="color:#27ae60;">ACB</span>).
+</div>
+
+<script>
+let step = 0;
+let autoTimer = null;
+const texts = [
+    "Cliquez sur « Étape suivante » pour faire apparaître les angles.",
+    "L'angle <span class='angle' style='color:#e74c3c;'>BAC</span> a son sommet en <strong>A</strong>. Ses côtés sont [AB) et [AC).",
+    "L'angle <span class='angle' style='color:#2980b9;'>ABC</span> a son sommet en <strong>B</strong>. Ses côtés sont [BA) et [BC).",
+    "L'angle <span class='angle' style='color:#27ae60;'>BCA</span> a son sommet en <strong>C</strong>. Ses côtés sont [CB) et [CA)."
+];
+
+function setOpacity(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute('opacity', v);
+}
+
+function fade(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.style.opacity = v;
+}
+
+function updateButtons() {
+    const btnPrec = document.getElementById('btnPrec');
+    if (btnPrec) btnPrec.disabled = (step <= 0);
+}
+
+// Applique uniquement la nouveauté de l'étape n (ne touche pas ce qui est déjà affiché)
+function applyStepChanges(n) {
+    document.getElementById('exTxtAngle').innerHTML = texts[n];
+    if (n >= 1) setOpacity('exAngleA', 1);
+    if (n >= 2) setOpacity('exAngleB', 1);
+    if (n >= 3) {
+        setOpacity('exAngleC', 1);
+        fade('exRecap', 1);
+    }
+}
+
+function hideAllTriEx() {
+    ['exAngleA','exAngleB','exAngleC'].forEach(id => setOpacity(id, 0));
+    fade('exRecap', 0);
+}
+
+// Reconstruit intégralement l'état visuel pour l'étape n (utilisé par « précédent »)
+function goToStep(n) {
+    if (n < 0) n = 0;
+    if (n > 3) n = 3;
+    hideAllTriEx();
+    applyStepChanges(n);
+    step = n;
+    updateButtons();
+}
+
+function advanceStep() {
+    if (step >= 3) return;
+    step++;
+    applyStepChanges(step);
+    updateButtons();
+}
+
+function nextStep() {
+    stopAuto();
+    advanceStep();
+}
+
+function prevStep() {
+    stopAuto();
+    if (step > 0) goToStep(step - 1);
+}
+
+function resetAnimation() {
+    stopAuto();
+    hideAllTriEx();
+    step = 0;
+    document.getElementById('exTxtAngle').innerHTML = texts[0];
+    updateButtons();
+}
+
+function toggleAuto() {
+    const btn = document.getElementById('btnAuto');
+    if (autoTimer) {
+        stopAuto();
+        return;
+    }
+    if (step >= 3) { hideAllTriEx(); step = 0; document.getElementById('exTxtAngle').innerHTML = texts[0]; updateButtons(); }
+    btn.textContent = '⏸ Pause';
+    btn.style.background = '#ff9800';
+    autoTimer = setInterval(() => {
+        if (step >= 3) { stopAuto(); return; }
+        advanceStep();
+    }, 2600);
+}
+
+function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+    const btn = document.getElementById('btnAuto');
+    if (btn) { btn.textContent = '⏵ Automatique'; btn.style.background = ''; }
+}
+</script>
+</body>
+</html>

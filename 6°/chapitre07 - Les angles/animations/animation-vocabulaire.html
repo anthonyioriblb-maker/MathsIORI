@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Vocabulaire de l'angle</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: white;
+        padding: 14px;
+    }
+    .btn-anim {
+        background: #2196f3; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-anim:hover { background: #1565c0; }
+    .btn-reset {
+        background: #e74c3c; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-reset:hover { background: #c0392b; }
+    .btn-auto {
+        background: #4caf50; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-auto:hover { background: #388e3c; }
+    .angle {
+        position: relative;
+        display: inline-block;
+    }
+    .angle::before {
+        content: '^';
+        position: absolute;
+        top: -0.5em;
+        left: 50%;
+        transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
+        font-size: 1.5em;
+        font-weight: 300;
+    }
+</style>
+</head>
+<body>
+
+<div style="display:flex; flex-wrap:wrap; align-items:center; gap:20px; background:white; padding:14px; border-radius:8px;">
+
+    <!-- SVG propre, sans labels intrusifs -->
+    <div style="flex:0 0 auto; text-align:center;">
+        <!-- SVG 340×230 : O=(80,185) A=(310,185) B=(210,25) -->
+        <svg id="svgVoc" width="340" height="230" viewBox="0 0 340 230" style="display:block;">
+
+            <!-- ── Géométrie de base ── -->
+            <!-- Demi-droite [OA) prolongée au-delà de A -->
+            <line x1="80" y1="185" x2="330" y2="185" stroke="black" stroke-width="2.5"/>
+            <!-- Demi-droite [OB) prolongée au-delà de B -->
+            <line x1="80" y1="185" x2="223" y2="10" stroke="black" stroke-width="2.5"/>
+            <!-- Croix sur O -->
+            <line x1="74" y1="179" x2="86" y2="191" stroke="black" stroke-width="2.2"/>
+            <line x1="86" y1="179" x2="74" y2="191" stroke="black" stroke-width="2.2"/>
+            <!-- Lettres A B O -->
+            <text x="56"  y="190" font-size="22" font-weight="bold" fill="black">O</text>
+            <!-- Croix A (fin de [OA) à (312,185)) -->
+            <line x1="306" y1="179" x2="318" y2="191" stroke="black" stroke-width="2"/>
+            <line x1="318" y1="179" x2="306" y2="191" stroke="black" stroke-width="2"/>
+            <text x="320" y="202" font-size="22" font-weight="bold" fill="black">A</text>
+            <!-- Croix B (fin de [OB) à (210,25)) -->
+            <line x1="204" y1="19" x2="216" y2="31" stroke="black" stroke-width="2"/>
+            <line x1="216" y1="19" x2="204" y2="31" stroke="black" stroke-width="2"/>
+            <text x="220" y="30"  font-size="22" font-weight="bold" fill="black">B</text>
+
+            <!-- ── Étape 1 : sommet ──
+                 Cercle rouge autour de O + label "sommet" collé à droite de O -->
+            <g id="vocLblSommet" opacity="0">
+                <circle cx="80" cy="185" r="16" fill="none" stroke="#e74c3c" stroke-width="2.5"/>
+                <!-- label placé juste au-dessus de O, légèrement à droite -->
+                <text x="102" y="175" font-size="14" fill="#e74c3c" font-weight="bold">sommet</text>
+            </g>
+
+            <!-- ── Étape 2 : côtés ──
+                 Labels placés directement sur chaque demi-droite, sans tiret long -->
+            <!-- OA : texte sous le milieu du segment -->
+            <g id="vocLblOA" opacity="0">
+                <text x="196" y="207" text-anchor="middle" font-size="14" fill="#2980b9" font-weight="bold">côté [OA)</text>
+            </g>
+            <!-- OB : milieu de OB ≈ (145,105), texte à droite du milieu -->
+            <g id="vocLblOB" opacity="0">
+                <text x="158" y="102" font-size="14" fill="#2980b9" font-weight="bold">côté [OB)</text>
+            </g>
+
+            <!-- Arc de l'angle (utilisé étapes 2 et 3) -->
+            <path id="vocArc" d="M 145 185 A 65 65 0 0 0 121 135"
+                  stroke="#e74c3c" stroke-width="2.5" fill="rgba(231,76,60,0.15)" opacity="0"/>
+
+            <!-- ── Étape 3 : notation AOB avec chapeau ── -->
+            <g id="vocNotation" opacity="0">
+                <!-- Texte AOB -->
+                <text x="152" y="167" font-size="15" fill="#e74c3c" font-weight="bold">AOB</text>
+                <!-- Chapeau = deux droites en ^ au-dessus de AOB -->
+                <path d="M 150 153 L 167 141 L 184 153" stroke="#e74c3c" stroke-width="2" fill="none" stroke-linejoin="round"/>
+            </g>
+
+        </svg>
+    </div>
+
+    <!-- Texte qui apparaît étape par étape -->
+    <div style="flex:1; min-width:200px; font-size:16px; color:#333; line-height:2;">
+        <div id="vocTxt0" style="opacity:0; transition:opacity 0.5s; color:#555; font-style:italic;">
+            Cliquez sur le bouton pour découvrir le vocabulaire ↓
+        </div>
+        <div id="vocTxt1" style="opacity:0; transition:opacity 0.6s; margin-bottom:6px;">
+            🔴 <strong style="color:#e74c3c;">O</strong> est le <strong>sommet</strong> de l'angle<br>
+            <span style="font-size:13px; color:#888;">(point d'origine des deux demi-droites)</span>
+        </div>
+        <div id="vocTxt2" style="opacity:0; transition:opacity 0.6s; margin-bottom:6px;">
+            🔵 Les demi-droites <strong style="color:#2980b9;">[OA)</strong> et <strong style="color:#2980b9;">[OB)</strong> sont les <strong>côtés</strong> de l'angle
+        </div>
+        <div id="vocTxt3" style="opacity:0; transition:opacity 0.6s; margin-bottom:6px;">
+            L'angle se note <strong><span class="angle">AOB</span></strong> ou <strong><span class="angle">BOA</span></strong>
+        </div>
+    </div>
+</div>
+
+<div style="text-align:center; margin-top:10px;">
+    <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" onclick="nextStep()">Étape suivante ▶</button>
+    <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation()">Recommencer ↺</button>
+</div>
+
+<script>
+let step = 0;
+let autoTimer = null;
+const steps = [
+    // step 0 → show hint text
+    () => { fade('vocTxt0', 1); },
+    // step 1 → sommet
+    () => {
+        fade('vocTxt0', 0);
+        fade('vocTxt1', 1);
+        setOpacity('vocLblSommet', 1);
+    },
+    // step 2 → côtés
+    () => {
+        fade('vocTxt2', 1);
+        setOpacity('vocLblOA', 1);
+        setOpacity('vocLblOB', 1);
+        setOpacity('vocArc', 1);
+    },
+    // step 3 → notation
+    () => {
+        fade('vocTxt3', 1);
+        setOpacity('vocNotation', 1);
+    },
+];
+
+function fade(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.style.opacity = v;
+}
+
+function setOpacity(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute('opacity', v);
+}
+
+function hideAll() {
+    ['vocTxt0','vocTxt1','vocTxt2','vocTxt3'].forEach(id => fade(id, 0));
+    ['vocLblSommet','vocLblOA','vocLblOB','vocArc','vocNotation'].forEach(id => setOpacity(id, 0));
+}
+
+function updateButtons() {
+    const btnPrec = document.getElementById('btnPrec');
+    if (btnPrec) btnPrec.disabled = (step <= 0);
+}
+
+// Avance d'une étape SANS rien masquer (ne touche que la nouveauté de cette étape)
+function advanceStep() {
+    if (step >= steps.length) return;
+    steps[step]();
+    step++;
+    updateButtons();
+}
+
+// Reconstruit intégralement l'état visuel pour l'étape n (utilisé par « précédent »)
+function goToStep(n) {
+    if (n < 0) n = 0;
+    if (n > steps.length) n = steps.length;
+    hideAll();
+    for (let i = 0; i < n; i++) steps[i]();
+    step = n;
+    updateButtons();
+}
+
+function nextStep() {
+    stopAuto();
+    advanceStep();
+}
+
+function prevStep() {
+    stopAuto();
+    if (step > 0) goToStep(step - 1);
+}
+
+function resetAnimation() {
+    stopAuto();
+    hideAll();
+    step = 0;
+    updateButtons();
+}
+
+function toggleAuto() {
+    const btn = document.getElementById('btnAuto');
+    if (autoTimer) {
+        stopAuto();
+        return;
+    }
+    if (step >= steps.length) { hideAll(); step = 0; updateButtons(); }
+    btn.textContent = '⏸ Pause';
+    btn.style.background = '#ff9800';
+    autoTimer = setInterval(() => {
+        if (step >= steps.length) { stopAuto(); return; }
+        advanceStep();
+    }, 2600);
+}
+
+function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+    const btn = document.getElementById('btnAuto');
+    if (btn) { btn.textContent = '⏵ Automatique'; btn.style.background = ''; }
+}
+</script>
+</body>
+</html>
