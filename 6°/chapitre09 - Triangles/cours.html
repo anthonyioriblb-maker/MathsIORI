@@ -17,16 +17,6 @@
         input.case-rep{width:70px;font-size:17px;text-align:center;border:2px solid #aaa;border-radius:5px;padding:4px;}
         input.case-rep:focus{border-color:#2196f3;outline:none;}
         select.case-sel{font-size:15px;padding:4px 8px;border:2px solid #aaa;border-radius:5px;}
-
-        /* ── Cartes types de triangles ── */
-        .tri-grid{display:flex;flex-wrap:wrap;gap:16px;margin:14px 0;}
-        .tri-card{border:2px solid #ddd;border-radius:10px;padding:14px;background:white;text-align:center;min-width:180px;box-shadow:0 2px 6px rgba(0,0,0,0.07);}
-        .tri-card h4{color:#1565c0;margin-bottom:8px;font-size:14px;}
-        .tri-card p{font-size:12px;color:#333;text-align:left;line-height:1.7;}
-
-        /* ── Animation somme angles ── */
-        #anim-angles{display:block;margin:10px auto;cursor:pointer;}
-        .anim-label{font-size:13px;color:#555;text-align:center;margin-top:4px;}
     </style>
 </head>
 <body>
@@ -36,94 +26,135 @@
     <!-- ══════════════════════════════════════════════════════ -->
     <h2>Les types de triangles</h2>
 
-    <h3>Classification selon les côtés</h3>
+    <h3>Définitions</h3>
 
     <div class="definition">
         <span style="color:red;">Définition :</span> Un <strong>triangle</strong> est une figure plane délimitée par 3 segments (les <strong>côtés</strong>) réunissant 3 points non alignés (les <strong>sommets</strong>).
     </div>
 
-    <div class="tri-grid">
-        <!-- Quelconque -->
-        <div class="tri-card">
-            <svg width="130" height="100" viewBox="0 0 130 100">
-                <polygon points="20,85 110,85 50,15" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
-                <text x="20" y="95" font-size="11" fill="#333">A</text>
-                <text x="107" y="95" font-size="11" fill="#333">B</text>
-                <text x="46" y="13" font-size="11" fill="#333">C</text>
-            </svg>
-            <h4>Triangle quelconque</h4>
-            <p>Les 3 côtés ont des longueurs <strong>différentes</strong>.<br>Les 3 angles sont différents.</p>
-        </div>
-        <!-- Isocèle -->
-        <div class="tri-card">
-            <svg width="130" height="110" viewBox="0 0 130 110">
-                <polygon points="65,10 10,95 120,95" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
-                <!-- marques d'égalité -->
-                <line x1="37" y1="52" x2="43" y2="58" stroke="#2e7d32" stroke-width="2"/>
-                <line x1="87" y1="52" x2="93" y2="58" stroke="#2e7d32" stroke-width="2"/>
-                <text x="62" y="8" font-size="11" fill="#333">A</text>
-                <text x="5" y="103" font-size="11" fill="#333">B</text>
-                <text x="117" y="103" font-size="11" fill="#333">C</text>
-            </svg>
-            <h4>Triangle isocèle</h4>
-            <p><strong>2 côtés</strong> ont la même longueur (AB = AC).<br>Les 2 angles à la base sont égaux.</p>
-        </div>
-        <!-- Équilatéral -->
-        <div class="tri-card">
-            <svg width="130" height="110" viewBox="0 0 130 110">
-                <polygon points="65,10 10,100 120,100" fill="#fff9c4" stroke="#f57f17" stroke-width="2"/>
-                <line x1="37" y1="55" x2="43" y2="61" stroke="#f57f17" stroke-width="2"/>
-                <line x1="40" y1="52" x2="46" y2="58" stroke="#f57f17" stroke-width="2"/>
-                <line x1="87" y1="55" x2="93" y2="61" stroke="#f57f17" stroke-width="2"/>
-                <line x1="84" y1="52" x2="90" y2="58" stroke="#f57f17" stroke-width="2"/>
-                <line x1="62" y1="100" x2="68" y2="100" stroke="#f57f17" stroke-width="2"/>
-                <line x1="62" y1="97" x2="68" y2="97" stroke="#f57f17" stroke-width="2"/>
-                <text x="62" y="8" font-size="11" fill="#333">A</text>
-                <text x="3" y="108" font-size="11" fill="#333">B</text>
-                <text x="117" y="108" font-size="11" fill="#333">C</text>
-            </svg>
-            <h4>Triangle équilatéral</h4>
-            <p><strong>3 côtés</strong> égaux.<br>Les <strong>3 angles</strong> valent chacun <strong>60°</strong>.</p>
-        </div>
+    <div class="definition">
+        <span style="color:red;">Définition :</span> un <strong>triangle quelconque</strong> est un triangle dont les <strong>3 côtés ont des longueurs différentes</strong> deux à deux.
+    </div>
+    <div style="text-align:center;margin:10px 0 24px;">
+        <svg width="150" height="115" viewBox="0 0 130 100">
+            <polygon points="20,85 110,85 50,15" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+            <text x="20" y="95" font-size="11" fill="#333">A</text>
+            <text x="107" y="95" font-size="11" fill="#333">B</text>
+            <text x="46" y="13" font-size="11" fill="#333">C</text>
+        </svg>
     </div>
 
-    <h3>Classification selon les angles</h3>
+    <div class="definition">
+        <span style="color:red;">Définition :</span> un <strong>triangle isocèle</strong> est un triangle ayant <strong>deux côtés de même longueur</strong>. Pour le triangle ABC ci-dessous, où AB = AC, on dit que ABC est <span style="color:red;">isocèle en A</span> et que sa <span style="color:red;">base</span> est le segment [BC].
+    </div>
+    <div style="text-align:center;margin:10px 0 24px;">
+        <svg width="180" height="153" viewBox="0 0 200 170">
+            <defs>
+                <marker id="arrow-def-iso" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="#333"/>
+                </marker>
+            </defs>
+            <polygon points="100,45 45,130 155,130" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+            <!-- marques d'égalité : un trait perpendiculaire au milieu de chaque côté égal (AB et AC) -->
+            <line x1="78" y1="91" x2="67" y2="84" stroke="#2e7d32" stroke-width="2"/>
+            <line x1="133" y1="84" x2="122" y2="91" stroke="#2e7d32" stroke-width="2"/>
+            <text x="112" y="52" font-size="11" fill="#333">A</text>
+            <text x="40" y="138" font-size="11" fill="#333">B</text>
+            <text x="152" y="138" font-size="11" fill="#333">C</text>
+            <!-- flèche vers A : sommet principal -->
+            <text x="100" y="13" font-size="11" fill="#333" text-anchor="middle">sommet principal</text>
+            <line x1="100" y1="18" x2="100" y2="41" stroke="#333" stroke-width="1.5" marker-end="url(#arrow-def-iso)"/>
+            <!-- flèche vers [BC] : base -->
+            <text x="100" y="165" font-size="11" fill="#333" text-anchor="middle">base</text>
+            <line x1="100" y1="159" x2="100" y2="133" stroke="#333" stroke-width="1.5" marker-end="url(#arrow-def-iso)"/>
+        </svg>
+    </div>
 
-    <div class="tri-grid">
-        <!-- Rectangle -->
-        <div class="tri-card">
-            <svg width="130" height="110" viewBox="0 0 130 110">
-                <polygon points="20,90 20,20 110,90" fill="#ffccbc" stroke="#bf360c" stroke-width="2"/>
-                <rect x="20" y="78" width="12" height="12" fill="none" stroke="#bf360c" stroke-width="1.5"/>
-                <text x="17" y="108" font-size="11" fill="#333">B</text>
-                <text x="17" y="18" font-size="11" fill="#333">A</text>
-                <text x="107" y="108" font-size="11" fill="#333">C</text>
-            </svg>
-            <h4>Triangle rectangle</h4>
-            <p>Un angle droit (90°). Le côté opposé à l'angle droit est l'<strong>hypoténuse</strong> (le plus long côté).</p>
-        </div>
-        <!-- Obtusangle -->
-        <div class="tri-card">
-            <svg width="130" height="110" viewBox="0 0 130 110">
-                <polygon points="5,90 120,90 95,20" fill="#e1bee7" stroke="#6a1b9a" stroke-width="2"/>
-                <text x="2" y="108" font-size="11" fill="#333">A</text>
-                <text x="117" y="108" font-size="11" fill="#333">B</text>
-                <text x="92" y="18" font-size="11" fill="#333">C</text>
-            </svg>
-            <h4>Triangle obtusangle</h4>
-            <p>Un angle <strong>obtus</strong> (entre 90° et 180°). Les deux autres angles sont aigus.</p>
-        </div>
-        <!-- Acutangle -->
-        <div class="tri-card">
-            <svg width="130" height="110" viewBox="0 0 130 110">
-                <polygon points="30,90 100,90 65,15" fill="#b2ebf2" stroke="#006064" stroke-width="2"/>
-                <text x="27" y="108" font-size="11" fill="#333">A</text>
-                <text x="97" y="108" font-size="11" fill="#333">B</text>
-                <text x="62" y="13" font-size="11" fill="#333">C</text>
-            </svg>
-            <h4>Triangle acutangle</h4>
-            <p>Les <strong>3 angles</strong> sont aigus (chacun inférieur à 90°).</p>
-        </div>
+    <div class="definition">
+        <span style="color:red;">Définition :</span> un <strong>triangle équilatéral</strong> est un triangle ayant <strong>ses 3 côtés de même longueur</strong>.
+    </div>
+    <div style="text-align:center;margin:10px 0 24px;">
+        <svg width="150" height="127" viewBox="0 0 130 110">
+            <polygon points="65,10 10,100 120,100" fill="#fff9c4" stroke="#f57f17" stroke-width="2"/>
+            <!-- marques d'égalité : un trait perpendiculaire au milieu de chacun des 3 côtés (AB, AC, BC) -->
+            <line x1="43" y1="58" x2="32" y2="52" stroke="#f57f17" stroke-width="2"/>
+            <line x1="98" y1="52" x2="87" y2="58" stroke="#f57f17" stroke-width="2"/>
+            <line x1="65" y1="94" x2="65" y2="106" stroke="#f57f17" stroke-width="2"/>
+            <text x="62" y="8" font-size="11" fill="#333">A</text>
+            <text x="3" y="108" font-size="11" fill="#333">B</text>
+            <text x="117" y="108" font-size="11" fill="#333">C</text>
+        </svg>
+    </div>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> un <strong>triangle rectangle</strong> est un triangle ayant <strong>un angle droit</strong> (90°). Le côté opposé à l'angle droit est l'<strong>hypoténuse</strong> (le plus long côté).
+    </div>
+    <div style="text-align:center;margin:10px 0 24px;">
+        <svg width="170" height="140" viewBox="0 0 170 140">
+            <defs>
+                <marker id="arrow-def-rect" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="#333"/>
+                </marker>
+            </defs>
+            <polygon points="20,110 20,40 110,110" fill="#ffccbc" stroke="#bf360c" stroke-width="2"/>
+            <rect x="20" y="98" width="12" height="12" fill="none" stroke="#bf360c" stroke-width="1.5"/>
+            <text x="17" y="128" font-size="11" fill="#333">B</text>
+            <text x="17" y="38" font-size="11" fill="#333">A</text>
+            <text x="107" y="128" font-size="11" fill="#333">C</text>
+            <!-- flèche vers l'hypoténuse -->
+            <text x="91" y="35" font-size="11" fill="#333" text-anchor="middle">hypoténuse</text>
+            <line x1="91" y1="42" x2="70" y2="69" stroke="#333" stroke-width="1.5" marker-end="url(#arrow-def-rect)"/>
+        </svg>
+    </div>
+
+    <h3>Propriétés</h3>
+
+    <div class="property">
+        <span style="color:red;">Propriété :</span> Si un triangle est <strong>isocèle</strong>, alors ses deux angles à la base sont égaux.
+    </div>
+    <div style="text-align:center;margin:10px 0 24px;">
+        <svg width="150" height="127" viewBox="0 0 130 110">
+            <polygon points="65,10 10,95 120,95" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+            <!-- marques d'angles égaux à la base (B et C) -->
+            <path d="M 18.7,81.6 A 16,16 0 0,1 26.0,95.0" fill="none" stroke="#e53935" stroke-width="2"/>
+            <path d="M 111.3,81.6 A 16,16 0 0,0 104.0,95.0" fill="none" stroke="#e53935" stroke-width="2"/>
+            <text x="62" y="8" font-size="11" fill="#333">A</text>
+            <text x="5" y="103" font-size="11" fill="#333">B</text>
+            <text x="117" y="103" font-size="11" fill="#333">C</text>
+        </svg>
+    </div>
+
+    <div class="property">
+        <span style="color:red;">Propriété :</span> Si un triangle est <strong>équilatéral</strong>, alors ses trois angles sont égaux et mesurent chacun 60°.
+    </div>
+    <div style="text-align:center;margin:10px 0 24px;">
+        <svg width="150" height="127" viewBox="0 0 130 110">
+            <polygon points="65,10 10,100 120,100" fill="#fff9c4" stroke="#f57f17" stroke-width="2"/>
+            <!-- marques d'angles égaux aux 3 sommets -->
+            <path d="M 57.7,21.9 A 14,14 0 0,0 72.3,21.9" fill="none" stroke="#e53935" stroke-width="2"/>
+            <path d="M 17.3,88.1 A 14,14 0 0,1 24.0,100.0" fill="none" stroke="#e53935" stroke-width="2"/>
+            <path d="M 112.7,88.1 A 14,14 0 0,0 106.0,100.0" fill="none" stroke="#e53935" stroke-width="2"/>
+            <text x="62" y="8" font-size="11" fill="#333">A</text>
+            <text x="3" y="108" font-size="11" fill="#333">B</text>
+            <text x="117" y="108" font-size="11" fill="#333">C</text>
+        </svg>
+    </div>
+
+    <div class="property">
+        <span style="color:red;">Propriété :</span> Si un triangle est <strong>rectangle</strong>, alors ses deux autres angles sont complémentaires (leur somme est de 90°).
+    </div>
+    <div style="text-align:center;margin:10px 0 24px;">
+        <svg width="150" height="127" viewBox="0 0 130 110">
+            <polygon points="20,90 20,20 110,90" fill="#ffccbc" stroke="#bf360c" stroke-width="2"/>
+            <rect x="20" y="78" width="12" height="12" fill="none" stroke="#bf360c" stroke-width="1.5"/>
+            <!-- marques des deux angles complémentaires (en A et en C) -->
+            <path d="M 20.0,36.0 A 16,16 0 0,0 32.6,29.8" fill="none" stroke="#1565c0" stroke-width="2"/>
+            <path d="M 97.4,80.2 A 16,16 0 0,0 94.0,90.0" fill="none" stroke="#1565c0" stroke-width="2"/>
+            <text x="17" y="108" font-size="11" fill="#333">B</text>
+            <text x="17" y="18" font-size="11" fill="#333">A</text>
+            <text x="107" y="108" font-size="11" fill="#333">C</text>
+        </svg>
+        <div style="font-size:1.05em;color:#1565c0;margin-top:6px;"><strong><span class="angle">BAC</span> + <span class="angle">ACB</span> = 90°</strong></div>
     </div>
 
     <!-- ── Exercice types ── -->
@@ -134,9 +165,9 @@
             <option value="">—</option>
             <option value="rec-iso">Rectangle isocèle</option>
             <option value="equi">Équilatéral</option>
-            <option value="quelq">Quelconque obtusangle</option>
+            <option value="quelq">Rectangle quelconque</option>
         </select></p>
-        <p>2) Un triangle équilatéral est-il aussi acutangle ?
+        <p>2) Un triangle équilatéral est-il aussi isocèle ?
         <select class="case-sel" id="type2">
             <option value="">—</option>
             <option value="oui">Oui</option>
@@ -162,55 +193,6 @@
             3. Régler le compas sur la mesure AC = 5 cm. Placer la pointe en A et tracer un arc de cercle.<br>
             4. Le point C est à l'intersection des deux arcs. Tracer les côtés [BC] et [AC].
         </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════════════════ -->
-    <h2>Somme des angles d'un triangle</h2>
-
-    <h3>La propriété fondamentale</h3>
-
-    <div class="property">
-        <strong>Propriété :</strong> Dans tout triangle, la somme des mesures des trois angles est égale à <strong>180°</strong>.<br>
-        Si le triangle ABC a des angles Â, B̂ et Ĉ, alors :<br>
-        <div style="text-align:center;font-size:1.2em;margin:10px 0;color:#c62828;">
-            <strong>Â + B̂ + Ĉ = 180°</strong>
-        </div>
-    </div>
-
-    <div class="example">
-        <strong>Démonstration intuitive — déchirer les angles :</strong><br>
-        Si on découpe les 3 angles d'un triangle et qu'on les place côte à côte au même point, ils forment toujours une demi-droite (un angle plat = 180°).<br><br>
-        <canvas id="anim-angles" width="460" height="160"></canvas>
-        <div class="anim-label">Clique sur l'animation pour voir les angles se déplacer.</div>
-    </div>
-
-    <div class="example">
-        <strong>Exemple 1 :</strong> Dans un triangle ABC, Â = 50° et B̂ = 70°. Calcule Ĉ.<br><br>
-        <div class="method">
-            Â + B̂ + Ĉ = 180°<br>
-            50° + 70° + Ĉ = 180°<br>
-            120° + Ĉ = 180°<br>
-            Ĉ = 180° − 120° = <strong>60°</strong>
-        </div>
-    </div>
-
-    <div class="example">
-        <strong>Exemple 2 :</strong> Vérification sur un triangle rectangle.<br>
-        Un angle vaut 90°, un autre vaut 35°. Le troisième vaut : 180° − 90° − 35° = <strong>55°</strong>.
-    </div>
-
-    <!-- ── Exercice somme angles ── -->
-    <div class="example">
-        <strong>À toi !</strong><br>
-        <p>1) Dans un triangle, deux angles mesurent 48° et 65°. Le troisième angle mesure :
-        <input class="case-rep" id="ang1" type="number" placeholder="?"> °</p>
-        <p>2) Un triangle isocèle a un angle au sommet de 40°. Chaque angle à la base mesure :
-        <input class="case-rep" id="ang2" type="number" placeholder="?"> °</p>
-        <p>3) Un triangle équilatéral : chaque angle mesure :
-        <input class="case-rep" id="ang3" type="number" placeholder="?"> °</p>
-        <button class="btn-check" onclick="checkAngles()">Vérifier</button>
-        <button class="btn-reset" onclick="['ang1','ang2','ang3'].forEach(id=>document.getElementById(id).value='');document.getElementById('fb-ang').textContent=''">Effacer</button>
-        <div class="feedback" id="fb-ang"></div>
     </div>
 
     <!-- ══════════════════════════════════════════════════════ -->
@@ -267,7 +249,7 @@
     </div>
 
     <div class="property">
-        <strong>Propriété :</strong> Le centre du cercle circonscrit à un triangle est le point d'intersection des <strong>trois médiatrices</strong> des côtés du triangle.<br>
+        <span style="color:red;">Propriété :</span> Le centre du cercle circonscrit à un triangle est le point d'intersection des <strong>trois médiatrices</strong> des côtés du triangle.<br>
         Ce point est à <strong>égale distance des trois sommets</strong>.
     </div>
 
@@ -330,81 +312,19 @@
             <option value="sommet">Sur le sommet A</option>
         </select></p>
         <p>2) Si OA = 6 cm et O est le centre du cercle circonscrit à ABC, alors OB = <input class="case-rep" id="circ2" type="number" placeholder="?"> cm et OC = <input class="case-rep" id="circ3" type="number" placeholder="?"> cm.</p>
-        <p>3) Un triangle a ses 3 médiatrices qui se croisent en un point situé à l'extérieur. Ce triangle est :
-        <select class="case-sel" id="circ4">
-            <option value="">—</option>
-            <option value="obtus">Obtusangle</option>
-            <option value="acutangle">Acutangle</option>
-            <option value="rectangle">Rectangle</option>
-        </select></p>
         <button class="btn-check" onclick="checkCirc()">Vérifier</button>
-        <button class="btn-reset" onclick="['circ2','circ3'].forEach(id=>document.getElementById(id).value='');['circ1','circ4'].forEach(id=>document.getElementById(id).value='');document.getElementById('fb-circ').textContent=''">Effacer</button>
+        <button class="btn-reset" onclick="['circ2','circ3'].forEach(id=>document.getElementById(id).value='');document.getElementById('circ1').value='';document.getElementById('fb-circ').textContent=''">Effacer</button>
         <div class="feedback" id="fb-circ"></div>
     </div>
 
     <!-- ══════════════════════════ SCRIPTS ══════════════════════════ -->
     <script>
-    // ── Animation somme angles ──
-    (function(){
-        const canvas=document.getElementById('anim-angles');
-        const ctx=canvas.getContext('2d');
-        let phase=0;
-        function draw(){
-            ctx.clearRect(0,0,460,160);
-            // Triangle original
-            const A={x:40,y:130},B={x:180,y:130},C={x:110,y:30};
-            ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(B.x,B.y);ctx.lineTo(C.x,C.y);ctx.closePath();
-            ctx.fillStyle='#e3f2fd';ctx.fill();ctx.strokeStyle='#1565c0';ctx.lineWidth=2;ctx.stroke();
-            ctx.fillStyle='#333';ctx.font='bold 13px Segoe UI';
-            ctx.fillText('A',A.x-14,A.y+4);ctx.fillText('B',B.x+4,B.y+4);ctx.fillText('C',C.x-4,C.y-8);
-            // Marqueurs d'angles (arcs)
-            ctx.strokeStyle='#e53935';ctx.lineWidth=1.5;
-            ctx.beginPath();ctx.arc(A.x,A.y,22,Math.atan2(C.y-A.y,C.x-A.x),0);ctx.stroke();
-            ctx.strokeStyle='#2e7d32';
-            ctx.beginPath();ctx.arc(B.x,B.y,22,Math.PI,Math.atan2(C.y-B.y,C.x-B.x));ctx.stroke();
-            ctx.strokeStyle='#f57f17';
-            ctx.beginPath();ctx.arc(C.x,C.y,22,Math.atan2(B.y-C.y,B.x-C.x),Math.atan2(A.y-C.y,A.x-C.x));ctx.stroke();
-            // Flèche
-            const t=Math.min(phase/60,1);
-            const targetX=290;
-            // Angle A déplacé
-            if(t>0){
-                ctx.save();ctx.translate(targetX+t*30*(0-1),130);
-                ctx.beginPath();ctx.arc(0,0,22,-0.5,0.5);ctx.strokeStyle='#e53935';ctx.lineWidth=1.5;ctx.stroke();
-                ctx.restore();
-            }
-            // Ligne finale (angle plat)
-            if(t>=1){
-                ctx.beginPath();ctx.moveTo(240,130);ctx.lineTo(400,130);ctx.strokeStyle='#333';ctx.lineWidth=2;ctx.stroke();
-                ctx.fillStyle='#555';ctx.font='13px Segoe UI';ctx.fillText('= 180° (angle plat)',250,120);
-            }
-            // Légende
-            ctx.fillStyle='#555';ctx.font='13px Segoe UI';
-            ctx.fillText('α + β + γ = 180°',230,90);
-        }
-        canvas.addEventListener('click',()=>{phase=phase>0?0:1;});
-        setInterval(()=>{if(phase>0&&phase<61)phase++;draw();},16);
-        draw();
-    })();
-
     function checkTypes(){
         const fb=document.getElementById('fb-types');
         let score=0,msgs=[];
         if(document.getElementById('type1').value==='rec-iso'){score++;}else{msgs.push('Q1 : isocèle (2 côtés égaux) ET rectangle (90°) → rectangle isocèle');}
-        if(document.getElementById('type2').value==='oui'){score++;}else{msgs.push('Q2 : équilatéral → 3 angles de 60°, tous aigus → acutangle');}
+        if(document.getElementById('type2').value==='oui'){score++;}else{msgs.push('Q2 : un triangle équilatéral a ses 3 côtés égaux, donc en particulier 2 côtés égaux → il est aussi isocèle');}
         if(score===2){fb.textContent='✓ Parfait !';fb.className='feedback ok';}
-        else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
-    }
-    function checkAngles(){
-        const fb=document.getElementById('fb-ang');
-        let score=0,msgs=[];
-        const a1=parseInt(document.getElementById('ang1').value);
-        const a2=parseInt(document.getElementById('ang2').value);
-        const a3=parseInt(document.getElementById('ang3').value);
-        if(a1===67){score++;}else{msgs.push('Q1 : 180−48−65=67°');}
-        if(a2===70){score++;}else{msgs.push('Q2 : (180−40)÷2=70°');}
-        if(a3===60){score++;}else{msgs.push('Q3 : 180÷3=60°');}
-        if(score===3){fb.textContent='✓ Bravo !';fb.className='feedback ok';}
         else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
     }
     function checkMed(){
@@ -422,8 +342,7 @@
         if(document.getElementById('circ1').value==='milieu'){score++;}else{msgs.push('Q1 : dans un triangle rectangle, le circumcentre est le milieu de l\'hypoténuse');}
         if(parseInt(document.getElementById('circ2').value)===6){score++;}else{msgs.push('Q2 : OB=OA=6 cm (même rayon)');}
         if(parseInt(document.getElementById('circ3').value)===6){score++;}else{msgs.push('Q2 : OC=OA=6 cm');}
-        if(document.getElementById('circ4').value==='obtus'){score++;}else{msgs.push('Q3 : circumcentre extérieur → triangle obtusangle');}
-        if(score===4){fb.textContent='✓ Excellent !';fb.className='feedback ok';}
+        if(score===3){fb.textContent='✓ Excellent !';fb.className='feedback ok';}
         else{fb.textContent='✗ '+msgs.join(' | ');fb.className='feedback err';}
     }
     </script>
