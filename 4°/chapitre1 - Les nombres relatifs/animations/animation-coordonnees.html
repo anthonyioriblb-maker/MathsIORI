@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Coordonnées d'un point</title>
+    <style>
+        html, body { margin:0; padding:0; background:#fafafa; overflow:hidden;
+               font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+        .container { width:560px; margin:0 auto; padding:16px 20px 20px; box-sizing:border-box; }
+        .step-text {
+            background:#e3f2fd; border-left:5px solid #2196f3;
+            padding:15px 20px; margin:0 0 15px; color:#1565c0;
+            font-size:17px; min-height:80px; font-weight:500;
+            display:flex; align-items:center; box-sizing:border-box;
+        }
+        svg { display:block; margin:0 auto; background:white;
+              border:2px solid #ddd; border-radius:8px; }
+        .controls { text-align:center; margin:0 0 16px; }
+        button {
+            background:#3498db; color:white; border:none;
+            padding:12px 20px; margin:6px; border-radius:6px;
+            cursor:pointer; font-size:15px; font-weight:bold;
+            box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.3s;
+        }
+        button:hover { background:#2980b9; transform:translateY(-2px); }
+        button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+        button.reset { background:#e74c3c; }
+        button.reset:hover { background:#c0392b; }
+        button.prev { background:#7f8c8d; }
+        button.prev:hover { background:#636e72; }
+        /* Une couleur dédiée par valeur lue (abscisse/ordonnée de A et de B) */
+        .hlAx { fill:#2980b9 !important; font-weight:bold; }
+        .hlAy { fill:#e67e22 !important; font-weight:bold; }
+        .hlBx { fill:#8e44ad !important; font-weight:bold; }
+        .hlBy { fill:#27ae60 !important; font-weight:bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        <span>Cliquez sur « Étape suivante » pour lire pas à pas les coordonnées des points A et B.</span>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" class="prev" onclick="goPrev()" disabled>◀ Précédent</button>
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+
+    <svg id="anim" width="460" height="460" viewBox="0 0 500 500">
+        <!-- Quadrillage -->
+        <g stroke="#ccc" stroke-width="1">
+            <line x1="50" y1="50" x2="50" y2="450"/>
+            <line x1="90" y1="50" x2="90" y2="450"/>
+            <line x1="130" y1="50" x2="130" y2="450"/>
+            <line x1="170" y1="50" x2="170" y2="450"/>
+            <line x1="210" y1="50" x2="210" y2="450"/>
+            <line x1="290" y1="50" x2="290" y2="450"/>
+            <line x1="330" y1="50" x2="330" y2="450"/>
+            <line x1="370" y1="50" x2="370" y2="450"/>
+            <line x1="410" y1="50" x2="410" y2="450"/>
+            <line x1="450" y1="50" x2="450" y2="450"/>
+
+            <line x1="50" y1="50" x2="450" y2="50"/>
+            <line x1="50" y1="90" x2="450" y2="90"/>
+            <line x1="50" y1="130" x2="450" y2="130"/>
+            <line x1="50" y1="170" x2="450" y2="170"/>
+            <line x1="50" y1="210" x2="450" y2="210"/>
+            <line x1="50" y1="290" x2="450" y2="290"/>
+            <line x1="50" y1="330" x2="450" y2="330"/>
+            <line x1="50" y1="370" x2="450" y2="370"/>
+            <line x1="50" y1="410" x2="450" y2="410"/>
+            <line x1="50" y1="450" x2="450" y2="450"/>
+        </g>
+
+        <!-- Axes -->
+        <g stroke="#2c3e50" stroke-width="2">
+            <line x1="250" y1="50" x2="250" y2="450"/>
+            <line x1="50" y1="250" x2="450" y2="250"/>
+        </g>
+
+        <!-- Graduations en abscisse -->
+        <g font-size="14" fill="#555" text-anchor="middle">
+            <text x="50"  y="270">-5</text>
+            <text id="axLabelB_neg4" x="90"  y="270">-4</text>
+            <text x="130" y="270">-3</text>
+            <text x="170" y="270">-2</text>
+            <text x="210" y="270">-1</text>
+            <text x="290" y="270">1</text>
+            <text x="330" y="270">2</text>
+            <text id="axLabelA3" x="370" y="270">3</text>
+            <text x="410" y="270">4</text>
+            <text x="450" y="270">5</text>
+        </g>
+
+        <!-- Graduations en ordonnée -->
+        <g font-size="14" fill="#555" text-anchor="end">
+            <text x="238" y="55">5</text>
+            <text x="238" y="95">4</text>
+            <text x="238" y="135">3</text>
+            <text x="238" y="175">2</text>
+            <text id="axLabelB1" x="238" y="215">1</text>
+            <text x="238" y="295">-1</text>
+            <text id="axLabelA_neg2" x="238" y="335">-2</text>
+            <text x="238" y="375">-3</text>
+            <text x="238" y="415">-4</text>
+            <text x="238" y="453">-5</text>
+        </g>
+
+        <text x="238" y="270" font-size="15" fill="#2c3e50" text-anchor="end">O</text>
+
+        <!-- Constructions en pointillés (masquées au départ), une couleur par valeur -->
+        <line id="lineA_down" x1="370" y1="330" x2="370" y2="330" opacity="0" stroke="#2980b9" stroke-width="2" stroke-dasharray="5,4"/>
+        <line id="lineA_left" x1="370" y1="330" x2="370" y2="330" opacity="0" stroke="#e67e22" stroke-width="2" stroke-dasharray="5,4"/>
+        <line id="lineB_down" x1="90" y1="210" x2="90" y2="210" opacity="0" stroke="#8e44ad" stroke-width="2" stroke-dasharray="5,4"/>
+        <line id="lineB_left" x1="90" y1="210" x2="90" y2="210" opacity="0" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,4"/>
+
+        <!-- Point A(3 ; -2) -->
+        <g id="ptA" opacity="0" stroke="#1a1a1a" stroke-width="2">
+            <line x1="364" y1="330" x2="376" y2="330"/>
+            <line x1="370" y1="324" x2="370" y2="336"/>
+        </g>
+        <text id="labelA" x="382" y="335" font-size="16" font-weight="bold" fill="#1a1a1a" opacity="0">A</text>
+        <text id="coordA" x="382" y="356" font-size="15" font-weight="bold" opacity="0">(<tspan fill="#2980b9">3</tspan> ; <tspan fill="#e67e22">-2</tspan>)</text>
+
+        <!-- Point B(-4 ; 1) -->
+        <g id="ptB" opacity="0" stroke="#1a1a1a" stroke-width="2">
+            <line x1="84" y1="210" x2="96" y2="210"/>
+            <line x1="90" y1="204" x2="90" y2="216"/>
+        </g>
+        <text id="labelB" x="70" y="215" font-size="16" font-weight="bold" fill="#1a1a1a" text-anchor="end" opacity="0">B</text>
+        <text id="coordB" x="70" y="236" font-size="15" font-weight="bold" text-anchor="end" opacity="0">(<tspan fill="#8e44ad">-4</tspan> ; <tspan fill="#27ae60">1</tspan>)</text>
+    </svg>
+</div>
+
+<script>
+let currentStep = 0;
+let isAnimating = false;
+const TOTAL_STEPS = 8;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour lire pas à pas les coordonnées des points A et B.',
+    '<strong style="color:#e67e22;font-size:19px;">1.</strong> Je place le point A sur le repère.',
+    '<strong style="color:#e67e22;font-size:19px;">2.</strong> Je descends verticalement du point A jusqu\'à l\'axe des abscisses : je lis <strong style="color:#2980b9;">3</strong>.',
+    '<strong style="color:#e67e22;font-size:19px;">3.</strong> Je vais horizontalement du point A jusqu\'à l\'axe des ordonnées : je lis <strong style="color:#e67e22;">−2</strong>.',
+    '<strong style="color:#e67e22;font-size:19px;">4.</strong> Les coordonnées de A sont donc A(<strong style="color:#2980b9;">3</strong> ; <strong style="color:#e67e22;">−2</strong>).',
+    '<strong style="color:#e67e22;font-size:19px;">5.</strong> Je fais de même avec le point B.',
+    '<strong style="color:#e67e22;font-size:19px;">6.</strong> Je descends verticalement du point B jusqu\'à l\'axe des abscisses : je lis <strong style="color:#8e44ad;">−4</strong>.',
+    '<strong style="color:#e67e22;font-size:19px;">7.</strong> Je vais horizontalement du point B jusqu\'à l\'axe des ordonnées : je lis <strong style="color:#27ae60;">1</strong>.',
+    '<strong style="color:#e67e22;font-size:19px;">8.</strong> Les coordonnées de B sont donc B(<strong style="color:#8e44ad;">−4</strong> ; <strong style="color:#27ae60;">1</strong>). ✓'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const el = id => document.getElementById(id);
+
+async function growLine(lineEl, x1, y1, x2, y2, duration) {
+    lineEl.setAttribute('x1', x1); lineEl.setAttribute('y1', y1);
+    lineEl.setAttribute('x2', x1); lineEl.setAttribute('y2', y1);
+    lineEl.style.opacity = '1';
+    const N = 20;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        lineEl.setAttribute('x2', x1 + (x2 - x1) * t);
+        lineEl.setAttribute('y2', y1 + (y2 - y1) * t);
+        await sleep(duration / N);
+    }
+}
+function setLineFinal(lineEl, x1, y1, x2, y2) {
+    lineEl.setAttribute('x1', x1); lineEl.setAttribute('y1', y1);
+    lineEl.setAttribute('x2', x2); lineEl.setAttribute('y2', y2);
+    lineEl.style.opacity = '1';
+}
+function setLineHidden(lineEl, x1, y1) {
+    lineEl.setAttribute('x1', x1); lineEl.setAttribute('y1', y1);
+    lineEl.setAttribute('x2', x1); lineEl.setAttribute('y2', y1);
+    lineEl.style.opacity = '0';
+}
+
+async function popMark(groupEl, duration) {
+    groupEl.style.opacity = '1';
+    groupEl.style.transformBox = 'fill-box';
+    groupEl.style.transformOrigin = 'center';
+    const N = 12;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const s = 0.3 + 0.9 * Math.sin(t * Math.PI / 2);
+        groupEl.style.transform = `scale(${Math.min(s, 1.15)})`;
+        await sleep(duration / N);
+    }
+    groupEl.style.transform = 'scale(1)';
+}
+
+async function fadeIn(elm, duration) {
+    elm.style.transition = `opacity ${duration}ms ease`;
+    elm.style.opacity = '1';
+    await sleep(duration);
+}
+
+async function nextStep() {
+    if (isAnimating) return;
+    if (currentStep >= TOTAL_STEPS) return;
+    isAnimating = true;
+    const txt = el('stepText');
+    const btn = el('nextBtn');
+    btn.disabled = true;
+    el('prevBtn').disabled = true;
+
+    txt.innerHTML = '<span>' + stepTexts[currentStep + 1] + '</span>';
+    if (currentStep + 1 >= TOTAL_STEPS) {
+        txt.style.background = '#c8e6c9'; txt.style.borderLeftColor = '#4caf50'; txt.style.color = '#2e7d32';
+    }
+
+    switch (currentStep) {
+        case 0:
+            await popMark(el('ptA'), 400);
+            el('labelA').style.opacity = '1';
+            break;
+        case 1:
+            await growLine(el('lineA_down'), 370, 330, 370, 250, 500);
+            el('axLabelA3').classList.add('hlAx');
+            break;
+        case 2:
+            await growLine(el('lineA_left'), 370, 330, 250, 330, 500);
+            el('axLabelA_neg2').classList.add('hlAy');
+            break;
+        case 3:
+            await fadeIn(el('coordA'), 400);
+            break;
+        case 4:
+            await popMark(el('ptB'), 400);
+            el('labelB').style.opacity = '1';
+            break;
+        case 5:
+            await growLine(el('lineB_down'), 90, 210, 90, 250, 500);
+            el('axLabelB_neg4').classList.add('hlBx');
+            break;
+        case 6:
+            await growLine(el('lineB_left'), 90, 210, 250, 210, 500);
+            el('axLabelB1').classList.add('hlBy');
+            break;
+        case 7:
+            await fadeIn(el('coordB'), 400);
+            btn.textContent = '✓ Terminé';
+            break;
+    }
+
+    currentStep++;
+    isAnimating = false;
+    btn.disabled = false;
+    el('prevBtn').disabled = (currentStep === 0);
+}
+
+function renderStep(n) {
+    el('ptA').style.opacity = '0'; el('ptA').style.transform = 'scale(1)';
+    el('labelA').style.opacity = '0';
+    el('coordA').style.opacity = '0';
+    setLineHidden(el('lineA_down'), 370, 330);
+    setLineHidden(el('lineA_left'), 370, 330);
+    el('axLabelA3').classList.remove('hlAx');
+    el('axLabelA_neg2').classList.remove('hlAy');
+
+    el('ptB').style.opacity = '0'; el('ptB').style.transform = 'scale(1)';
+    el('labelB').style.opacity = '0';
+    el('coordB').style.opacity = '0';
+    setLineHidden(el('lineB_down'), 90, 210);
+    setLineHidden(el('lineB_left'), 90, 210);
+    el('axLabelB_neg4').classList.remove('hlBx');
+    el('axLabelB1').classList.remove('hlBy');
+
+    if (n >= 1) { el('ptA').style.opacity = '1'; el('labelA').style.opacity = '1'; }
+    if (n >= 2) { setLineFinal(el('lineA_down'), 370, 330, 370, 250); el('axLabelA3').classList.add('hlAx'); }
+    if (n >= 3) { setLineFinal(el('lineA_left'), 370, 330, 250, 330); el('axLabelA_neg2').classList.add('hlAy'); }
+    if (n >= 4) { el('coordA').style.opacity = '1'; }
+    if (n >= 5) { el('ptB').style.opacity = '1'; el('labelB').style.opacity = '1'; }
+    if (n >= 6) { setLineFinal(el('lineB_down'), 90, 210, 90, 250); el('axLabelB_neg4').classList.add('hlBx'); }
+    if (n >= 7) { setLineFinal(el('lineB_left'), 90, 210, 250, 210); el('axLabelB1').classList.add('hlBy'); }
+    if (n >= 8) { el('coordB').style.opacity = '1'; }
+
+    const txt = el('stepText');
+    txt.innerHTML = '<span>' + stepTexts[n] + '</span>';
+    if (n >= TOTAL_STEPS) {
+        txt.style.background = '#c8e6c9'; txt.style.borderLeftColor = '#4caf50'; txt.style.color = '#2e7d32';
+    } else {
+        txt.style.background = '#e3f2fd'; txt.style.borderLeftColor = '#2196f3'; txt.style.color = '#1565c0';
+    }
+
+    el('nextBtn').textContent = (n >= TOTAL_STEPS) ? '✓ Terminé' : '▶ Étape suivante';
+    el('nextBtn').disabled = false;
+    el('prevBtn').disabled = (n === 0);
+    currentStep = n;
+}
+
+function goPrev() {
+    if (isAnimating) return;
+    if (currentStep <= 0) return;
+    renderStep(currentStep - 1);
+}
+
+function resetAnimation() {
+    renderStep(0);
+}
+
+// ── Communication avec la page parente (bouton flottant, si présent) ──
+(function() {
+    function postState() {
+        if (window.parent === window) return;
+        window.parent.postMessage({
+            type: 'symAnimState',
+            nextText: el('nextBtn').textContent,
+            nextDisabled: el('nextBtn').disabled,
+            prevDisabled: el('prevBtn').disabled
+        }, '*');
+    }
+    const mo = new MutationObserver(postState);
+    mo.observe(el('nextBtn'), {attributes:true, childList:true, characterData:true, subtree:true});
+    mo.observe(el('prevBtn'), {attributes:true});
+    window.addEventListener('load', postState);
+    window.addEventListener('message', function(e) {
+        if (!e.data || e.data.type !== 'symAnimCmd') return;
+        if (e.data.cmd === 'next') nextStep();
+        else if (e.data.cmd === 'prev') goPrev();
+        else if (e.data.cmd === 'reset') resetAnimation();
+        else if (e.data.cmd === 'sync') postState();
+    });
+})();
+</script>
+</body>
+</html>

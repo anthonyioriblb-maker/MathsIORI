@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Théorème de Pythagore : Réciproque et Contraposée</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            font-family: Arial, sans-serif;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            font-family: Arial, sans-serif;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #764ba2;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .question-container {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-number {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .question-body {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 0 0 15px 15px;
+            margin-bottom: 30px;
+        }
+
+        .triangle-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #764ba2;
+            font-family: Arial, sans-serif;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .redaction {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #764ba2;
+            font-family: Arial, sans-serif;
+            font-size: 1.15em;
+            line-height: 2.2;
+        }
+
+        .input-field {
+            display: inline-block;
+            border: none;
+            border-bottom: 2px solid #764ba2;
+            background: #f0f4ff;
+            padding: 2px 8px;
+            font-size: 1.1em;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+            min-width: 60px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            background: #e3f2fd;
+            border-bottom-color: #667eea;
+        }
+
+        .input-field.correct {
+            background: #d4edda;
+            border-bottom-color: #28a745;
+            color: #155724;
+        }
+
+        .input-field.incorrect {
+            background: #f8d7da;
+            border-bottom-color: #dc3545;
+            color: #721c24;
+        }
+
+        .input-field:disabled {
+            cursor: not-allowed;
+        }
+
+        .input-small {
+            min-width: 50px;
+        }
+
+        .input-medium {
+            min-width: 80px;
+        }
+
+        .input-large {
+            min-width: 120px;
+        }
+
+        .input-xlarge {
+            min-width: 200px;
+        }
+
+        .select-field {
+            display: inline-block;
+            border: 2px solid #764ba2;
+            background: #f0f4ff;
+            padding: 4px 8px;
+            font-size: 1.1em;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .select-field:focus {
+            outline: none;
+            background: #e3f2fd;
+            border-color: #667eea;
+        }
+
+        .select-field.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .select-field.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .select-field:disabled {
+            cursor: not-allowed;
+        }
+
+        .explanation {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            font-family: Arial, sans-serif;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .explanation-title {
+            font-weight: bold;
+            color: #1565c0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .correction {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid #28a745;
+            font-family: Arial, sans-serif;
+            line-height: 1.8;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.6);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #764ba2;
+            border: 2px solid #764ba2;
+        }
+
+        .btn-secondary:hover {
+            background: #764ba2;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .results-container.show {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .results-score {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .results-score.low {
+            background: linear-gradient(135deg, #ff5e62 0%, #ff9966 100%);
+        }
+
+        .results-score.medium {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .score-big {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .score-message {
+            font-size: 1.5em;
+            margin-top: 15px;
+        }
+
+        .results-details {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.6);
+        }
+
+        .floating-next {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9999;
+            border-radius: 30px;
+            padding: 12px 20px;
+            font-size: 1.05em;
+        }
+    </style>
+</head>
+<body>
+    <a href="../../classe-4e.html" style="position: absolute; top: 20px; left: 20px; padding: 12px 24px; background: white; color: #667eea; text-decoration: none; border-radius: 12px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; z-index: 1000;">← Retour</a>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Quiz - Théorème de Pythagore</h1>
+            <p class="subtitle">Réciproque et Contraposée - 4ème</p>
+        </div>
+
+        <div class="quiz-info">
+            <div class="info-item">
+                <div class="info-label">Questions</div>
+                <div class="info-value" id="totalQuestions">8</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Question actuelle</div>
+                <div class="info-value" id="currentQuestion">1</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Score</div>
+                <div class="info-value" id="currentScore">0</div>
+            </div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="button-group" id="quizButtons">
+            <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="display:none;">← Précédent</button>
+            <button class="btn btn-primary" id="validateBtn" onclick="validateAnswer()">Valider la réponse</button>
+            <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" style="display:none;">Suivant →</button>
+            <button class="btn btn-primary" id="finishBtn" onclick="showResults()" style="display:none;">Voir les résultats 🎉</button>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+            <h2>🎉 Quiz terminé !</h2>
+
+            <div class="results-score" id="resultsScore">
+                <div class="score-big" id="scoreBig">0/8</div>
+                <div class="score-message" id="scoreMessage">Bravo !</div>
+            </div>
+
+            <div class="results-details">
+                <div class="detail-row">
+                    <span><strong>Bonnes réponses :</strong></span>
+                    <span id="correctCount">0</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Mauvaises réponses :</strong></span>
+                    <span id="incorrectCount">0</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Pourcentage :</strong></span>
+                    <span id="percentage">0%</span>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <a href="../../classe-4e.html" class="nav-btn">← Retour au chapitre</a>
+                <button class="nav-btn" onclick="restartQuiz()">🔄 Recommencer</button>
+            </div>
+        </div>
+
+        <div class="navigation" id="initialNav">
+            <a href="../../classe-4e.html" class="nav-btn">← Retour au chapitre</a>
+        </div>
+
+        <button id="floatingNextBtn" class="btn btn-primary floating-next" onclick="nextQuestion()" style="display:none;">Suivant →</button>
+    </div>
+
+    <script>
+        function formatNumber(num) {
+            // Affiche les nombres sans décimales inutiles (9 au lieu de 9.00)
+            if (num === Math.floor(num)) {
+                return num.toString();
+            }
+            return num.toString().replace('.', ',');
+        }
+
+        function normalizeAnswer(answer) {
+            // Normalise la réponse : enlève espaces, met en minuscules
+            return answer.trim().toLowerCase().replace(/\s+/g, '');
+        }
+
+        function checkSegment(input, expected) {
+            // Accepte [BC] et [CB]
+            const normalized = normalizeAnswer(input);
+            const exp = normalizeAnswer(expected);
+
+            if (normalized === exp) return true;
+
+            // Vérifier si c'est un segment avec lettres inversées
+            const match1 = exp.match(/\[([a-z])([a-z])\]/);
+            if (match1) {
+                const reversed = `[${match1[2]}${match1[1]}]`;
+                if (normalized === reversed) return true;
+            }
+
+            return false;
+        }
+
+        function checkSquared(input, expected) {
+            // Accepte AB² et BA², BC² et CB², 6,5² et 6.5², etc.
+            const normalized = normalizeAnswer(input).replace(',', '.');
+            const exp = normalizeAnswer(expected).replace(',', '.');
+
+            if (normalized === exp) return true;
+
+            // Vérifier si c'est une expression au carré avec lettres inversées
+            const match1 = exp.match(/([a-z])([a-z])²/);
+            if (match1) {
+                const reversed = `${match1[2]}${match1[1]}²`;
+                if (normalized === reversed) return true;
+            }
+
+            return false;
+        }
+
+        function checkSum(input, expected) {
+            // Accepte AB² + AC² et AC² + AB² (et aussi BA² + CA², virgules/points, etc.)
+            const normalized = normalizeAnswer(input).replace(',', '.');
+            const exp = normalizeAnswer(expected).replace(',', '.');
+
+            if (normalized === exp) return true;
+
+            // Vérifier si c'est une somme avec termes inversés
+            const match1 = exp.match(/([a-z²\.0-9]+)\+([a-z²\.0-9]+)/);
+            if (match1) {
+                const reversed = `${match1[2]}+${match1[1]}`;
+                if (normalized === reversed) return true;
+            }
+
+            // Vérifier aussi avec lettres inversées dans chaque terme
+            // AB² + AC² -> BA² + CA², AB² + AC² -> BA² + AC², etc.
+            const variations = [
+                exp,
+                exp.replace(/ab²/g, 'ba²').replace(/ac²/g, 'ca²').replace(/bc²/g, 'cb²'),
+            ];
+
+            for (let variant of variations) {
+                if (normalized === variant) return true;
+                // Vérifier aussi l'ordre inversé de chaque variante
+                const match2 = variant.match(/([a-z²\.0-9]+)\+([a-z²\.0-9]+)/);
+                if (match2) {
+                    const reversed = `${match2[2]}+${match2[1]}`;
+                    if (normalized === reversed) return true;
+                }
+            }
+
+            return false;
+        }
+
+        function checkNumber(input, expected) {
+            // Accepte , ou . comme séparateur décimal
+            const normalized = input.trim().replace(',', '.');
+            const exp = expected.toString().replace(',', '.');
+
+            return parseFloat(normalized) === parseFloat(exp);
+        }
+
+        let questionsData = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answeredQuestions = [];
+
+        function generateQuestions() {
+            questionsData = [
+                // Question 1: Triangle rectangle (3, 4, 5)
+                { AB: 3, AC: 4, BC: 5, isRectangle: true, rightAngle: 'A' },
+                // Question 2: Triangle non rectangle
+                { AB: 5, AC: 6, BC: 9, isRectangle: false },
+                // Question 3: Triangle rectangle avec décimaux
+                { AB: 5.2, AC: 3.9, BC: 6.5, isRectangle: true, rightAngle: 'A' },
+                // Question 4: Triangle non rectangle
+                { AB: 7, AC: 8, BC: 11, isRectangle: false },
+                // Question 5: Triangle rectangle (6, 8, 10)
+                { AB: 6, AC: 8, BC: 10, isRectangle: true, rightAngle: 'A' },
+                // Question 6: Triangle non rectangle
+                { AB: 15, AC: 11, BC: 10, isRectangle: false },
+                // Question 7: Triangle rectangle (5, 12, 13)
+                { AB: 5, AC: 12, BC: 13, isRectangle: true, rightAngle: 'A' },
+                // Question 8: Triangle non rectangle
+                { AB: 10, AC: 12, BC: 18, isRectangle: false }
+            ];
+        }
+
+        function createQuestionHTML(questionNum, data) {
+            const container = document.createElement('div');
+            container.className = 'question-container' + (questionNum === 1 ? ' active' : '');
+            container.id = `question${questionNum}`;
+
+            const AB2 = data.AB * data.AB;
+            const AC2 = data.AC * data.AC;
+            const BC2 = data.BC * data.BC;
+            const sum = AB2 + AC2;
+
+            container.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">Question ${questionNum}/8</div>
+                </div>
+                <div class="question-body">
+                    <div class="triangle-info">
+                        Triangle ABC tel que :<br>
+                        AB = ${formatNumber(data.AB)} cm, AC = ${formatNumber(data.AC)} cm, BC = ${formatNumber(data.BC)} cm
+                    </div>
+
+                    <div class="redaction">
+                        Dans le triangle ABC, le côté le plus long est <input type="text" class="input-field input-small" id="q${questionNum}_seg1" data-answer="[BC]" placeholder="[...]">.<br><br>
+
+                        D'une part, <input type="text" class="input-field input-small" id="q${questionNum}_calc1a" data-answer="BC²" placeholder="...">
+                        = <input type="text" class="input-field input-small" id="q${questionNum}_calc1b" data-answer="${formatNumber(data.BC)}²" placeholder="...">
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc1c" data-answer="${formatNumber(BC2)}" placeholder="..."><br><br>
+
+                        D'autre part, <input type="text" class="input-field input-small" id="q${questionNum}_calc2a" data-answer="AB²" data-type="sum-part1" placeholder="...">
+                        + <input type="text" class="input-field input-small" id="q${questionNum}_calc2b" data-answer="AC²" data-type="sum-part2" placeholder="...">
+                        = <input type="text" class="input-field input-small" id="q${questionNum}_calc2c" data-answer="${formatNumber(data.AB)}²" placeholder="...">
+                        + <input type="text" class="input-field input-small" id="q${questionNum}_calc2d" data-answer="${formatNumber(data.AC)}²" placeholder="...">
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc2e" data-answer="${formatNumber(AB2)}" placeholder="...">
+                        + <input type="text" class="input-field input-medium" id="q${questionNum}_calc2f" data-answer="${formatNumber(AC2)}" placeholder="...">
+                        = <input type="text" class="input-field input-medium" id="q${questionNum}_calc2g" data-answer="${formatNumber(sum)}" placeholder="..."><br><br>
+
+                        Ainsi <input type="text" class="input-field input-medium" id="q${questionNum}_calc3a" data-answer="AB² + AC²" data-type="sum" placeholder="...">
+                        <select class="select-field" id="q${questionNum}_calc3b" data-answer="${data.isRectangle ? '=' : '≠'}">
+                            <option value="">...</option>
+                            <option value="=">=</option>
+                            <option value="≠">≠</option>
+                        </select>
+                        <input type="text" class="input-field input-medium" id="q${questionNum}_calc3c" data-answer="BC²" placeholder="...">,
+                        d'après la <select class="select-field" id="q${questionNum}_theoreme" data-answer="${data.isRectangle ? 'réciproque du théorème de Pythagore' : 'contraposée du théorème de Pythagore'}" style="min-width: 250px;">
+                            <option value="">...</option>
+                            <option value="réciproque du théorème de Pythagore">réciproque du théorème de Pythagore</option>
+                            <option value="contraposée du théorème de Pythagore">contraposée du théorème de Pythagore</option>
+                        </select>,
+                        <select class="select-field" id="q${questionNum}_conclusion" data-answer="${data.isRectangle ? 'le triangle ABC est rectangle en A' : 'le triangle ABC n\'est pas rectangle'}" style="min-width: 280px;">
+                            <option value="">...</option>
+                            <option value="le triangle ABC est rectangle en A">le triangle ABC est rectangle en A</option>
+                            <option value="le triangle ABC est rectangle en B">le triangle ABC est rectangle en B</option>
+                            <option value="le triangle ABC est rectangle en C">le triangle ABC est rectangle en C</option>
+                            <option value="le triangle ABC n'est pas rectangle">le triangle ABC n'est pas rectangle</option>
+                        </select>.
+                    </div>
+
+                    <div class="explanation" id="explanation${questionNum}">
+                        <div class="explanation-title">💡 Correction</div>
+                        <div class="correction" id="correctionText${questionNum}"></div>
+                    </div>
+                </div>
+            `;
+
+            return container;
+        }
+
+        function initQuiz() {
+            generateQuestions();
+            const questionsContainer = document.getElementById('questionsContainer');
+            questionsContainer.innerHTML = '';
+
+            questionsData.forEach((data, idx) => {
+                const questionHTML = createQuestionHTML(idx + 1, data);
+                questionsContainer.appendChild(questionHTML);
+            });
+
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions = [];
+
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('currentScore').textContent = '0';
+        }
+
+        window.addEventListener('DOMContentLoaded', initQuiz);
+
+        function validateAnswer() {
+            const questionNum = currentQuestionIndex + 1;
+            const data = questionsData[currentQuestionIndex];
+
+            if (answeredQuestions.includes(questionNum)) return;
+
+            const fields = document.querySelectorAll(`#question${questionNum} .input-field, #question${questionNum} .select-field`);
+            let allCorrect = true;
+            let totalInputs = fields.length;
+            let correctInputs = 0;
+
+            fields.forEach(field => {
+                const userAnswer = field.value;
+                const expectedAnswer = field.dataset.answer;
+                const fieldType = field.dataset.type;
+                let isCorrect = false;
+
+                // Vérifier selon le type de réponse
+                if (expectedAnswer.includes('[')) {
+                    // C'est un segment
+                    isCorrect = checkSegment(userAnswer, expectedAnswer);
+                } else if (fieldType === 'sum') {
+                    // C'est une somme (accepte ordre inversé)
+                    isCorrect = checkSum(userAnswer, expectedAnswer);
+                } else if (fieldType === 'sum-part1' || fieldType === 'sum-part2') {
+                    // Parties de la somme (accepte AB² ou AC², et aussi BA² ou CA²)
+                    const alt1 = 'AB²';
+                    const alt2 = 'AC²';
+                    isCorrect = checkSquared(userAnswer, alt1) || checkSquared(userAnswer, alt2);
+                } else if (expectedAnswer.includes('²') && !expectedAnswer.includes('+')) {
+                    // C'est une expression avec carré simple (BC², AB², etc.)
+                    // Accepte aussi l'ordre inversé (CB², BA², etc.)
+                    isCorrect = checkSquared(userAnswer, expectedAnswer);
+                } else if (expectedAnswer === '=' || expectedAnswer === '≠') {
+                    // C'est un symbole
+                    isCorrect = userAnswer.trim() === expectedAnswer;
+                } else if (expectedAnswer.includes('théorème') || expectedAnswer.includes('triangle')) {
+                    // C'est du texte
+                    isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(expectedAnswer);
+                } else if (expectedAnswer.includes('+')) {
+                    // C'est une somme (avec ordre inversé possible)
+                    isCorrect = checkSum(userAnswer, expectedAnswer);
+                } else {
+                    // C'est un nombre
+                    isCorrect = checkNumber(userAnswer, expectedAnswer);
+                }
+
+                if (isCorrect) {
+                    field.classList.add('correct');
+                    field.classList.remove('incorrect');
+                    correctInputs++;
+                } else {
+                    field.classList.add('incorrect');
+                    field.classList.remove('correct');
+                    allCorrect = false;
+                }
+
+                field.disabled = true;
+            });
+
+            answeredQuestions.push(questionNum);
+
+            // Calculer le score pour cette question (proportionnel au nombre de bonnes réponses)
+            const questionScore = correctInputs / totalInputs;
+            score += questionScore;
+
+            // Afficher la correction
+            const AB2 = data.AB * data.AB;
+            const AC2 = data.AC * data.AC;
+            const BC2 = data.BC * data.BC;
+            const sum = AB2 + AC2;
+
+            let correctionHTML = `
+                Dans le triangle ABC, le côté le plus long est <strong>[BC]</strong>.<br><br>
+
+                D'une part, <strong>BC²</strong> = <strong>${formatNumber(data.BC)}²</strong> = <strong>${formatNumber(BC2)}</strong><br><br>
+
+                D'autre part, <strong>AB²</strong> + <strong>AC²</strong> = <strong>${formatNumber(data.AB)}²</strong> + <strong>${formatNumber(data.AC)}²</strong> = <strong>${formatNumber(AB2)}</strong> + <strong>${formatNumber(AC2)}</strong> = <strong>${formatNumber(sum)}</strong><br><br>
+            `;
+
+            if (data.isRectangle) {
+                correctionHTML += `Ainsi <strong>AB² + AC²</strong> <strong>=</strong> <strong>BC²</strong>, d'après la <strong>réciproque du théorème de Pythagore</strong>, <strong>le triangle ABC est rectangle en A</strong>.`;
+            } else {
+                correctionHTML += `Ainsi <strong>AB² + AC²</strong> <strong>≠</strong> <strong>BC²</strong>, d'après la <strong>contraposée du théorème de Pythagore</strong>, <strong>le triangle ABC n'est pas rectangle</strong>.`;
+            }
+
+            document.getElementById(`correctionText${questionNum}`).innerHTML = correctionHTML;
+            document.getElementById(`explanation${questionNum}`).classList.add('show');
+            document.getElementById('currentScore').textContent = Math.round(score);
+
+            document.getElementById('validateBtn').style.display = 'none';
+
+            if (currentQuestionIndex < questionsData.length - 1) {
+                document.getElementById('nextBtn').style.display = 'block';
+                document.getElementById('floatingNextBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('finishBtn').style.display = 'block';
+            }
+        }
+
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex++;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('floatingNextBtn').style.display = 'none';
+            document.getElementById('finishBtn').style.display = 'none';
+
+            if (currentQuestionIndex > 0) {
+                document.getElementById('prevBtn').style.display = 'block';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function previousQuestion() {
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.remove('active');
+            currentQuestionIndex--;
+            document.getElementById(`question${currentQuestionIndex + 1}`).classList.add('active');
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+
+            if (currentQuestionIndex === 0) {
+                document.getElementById('prevBtn').style.display = 'none';
+            }
+
+            if (answeredQuestions.includes(currentQuestionIndex + 1)) {
+                document.getElementById('validateBtn').style.display = 'none';
+                if (currentQuestionIndex < questionsData.length - 1) {
+                    document.getElementById('nextBtn').style.display = 'block';
+                    document.getElementById('floatingNextBtn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('finishBtn').style.display = 'block';
+                }
+            } else {
+                document.getElementById('validateBtn').style.display = 'block';
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('floatingNextBtn').style.display = 'none';
+                document.getElementById('finishBtn').style.display = 'none';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showResults() {
+            document.querySelector('.quiz-info').style.display = 'none';
+            document.querySelectorAll('.question-container').forEach(q => q.style.display = 'none');
+            document.getElementById('quizButtons').style.display = 'none';
+            document.getElementById('initialNav').style.display = 'none';
+            document.getElementById('floatingNextBtn').style.display = 'none';
+
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.classList.add('show');
+
+            const totalQuestions = questionsData.length;
+            const roundedScore = Math.round(score);
+            const incorrectCount = totalQuestions - roundedScore;
+            const percentageValue = Math.round((score / totalQuestions) * 100);
+
+            document.getElementById('scoreBig').textContent = `${roundedScore}/${totalQuestions}`;
+            document.getElementById('correctCount').textContent = roundedScore;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('percentage').textContent = percentageValue + '%';
+
+            const resultsScore = document.getElementById('resultsScore');
+            const scoreMessage = document.getElementById('scoreMessage');
+
+            if (percentageValue === 100) {
+                scoreMessage.textContent = '🏆 Parfait ! Tu maîtrises le théorème de Pythagore !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 75) {
+                scoreMessage.textContent = '🌟 Très bien ! Tu as bien compris !';
+                resultsScore.className = 'results-score';
+            } else if (percentageValue >= 50) {
+                scoreMessage.textContent = '👍 Pas mal ! Révise encore un peu !';
+                resultsScore.className = 'results-score medium';
+            } else {
+                scoreMessage.textContent = '💪 Continue à t\'entraîner, tu vas y arriver !';
+                resultsScore.className = 'results-score low';
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            document.querySelector('.quiz-info').style.display = 'flex';
+            document.getElementById('quizButtons').style.display = 'flex';
+            document.getElementById('initialNav').style.display = 'flex';
+            document.getElementById('resultsContainer').classList.remove('show');
+
+            document.getElementById('validateBtn').style.display = 'block';
+            document.getElementById('prevBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('finishBtn').style.display = 'none';
+            document.getElementById('floatingNextBtn').style.display = 'none';
+
+            initQuiz();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
