@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Axes et centre de symétrie de figures usuelles</title>
+    <style>
+        html, body { margin:0; padding:0; background:#fafafa; overflow:hidden;
+               font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+        .container { width:920px; margin:0 auto; padding:16px 30px 20px; box-sizing:border-box; }
+        .step-text {
+            background:#e3f2fd; border-left:5px solid #2196f3;
+            padding:15px 20px; margin:0 0 15px; color:#1565c0;
+            font-size:17px; min-height:60px; font-weight:500;
+            display:flex; align-items:center; box-sizing:border-box;
+        }
+        svg { display:block; margin:0 auto; background:#fafafa;
+              border:2px solid #ddd; border-radius:8px; }
+        .controls { text-align:center; margin:0 0 16px; }
+        button {
+            background:#3498db; color:white; border:none;
+            padding:14px 28px; margin:8px; border-radius:6px;
+            cursor:pointer; font-size:17px; font-weight:bold;
+            box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.3s;
+        }
+        button:hover { background:#2980b9; transform:translateY(-2px); }
+        button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+        button.reset { background:#e74c3c; }
+        button.reset:hover { background:#c0392b; }
+        button.prev { background:#7f8c8d; }
+        button.prev:hover { background:#636e72; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        Cliquez sur « Étape suivante » pour voir apparaître les axes et le centre de symétrie de chaque figure.
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" class="prev" onclick="goPrev()" disabled>◀ Précédent</button>
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+
+    <!--
+    ═══════════════════════════════════════════════════════
+    Grille : 4 colonnes x (en-tête + figure + légende), sur 2 blocs
+    Bloc A (quadrilatères) : Carré, Rectangle, Losange, Cerf-volant
+    Bloc B (triangles + cercle) : Équilatéral, Isocèle, Quelconque, Cercle
+    Chaque figure est dessinée dans un repère local 200x170,
+    translaté à sa cellule (colX, shapeY).
+    ═══════════════════════════════════════════════════════
+    -->
+
+    <svg id="anim" width="860" height="580" viewBox="0 0 860 580">
+
+        <!-- ══ Grille du tableau (toujours visible) ══ -->
+        <g stroke="#999" stroke-width="1.2" fill="none">
+            <rect x="20" y="20" width="800" height="254"/>
+            <line x1="220" y1="20" x2="220" y2="274"/>
+            <line x1="420" y1="20" x2="420" y2="274"/>
+            <line x1="620" y1="20" x2="620" y2="274"/>
+            <line x1="20" y1="54" x2="820" y2="54"/>
+            <line x1="20" y1="224" x2="820" y2="224"/>
+
+            <rect x="20" y="294" width="800" height="254"/>
+            <line x1="220" y1="294" x2="220" y2="548"/>
+            <line x1="420" y1="294" x2="420" y2="548"/>
+            <line x1="620" y1="294" x2="620" y2="548"/>
+            <line x1="20" y1="328" x2="820" y2="328"/>
+            <line x1="20" y1="498" x2="820" y2="498"/>
+        </g>
+
+        <!-- ══ En-têtes (toujours visibles) ══ -->
+        <g font-size="16" font-weight="bold" fill="#2c3e50" text-anchor="middle">
+            <text x="120" y="42">Carré</text>
+            <text x="320" y="42">Rectangle</text>
+            <text x="520" y="42">Losange</text>
+            <text x="720" y="42">Cerf-volant</text>
+            <text x="120" y="316">Triangle équilatéral</text>
+            <text x="320" y="316">Triangle isocèle</text>
+            <text x="520" y="316">Triangle quelconque</text>
+            <text x="720" y="316">Cercle</text>
+        </g>
+
+        <!-- ══════════ BLOC A : QUADRILATÈRES (shapeY = 54) ══════════ -->
+
+        <!-- Carré -->
+        <g transform="translate(20,54)">
+            <rect x="40" y="15" width="120" height="120" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+            <g id="axCarre" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,4">
+                <line id="axCarreV"  x1="100" y1="75" x2="100" y2="75" opacity="0"/>
+                <line id="axCarreH"  x1="100" y1="75" x2="100" y2="75" opacity="0"/>
+                <line id="axCarreD1" x1="100" y1="75" x2="100" y2="75" opacity="0"/>
+                <line id="axCarreD2" x1="100" y1="75" x2="100" y2="75" opacity="0"/>
+            </g>
+            <g id="centerCarre" opacity="0" stroke="#8e44ad" stroke-width="3">
+                <line x1="92" y1="67" x2="108" y2="83"/>
+                <line x1="108" y1="67" x2="92" y2="83"/>
+            </g>
+        </g>
+
+        <!-- Rectangle -->
+        <g transform="translate(220,54)">
+            <rect x="20" y="35" width="160" height="80" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+            <g id="axRect" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,4">
+                <line id="axRectV" x1="100" y1="75" x2="100" y2="75" opacity="0"/>
+                <line id="axRectH" x1="100" y1="75" x2="100" y2="75" opacity="0"/>
+            </g>
+            <g id="centerRect" opacity="0" stroke="#8e44ad" stroke-width="3">
+                <line x1="92" y1="67" x2="108" y2="83"/>
+                <line x1="108" y1="67" x2="92" y2="83"/>
+            </g>
+        </g>
+
+        <!-- Losange -->
+        <g transform="translate(420,54)">
+            <polygon points="100,10 170,75 100,140 30,75" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+            <g id="axLos" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,4">
+                <line id="axLosV" x1="100" y1="75" x2="100" y2="75" opacity="0"/>
+                <line id="axLosH" x1="100" y1="75" x2="100" y2="75" opacity="0"/>
+            </g>
+            <g id="centerLos" opacity="0" stroke="#8e44ad" stroke-width="3">
+                <line x1="92" y1="67" x2="108" y2="83"/>
+                <line x1="108" y1="67" x2="92" y2="83"/>
+            </g>
+        </g>
+
+        <!-- Cerf-volant (1 axe, pas de centre) -->
+        <g transform="translate(620,54)">
+            <polygon points="100,8 148,62 100,145 52,62" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+            <g id="axCerf" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,4">
+                <line id="axCerf1" x1="100" y1="76" x2="100" y2="76" opacity="0"/>
+            </g>
+        </g>
+
+        <!-- ══════════ BLOC B : TRIANGLES + CERCLE (shapeY = 328) ══════════ -->
+
+        <!-- Triangle équilatéral (3 axes, pas de centre) -->
+        <g transform="translate(20,328)">
+            <polygon points="100,29 170,150 30,150" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+            <g id="axEq" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,4">
+                <line id="axEq1" x1="100" y1="89.5" x2="100" y2="89.5" opacity="0"/>
+                <line id="axEq2" x1="100" y1="89.5" x2="100" y2="89.5" opacity="0"/>
+                <line id="axEq3" x1="100" y1="89.5" x2="100" y2="89.5" opacity="0"/>
+            </g>
+        </g>
+
+        <!-- Triangle isocèle (1 axe, pas de centre) -->
+        <g transform="translate(220,328)">
+            <polygon points="100,20 155,150 45,150" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+            <g id="axIso" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,4">
+                <line id="axIso1" x1="100" y1="85" x2="100" y2="85" opacity="0"/>
+            </g>
+        </g>
+
+        <!-- Triangle quelconque (aucun axe, aucun centre) -->
+        <g transform="translate(420,328)">
+            <polygon points="25,145 175,120 95,20" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+        </g>
+
+        <!-- Cercle (une infinité d'axes, 1 centre) -->
+        <g transform="translate(620,328)">
+            <circle cx="100" cy="77" r="68" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+            <g id="axCercle" stroke="#e67e22" stroke-width="2" stroke-dasharray="6,4">
+                <line id="axCercle1" x1="100" y1="77" x2="100" y2="77" opacity="0"/>
+                <line id="axCercle2" x1="100" y1="77" x2="100" y2="77" opacity="0"/>
+                <line id="axCercle3" x1="100" y1="77" x2="100" y2="77" opacity="0"/>
+                <line id="axCercle4" x1="100" y1="77" x2="100" y2="77" opacity="0"/>
+            </g>
+            <g id="centerCercle" opacity="0" stroke="#8e44ad" stroke-width="3">
+                <line x1="92" y1="69" x2="108" y2="85"/>
+                <line x1="108" y1="69" x2="92" y2="85"/>
+            </g>
+        </g>
+
+        <!-- ══ Légendes (révélées) ══ -->
+        <g font-size="15" font-weight="bold" fill="#2c3e50" text-anchor="middle">
+            <text id="capCarre" x="120" y="253" opacity="0">4 axes et 1 centre</text>
+            <text id="capRect"  x="320" y="253" opacity="0">2 axes et 1 centre</text>
+            <text id="capLos"   x="520" y="253" opacity="0">2 axes et 1 centre</text>
+            <text id="capCerf"  x="720" y="253" opacity="0">1 axe et aucun centre</text>
+            <text id="capEq"    x="120" y="527" opacity="0">3 axes et aucun centre</text>
+            <text id="capIso"   x="320" y="527" opacity="0">1 axe et aucun centre</text>
+            <text id="capQcq"   x="520" y="527" opacity="0">Aucun axe et aucun centre</text>
+            <text id="capCercle" x="720" y="520" opacity="0">Une infinité d'axes</text>
+            <text id="capCercle2" x="720" y="540" opacity="0">et 1 centre</text>
+        </g>
+
+    </svg>
+</div>
+
+<script>
+let currentStep = 0;
+let isAnimating = false;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour voir apparaître les axes et le centre de symétrie de chaque figure, une par une.',
+    '<strong style="color:#e67e22;font-size:20px;">1.</strong> Le carré : 4 axes de symétrie (pointillés) et 1 centre de symétrie (croix violette).',
+    '<strong style="color:#e67e22;font-size:20px;">2.</strong> Le rectangle : 2 axes de symétrie et 1 centre de symétrie.',
+    '<strong style="color:#e67e22;font-size:20px;">3.</strong> Le losange : 2 axes de symétrie (ses diagonales) et 1 centre de symétrie.',
+    '<strong style="color:#e67e22;font-size:20px;">4.</strong> Le cerf-volant : 1 axe de symétrie et aucun centre de symétrie.',
+    '<strong style="color:#e67e22;font-size:20px;">5.</strong> Le triangle équilatéral : 3 axes de symétrie et aucun centre de symétrie.',
+    '<strong style="color:#e67e22;font-size:20px;">6.</strong> Le triangle isocèle : 1 axe de symétrie et aucun centre de symétrie.',
+    '<strong style="color:#e67e22;font-size:20px;">7.</strong> Le triangle quelconque : aucun axe et aucun centre de symétrie.',
+    '<strong style="color:#e67e22;font-size:20px;">8.</strong> Le cercle : une infinité d\'axes de symétrie et 1 centre de symétrie. ✓'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const el = id => document.getElementById(id);
+
+// ── Un axe "se trace" d'une extrémité à l'autre ─────────────
+async function growAxis(lineEl, x1, y1, x2, y2, duration) {
+    lineEl.setAttribute('x1', x1); lineEl.setAttribute('y1', y1);
+    lineEl.setAttribute('x2', x1); lineEl.setAttribute('y2', y1);
+    lineEl.style.opacity = '1';
+    const N = 24;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        lineEl.setAttribute('x2', x1 + (x2 - x1) * t);
+        lineEl.setAttribute('y2', y1 + (y2 - y1) * t);
+        await sleep(duration / N);
+    }
+}
+function setAxisFinal(lineEl, x1, y1, x2, y2) {
+    lineEl.setAttribute('x1', x1); lineEl.setAttribute('y1', y1);
+    lineEl.setAttribute('x2', x2); lineEl.setAttribute('y2', y2);
+    lineEl.style.opacity = '1';
+}
+
+// ── Le centre "apparaît" avec un petit effet de zoom ────────
+async function popCenter(groupEl, duration) {
+    groupEl.style.opacity = '1';
+    groupEl.style.transformBox = 'fill-box';
+    groupEl.style.transformOrigin = 'center';
+    const N = 14;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const s = 0.3 + 0.9 * Math.sin(t * Math.PI / 2); // léger dépassement puis stabilisation visuelle
+        groupEl.style.transform = `scale(${Math.min(s, 1.15)})`;
+        await sleep(duration / N);
+    }
+    groupEl.style.transform = 'scale(1)';
+}
+
+async function fadeIn(elm, duration) {
+    elm.style.transition = `opacity ${duration}ms ease`;
+    elm.style.opacity = '1';
+    await sleep(duration);
+}
+
+// ── Définition des figures : axes [x1,y1,x2,y2] + centre + légende ──
+const SHAPES_A = [
+    { axes: [['axCarreV',100,15,100,135], ['axCarreH',40,75,160,75],
+              ['axCarreD1',40,15,160,135], ['axCarreD2',160,15,40,135]],
+      center: 'centerCarre', cap: 'capCarre' },
+    { axes: [['axRectV',100,35,100,115], ['axRectH',20,75,180,75]],
+      center: 'centerRect', cap: 'capRect' },
+    { axes: [['axLosV',100,10,100,140], ['axLosH',30,75,170,75]],
+      center: 'centerLos', cap: 'capLos' },
+    { axes: [['axCerf1',100,8,100,145]],
+      center: null, cap: 'capCerf' }
+];
+
+const SHAPES_B = [
+    { axes: [['axEq1',100,29,100,150], ['axEq2',30,150,132.5,89.5], ['axEq3',170,150,67.5,89.5]],
+      center: null, cap: 'capEq' },
+    { axes: [['axIso1',100,20,100,150]],
+      center: null, cap: 'capIso' },
+    { axes: [],
+      center: null, cap: 'capQcq' },
+    { axes: [['axCercle1',32,77,168,77], ['axCercle2',100,9,100,145],
+              ['axCercle3',52,29,148,125], ['axCercle4',52,125,148,29]],
+      center: 'centerCercle', cap: 'capCercle', cap2: 'capCercle2' }
+];
+
+const ALL_SHAPES = SHAPES_A.concat(SHAPES_B);
+const TOTAL_STEPS = ALL_SHAPES.length; // 8
+
+async function revealShape(shape, startDelay) {
+    await sleep(startDelay);
+    await Promise.all(shape.axes.map(a => growAxis(el(a[0]), a[1], a[2], a[3], a[4], 550)));
+    if (shape.center) await popCenter(el(shape.center), 350);
+    await sleep(80);
+    await fadeIn(el(shape.cap), 350);
+    if (shape.cap2) await fadeIn(el(shape.cap2), 350);
+}
+
+function renderShapeFinal(shape) {
+    shape.axes.forEach(a => setAxisFinal(el(a[0]), a[1], a[2], a[3], a[4]));
+    if (shape.center) { el(shape.center).style.opacity = '1'; el(shape.center).style.transform = 'scale(1)'; }
+    el(shape.cap).style.opacity = '1';
+    if (shape.cap2) el(shape.cap2).style.opacity = '1';
+}
+
+// ── Affichage instantané de l'état final d'une étape (pour Précédent) ──
+function renderStep(n) {
+    ALL_SHAPES.forEach(shape => {
+        shape.axes.forEach(a => {
+            const line = el(a[0]);
+            line.setAttribute('x1', a[1]); line.setAttribute('y1', a[2]);
+            line.setAttribute('x2', a[1]); line.setAttribute('y2', a[2]);
+            line.style.opacity = '0';
+        });
+        if (shape.center) { el(shape.center).style.opacity = '0'; el(shape.center).style.transform = 'scale(1)'; }
+        el(shape.cap).style.opacity = '0';
+        if (shape.cap2) el(shape.cap2).style.opacity = '0';
+    });
+
+    for (let i = 0; i < n; i++) renderShapeFinal(ALL_SHAPES[i]);
+
+    const txt = el('stepText');
+    txt.innerHTML = stepTexts[n];
+    if (n >= TOTAL_STEPS) {
+        txt.style.background = '#c8e6c9'; txt.style.borderLeftColor = '#4caf50'; txt.style.color = '#2e7d32';
+    } else {
+        txt.style.background = '#e3f2fd'; txt.style.borderLeftColor = '#2196f3'; txt.style.color = '#1565c0';
+    }
+
+    el('nextBtn').textContent = (n >= TOTAL_STEPS) ? '✓ Terminé' : '▶ Étape suivante';
+    el('nextBtn').disabled = false;
+    el('prevBtn').disabled = (n === 0);
+    currentStep = n;
+}
+
+function goPrev() {
+    if (isAnimating) return;
+    if (currentStep <= 0) return;
+    renderStep(currentStep - 1);
+}
+
+// ── ÉTAPES : une figure par étape ──────────────────────────
+async function nextStep() {
+    if (isAnimating) return;
+    const txt = el('stepText');
+    const btn = el('nextBtn');
+    if (currentStep >= TOTAL_STEPS) return;
+    isAnimating = true;
+    btn.disabled = true;
+    el('prevBtn').disabled = true;
+
+    const shape = ALL_SHAPES[currentStep];
+    txt.innerHTML = stepTexts[currentStep + 1];
+    if (currentStep + 1 >= TOTAL_STEPS) {
+        txt.style.background      = '#c8e6c9';
+        txt.style.borderLeftColor = '#4caf50';
+        txt.style.color           = '#2e7d32';
+    }
+    await revealShape(shape, 0);
+    currentStep++;
+    if (currentStep >= TOTAL_STEPS) btn.textContent = '✓ Terminé';
+
+    isAnimating = false;
+    btn.disabled = false;
+    el('prevBtn').disabled = (currentStep === 0);
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetAnimation() {
+    renderStep(0);
+}
+
+// ── Communication avec la page parente (bouton flottant) ──
+(function() {
+    function postState() {
+        if (window.parent === window) return;
+        window.parent.postMessage({
+            type: 'symAnimState',
+            nextText: el('nextBtn').textContent,
+            nextDisabled: el('nextBtn').disabled,
+            prevDisabled: el('prevBtn').disabled
+        }, '*');
+    }
+    const mo = new MutationObserver(postState);
+    mo.observe(el('nextBtn'), {attributes:true, childList:true, characterData:true, subtree:true});
+    mo.observe(el('prevBtn'), {attributes:true});
+    window.addEventListener('load', postState);
+    window.addEventListener('message', function(e) {
+        if (!e.data || e.data.type !== 'symAnimCmd') return;
+        if (e.data.cmd === 'next') nextStep();
+        else if (e.data.cmd === 'prev') goPrev();
+        else if (e.data.cmd === 'reset') resetAnimation();
+        else if (e.data.cmd === 'sync') postState();
+    });
+})();
+</script>
+</body>
+</html>

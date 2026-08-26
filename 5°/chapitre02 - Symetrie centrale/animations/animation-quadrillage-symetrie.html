@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Symétrique d'un point — dans un quadrillage</title>
+    <style>
+        html, body { margin:0; padding:0; background:#fafafa; overflow:hidden;
+               font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+        .container { width: 884px; margin:0 auto; padding: 16px 30px 20px; box-sizing:border-box; }
+        .step-text {
+            background:#e3f2fd; border-left:5px solid #2196f3;
+            padding:15px 20px; margin:0 0 15px; color:#1565c0;
+            font-size:17px; min-height:60px; font-weight:500;
+            display:flex; align-items:center; box-sizing:border-box;
+        }
+        svg { display:block; margin:0 auto; background:white;
+              border:2px solid #ddd; border-radius:8px; }
+        .controls { text-align:center; margin:0 0 16px; }
+        button {
+            background:#3498db; color:white; border:none;
+            padding:14px 28px; margin:8px; border-radius:6px;
+            cursor:pointer; font-size:17px; font-weight:bold;
+            box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.3s;
+        }
+        button:hover { background:#2980b9; transform:translateY(-2px); }
+        button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+        button.reset { background:#e74c3c; }
+        button.reset:hover { background:#c0392b; }
+        button.prev { background:#7f8c8d; }
+        button.prev:hover { background:#636e72; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        Cliquez sur « Étape suivante » pour voir la construction étape par étape.
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" class="prev" onclick="goPrev()" disabled>◀ Précédent</button>
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+
+    <!--
+    ═══════════════════════════════════════════════════════
+    GÉOMÉTRIE (quadrillage, cellule = 60)
+    A  = (40,40)
+    O  = A + (3 carreaux droite, 2 carreaux bas) = (220,160)
+    A' = O + (3 carreaux droite, 2 carreaux bas) = (400,280)
+    Grille : x = 40..460 pas 60 (8 lignes), y = 40..340 pas 60 (6 lignes)
+    ═══════════════════════════════════════════════════════
+    -->
+
+    <svg id="anim" width="820" height="640" viewBox="0 0 500 380">
+        <g id="grid" stroke="#cfe8fb" stroke-width="1.5">
+            <line x1="40" y1="40" x2="40" y2="340"/>
+            <line x1="100" y1="40" x2="100" y2="340"/>
+            <line x1="160" y1="40" x2="160" y2="340"/>
+            <line x1="220" y1="40" x2="220" y2="340"/>
+            <line x1="280" y1="40" x2="280" y2="340"/>
+            <line x1="340" y1="40" x2="340" y2="340"/>
+            <line x1="400" y1="40" x2="400" y2="340"/>
+            <line x1="460" y1="40" x2="460" y2="340"/>
+            <line x1="40" y1="40" x2="460" y2="40"/>
+            <line x1="40" y1="100" x2="460" y2="100"/>
+            <line x1="40" y1="160" x2="460" y2="160"/>
+            <line x1="40" y1="220" x2="460" y2="220"/>
+            <line x1="40" y1="280" x2="460" y2="280"/>
+            <line x1="40" y1="340" x2="460" y2="340"/>
+        </g>
+
+        <defs>
+            <marker id="arrowGreenQ" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+                <polygon points="0 0, 8 3.5, 0 7" fill="#2ecc71"/>
+            </marker>
+            <marker id="arrowRedQ" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+                <polygon points="0 0, 8 3.5, 0 7" fill="#e74c3c"/>
+            </marker>
+        </defs>
+
+        <!-- Point A (croix, toujours visible) -->
+        <g>
+            <line x1="33" y1="33" x2="47" y2="47" stroke="#2c3e50" stroke-width="3"/>
+            <line x1="47" y1="33" x2="33" y2="47" stroke="#2c3e50" stroke-width="3"/>
+            <text x="22" y="30" font-size="17" font-weight="bold" fill="#2c3e50">A</text>
+        </g>
+
+        <!-- Point O (croix, toujours visible dès le début) -->
+        <g id="pointO">
+            <line x1="213" y1="153" x2="227" y2="167" stroke="#2c3e50" stroke-width="3"/>
+            <line x1="227" y1="153" x2="213" y2="167" stroke="#2c3e50" stroke-width="3"/>
+            <text x="228" y="150" font-size="17" font-weight="bold" fill="#2c3e50">O</text>
+        </g>
+
+        <!-- Trajet A -> O -->
+        <line id="arrowH1" x1="40" y1="40" x2="40" y2="40" stroke="#2ecc71" stroke-width="3.5" marker-end="url(#arrowGreenQ)" opacity="0"/>
+        <line id="arrowV1" x1="220" y1="40" x2="220" y2="40" stroke="#e74c3c" stroke-width="3.5" marker-end="url(#arrowRedQ)" opacity="0"/>
+        <circle id="marker1" cx="40" cy="40" r="6" fill="#ff8c00" stroke="#cc6600" stroke-width="2" opacity="0"/>
+
+        <!-- Trajet O -> A' -->
+        <line id="arrowH2" x1="220" y1="160" x2="220" y2="160" stroke="#2ecc71" stroke-width="3.5" marker-end="url(#arrowGreenQ)" opacity="0"/>
+        <line id="arrowV2" x1="400" y1="160" x2="400" y2="160" stroke="#e74c3c" stroke-width="3.5" marker-end="url(#arrowRedQ)" opacity="0"/>
+        <circle id="marker2" cx="220" cy="160" r="6" fill="#ff8c00" stroke="#cc6600" stroke-width="2" opacity="0"/>
+        <g id="pointAp" opacity="0">
+            <line x1="393" y1="273" x2="407" y2="287" stroke="#e74c3c" stroke-width="3"/>
+            <line x1="407" y1="273" x2="393" y2="287" stroke="#e74c3c" stroke-width="3"/>
+            <text x="408" y="270" font-size="17" font-weight="bold" fill="#e74c3c">A'</text>
+        </g>
+    </svg>
+</div>
+
+<script>
+let currentStep = 0;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour voir la construction étape par étape.',
+    '<strong style="color:#2ecc71;font-size:20px;">1.</strong> Je compte le déplacement pour aller de A vers O : 3 carreaux vers la droite...',
+    '<strong style="color:#e74c3c;font-size:20px;">1.</strong> ...puis 2 carreaux vers le bas. J\'arrive en O.',
+    '<strong style="color:#2ecc71;font-size:20px;">2.</strong> Je reproduis le même déplacement à partir de O : 3 carreaux à droite, 2 carreaux vers le bas.',
+    '<strong style="color:#555;font-size:20px;">3.</strong> J\'arrive au point A\', symétrique de A par rapport à O. ✓'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const el = id => document.getElementById(id);
+
+// Anime un segment horizontal/vertical qui "pousse" avec un marqueur qui le suit
+async function growLine(lineId, markerId, x1, y1, x2, y2, duration) {
+    const line = el(lineId), marker = el(markerId);
+    line.style.opacity = '1';
+    if (marker) marker.style.opacity = '1';
+    const N = 40;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const cx = x1 + (x2 - x1) * t;
+        const cy = y1 + (y2 - y1) * t;
+        line.setAttribute('x2', cx);
+        line.setAttribute('y2', cy);
+        if (marker) { marker.setAttribute('cx', cx); marker.setAttribute('cy', cy); }
+        await sleep(duration / N);
+    }
+    if (marker) marker.style.opacity = '0';
+}
+
+// ── Affichage instantané de l'état final d'une étape (pour Précédent) ──
+function renderStep(n) {
+    ['arrowH1','arrowV1','marker1','arrowH2','arrowV2','marker2','pointAp'].forEach(id => {
+        el(id).style.opacity = '0';
+    });
+    el('arrowH1').setAttribute('x2', 40);  el('arrowH1').setAttribute('y2', 40);
+    el('arrowV1').setAttribute('x1', 220); el('arrowV1').setAttribute('y1', 40);
+    el('arrowV1').setAttribute('x2', 220); el('arrowV1').setAttribute('y2', 40);
+    el('arrowH2').setAttribute('x2', 220); el('arrowH2').setAttribute('y2', 160);
+    el('arrowV2').setAttribute('x1', 400); el('arrowV2').setAttribute('y1', 160);
+    el('arrowV2').setAttribute('x2', 400); el('arrowV2').setAttribute('y2', 160);
+    el('marker1').setAttribute('cx', 40);  el('marker1').setAttribute('cy', 40);
+    el('marker2').setAttribute('cx', 220); el('marker2').setAttribute('cy', 160);
+
+    if (n >= 1) {
+        el('arrowH1').style.opacity = '1';
+        el('arrowH1').setAttribute('x2', 220); el('arrowH1').setAttribute('y2', 40);
+    }
+    if (n >= 2) {
+        el('arrowV1').style.opacity = '1';
+        el('arrowV1').setAttribute('x2', 220); el('arrowV1').setAttribute('y2', 160);
+    }
+    if (n >= 3) {
+        el('arrowH2').style.opacity = '1';
+        el('arrowH2').setAttribute('x2', 400); el('arrowH2').setAttribute('y2', 160);
+        el('arrowV2').style.opacity = '1';
+        el('arrowV2').setAttribute('x2', 400); el('arrowV2').setAttribute('y2', 280);
+    }
+    if (n >= 4) {
+        el('pointAp').style.opacity = '1';
+    }
+
+    const txt = el('stepText');
+    txt.innerHTML = stepTexts[n];
+    if (n >= 4) {
+        txt.style.background = '#c8e6c9'; txt.style.borderLeftColor = '#4caf50'; txt.style.color = '#2e7d32';
+    } else {
+        txt.style.background = '#e3f2fd'; txt.style.borderLeftColor = '#2196f3'; txt.style.color = '#1565c0';
+    }
+
+    el('nextBtn').textContent = (n >= 4) ? '✓ Terminé' : '▶ Étape suivante';
+    el('nextBtn').disabled = false;
+    el('prevBtn').disabled = (n === 0);
+    currentStep = n;
+}
+
+let isAnimating = false;
+
+function goPrev() {
+    if (isAnimating) return;
+    if (currentStep <= 0) return;
+    renderStep(currentStep - 1);
+}
+
+// ── ÉTAPES ───────────────────────────────────────────────
+async function nextStep() {
+    if (isAnimating) return;
+    const txt = el('stepText');
+    const btn = el('nextBtn');
+    if (currentStep >= 4) return;
+    isAnimating = true;
+    btn.disabled = true;
+    el('prevBtn').disabled = true;
+
+    // 1a : déplacement horizontal A -> milieu
+    if (currentStep === 0) {
+        txt.innerHTML = stepTexts[1];
+        await growLine('arrowH1', 'marker1', 40, 40, 220, 40, 1300);
+        await sleep(400);
+        currentStep = 1;
+    }
+
+    // 1b : déplacement vertical -> O
+    else if (currentStep === 1) {
+        txt.innerHTML = stepTexts[2];
+        await growLine('arrowV1', 'marker1', 220, 40, 220, 160, 1000);
+        await sleep(600);
+        currentStep = 2;
+    }
+
+    // 2 : reproduit le déplacement à partir de O
+    else if (currentStep === 2) {
+        txt.innerHTML = stepTexts[3];
+        await growLine('arrowH2', 'marker2', 220, 160, 400, 160, 1300);
+        await sleep(300);
+        await growLine('arrowV2', 'marker2', 400, 160, 400, 280, 1000);
+        await sleep(400);
+        currentStep = 3;
+    }
+
+    // 3 : marque A'
+    else if (currentStep === 3) {
+        txt.innerHTML = stepTexts[4];
+        txt.style.background      = '#c8e6c9';
+        txt.style.borderLeftColor = '#4caf50';
+        txt.style.color           = '#2e7d32';
+        el('pointAp').style.opacity = '1';
+        await sleep(400);
+        currentStep = 4;
+        btn.textContent = '✓ Terminé';
+    }
+
+    isAnimating = false;
+    btn.disabled = false;
+    el('prevBtn').disabled = (currentStep === 0);
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetAnimation() {
+    renderStep(0);
+}
+
+// ── Communication avec la page parente (bouton flottant) ──
+(function() {
+    function postState() {
+        if (window.parent === window) return;
+        window.parent.postMessage({
+            type: 'symAnimState',
+            nextText: el('nextBtn').textContent,
+            nextDisabled: el('nextBtn').disabled,
+            prevDisabled: el('prevBtn').disabled
+        }, '*');
+    }
+    const mo = new MutationObserver(postState);
+    mo.observe(el('nextBtn'), {attributes:true, childList:true, characterData:true, subtree:true});
+    mo.observe(el('prevBtn'), {attributes:true});
+    window.addEventListener('load', postState);
+    window.addEventListener('message', function(e) {
+        if (!e.data || e.data.type !== 'symAnimCmd') return;
+        if (e.data.cmd === 'next') nextStep();
+        else if (e.data.cmd === 'prev') goPrev();
+        else if (e.data.cmd === 'reset') resetAnimation();
+        else if (e.data.cmd === 'sync') postState();
+    });
+})();
+</script>
+</body>
+</html>

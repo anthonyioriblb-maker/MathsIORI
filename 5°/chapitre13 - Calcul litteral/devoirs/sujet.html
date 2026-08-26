@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Test – Calcul Littéral – 5ème</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 14px; padding: 20px 30px; color: #111; }
+
+  .entete {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+  .entete-gauche { font-size: 13px; }
+  .entete-gauche p { margin-bottom: 4px; }
+  .entete-droite { font-size: 13px; text-align: right; }
+
+  .titre {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: underline;
+    text-transform: uppercase;
+    margin: 10px 0 16px 0;
+    letter-spacing: 1px;
+  }
+
+  .exercice { margin-bottom: 18px; }
+
+  .ex-titre {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  p { margin-bottom: 4px; line-height: 1.6; }
+
+  ol { margin-left: 20px; margin-top: 4px; }
+  ol li { margin-bottom: 4px; line-height: 1.6; }
+
+  .figures {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin: 10px 0;
+    align-items: flex-end;
+  }
+  .figure { text-align: center; }
+  .figure img { display: block; margin: 0 auto 4px auto; }
+  .figure .legende { font-size: 13px; }
+
+  /* Image déco ex1 */
+  .img-deco { float: right; margin: 0 0 8px 12px; }
+
+  .programmes {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin: 8px 0;
+  }
+  .prog {
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-size: 13px;
+    min-width: 160px;
+  }
+  .prog .prog-titre {
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .prog ul { list-style: none; padding: 0; }
+  .prog ul li::before { content: "▶ "; font-size: 10px; }
+  .prog ul li { margin-bottom: 2px; }
+
+  .note-images {
+    background: #fff8dc;
+    border: 1px dashed #bbb;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #888;
+    padding: 3px 8px;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  @media print {
+    body { padding: 10px 15px; }
+    .note-images { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- EN-TÊTE -->
+<div class="entete">
+  <div class="entete-gauche">
+    <p>Nom Prénom : ………………………………</p>
+    <p>Date : ………………………</p>
+  </div>
+  <div class="entete-droite">
+    <p>5ème ……</p>
+  </div>
+</div>
+
+<div class="titre">Test : Calcul Littéral</div>
+
+<!-- ======= EXERCICE 1 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 1 : Réduire des expressions</div>
+
+  <p>Réduis chacune des expressions suivantes.</p>
+  <ol type="a">
+    <li>A = 3x + 5 + 2x − 1</li>
+    <li>B = 7a − 3b + 2a + 8b − 5</li>
+    <li>C = 4x² + 3x − x² + 2 − x</li>
+  </ol>
+</div>
+
+<!-- ======= EXERCICE 2 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 2 :</div>
+
+  <p>On considère le carré et le rectangle ci-dessous :</p>
+
+  <div style="text-align:center; margin: 10px 0;">
+    <svg width="320" height="110" viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif" font-size="14">
+      <!-- Carré bleu -->
+      <rect x="20" y="10" width="80" height="80" fill="none" stroke="#4a90d9" stroke-width="2"/>
+      <!-- Étiquette x sous le carré -->
+      <text x="60" y="105" text-anchor="middle" font-style="italic" fill="#111">x</text>
+
+      <!-- Rectangle violet -->
+      <rect x="160" y="20" width="120" height="70" fill="none" stroke="#c050c0" stroke-width="2"/>
+      <!-- Étiquette y à gauche du rectangle -->
+      <text x="152" y="58" text-anchor="end" font-style="italic" fill="#111">y</text>
+      <!-- Étiquette y+4 sous le rectangle -->
+      <text x="220" y="105" text-anchor="middle" font-style="italic" fill="#111">y + 4</text>
+    </svg>
+  </div>
+
+  <ol style="margin-top:8px;">
+    <li>Exprime en fonction de x le périmètre du carré.</li>
+    <li>Exprime en fonction de y le périmètre du rectangle.</li>
+    <li>Si x = 3 et y = 1, quelle figure a le plus grand périmètre ?</li>
+  </ol>
+</div>
+
+<!-- ======= EXERCICE 3 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 3 :</div>
+  <p>Dans chaque cas, dire si l'égalité est vraie ou fausse pour la valeur de t proposée.</p>
+  <ol>
+    <li>3 + t = 2 × t + 7, pour t = 4.</li>
+    <li>4 × (t − 1) = t², pour t = 2.</li>
+  </ol>
+</div>
+
+<!-- ======= EXERCICE 4 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 4 :</div>
+  <p>Développe puis réduis les expressions.</p>
+  <p style="margin-top:6px;">
+    A = s(s + 2) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    B = 4 + 3(2y − 5) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    C = 3,5(2 − b) + 8,2
+  </p>
+</div>
+
+<!-- ======= EXERCICE 5 ======= -->
+<div class="exercice">
+  <div class="ex-titre">Exercice 5 :</div>
+  <p>Nour et Flore ont créé chacune un programme de calcul.</p>
+  <p>Elles les testent avec 4 et se rendent compte que les deux programmes donnent le même résultat.</p>
+  <p>Elles essayent alors avec 5, la même chose se produit.</p>
+  <p style="margin: 6px 0;">« C'est magique, s'exclame Nour, nos deux programmes donneront toujours des résultats identiques ! »</p>
+
+  <div class="programmes">
+    <div class="prog">
+      <div class="prog-titre">Programme de Nour</div>
+      <ul>
+        <li>Choisir un nombre.</li>
+        <li>Multiplier par 5.</li>
+        <li>Soustraire 20.</li>
+      </ul>
+    </div>
+    <div class="prog">
+      <div class="prog-titre">Programme de Flore</div>
+      <ul>
+        <li>Choisir un nombre.</li>
+        <li>Soustraire 4.</li>
+        <li>Multiplier par le nombre de départ.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>Est-ce vrai ? Pourquoi ?</p>
+</div>
+
+</body>
+</html>

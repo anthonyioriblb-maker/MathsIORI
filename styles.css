@@ -170,12 +170,15 @@ img {
 }
 
 /* --- MATHÉMATIQUES --- */
+/* !important : garantit la même police pour toutes les lettres mathématiques
+   (A, D, E...) quel que soit le bloc dans lequel elles apparaissent
+   (exemple, calcul-etapes, calcul-detail...), sans avoir à corriger
+   chaque conteneur un par un. */
 .math {
-    font-family: 'Latin Modern Math';
-    font-style: italic;
-    font-weight: normal;
-    font-size: 1.15em;
-    
+    font-family: 'Latin Modern Math' !important;
+    font-style: italic !important;
+    font-weight: normal !important;
+    font-size: 1.15em !important;
 }
 
 /* Fractions */
@@ -719,4 +722,37 @@ a:hover {
     .fraction-part {
         min-width: 30px;
     }
+}
+/* Programme de calcul - présentation en étapes avec flèches */
+.programme-calcul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.etape-calcul {
+    background-color: #e3f2fd;
+    border: 2px solid #1976d2;
+    padding: 10px 20px;
+    border-radius: 8px;
+    min-width: 100px;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.fleche-calcul {
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 0.9em;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.programme-calcul-groupe {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
 }

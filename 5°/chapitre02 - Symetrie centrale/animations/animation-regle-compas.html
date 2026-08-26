@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation : Symétrique d'un point — règle et compas</title>
+    <style>
+        html, body { margin:0; padding:0; background:#fafafa; overflow:hidden;
+               font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+        .container { width:1160px; margin:0 auto; padding: 16px 30px 20px; box-sizing:border-box; }
+        .step-text {
+            background:#e3f2fd; border-left:5px solid #2196f3;
+            padding:15px 20px; margin:0 0 15px; color:#1565c0;
+            font-size:17px; min-height:60px; font-weight:500;
+            display:flex; align-items:center; box-sizing:border-box;
+        }
+        svg { display:block; margin:0 auto; background:#fafafa;
+              border:2px solid #ddd; border-radius:8px; }
+        .controls { text-align:center; margin:0 0 16px; }
+        button {
+            background:#3498db; color:white; border:none;
+            padding:14px 28px; margin:8px; border-radius:6px;
+            cursor:pointer; font-size:17px; font-weight:bold;
+            box-shadow:0 2px 5px rgba(0,0,0,0.2); transition:all 0.3s;
+        }
+        button:hover { background:#2980b9; transform:translateY(-2px); }
+        button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
+        button.reset { background:#e74c3c; }
+        button.reset:hover { background:#c0392b; }
+        button.prev { background:#7f8c8d; }
+        button.prev:hover { background:#636e72; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="step-text" id="stepText">
+        Cliquez sur « Étape suivante » pour voir la construction étape par étape.
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" class="prev" onclick="goPrev()" disabled>◀ Précédent</button>
+        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
+        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+    </div>
+
+    <!--
+    ═══════════════════════════════════════════════════════
+    GÉOMÉTRIE
+    ═══════════════════════════════════════════════════════
+    A = (90,390)   O = (340,240)
+    d = O - A = (250,-150)   AO = √(250²+150²) = √85000 ≈ 291.5
+    A' = 2O - A = (590,90)  (symétrique de A par rapport à O)
+    Angle de la droite (AO)  = atan2(-150,250) ≈ -30.96°
+    Angle vers A depuis O  = atan2(390-240, 90-340)  = atan2(150,-250)  ≈ 2.601 rad
+    Angle vers A' depuis O = angle vers A + π         ≈ -0.540 rad
+    Tick AO   : milieu (215,315), perpendiculaire à d = (0.5146,0.8575), demi-long 8
+    Tick OA'  : milieu (465,165), même perpendiculaire
+    Règle : rectangle local dont le BORD INFÉRIEUR (y local = 0) est posé
+            exactement sur la droite (AO), le corps de la règle s'étend
+            au-dessus (y local négatif). Le crayon trace le long de ce bord.
+    ═══════════════════════════════════════════════════════
+    -->
+
+    <svg id="anim" width="1100" height="676" viewBox="0 0 700 430">
+
+        <!-- ══ TOUJOURS VISIBLES : points A et O ══ -->
+        <g>
+            <line x1="83" y1="383" x2="97" y2="397" stroke="#2c3e50" stroke-width="3"/>
+            <line x1="97" y1="383" x2="83" y2="397" stroke="#2c3e50" stroke-width="3"/>
+            <text x="62" y="402" font-size="20" fill="#2c3e50" font-weight="bold">A</text>
+
+            <line x1="333" y1="233" x2="347" y2="247" stroke="#2c3e50" stroke-width="3"/>
+            <line x1="347" y1="233" x2="333" y2="247" stroke="#2c3e50" stroke-width="3"/>
+            <text x="352" y="232" font-size="20" fill="#2c3e50" font-weight="bold">O</text>
+        </g>
+
+        <!-- ══ ÉTAPE 1 : RÈGLE — bord inférieur (y local = 0) posé sur (AO) ══ -->
+        <g id="ruler" opacity="0" transform="translate(90,390) rotate(-30.96)">
+            <rect x="-20" y="-20" width="600" height="20" rx="3"
+                  fill="rgba(255,206,84,0.55)" stroke="#e0a800" stroke-width="2"/>
+            <line x1="20"  y1="-20" x2="20"  y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="60"  y1="-20" x2="60"  y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="100" y1="-20" x2="100" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="140" y1="-20" x2="140" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="180" y1="-20" x2="180" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="220" y1="-20" x2="220" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="260" y1="-20" x2="260" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="300" y1="-20" x2="300" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="340" y1="-20" x2="340" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="380" y1="-20" x2="380" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="420" y1="-20" x2="420" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="460" y1="-20" x2="460" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="500" y1="-20" x2="500" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="540" y1="-20" x2="540" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <line x1="580" y1="-20" x2="580" y2="-4" stroke="#e0a800" stroke-width="1.2"/>
+            <!-- bord inférieur mis en évidence : c'est le long de CE bord (y=0) que le crayon trace -->
+            <line x1="-20" y1="0" x2="580" y2="0" stroke="#c98f00" stroke-width="2"/>
+        </g>
+
+        <!-- ══ CRAYON qui trace le long du bord de la règle ══ -->
+        <g id="pencil" opacity="0">
+            <g transform="rotate(-40)">
+                <rect x="-5" y="-40" width="10" height="27" rx="2" fill="#ff4444" stroke="#cc0000" stroke-width="2"/>
+                <polygon points="-5,-13 5,-13 0,-1" fill="#333"/>
+                <circle cx="0" cy="-1" r="2.5" fill="#000"/>
+            </g>
+        </g>
+
+        <!-- ══ Demi-droite [AO) tracée progressivement par le crayon ══ -->
+        <line id="rayLine" x1="90" y1="390" x2="90" y2="390"
+              stroke="#3498db" stroke-width="2.5" opacity="0"/>
+
+        <!-- ══ ARC du compas (tracé progressivement) ══ -->
+        <path id="arcCompas" d="" stroke="#27ae60" stroke-width="2.5"
+              fill="none" opacity="0"/>
+
+        <!-- ══ MARQUES égalité ══ -->
+        <g id="marks" opacity="0">
+            <line x1="210.9" y1="308.1" x2="219.1" y2="321.9" stroke="#555" stroke-width="2.5"/>
+            <line x1="460.9" y1="158.1" x2="469.1" y2="171.9" stroke="#555" stroke-width="2.5"/>
+        </g>
+
+        <!-- ══ POINT A' ══ -->
+        <g id="pointAp" opacity="0">
+            <line x1="583" y1="83" x2="597" y2="97" stroke="#e74c3c" stroke-width="3"/>
+            <line x1="597" y1="83" x2="583" y2="97" stroke="#e74c3c" stroke-width="3"/>
+            <text x="602" y="102" font-size="20" fill="#e74c3c" font-weight="bold">A'</text>
+        </g>
+
+        <!-- ══ COMPAS ══ -->
+        <g id="compass" opacity="0">
+            <circle id="compassHinge" cx="0" cy="0" r="10"
+                    fill="#ff8c00" stroke="#cc6600" stroke-width="2"/>
+            <line id="compassPointBranch" x1="0" y1="0" x2="-5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <circle id="compassPointTip" cx="-5" cy="60" r="6"
+                    fill="#222" stroke="#000" stroke-width="2"/>
+            <line id="compassPencilBranch" x1="0" y1="0" x2="5" y2="60"
+                  stroke="#ff8c00" stroke-width="6"/>
+            <rect id="compassPencilBody" x="0" y="50" width="10" height="25"
+                  fill="#ff4444" stroke="#cc0000" stroke-width="2" rx="2"/>
+            <polygon id="compassPencilTip" points="5,75 0,85 10,85" fill="#333"/>
+            <circle id="compassPencilPoint" cx="5" cy="85" r="3" fill="#000"/>
+        </g>
+
+    </svg>
+</div>
+
+<script>
+const A  = {x:90,  y:390};
+const O  = {x:340, y:240};
+const Ap = {x:590, y:90};
+const RAY_END = {x:615, y:75};   // extrémité visible de la demi-droite tracée
+const RADIUS = Math.hypot(O.x - A.x, O.y - A.y);
+
+const angA  = Math.atan2(A.y  - O.y, A.x  - O.x);
+const angAp = angA + Math.PI;
+
+let currentStep = 0;
+
+const stepTexts = [
+    'Cliquez sur « Étape suivante » pour voir la construction étape par étape.',
+    '<strong style="color:#e0a800;font-size:20px;">1.</strong> À la règle, je trace la demi-droite [AO), d\'origine A et passant par O.',
+    '<strong style="color:#27ae60;font-size:20px;">2.</strong> Au compas, je place la pointe en O et j\'ouvre l\'écartement jusqu\'à A : j\'obtiens l\'écartement OA.',
+    '<strong style="color:#27ae60;font-size:20px;">3.</strong> Je fais pivoter le compas de l\'autre côté de O, en gardant le même écartement, et je trace un arc sur la demi-droite.',
+    '<strong style="color:#555;font-size:20px;">4.</strong> Le point A\' est à l\'intersection de l\'arc et de la demi-droite. Je marque A\' et je code l\'égalité des longueurs AO et OA\'. ✓'
+];
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const el = id => document.getElementById(id);
+
+// ── Crayon glissant le long du bord de la règle ────────────
+async function drawWithPencil(x1, y1, x2, y2, duration) {
+    const line = el('rayLine'), pencil = el('pencil');
+    line.style.opacity = '1';
+    pencil.style.opacity = '1';
+    const N = 60;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const cx = x1 + (x2 - x1) * t;
+        const cy = y1 + (y2 - y1) * t;
+        line.setAttribute('x2', cx);
+        line.setAttribute('y2', cy);
+        pencil.setAttribute('transform', `translate(${cx},${cy})`);
+        await sleep(duration / N);
+    }
+    pencil.style.opacity = '0';
+}
+
+// ── Compas ───────────────────────────────────────────────
+function setCompass(tip, pen) {
+    const hx = (tip.x + pen.x) / 2, hy = (tip.y + pen.y) / 2;
+    el('compassHinge').setAttribute('cx', hx);
+    el('compassHinge').setAttribute('cy', hy);
+    el('compassPointBranch').setAttribute('x1', hx);
+    el('compassPointBranch').setAttribute('y1', hy);
+    el('compassPointBranch').setAttribute('x2', tip.x);
+    el('compassPointBranch').setAttribute('y2', tip.y);
+    el('compassPointTip').setAttribute('cx', tip.x);
+    el('compassPointTip').setAttribute('cy', tip.y);
+    el('compassPencilBranch').setAttribute('x1', hx);
+    el('compassPencilBranch').setAttribute('y1', hy);
+    el('compassPencilBranch').setAttribute('x2', pen.x);
+    el('compassPencilBranch').setAttribute('y2', pen.y);
+    const ang = Math.atan2(pen.y - hy, pen.x - hx) * 180 / Math.PI + 90;
+    el('compassPencilBody').setAttribute('transform',
+        `translate(${pen.x},${pen.y - 15}) rotate(${ang})`);
+    el('compassPencilTip').setAttribute('transform',
+        `translate(${pen.x - 5},${pen.y}) rotate(${ang} 5 0)`);
+    el('compassPencilPoint').setAttribute('cx', pen.x);
+    el('compassPencilPoint').setAttribute('cy', pen.y);
+}
+
+async function compassOpen(tip, target, duration) {
+    const N = 30;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        setCompass(tip, {
+            x: tip.x + (target.x - tip.x) * t,
+            y: tip.y + (target.y - tip.y) * t
+        });
+        await sleep(duration / N);
+    }
+}
+
+async function compassPivot(tip, radius, a1, a2, duration) {
+    const N = 60;
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        setCompass(tip, {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        });
+        await sleep(duration / N);
+    }
+}
+
+async function compassSweep(tip, radius, a1, a2, duration) {
+    const N = 60;
+    let path = '';
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        const pen = {
+            x: tip.x + radius * Math.cos(angle),
+            y: tip.y + radius * Math.sin(angle)
+        };
+        if (i === 0) path = `M ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        else         path += ` L ${pen.x.toFixed(1)} ${pen.y.toFixed(1)}`;
+        setCompass(tip, pen);
+        el('arcCompas').setAttribute('d', path);
+        el('arcCompas').style.opacity = '1';
+        await sleep(duration / N);
+    }
+}
+
+function buildArcPath(tip, radius, a1, a2, N) {
+    N = N || 60;
+    let path = '';
+    for (let i = 0; i <= N; i++) {
+        const t = i / N;
+        const angle = a1 + (a2 - a1) * t;
+        const x = tip.x + radius * Math.cos(angle), y = tip.y + radius * Math.sin(angle);
+        path += (i === 0 ? 'M ' : ' L ') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    return path;
+}
+
+// ── Affichage instantané de l'état final d'une étape (pour Précédent) ──
+function renderStep(n) {
+    ['ruler','pencil','rayLine','arcCompas','marks','pointAp','compass'].forEach(id => {
+        el(id).style.opacity = '0';
+    });
+    el('arcCompas').setAttribute('d', '');
+    el('rayLine').setAttribute('x2', A.x);
+    el('rayLine').setAttribute('y2', A.y);
+    setCompass(O, O);
+
+    if (n >= 1) {
+        el('rayLine').style.opacity = '1';
+        el('rayLine').setAttribute('x2', RAY_END.x);
+        el('rayLine').setAttribute('y2', RAY_END.y);
+    }
+    if (n >= 2) {
+        el('compass').style.opacity = '1';
+        setCompass(O, A);
+    }
+    if (n >= 3) {
+        const half = 0.26;
+        const aStart = angAp - half, aEnd = angAp + half;
+        el('compass').style.opacity = '1';
+        el('arcCompas').style.opacity = '1';
+        el('arcCompas').setAttribute('d', buildArcPath(O, RADIUS, aStart, aEnd));
+        setCompass(O, { x: O.x + RADIUS * Math.cos(aEnd), y: O.y + RADIUS * Math.sin(aEnd) });
+    }
+    if (n >= 4) {
+        el('compass').style.opacity = '0';
+        el('pointAp').style.opacity = '1';
+        el('marks').style.opacity = '1';
+    }
+
+    const txt = el('stepText');
+    txt.innerHTML = stepTexts[n];
+    if (n >= 4) {
+        txt.style.background = '#c8e6c9'; txt.style.borderLeftColor = '#4caf50'; txt.style.color = '#2e7d32';
+    } else {
+        txt.style.background = '#e3f2fd'; txt.style.borderLeftColor = '#2196f3'; txt.style.color = '#1565c0';
+    }
+
+    el('nextBtn').textContent = (n >= 4) ? '✓ Terminé' : '▶ Étape suivante';
+    el('nextBtn').disabled = false;
+    el('prevBtn').disabled = (n === 0);
+    currentStep = n;
+}
+
+let isAnimating = false;
+
+function goPrev() {
+    if (isAnimating) return;
+    if (currentStep <= 0) return;
+    renderStep(currentStep - 1);
+}
+
+// ── ÉTAPES ───────────────────────────────────────────────
+async function nextStep() {
+    if (isAnimating) return;
+    const txt = el('stepText');
+    const btn = el('nextBtn');
+    if (currentStep >= 4) return;
+    isAnimating = true;
+    btn.disabled = true;
+    el('prevBtn').disabled = true;
+
+    // 1 : règle posée le long de [AO) (bord sur la droite), le crayon trace la demi-droite
+    if (currentStep === 0) {
+        txt.innerHTML = stepTexts[1];
+        el('ruler').style.opacity = '1';
+        await sleep(600);
+        await drawWithPencil(A.x, A.y, RAY_END.x, RAY_END.y, 1800);
+        await sleep(500);
+        el('ruler').style.opacity = '0';
+        await sleep(400);
+        currentStep = 1;
+    }
+
+    // 2 : compas ouvert, pointe en O, mine en A
+    else if (currentStep === 1) {
+        txt.innerHTML = stepTexts[2];
+        setCompass(O, O);
+        el('compass').style.opacity = '1';
+        await sleep(400);
+        await compassOpen(O, A, 1400);
+        await sleep(800);
+        currentStep = 2;
+    }
+
+    // 3 : pivote de l'autre côté (écartement constant), trace un petit arc
+    else if (currentStep === 2) {
+        txt.innerHTML = stepTexts[3];
+        const half = 0.26;
+        const aStart = angAp - half;
+        const aEnd   = angAp + half;
+        await compassPivot(O, RADIUS, angA, aStart, 1500);
+        await sleep(300);
+        await compassSweep(O, RADIUS, aStart, aEnd, 1200);
+        await sleep(800);
+        currentStep = 3;
+    }
+
+    // 4 : point A' + marques, compas disparaît
+    else if (currentStep === 3) {
+        txt.innerHTML = stepTexts[4];
+        txt.style.background      = '#c8e6c9';
+        txt.style.borderLeftColor = '#4caf50';
+        txt.style.color           = '#2e7d32';
+        el('compass').style.opacity = '0';
+        await sleep(400);
+        el('pointAp').style.opacity = '1';
+        await sleep(600);
+        el('marks').style.opacity = '1';
+        await sleep(400);
+        currentStep = 4;
+        btn.textContent = '✓ Terminé';
+    }
+
+    isAnimating = false;
+    btn.disabled = false;
+    el('prevBtn').disabled = (currentStep === 0);
+}
+
+// ── RESET ─────────────────────────────────────────────────
+function resetAnimation() {
+    renderStep(0);
+}
+
+// ── Communication avec la page parente (bouton flottant) ──
+(function() {
+    function postState() {
+        if (window.parent === window) return;
+        window.parent.postMessage({
+            type: 'symAnimState',
+            nextText: el('nextBtn').textContent,
+            nextDisabled: el('nextBtn').disabled,
+            prevDisabled: el('prevBtn').disabled
+        }, '*');
+    }
+    const mo = new MutationObserver(postState);
+    mo.observe(el('nextBtn'), {attributes:true, childList:true, characterData:true, subtree:true});
+    mo.observe(el('prevBtn'), {attributes:true});
+    window.addEventListener('load', postState);
+    window.addEventListener('message', function(e) {
+        if (!e.data || e.data.type !== 'symAnimCmd') return;
+        if (e.data.cmd === 'next') nextStep();
+        else if (e.data.cmd === 'prev') goPrev();
+        else if (e.data.cmd === 'reset') resetAnimation();
+        else if (e.data.cmd === 'sync') postState();
+    });
+})();
+</script>
+</body>
+</html>

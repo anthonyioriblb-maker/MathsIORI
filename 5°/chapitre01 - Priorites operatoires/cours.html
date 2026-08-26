@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Priorités opératoires</title>
+    <link rel="stylesheet" href="../../styles.css?v=20251120143124">
+</head>
+<body>
+    <a href="../classe-5e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre 1 : Priorités opératoires</h1>
+
+    <h2>Rappels vocabulaire</h2>
+
+    <div class="definition">
+        <span style="color: red;">Définitions :</span><br><br>
+        Dans une <span style="color: red;">addition</span>, on ajoute les <span style="color: red;">termes</span> et le résultat obtenu s'appelle la <span style="color: red;">somme</span>.<br><br>
+        Dans une <span style="color: red;">soustraction</span>, on soustrait (ou on retranche) les <span style="color: red;">termes</span> et le résultat obtenu s'appelle la <span style="color: red;">différence</span>.<br><br>
+        Dans une <span style="color: red;">multiplication</span>, on multiplie les <span style="color: red;">facteurs</span> et le résultat obtenu s'appelle le <span style="color: red;">produit</span>.<br><br>
+        Dans une <span style="color: red;">division</span>, le résultat obtenu s'appelle le <span style="color: red;">quotient</span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br><br>
+        <span class="math">A</span> = 16 + 3 × 5 ; <span class="math">A</span> est la somme de 16 et du produit de 3 par 5.<br><br>
+        <span class="math">B</span> = 30 − (2 + 7) ; <span class="math">B</span> est la différence de 30 par la somme de 2 et de 7.<br><br>
+        <span class="math">C</span> = <span class="fraction"><span class="numerateur">6</span><span class="denominateur">5 + 3</span></span> ; <span class="math">C</span> est le quotient de 6 par la somme de 5 et de 3.
+    </div>
+
+    <h2>Calculs sans parenthèses</h2>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Dans une expression numérique <span style="color: red;">sans parenthèses</span>, on effectue :<br><br>
+        • <span style="color: red;">d'abord</span> les multiplications et les divisions, de gauche à droite,<br><br>
+        • <span style="color: red;">puis</span> les additions et les soustractions, également de gauche à droite.<br><br>
+        On dit que la multiplication et la division sont <span style="color: red;">prioritaires</span> sur l'addition et la soustraction.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong>
+        <div class="calcul-etapes">
+            <div><span class="math">D</span> = <span style="background-color: yellow;">4 × 7</span> − 8 : 2</div>
+            <div><span class="math">D</span> = 28 − <span style="background-color: yellow;">8 : 2</span></div>
+            <div><span class="math">D</span> = <span style="background-color: yellow;">28 − 4</span></div>
+            <div><span class="math">D</span> = 24</div>
+        </div>
+    </div>
+
+    <h2>Calculs avec des parenthèses</h2>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Dans une expression <span style="color: red;">avec parenthèses</span>, on effectue :<br><br>
+        • <span style="color: red;">d'abord</span> les calculs entre parenthèses en commençant par les parenthèses les plus à l'intérieur,<br><br>
+        • <span style="color: red;">puis</span> on suit les règles de calculs sans parenthèses.
+    </div>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> Lorsque des parenthèses sont à l'intérieur d'autres parenthèses, les plus à l'extérieur sont souvent remplacées par des crochets.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong>
+        <div class="calcul-etapes">
+            <div><span class="math">E</span> = 3 × (10 − (<span style="background-color: yellow;">4 + 2</span> − 3))</div>
+            <div><span class="math">E</span> = 3 × (10 − (<span style="background-color: yellow;">6 − 3</span>))</div>
+            <div><span class="math">E</span> = 3 × <span style="background-color: yellow;">(10 − 3)</span></div>
+            <div><span class="math">E</span> = <span style="background-color: yellow;">3 × 7</span></div>
+            <div><span class="math">E</span> = 21</div>
+        </div>
+    </div>
+
+    <h2>Division par un nombre décimal</h2>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour diviser par un nombre décimal, on multiplie le dividende <span style="color: red;">et</span> le diviseur par 10, 100, 1000... pour obtenir un diviseur entier. Le quotient ne change pas.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong>
+        <div class="calcul-etapes">
+            <div>25,6 : 0,8</div>
+            <div>= <span style="background-color: yellow;">256 : 8</span> (on multiplie les deux nombres par 10)</div>
+            <div>= 32</div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple (avec un diviseur à deux chiffres après la virgule) :</strong>
+        <div class="calcul-etapes">
+            <div>99,875 : 4,25</div>
+            <div>= <span style="background-color: yellow;">9987,5 : 425</span> (on multiplie les deux nombres par 100, car le diviseur a deux chiffres après la virgule)</div>
+            <div>= 23,5</div>
+        </div>
+    </div>
+
+    <h2>Distributivité (calcul astucieux)</h2>
+
+    <div class="important">
+        <span style="color: red;">Propriété :</span> Pour multiplier un nombre par une somme (ou une différence), on peut multiplier ce nombre par chaque terme, puis additionner (ou soustraire) les résultats.
+    </div>
+
+    <div class="example">
+        <strong>Exemple (avec une différence) :</strong>
+        <div class="calcul-etapes">
+            <div><span class="math">F</span> = 4 × 27</div>
+            <div><span class="math">F</span> = 4 × (30 − 3)</div>
+            <div><span class="math">F</span> = <span style="background-color: yellow;">4 × 30</span> − <span style="background-color: yellow;">4 × 3</span></div>
+            <div><span class="math">F</span> = 120 − 12 = 108</div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple (avec une somme) :</strong>
+        <div class="calcul-etapes">
+            <div><span class="math">G</span> = 6 × 53</div>
+            <div><span class="math">G</span> = 6 × (50 + 3)</div>
+            <div><span class="math">G</span> = <span style="background-color: yellow;">6 × 50</span> + <span style="background-color: yellow;">6 × 3</span></div>
+            <div><span class="math">G</span> = 300 + 18 = 318</div>
+        </div>
+    </div>
+
+    <h2>Programme de calcul et expression</h2>
+
+    <div class="definition">
+        Un <span style="color: red;">programme de calcul</span> est une suite d'instructions à effectuer sur un nombre : c'est une forme d'<span style="color: red;">algorithme</span>. On peut le traduire par une <span style="color: red;">expression mathématique</span>, et inversement.
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 — du programme vers l'expression :</strong><br><br>
+        On considère le programme de calcul :
+        <ul>
+            <li>Choisir un nombre</li>
+            <li>Le multiplier par 3</li>
+            <li>Ajouter 5</li>
+        </ul>
+        <div class="programme-calcul-groupe">
+            <div>
+                <div style="text-align:center; font-weight:bold;">Avec le nombre 4</div>
+                <div class="programme-calcul">
+                    <div class="etape-calcul">4</div>
+                    <div class="fleche-calcul">↓ Multiplier par 3</div>
+                    <div class="etape-calcul">12</div>
+                    <div class="fleche-calcul">↓ Ajouter 5</div>
+                    <div class="etape-calcul">17</div>
+                </div>
+            </div>
+            <div>
+                <div style="text-align:center; font-weight:bold;">Avec un nombre quelconque <span class="math">x</span></div>
+                <div class="programme-calcul">
+                    <div class="etape-calcul"><span class="math">x</span></div>
+                    <div class="fleche-calcul">↓ Multiplier par 3</div>
+                    <div class="etape-calcul">3 × <span class="math">x</span></div>
+                    <div class="fleche-calcul">↓ Ajouter 5</div>
+                    <div class="etape-calcul">3 × <span class="math">x</span> + 5</div>
+                </div>
+            </div>
+        </div>
+        Si on choisit <span class="math">x</span> = 4 : expression = 4 × 3 + 5 = 17.
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 — de l'expression vers le programme :</strong><br><br>
+        Soit l'expression suivante, donner le programme de calcul associé : (<span class="math">x</span> + 2) × 3<br><br>
+        Programme :
+        <ul>
+            <li>Choisir un nombre</li>
+            <li>Lui ajouter 2</li>
+            <li>Multiplier le résultat par 3</li>
+        </ul>
+    </div>
+
+    <h2>Multiples, diviseurs et divisibilité</h2>
+
+    <div class="definition">
+        <span style="color: red;">a</span> est un <span style="color: red;">multiple</span> de <span style="color: red;">b</span> si on peut trouver un nombre entier <span class="math">k</span> tel que <span class="math">a</span> = <span class="math">b</span> × <span class="math">k</span>. On dit alors aussi que <span style="color: red;">b</span> est un <span style="color: red;">diviseur</span> de <span style="color: red;">a</span>, ou que <span style="color: red;">a</span> est <span style="color: red;">divisible</span> par <span style="color: red;">b</span>.
+    </div>
+
+    <div class="important">
+        <span style="color: red;">Critères de divisibilité :</span><br><br>
+        • Un nombre est divisible par <span style="color: red;">3</span> si la somme de ses chiffres est divisible par 3.<br><br>
+        • Un nombre est divisible par <span style="color: red;">9</span> si la somme de ses chiffres est divisible par 9.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong><br><br>
+        1 + 2 + 6 = 9, donc 126 est divisible par 3 et par 9.<br>
+        1 + 2 + 3 = 6, la somme est divisible par 3 mais pas par 9, donc 123 est divisible par 3 mais pas par 9.
+    </div>
+
+</body>
+</html>

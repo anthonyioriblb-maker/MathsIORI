@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             coursBtn = `<span class="action-button cours disabled">📖 Cours</span>`;
         }
 
+
         // Menu déroulant exercices ou activité (pour Scratch)
         let exercicesBtn = '';
         if (chapitre.activite) {
