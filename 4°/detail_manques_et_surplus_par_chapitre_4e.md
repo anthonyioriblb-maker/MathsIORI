@@ -1,6 +1,6 @@
 # Détail par chapitre — manques et surplus vs programme officiel (4e, ancien programme)
 
-Source officielle : BO spécial n°11 du 26 novembre 2015 (ajustements 2018), programme cycle 4 — toujours applicable en 4e cette année (2026-2027) et l'an prochain, le nouveau programme (BO 5 mars 2026) n'entrant en application en 4e qu'à la rentrée 2027-2028. Ce document reprend l'audit global (`audit_programme_4e.md`) et le décline **chapitre par chapitre**, dans l'ordre actuel de `classe-4e.html`, avec pour chaque chapitre ce qui **manque** et ce qui est **en trop** par rapport aux attendus de fin de 4e.
+Source officielle : programme cycle 4 (BO spécial n°11 du 26 novembre 2015), ajusté et fixé par la note de service n°2019-072 du 28 mai 2019 (BO n°22 du 29-5-2019, en vigueur depuis la rentrée 2019-2020) — toujours applicable en 4e cette année (2026-2027) et l'an prochain, le nouveau programme (BO n°10 du 5 mars 2026) n'entrant en application en 4e qu'à la rentrée 2027-2028. Ce document reprend l'audit global (`audit_programme_4e.md`) et le décline **chapitre par chapitre**, dans l'ordre actuel de `classe-4e.html`, avec pour chaque chapitre ce qui **manque** et ce qui est **en trop** par rapport aux attendus de fin de 4e. Toutes les entrées ci-dessous ont été vérifiées citation à l'appui dans les textes officiels (attendus éduscol, programme cycle 4, repères annuels de progression).
 
 Légende : Conforme = rien à signaler.
 
@@ -8,8 +8,7 @@ Légende : Conforme = rien à signaler.
 
 ## Chapitre 1 — Les nombres relatifs
 
-**Manque :**
-- Comparer, ranger et encadrer des nombres rationnels (positifs ou négatifs) — le chapitre couvre les 4 opérations et les priorités, pas explicitement la comparaison/l'encadrement.
+**Manque :** Conforme (section « Comparer, ranger et encadrer des nombres relatifs » ajoutée : comparaison via la distance à zéro, rangement, encadrement, avec un exemple étendu aux nombres en écriture fractionnaire — l'attendu officiel porte sur les « nombres rationnels », dont les entiers/décimaux relatifs et les fractions signées). La comparaison de deux fractions de même signe nécessitant une réduction au même dénominateur relève des chapitres 3 et 5 (écriture fractionnaire).
 
 **En trop :** Rien.
 
@@ -25,8 +24,7 @@ Légende : Conforme = rien à signaler.
 
 ## Chapitre 3 — Écriture fractionnaire, partie 1
 
-**Manque :**
-- Pas de mention explicite de « calcule avec les nombres rationnels » en contexte fractionnaire complexe — probablement couvert en pratique, à vérifier.
+**Manque :** Conforme. Attendu explicite et vérifié : « Il calcule avec les nombres rationnels : addition, soustraction, multiplication, division » — couvert par l'ensemble des chapitres 3 et 5.
 
 **En trop :** Rien.
 
@@ -111,9 +109,9 @@ Légende : Conforme = rien à signaler.
 
 ## Chapitre 13 — Arithmétique
 
-**Manque :** Conforme et complet (divisibilité, nombres premiers, décomposition, PGCD, PPCM).
+**Manque :** Conforme sur les attendus officiels vérifiés (divisibilité, nombres premiers inférieurs à 100, décomposition en facteurs premiers, simplification de fractions).
 
-**En trop :** Rien.
+**En trop :** Le PGCD et le PPCM ne figurent dans aucun des textes officiels vérifiés (attendus de fin de 4e, programme cycle 4, repères annuels de progression) — ce sont des ajouts hors périmètre officiel du programme actuel (pas gênants pour autant, juste à signaler).
 
 ---
 
@@ -138,10 +136,10 @@ Légende : Conforme = rien à signaler.
 
 **Statut : aucun chapitre dédié.**
 
-**Manque (contenu attendu, niveaux 1 à 3 du programme) :**
-- Niveau 1 : construire un programme simple à partir de blocs fournis.
-- Niveau 2 : gérer des événements, utiliser des variables et des instructions conditionnelles.
-- Niveau 3 : créer des blocs personnalisés, utiliser des boucles imbriquées, des scripts en parallèle.
+**Manque (contenu attendu, vérifié texte à l'appui) :**
+- Niveau 1 (attendu de 4e) : « Il met en ordre et/ou complète des blocs fournis par le professeur pour construire un programme simple ».
+- Niveau 2 (attendu de 4e) : gérer le déclenchement d'un script en réponse à un événement, écrire une séquence d'instructions avec condition « si … alors » et boucle « répéter … fois », intégrer une variable.
+- Niveau 3 (attendu de **3e**, pas de 4e — à ne pas exiger à ce niveau) : créer des blocs personnalisés, utiliser **simultanément** les boucles « Répéter … fois » et « Répéter jusqu'à … » avec des instructions conditionnelles, écrire des scripts en parallèle. (Le texte officiel ne parle pas de « boucles imbriquées » mais d'utilisation simultanée de deux types de boucles.)
 
 **En trop :** Sans objet (rien n'existe encore).
 
@@ -151,7 +149,7 @@ Légende : Conforme = rien à signaler.
 
 | # | Chapitre | Manques | Surplus |
 |---|----------|---------|---------|
-| 1 | Les nombres relatifs | 1 point (comparaison/encadrement) | — |
+| 1 | Les nombres relatifs | Conforme | — |
 | 2 | Pythagore — partie 1 | Conforme | — |
 | 3 | Écriture fractionnaire — partie 1 | Conforme | — |
 | 4 | Pythagore — partie 2 | Conforme | — |
@@ -168,4 +166,4 @@ Légende : Conforme = rien à signaler.
 | 15 | Calcul littéral | 1 point (factorisation) | — |
 | — | Algorithmique et programmation | **chapitre entier à créer** | — |
 
-Sources : [Attendus 4e — éduscol](https://eduscol.education.gouv.fr/sites/default/files/document/16-maths-4e-attendus-eduscol1114746pdf-74682.pdf), [Programme cycle 4 — BO spécial n°11 du 26/11/2015](https://pedagogie.ac-strasbourg.fr/fileadmin/pedagogie/mathematiques/College/Programmes_Documents_officiels/Maths_cycle4_BO_SPE_11_26-11-2015.pdf).
+Sources : [Attendus 4e — éduscol](https://eduscol.education.gouv.fr/sites/default/files/document/16-maths-4e-attendus-eduscol1114746pdf-74682.pdf), [Programme cycle 4 — BO spécial n°11 du 26/11/2015](https://pedagogie.ac-strasbourg.fr/fileadmin/pedagogie/mathematiques/College/Programmes_Documents_officiels/Maths_cycle4_BO_SPE_11_26-11-2015.pdf), [Note de service n°2019-072 du 28-5-2019 (BO n°22 du 29-5-2019)](https://www.education.gouv.fr/bo/19/Hebdo22/MENE1913283N.htm).

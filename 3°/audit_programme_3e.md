@@ -1,8 +1,8 @@
-# Audit — Cours de 3e vs programme officiel (BO spécial n°11 du 26 novembre 2015, cycle 4)
+# Audit — Cours de 3e vs programme officiel (cycle 4, ajustements 2019)
 
-**Calendrier de la réforme :** le nouveau programme cycle 4 (BO n°10 du 5 mars 2026) s'applique de façon progressive : 5e à la rentrée 2026-2027, 4e à la rentrée 2027-2028, **3e à la rentrée 2028-2029**. Cette année (2026-2027) et l'an prochain, la 3e reste donc sur l'**ancien programme** (BO spécial n°11 du 26 novembre 2015, ajustements 2018) — c'est ce texte qui sert de référence ci-dessous, avec en plus les attendus du DNB.
+**Calendrier de la réforme :** le nouveau programme cycle 4 (BO n°10 du 5 mars 2026) s'applique de façon progressive : 5e à la rentrée 2026-2027, 4e à la rentrée 2027-2028, **3e à la rentrée 2028-2029**. Cette année (2026-2027) et l'an prochain, la 3e reste donc sur l'**ancien programme** : programme cycle 4 initial (BO spécial n°11 du 26 novembre 2015) tel qu'ajusté et définitivement fixé par la **note de service n°2019-072 du 28 mai 2019 (BO n°22 du 29 mai 2019)**, entrée en vigueur à la rentrée 2019-2020 — c'est ce texte (attendus de fin d'année + repères annuels de progression) qui sert de référence ci-dessous, avec en plus les attendus du DNB.
 
-Source : [Attendus de fin d'année — 3e (éduscol)](https://eduscol.education.gouv.fr/sites/default/files/document/18-maths-3e-attendus-eduscol1114748pdf-74688.pdf), [Programme cycle 4 (BO spécial n°11)](https://pedagogie.ac-strasbourg.fr/fileadmin/pedagogie/mathematiques/College/Programmes_Documents_officiels/Maths_cycle4_BO_SPE_11_26-11-2015.pdf).
+Source : [Attendus de fin d'année — 3e (éduscol)](https://eduscol.education.gouv.fr/sites/default/files/document/18-maths-3e-attendus-eduscol1114748pdf-74688.pdf), [Programme cycle 4 initial (BO spécial n°11, 2015)](https://pedagogie.ac-strasbourg.fr/fileadmin/pedagogie/mathematiques/College/Programmes_Documents_officiels/Maths_cycle4_BO_SPE_11_26-11-2015.pdf), [Note de service n°2019-072 du 28-5-2019, ajustements et attendus (BO n°22 du 29-5-2019)](https://www.education.gouv.fr/bo/19/Hebdo22/MENE1913283N.htm).
 
 Comparaison de tes 12 chapitres actuels (ordre de `classe-3e.html`, contenu retrouvé dans `Archives/MathsIORI/3e/`) aux attendus de fin de 3e.
 

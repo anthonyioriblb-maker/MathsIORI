@@ -1,6 +1,6 @@
 # Détail par chapitre — manques et surplus vs programme officiel (3e, ancien programme)
 
-Source officielle : BO spécial n°11 du 26 novembre 2015 (ajustements 2018), programme cycle 4 — toujours applicable en 3e cette année (2026-2027), le nouveau programme (BO 5 mars 2026) n'entrant en application en 3e qu'à la rentrée 2028-2029. Ce document reprend l'audit global (`audit_programme_3e.md`) et le décline **chapitre par chapitre**, dans l'ordre actuel de `classe-3e.html`, avec pour chaque chapitre ce qui **manque** et ce qui est **en trop** par rapport aux attendus de fin de 3e (et au DNB).
+Source officielle : programme cycle 4 (BO spécial n°11 du 26 novembre 2015), ajusté et fixé par la note de service n°2019-072 du 28 mai 2019 (BO n°22 du 29-5-2019, en vigueur depuis la rentrée 2019-2020) — toujours applicable en 3e cette année (2026-2027), le nouveau programme (BO n°10 du 5 mars 2026) n'entrant en application en 3e qu'à la rentrée 2028-2029. Ce document reprend l'audit global (`audit_programme_3e.md`) et le décline **chapitre par chapitre**, dans l'ordre actuel de `classe-3e.html`, avec pour chaque chapitre ce qui **manque** et ce qui est **en trop** par rapport aux attendus de fin de 3e (et au DNB).
 
 Légende : Conforme = rien à signaler.
 
@@ -8,8 +8,7 @@ Légende : Conforme = rien à signaler.
 
 ## Chapitre 1 — Rappels de calculs
 
-**Manque :**
-- Un point de rappel/approfondissement sur les racines carrées — l'attendu « résout des problèmes mettant en jeu des racines carrées » n'a pas de section dédiée (priorités/fractions, puissances, notation scientifique seulement).
+**Manque :** Conforme (section « Racines carrées » ajoutée : définition, carrés parfaits de 1 à 144, encadrement par deux entiers consécutifs, résolution de problème avec valeur exacte et valeur approchée — conforme au programme, qui reste à ce niveau élémentaire/calculatoire et ne demande pas les propriétés de racine d'un produit/quotient ni la simplification de racines).
 
 **En trop :** Rien.
 
@@ -111,8 +110,11 @@ Légende : Conforme = rien à signaler.
 
 **Statut : aucun chapitre dédié.**
 
-**Manque (contenu attendu, niveau 3 principalement en 3e) :**
-- Créer des blocs personnalisés, utiliser des boucles imbriquées, des scripts en parallèle, gérer des variables et événements complexes.
+**Manque (contenu attendu, niveau 3 principalement en 3e, vérifié texte à l'appui) :**
+- Créer des blocs personnalisés (« Il décompose un problème en sous-problèmes et traduit un sous-problème en créant un bloc-personnalisé »).
+- Utiliser **simultanément** les boucles « Répéter … fois » et « Répéter jusqu'à … » ainsi que les instructions conditionnelles (et non des boucles imbriquées, terme qui n'est pas celui du texte officiel).
+- Écrire plusieurs scripts fonctionnant en parallèle.
+- Gérer des variables et le déclenchement d'un script en réponse à un événement (le texte parle d'un événement simple, pas d'« événements complexes »).
 
 **En trop :** Sans objet (rien n'existe encore).
 
@@ -122,7 +124,7 @@ Légende : Conforme = rien à signaler.
 
 | # | Chapitre | Manques | Surplus |
 |---|----------|---------|---------|
-| 1 | Rappels de calculs | 1 point (racines carrées) | — |
+| 1 | Rappels de calculs | Conforme | — |
 | 2 | Théorème de Thalès | Conforme | — |
 | 3 | Calcul littéral | 1 point (opposé d'une expression) | — |
 | 4 | Trigonométrie triangle rectangle | Conforme | — |
@@ -136,4 +138,4 @@ Légende : Conforme = rien à signaler.
 | 12 | Transformations du plan | Conforme | — |
 | — | Algorithmique et programmation | **chapitre entier à créer** | — |
 
-Sources : [Attendus 3e — éduscol](https://eduscol.education.gouv.fr/sites/default/files/document/18-maths-3e-attendus-eduscol1114748pdf-74688.pdf), [Programme cycle 4 — BO spécial n°11 du 26/11/2015](https://pedagogie.ac-strasbourg.fr/fileadmin/pedagogie/mathematiques/College/Programmes_Documents_officiels/Maths_cycle4_BO_SPE_11_26-11-2015.pdf).
+Sources : [Attendus 3e — éduscol](https://eduscol.education.gouv.fr/sites/default/files/document/18-maths-3e-attendus-eduscol1114748pdf-74688.pdf), [Programme cycle 4 — BO spécial n°11 du 26/11/2015](https://pedagogie.ac-strasbourg.fr/fileadmin/pedagogie/mathematiques/College/Programmes_Documents_officiels/Maths_cycle4_BO_SPE_11_26-11-2015.pdf), [Note de service n°2019-072 du 28-5-2019 (BO n°22 du 29-5-2019)](https://www.education.gouv.fr/bo/19/Hebdo22/MENE1913283N.htm).
