@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Automatismes 4e</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    .top { text-align: center; color: white; margin-bottom: 20px; }
+    .top h1 { font-size: 2.2em; text-shadow: 2px 2px 4px rgba(0,0,0,0.25); }
+    .top p { opacity: 0.9; margin-top: 6px; }
+    .panel {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        padding: 24px;
+    }
+    .controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+    }
+    .controls label { font-weight: bold; color: #5a3d9e; font-size: 1.1em; }
+    .num-input { display: flex; align-items: center; gap: 6px; }
+    .num-input button {
+        width: 40px; height: 40px; border-radius: 10px;
+        border: 2px solid #5a3d9e; background: white; color: #5a3d9e;
+        font-size: 1.3em; font-weight: bold; cursor: pointer;
+    }
+    .num-input button:hover { background: #f1ecfa; }
+    .num-input input {
+        width: 80px; height: 40px; text-align: center;
+        font-size: 1.3em; font-weight: bold;
+        border: 2px solid #5a3d9e; border-radius: 10px; color: #5a3d9e;
+    }
+    .slider { width: 100%; max-width: 320px; }
+    .print-btn, .reset-btn, .dl-btn {
+        border: none; padding: 12px 22px; font-size: 1em; font-weight: bold;
+        border-radius: 12px; cursor: pointer;
+    }
+    .print-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 6px 16px rgba(102,126,234,0.35);
+    }
+    .print-btn:hover { opacity: 0.92; }
+    .reset-btn {
+        background: white;
+        color: #c0392b;
+        border: 2px solid #c0392b;
+    }
+    .reset-btn:hover { background: #fdecea; }
+    .dl-btn {
+        background: white;
+        color: #1a56db;
+        border: 2px solid #1a56db;
+    }
+    .dl-btn:hover { background: #eaf1ff; }
+
+    .controls2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+    .folder-btn {
+        background: white;
+        color: #555;
+        border: 2px solid #999;
+        border-radius: 10px;
+        padding: 6px 14px;
+        font-size: 0.85em;
+        cursor: pointer;
+    }
+    .folder-btn:hover { background: #f2f2f2; }
+    .save-status {
+        font-size: 0.85em;
+        color: #5a3d9e;
+        font-weight: bold;
+        min-height: 1.2em;
+    }
+
+    .hint {
+        text-align: center;
+        color: #777;
+        font-size: 0.9em;
+        margin-bottom: 16px;
+        font-style: italic;
+    }
+
+    .sheet {
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 14px;
+    }
+    .sheet-title {
+        text-align: center;
+        color: #333;
+        font-size: 1.15em;
+        margin-bottom: 12px;
+    }
+
+    .screen-view {
+        border: 2px dashed transparent;
+        border-radius: 8px;
+        padding: 8px;
+        transition: border-color 0.2s, background 0.2s;
+    }
+    .screen-view:hover, .screen-view:focus-within {
+        border-color: #764ba2;
+        background: #fbfaff;
+    }
+    .screen-view table { width: 100%; border-collapse: collapse; }
+    .screen-view td { border: 1px solid #000; padding: 10px; text-align: center; }
+
+    .print-grid {
+        display: none;
+    }
+    .cell {
+        border: 1px dashed #bbb;
+        border-radius: 8px;
+        padding: 6px;
+        overflow: hidden;
+    }
+    .cell table { width: 100%; border-collapse: collapse; }
+    .cell td { border: 1px solid #000; padding: 6px; text-align: center; }
+
+    .back {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: white;
+        text-decoration: none;
+        opacity: 0.9;
+    }
+    .back:hover { text-decoration: underline; }
+
+    @media print {
+        body { background: white; padding: 0; }
+        .top, .controls, .controls2, .hint, .back { display: none !important; }
+        .panel { box-shadow: none; padding: 0; border-radius: 0; }
+        .sheet { border: none; padding: 0; }
+        .sheet-title { font-size: 12pt; margin-bottom: 8pt; }
+        .screen-view { display: none !important; }
+        .print-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 12px;
+        }
+        .cell { border: 1px dashed #999; font-size: 8pt; }
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <h1>Automatismes 4e</h1>
+        <p>Choisis le numero du jour. A l'impression : une seule feuille, 4 exemplaires.</p>
+    </div>
+
+    <div class="panel">
+        <div class="controls">
+            <label for="num">Automatisme N</label>
+            <div class="num-input">
+                <button type="button" onclick="step(-1)">-</button>
+                <input id="num" type="number" min="1" max="3" value="1" onchange="setNum(this.value)">
+                <button type="button" onclick="step(1)">+</button>
+            </div>
+            <input class="slider" id="slider" type="range" min="1" max="3" value="1" oninput="setNum(this.value)">
+            <button class="print-btn" onclick="window.print()">Imprimer</button>
+            <button class="reset-btn" onclick="resetCurrent()">Reinitialiser</button>
+            <button class="dl-btn" onclick="downloadCurrent()">Telecharger cette version</button>
+        </div>
+        <div class="controls2">
+            <button class="folder-btn" type="button" onclick="chooseFolder()">Choisir le dossier d'enregistrement</button>
+            <span class="save-status" id="save-status"></span>
+        </div>
+        <p class="hint">Clique directement sur un nombre ou un texte ci-dessous pour le modifier. Choisis une fois le dossier "automatismes" pour que le bouton Telecharger y enregistre directement (Chrome/Edge uniquement).</p>
+
+        <div class="sheet">
+            <div class="sheet-title" id="sheet-title">Automatismes 4e - N1</div>
+            <div class="screen-view" id="screen-view" contenteditable="true" spellcheck="false"></div>
+            <div class="print-grid" id="print-grid"></div>
+        </div>
+    </div>
+
+    <a class="back" href="classe-automatismes.html">Retour aux automatismes</a>
+</div>
+
+<script>
+    const FRAGMENTS = {"1": "<table>\n<tr><td>Calculer : (&minus;8) + 5 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>Calculer : (&minus;4) &times; (&minus;3) =</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Ranger dans l'ordre croissant : &minus;6 &nbsp;;&nbsp; 3 &nbsp;;&nbsp; &minus;2 &nbsp;;&nbsp; 0<br>&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>\n<tr><td>D&eacute;velopper : 4(x + 3) =</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Un article co&ucirc;te 60&nbsp;&euro;. Il baisse de 20&nbsp;%. Quel est son nouveau prix&nbsp;?<br>&hellip;&hellip;&hellip; &euro;</td></tr>\n</table>", "2": "<table>\n<tr><td>Calculer : (&minus;15) &minus; (&minus;7) =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>Simplifier la fraction : 18/24 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>R&eacute;soudre : x + 5 = 12, donc x =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>Calculer : 3&sup2; + 2&sup3; =</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:center\">\n<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 220 170\" width=\"200\" height=\"155\" style=\"display:block;margin:6px auto;\">\n  <polygon points=\"20,150 20,30 170,150\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"2\"/>\n  <rect x=\"20\" y=\"138\" width=\"12\" height=\"12\" fill=\"none\" stroke=\"#1a1a1a\" stroke-width=\"1.5\"/>\n  <text x=\"0\" y=\"93\" font-family=\"Arial\" font-size=\"14\">8 cm</text>\n  <text x=\"80\" y=\"168\" font-family=\"Arial\" font-size=\"14\">6 cm</text>\n  <text x=\"100\" y=\"83\" font-family=\"Arial\" font-size=\"14\" font-style=\"italic\">?</text>\n</svg>\nCe triangle est rectangle. Quelle est la longueur de l'hypot&eacute;nuse&nbsp;?<br>&hellip;&hellip;&hellip; cm\n</td></tr>\n</table>", "3": "<table>\n<tr><td>Calculer : 5 &times; (&minus;2) + 3 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>R&eacute;duire : 3x + 5x &minus; 2x =</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Tableau de proportionnalit&eacute; :<br>4 &rarr; 10 &nbsp;&nbsp;&nbsp;&nbsp; 6 &rarr; &hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Calculer la moyenne de la s&eacute;rie : 12 &nbsp;;&nbsp; 15 &nbsp;;&nbsp; 9 &nbsp;;&nbsp; 14<br>&hellip;&hellip;</td></tr>\n<tr><td>Convertir : 3,5 km =</td><td>&hellip;&hellip;&hellip; m</td></tr>\n</table>"};
+    const TOTAL = 3;
+    let currentNum = 1;
+    let loadToken = 0;
+
+    function pad2(n) { return String(n).padStart(2, '0'); }
+
+    function loadFragment(n) {
+        if (!window.fetch) return Promise.resolve(FRAGMENTS[n]);
+        return fetch('4e/data/N' + pad2(n) + '.html', {cache: 'no-store'}).then(function(resp) {
+            if (!resp.ok) return FRAGMENTS[n];
+            return resp.text().then(function(text) {
+                if (!text || text.trim().length === 0) return FRAGMENTS[n];
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(text, 'text/html');
+                var contentEl = doc.querySelector('.content');
+                if (!contentEl) return FRAGMENTS[n];
+                var inner = contentEl.innerHTML.split('../src_images/').join('4e/src_images/');
+                FRAGMENTS[n] = inner;
+                return inner;
+            });
+        }).catch(function() {
+            return FRAGMENTS[n];
+        });
+    }
+
+    function render(n) {
+        var token = ++loadToken;
+        document.getElementById('sheet-title').textContent = 'Automatismes 4e - N' + n;
+        document.getElementById('screen-view').innerHTML = '<p style="text-align:center;color:#999;padding:30px;">Chargement...</p>';
+        loadFragment(n).then(function(content) {
+            if (token !== loadToken) return;
+            currentNum = n;
+            document.getElementById('screen-view').innerHTML = content;
+        });
+    }
+
+    function setNum(v) {
+        let n = parseInt(v, 10);
+        if (isNaN(n)) n = 1;
+        n = Math.max(1, Math.min(TOTAL, n));
+        document.getElementById('num').value = n;
+        document.getElementById('slider').value = n;
+        if (n === currentNum) return;
+        render(n);
+    }
+
+    function step(delta) {
+        const cur = parseInt(document.getElementById('num').value, 10) || 1;
+        setNum(cur + delta);
+    }
+
+    function resetCurrent() {
+        document.getElementById('screen-view').innerHTML = FRAGMENTS[currentNum];
+    }
+
+    function syncPrintGrid() {
+        const content = document.getElementById('screen-view').innerHTML;
+        const grid = document.getElementById('print-grid');
+        grid.innerHTML = '';
+        for (let i = 0; i < 4; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.innerHTML = content;
+            grid.appendChild(cell);
+        }
+    }
+
+    window.addEventListener('beforeprint', syncPrintGrid);
+
+    const IDB_NAME = 'automatismes4e';
+    const IDB_STORE = 'handles';
+
+    function idbOpen() {
+        return new Promise(function(resolve, reject) {
+            var req = indexedDB.open(IDB_NAME, 1);
+            req.onupgradeneeded = function() { req.result.createObjectStore(IDB_STORE); };
+            req.onsuccess = function() { resolve(req.result); };
+            req.onerror = function() { reject(req.error); };
+        });
+    }
+
+    function idbSet(key, value) {
+        return idbOpen().then(function(db) {
+            return new Promise(function(resolve, reject) {
+                var tx = db.transaction(IDB_STORE, 'readwrite');
+                tx.objectStore(IDB_STORE).put(value, key);
+                tx.oncomplete = function() { resolve(); };
+                tx.onerror = function() { reject(tx.error); };
+            });
+        });
+    }
+
+    function idbGet(key) {
+        return idbOpen().then(function(db) {
+            return new Promise(function(resolve, reject) {
+                var tx = db.transaction(IDB_STORE, 'readonly');
+                var req = tx.objectStore(IDB_STORE).get(key);
+                req.onsuccess = function() { resolve(req.result); };
+                req.onerror = function() { reject(req.error); };
+            });
+        });
+    }
+
+    function showSaveStatus(msg) {
+        var el = document.getElementById('save-status');
+        if (!el) return;
+        el.textContent = msg;
+        setTimeout(function() {
+            if (el.textContent === msg) el.textContent = '';
+        }, 5000);
+    }
+
+    function chooseFolder() {
+        if (!('showDirectoryPicker' in window)) {
+            alert("Cette fonction n'est disponible que sur Chrome ou Edge, et seulement si la page est ouverte via une adresse web (pas en double-cliquant sur le fichier). Le bouton Telecharger classique reste disponible.");
+            return;
+        }
+        window.showDirectoryPicker().then(function(handle) {
+            return idbSet('automatismesDir', handle).then(function() {
+                showSaveStatus('Dossier choisi : ' + handle.name + '. Les prochains enregistrements iront directement dedans.');
+            });
+        }).catch(function(e) {
+            if (e && e.name !== 'AbortError') console.warn(e);
+        });
+    }
+
+    function saveFile(filename, htmlContent) {
+        var directSave = function() {
+            if (!('showDirectoryPicker' in window)) return Promise.resolve(false);
+            return idbGet('automatismesDir').catch(function(){ return null; }).then(function(handle) {
+                if (!handle) return false;
+                return handle.queryPermission({mode: 'readwrite'}).then(function(perm) {
+                    if (perm === 'granted') return true;
+                    return handle.requestPermission({mode: 'readwrite'}).then(function(p) { return p === 'granted'; });
+                }).then(function(granted) {
+                    if (!granted) return false;
+                    return handle.getFileHandle(filename, {create: true}).then(function(fileHandle) {
+                        return fileHandle.createWritable().then(function(writable) {
+                            return writable.write(htmlContent).then(function() {
+                                return writable.close();
+                            }).then(function() { return true; });
+                        });
+                    });
+                }).catch(function(e) {
+                    console.warn('direct save failed', e);
+                    return false;
+                });
+            });
+        };
+        return directSave().then(function(saved) {
+            if (saved) {
+                showSaveStatus('Enregistre directement : ' + filename);
+                return true;
+            }
+            var blob = new Blob([htmlContent], {type: 'text/html;charset=utf-8'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+            showSaveStatus('Telecharge dans tes telechargements : ' + filename);
+            return false;
+        });
+    }
+
+    function updateFolderStatus() {
+        if (!('showDirectoryPicker' in window)) return;
+        idbGet('automatismesDir').then(function(handle) {
+            if (handle) showSaveStatus('Dossier lie : ' + handle.name);
+        }).catch(function(){});
+    }
+
+    function downloadHtml(n, editedContent, originalContent) {
+        var css = ".wrap{max-width:900px;margin:0 auto}.top{text-align:center;color:#fff;margin-bottom:20px}.top h1{font-size:2em;text-shadow:2px 2px 4px rgba(0,0,0,.25)}.top p{opacity:.9;margin-top:6px;font-size:.9em}.panel{background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.25);padding:24px}.controls{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}.print-btn,.reset-btn,.dl-btn{border:none;padding:12px 22px;font-size:1em;font-weight:bold;border-radius:12px;cursor:pointer}.print-btn{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;box-shadow:0 6px 16px rgba(102,126,234,.35)}.print-btn:hover{opacity:.92}.reset-btn{background:#fff;color:#c0392b;border:2px solid #c0392b}.reset-btn:hover{background:#fdecea}.dl-btn{background:#fff;color:#1a56db;border:2px solid #1a56db}.dl-btn:hover{background:#eaf1ff}.controls2{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}.folder-btn{background:#fff;color:#555;border:2px solid #999;border-radius:10px;padding:6px 14px;font-size:.85em;cursor:pointer}.folder-btn:hover{background:#f2f2f2}.save-status{font-size:.85em;color:#5a3d9e;font-weight:bold;min-height:1.2em}.hint{text-align:center;color:#777;font-size:.85em;margin-bottom:16px;font-style:italic}.sheet{border:2px dashed #ccc;border-radius:10px;padding:14px}.sheet-title{text-align:center;color:#333;font-size:1.15em;margin-bottom:12px}.screen-view{border:2px dashed transparent;border-radius:8px;padding:8px}.screen-view table{width:100%;border-collapse:collapse}.screen-view td{border:1px solid #000;padding:10px;text-align:center}.print-grid{display:none}.cell{border:1px dashed #bbb;border-radius:8px;padding:6px;overflow:hidden}.cell table{width:100%;border-collapse:collapse}.cell td{border:1px solid #000;padding:6px;text-align:center}.back{display:block;text-align:center;margin-top:20px;color:#fff;text-decoration:none;opacity:.9}.back:hover{text-decoration:underline}body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px}*{margin:0;padding:0;box-sizing:border-box}@media print{body{background:#fff;padding:0}.top,.controls,.controls2,.hint,.back{display:none!important}.panel{box-shadow:none;padding:0;border-radius:0}.sheet{border:none;padding:0}.sheet-title{font-size:12pt;margin-bottom:8pt}.screen-view{display:none!important}.print-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px}.cell{border:1px dashed #999;font-size:8pt}}";
+
+        var dateStr = new Date().toLocaleDateString('fr-FR');
+
+        var bodyHtml = '<div class="wrap"><div class="top"><h1>Automatisme 4e - N' + n + '</h1>' +
+            '<p>Version enregistree le ' + dateStr + '.</p></div>' +
+            '<div class="panel"><div class="controls">' +
+            '<button class="print-btn" onclick="window.print()">Imprimer</button>' +
+            '<button class="reset-btn" onclick="resetToOriginal()">Revenir a l\'original</button>' +
+            '<button class="dl-btn" onclick="downloadAgain()">Telecharger cette version</button>' +
+            '</div><div class="controls2">' +
+            '<button class="folder-btn" type="button" onclick="chooseFolder()">Choisir le dossier d\'enregistrement</button>' +
+            '<span class="save-status" id="save-status"></span>' +
+            '</div><p class="hint">Clique directement sur un nombre ou un texte ci-dessous pour le modifier.</p>' +
+            '<div class="sheet"><div class="sheet-title">Automatismes 4e - N' + n + '</div>' +
+            '<div class="screen-view" id="screen-view" contenteditable="true" spellcheck="false"></div>' +
+            '<div class="print-grid" id="print-grid"></div></div></div>' +
+            '<a class="back" href="4e-automatisme.html">Retour a la liste complete</a></div>';
+
+        var helperFns = [idbOpen, idbSet, idbGet, showSaveStatus, chooseFolder, saveFile, updateFolderStatus];
+        var helperSrc = helperFns.map(function(fn) { return fn.toString(); }).join('\n') + '\n';
+
+        var script =
+            'const IDB_NAME = ' + JSON.stringify(IDB_NAME) + ';\n' +
+            'const IDB_STORE = ' + JSON.stringify(IDB_STORE) + ';\n' +
+            helperSrc +
+            'const N = ' + JSON.stringify(n) + ';\n' +
+            'const ORIGINAL = ' + JSON.stringify(originalContent) + ';\n' +
+            'const INITIAL = ' + JSON.stringify(editedContent) + ';\n' +
+            'document.getElementById("screen-view").innerHTML = INITIAL;\n' +
+            'function resetToOriginal(){ document.getElementById("screen-view").innerHTML = ORIGINAL; }\n' +
+            'function syncPrintGrid(){\n' +
+            '  const content = document.getElementById("screen-view").innerHTML;\n' +
+            '  const grid = document.getElementById("print-grid");\n' +
+            '  grid.innerHTML = "";\n' +
+            '  for (let i=0;i<4;i++){\n' +
+            '    const cell=document.createElement("div");\n' +
+            '    cell.className="cell";\n' +
+            '    cell.innerHTML=content;\n' +
+            '    grid.appendChild(cell);\n' +
+            '  }\n' +
+            '}\n' +
+            'window.addEventListener("beforeprint", syncPrintGrid);\n' +
+            'var downloadHtml = ' + downloadHtml.toString() + ';\n' +
+            'function downloadAgain(){\n' +
+            '  const edited = document.getElementById("screen-view").innerHTML;\n' +
+            '  downloadHtml(N, edited, ORIGINAL);\n' +
+            '}\n' +
+            'updateFolderStatus();\n';
+
+        var fullHtml = '<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n' +
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+            '<title>Automatisme 4e - N' + n + ' (modifie)</title>\n' +
+            '<style>' + css + '</style>\n</head>\n<body>\n' + bodyHtml +
+            '\n<' + 'script>\n' + script + '<' + '/script>\n</body>\n</html>\n';
+
+        saveFile('automatisme_4e_N' + n + '_modifie.html', fullHtml);
+    }
+
+    function downloadCurrent() {
+        downloadHtml(currentNum, document.getElementById('screen-view').innerHTML, FRAGMENTS[currentNum]);
+    }
+
+    render(1);
+    updateFolderStatus();
+</script>
+</body>
+</html>
