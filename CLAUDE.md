@@ -14,6 +14,15 @@
 - **MathsIORI** = les cours (`cours.html` par chapitre, par niveau `3°/4°/5°/6°`). C'est la **source**.
 - **COURSPRESENTATION** = les mêmes cours reproduits en diaporama interactif (slides, étapes au clic). C'est une **copie fidèle**, jamais une réécriture.
 
+### Source de référence académique (créé sept. 2026)
+Site officiel de l'académie de Reims pour les mathématiques : **https://mathematiquesreims.fr/** (édité par l'IA-IPR de maths). Sections utiles : « Enseigner » (programmes officiels, ressources par niveau — école/collège/lycée), orientations sur l'évaluation et les automatismes.
+→ À consulter, en complément du programme officiel BOEN (déjà cité dans `3°/audit_programme_3e.md`, `4°/audit_programme_4e.md`, `5°/audit_programme_5e.md`), pour vérifier que les cours, progressions, automatismes et autres contenus produits restent cohérents avec les attentes académiques de Reims — pas seulement avec le texte national brut.
+
+**Documents déjà repérés et archivés (sept. 2026)** dans `MathsIORI/références_reims/` (pas besoin de re-parcourir le site pour ceux-ci) :
+- `DNB_2026_liste_indicative_automatismes.pdf` — liste indicative d'automatismes DNB (toutes séries) : nombres et calculs, espace et géométrie, organisation/gestion de données et probabilités, proportionnalité/fonctions, algorithmique. Référence de contenu pour les automatismes 4e/3e — déjà globalement cohérente avec `automatismes/3e/` (créé sept. 2026).
+- `Progression_6e_academie_reims_rentree2025.pdf` — proposition académique de progression 6e (19 séquences avec durées en semaines), incluant une liste officielle d'« automatismes pouvant être travaillés dès la rentrée de septembre » (réactivation des acquis du CM2). Confirme le principe « début d'année = révision du niveau précédent » déjà appliqué pour les automatismes 5e/3e créés sept. 2026.
+  → Cette proposition Reims (19 séquences fines) est un recoupement pédagogique complémentaire ; elle ne remplace pas et n'a pas vocation à réordonner `progression_6eme_2026-2027.pdf` (progression perso en 17 chapitres, programme BO avril 2025, déjà dans MathsIORI) — les deux découpages sont juste différents, pas contradictoires.
+
 ### Règle n°0 — Déclencheur automatique
 Dès qu'un `cours.html` dans MathsIORI est **terminé ou modifié** (contenu, image remplacée par une animation, correction quelconque), la présentation `COURSPRESENTATION` correspondante doit être créée ou mise à jour pour refléter exactement ce changement. **Ne pas attendre qu'on le demande.**
 
