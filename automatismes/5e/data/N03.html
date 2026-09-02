@@ -11,13 +11,17 @@ body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
 .content { max-width: 700px; margin: 0 auto; background: white; border: 2px dashed #ccc; border-radius: 10px; padding: 14px; }
 table { width: 100%; border-collapse: collapse; }
 td { border: 1px solid #000; padding: 10px; text-align: center; font-size: 1em; }
+.frac, .fraction { display: inline-block; margin-left: .1em; margin-right: .1em; vertical-align: middle; text-align: center; }
+.frac > .num, .frac > .numerateur { display: block; padding: 0 .1em; border-bottom: 1px solid black; padding-bottom: 2px; }
+.frac > .den, .frac > .denominateur { display: block; padding: 0 .1em; padding-top: 2px; }
+.frac > .fracbar { display: block; height: 0; margin: 0; border: 0; border-bottom: .1em solid; overflow: hidden; }
 </style>
 </head>
 <body>
 <div class="sheet-title">Automatismes 5e - N3</div>
 <div class="content"><table>
 <tr><td>Calculer : 4,5&nbsp;&times;&nbsp;100 =</td><td>&hellip;&hellip;</td></tr>
-<tr><td>Simplifier la fraction : 6/9 =</td><td>&hellip;&hellip;</td></tr>
+<tr><td>Simplifier la fraction : <span class="frac"><span class="num">6</span><span class="fracbar">/</span><span class="den">9</span></span> =</td><td>&hellip;&hellip;</td></tr>
 <tr><td colspan="2" style="text-align:left">Un cube a combien de faces&nbsp;? de sommets&nbsp;? d'ar&ecirc;tes&nbsp;?<br>faces&nbsp;: &hellip;&hellip; ; sommets&nbsp;: &hellip;&hellip; ; ar&ecirc;tes&nbsp;: &hellip;&hellip;</td></tr>
 <tr><td>Compl&eacute;ter la suite logique : 15 ; 30 ; 45 ; &hellip;&hellip;</td><td>&hellip;&hellip;</td></tr>
 <tr><td>192 est-il divisible par 3&nbsp;?</td><td>&hellip;&hellip;</td></tr>
