@@ -17,6 +17,8 @@
 ### Règle n°0 — Déclencheur automatique
 Dès qu'un `cours.html` dans MathsIORI est **terminé ou modifié** (contenu, image remplacée par une animation, correction quelconque), la présentation `COURSPRESENTATION` correspondante doit être créée ou mise à jour pour refléter exactement ce changement. **Ne pas attendre qu'on le demande.**
 
+Même principe pour la fiche « images à coller » (voir section « MathsIORI — spécifique aux cours » ci-dessous) : dès qu'un `cours.html` avec des images statiques est terminé ou modifié, le PDF correspondant dans `a distribuer/` doit être créé ou mis à jour. **Ne pas attendre qu'on le demande.**
+
 ---
 
 ## Règles communes aux deux projets (animations, notation)
@@ -93,18 +95,30 @@ async function compassPivot(tip, radius, a1, a2, duration) {
 
 ## MathsIORI — spécifique aux cours
 
-**Avant toute modification d'un `cours.html`**
-→ Archiver d'abord :
+**Au début d'une session de travail sur un `cours.html`**
+→ Archiver d'abord la version actuelle, avec la date **et l'heure** (pas de suffixe a/b/c) :
 ```
-MathsIORI/Archives/MathsIORI/<niveau>°/chapitre<N> - <Nom>/cours_<YYYY-MM-DD>.html
+Archives/MathsIORI/<niveau>°/chapitre<N> - <Nom>/cours_<YYYY-MM-DD>_<HHhMM>.html
 ```
-Exemple : `MathsIORI/Archives/MathsIORI/6°/chapitre10 - Les angles/cours_2026-05-06.html`
+Exemple : `Archives/MathsIORI/6°/chapitre10 - Les angles/cours_2026-05-06_14h32.html`
+
+→ **Une seule archive par session de travail**, pas une à chaque modification. Si on enchaîne plusieurs modifications d'affilée sur le même chapitre dans la même session, on archive uniquement au début (avant la toute première modification). On réarchive seulement quand une **nouvelle session de travail** démarre sur ce chapitre (reprise un autre jour, ou après une interruption nette du travail).
 
 **Numérotation des titres h2/h3**
 → `MathsIORI/styles.css` ajoute **automatiquement** le préfixe via CSS counter : `h2::before` → `I.`, `II.`... et `h3::before` → `1)`, `2)`...
 → Conséquence : les `<h2>` et `<h3>` dans `cours.html` ne doivent **jamais** contenir le préfixe en dur.
   - ✅ `<h2>Construction du symétrique d'un point</h2>`
   - ❌ `<h2>II. Construction du symétrique d'un point</h2>` → affiche "II. II. Construction…"
+
+**Fiche « images à coller » (PDF à imprimer, à découper et coller dans le cahier)** (créé sept. 2026)
+→ Dès qu'un `cours.html` contenant des images statiques (`images/*.png`, schémas/tableaux trop complexes à redessiner à la main) est terminé ou modifié, générer/mettre à jour automatiquement le PDF correspondant — **ne pas attendre qu'on le demande** (même principe que la Règle n°0).
+→ Script réutilisable : `MathsIORI/build_a_coller_pdf.py "<dossier du chapitre>"`. Il lit toutes les `<img src="images/...">` du `cours.html` dans leur ordre d'apparition et génère le PDF.
+→ **Une seule page A4, sans titre.** Chaque image entourée d'une bordure pointillée (guide de découpe) avec une petite marge intérieure.
+→ Taille par défaut par image : largeur max ~420pt, hauteur max ~130pt → les images presque carrées (ex. cubes de numération) sont donc automatiquement plus petites que les images larges (tableaux, demi-droites graduées), pour rester proportionnées entre elles.
+→ Si tout ne tient pas sur une page à taille normale, réduction **uniforme** de toutes les images (jamais de passage à une 2ᵉ page).
+→ Réglage manuel possible image par image (`img_overrides` dans le script) si le rendu automatique ne convient pas pour un chapitre précis — cas vécu : chapitre 1 (6ème), 2 premières images réduites à la main.
+→ Nom de sortie : `Chapitre_<N>_<niveau>_images_a_coller.pdf`, dans `MathsIORI/<niveau>°/chapitre<N> - <Nom>/a distribuer/`.
+→ Certains chapitres n'ont aucune image statique à coller (tout est en animations interactives, ex. chapitre07 - Les angles) : dans ce cas, rien à générer.
 
 ---
 
@@ -183,10 +197,12 @@ COURSPRESENTATION/
 │   └── Chapitre<N>_<Nom>/
 │       ├── Chapitre_<N>_<nom>_presentation.html
 │       └── script-<nom>.js
-└── archives/
-    └── <niveau>/
-        └── <date>_<motif>/
-            └── Chapitre<N>_<Nom>/
+
+Archives/COURSPRESENTATION/                  ← dossier séparé, au même niveau que MathsIORI/ et COURSPRESENTATION/
+└── <niveau>/
+    └── Chapitre<N>_<Nom>/
+        ├── Chapitre_<N>_<nom>_presentation_<YYYY-MM-DD>_<HHhMM>.html
+        └── script-<nom>_<YYYY-MM-DD>_<HHhMM>.js
 ```
 Chemin CSS dans le HTML : `<link rel="stylesheet" href="../../styles.css">` (deux niveaux à remonter).
 
@@ -277,20 +293,22 @@ Toujours présent, structure identique d'un chapitre à l'autre. Copier depuis `
 - Les fonctions d'animations spécifiques (`init...`, `show...`, `reset...`, `sync...`)
 - Tout le reste (navigation, raccourcis clavier, menu, aide) reste **identique mot pour mot**.
 
-### Règle n°8 — Avant toute modification : archiver (les deux fichiers)
+### Règle n°8 — Au début d'une session de travail : archiver (les deux fichiers)
 **S'applique aux DEUX fichiers : présentation ET cours source.**
 
-Structure archive COURSPRESENTATION (date dans le nom de fichier) :
+Structure archive COURSPRESENTATION (date **et heure** dans le nom de fichier, pas de suffixe a/b/c) :
 ```
-COURSPRESENTATION/archives/<niveau>/Chapitre<N>_<Nom>/
-    Chapitre_<N>_<nom>_presentation_<YYYY-MM-DD>.html
-    script-<nom>_<YYYY-MM-DD>.js
+Archives/COURSPRESENTATION/<niveau>/Chapitre<N>_<Nom>/
+    Chapitre_<N>_<nom>_presentation_<YYYY-MM-DD>_<HHhMM>.html
+    script-<nom>_<YYYY-MM-DD>_<HHhMM>.js
 ```
-Exemple : `archives/6/Chapitre10_Angles/Chapitre_10_angles_presentation_2026-05-06.html`
+Exemple : `Archives/COURSPRESENTATION/6/Chapitre10_Angles/Chapitre_10_angles_presentation_2026-05-06_14h32.html`
 
 Structure archive MathsIORI : voir section « MathsIORI » ci-dessus.
 
-> **Erreur commise (mai 2026)** : cours.html modifié sans archive → impossible de revenir à l'état précédent sans reconstruire manuellement. Archiver TOUJOURS les deux fichiers avant modification.
+→ **Une seule archive par session de travail** (au début, avant la première modification), pas une à chaque modification individuelle — voir section « MathsIORI » ci-dessus pour le détail de cette règle, qui s'applique identiquement ici.
+
+> **Erreur commise (mai 2026)** : cours.html modifié sans archive → impossible de revenir à l'état précédent sans reconstruire manuellement. Archiver TOUJOURS les deux fichiers au début d'une session de modification.
 
 ### Règle n°9 — Workflow type pour produire une nouvelle présentation
 1. Lire le fichier source `MathsIORI/<niveau>°/chapitre<N> - <Nom>/cours.html`.

@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Automatismes 3e</title>
+<title>Automatismes 5e</title>
 <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
@@ -176,7 +176,7 @@
 <body>
 <div class="wrap">
     <div class="top">
-        <h1>Automatismes 3e</h1>
+        <h1>Automatismes 5e</h1>
         <p>Choisis le numero du jour. A l'impression : une seule feuille, 4 exemplaires.</p>
     </div>
 
@@ -200,7 +200,7 @@
         <p class="hint">Clique directement sur un nombre ou un texte ci-dessous pour le modifier. Choisis une fois le dossier "automatismes" pour que le bouton Telecharger y enregistre directement (Chrome/Edge uniquement).</p>
 
         <div class="sheet">
-            <div class="sheet-title" id="sheet-title">Automatismes 3e - N1</div>
+            <div class="sheet-title" id="sheet-title">Automatismes 5e - N1</div>
             <div class="screen-view" id="screen-view" contenteditable="true" spellcheck="false"></div>
             <div class="print-grid" id="print-grid"></div>
         </div>
@@ -210,7 +210,7 @@
 </div>
 
 <script>
-    const FRAGMENTS = {"1": "<table>\n<tr><td>Calculer : (&minus;6) &times; 4 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>Calculer : (&minus;15) &divide; (&minus;3) =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>D&eacute;velopper : 5(x &minus; 2) =</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Un triangle rectangle a des c&ocirc;t&eacute;s de l'angle droit 6&nbsp;cm et 8&nbsp;cm. Calculer l'hypot&eacute;nuse.<br>&hellip;&hellip;&hellip; cm</td></tr>\n<tr><td>Calculer : 15&nbsp;% de 140 =</td><td>&hellip;&hellip;</td></tr>\n</table>", "2": "<table>\n<tr><td>Calculer : (&minus;7) + (&minus;4) &minus; (&minus;9) =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>R&eacute;duire : 7x &minus; 3x + 2 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>PGCD(24&nbsp;;&nbsp;36) =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>Calculer : 3&sup2; &times; 3&sup3; = (sous forme de puissance de 3)</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Un article &agrave; 80&nbsp;&euro; subit une remise de 25&nbsp;%. Quel est son nouveau prix&nbsp;?<br>&hellip;&hellip;&hellip; &euro;</td></tr>\n</table>", "3": "<table>\n<tr><td>Calculer : 4 &minus; (&minus;3) &times; 2 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>D&eacute;velopper et r&eacute;duire : 3(x + 2) &minus; 5 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">D&eacute;composer 60 en produit de facteurs premiers.<br>60 = &hellip;&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Un triangle rectangle a des c&ocirc;t&eacute;s de l'angle droit 9&nbsp;cm et 12&nbsp;cm. Calculer l'hypot&eacute;nuse.<br>&hellip;&hellip;&hellip; cm</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Sur un plan &agrave; l'&eacute;chelle 1/100, un mur mesure 3&nbsp;cm. Quelle est sa longueur r&eacute;elle&nbsp;?<br>&hellip;&hellip;&hellip; m</td></tr>\n</table>"};
+    const FRAGMENTS = {"1": "<table>\n<tr><td>Poser l'addition : 34,7&nbsp;+&nbsp;8,25 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>Poser la multiplication : 23&nbsp;&times;&nbsp;6 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>Compl&eacute;ter la fraction &eacute;quivalente : 3/4 = &hellip;&hellip;/8</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Calculer le p&eacute;rim&egrave;tre d'un rectangle de longueur 7&nbsp;cm et largeur 4&nbsp;cm.<br>&hellip;&hellip;&hellip; cm</td></tr>\n<tr><td>Calculer : 25&nbsp;% de 60 =</td><td>&hellip;&hellip;</td></tr>\n</table>", "2": "<table>\n<tr><td>Poser la soustraction : 52,3&nbsp;&minus;&nbsp;18,45 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Poser la division euclidienne de 47 par 5 : quotient et reste.<br>q = &hellip;&hellip; ; r = &hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Ranger dans l'ordre croissant : 3,4&nbsp;;&nbsp;3,04&nbsp;;&nbsp;3,45&nbsp;;&nbsp;3,1<br>&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;</td></tr>\n<tr><td>Un triangle a trois c&ocirc;t&eacute;s de m&ecirc;me longueur. Comment l'appelle-t-on&nbsp;?</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Tableau de proportionnalit&eacute; :<br>3 &rarr; 12 &nbsp;&nbsp;&nbsp;&nbsp; 5 &rarr; &hellip;&hellip;</td></tr>\n</table>", "3": "<table>\n<tr><td>Calculer : 4,5&nbsp;&times;&nbsp;100 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td>Simplifier la fraction : 6/9 =</td><td>&hellip;&hellip;</td></tr>\n<tr><td colspan=\"2\" style=\"text-align:left\">Un cube a combien de faces&nbsp;? de sommets&nbsp;? d'ar&ecirc;tes&nbsp;?<br>faces&nbsp;: &hellip;&hellip; ; sommets&nbsp;: &hellip;&hellip; ; ar&ecirc;tes&nbsp;: &hellip;&hellip;</td></tr>\n<tr><td>Compl&eacute;ter la suite logique : 15 ; 30 ; 45 ; &hellip;&hellip;</td><td>&hellip;&hellip;</td></tr>\n<tr><td>192 est-il divisible par 3&nbsp;?</td><td>&hellip;&hellip;</td></tr>\n</table>"};
     const TOTAL = 3;
     let currentNum = 1;
     let loadToken = 0;
@@ -219,7 +219,7 @@
 
     function loadFragment(n) {
         if (!window.fetch) return Promise.resolve(FRAGMENTS[n]);
-        return fetch('3e/data/N' + pad2(n) + '.html', {cache: 'no-store'}).then(function(resp) {
+        return fetch('5e/data/N' + pad2(n) + '.html', {cache: 'no-store'}).then(function(resp) {
             if (!resp.ok) return FRAGMENTS[n];
             return resp.text().then(function(text) {
                 if (!text || text.trim().length === 0) return FRAGMENTS[n];
@@ -227,7 +227,7 @@
                 var doc = parser.parseFromString(text, 'text/html');
                 var contentEl = doc.querySelector('.content');
                 if (!contentEl) return FRAGMENTS[n];
-                var inner = contentEl.innerHTML.split('../src_images/').join('3e/src_images/');
+                var inner = contentEl.innerHTML.split('../src_images/').join('5e/src_images/');
                 FRAGMENTS[n] = inner;
                 return inner;
             });
@@ -238,7 +238,7 @@
 
     function render(n) {
         var token = ++loadToken;
-        document.getElementById('sheet-title').textContent = 'Automatismes 3e - N' + n;
+        document.getElementById('sheet-title').textContent = 'Automatismes 5e - N' + n;
         document.getElementById('screen-view').innerHTML = '<p style="text-align:center;color:#999;padding:30px;">Chargement...</p>';
         loadFragment(n).then(function(content) {
             if (token !== loadToken) return;
@@ -280,7 +280,7 @@
 
     window.addEventListener('beforeprint', syncPrintGrid);
 
-    const IDB_NAME = 'automatismes3e';
+    const IDB_NAME = 'automatismes5e';
     const IDB_STORE = 'handles';
 
     function idbOpen() {
@@ -391,7 +391,7 @@
 
         var dateStr = new Date().toLocaleDateString('fr-FR');
 
-        var bodyHtml = '<div class="wrap"><div class="top"><h1>Automatisme 3e - N' + n + '</h1>' +
+        var bodyHtml = '<div class="wrap"><div class="top"><h1>Automatisme 5e - N' + n + '</h1>' +
             '<p>Version enregistree le ' + dateStr + '.</p></div>' +
             '<div class="panel"><div class="controls">' +
             '<button class="print-btn" onclick="window.print()">Imprimer</button>' +
@@ -401,10 +401,10 @@
             '<button class="folder-btn" type="button" onclick="chooseFolder()">Choisir le dossier d\'enregistrement</button>' +
             '<span class="save-status" id="save-status"></span>' +
             '</div><p class="hint">Clique directement sur un nombre ou un texte ci-dessous pour le modifier.</p>' +
-            '<div class="sheet"><div class="sheet-title">Automatismes 3e - N' + n + '</div>' +
+            '<div class="sheet"><div class="sheet-title">Automatismes 5e - N' + n + '</div>' +
             '<div class="screen-view" id="screen-view" contenteditable="true" spellcheck="false"></div>' +
             '<div class="print-grid" id="print-grid"></div></div></div>' +
-            '<a class="back" href="3e-automatisme.html">Retour a la liste complete</a></div>';
+            '<a class="back" href="5e-automatisme.html">Retour a la liste complete</a></div>';
 
         var helperFns = [idbOpen, idbSet, idbGet, showSaveStatus, chooseFolder, saveFile, updateFolderStatus];
         var helperSrc = helperFns.map(function(fn) { return fn.toString(); }).join('\n') + '\n';
@@ -439,11 +439,11 @@
 
         var fullHtml = '<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n' +
             '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
-            '<title>Automatisme 3e - N' + n + ' (modifie)</title>\n' +
+            '<title>Automatisme 5e - N' + n + ' (modifie)</title>\n' +
             '<style>' + css + '</style>\n</head>\n<body>\n' + bodyHtml +
             '\n<' + 'script>\n' + script + '<' + '/script>\n</body>\n</html>\n';
 
-        saveFile('automatisme_3e_N' + n + '_modifie.html', fullHtml);
+        saveFile('automatisme_5e_N' + n + '_modifie.html', fullHtml);
     }
 
     function downloadCurrent() {
