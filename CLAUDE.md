@@ -28,6 +28,28 @@ Dès qu'un `cours.html` dans MathsIORI est **terminé ou modifié** (contenu, im
 
 Même principe pour la fiche « images à coller » (voir section « MathsIORI — spécifique aux cours » ci-dessous) : dès qu'un `cours.html` avec des images statiques est terminé ou modifié, le PDF correspondant dans `a distribuer/` doit être créé ou mis à jour. **Ne pas attendre qu'on le demande.**
 
+## Automatismes — règles spécifiques
+
+Les fiches d'automatismes (`automatismes/<niveau>/data/N*.html`, plus leur copie intégrée dans `automatismes/<niveau>-automatisme.html` — les **deux fichiers doivent toujours être mis à jour ensemble**, le second n'est pas régénéré automatiquement à partir du premier) suivent ces règles :
+
+**1. Toujours écrire les fractions en vraies fractions**
+→ Jamais en écriture inline type `18/24`. Utiliser le patron déjà en place (`automatismes/5e/data/N01.html`) :
+```html
+<span class="frac"><span class="num">18</span><span class="fracbar">/</span><span class="den">24</span></span>
+```
+```css
+.frac, .fraction { display: inline-block; margin-left: .1em; margin-right: .1em; vertical-align: middle; text-align: center; }
+.frac > .num, .frac > .numerateur { display: block; padding: 0 .1em; border-bottom: 1px solid black; padding-bottom: 2px; }
+.frac > .den, .frac > .denominateur { display: block; padding: 0 .1em; padding-top: 2px; }
+.frac > .fracbar { display: block; height: 0; margin: 0; border: 0; border-bottom: .1em solid; overflow: hidden; }
+```
+→ Cette CSS doit être présente à **trois endroits** si elle n'y est pas déjà : le `<style>` du fichier `data/N*.html`, le `<style>` du fichier `<niveau>-automatisme.html`, et la variable JS `var css = "..."` de ce même fichier (utilisée pour l'impression/export) — sinon la fraction s'affiche correctement à l'écran mais pas à l'impression (ou inversement).
+
+**2. Vérifier systématiquement que chaque notion utilisée a déjà été vue**
+→ Avant d'inclure un exercice, vérifier qu'il ne fait appel qu'à des notions déjà traitées en classe à ce moment de l'année scolaire — jamais une notion du chapitre en cours (sauf si l'exercice révise volontairement ce qui a déjà été fait dans ce chapitre) ou d'un chapitre à venir. Se référer à la progression du niveau (`progression_<niveau>eme_2026-2027.pdf/docx`) et à l'ordre des chapitres du dossier `<niveau>°/` pour savoir ce qui est déjà acquis.
+→ Rappel du principe déjà appliqué pour les automatismes 5e/6e/3e créés sept. 2026 : **début d'année = révision du niveau précédent**, jamais d'anticipation sur une notion du programme de l'année en cours qui n'a pas encore été enseignée.
+→ Erreur commise (sept. 2026, automatisme 4e N2) : une question sur l'hypoténuse (théorème de Pythagore, chapitre 2 non traité à ce stade de l'année), un calcul `3&sup2; + 2&sup3;` (puissances, chapitre 10, très loin dans l'année) et une fraction écrite en `18/24` au lieu d'une vraie fraction. Corrigé en remplaçant Pythagore par un calcul d'aire du même triangle (formule déjà connue) et les puissances par un calcul avec priorités opératoires.
+
 ---
 
 ## Règles communes aux deux projets (animations, notation)

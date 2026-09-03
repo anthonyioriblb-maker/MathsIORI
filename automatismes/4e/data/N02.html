@@ -11,24 +11,27 @@ body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
 .content { max-width: 700px; margin: 0 auto; background: white; border: 2px dashed #ccc; border-radius: 10px; padding: 14px; }
 table { width: 100%; border-collapse: collapse; }
 td { border: 1px solid #000; padding: 10px; text-align: center; font-size: 1em; }
+.frac, .fraction { display: inline-block; margin-left: .1em; margin-right: .1em; vertical-align: middle; text-align: center; }
+.frac > .num, .frac > .numerateur { display: block; padding: 0 .1em; border-bottom: 1px solid black; padding-bottom: 2px; }
+.frac > .den, .frac > .denominateur { display: block; padding: 0 .1em; padding-top: 2px; }
+.frac > .fracbar { display: block; height: 0; margin: 0; border: 0; border-bottom: .1em solid; overflow: hidden; }
 </style>
 </head>
 <body>
 <div class="sheet-title">Automatismes 4e - N2</div>
 <div class="content"><table>
 <tr><td>Calculer : (&minus;15) &minus; (&minus;7) =</td><td>&hellip;&hellip;</td></tr>
-<tr><td>Simplifier la fraction : 18/24 =</td><td>&hellip;&hellip;</td></tr>
+<tr><td>Simplifier la fraction : <span class="frac"><span class="num">18</span><span class="fracbar">/</span><span class="den">24</span></span> =</td><td>&hellip;&hellip;</td></tr>
 <tr><td>R&eacute;soudre : x + 5 = 12, donc x =</td><td>&hellip;&hellip;</td></tr>
-<tr><td>Calculer : 3&sup2; + 2&sup3; =</td><td>&hellip;&hellip;</td></tr>
+<tr><td>Calculer en respectant les priorit&eacute;s : 5 + 4 &times; 3 =</td><td>&hellip;&hellip;</td></tr>
 <tr><td colspan="2" style="text-align:center">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 170" width="200" height="155" style="display:block;margin:6px auto;">
   <polygon points="20,150 20,30 170,150" fill="none" stroke="#1a1a1a" stroke-width="2"/>
   <rect x="20" y="138" width="12" height="12" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
   <text x="0" y="93" font-family="Arial" font-size="14">8 cm</text>
   <text x="80" y="168" font-family="Arial" font-size="14">6 cm</text>
-  <text x="100" y="83" font-family="Arial" font-size="14" font-style="italic">?</text>
 </svg>
-Ce triangle est rectangle. Quelle est la longueur de l'hypot&eacute;nuse&nbsp;?<br>&hellip;&hellip;&hellip; cm
+Ce triangle est rectangle. Quelle est son aire&nbsp;?<br>&hellip;&hellip;&hellip; cm&sup2;
 </td></tr>
 </table></div>
 </body>
