@@ -175,6 +175,42 @@
 </style>
 </head>
 <body>
+<div id="pw-gate" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);display:flex;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:white;border-radius:16px;padding:32px 28px;max-width:320px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;">
+    <div style="font-size:2em;margin-bottom:10px;">&#128274;</div>
+    <p style="font-weight:bold;color:#333;margin-bottom:16px;">Acces reserve - entre le code</p>
+    <input id="pw-input" type="password" inputmode="numeric" autocomplete="off" style="width:100%;padding:10px;font-size:1.1em;text-align:center;border:2px solid #764ba2;border-radius:8px;margin-bottom:12px;box-sizing:border-box;" placeholder="Code">
+    <div id="pw-error" style="color:#c0392b;font-size:.85em;min-height:1.2em;margin-bottom:8px;"></div>
+    <button id="pw-submit" type="button" style="width:100%;padding:10px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer;font-size:1em;">Valider</button>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY = 'mathsiori_automatismes_unlocked';
+  var CODE = '051226';
+  var gate = document.getElementById('pw-gate');
+  if (localStorage.getItem(KEY) === '1') {
+    gate.remove();
+  } else {
+    document.documentElement.style.overflow = 'hidden';
+    var input = document.getElementById('pw-input');
+    var tryUnlock = function() {
+      if (input.value === CODE) {
+        localStorage.setItem(KEY, '1');
+        gate.remove();
+        document.documentElement.style.overflow = '';
+      } else {
+        document.getElementById('pw-error').textContent = 'Code incorrect';
+        input.value = '';
+        input.focus();
+      }
+    };
+    document.getElementById('pw-submit').addEventListener('click', tryUnlock);
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') tryUnlock(); });
+    setTimeout(function(){ input.focus(); }, 50);
+  }
+})();
+</script>
 <div class="wrap">
     <div class="top">
         <h1>Automatismes 5e</h1>
