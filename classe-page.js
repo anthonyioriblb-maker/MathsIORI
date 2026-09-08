@@ -41,6 +41,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
 
+        // Menu déroulant activités (fiches d'activité indépendantes, à côté du cours)
+        let activitesBtn = '';
+        if (chapitre.activites && chapitre.activites.actif && chapitre.activites.items.length > 0) {
+            const activitesItems = chapitre.activites.items.map(act =>
+                `<a href="${act.fichier}" class="dropdown-item activites-item">🧩 ${act.titre}</a>`
+            ).join('');
+
+            activitesBtn = `
+                <div class="dropdown-wrapper">
+                    <button class="action-button activites">
+                        🧩 Activité <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        ${activitesItems}
+                    </div>
+                </div>
+            `;
+        }
+
         // Menu déroulant exercices ou activité (pour Scratch)
         let exercicesBtn = '';
         if (chapitre.activite) {
@@ -132,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="chapter-actions">
                 ${coursBtn}
+                ${activitesBtn}
                 ${exercicesBtn}
                 ${quizBtn}
                 ${evenementBtn}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activité d'introduction - Les nombres relatifs</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2980b9;
+            text-align: center;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 1.15em;
+            margin-top: 25px;
+            margin-bottom: 8px;
+            border-left: 4px solid #2980b9;
+            padding-left: 10px;
+        }
+        .dialogue {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .bulle {
+            flex: 1;
+            min-width: 220px;
+            border-radius: 14px;
+            padding: 10px 14px;
+        }
+        .bulle-amelie {
+            background: #fdecea;
+            border: 2px solid #e74c3c;
+        }
+        .bulle-fred {
+            background: #eaf4fd;
+            border: 2px solid #2980b9;
+        }
+        .bulle strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+        .question {
+            margin: 10px 0;
+        }
+        .reponse-ligne {
+            display: inline-block;
+            border-bottom: 1px solid #333;
+            min-width: 220px;
+            height: 1.2em;
+            margin-left: 6px;
+            vertical-align: bottom;
+        }
+        .reponse-ligne.pleine {
+            display: block;
+            min-width: 100%;
+            margin-left: 0;
+            margin-top: 6px;
+        }
+        .schema-relief {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .definitions {
+            background: #f8f9fa;
+            border-left: 4px solid #27ae60;
+            padding: 12px 16px;
+            margin: 15px 0;
+        }
+        .definitions p {
+            margin: 5px 0;
+        }
+        @media print {
+            body {
+                background: white;
+                margin: 0.4cm;
+            }
+            .container {
+                box-shadow: none;
+                padding: 10px;
+            }
+            .home-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../classe-5e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <div class="container">
+        <h1>Les nombres relatifs — Activité d'introduction</h1>
+
+        <h2>Première approche</h2>
+        <p>Amélie et Fred ne sont pas d'accord sur la soustraction 7 − 9.</p>
+
+        <div class="dialogue">
+            <div class="bulle bulle-amelie">
+                <strong>Amélie</strong>
+                Cette soustraction n'a aucun sens ! Si j'ai 7 pommes, je ne peux pas en donner 9.
+            </div>
+            <div class="bulle bulle-fred">
+                <strong>Fred</strong>
+                Mais si, cette soustraction a un sens ! Par exemple, si la température est de 7 °C et qu'elle baisse de 9 °C, cela correspond à la soustraction 7 − 9.
+            </div>
+        </div>
+
+        <div class="question">
+            <strong>a)</strong> Quelle température correspond à l'exemple de Fred ?
+            <span class="reponse-ligne"></span>
+        </div>
+
+        <div class="question">
+            <strong>b)</strong> La température est de −1 °C aujourd'hui et elle va baisser de 3 °C demain. Quelle sera la température demain ? Quel calcul a été fait ?
+            <div class="reponse-ligne pleine"></div>
+        </div>
+
+        <h2>Deuxième approche</h2>
+        <p>Le schéma ci-dessous met en évidence le relief au-dessus et au-dessous du niveau de la mer.</p>
+
+        <div class="schema-relief">
+            <svg width="700" height="420" xmlns="http://www.w3.org/2000/svg">
+                <!-- Eau (au-dessus du fond marin) -->
+                <rect x="40" y="150" width="620" height="250" fill="#d6e8f2"/>
+
+                <!-- Sol / roche (en-dessous du fond marin) -->
+                <polygon points="230,150 340,168 430,248 520,288 560,308 600,293 660,298 660,400 230,400"
+                         fill="#c8b89e"/>
+
+                <!-- Montagne (Mont-Everest) -->
+                <polygon points="70,150 150,25 230,150" fill="#c8b89e" stroke="black" stroke-width="1.5"/>
+                <text x="240" y="30" font-size="13" font-weight="bold">+ 8 882 m</text>
+                <text x="240" y="46" font-size="12">Mont-Everest</text>
+
+                <!-- Niveau de la mer -->
+                <line x1="40" y1="150" x2="660" y2="150" stroke="#2980b9" stroke-width="2" stroke-dasharray="6,4"/>
+                <text x="500" y="145" font-size="13" fill="#2980b9">niveau de la mer</text>
+
+                <!-- Lignes de niveau : l'écart mer → −200 m reste volontairement
+                     petit et serré (200 m réels), bien plus resserré que les
+                     écarts suivants (4 800 m puis 2 000 m), pour rester cohérent
+                     avec les ordres de grandeur -->
+                <line x1="40" y1="168" x2="660" y2="168" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="45" y="165" font-size="12">− 200 m</text>
+
+                <line x1="40" y1="248" x2="660" y2="248" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="45" y="245" font-size="12">− 5 000 m</text>
+
+                <line x1="40" y1="288" x2="660" y2="288" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+                <text x="45" y="285" font-size="12">− 7 000 m</text>
+
+                <!-- Contour du relief sous-marin -->
+                <polyline points="230,150 340,168 430,248 520,288 560,308 600,293 660,298" fill="none" stroke="black" stroke-width="2"/>
+
+                <!-- Noms des zones, écrits directement dans le schéma : chacun
+                     placé nettement à l'intérieur de sa tranche de profondeur
+                     (la bande mer→−200 m est très fine, le nom déborde donc
+                     légèrement dessus/dessous, ce qui reste lisible) -->
+                <text x="260" y="163" font-size="11" fill="#2c3e50" text-anchor="middle" font-weight="bold">plateau continental</text>
+                <text x="385" y="232" font-size="12" fill="#2c3e50" text-anchor="middle" font-weight="bold">talus continental</text>
+                <text x="440" y="274" font-size="12" fill="#2c3e50" text-anchor="middle" font-weight="bold">régions pélagiques</text>
+                <text x="560" y="354" font-size="12" fill="#2c3e50" text-anchor="middle" font-weight="bold">fosses abyssales</text>
+            </svg>
+        </div>
+
+        <div class="question">
+            <strong>c)</strong> À quel nombre correspond le niveau de la mer ?
+            <span class="reponse-ligne"></span>
+        </div>
+        <div class="question">
+            <strong>d)</strong> Quelle est la signification de + 8 882 m ?
+            <div class="reponse-ligne pleine"></div>
+        </div>
+        <div class="question">
+            <strong>e)</strong> Quelle est la signification de − 5 000 m ?
+            <div class="reponse-ligne pleine"></div>
+        </div>
+
+        <div class="definitions">
+            <p>Les nombres obtenus avec le signe <strong>−</strong> s'appellent des <strong>nombres négatifs</strong>.</p>
+            <p>Les nombres obtenus avec le signe <strong>+</strong> ou sans signe s'appellent des <strong>nombres positifs</strong>.</p>
+            <p>L'ensemble des <u>nombres négatifs</u> et des <u>nombres positifs</u> s'appelle l'ensemble des <strong>nombres relatifs</strong>.</p>
+        </div>
+
+        <div class="question">
+            <strong>f)</strong> À quelles occasions as-tu déjà vu des nombres relatifs négatifs ?
+            <div class="reponse-ligne pleine"></div>
+            <div class="reponse-ligne pleine"></div>
+        </div>
+    </div>
+</body>
+</html>

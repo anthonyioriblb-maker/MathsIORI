@@ -161,12 +161,16 @@ h1 {
     color: var(--primary-color);
 }
 
-.action-button.exercices, .action-button.quiz {
+.action-button.exercices, .action-button.quiz, .action-button.activites {
     background: rgba(255,255,255,0.85);
 }
 
 .action-button.exercices {
     color: var(--exercices-color);
+}
+
+.action-button.activites {
+    color: #8e44ad;
 }
 
 .action-button.quiz {
@@ -260,6 +264,10 @@ h1 {
 
 .dropdown-item.exercices-item {
     color: var(--exercices-color);
+}
+
+.dropdown-item.activites-item {
+    color: #8e44ad;
 }
 
 .dropdown-item.quiz-item {

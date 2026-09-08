@@ -34,19 +34,24 @@
         • 0 est le seul nombre qui est à la fois positif et négatif.
     </div>
 
-    
+    <div class="remarque">
+        <strong>Remarque :</strong> Un nombre est <span style="color: red;">positif</span> s'il est supérieur ou égal à 0 (0 est donc positif). Un nombre est <span style="color: red;">négatif</span> s'il est inférieur ou égal à 0 (0 est donc négatif). C'est pourquoi 0 est à la fois positif et négatif.<br><br>
+        Quand on veut exclure 0, on précise <span style="color: red;">strictement positif</span> (strictement supérieur à 0) ou <span style="color: red;">strictement négatif</span> (strictement inférieur à 0).
+    </div>
+
     <h3>Distance à zéro</h3>
 
     <div class="definition">
         <span style="color: red;">Définition :</span><br><br>
         La <span style="color: red;">distance à zéro</span> d'un nombre relatif est la distance entre ce nombre et 0 sur une droite graduée. C'est donc le nombre sans son signe. <br><br>
+        Cette distance à zéro s'appelle aussi la <span style="color: red;">valeur absolue</span> du nombre. La valeur absolue d'un nombre <span class="math">a</span> se note <span class="math">|a|</span>.
     </div>
 
     <div class="example">
         <strong>Exemples :</strong><br><br>
-        • La distance à zéro de +5 est 5<br><br>
-        • La distance à zéro de −7 est 7<br><br>
-        • La distance à zéro de −3,5 est 3,5
+        • La distance à zéro de +5 est 5, on note |+5| = 5<br><br>
+        • La distance à zéro de −7 est 7, on note |−7| = 7<br><br>
+        • La distance à zéro de −3,5 est 3,5, on note |−3,5| = 3,5
     </div>
 
     <h3>Nombres opposés</h3>
@@ -178,28 +183,34 @@
     <h3>Comparaison de nombres positifs</h3>
 
     <div class="important">
-        <span style="color: red;">Propriété :</span> Pour comparer deux nombres <span style="color: red;">positifs</span>, on compare leurs distances à zéro :<br><br>
-        Le plus grand nombre positif est celui qui a la plus grande distance à zéro.
+        <span style="color: red;">Propriété :</span> Pour comparer deux nombres <span style="color: red;">positifs</span>, c'est la comparaison habituelle des nombres décimaux : le plus grand est celui qui a la plus grande valeur.
+    </div>
+
+    <div class="method">
+        <strong>Méthode : comparer deux nombres décimaux positifs</strong><br><br>
+        • On regarde d'abord la partie entière (les chiffres avant la virgule). Le nombre qui a la plus grande partie entière est le plus grand.<br><br>
+        • Si les parties entières sont identiques, on compare les chiffres après la virgule un par un en partant de la gauche (les dixièmes, puis les centièmes, etc.).
     </div>
 
     <div class="example">
         <strong>Exemples :</strong><br><br>
-        • 7 > 3 car 7 est plus loin de 0 que 3<br><br>
-        • 12,5 > 8,9 car 12,5 est plus loin de 0 que 8,9
+        • 12,5 > 8,9 car la partie entière de 12,5 (12) est plus grande que celle de 8,9 (8)<br><br>
+        • 43,285 > 43,27 car les parties entières sont égales (43), les dixièmes sont égaux (2), et 8 > 7 pour les centièmes
     </div>
 
     <h3>Comparaison de nombres négatifs</h3>
 
     <div class="important">
-        <span style="color: red;">Propriété :</span> Pour comparer deux nombres <span style="color: red;">négatifs</span>, on compare leurs distances à zéro :<br><br>
-        Le plus grand nombre négatif est celui qui a la plus <span style="color: red;">petite</span> distance à zéro.
+        <span style="color: red;">Propriété :</span> Pour comparer deux nombres <span style="color: red;">négatifs</span>, on compare leurs valeurs absolues (avec la même méthode que ci-dessus) :<br><br>
+        Le plus grand nombre négatif est celui qui a la plus <span style="color: red;">petite</span> valeur absolue.
     </div>
 
     <div class="example">
         <strong>Exemples :</strong><br><br>
-        • −3 > −7 car 3 < 7 (la distance à zéro de −3 est plus petite)<br><br>
-        • −2,5 > −8,1 car 2,5 < 8,1<br><br>
-        • −0,5 > −1 car 0,5 < 1
+        • −3 > −7 car |−3| = 3 < |−7| = 7<br><br>
+        • −2,5 > −8,1 car |−2,5| = 2,5 < |−8,1| = 8,1<br><br>
+        • −4,1 > −4,3 car |−4,1| = 4,1 < |−4,3| = 4,3<br><br>
+        • −0,5 > −1 car |−0,5| = 0,5 < |−1| = 1
     </div>
 
     <h2>Repérage dans le plan</h2>
@@ -216,7 +227,72 @@
     <div class="example">
         <strong>Exemple :</strong><br><br>
 
-     <img src="images/5-41.png" width="30%" alt="Repère du plan">
+        <div style="text-align: center;">
+            <svg width="600" height="600" xmlns="http://www.w3.org/2000/svg">
+                <!-- Axe des abscisses -->
+                <line x1="35" y1="300" x2="575" y2="300" stroke="black" stroke-width="2"/>
+                <polygon points="575,300 565,295 565,305" fill="black"/>
+
+                <!-- Axe des ordonnées -->
+                <line x1="300" y1="565" x2="300" y2="35" stroke="black" stroke-width="2"/>
+                <polygon points="300,35 295,45 305,45" fill="black"/>
+
+                <!-- Origine -->
+                <text x="285" y="320" text-anchor="end" font-size="14" font-weight="bold">O</text>
+
+                <!-- Graduations axe des abscisses -->
+                <line x1="50" y1="295" x2="50" y2="305" stroke="black" stroke-width="1"/>
+                <text x="50" y="320" text-anchor="middle" font-size="13">-5</text>
+                <line x1="100" y1="295" x2="100" y2="305" stroke="black" stroke-width="1"/>
+                <text x="100" y="320" text-anchor="middle" font-size="13">-4</text>
+                <line x1="150" y1="295" x2="150" y2="305" stroke="black" stroke-width="1"/>
+                <text x="150" y="320" text-anchor="middle" font-size="13">-3</text>
+                <line x1="200" y1="295" x2="200" y2="305" stroke="black" stroke-width="1"/>
+                <text x="200" y="320" text-anchor="middle" font-size="13">-2</text>
+                <line x1="250" y1="295" x2="250" y2="305" stroke="black" stroke-width="1"/>
+                <text x="250" y="320" text-anchor="middle" font-size="13">-1</text>
+                <line x1="350" y1="295" x2="350" y2="305" stroke="black" stroke-width="1"/>
+                <text x="350" y="320" text-anchor="middle" font-size="13">1</text>
+                <line x1="400" y1="295" x2="400" y2="305" stroke="black" stroke-width="1"/>
+                <text x="400" y="320" text-anchor="middle" font-size="13">2</text>
+                <line x1="450" y1="295" x2="450" y2="305" stroke="black" stroke-width="1"/>
+                <text x="450" y="320" text-anchor="middle" font-size="13">3</text>
+                <line x1="500" y1="295" x2="500" y2="305" stroke="black" stroke-width="1"/>
+                <text x="500" y="320" text-anchor="middle" font-size="13">4</text>
+                <line x1="550" y1="295" x2="550" y2="305" stroke="black" stroke-width="1"/>
+                <text x="550" y="320" text-anchor="middle" font-size="13">5</text>
+
+                <!-- Graduations axe des ordonnées -->
+                <line x1="295" y1="550" x2="305" y2="550" stroke="black" stroke-width="1"/>
+                <text x="285" y="554" text-anchor="end" font-size="13">-5</text>
+                <line x1="295" y1="500" x2="305" y2="500" stroke="black" stroke-width="1"/>
+                <text x="285" y="504" text-anchor="end" font-size="13">-4</text>
+                <line x1="295" y1="450" x2="305" y2="450" stroke="black" stroke-width="1"/>
+                <text x="285" y="454" text-anchor="end" font-size="13">-3</text>
+                <line x1="295" y1="400" x2="305" y2="400" stroke="black" stroke-width="1"/>
+                <text x="285" y="404" text-anchor="end" font-size="13">-2</text>
+                <line x1="295" y1="350" x2="305" y2="350" stroke="black" stroke-width="1"/>
+                <text x="285" y="354" text-anchor="end" font-size="13">-1</text>
+                <line x1="295" y1="250" x2="305" y2="250" stroke="black" stroke-width="1"/>
+                <text x="285" y="254" text-anchor="end" font-size="13">1</text>
+                <line x1="295" y1="200" x2="305" y2="200" stroke="black" stroke-width="1"/>
+                <text x="285" y="204" text-anchor="end" font-size="13">2</text>
+                <line x1="295" y1="150" x2="305" y2="150" stroke="black" stroke-width="1"/>
+                <text x="285" y="154" text-anchor="end" font-size="13">3</text>
+                <line x1="295" y1="100" x2="305" y2="100" stroke="black" stroke-width="1"/>
+                <text x="285" y="104" text-anchor="end" font-size="13">4</text>
+                <line x1="295" y1="50" x2="305" y2="50" stroke="black" stroke-width="1"/>
+                <text x="285" y="54" text-anchor="end" font-size="13">5</text>
+
+                <!-- Étiquette : axe des ordonnées -->
+                <polygon points="325,65 345,58 345,72" fill="black"/>
+                <text x="352" y="70" font-size="15">Axe des ordonnées</text>
+
+                <!-- Étiquette : axe des abscisses -->
+                <polygon points="470,255 463,235 477,235" fill="black"/>
+                <text x="415" y="228" font-size="15">Axe des abscisses</text>
+            </svg>
+        </div>
 
     </div>
 
@@ -233,89 +309,14 @@
     <div class="example">
         <strong>Exemples :</strong><br><br>
 
-        <div style="text-align: center;">
-            <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
-                <!-- Axes -->
-                <line x1="50" y1="250" x2="450" y2="250" stroke="black" stroke-width="2"/>
-                <polygon points="450,250 440,245 440,255" fill="black"/>
-                <text x="460" y="255" font-size="14">x</text>
-                
-                <line x1="250" y1="450" x2="250" y2="50" stroke="black" stroke-width="2"/>
-                <polygon points="250,50 245,60 255,60" fill="black"/>
-                <text x="255" y="45" font-size="14">y</text>
-                
-                <!-- Origine -->
-                <text x="260" y="265" font-size="14" font-weight="bold">O</text>
-                
-                <!-- Graduations axe x -->
-                <line x1="100" y1="245" x2="100" y2="255" stroke="black" stroke-width="1"/>
-                <text x="100" y="270" text-anchor="middle" font-size="12">−3</text>
-                
-                <line x1="150" y1="245" x2="150" y2="255" stroke="black" stroke-width="1"/>
-                <text x="150" y="270" text-anchor="middle" font-size="12">−2</text>
-                
-                <line x1="200" y1="245" x2="200" y2="255" stroke="black" stroke-width="1"/>
-                <text x="200" y="270" text-anchor="middle" font-size="12">−1</text>
-                
-                <line x1="300" y1="245" x2="300" y2="255" stroke="black" stroke-width="1"/>
-                <text x="300" y="270" text-anchor="middle" font-size="12">1</text>
-                
-                <line x1="350" y1="245" x2="350" y2="255" stroke="black" stroke-width="1"/>
-                <text x="350" y="270" text-anchor="middle" font-size="12">2</text>
-                
-                <line x1="400" y1="245" x2="400" y2="255" stroke="black" stroke-width="1"/>
-                <text x="400" y="270" text-anchor="middle" font-size="12">3</text>
-                
-                <!-- Graduations axe y -->
-                <line x1="245" y1="350" x2="255" y2="350" stroke="black" stroke-width="1"/>
-                <text x="235" y="355" text-anchor="end" font-size="12">−2</text>
-                
-                <line x1="245" y1="300" x2="255" y2="300" stroke="black" stroke-width="1"/>
-                <text x="235" y="305" text-anchor="end" font-size="12">−1</text>
-                
-                <line x1="245" y1="200" x2="255" y2="200" stroke="black" stroke-width="1"/>
-                <text x="235" y="205" text-anchor="end" font-size="12">1</text>
-                
-                <line x1="245" y1="150" x2="255" y2="150" stroke="black" stroke-width="1"/>
-                <text x="235" y="155" text-anchor="end" font-size="12">2</text>
-                
-                <line x1="245" y1="100" x2="255" y2="100" stroke="black" stroke-width="1"/>
-                <text x="235" y="105" text-anchor="end" font-size="12">3</text>
-                
-                <!-- Points A, B, C avec croix -->
-                <line x1="293" y1="193" x2="307" y2="207" stroke="red" stroke-width="2.5"/>
-                <line x1="307" y1="193" x2="293" y2="207" stroke="red" stroke-width="2.5"/>
-                <text x="315" y="200" font-size="14" fill="red">A(1 ; 1)</text>
-                
-                <line x1="93" y1="143" x2="107" y2="157" stroke="blue" stroke-width="2.5"/>
-                <line x1="107" y1="143" x2="93" y2="157" stroke="blue" stroke-width="2.5"/>
-                <text x="115" y="150" font-size="14" fill="blue">B(−3 ; 2)</text>
-                
-                <line x1="343" y1="293" x2="357" y2="307" stroke="green" stroke-width="2.5"/>
-                <line x1="357" y1="293" x2="343" y2="307" stroke="green" stroke-width="2.5"/>
-                <text x="365" y="300" font-size="14" fill="green">C(2 ; −1)</text>
-                
-                <!-- Lignes pointillées pour A -->
-                <line x1="300" y1="200" x2="300" y2="250" stroke="red" stroke-width="1" stroke-dasharray="3,3"/>
-                <line x1="300" y1="200" x2="250" y2="200" stroke="red" stroke-width="1" stroke-dasharray="3,3"/>
-                
-                <!-- Lignes pointillées pour B -->
-                <line x1="100" y1="150" x2="100" y2="250" stroke="blue" stroke-width="1" stroke-dasharray="3,3"/>
-                <line x1="100" y1="150" x2="250" y2="150" stroke="blue" stroke-width="1" stroke-dasharray="3,3"/>
-                
-                <!-- Lignes pointillées pour C -->
-                <line x1="350" y1="300" x2="350" y2="250" stroke="green" stroke-width="1" stroke-dasharray="3,3"/>
-                <line x1="350" y1="300" x2="250" y2="300" stroke="green" stroke-width="1" stroke-dasharray="3,3"/>
-            </svg>
-        </div>
-
-        • Le point A a pour coordonnées (1 ; 1)<br><br>
-        • Le point B a pour coordonnées (2 ; -1)<br><br>
-        • Le point C a pour coordonnées (-3 ; 2)
+        <iframe src="animations/animation-coordonnees-points.html"
+                style="display:block; margin:16px auto 0; width:100%; max-width:620px; border:none;"
+                height="720" scrolling="no"
+                title="Animation : coordonnées des points A, B, C"></iframe>
     </div>
 
     <div class="remarque">
-        <strong>Remarque :</strong> L'ordre des coordonnées est important : Un point M(2 ; −1) n'est pas le même qu'un point N(−1 ; 2).
+        <strong>Remarque :</strong> L'ordre des coordonnées est important : Un point M(4 ; −2) n'est pas le même qu'un point N(−2 ; 4).
     </div>
 
 </body>
