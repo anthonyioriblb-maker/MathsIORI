@@ -123,6 +123,41 @@ async function compassPivot(tip, radius, a1, a2, duration) {
 3. **Ranger l'équerre EN PREMIER**, puis faire apparaître le codage de l'angle droit — jamais l'inverse
 4. Compas : `compassOpen` de I vers M, `compassPivot`, `compassSweep`
 
+**7. Calculs détaillés (`calcul-detail` / `calcul-etapes`) : soulignement, jamais surlignage** (sept. 2026)
+→ Ce qu'on s'apprête à calculer se marque par un **soulignement rouge**, jamais par un fond jaune (`background-color: yellow` ou classe `.highlight`) :
+```html
+<span style="text-decoration: underline; text-decoration-color: red; text-decoration-thickness: 2px; text-underline-offset: 3px;">4 × 7</span>
+```
+→ **Jamais de ligne redondante** : ne jamais afficher deux fois la même expression (une fois normale, une fois soulignée). Le soulignement se pose directement sur la ligne qui affiche déjà le résultat du calcul précédent — chaque ligne montre un état nouveau.
+→ **Regrouper les opérations indépendantes de même priorité sur une seule ligne** (ex. deux multiplications séparées et sans lien l'une avec l'autre) plutôt que de les traiter une par une sur des lignes séparées. **Exception** : dans un chapitre d'introduction/fondamental où la notion est vue pour la première fois (ex. `5°/chapitre01 - Priorites operatoires`), garder une étape par opération, même si elles sont indépendantes — l'enseignant peut demander explicitement ce rythme plus lent.
+→ Si une valeur calculée reprend par coïncidence les mêmes chiffres qu'un nombre déjà présent ailleurs dans l'expression d'origine (ex. `2 − 12 = −10` qui tombe sur les mêmes chiffres qu'un `−10` déjà écrit plus loin dans l'expression), l'entourer de parenthèses `(−10)` pour montrer que c'est une valeur calculée, pas un reste recopié de l'expression de départ.
+→ **Dans COURSPRESENTATION**, le soulignement doit apparaître **une étape après le texte** (le texte est visible immédiatement, le soulignement se révèle au clic suivant). Implémentation :
+```css
+.ul-reveal {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.4s;
+}
+```
+```html
+<div class="step calcul-detail"><em>A</em> = <span class="ul-reveal ulg1">...</span></div>
+<div class="step ul-trigger" data-target="ulg1" style="height:0;overflow:hidden;margin:0;padding:0;"></div>
+```
+Puis dans `updateSlide()` du script du chapitre, juste après la boucle qui bascule `.visible` sur les `.step` :
+```js
+currentSlide.querySelectorAll('.ul-trigger').forEach(t => {
+    const active = t.classList.contains('visible');
+    const grp = t.dataset.target;
+    currentSlide.querySelectorAll('.' + grp).forEach(el => {
+        el.style.textDecorationColor = active ? 'red' : 'transparent';
+    });
+});
+```
+→ Exemples de référence complets : `MathsIORI/4°/chapitre1 - Les nombres relatifs/cours.html` (+ présentation `COURSPRESENTATION/4/Chapitre1_Nombres_Relatifs/`) et `MathsIORI/5°/chapitre01 - Priorites operatoires/cours.html` (+ présentation `COURSPRESENTATION/5/Chapitre1_Priorites_Operatoires/`).
+→ Cette règle ne concerne que le marquage "ce qu'on calcule ensuite" dans une trace de calcul pas-à-pas. Un `.highlight` utilisé pour un tout autre usage (ex. suivre visuellement un même opérateur d'une ligne à l'autre, comme dans `4°/chapitre2 - Le theoreme de Pythagore partie 1`) n'est pas concerné et n'a pas besoin d'être changé.
+
 ---
 
 ## MathsIORI — spécifique aux cours
