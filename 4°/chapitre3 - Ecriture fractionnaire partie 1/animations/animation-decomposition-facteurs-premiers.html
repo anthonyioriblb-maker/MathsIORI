@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Animation – Décomposition en facteurs premiers</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+  }
+
+  /* ── Barre de progression ── */
+  .progress-bar-wrap {
+    width: 100%; max-width: 100%;
+    background: #e0e0e0;
+    border-radius: 8px;
+    height: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 8px;
+    background: linear-gradient(90deg, #2196f3, #4caf50);
+    border-radius: 8px;
+    width: 0%;
+    transition: width 0.4s;
+  }
+
+  /* ── Échelle de divisions ── */
+  .echelle-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 18px 24px;
+    width: 100%;
+    max-width: 260px;
+    margin-bottom: 18px;
+  }
+  .echelle {
+    font-family: 'Courier New', monospace;
+    font-size: 1.3rem;
+    line-height: 1;
+    position: relative;
+    display: inline-block;
+  }
+  .echelle::before {
+    content: '';
+    position: absolute;
+    left: 65px;
+    top: 0;
+    bottom: 0;
+    border-left: 2px solid #333;
+    pointer-events: none;
+  }
+  .echelle-row {
+    display: flex;
+    align-items: center;
+    height: 1.9em;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .echelle-row.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .echelle-n {
+    min-width: 55px;
+    text-align: right;
+    padding-right: 8px;
+    color: #1a237e;
+    font-weight: bold;
+  }
+  .echelle-d {
+    padding-left: 10px;
+    min-width: 32px;
+    color: #e53935;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .echelle-d.visible {
+    opacity: 1;
+  }
+
+  /* ── Ligne d'égalité qui se construit ── */
+  .decompo-wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 18px 24px;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+    min-height: 70px;
+  }
+  .decompo-ligne {
+    font-size: 1.15rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    min-height: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+  }
+  .term {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s, transform 0.4s;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .term.visible { opacity: 1; transform: translateY(0); }
+  .term-facteur { background: #ffebee; color: #c62828; border: 2px solid #e53935; }
+  .term-op      { background: transparent; color: #666; border: none; font-size: 1.2rem; padding: 2px; }
+  .term-egal    { background: transparent; color: #333; border: none; font-size: 1.2rem; padding: 2px; font-weight: bold; }
+
+  /* ── Message étape ── */
+  .step-box {
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    font-size: 1rem;
+    color: #1565c0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 60px;
+    display: block;
+    margin-bottom: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    transition: all 0.3s;
+  }
+
+  /* ── Contrôles ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  button {
+    padding: 13px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; box-shadow: none; }
+  #btnSuivant   { background: #2196f3; color: white; }
+  #btnPrecedent { background: #ff9800; color: white; }
+  #btnReset     { background: #f44336; color: white; }
+  #btnAuto      { background: #4caf50; color: white; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- Échelle de divisions successives -->
+<div class="echelle-wrap">
+  <div class="echelle" id="echelle"></div>
+</div>
+
+<!-- Ligne d'égalité qui se construit -->
+<div class="decompo-wrap">
+  <div class="decompo-ligne" id="decompoLigne"></div>
+</div>
+
+<!-- Message étape -->
+<div class="step-box" id="stepBox">Cliquez sur « Étape suivante » pour décomposer 300 en facteurs premiers.</div>
+
+<!-- Contrôles -->
+<div class="controls">
+  <button id="btnReset"    onclick="reset()">↺ Recommencer</button>
+  <button id="btnPrecedent" onclick="precedent()" disabled>◀ Étape précédente</button>
+  <button id="btnSuivant"  onclick="suivant()">Étape suivante ▶</button>
+  <button id="btnAuto"     onclick="toggleAuto()">⏵ Automatique</button>
+</div>
+
+<script>
+  // Chaque étape = une division de l'échelle
+  const etapes = [
+    { n: 300, d: 2, msg: 'On divise <strong>300</strong> par le plus petit nombre premier possible : <strong>2</strong>.<br>300 ÷ 2 = <strong>150</strong>.' },
+    { n: 150, d: 2, msg: '150 est encore divisible par <strong>2</strong>.<br>150 ÷ 2 = <strong>75</strong>.' },
+    { n: 75,  d: 3, msg: '75 n\'est pas divisible par 2 (impair). On essaie le nombre premier suivant : <strong>3</strong>.<br>75 ÷ 3 = <strong>25</strong>.' },
+    { n: 25,  d: 5, msg: '25 n\'est pas divisible par 3. On essaie <strong>5</strong>.<br>25 ÷ 5 = <strong>5</strong>.' },
+    { n: 5,   d: 5, msg: '5 est un nombre premier, il se divise par lui-même.<br>5 ÷ 5 = <strong>1</strong>.' },
+  ];
+  const dernierN = 1;
+
+  let etape = -1;
+  let autoTimer = null;
+  let autoMode = false;
+
+  function buildEchelle() {
+    const el = document.getElementById('echelle');
+    let html = '';
+    etapes.forEach((e, i) => {
+      html += `<div class="echelle-row" id="row-${i}"><span class="echelle-n">${e.n}</span><span class="echelle-d" id="d-${i}">${e.d}</span></div>`;
+    });
+    html += `<div class="echelle-row" id="row-last"><span class="echelle-n">${dernierN}</span><span class="echelle-d"></span></div>`;
+    el.innerHTML = html;
+  }
+
+  function buildDecompoLigne() {
+    const ligne = document.getElementById('decompoLigne');
+    let html = `<span class="term term-egal" id="term-nombre">${etapes[0].n}</span>`;
+    html += `<span class="term term-egal" id="term-egal">=</span>`;
+    etapes.forEach((e, i) => {
+      if (i > 0) html += `<span class="term term-op" id="term-op-${i}">×</span>`;
+      html += `<span class="term term-facteur" id="term-${i}">${e.d}</span>`;
+    });
+    ligne.innerHTML = html;
+  }
+
+  function updateProgress() {
+    const total = etapes.length;
+    const done = Math.max(0, etape + 1);
+    document.getElementById('progressBar').style.width = (done / total * 100) + '%';
+  }
+
+  function reset() {
+    stopAuto();
+    etape = -1;
+    document.querySelectorAll('.echelle-row').forEach(r => r.classList.remove('visible'));
+    document.querySelectorAll('.echelle-d').forEach(d => d.classList.remove('visible'));
+    document.querySelectorAll('.term-facteur, .term-op').forEach(t => t.classList.remove('visible'));
+    document.getElementById('row-0').classList.add('visible');
+    document.getElementById('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour décomposer 300 en facteurs premiers.';
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('btnSuivant').disabled = false;
+    document.getElementById('btnPrecedent').disabled = true;
+  }
+
+  function precedent() {
+    if (etape <= 0) {
+      if (etape === 0) {
+        etape = -1;
+        document.getElementById('d-0').classList.remove('visible');
+        document.getElementById('row-1') && document.getElementById('row-1').classList.remove('visible');
+        document.getElementById('stepBox').innerHTML = 'Cliquez sur « Étape suivante » pour décomposer 300 en facteurs premiers.';
+        document.getElementById('progressBar').style.width = '0%';
+        document.getElementById('btnPrecedent').disabled = true;
+        document.getElementById('btnSuivant').disabled = false;
+      }
+      return;
+    }
+    stopAuto();
+
+    // On annule la dernière étape affichée
+    const last = etapes.length - 1;
+    document.getElementById(etape === last ? 'row-last' : 'row-' + (etape + 1)).classList.remove('visible');
+    document.getElementById('d-' + etape).classList.remove('visible');
+    document.getElementById('term-' + etape).classList.remove('visible');
+    const op = document.getElementById('term-op-' + etape);
+    if (op) op.classList.remove('visible');
+
+    etape--;
+    document.getElementById('stepBox').innerHTML = etape >= 0 ? etapes[etape].msg : 'Cliquez sur « Étape suivante » pour décomposer 300 en facteurs premiers.';
+    updateProgress();
+    document.getElementById('btnSuivant').disabled = false;
+    document.getElementById('btnPrecedent').disabled = (etape < 0);
+  }
+
+  function suivant() {
+    if (etape >= etapes.length - 1) {
+      // Étape finale : afficher la conclusion
+      stopAuto();
+      document.getElementById('row-last').classList.add('visible');
+      document.getElementById('stepBox').innerHTML = '✅ <strong>Décomposition complète !</strong><br>300 = 2 × 2 × 3 × 5 × 5';
+      document.getElementById('btnSuivant').disabled = true;
+      document.getElementById('progressBar').style.width = '100%';
+      etape = etapes.length;
+      return;
+    }
+
+    etape++;
+    const e = etapes[etape];
+
+    // Révéler le diviseur de la ligne courante
+    document.getElementById('d-' + etape).classList.add('visible');
+    // Révéler la ligne suivante de l'échelle (le nombre obtenu)
+    const nextRow = (etape === etapes.length - 1) ? 'row-last' : 'row-' + (etape + 1);
+    document.getElementById(nextRow).classList.add('visible');
+
+    // Révéler le facteur dans la ligne d'égalité
+    document.getElementById('term-' + etape).classList.add('visible');
+    if (etape > 0) document.getElementById('term-op-' + etape).classList.add('visible');
+
+    document.getElementById('stepBox').innerHTML = e.msg;
+    updateProgress();
+    document.getElementById('btnPrecedent').disabled = false;
+  }
+
+  function toggleAuto() {
+    if (autoMode) {
+      stopAuto();
+    } else {
+      autoMode = true;
+      document.getElementById('btnAuto').textContent = '⏸ Pause';
+      document.getElementById('btnAuto').style.background = '#ff9800';
+      autoTimer = setInterval(() => {
+        if (etape >= etapes.length) { stopAuto(); return; }
+        suivant();
+      }, 2200);
+    }
+  }
+
+  function stopAuto() {
+    autoMode = false;
+    clearInterval(autoTimer);
+    autoTimer = null;
+    document.getElementById('btnAuto').textContent = '⏵ Automatique';
+    document.getElementById('btnAuto').style.background = '#4caf50';
+  }
+
+  // Init
+  buildEchelle();
+  buildDecompoLigne();
+  document.getElementById('term-nombre').classList.add('visible');
+  document.getElementById('term-egal').classList.add('visible');
+</script>
+</body>
+</html>

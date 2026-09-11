@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapitre 1 (4e) — Repères à coller</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: #eee;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .toolbar {
+        text-align: center;
+        padding: 14px;
+    }
+    .toolbar button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+    .toolbar button:hover { background: #2980b9; }
+    .toolbar p {
+        color: #555;
+        font-size: 13px;
+        margin: 8px 0 0;
+    }
+    .page {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        box-sizing: border-box;
+        padding: 10mm;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 6mm;
+        width: 100%;
+        height: 277mm;
+    }
+    .cell {
+        border: 1.5px dashed #888;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3mm;
+        box-sizing: border-box;
+    }
+    .cell svg {
+        width: 100%;
+        height: 100%;
+        background: white;
+    }
+    @page {
+        size: A4;
+        margin: 0;
+    }
+    @media print {
+        html, body { background: white; }
+        .toolbar { display: none; }
+        .page {
+            box-shadow: none;
+            margin: 0;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 10mm;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+    <button onclick="window.print()">🖨️ Imprimer / Enregistrer en PDF</button>
+    <p>Astuce : dans la fenêtre d'impression, choisis « Enregistrer au format PDF » comme imprimante.</p>
+</div>
+
+<div class="page">
+    <div class="grid" id="grid"></div>
+</div>
+
+<script>
+const REPERE_SVG = `
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#ccc" stroke-width="1">
+        <line x1="50" y1="50" x2="50" y2="450"/>
+        <line x1="90" y1="50" x2="90" y2="450"/>
+        <line x1="130" y1="50" x2="130" y2="450"/>
+        <line x1="170" y1="50" x2="170" y2="450"/>
+        <line x1="210" y1="50" x2="210" y2="450"/>
+        <line x1="290" y1="50" x2="290" y2="450"/>
+        <line x1="330" y1="50" x2="330" y2="450"/>
+        <line x1="370" y1="50" x2="370" y2="450"/>
+        <line x1="410" y1="50" x2="410" y2="450"/>
+        <line x1="450" y1="50" x2="450" y2="450"/>
+        <line x1="50" y1="50" x2="450" y2="50"/>
+        <line x1="50" y1="90" x2="450" y2="90"/>
+        <line x1="50" y1="130" x2="450" y2="130"/>
+        <line x1="50" y1="170" x2="450" y2="170"/>
+        <line x1="50" y1="210" x2="450" y2="210"/>
+        <line x1="50" y1="290" x2="450" y2="290"/>
+        <line x1="50" y1="330" x2="450" y2="330"/>
+        <line x1="50" y1="370" x2="450" y2="370"/>
+        <line x1="50" y1="410" x2="450" y2="410"/>
+        <line x1="50" y1="450" x2="450" y2="450"/>
+    </g>
+    <g stroke="#2c3e50" stroke-width="2">
+        <line x1="250" y1="50" x2="250" y2="450"/>
+        <line x1="50" y1="250" x2="450" y2="250"/>
+    </g>
+    <g font-size="14" text-anchor="middle">
+        <text x="50" y="270" fill="#555">-5</text>
+        <text x="90" y="270" fill="#8e44ad" font-weight="bold">-4</text>
+        <text x="130" y="270" fill="#555">-3</text>
+        <text x="170" y="270" fill="#555">-2</text>
+        <text x="210" y="270" fill="#555">-1</text>
+        <text x="290" y="270" fill="#555">1</text>
+        <text x="330" y="270" fill="#555">2</text>
+        <text x="370" y="270" fill="#2980b9" font-weight="bold">3</text>
+        <text x="410" y="270" fill="#555">4</text>
+        <text x="450" y="270" fill="#555">5</text>
+    </g>
+    <g font-size="14" text-anchor="end">
+        <text x="238" y="55" fill="#555">5</text>
+        <text x="238" y="95" fill="#555">4</text>
+        <text x="238" y="135" fill="#555">3</text>
+        <text x="238" y="175" fill="#555">2</text>
+        <text x="238" y="215" fill="#27ae60" font-weight="bold">1</text>
+        <text x="238" y="295" fill="#555">-1</text>
+        <text x="238" y="335" fill="#e67e22" font-weight="bold">-2</text>
+        <text x="238" y="375" fill="#555">-3</text>
+        <text x="238" y="415" fill="#555">-4</text>
+        <text x="238" y="453" fill="#555">-5</text>
+    </g>
+    <text x="238" y="270" font-size="15" fill="#2c3e50" text-anchor="end">O</text>
+
+    <line x1="370" y1="330" x2="370" y2="250" stroke="#2980b9" stroke-width="2" stroke-dasharray="5,4"/>
+    <line x1="370" y1="330" x2="250" y2="330" stroke="#e67e22" stroke-width="2" stroke-dasharray="5,4"/>
+    <line x1="90" y1="210" x2="90" y2="250" stroke="#8e44ad" stroke-width="2" stroke-dasharray="5,4"/>
+    <line x1="90" y1="210" x2="250" y2="210" stroke="#27ae60" stroke-width="2" stroke-dasharray="5,4"/>
+
+    <g stroke="#1a1a1a" stroke-width="2">
+        <line x1="364" y1="330" x2="376" y2="330"/>
+        <line x1="370" y1="324" x2="370" y2="336"/>
+    </g>
+    <text x="382" y="335" font-size="16" font-weight="bold" fill="#1a1a1a">A</text>
+    <text x="382" y="356" font-size="15" font-weight="bold">(<tspan fill="#2980b9">3</tspan> ; <tspan fill="#e67e22">-2</tspan>)</text>
+
+    <g stroke="#1a1a1a" stroke-width="2">
+        <line x1="84" y1="210" x2="96" y2="210"/>
+        <line x1="90" y1="204" x2="90" y2="216"/>
+    </g>
+    <text x="70" y="215" font-size="16" font-weight="bold" fill="#1a1a1a" text-anchor="end">B</text>
+    <text x="70" y="236" font-size="15" font-weight="bold" text-anchor="end">(<tspan fill="#8e44ad">-4</tspan> ; <tspan fill="#27ae60">1</tspan>)</text>
+</svg>`;
+
+const grid = document.getElementById('grid');
+for (let i = 0; i < 6; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.innerHTML = REPERE_SVG;
+    grid.appendChild(cell);
+}
+</script>
+
+</body>
+</html>

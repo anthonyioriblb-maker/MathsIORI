@@ -91,6 +91,9 @@ Les fiches d'automatismes (`automatismes/<niveau>/data/N*.html`, plus leur copie
 → `prevStep()` ne peut pas "rejouer à l'envers" une animation faite de classes CSS/`setTimeout` chaînés (ordre non déterministe). Utiliser une fonction `renderStep(n)` qui recalcule **instantanément** (sans classes d'animation ni délais) l'état visuel final de l'étape `n`, en repartant de zéro (tout cacher, puis ne montrer que ce qui doit l'être à `n`). `toggleAuto()` relance simplement `nextStep()`/`advanceStep()` à intervalle régulier.
 → Piège : un élément dont la visibilité ne dépend **que** d'une classe d'animation CSS (ex. `#sweepLine72.sweep-active { animation: ... forwards; }`, sans règle `#sweepLine72 { opacity: 0; }` par défaut) réapparaît à son état de repos si on retire juste la classe dans `renderStep()` — il faut le masquer explicitement (`el.style.opacity = '0'`).
 → Exemples de référence complets : `MathsIORI/6°/chapitre07 - Les angles/animations/` (6 fichiers) et `MathsIORI/6°/chapitre08 - Fractions partie 1/animations/animation-placer-fraction-demi-droite.html`.
+→ **Cette règle s'applique dès qu'un contenu est interactif pas-à-pas, pas seulement aux fichiers déjà nommés `animation-*.html`.** Dès qu'on ajoute un widget cliquable qui révèle du contenu étape par étape (ex. décomposition en facteurs premiers, division posée, etc.), il doit être créé comme un **vrai fichier séparé** dans un dossier `animations/` du chapitre, avec les 4 boutons ci-dessus, puis appelé par `<iframe>` dans `cours.html` **et** dans la présentation COURSPRESENTATION correspondante — jamais codé en CSS/JS dupliqué directement dans `cours.html` ou dans la présentation.
+→ Erreur commise (sept. 2026, chapitre3 4e) : un widget de décomposition en facteurs premiers a d'abord été codé en inline (CSS + JS collés dans `cours.html`, puis recopiés à la main dans la présentation) avec un seul bouton "Suivant", puis avec 4 boutons mais toujours inline — au lieu d'être une vraie animation dans `animations/`. Corrigé en extrayant le tout dans `animations/animation-decomposition-facteurs-premiers.html` (même patron que `6°/chapitre01 - Les nombres entiers/animations/animation-decomposition.html`), appelé par iframe des deux côtés.
+→ En cas de doute sur l'état d'un chapitre existant, se référer en priorité aux chapitres les plus récemment repris avec les conventions actuelles (ex. les premiers chapitres de chaque niveau retravaillés en 2026), pas aux anciens chapitres non encore mis à jour — ces derniers peuvent contenir des patrons obsolètes (ex. widget à un seul bouton) qu'il ne faut pas reproduire.
 
 **6. Animations compas — règles absolues** (juin 2026, long à corriger)
 → Le compas ne se referme **jamais** pendant une animation. L'écartement, une fois pris, reste constant jusqu'au prochain "prise d'écartement" explicite.
@@ -157,6 +160,27 @@ currentSlide.querySelectorAll('.ul-trigger').forEach(t => {
 ```
 → Exemples de référence complets : `MathsIORI/4°/chapitre1 - Les nombres relatifs/cours.html` (+ présentation `COURSPRESENTATION/4/Chapitre1_Nombres_Relatifs/`) et `MathsIORI/5°/chapitre01 - Priorites operatoires/cours.html` (+ présentation `COURSPRESENTATION/5/Chapitre1_Priorites_Operatoires/`).
 → Cette règle ne concerne que le marquage "ce qu'on calcule ensuite" dans une trace de calcul pas-à-pas. Un `.highlight` utilisé pour un tout autre usage (ex. suivre visuellement un même opérateur d'une ligne à l'autre, comme dans `4°/chapitre2 - Le theoreme de Pythagore partie 1`) n'est pas concerné et n'a pas besoin d'être changé.
+
+**8. Bouton volant (contrôle flottant des animations) — COURSPRESENTATION uniquement** (sept. 2026)
+→ **Ne concerne pas MathsIORI.** Dans MathsIORI, les animations gardent uniquement leurs 4 boutons propres (Règle n°5) ; le bouton volant n'a de sens qu'en présentation, où l'animation peut remplir tout l'écran et rendre ses propres boutons hors champ.
+→ Système généralisé (sept. 2026, après une première version faite à la main uniquement pour `5/Chapitre2_Symetrie_Centrale`) : quand une iframe d'animation (`animations/*.html`) est visible dans la slide active d'une présentation, une petite barre flottante (◀ Préc. / Suiv. ▶ / 🔄 Reprendre) apparaît en superposition et pilote cette animation à distance, sans qu'on ait besoin de faire défiler jusqu'à ses propres boutons ni à ceux de la présentation.
+→ **Fichiers partagés, jamais dupliqués par chapitre** :
+  - `COURSPRESENTATION/floating-anim-controls.js` — logique complète (détection de l'iframe visible, création de la barre, envoi/réception des commandes). Un seul fichier pour toute la présentation.
+  - `COURSPRESENTATION/styles.css` — bloc `#floatAnimCtrl` (déjà présent, ne pas le redupliquer dans un `<style>` de chapitre).
+  - Chaque présentation ayant au moins une animation ajoute une seule ligne avant `</body>`, après son script de chapitre :
+    ```html
+    <script src="script-<nom>.js"></script>
+    <script src="../../floating-anim-controls.js"></script>
+    ```
+    (deux niveaux à remonter, comme pour `styles.css`). Aucune autre modification de la présentation n'est nécessaire — pas de CSS, pas de div, pas de script inline : `floating-anim-controls.js` injecte lui-même la barre dans le DOM.
+→ **Protocole postMessage** entre la présentation (page parente) et chaque animation (iframe) :
+  - Présentation → animation : `{ type: 'symAnimCmd', cmd: 'next'|'prev'|'reset'|'sync' }`
+  - Animation → présentation : `{ type: 'symAnimState', nextText, nextDisabled, prevDisabled }`
+  (noms historiques conservés depuis la première implémentation `Chapitre2_Symetrie_Centrale`, à garder pour toute nouvelle animation.)
+→ **Chaque fichier `animations/*.html` de COURSPRESENTATION** doit avoir, avant `</body>`, le pont générique qui répond à ce protocole (voir le fichier ci-dessous en référence : il détecte les boutons précédent/suivant/reset par id connu, puis par attribut `onclick`, puis par le texte du bouton — fonctionne quels que soient les noms choisis dans l'animation, pas besoin d'adapter le snippet au cas par cas). Référence complète : `COURSPRESENTATION/4/Chapitre3_Fractions_Partie1/animations/animation-decomposition-facteurs-premiers.html` (dernier fichier ajouté, sept. 2026) ou n'importe quelle animation du dossier `COURSPRESENTATION` — les 44 fichiers existants au sept. 2026 l'ont tous.
+→ **Nouvelle animation créée après sept. 2026** : dès qu'un fichier `animations/*.html` est créé dans COURSPRESENTATION (jamais dans MathsIORI), lui ajouter ce pont dès sa création — ne pas attendre qu'on le demande (même logique que la Règle n°0).
+→ Le côté MathsIORI de la même animation (copié à l'identique par ailleurs, Règle n°4) n'a pas besoin de ce pont — mais l'avoir ne pose aucun problème puisque `window.parent === window` fait sortir la fonction immédiatement quand l'animation n'est pas dans une iframe pilotée par une présentation.
+→ Erreur commise avant la généralisation : le bouton volant avait été codé à la main, en dur, dans chaque présentation concernée (CSS + JS + HTML dans `Chapitre2_symetrie_presentation.html`), avec un sélecteur `iframe.sym-anim-frame` nécessitant d'ajouter une classe spécifique à chaque iframe — au lieu d'un sélecteur générique `iframe[src*="animations/"]` qui fonctionne sans toucher aux balises `<iframe>` existantes. Corrigé en extrayant tout dans `floating-anim-controls.js` (sélecteur générique) et en migrant `Chapitre2_Symetrie_Centrale` vers ce fichier partagé.
 
 ---
 
