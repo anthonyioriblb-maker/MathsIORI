@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TEST 1 - Priorités opératoires - Sujet</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:22px;
+  }
+  .entete{
+    border:2px solid #333;
+    border-radius:8px;
+    padding:12px 16px;
+    line-height:2;
+    margin-bottom:22px;
+    font-size:0.95em;
+  }
+  .entete .ligne{
+    display:inline-block;
+    min-width:60px;
+    border-bottom:1px solid #333;
+    margin-left:4px;
+  }
+
+  .consigne{
+    background:#fff3b8;
+    border-left:6px solid #f39c12;
+    border-radius:6px;
+    padding:12px 16px;
+    font-size:0.95em;
+    margin-bottom:26px;
+  }
+
+  .expr{
+    background:var(--bleu-clair);
+    border-left:6px solid var(--bleu);
+    border-radius:8px;
+    padding:14px 22px;
+    margin-bottom:14px;
+    font-family:'Cambria Math','Latin Modern Math',serif;
+    font-size:1.2em;
+    letter-spacing:0.02em;
+  }
+
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:10px;
+  }
+
+  @media print{
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:14mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Chapitre 1 &mdash; Priorités opératoires</h1>
+  <div class="souschapitre">TEST 1 &middot; 5<sup>ème</sup></div>
+
+  <div class="entete">
+    Nom &ndash; Prénom : <span class="ligne" style="min-width:260px;"></span><br>
+    Classe : 5<span class="ligne" style="min-width:70px;"></span>
+    &nbsp;&nbsp; Date : <span class="ligne" style="min-width:110px;"></span>
+    &nbsp;&nbsp; Note : <span class="ligne" style="min-width:70px;"></span>
+  </div>
+
+  <div class="consigne">
+    Calcule les expressions suivantes <strong>en détaillant toutes les étapes</strong>. La rédaction et la présentation sont notées.
+  </div>
+
+  <div class="expr">A&nbsp;=&nbsp;2&nbsp;&minus;&nbsp;6&nbsp;:&nbsp;3&nbsp;+&nbsp;3&nbsp;&times;&nbsp;4&nbsp;+&nbsp;1</div>
+
+  <div class="expr">B&nbsp;=&nbsp;30&nbsp;+&nbsp;4&nbsp;&times;&nbsp;(2&nbsp;+&nbsp;6)</div>
+
+  <div class="expr">C&nbsp;=&nbsp;4&nbsp;&times;&nbsp;[&nbsp;(18&nbsp;+&nbsp;5)&nbsp;&minus;&nbsp;2&nbsp;]</div>
+
+  <div class="expr">D&nbsp;=&nbsp;(2,5&nbsp;&times;&nbsp;3)&nbsp;+&nbsp;5&nbsp;&times;&nbsp;(9,7&nbsp;&minus;&nbsp;4,2)</div>
+
+  <footer>Collège Montmorency &mdash; M. Iori</footer>
+</div>
+</body>
+</html>

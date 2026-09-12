@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TEST 1 - Priorités opératoires - Correction</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --vert:#27ae60;
+    --vert-clair:#e8f8f0;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:6px;
+  }
+  .badge-correction{
+    display:block;
+    text-align:center;
+    margin:0 auto 26px;
+    background:var(--rouge);
+    color:#fff;
+    font-weight:bold;
+    letter-spacing:0.06em;
+    width:fit-content;
+    padding:4px 18px;
+    border-radius:20px;
+    font-size:0.85em;
+  }
+
+  .expr{
+    background:var(--bleu-clair);
+    border-left:6px solid var(--bleu);
+    border-radius:8px;
+    padding:14px 22px;
+    margin:0 0 12px;
+    font-family:'Cambria Math','Latin Modern Math',serif;
+    font-size:1.2em;
+  }
+
+  .etapes{
+    background:var(--vert-clair);
+    border-left:6px solid var(--vert);
+    border-radius:8px;
+    padding:16px 24px;
+    margin:0 0 28px;
+    font-family:'Cambria Math','Latin Modern Math',serif;
+    font-size:1.15em;
+    line-height:2.1;
+  }
+  .etapes .ligne{ display:block; }
+  .op{ text-decoration:underline; text-decoration-thickness:2px; }
+  .resultat{ font-weight:bold; }
+
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:10px;
+  }
+
+  @media print{
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:14mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Chapitre 1 &mdash; Priorités opératoires</h1>
+  <div class="souschapitre">TEST 1 &middot; 5<sup>ème</sup></div>
+  <div class="badge-correction">CORRECTION</div>
+
+  <div class="expr">A&nbsp;=&nbsp;2&nbsp;&minus;&nbsp;6&nbsp;:&nbsp;3&nbsp;+&nbsp;3&nbsp;&times;&nbsp;4&nbsp;+&nbsp;1</div>
+  <div class="etapes">
+    <span class="ligne">A&nbsp;=&nbsp;2&nbsp;&minus;&nbsp;<span class="op">6&nbsp;:&nbsp;3</span>&nbsp;+&nbsp;3&nbsp;&times;&nbsp;4&nbsp;+&nbsp;1</span>
+    <span class="ligne">A&nbsp;=&nbsp;2&nbsp;&minus;&nbsp;2&nbsp;+&nbsp;<span class="op">3&nbsp;&times;&nbsp;4</span>&nbsp;+&nbsp;1</span>
+    <span class="ligne">A&nbsp;=&nbsp;<span class="op">2&nbsp;&minus;&nbsp;2</span>&nbsp;+&nbsp;12&nbsp;+&nbsp;1</span>
+    <span class="ligne">A&nbsp;=&nbsp;<span class="op">0&nbsp;+&nbsp;12</span>&nbsp;+&nbsp;1</span>
+    <span class="ligne">A&nbsp;=&nbsp;<span class="op">12&nbsp;+&nbsp;1</span></span>
+    <span class="ligne resultat">A&nbsp;=&nbsp;13</span>
+  </div>
+
+  <div class="expr">B&nbsp;=&nbsp;30&nbsp;+&nbsp;4&nbsp;&times;&nbsp;(2&nbsp;+&nbsp;6)</div>
+  <div class="etapes">
+    <span class="ligne">B&nbsp;=&nbsp;30&nbsp;+&nbsp;4&nbsp;&times;&nbsp;<span class="op">(2&nbsp;+&nbsp;6)</span></span>
+    <span class="ligne">B&nbsp;=&nbsp;30&nbsp;+&nbsp;<span class="op">4&nbsp;&times;&nbsp;8</span></span>
+    <span class="ligne">B&nbsp;=&nbsp;<span class="op">30&nbsp;+&nbsp;32</span></span>
+    <span class="ligne resultat">B&nbsp;=&nbsp;62</span>
+  </div>
+
+  <div class="expr">C&nbsp;=&nbsp;4&nbsp;&times;&nbsp;[&nbsp;(18&nbsp;+&nbsp;5)&nbsp;&minus;&nbsp;2&nbsp;]</div>
+  <div class="etapes">
+    <span class="ligne">C&nbsp;=&nbsp;4&nbsp;&times;&nbsp;[&nbsp;<span class="op">(18&nbsp;+&nbsp;5)</span>&nbsp;&minus;&nbsp;2&nbsp;]</span>
+    <span class="ligne">C&nbsp;=&nbsp;4&nbsp;&times;&nbsp;<span class="op">[&nbsp;23&nbsp;&minus;&nbsp;2&nbsp;]</span></span>
+    <span class="ligne">C&nbsp;=&nbsp;<span class="op">4&nbsp;&times;&nbsp;21</span></span>
+    <span class="ligne resultat">C&nbsp;=&nbsp;84</span>
+  </div>
+
+  <div class="expr">D&nbsp;=&nbsp;(2,5&nbsp;&times;&nbsp;3)&nbsp;+&nbsp;5&nbsp;&times;&nbsp;(9,7&nbsp;&minus;&nbsp;4,2)</div>
+  <div class="etapes">
+    <span class="ligne">D&nbsp;=&nbsp;<span class="op">(2,5&nbsp;&times;&nbsp;3)</span>&nbsp;+&nbsp;5&nbsp;&times;&nbsp;(9,7&nbsp;&minus;&nbsp;4,2)</span>
+    <span class="ligne">D&nbsp;=&nbsp;7,5&nbsp;+&nbsp;5&nbsp;&times;&nbsp;<span class="op">(9,7&nbsp;&minus;&nbsp;4,2)</span></span>
+    <span class="ligne">D&nbsp;=&nbsp;7,5&nbsp;+&nbsp;<span class="op">5&nbsp;&times;&nbsp;5,5</span></span>
+    <span class="ligne">D&nbsp;=&nbsp;<span class="op">7,5&nbsp;+&nbsp;27,5</span></span>
+    <span class="ligne resultat">D&nbsp;=&nbsp;35</span>
+  </div>
+
+  <footer>Collège Montmorency &mdash; M. Iori</footer>
+</div>
+</body>
+</html>
