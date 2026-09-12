@@ -177,6 +177,11 @@ h1 {
     color: var(--quiz-color);
 }
 
+.action-button.evaluations {
+    background: rgba(255,255,255,0.85);
+    color: var(--evaluations-color, #c0392b);
+}
+
 .action-button.evenement {
     background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
     color: white;
@@ -272,6 +277,10 @@ h1 {
 
 .dropdown-item.quiz-item {
     color: var(--quiz-color);
+}
+
+.dropdown-item.evaluations-item {
+    color: var(--evaluations-color, #c0392b);
 }
 
 .dropdown-arrow {

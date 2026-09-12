@@ -88,6 +88,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         // Si aucun exercice actif n'existe, on n'affiche rien (pas d'icône grisée)
 
+        // Menu déroulant évaluations (sujet + correction)
+        let evaluationsBtn = '';
+        if (chapitre.evaluations && chapitre.evaluations.actif && chapitre.evaluations.items.length > 0) {
+            const evaluationsItems = chapitre.evaluations.items.map(ev =>
+                `<a href="${ev.fichier}" class="dropdown-item evaluations-item">📝 ${ev.titre}</a>`
+            ).join('');
+
+            evaluationsBtn = `
+                <div class="dropdown-wrapper">
+                    <button class="action-button evaluations">
+                        📝 Évaluations <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        ${evaluationsItems}
+                    </div>
+                </div>
+            `;
+        }
+        // Si aucune évaluation active n'existe, on n'affiche rien (pas d'icône grisée)
+
         // Menu déroulant quiz ou correction (pour Scratch)
         let quizBtn = '';
         if (chapitre.correction) {
@@ -153,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${coursBtn}
                 ${activitesBtn}
                 ${exercicesBtn}
+                ${evaluationsBtn}
                 ${quizBtn}
                 ${evenementBtn}
             </div>
