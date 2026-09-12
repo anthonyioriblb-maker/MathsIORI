@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interrogation - Nombres entiers - Correction</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:6px;
+  }
+  .badge-correction{
+    display:block;
+    text-align:center;
+    margin:0 auto 24px;
+    background:var(--rouge);
+    color:#fff;
+    font-weight:bold;
+    letter-spacing:0.06em;
+    width:fit-content;
+    padding:4px 18px;
+    border-radius:20px;
+    font-size:0.85em;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 12px;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:8px;
+    font-size:1.05em;
+  }
+  td{
+    border:1.5px solid #999;
+    padding:10px 14px;
+  }
+  .q{
+    border:1.5px solid #999;
+    padding:10px 14px;
+    font-size:0.92em;
+    vertical-align:top;
+  }
+  .q b{ color:var(--bleu); }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .sym{
+    background:#f2f2f2;
+    width:60px;
+    text-align:center;
+  }
+  .num{ text-align:center; }
+  th{
+    background:#e8e8e8;
+    padding:8px 10px;
+    font-size:0.85em;
+  }
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:16px;
+  }
+  @media print{
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:14mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Chapitre 1 &mdash; Les nombres entiers</h1>
+  <div class="souschapitre">Interrogation &middot; 6<sup>ème</sup></div>
+  <div class="badge-correction">CORRECTION</div>
+
+  <h2 class="exo">Exercice n° 1 : calculer.</h2>
+  <table>
+    <tr><td>6 × 6 = <span class="rep">36</span></td><td>9 × 1 = <span class="rep">9</span></td></tr>
+    <tr><td>8 × 7 = <span class="rep">56</span></td><td>9 × 9 = <span class="rep">81</span></td></tr>
+    <tr><td>7 × 10 = <span class="rep">70</span></td><td>8 × 8 = <span class="rep">64</span></td></tr>
+  </table>
+
+  <h2 class="exo">Exercice n° 2 : répondre aux questions.</h2>
+  <table>
+    <tr>
+      <td class="q">1. Dans 26 294 558 490, quel est le chiffre des <b>dizaines de mille</b> ? <span class="rep">5</span></td>
+      <td class="q">5. Dans 6 436 070 755, quel est le chiffre des <b>unités de milliards</b> ? <span class="rep">6</span></td>
+    </tr>
+    <tr>
+      <td class="q">2. Dans 37 271 584 850, quel est le chiffre des <b>dizaines de millions</b> ? <span class="rep">7</span></td>
+      <td class="q">6. Dans 94 675 382, quel est le chiffre des <b>centaines de mille</b> ? <span class="rep">6</span></td>
+    </tr>
+    <tr>
+      <td class="q">3. Dans 86 742 470 174, quel est le chiffre des <b>dizaines de milliards</b> ? <span class="rep">8</span></td>
+      <td class="q">7. Dans 67 534 128, quel est le nombre des <b>unités de mille</b> ? <span class="rep">67 534</span></td>
+    </tr>
+    <tr>
+      <td class="q">4. Dans 36 444 908 199, quel est le chiffre des <b>centaines de milliards</b> ? <span class="rep">0</span></td>
+      <td class="q">8. Dans 34 260 571, quel est le nombre des <b>dizaines de millions</b> ? <span class="rep">3</span></td>
+    </tr>
+  </table>
+
+  <h2 class="exo">Exercice n° 3 : comparer en utilisant &lt;, &gt; ou =.</h2>
+  <table>
+    <tr>
+      <th>Nombre 1</th><th></th><th>Nombre 2</th>
+      <th>Nombre 1</th><th></th><th>Nombre 2</th>
+    </tr>
+    <tr>
+      <td class="num">51 420</td><td class="sym rep">&lt;</td><td class="num">69 503</td>
+      <td class="num">679 521</td><td class="sym rep">&lt;</td><td class="num">1 679 520</td>
+    </tr>
+    <tr>
+      <td class="num">1 400 589</td><td class="sym rep">&gt;</td><td class="num">140 589</td>
+      <td class="num">5 020 301</td><td class="sym rep">&lt;</td><td class="num">5 020 311</td>
+    </tr>
+    <tr>
+      <td class="num">89 965 145</td><td class="sym rep">=</td><td class="num">89 965 145</td>
+      <td class="num">4 751 856</td><td class="sym rep">&gt;</td><td class="num">636 548</td>
+    </tr>
+  </table>
+
+  <footer>Collège Montmorency &mdash; M. Iori</footer>
+</div>
+</body>
+</html>
