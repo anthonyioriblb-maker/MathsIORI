@@ -66,7 +66,29 @@ Les fiches d'automatismes (`automatismes/<niveau>/data/N*.html`, plus leur copie
 **3. Iframe d'animation collée à gauche avec espace vide à droite** (bug rencontré juillet 2026)
 → Un `<iframe>` sans `display:block; margin:auto` reste aligné à gauche même dans un conteneur large → grand espace vide à droite, animation qui semble minuscule.
 → Toujours centrer comme les images (`display:block; margin:0 auto` ou `margin:16px auto 0`) et choisir une `width` qui remplit réellement l'espace disponible (pas une valeur arbitrairement petite comme 480px si le conteneur fait plus de 1000px). Adapter en conséquence le `max-width` du `.wrap` interne.
-→ Toujours ajouter `scrolling="no"` et calculer une `height` généreuse (padding du wrap + hauteur SVG + boîte de nom + boutons + texte + padding body) pour éviter tout ascenseur. Mieux vaut prévoir large que trop juste.
+→ Toujours ajouter `scrolling="no"`. La **hauteur** n'a plus besoin d'être devinée à la main : voir Règle n°9 ci-dessous (redimensionnement automatique). Le `height="..."` mis dans l'attribut de l'`<iframe>` ne sert plus que de valeur de repli avant que le script de redimensionnement ne s'exécute — inutile de chercher à le rendre exact.
+
+**9. Redimensionnement automatique des iframes d'animation** (sept. 2026 — remplace le calcul manuel de hauteur de la Règle n°3)
+→ **Problème résolu** : deviner à la main une `height` pour chaque `<iframe>` d'animation finissait presque toujours par couper le bas du contenu (boutons manquants, texte tronqué) ou par laisser un espace vide généreux « au cas où ». La hauteur réelle d'une animation dépend de son contenu (nombre de lignes de texte, taille du SVG...), pas d'une estimation a priori.
+→ **Mécanisme** : chaque fichier `animations/*.html` (MathsIORI **et** COURSPRESENTATION) mesure sa propre hauteur (`document.body.scrollHeight`, avec un `ResizeObserver` sur `document.body` pour réagir aux changements en cours d'animation) et l'envoie à la page parente via `postMessage({ type: 'iframe-resize', height })`. La page parente écoute ce message, retrouve l'iframe correspondante (`frames[i].contentWindow === e.source`) et ajuste sa hauteur exactement (`height + 4px`).
+→ **Obligatoire dans toute nouvelle animation** (`animations/*.html`, MathsIORI et COURSPRESENTATION) : ajouter ce bloc juste avant `</body>`, tel quel, sans l'adapter au cas par cas :
+```html
+<script>
+/* === Redimensionnement automatique (hauteur) === */
+(function () {
+    if (window.parent === window) return;
+    function postH() {
+        window.parent.postMessage({ type: 'iframe-resize', height: document.body.scrollHeight }, '*');
+    }
+    if (window.ResizeObserver) new ResizeObserver(postH).observe(document.body);
+    window.addEventListener('load', postH);
+    if (document.readyState !== 'loading') postH(); else document.addEventListener('DOMContentLoaded', postH);
+})();
+</script>
+```
+→ **Côté MathsIORI** : la page parente (`cours.html`) doit charger le script partagé `MathsIORI/iframe-autoresize.js` (jamais dupliqué) via une seule ligne avant `</body>` : `<script src="../../iframe-autoresize.js"></script>` (adapter le nombre de `../` à la profondeur du chapitre, comme pour `styles.css`). Obligatoire dès qu'un `cours.html` contient au moins une iframe d'animation — ne pas attendre qu'on le demande (même principe que la Règle n°0).
+→ **Côté COURSPRESENTATION** : rien à ajouter sur la présentation elle-même — l'écoute du message `iframe-resize` a été intégrée directement dans `COURSPRESENTATION/floating-anim-controls.js`, déjà chargé par toute présentation ayant une animation (voir Règle n°8 ci-dessous). Le pont resize et le bouton volant sont deux blocs indépendants dans ce même fichier partagé.
+→ Déployé rétroactivement en sept. 2026 sur la totalité des animations existantes (49 fichiers MathsIORI, 44 fichiers COURSPRESENTATION) et sur les 16 `cours.html` concernés.
 
 **4. `.step-box` avec `display: flex` → espaces avalés autour des `<strong>`**
 → Toujours garder `display: block` sur `.step-box` (centrage vertical via `min-height` + `line-height`, jamais `flex`). Avec `flex`, les nœuds de texte ne contenant qu'un espace deviennent des items flex vides et disparaissent dans certains navigateurs.
@@ -210,6 +232,16 @@ Exemple : `Archives/MathsIORI/6°/chapitre10 - Les angles/cours_2026-05-06_14h32
 → Réglage manuel possible image par image (`img_overrides` dans le script) si le rendu automatique ne convient pas pour un chapitre précis — cas vécu : chapitre 1 (6ème), 2 premières images réduites à la main.
 → Nom de sortie : `Chapitre_<N>_<niveau>_images_a_coller.pdf`, dans `MathsIORI/<niveau>°/chapitre<N> - <Nom>/a distribuer/`.
 → Certains chapitres n'ont aucune image statique à coller (tout est en animations interactives, ex. chapitre07 - Les angles) : dans ce cas, rien à générer.
+
+**Évaluations (dossier `evaluation/`)** (créé sept. 2026)
+→ Structure : `MathsIORI/<niveau>°/chapitre<N> - <Nom>/evaluation/Interrogation_<Nom>_Sujet.html` + `..._Correction.html`, sur le modèle de `6°/chapitre01 - Les nombres entiers/evaluation/`.
+→ **Sobriété obligatoire** — ne pas ajouter, même par réflexe :
+  - de titre de chapitre (`<h1>`) ni de ligne sous-titre du type « Interrogation · niveau · durée » : la page commence directement par l'encadré Nom/Classe/Date/Note ;
+  - d'indications d'aide dans les consignes (ex. « aide-toi des carrés parfaits ») : l'énoncé reste sobre, sans donner la méthode ;
+  - de pied de page établissement/enseignant.
+→ **Laisser de la place pour écrire** : hauteur de cellule et sauts de ligne suffisants sous chaque question pour que l'élève pose son calcul, pas juste un blanc symbolique après le signe =.
+→ **Notation identique au cours** : reprendre exactement les classes `.frac`/`.exposant`/`.sqrt` de `styles.css` (jamais de fraction en écriture inline `a/b`), et respecter la forme utilisée dans le cours pour une opération donnée (ex. un quotient de puissances `aⁿ/aᵖ` s'écrit en fraction, pas avec `÷`, car c'est ainsi que `cours.html` le présente).
+→ Une question peut reprendre un exemple du cours (même énoncé, mêmes valeurs) si la notion a été vue ainsi en classe — dans ce cas, la placer en dernière question de l'exercice (la plus difficile), avec assez de place pour le développement.
 
 ---
 

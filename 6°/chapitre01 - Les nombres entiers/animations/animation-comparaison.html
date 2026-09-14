@@ -717,5 +717,17 @@ function stopAuto() {
    ============================================================ */
 chargerRegle(1);
 </script>
+<script>
+/* === Redimensionnement automatique (hauteur) === */
+(function () {
+    if (window.parent === window) return;
+    function postH() {
+        window.parent.postMessage({ type: 'iframe-resize', height: document.body.scrollHeight }, '*');
+    }
+    if (window.ResizeObserver) new ResizeObserver(postH).observe(document.body);
+    window.addEventListener('load', postH);
+    if (document.readyState !== 'loading') postH(); else document.addEventListener('DOMContentLoaded', postH);
+})();
+</script>
 </body>
 </html>

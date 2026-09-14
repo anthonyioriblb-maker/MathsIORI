@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interrogation - Rappels de calculs - Sujet</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:22px;
+  }
+  .entete{
+    border:2px solid #333;
+    border-radius:8px;
+    padding:12px 16px;
+    line-height:2;
+    margin-bottom:22px;
+    font-size:0.95em;
+  }
+  .entete .ligne{
+    display:inline-block;
+    min-width:60px;
+    border-bottom:1px solid #333;
+    margin-left:4px;
+  }
+  .consigne{
+    background:#fff3b8;
+    border-left:6px solid #f39c12;
+    border-radius:6px;
+    padding:12px 16px;
+    font-size:0.95em;
+    margin-bottom:24px;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 12px;
+  }
+  .bareme{
+    float:right;
+    font-weight:normal;
+    text-decoration:none;
+    color:var(--gris);
+    font-size:0.85em;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:8px;
+    font-size:1.05em;
+  }
+  td{
+    border:1.5px solid #999;
+    padding:10px 14px;
+  }
+  .calc-cell{
+    height:70px;
+    vertical-align:top;
+    width:50%;
+  }
+  .q{
+    border:1.5px solid #999;
+    padding:10px 14px;
+    font-size:0.92em;
+    vertical-align:top;
+    height:56px;
+  }
+  .q b{ color:var(--bleu); }
+  th{
+    background:#e8e8e8;
+    padding:8px 10px;
+    font-size:0.85em;
+  }
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:16px;
+  }
+
+  /* ── Notation mathématique (identique à MathsIORI/styles.css) ── */
+  .frac, .fraction {
+    display: inline-block;
+    margin-left: .15em;
+    margin-right: .15em;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .frac > .num {
+    display: block;
+    padding: 0 .1em;
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+  }
+  .frac > .den {
+    display: block;
+    padding: 0 .1em;
+    padding-top: 2px;
+  }
+  .exposant {
+    vertical-align: super;
+    font-size: 0.8em;
+  }
+  .sqrt {
+    position: relative;
+    display: inline-block;
+    border-top: 2px solid black;
+    margin-left: .7em;
+    padding-left: .2em;
+    padding-right: .1em;
+  }
+  .sqrt:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    left: -.65em;
+    height: 56%;
+    width: .6em;
+    border-right: 2px solid black;
+    border-bottom: 2.5px solid black;
+    transform-origin: top right;
+    transform: rotate(55deg) skew(50deg);
+  }
+
+  @media print{
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:14mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="entete">
+    Nom &ndash; Prénom : <span class="ligne" style="min-width:260px;"></span>
+    &nbsp;&nbsp; Classe : <span class="ligne" style="min-width:70px;"></span>
+  </div>
+
+  <div class="consigne">Calculatrice interdite. Les fractions doivent être données sous forme simplifiée. Faire apparaître les calculs.</div>
+
+  <h2 class="exo">Exercice n° 1 : racines carrées de carrés parfaits</h2>
+  <table>
+    <tr>
+      <td class="q" style="height:70px;">1. Calculer :<br><br>
+        <div style="display:flex; gap:20px;">
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>a) <span class="sqrt">64</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>b) <span class="sqrt">100</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>c) <span class="sqrt">1</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>d) <span class="sqrt">81</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="q" style="height:90px;">2. Encadrer par deux entiers consécutifs :<br><br>
+        <span style="font-size:1.3em;">
+          <span style="display:inline-block; min-width:50px; border-bottom:1px solid #333;">&nbsp;</span>
+          &nbsp;&lt;&nbsp; <span class="sqrt">40</span> &nbsp;&lt;&nbsp;
+          <span style="display:inline-block; min-width:50px; border-bottom:1px solid #333;">&nbsp;</span>
+        </span>
+      </td>
+    </tr>
+  </table>
+
+  <h2 class="exo">Exercice n° 2 : puissances</h2>
+  <table>
+    <tr>
+      <td class="q" style="height:90px;">1. Écrire à l'aide d'une seule puissance :<br><br>
+        <div style="display:flex; gap:20px;">
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>a) 4<span class="exposant">3</span> &times; 4<span class="exposant">5</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>b) <span class="frac"><span class="num">9<span class="exposant">8</span></span><span class="den">9<span class="exposant">3</span></span></span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>c) (2<span class="exposant">3</span>)<span class="exposant">4</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="q" style="height:90px;">2. Calculer (donner la valeur numérique) :<br><br>
+        <div style="display:flex; gap:20px;">
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>a) 3<span class="exposant">2</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>b) 2<span class="exposant">4</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+          <span style="flex:1; display:flex; align-items:center; white-space:nowrap;"><span>c) 5<span class="exposant">0</span> =</span><span style="flex:1; border-bottom:1px solid #333; margin-left:6px;">&nbsp;</span></span>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <h2 class="exo">Exercice n° 3 : calculs avec des fractions</h2>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px 40px; font-size:1.1em;">
+    <div><i>A</i> = <span class="frac"><span class="num">5</span><span class="den">6</span></span> + <span class="frac"><span class="num">1</span><span class="den">3</span></span></div>
+    <div><i>B</i> = <span class="frac"><span class="num">2</span><span class="den">3</span></span> &times; <span class="frac"><span class="num">9</span><span class="den">8</span></span></div>
+    <div><i>C</i> = <span class="frac"><span class="num">5</span><span class="den">6</span></span> &divide; <span class="frac"><span class="num">10</span><span class="den">3</span></span></div>
+    <div><i>D</i> = (<span class="frac"><span class="num">&minus;2</span><span class="den">7</span></span> &minus; <span class="frac"><span class="num">&minus;4</span><span class="den">21</span></span>) &divide; (<span class="frac"><span class="num">3</span><span class="den">2</span></span> + <span class="frac"><span class="num">1</span><span class="den">2</span></span> &times; <span class="frac"><span class="num">7</span><span class="den">&minus;9</span></span>)</div>
+  </div>
+
+  <div style="height:260px;"></div>
+
+</div>
+</body>
+</html>

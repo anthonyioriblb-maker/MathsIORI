@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interrogation - Rappels de calculs - Correction</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:6px;
+  }
+  .badge-correction{
+    display:block;
+    text-align:center;
+    margin:0 auto 24px;
+    background:var(--rouge);
+    color:#fff;
+    font-weight:bold;
+    letter-spacing:0.06em;
+    width:fit-content;
+    padding:4px 18px;
+    border-radius:20px;
+    font-size:0.85em;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 12px;
+  }
+  .bareme{
+    float:right;
+    font-weight:normal;
+    text-decoration:none;
+    color:var(--gris);
+    font-size:0.85em;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:8px;
+    font-size:1.05em;
+  }
+  td{
+    border:1.5px solid #999;
+    padding:10px 14px;
+  }
+  .calc-cell{
+    vertical-align:top;
+    width:50%;
+  }
+  .q{
+    border:1.5px solid #999;
+    padding:10px 14px;
+    font-size:0.92em;
+    vertical-align:top;
+  }
+  .q b{ color:var(--bleu); }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:16px;
+  }
+
+  /* ── Notation mathématique (identique à MathsIORI/styles.css) ── */
+  .frac, .fraction {
+    display: inline-block;
+    margin-left: .15em;
+    margin-right: .15em;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .frac > .num {
+    display: block;
+    padding: 0 .1em;
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+  }
+  .frac > .den {
+    display: block;
+    padding: 0 .1em;
+    padding-top: 2px;
+  }
+  .exposant {
+    vertical-align: super;
+    font-size: 0.8em;
+  }
+  .sqrt {
+    position: relative;
+    display: inline-block;
+    border-top: 2px solid black;
+    margin-left: .7em;
+    padding-left: .2em;
+    padding-right: .1em;
+  }
+  .sqrt:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    left: -.65em;
+    height: 56%;
+    width: .6em;
+    border-right: 2px solid black;
+    border-bottom: 2.5px solid black;
+    transform-origin: top right;
+    transform: rotate(55deg) skew(50deg);
+  }
+
+  @media print{
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:14mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="badge-correction" style="margin-top:0;">CORRECTION</div>
+
+  <h2 class="exo">Exercice n° 1 : racines carrées de carrés parfaits</h2>
+  <table>
+    <tr>
+      <td class="q">1. Calculer :<br>
+        a) <span class="sqrt">64</span> = <span class="rep">8</span> &nbsp;&nbsp;&nbsp;
+        b) <span class="sqrt">100</span> = <span class="rep">10</span> &nbsp;&nbsp;&nbsp;
+        c) <span class="sqrt">1</span> = <span class="rep">1</span> &nbsp;&nbsp;&nbsp;
+        d) <span class="sqrt">81</span> = <span class="rep">9</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="q">2. Encadrer par deux entiers consécutifs :<br>
+        36 &lt; 40 &lt; 49 donc 6<span class="exposant">2</span> &lt; 40 &lt; 7<span class="exposant">2</span> donc <span class="rep">6 &lt; <span class="sqrt">40</span> &lt; 7</span>
+      </td>
+    </tr>
+  </table>
+
+  <h2 class="exo">Exercice n° 2 : puissances</h2>
+  <table>
+    <tr>
+      <td class="q">1. Écrire à l'aide d'une seule puissance :<br>
+        a) 4<span class="exposant">3</span> &times; 4<span class="exposant">5</span> = <span class="rep">4<span class="exposant">8</span></span> &nbsp;&nbsp;&nbsp;
+        b) <span class="frac"><span class="num">9<span class="exposant">8</span></span><span class="den">9<span class="exposant">3</span></span></span> = <span class="rep">9<span class="exposant">5</span></span> &nbsp;&nbsp;&nbsp;
+        c) (2<span class="exposant">3</span>)<span class="exposant">4</span> = <span class="rep">2<span class="exposant">12</span></span>
+      </td>
+    </tr>
+    <tr>
+      <td class="q">2. Calculer (donner la valeur numérique) :<br>
+        a) 3<span class="exposant">2</span> = <span class="rep">9</span> &nbsp;&nbsp;&nbsp;
+        b) 2<span class="exposant">4</span> = <span class="rep">16</span> &nbsp;&nbsp;&nbsp;
+        c) 5<span class="exposant">0</span> = <span class="rep">1</span>
+      </td>
+    </tr>
+  </table>
+
+  <h2 class="exo">Exercice n° 3 : calculs avec des fractions</h2>
+  <table>
+    <tr>
+      <td class="calc-cell">
+        <i>A</i> = <span class="frac"><span class="num">5</span><span class="den">6</span></span> + <span class="frac"><span class="num">1</span><span class="den">3</span></span>
+        = <span class="frac"><span class="num">5</span><span class="den">6</span></span> + <span class="frac"><span class="num">2</span><span class="den">6</span></span>
+        = <span class="rep"><span class="frac"><span class="num">7</span><span class="den">6</span></span></span>
+      </td>
+      <td class="calc-cell">
+        <i>B</i> = <span class="frac"><span class="num">2</span><span class="den">3</span></span> &times; <span class="frac"><span class="num">9</span><span class="den">8</span></span>
+        = <span class="frac"><span class="num">18</span><span class="den">24</span></span>
+        = <span class="rep"><span class="frac"><span class="num">3</span><span class="den">4</span></span></span>
+      </td>
+    </tr>
+    <tr>
+      <td class="calc-cell" colspan="2">
+        <i>C</i> = <span class="frac"><span class="num">5</span><span class="den">6</span></span> &divide; <span class="frac"><span class="num">10</span><span class="den">3</span></span>
+        = <span class="frac"><span class="num">5</span><span class="den">6</span></span> &times; <span class="frac"><span class="num">3</span><span class="den">10</span></span>
+        = <span class="frac"><span class="num">15</span><span class="den">60</span></span>
+        = <span class="rep"><span class="frac"><span class="num">1</span><span class="den">4</span></span></span>
+      </td>
+    </tr>
+    <tr>
+      <td class="calc-cell" colspan="2">
+        <i>D</i> = (<span class="frac"><span class="num">&minus;2</span><span class="den">7</span></span> &minus; <span class="frac"><span class="num">&minus;4</span><span class="den">21</span></span>) &divide; (<span class="frac"><span class="num">3</span><span class="den">2</span></span> + <span class="frac"><span class="num">1</span><span class="den">2</span></span> &times; <span class="frac"><span class="num">7</span><span class="den">&minus;9</span></span>)<br><br>
+        <i>D</i> = (<span class="frac"><span class="num">&minus;6</span><span class="den">21</span></span> + <span class="frac"><span class="num">4</span><span class="den">21</span></span>) &divide; (<span class="frac"><span class="num">27</span><span class="den">18</span></span> &minus; <span class="frac"><span class="num">7</span><span class="den">18</span></span>)<br><br>
+        <i>D</i> = <span class="frac"><span class="num">&minus;2</span><span class="den">21</span></span> &divide; <span class="frac"><span class="num">20</span><span class="den">18</span></span>
+        = <span class="frac"><span class="num">&minus;2</span><span class="den">21</span></span> &times; <span class="frac"><span class="num">18</span><span class="den">20</span></span>
+        = <span class="frac"><span class="num">&minus;36</span><span class="den">420</span></span>
+        = <span class="rep"><span class="frac"><span class="num">&minus;3</span><span class="den">35</span></span></span>
+      </td>
+    </tr>
+  </table>
+
+</div>
+</body>
+</html>

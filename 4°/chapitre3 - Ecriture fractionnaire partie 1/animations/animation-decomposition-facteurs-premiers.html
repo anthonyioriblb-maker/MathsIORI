@@ -169,10 +169,12 @@
   }
   button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
   button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; box-shadow: none; }
-  #btnSuivant   { background: #2196f3; color: white; }
-  #btnPrecedent { background: #ff9800; color: white; }
-  #btnReset     { background: #f44336; color: white; }
-  #btnAuto      { background: #4caf50; color: white; }
+  .btn-anim  { background: #2196f3; color: white; }
+  .btn-anim:hover { background: #1565c0; }
+  .btn-reset { background: #e74c3c; color: white; }
+  .btn-reset:hover { background: #c0392b; }
+  .btn-auto  { background: #4caf50; color: white; }
+  .btn-auto:hover { background: #388e3c; }
 </style>
 </head>
 <body>
@@ -194,10 +196,10 @@
 
 <!-- Contrôles -->
 <div class="controls">
-  <button id="btnReset"    onclick="reset()">↺ Recommencer</button>
-  <button id="btnPrecedent" onclick="precedent()" disabled>◀ Étape précédente</button>
-  <button id="btnSuivant"  onclick="suivant()">Étape suivante ▶</button>
-  <button id="btnAuto"     onclick="toggleAuto()">⏵ Automatique</button>
+  <button class="btn-anim" id="btnPrecedent" onclick="prevStep()" disabled>◀ Étape précédente</button>
+  <button class="btn-anim" id="btnSuivant" onclick="nextStep()">Étape suivante ▶</button>
+  <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+  <button class="btn-reset" id="btnReset" onclick="resetAnimation()">Recommencer ↺</button>
 </div>
 
 <script>
@@ -242,7 +244,7 @@
     document.getElementById('progressBar').style.width = (done / total * 100) + '%';
   }
 
-  function reset() {
+  function resetAnimation() {
     stopAuto();
     etape = -1;
     document.querySelectorAll('.echelle-row').forEach(r => r.classList.remove('visible'));
@@ -255,7 +257,7 @@
     document.getElementById('btnPrecedent').disabled = true;
   }
 
-  function precedent() {
+  function prevStep() {
     if (etape <= 0) {
       if (etape === 0) {
         etape = -1;
@@ -285,7 +287,7 @@
     document.getElementById('btnPrecedent').disabled = (etape < 0);
   }
 
-  function suivant() {
+  function nextStep() {
     if (etape >= etapes.length - 1) {
       // Étape finale : afficher la conclusion
       stopAuto();
@@ -324,7 +326,7 @@
       document.getElementById('btnAuto').style.background = '#ff9800';
       autoTimer = setInterval(() => {
         if (etape >= etapes.length) { stopAuto(); return; }
-        suivant();
+        nextStep();
       }, 2200);
     }
   }
@@ -340,8 +342,21 @@
   // Init
   buildEchelle();
   buildDecompoLigne();
+  document.getElementById('row-0').classList.add('visible');
   document.getElementById('term-nombre').classList.add('visible');
   document.getElementById('term-egal').classList.add('visible');
+</script>
+<script>
+/* === Redimensionnement automatique (hauteur) === */
+(function () {
+    if (window.parent === window) return;
+    function postH() {
+        window.parent.postMessage({ type: 'iframe-resize', height: document.body.scrollHeight }, '*');
+    }
+    if (window.ResizeObserver) new ResizeObserver(postH).observe(document.body);
+    window.addEventListener('load', postH);
+    if (document.readyState !== 'loading') postH(); else document.addEventListener('DOMContentLoaded', postH);
+})();
 </script>
 </body>
 </html>
