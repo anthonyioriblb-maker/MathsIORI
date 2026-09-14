@@ -242,6 +242,14 @@ Exemple : `Archives/MathsIORI/6°/chapitre10 - Les angles/cours_2026-05-06_14h32
 → **Laisser de la place pour écrire** : hauteur de cellule et sauts de ligne suffisants sous chaque question pour que l'élève pose son calcul, pas juste un blanc symbolique après le signe =.
 → **Notation identique au cours** : reprendre exactement les classes `.frac`/`.exposant`/`.sqrt` de `styles.css` (jamais de fraction en écriture inline `a/b`), et respecter la forme utilisée dans le cours pour une opération donnée (ex. un quotient de puissances `aⁿ/aᵖ` s'écrit en fraction, pas avec `÷`, car c'est ainsi que `cours.html` le présente).
 → Une question peut reprendre un exemple du cours (même énoncé, mêmes valeurs) si la notion a été vue ainsi en classe — dans ce cas, la placer en dernière question de l'exercice (la plus difficile), avec assez de place pour le développement.
+→ **Marge d'impression obligatoire** (bug rencontré sept. 2026) : le bloc `@media print` doit toujours fixer explicitement `@page{ margin:10mm; }`, jamais laisser le navigateur appliquer sa marge d'impression par défaut. Sans cette règle, la marge du navigateur s'ajoute au `padding` du `.page`, ce qui double les marges à l'impression par rapport à l'aperçu écran. En conséquence, réduire le `padding` du `.page` en impression à une petite valeur (ex. `4mm`) puisque la vraie marge est désormais portée par `@page`. Patron :
+```css
+@media print{
+  @page{ margin:10mm; }
+  body{ background:#fff; padding:0; }
+  .page{ box-shadow:none; border-radius:0; padding:4mm; }
+}
+```
 
 ---
 

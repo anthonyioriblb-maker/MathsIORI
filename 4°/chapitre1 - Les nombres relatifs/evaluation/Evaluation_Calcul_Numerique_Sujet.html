@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Evaluation calcul numérique - Sujet</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  .entete{
+    border:2px solid #333;
+    border-radius:8px;
+    padding:12px 16px;
+    line-height:2;
+    margin-bottom:22px;
+    font-size:0.95em;
+  }
+  .entete .ligne{
+    display:inline-block;
+    min-width:60px;
+    border-bottom:1px solid #333;
+    margin-left:4px;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 2px;
+  }
+  .items2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 40px;
+    font-size:1.1em;
+  }
+  .item{
+    display:flex;
+    align-items:flex-end;
+    white-space:nowrap;
+    padding:14px 0 4px;
+  }
+  .item .blanc{
+    flex:0 0 110px;
+    border-bottom:1px solid #333;
+    height:28px;
+    margin-left:8px;
+  }
+  .item .blanc-long{
+    flex:0 0 170px;
+  }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="entete">
+    Nom &ndash; Prénom : <span class="ligne" style="min-width:260px;"></span>
+    &nbsp;&nbsp; Classe : <span class="ligne" style="min-width:70px;"></span>
+  </div>
+
+  <h2 class="exo">Exercice n° 1 : Addition de relatifs</h2>
+  <div class="items2">
+    <div class="item"><span class="label">A)&nbsp;&minus;4 + 17 =</span><span class="blanc"></span></div>
+    <div class="item"><span class="label">B)&nbsp;(+11) + (&minus;17) =</span><span class="blanc"></span></div>
+    <div class="item"><span class="label">C)&nbsp;4 &minus; 1 =</span><span class="blanc"></span></div>
+    <div class="item"><span class="label">D)&nbsp;&minus;5 &minus; 17 =</span><span class="blanc"></span></div>
+    <div class="item"><span class="label">E)&nbsp;(&minus;10) + (+14) =</span><span class="blanc"></span></div>
+  </div>
+
+  <h2 class="exo">Exercice n° 2 : Soustraction de relatifs</h2>
+  <div class="items2">
+    <div class="item"><span class="label">A)&nbsp;(+4) &minus; (&minus;2) =</span><span class="blanc blanc-long"></span></div>
+    <div class="item"><span class="label">B)&nbsp;(+19) &minus; (&minus;10) =</span><span class="blanc blanc-long"></span></div>
+    <div class="item"><span class="label">C)&nbsp;(+5) &minus; (&minus;7) =</span><span class="blanc blanc-long"></span></div>
+    <div class="item"><span class="label">D)&nbsp;(&minus;20) &minus; (+10) =</span><span class="blanc blanc-long"></span></div>
+    <div class="item"><span class="label">E)&nbsp;(+1) &minus; (&minus;19) =</span><span class="blanc blanc-long"></span></div>
+  </div>
+
+  <h2 class="exo">Exercice n° 3 : Multiplication de relatifs</h2>
+  <div class="items2">
+    <div class="item"><span class="label">A)&nbsp;&minus;8 × (&minus;7) =</span><span class="blanc"></span></div>
+    <div class="item"><span class="label">B)&nbsp;&minus;9 × 7 =</span><span class="blanc"></span></div>
+    <div class="item"><span class="label">C)&nbsp;3 × (&minus;6) =</span><span class="blanc"></span></div>
+    <div class="item"><span class="label">D)&nbsp;&minus;6 × (&minus;7) =</span><span class="blanc"></span></div>
+    <div class="item"><span class="label">E)&nbsp;&minus;5 × 4 =</span><span class="blanc"></span></div>
+  </div>
+
+  <h2 class="exo">Exercice n° 4 : Donner le signe de</h2>
+  <div class="item"><span class="label">A)&nbsp;&minus;8 × (&minus;7) × 5 × (&minus;3) × 6 × (&minus;5) × (&minus;61) &rarr;</span><span class="blanc"></span></div>
+  <div class="item"><span class="label">B)&nbsp;&minus;9 × 7 × (&minus;7) × 5 × (&minus;3) × 6 × (&minus;5) &rarr;</span><span class="blanc"></span></div>
+
+  <h2 class="exo">Exercice n° 5 : Calculer en détaillant les calculs</h2>
+  <div style="font-size:1.1em;">A) 48 ÷ (2 &minus; 12 ÷ 4 &minus; 7) &minus; 4</div>
+  <div style="height:220px;"></div>
+
+</div>
+</body>
+</html>

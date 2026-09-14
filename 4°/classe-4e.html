@@ -14,6 +14,7 @@
             --primary-color: #fa709a;
             --exercices-color: #fee140;
             --quiz-color: #667eea;
+            --evaluations-color: #c0392b;
             --shadow-color: rgba(250, 112, 154, 0.4);
             --shadow-color-hover: rgba(250, 112, 154, 0.6);
 
@@ -77,6 +78,13 @@
                 exercices: {
                     actif: false,
                     items: []
+                },
+                evaluations: {
+                    actif: true,
+                    items: [
+                        { titre: "Sujet",      fichier: "chapitre1 - Les nombres relatifs/evaluation/Evaluation_Calcul_Numerique_Sujet.html" },
+                        { titre: "Correction", fichier: "chapitre1 - Les nombres relatifs/evaluation/Evaluation_Calcul_Numerique_Correction.html" }
+                    ]
                 },
                 quiz: {
                     actif: false,
