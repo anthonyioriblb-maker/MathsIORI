@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activité : découverte du théorème de Thalès (3e) — Correction</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        .activite h2::before, .activite h3::before { content: none; }
+        .activite h2 { font-size: 1.3em; }
+        .activite h3 { font-size: 1.1em; margin-left: 0; }
+        .figure-row { display: flex; flex-wrap: wrap; gap: 30px; align-items: flex-start; margin: 15px 0 25px; }
+        .figure-svg { flex: 0 0 auto; background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 10px; }
+        .donnees { flex: 1 1 220px; min-width: 220px; }
+        .donnees ul { list-style: none; margin: 8px 0; padding: 0; }
+        .donnees li { margin: 4px 0; }
+        .a-mesurer { color: #c0392b; font-weight: bold; margin-top: 10px; }
+        table.calc td:first-child { text-align: center; }
+        table.calc td:last-child { text-align: center; }
+        .conjecture-phrase { font-style: italic; margin: 10px 0; }
+        .rep { color: #c0392b; font-weight: bold; }
+        .badge-correction {
+            display: block; text-align: center; margin: 0 auto 22px; background: #c0392b; color: #fff;
+            font-weight: bold; letter-spacing: 0.06em; width: fit-content; padding: 4px 18px;
+            border-radius: 20px; font-size: 0.85em;
+        }
+        .lien-sujet { display: inline-block; margin-top: 30px; font-weight: bold; color: #1f4e8c; }
+</style>
+</head>
+<body>
+    <a href="../cours.html" class="home-button" style="margin: 20px;">← Retour au cours</a>
+
+    <div class="activite">
+    <h1>Activité : à la découverte du théorème de Thalès</h1>
+    <div class="badge-correction">CORRECTION</div>
+
+    <h2>Le défi de Thalès</h2>
+    <p>Vers 600 avant J.-C., les prêtres égyptiens mettent Thalès au défi de mesurer la hauteur de la grande pyramide de Khéops, sans y grimper et sans la toucher. Thalès remarque qu'à un instant précis de la journée, l'ombre d'un bâton planté verticalement est proportionnelle à sa hauteur — et que la même relation vaut pour la pyramide et son ombre. Dans cette activité, tu vas retrouver par toi-même la relation que Thalès a utilisée.</p>
+
+    <p><strong>Consigne :</strong> mesure uniquement les longueurs des segments tracés en <strong style="color:#c0392b;">ROUGE</strong> sur les figures (sur une version imprimée) — ou complète directement les champs. Les autres longueurs sont déjà données. Arrondis au millimètre près.</p>
+
+    <h2>Figure 1 — configuration « triangle »</h2>
+    <div class="figure-row">
+        <div class="figure-svg"><svg viewBox="0 0 306 343" width="306" height="343" xmlns="http://www.w3.org/2000/svg">
+<line x1="46.0" y1="296.7" x2="250.0" y2="296.7" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="46.0" y1="296.7" x2="221.5" y2="46.0" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="182.0" y1="296.7" x2="163.0" y2="129.6" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+<line x1="250.0" y1="296.7" x2="221.5" y2="46.0" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+<circle cx="46.0" cy="296.7" r="4" fill="#111111"/>
+<text x="24.0" y="316.7" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">A</text>
+<circle cx="182.0" cy="296.7" r="4" fill="#111111"/>
+<text x="176.0" y="318.7" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">M</text>
+<circle cx="250.0" cy="296.7" r="4" fill="#111111"/>
+<text x="258.0" y="316.7" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">B</text>
+<circle cx="221.5" cy="46.0" r="4" fill="#111111"/>
+<text x="217.5" y="32.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">C</text>
+<circle cx="163.0" cy="129.6" r="4" fill="#111111"/>
+<text x="141.0" y="135.6" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">N</text>
+</svg></div>
+        <div class="donnees">
+            <strong>Données :</strong>
+            <ul><li>AM = 4 cm</li><li>AB = 6 cm</li><li>AN = 6 cm</li><li>AC = 9 cm</li></ul>
+            <div class="a-mesurer">À mesurer :</div>
+            MN = <span class="rep">4,9 cm</span><br><br>
+            BC = <span class="rep">7,4 cm</span>
+        </div>
+    </div>
+
+    <table class="calc">
+        <tr><th>Rapport</th><th>Valeur (arrondie au centième)</th></tr>
+        <tr><td><span class="frac"><span class="num">AM</span><span class="den">AB</span></span></td><td><span class="rep">0,67</span></td></tr>
+        <tr><td><span class="frac"><span class="num">AN</span><span class="den">AC</span></span></td><td><span class="rep">0,67</span></td></tr>
+        <tr><td><span class="frac"><span class="num">MN</span><span class="den">BC</span></span></td><td><span class="rep">0,66</span></td></tr>
+    </table>
+
+    <p><em>Que remarques-tu en comparant les trois rapports ?</em></p>
+    <p><span class="rep">Les trois rapports sont égaux (aux imprécisions de mesure près) : le coefficient est 2/3.</span></p>
+
+    <h2>Figure 2 — configuration « papillon »</h2>
+    <div class="figure-row">
+        <div class="figure-svg"><svg viewBox="0 0 389 359" width="389" height="359" xmlns="http://www.w3.org/2000/svg">
+<line x1="333.0" y1="213.1" x2="61.0" y2="213.1" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="46.0" y1="46.0" x2="233.2" y2="313.4" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="333.0" y1="213.1" x2="46.0" y2="46.0" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+<line x1="61.0" y1="213.1" x2="233.2" y2="313.4" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+<circle cx="163.0" cy="213.1" r="4" fill="#111111"/>
+<text x="169.0" y="233.1" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">A</text>
+<circle cx="333.0" cy="213.1" r="4" fill="#111111"/>
+<text x="343.0" y="217.1" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">M</text>
+<circle cx="61.0" cy="213.1" r="4" fill="#111111"/>
+<text x="39.0" y="217.1" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">B</text>
+<circle cx="46.0" cy="46.0" r="4" fill="#111111"/>
+<text x="38.0" y="32.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">N</text>
+<circle cx="233.2" cy="313.4" r="4" fill="#111111"/>
+<text x="241.2" y="333.4" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">C</text>
+</svg></div>
+        <div class="donnees">
+            <strong>Données :</strong>
+            <ul><li>AM = 5 cm</li><li>AB = 3 cm</li><li>AN = 6 cm</li><li>AC = 3,6 cm</li></ul>
+            <div class="a-mesurer">À mesurer :</div>
+            MN = <span class="rep">9,8 cm</span><br><br>
+            BC = <span class="rep">5,9 cm</span>
+        </div>
+    </div>
+
+    <table class="calc">
+        <tr><th>Rapport</th><th>Valeur (arrondie au centième)</th></tr>
+        <tr><td><span class="frac"><span class="num">AM</span><span class="den">AB</span></span></td><td><span class="rep">1,67</span></td></tr>
+        <tr><td><span class="frac"><span class="num">AN</span><span class="den">AC</span></span></td><td><span class="rep">1,67</span></td></tr>
+        <tr><td><span class="frac"><span class="num">MN</span><span class="den">BC</span></span></td><td><span class="rep">1,66</span></td></tr>
+    </table>
+
+    <h2>Ta conjecture</h2>
+    <p>En t'aidant des deux tableaux, complète la phrase suivante avec tes propres mots :</p>
+    <p class="conjecture-phrase">« Quand deux droites sécantes en un point A sont coupées par deux droites parallèles, alors <span class="rep">les longueurs sur les deux droites sont proportionnelles.</span> »</p>
+
+    <h3>Théorème (rédaction du cours, chapitre 2)</h3>
+    <p>Soient deux droites (d) et (d') sécantes au point A. Soient B et M deux points de (d) distincts de A et soient C et N deux points de (d') distincts de A.</p>
+    <p>Si les droites (BC) et (MN) sont parallèles, alors :</p>
+    <p style="font-size:1.3em; font-weight:bold; color:#c0392b;"><span class="frac"><span class="num">AM</span><span class="den">AB</span></span> = <span class="frac"><span class="num">AN</span><span class="den">AC</span></span> = <span class="frac"><span class="num">MN</span><span class="den">BC</span></span></p>
+    <p><em>Remarque historique : le nom « théorème de Thalès » n'apparaît dans un manuel français qu'en 1883, et n'entre dans les programmes officiels qu'en 1925 — plus de 2000 ans après Thalès.</em></p>
+
+    <h2>Retour au défi de Thalès</h2>
+    <p>Pour mesurer la hauteur de la pyramide sans y grimper, Léa s'allonge au sol en un point A et vise, dans son alignement, le sommet d'un bâton planté verticalement puis le sommet de la pyramide (même configuration que la figure 1).</p>
+
+    <div class="figure-row">
+        <div class="figure-svg"><svg viewBox="0 0 332 219" width="332" height="219" xmlns="http://www.w3.org/2000/svg">
+<line x1="46.0" y1="173.4" x2="216.0" y2="173.4" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="46.0" y1="173.4" x2="216.0" y2="52.0" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="93.6" y1="173.4" x2="93.6" y2="139.4" stroke="#111111" stroke-width="2.6" stroke-linecap="round"/>
+<line x1="216.0" y1="173.4" x2="216.0" y2="52.0" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+<polyline points="93.6,173.4 101.8,173.4 101.8,165.3 93.6,165.3" fill="none" stroke="#111111" stroke-width="1.4"/>
+<polyline points="216.0,173.4 224.2,173.4 224.2,165.3 216.0,165.3" fill="none" stroke="#111111" stroke-width="1.4"/>
+<circle cx="46.0" cy="173.4" r="4" fill="#111111"/>
+<text x="24.0" y="193.4" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">A</text>
+<circle cx="93.6" cy="173.4" r="4" fill="#111111"/>
+<text x="85.6" y="195.4" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">M</text>
+<circle cx="216.0" cy="173.4" r="4" fill="#111111"/>
+<text x="208.0" y="195.4" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">B</text>
+<circle cx="216.0" cy="52.0" r="4" fill="#111111"/>
+<text x="226.0" y="46.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">C</text>
+<circle cx="93.6" cy="139.4" r="4" fill="#111111"/>
+<text x="103.6" y="133.4" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">N</text>
+<text x="86.8" y="156.4" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-style="italic" fill="#666666">bâton</text>
+<text x="224.5" y="112.7" text-anchor="start" font-family="Segoe UI, sans-serif" font-size="13" font-style="italic" fill="#c0392b">pyramide</text>
+</svg></div>
+        <div class="donnees">
+            <strong>Données :</strong>
+            <ul><li>AM = 2 m</li><li>AB = 182,5 m</li><li>MN = 1,6 m (bâton)</li></ul>
+            <div class="a-mesurer">Calculer BC</div>
+            <span style="font-style:italic; color:#666;">(hauteur de la pyramide)</span><br>
+            BC = <span class="rep">146 m</span>
+        </div>
+    </div>
+
+    <p>Même configuration que la figure 1 : les points A, M, B et A, N, C sont alignés dans cet ordre et (MN) // (BC), donc, d'après le théorème de Thalès :</p>
+    <p><span class="frac"><span class="num">AM</span><span class="den">AB</span></span> = <span class="frac"><span class="num">MN</span><span class="den">BC</span></span> soit <span class="frac"><span class="num">2</span><span class="den">182,5</span></span> = <span class="frac"><span class="num">1,6</span><span class="den">BC</span></span><br><br>
+    D'où BC = <span class="frac"><span class="num">1,6 × 182,5</span><span class="den">2</span></span> = <span class="frac"><span class="num">292</span><span class="den">2</span></span> = <span class="rep">146</span></p>
+    <p><em>Bonus pour la classe : la pyramide de Khéops mesurait à l'origine environ 146,6 m. La méthode de Thalès donne un résultat remarquablement proche !</em></p>
+
+    <a class="lien-sujet" href="activite.html">← Retour au sujet</a>
+
+    </div>
+</body>
+</html>

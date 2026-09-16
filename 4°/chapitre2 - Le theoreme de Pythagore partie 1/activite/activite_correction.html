@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activité : découverte du théorème de Pythagore (4e) — Correction</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        .activite h2::before, .activite h3::before { content: none; }
+        .activite h2 { font-size: 1.3em; }
+        .activite h3 { font-size: 1.1em; margin-left: 0; }
+        .figure-row { display: flex; flex-wrap: wrap; gap: 30px; align-items: flex-start; margin: 15px 0 25px; }
+        .figure-svg { flex: 0 0 auto; background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 10px; }
+        .donnees { flex: 1 1 220px; min-width: 220px; }
+        .donnees ul { list-style: none; margin: 8px 0; padding: 0; }
+        .donnees li { margin: 4px 0; }
+        .a-mesurer { color: #c0392b; font-weight: bold; margin-top: 10px; }
+        table.calc td:first-child { text-align: center; }
+        table.calc td:last-child { text-align: center; }
+        .conjecture-phrase { font-style: italic; margin: 10px 0; }
+        .rep { color: #c0392b; font-weight: bold; }
+        .calc-ligne { font-family: 'Courier New', monospace; font-size: 1.15em; margin: 10px 0; color: #c0392b; font-weight: bold; }
+        .badge-correction {
+            display: block; text-align: center; margin: 0 auto 22px; background: #c0392b; color: #fff;
+            font-weight: bold; letter-spacing: 0.06em; width: fit-content; padding: 4px 18px;
+            border-radius: 20px; font-size: 0.85em;
+        }
+        .lien-sujet { display: inline-block; margin-top: 30px; font-weight: bold; color: #1f4e8c; }
+</style>
+</head>
+<body>
+    <a href="../cours.html" class="home-button" style="margin: 20px;">← Retour au cours</a>
+
+    <div class="activite">
+    <h1>Activité : à la découverte du théorème de Pythagore</h1>
+    <div class="badge-correction">CORRECTION</div>
+
+    <h2>Le défi de Pythagore</h2>
+    <p>Dans l'Égypte antique, des arpenteurs appelés « harpédonaptes » (les « tendeurs de corde ») utilisaient une corde à 13 nœuds régulièrement espacés pour tracer des angles droits parfaits sur les chantiers des temples et des pyramides. En tendant la corde selon un triangle de 3, 4 et 5 intervalles, ils obtenaient à coup sûr un angle droit. Dans cette activité, tu vas découvrir par toi-même la relation qui explique leur astuce.</p>
+
+    <div class="remarque">
+        <strong>Rappel :</strong> dans un triangle rectangle, le côté le plus long, situé en face de l'angle droit, s'appelle l'<strong>hypoténuse</strong>. Les deux autres côtés sont appelés les <strong>côtés de l'angle droit</strong>.
+    </div>
+
+    <p><strong>Consigne :</strong> mesure uniquement la longueur du côté tracé en <strong style="color:#c0392b;">ROUGE</strong> (l'hypoténuse) sur chaque figure ci-dessous (sur une version imprimée) — ou complète directement les champs avec les valeurs demandées. Arrondis au millimètre près. Les deux côtés de l'angle droit sont déjà donnés.</p>
+
+    <h2>Figure 1 — triangle ABC rectangle en A</h2>
+    <div class="figure-row">
+        <div class="figure-svg"><svg viewBox="0 0 306 364" width="306" height="364" xmlns="http://www.w3.org/2000/svg">
+<line x1="46.0" y1="318.0" x2="250.0" y2="318.0" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="46.0" y1="318.0" x2="46.0" y2="46.0" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="250.0" y1="318.0" x2="46.0" y2="46.0" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+<polyline points="46.0,318.0 57.6,318.0 57.6,306.4 46.0,306.4" fill="none" stroke="#111111" stroke-width="1.4"/>
+<circle cx="46.0" cy="318.0" r="4" fill="#111111"/>
+<text x="24.0" y="338.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">A</text>
+<circle cx="250.0" cy="318.0" r="4" fill="#111111"/>
+<text x="260.0" y="338.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">B</text>
+<circle cx="46.0" cy="46.0" r="4" fill="#111111"/>
+<text x="40.0" y="32.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">C</text>
+</svg></div>
+        <div class="donnees">
+            <strong>Données :</strong>
+            <ul><li>AB = 6 cm</li><li>AC = 8 cm</li></ul>
+            <div class="a-mesurer">À mesurer :</div>
+            BC = <span class="rep">10,0 cm</span>
+        </div>
+    </div>
+
+    <table class="calc">
+        <tr><th>Calcul</th><th>Résultat</th></tr>
+        <tr><td>AB<span class="exposant">2</span></td><td><span class="rep">36</span></td></tr>
+        <tr><td>AC<span class="exposant">2</span></td><td><span class="rep">64</span></td></tr>
+        <tr><td>AB<span class="exposant">2</span> + AC<span class="exposant">2</span></td><td><span class="rep">100</span></td></tr>
+        <tr><td>BC<span class="exposant">2</span></td><td><span class="rep">100</span></td></tr>
+    </table>
+
+    <p><em>Que remarques-tu en comparant les deux dernières valeurs du tableau ?</em></p>
+    <p><span class="rep">AB<span class="exposant">2</span> + AC<span class="exposant">2</span> = BC<span class="exposant">2</span> : les deux valeurs sont égales (aux imprécisions de mesure près).</span></p>
+
+    <h2>Figure 2 — triangle MER rectangle en E</h2>
+    <div class="figure-row">
+        <div class="figure-svg"><svg viewBox="0 0 187 296" width="187" height="296" xmlns="http://www.w3.org/2000/svg">
+<line x1="46.0" y1="250.0" x2="131.0" y2="250.0" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="46.0" y1="250.0" x2="46.0" y2="46.0" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+<line x1="131.0" y1="250.0" x2="46.0" y2="46.0" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+<polyline points="46.0,250.0 57.6,250.0 57.6,238.4 46.0,238.4" fill="none" stroke="#111111" stroke-width="1.4"/>
+<circle cx="46.0" cy="250.0" r="4" fill="#111111"/>
+<text x="24.0" y="270.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">E</text>
+<circle cx="131.0" cy="250.0" r="4" fill="#111111"/>
+<text x="141.0" y="270.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">M</text>
+<circle cx="46.0" cy="46.0" r="4" fill="#111111"/>
+<text x="40.0" y="32.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">R</text>
+</svg></div>
+        <div class="donnees">
+            <strong>Données :</strong>
+            <ul><li>EM = 2,5 cm</li><li>ER = 6 cm</li></ul>
+            <div class="a-mesurer">À mesurer :</div>
+            MR = <span class="rep">6,5 cm</span>
+        </div>
+    </div>
+
+    <table class="calc">
+        <tr><th>Calcul</th><th>Résultat</th></tr>
+        <tr><td>EM<span class="exposant">2</span></td><td><span class="rep">6,25</span></td></tr>
+        <tr><td>ER<span class="exposant">2</span></td><td><span class="rep">36</span></td></tr>
+        <tr><td>EM<span class="exposant">2</span> + ER<span class="exposant">2</span></td><td><span class="rep">42,25</span></td></tr>
+        <tr><td>MR<span class="exposant">2</span></td><td><span class="rep">42,25</span></td></tr>
+    </table>
+
+    <h2>Ta conjecture</h2>
+    <p>En t'aidant des deux tableaux, complète la phrase suivante avec tes propres mots :</p>
+    <p class="conjecture-phrase">« Si un triangle est rectangle, alors <span class="rep">la somme des carrés des deux côtés de l'angle droit est égale au carré de l'hypoténuse.</span> »</p>
+
+    <h3>Théorème (rédaction du cours, chapitre 2)</h3>
+    <p>Si ABC est un triangle rectangle en A, alors :</p>
+    <p style="font-size:1.3em; font-weight:bold; color:#c0392b;">AB<span class="exposant">2</span> + AC<span class="exposant">2</span> = BC<span class="exposant">2</span></p>
+
+    <h2>Retour au défi de Pythagore</h2>
+    <p>Les ouvriers égyptiens veulent construire une rampe en terre battue pour amener des blocs de pierre en haut d'un mur de soutènement. Le mur mesure 5&nbsp;m de haut, et le pied de la rampe est installé à 12&nbsp;m de la base du mur.</p>
+
+    <div class="figure-row">
+        <div class="figure-svg"><svg viewBox="0 0 306 183" width="306" height="183" xmlns="http://www.w3.org/2000/svg">
+<line x1="46.0" y1="137.0" x2="250.0" y2="137.0" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="46.0" y1="137.0" x2="46.0" y2="52.0" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="46.0" y1="52.0" x2="250.0" y2="137.0" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+<polyline points="46.0,137.0 56.9,137.0 56.9,126.1 46.0,126.1" fill="none" stroke="#111111" stroke-width="1.4"/>
+<circle cx="46.0" cy="137.0" r="4" fill="#111111"/>
+<text x="28.0" y="157.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">G</text>
+<circle cx="250.0" cy="137.0" r="4" fill="#111111"/>
+<text x="260.0" y="157.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">F</text>
+<circle cx="46.0" cy="52.0" r="4" fill="#111111"/>
+<text x="28.0" y="44.0" font-family="Segoe UI, sans-serif" font-size="17" font-weight="bold" fill="#111111">H</text>
+<text x="148.0" y="158.1" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-style="italic" fill="#666666">sol</text>
+<text x="34.1" y="94.5" text-anchor="end" font-family="Segoe UI, sans-serif" font-size="13" font-style="italic" fill="#666666">mur</text>
+<text x="152.1" y="90.4" text-anchor="start" font-family="Segoe UI, sans-serif" font-size="13" font-style="italic" fill="#c0392b">rampe</text>
+</svg></div>
+        <div class="donnees">
+            <strong>Données :</strong>
+            <ul><li>hauteur du mur = 5 m</li><li>distance au mur = 12 m</li></ul>
+            <div class="a-mesurer">Calculer la longueur de la rampe</div>
+            rampe = <span class="rep">13 m</span>
+        </div>
+    </div>
+
+    <p>Le triangle GHF (sol / mur / rampe) est rectangle en G : GH<span class="exposant">2</span> + GF<span class="exposant">2</span> = HF<span class="exposant">2</span></p>
+    <p class="calc-ligne">12<span class="exposant">2</span> + 5<span class="exposant">2</span> = 144 + 25 = 169 → rampe = <span class="sqrt">169</span> = 13 m</p>
+    <p><em>Remarque : 5, 12, 13 forment un « triplet pythagoricien », tout comme 3, 4, 5 — le triangle de la corde à treize nœuds des harpédonaptes !</em></p>
+
+    <a class="lien-sujet" href="activite.html">← Retour au sujet</a>
+
+    </div>
+</body>
+</html>

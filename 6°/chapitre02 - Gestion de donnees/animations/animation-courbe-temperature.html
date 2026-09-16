@@ -12,7 +12,6 @@
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f0f4f8;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -376,7 +375,6 @@
     window.parent.postMessage({ type: 'iframe-resize', height: h }, '*');
   }
   window.addEventListener('load', reportHeight);
-  window.addEventListener('resize', reportHeight);
   if (window.ResizeObserver) {
     new ResizeObserver(reportHeight).observe(document.body);
   }
