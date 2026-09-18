@@ -66,6 +66,26 @@ table.style.height = prev;
 ```
 → **Cible** : viser un `naturalH` proche de `cellH` (écart de quelques px, jamais plus d'une vingtaine), sans jamais le dépasser (sinon débordement/coupure à l'impression). En pratique : dimensionner les figures SVG et le texte **directement à une taille généreuse dès la première version** de la fiche (pas une taille "prudente" qu'on agrandira seulement si on remarque le problème) — plus lisible pour l'élève et ça évite l'aller-retour de correction. Ajuster ensuite par petits pas (taille de police en `em`/`pt` inline sur chaque `<td>`, dimensions `width`/`height` du `<svg>`) en resynchronisant `FRAGMENTS` et en re-testant à chaque itération, jusqu'à tomber dans la fourchette cible.
 → Rappel : toute taille de police doit être posée en `style="font-size:...em"` **inline directement sur l'élément** (jamais dans un `<style>` du fichier `data/N*.html`, qui est ignoré par le lecteur — voir règle de synchronisation ci-dessus) car `<niveau>-automatisme.html` impose `font-size:10pt` en impression via `.cell td` ; seul un style inline sur l'élément lui-même (spécificité supérieure) peut l'emporter.
+→ **Second piège de vérification, plus grave (découvert sept. 2026 sur N07)** : la largeur du viewport Playwright utilisée pendant la mesure change directement le nombre de lignes sur lesquelles le texte se replie, donc `naturalH`. Un viewport trop large (ex. 1200px) fait tenir le texte sur moins de lignes qu'à l'impression réelle → `naturalH` mesuré artificiellement bas → le script dit « ça rentre » alors que ça déborde et coupe une ligne/question au papier. Une première correction (N06-N21, même session) avait réglé le problème des lignes blanches en trop mais avait été **validée avec un viewport trop large**, laissant 6 fiches (N06, N07, N12, N14, N15, N20) réellement en débordement à l'impression malgré des mesures "OK". Toujours fixer le viewport Playwright à la largeur imprimable réelle avant de mesurer :
+```js
+// largeur imprimable réelle = largeur A4 (210mm) moins les marges @page (5mm de chaque côté), en px CSS (96px/pouce)
+const PRINT_PX_WIDTH = Math.round(200 * 96 / 25.4); // ≈ 756
+// → page = await browser.newPage({ viewport: { width: PRINT_PX_WIDTH, height: 1400 } })
+```
+→ En cas de doute, valider en plus par un rendu PDF réel (`page.pdf({ preferCSSPageSize: true })` + `pdftoppm`) plutôt que de faire confiance uniquement à la mesure DOM — c'est ce contrôle visuel qui a révélé le débordement que la mesure à 1200px avait caché.
+→ **Troisième piège de vérification, le plus grave des trois (découvert sept. 2026 sur N10, signalé par l'enseignant via une capture d'écran montrant "F1/F2/F3" coupés en bas d'une case)** : `cell.getBoundingClientRect().height` (utilisé comme `cellH` dans le snippet du point 2 ci-dessus) donne la hauteur de la **boîte englobante** de `.cell`, *padding compris* (`.cell { padding: 3mm; }`). Mais `.cell table { height:100% }` se calcule par rapport à la **boîte de contenu** de `.cell` (hauteur totale moins le padding, moins la bordure) — donc le vrai budget disponible pour le tableau est `cellH` moins environ 2×3mm de padding et 2×1px de bordure, soit **~316px et non ~341px** pour une grille 3 lignes/page A4. Comparer `naturalH` à `cellH` (341px) au lieu du vrai budget (316px) fait croire à ~25px de marge qui n'existent pas → toutes les fiches "corrigées" avec cette mesure (marge mesurée ≤25px) débordaient en réalité, même celles qui semblaient avoir une marge confortable. Toujours mesurer la hauteur *disponible pour le tableau*, pas la boîte externe de `.cell` :
+```js
+const cell = document.querySelector('.print-grid .cell');
+const cs = getComputedStyle(cell);
+const availableH = cell.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom); // budget réel (~316px), PAS cell.getBoundingClientRect().height (~341px)
+const table = cell.querySelector('table');
+const prev = table.style.height;
+table.style.height = 'auto';
+const naturalH = table.scrollHeight;
+table.style.height = prev;
+// viser naturalH <= availableH - 20 (marge réelle d'au moins 20px), jamais se contenter d'une marge de quelques px
+```
+→ Cible révisée : viser au moins ~20-25px de marge réelle (`availableH - naturalH`), pas seulement un chiffre positif — les trois pièges ci-dessus se cumulent facilement et une marge mesurée à 5-10px s'est déjà révélée être un débordement réel une fois le bon calcul fait.
 
 **4. Chantier futur — refaire proprement les images et les tableaux, tous niveaux** (sept. 2026)
 → Constat : les fiches `automatismes/6e/data/N*.html` (96 fichiers) sont un export Word/LibreOffice brut (`<font>` imbriqués, images `<img align="left">` flottantes, mise en page en `pt`/`in`). C'est fragile et déjà source de bugs corrigés au cas par cas (mots coupés par une image mal placée type « Q uelle » au lieu de « Quelle », espaces vides en excès sous les tableaux) — patché sur les 96 fiches sept. 2026, mais le problème de fond reste l'export d'origine.
