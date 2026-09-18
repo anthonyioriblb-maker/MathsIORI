@@ -51,6 +51,27 @@ Les fiches d'automatismes (`automatismes/<niveau>/data/N*.html`, plus leur copie
 → Exception accordée par l'enseignant (sept. 2026) : en 4e, les statistiques et probabilités simples (moyenne, probabilité d'un événement équiprobable — dé, pièce, sac de boules) sont autorisées en révision même si les chapitres 5e correspondants (`5°/chapitre07 - Statistiques`, `5°/chapitre17 - Probabilites`) n'ont pas de `cours.html` rédigé — privilégier les probabilités aux statistiques pour ce niveau, sur demande expresse de l'enseignant. Cette exception est spécifique à la 4e ; pour les autres niveaux, continuer à exiger un chapitre rédigé (`cours.html` non vide) avant d'utiliser une notion en révision.
 → Erreur commise (sept. 2026, automatisme 4e N2) : une question sur l'hypoténuse (théorème de Pythagore, chapitre 2 non traité à ce stade de l'année), un calcul `3&sup2; + 2&sup3;` (puissances, chapitre 10, très loin dans l'année) et une fraction écrite en `18/24` au lieu d'une vraie fraction. Corrigé en remplaçant Pythagore par un calcul d'aire du même triangle (formule déjà connue) et les puissances par un calcul avec priorités opératoires.
 
+**3. Éviter les lignes blanches inutiles à l'impression (bug rencontré sept. 2026, fiches 6e N06-N21)**
+→ **Problème** : à l'impression, `<niveau>-automatisme.html` force chaque fiche dans une case de hauteur fixe (`.print-grid` : 3 cases par page A4, `.cell table{height:100%}`). Si le contenu d'une fiche (figures SVG, texte) est trop petit pour cette case, le navigateur étire quand même le tableau pour remplir toute la hauteur disponible (redistribution proportionnelle entre les lignes, CSS 2.1 §17.5.3) → gros espaces blancs autour de petites figures/petits textes, très visible sur papier même si ça semblait correct à l'écran.
+→ **Piège de vérification** : mesurer `table.scrollHeight` directement ne suffit PAS pour détecter ce problème — cette valeur est elle-même plafonnée par le `height:100%` dès que le contenu réel est plus petit que la case (elle retombe systématiquement à la même valeur, ~316-341px selon le padding, quel que soit le contenu réel). Ça a fait passer inaperçu le problème sur 21 fiches d'affilée dans une session de sept. 2026, jusqu'à ce que l'enseignant le remarque à l'impression papier.
+→ **Bonne méthode de vérification** (à utiliser systématiquement pour toute nouvelle fiche `automatismes/<niveau>/data/N*.html`) : dans le script Playwright de contrôle, avant de lire `scrollHeight`, forcer temporairement `table.style.height = 'auto'` pour obtenir la hauteur *naturelle* du contenu, la comparer à la hauteur réelle de la case (`.print-grid .cell` en `emulate_media('print')`, environ 341px pour une grille 3 lignes/page A4), puis remettre `table.style.height` à sa valeur d'origine :
+```js
+const cell = document.querySelector('.print-grid .cell');
+const cellH = cell.getBoundingClientRect().height;
+const table = cell.querySelector('table');
+const prev = table.style.height;
+table.style.height = 'auto';
+const naturalH = table.scrollHeight;   // vraie taille du contenu
+table.style.height = prev;
+```
+→ **Cible** : viser un `naturalH` proche de `cellH` (écart de quelques px, jamais plus d'une vingtaine), sans jamais le dépasser (sinon débordement/coupure à l'impression). En pratique : dimensionner les figures SVG et le texte **directement à une taille généreuse dès la première version** de la fiche (pas une taille "prudente" qu'on agrandira seulement si on remarque le problème) — plus lisible pour l'élève et ça évite l'aller-retour de correction. Ajuster ensuite par petits pas (taille de police en `em`/`pt` inline sur chaque `<td>`, dimensions `width`/`height` du `<svg>`) en resynchronisant `FRAGMENTS` et en re-testant à chaque itération, jusqu'à tomber dans la fourchette cible.
+→ Rappel : toute taille de police doit être posée en `style="font-size:...em"` **inline directement sur l'élément** (jamais dans un `<style>` du fichier `data/N*.html`, qui est ignoré par le lecteur — voir règle de synchronisation ci-dessus) car `<niveau>-automatisme.html` impose `font-size:10pt` en impression via `.cell td` ; seul un style inline sur l'élément lui-même (spécificité supérieure) peut l'emporter.
+
+**4. Chantier futur — refaire proprement les images et les tableaux, tous niveaux** (sept. 2026)
+→ Constat : les fiches `automatismes/6e/data/N*.html` (96 fichiers) sont un export Word/LibreOffice brut (`<font>` imbriqués, images `<img align="left">` flottantes, mise en page en `pt`/`in`). C'est fragile et déjà source de bugs corrigés au cas par cas (mots coupés par une image mal placée type « Q uelle » au lieu de « Quelle », espaces vides en excès sous les tableaux) — patché sur les 96 fiches sept. 2026, mais le problème de fond reste l'export d'origine.
+→ `automatismes/3e/data/`, `4e/data/` et `5e/data/` sont déjà propres (HTML/CSS natif, vrais SVG, aucune balise `<font>`) : c'est le modèle à suivre.
+→ À faire plus tard, niveau par niveau (y compris 6e) : recréer les images en vrai SVG et les tableaux en HTML/CSS natif propre, sur ce modèle, au lieu de rustiner l'export Word. Pas encore planifié — à reprendre quand l'enseignant le décide.
+
 ---
 
 ## Règles communes aux deux projets (animations, notation)
