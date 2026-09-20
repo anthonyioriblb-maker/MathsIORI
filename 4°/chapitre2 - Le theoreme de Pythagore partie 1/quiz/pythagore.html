@@ -425,6 +425,42 @@
             font-size: 1.05em;
         }
 
+        .sqrt-button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sqrt-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 22px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .sqrt-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.6);
+        }
+
+        .sqrt-button:active {
+            transform: translateY(0);
+        }
+
+        .sqrt-hint {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            font-family: Arial, sans-serif;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
         .sqrt {
             text-decoration: overline;
         }
@@ -460,6 +496,11 @@
                 <div class="info-value" id="currentScore">0</div>
             </div>
         </div>
+
+        <div class="sqrt-button-container">
+            <button type="button" class="sqrt-button" id="btnSqrt" title="Insérer le symbole racine carrée">√</button>
+        </div>
+        <p class="sqrt-hint">Clique dans une case puis sur le bouton √ pour insérer le symbole racine carrée.</p>
 
         <div id="questionsContainer"></div>
 
@@ -587,6 +628,33 @@
         let currentQuestionIndex = 0;
         let score = 0;
         let answeredQuestions = [];
+        let lastFocusedInput = null;
+
+        // Suivre le dernier input avec le focus
+        document.addEventListener('focusin', function(e) {
+            if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
+                lastFocusedInput = e.target;
+            }
+        });
+
+        function insertSqrt() {
+            if (lastFocusedInput && document.body.contains(lastFocusedInput) && !lastFocusedInput.disabled) {
+                const cursorPos = lastFocusedInput.selectionStart ?? lastFocusedInput.value.length;
+                const textBefore = lastFocusedInput.value.substring(0, cursorPos);
+                const textAfter = lastFocusedInput.value.substring(cursorPos);
+                lastFocusedInput.value = textBefore + '√' + textAfter;
+                lastFocusedInput.focus();
+                lastFocusedInput.setSelectionRange(cursorPos + 1, cursorPos + 1);
+            } else {
+                // Si aucun input n'a le focus, chercher le premier input disponible de la question active
+                const firstInput = document.querySelector('.question-container.active .input-field:not(:disabled)');
+                if (firstInput) {
+                    firstInput.value += '√';
+                    firstInput.focus();
+                    lastFocusedInput = firstInput;
+                }
+            }
+        }
 
         function generateRandomTriplet() {
             // Générer aléatoirement soit un triplet pythagoricien, soit un triplet non pythagoricien
@@ -851,6 +919,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', initQuiz);
+        document.getElementById('btnSqrt').addEventListener('click', insertSqrt);
 
         function validateAnswer() {
             const questionNum = currentQuestionIndex + 1;
