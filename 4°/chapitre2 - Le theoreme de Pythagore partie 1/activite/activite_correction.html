@@ -19,7 +19,6 @@
         table.calc td:last-child { text-align: center; }
         .conjecture-phrase { font-style: italic; margin: 10px 0; }
         .rep { color: #c0392b; font-weight: bold; }
-        .calc-ligne { font-family: 'Courier New', monospace; font-size: 1.15em; margin: 10px 0; color: #c0392b; font-weight: bold; }
         .badge-correction {
             display: block; text-align: center; margin: 0 auto 22px; background: #c0392b; color: #fff;
             font-weight: bold; letter-spacing: 0.06em; width: fit-content; padding: 4px 18px;
@@ -142,8 +141,32 @@
         </div>
     </div>
 
-    <p>Le triangle GHF (sol / mur / rampe) est rectangle en G : GH<span class="exposant">2</span> + GF<span class="exposant">2</span> = HF<span class="exposant">2</span></p>
-    <p class="calc-ligne">12<span class="exposant">2</span> + 5<span class="exposant">2</span> = 144 + 25 = 169 → rampe = <span class="sqrt">169</span> = 13 m</p>
+    <p>Le triangle GHF (sol / mur / rampe) est rectangle en G, d'après le théorème de Pythagore on a :</p>
+
+    <table class="calc">
+        <tr><th>Calcul</th><th>Résultat</th></tr>
+        <tr><td>GH<span class="exposant">2</span></td><td><span class="rep">25</span></td></tr>
+        <tr><td>GF<span class="exposant">2</span></td><td><span class="rep">144</span></td></tr>
+        <tr><td>GH<span class="exposant">2</span> + GF<span class="exposant">2</span></td><td><span class="rep">169</span></td></tr>
+        <tr><td>HF<span class="exposant">2</span></td><td><span class="rep">169</span></td></tr>
+    </table>
+
+    <p>On cherche donc un nombre qui, multiplié par lui-même, donne 169. Après quelques essais, on trouve que ce nombre est <span class="rep">13</span> (en effet, 13 × 13 = 169) : la rampe mesure donc <span class="rep">13 m</span>.</p>
+
+    <div class="remarque">
+        <strong>Remarque :</strong> chercher « par essais » un nombre qui, multiplié par lui-même, donne un résultat donné peut prendre du temps, et ne fonctionne pas toujours aussi bien (le nombre cherché n'est pas toujours entier !). <strong>Tout l'enjeu de ce chapitre est justement d'apprendre à trouver directement ce type de nombre</strong>, sans avoir à tâtonner : c'est ce qu'on appelle la <strong>racine carrée</strong>, que tu vas découvrir dans la suite du cours.
+    </div>
+
+    <p>Voici la rédaction finale qui sera utilisée en fin de chapitre :</p>
+
+    <div class="calcul-detail">
+        Le triangle GHF (sol / mur / rampe) est rectangle en G, d'après le théorème de Pythagore on a :<br><br>
+        HF<span class="exposant">2</span> = GH<span class="exposant">2</span> + GF<span class="exposant">2</span><br>
+        HF<span class="exposant">2</span> = 5<span class="exposant">2</span> + 12<span class="exposant">2</span><br>
+        HF<span class="exposant">2</span> = 25 + 144<br>
+        HF<span class="exposant">2</span> = 169<br>
+        HF = <span class="sqrt">169</span> = 13 m
+    </div>
     <p><em>Remarque : 5, 12, 13 forment un « triplet pythagoricien », tout comme 3, 4, 5 — le triangle de la corde à treize nœuds des harpédonaptes !</em></p>
 
     <a class="lien-sujet" href="activite.html">← Retour au sujet</a>
