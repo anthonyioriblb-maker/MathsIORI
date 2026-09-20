@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activité : à la découverte de la symétrie centrale (5e)</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        .activite h2::before, .activite h3::before { content: none; }
+        .activite h2 { font-size: 1.3em; }
+        .figure-row { display: flex; flex-wrap: wrap; gap: 30px; align-items: flex-start; justify-content: center; margin: 15px 0 25px; }
+        .figure-img { flex: 0 0 auto; background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 10px; text-align: center; }
+        .figure-img img { margin: 0; }
+        .figure-img p { font-size: 0.85em; color: #666; font-style: italic; margin-top: 6px; }
+        .champ { border: none; border-bottom: 1.5px dotted #888; background: transparent;
+                 font-size: 1em; font-family: inherit; color: #111; padding: 2px 4px; }
+        .champ:focus { outline: none; border-bottom-color: #1f4e8c; }
+        .blancs { list-style: none; margin: 10px 0; padding: 0; }
+        .blancs li { margin: 10px 0; }
+        .lien-corrige { display: inline-block; margin-top: 30px; font-weight: bold; color: #c0392b; }
+        .carte-rotation-wrap { display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .fleche-rotation { flex: 0 0 auto; }
+        .carte-img { transition: transform 1s ease-in-out; }
+        .carte-img.tournee { transform: rotate(180deg); }
+        .btn-rotation-wrap { text-align: center; margin-top: 4px; }
+        .btn-rotation {
+            margin-top: 4px; padding: 8px 18px; border: none; border-radius: 20px;
+            background: #1f4e8c; color: #fff; font-weight: bold; cursor: pointer; font-size: 0.95em;
+        }
+        .btn-rotation:hover { background: #163a68; }
+        .calque-stage { position: relative; width: 300px; margin: 0 auto; }
+        .calque-stage img { display: block; width: 100%; }
+        .calque-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        #calque { transition: opacity 0.8s ease-in-out, transform 1.1s ease-in-out; }
+        #calque.calque-cache { opacity: 0; }
+        #pointe-compas { transition: opacity 0.4s ease-in-out; }
+        #pointe-compas.pointe-cachee { opacity: 0; }
+        .etape-legende { min-height: 1.4em; }
+        .btn-etapes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 6px; }
+        .btn-rotation.btn-inactif { background: #b6c2d1; cursor: not-allowed; }
+        .btn-rotation.btn-inactif:hover { background: #b6c2d1; }
+        .btn-rotation.btn-secondaire { background: #6c757d; }
+        .btn-rotation.btn-secondaire:hover { background: #54595c; }
+</style>
+</head>
+<body>
+    <a href="../cours.html" class="home-button" style="margin: 20px;">← Retour au cours</a>
+
+    <div class="activite">
+    <h1>Activité : à la découverte de la symétrie centrale</h1>
+
+    <h2>Partie 1 : la carte à jouer</h2>
+
+    <div class="figure-row">
+        <div class="figure-img">
+            <div class="carte-rotation-wrap">
+                <svg class="fleche-rotation" viewBox="0 0 34 220" width="26" height="168">
+                    <path d="M 24 12 C 2 12, 2 208, 24 208" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="24,208 13,194 31,196" fill="#333"/>
+                </svg>
+                <img id="carte-img" class="carte-img" src="images/carte-symetrie.png" alt="Valet de carreau (Hector)" style="width:150px;">
+                <svg class="fleche-rotation" viewBox="0 0 34 220" width="26" height="168">
+                    <path d="M 10 208 C 32 208, 32 12, 10 12" fill="none" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+                    <polygon points="10,12 21,26 3,24" fill="#333"/>
+                </svg>
+            </div>
+            <div class="btn-rotation-wrap">
+                <button type="button" class="btn-rotation" onclick="document.getElementById('carte-img').classList.toggle('tournee')">🔄 Faire tourner la carte</button>
+            </div>
+        </div>
+    </div>
+
+    <p><strong>1)</strong> Peut-on superposer le corps et la tête par pliage ?</p>
+    <p><input type="text" class="champ" style="width:100%;"></p>
+
+    <p><strong>2)</strong> Retourne la carte comme indiqué par les flèches (tu peux aussi utiliser le bouton ci-dessus). Que remarques-tu ?</p>
+    <p><input type="text" class="champ" style="width:100%;"></p>
+
+    <p>Voici un schéma simplifié représentant la carte ci-dessus. Les points D et D' représentent le nez des personnages, les points B et B' une épaule et les points A et A' le bas de la manche.</p>
+
+    <div class="figure-row">
+        <div class="figure-img">
+            <img src="images/schema-carte.png" alt="Schéma simplifié de la carte avec les points A, B, D et leurs symétriques A', B', D'" style="width:170px;">
+        </div>
+    </div>
+
+    <p><strong>3)</strong> Construis le point O, milieu du segment [AA'].</p>
+
+    <p><strong>4)</strong> Construis les milieux des segments [BB'] et [DD']. Que constates-tu ?</p>
+    <p><input type="text" class="champ" style="width:100%;"></p>
+
+    <p><strong>5)</strong> Pointe ton compas sur le point O et fais tourner la feuille d'un demi-tour. Que se passe-t-il ?</p>
+    <p><input type="text" class="champ" style="width:100%;"></p>
+
+    <h2>Partie 2 : vocabulaire</h2>
+
+    <div class="figure-row">
+        <div class="figure-img">
+            <div class="calque-stage">
+                <img src="images/droite-points.png" alt="Droite d avec les points A, B et leurs symétriques A', B' par rapport à O">
+                <svg class="calque-overlay" viewBox="0 0 826 854">
+                    <g id="calque" class="calque-cache" transform="rotate(0 355.5 439.5)">
+                        <line x1="101.8" y1="366.3" x2="609.2" y2="112.7" stroke="#c0392b" stroke-width="5" stroke-linecap="round" stroke-opacity="0.85"/>
+
+                        <line x1="143" y1="327" x2="168" y2="352" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round"/>
+                        <line x1="143" y1="352" x2="168" y2="327" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round"/>
+                        <g id="label-A" class="calque-label" transform="rotate(0 163 319)">
+                            <text x="163" y="319" font-size="26" fill="#c0392b" font-weight="bold" font-family="'Comic Sans MS', cursive, sans-serif">A</text>
+                        </g>
+
+                        <line x1="543" y1="127" x2="568" y2="152" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round"/>
+                        <line x1="543" y1="152" x2="568" y2="127" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round"/>
+                        <g id="label-B" class="calque-label" transform="rotate(0 566 119)">
+                            <text x="566" y="119" font-size="26" fill="#c0392b" font-weight="bold" font-family="'Comic Sans MS', cursive, sans-serif">B</text>
+                        </g>
+
+                        <line x1="343" y1="427" x2="368" y2="452" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round"/>
+                        <line x1="343" y1="452" x2="368" y2="427" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round"/>
+                        <g id="label-O" class="calque-label" transform="rotate(0 386 439)">
+                            <text x="386" y="439" font-size="24" fill="#c0392b" font-weight="bold" font-family="'Comic Sans MS', cursive, sans-serif">O</text>
+                        </g>
+                    </g>
+                    <g id="pointe-compas" class="pointe-cachee">
+                        <circle cx="355.5" cy="439.5" r="22" fill="none" stroke="#c0392b" stroke-width="3.5"/>
+                        <line x1="333.5" y1="439.5" x2="377.5" y2="439.5" stroke="#c0392b" stroke-width="3.5"/>
+                        <line x1="355.5" y1="417.5" x2="355.5" y2="461.5" stroke="#c0392b" stroke-width="3.5"/>
+                    </g>
+                </svg>
+            </div>
+            <p class="etape-legende" id="etape-legende">Étape 1 : au stylo rouge, décalque la droite d, les points A, B et O sur la feuille de papier calque.</p>
+            <div class="btn-etapes">
+                <button type="button" id="btn-decalquer" class="btn-rotation" onclick="decalquer()">🖊️ 1) Décalquer au stylo rouge</button>
+                <button type="button" id="btn-piquer" class="btn-rotation btn-inactif" onclick="pivoterCalque()" disabled>📌 2) Piquer sur O et pivoter d'un demi-tour</button>
+                <button type="button" id="btn-reset-calque" class="btn-rotation btn-secondaire" onclick="reinitialiserCalque()">↺ Recommencer</button>
+            </div>
+        </div>
+    </div>
+
+    <p><strong>1)</strong> Que représente le point O pour les segments [AA'] et [BB'] ?</p>
+    <p><input type="text" class="champ" style="width:100%;"></p>
+
+    <p><strong>2) a)</strong> Décalque la droite d, les points A et B ainsi que le point O sur une feuille de papier calque.</p>
+    <p><strong>b)</strong> Fixe la feuille de papier calque en la piquant avec la pointe du compas sur le point O.</p>
+    <p style="margin-left:20px;">Fais pivoter la feuille de papier calque d'un demi-tour autour du point O.<br>Que remarques-tu ?</p>
+    <p><input type="text" class="champ" style="width:100%;"></p>
+
+    <p><strong>3)</strong> Complète les phrases suivantes :</p>
+    <p>On remarque que :</p>
+    <ul class="blancs">
+        <li>Par le demi-tour autour du point O, le point A se superpose avec le point <input type="text" class="champ" style="width:70px;">.</li>
+        <li>Par le demi-tour autour du point O, le point B se superpose avec le point <input type="text" class="champ" style="width:70px;"> et le segment [AB] se superpose avec le segment <input type="text" class="champ" style="width:90px;">.</li>
+        <li>La longueur du segment [A'B'] est égale à la longueur du segment <input type="text" class="champ" style="width:70px;">.</li>
+        <li>La droite (AB) se superpose avec la droite <input type="text" class="champ" style="width:90px;">.</li>
+        <li>Les droites (A'B') et (AB) sont <input type="text" class="champ" style="width:220px;">.</li>
+    </ul>
+
+    <div class="definition">
+        <p>On dit que le point A' est <strong>le symétrique</strong> de A par <strong>rapport au point O</strong>.</p>
+        <p>On dit que le segment [A'B'] est <strong>le symétrique</strong> du segment [AB] par <strong>rapport au point O</strong>.</p>
+        <p>On dit que la droite (A'B') est <strong>la symétrique</strong> de la droite (AB) par <strong>rapport au point O</strong>.</p>
+    </div>
+
+    <a class="lien-corrige" href="activite_correction.html">Voir le corrigé →</a>
+
+    </div>
+
+    <script>
+        let etapeCalque = 0; // 0 = rien décalqué, 1 = décalqué (posé sur O), 2 = pivoté d'un demi-tour
+
+        function decalquer() {
+            if (etapeCalque >= 1) return;
+            document.getElementById('calque').classList.remove('calque-cache');
+            document.getElementById('pointe-compas').classList.remove('pointe-cachee');
+            const btnDecalquer = document.getElementById('btn-decalquer');
+            btnDecalquer.disabled = true;
+            btnDecalquer.classList.add('btn-inactif');
+            const btnPiquer = document.getElementById('btn-piquer');
+            btnPiquer.disabled = false;
+            btnPiquer.classList.remove('btn-inactif');
+            document.getElementById('etape-legende').textContent =
+                "Étape 2 : pique la pointe du compas sur le point O, puis fais pivoter le calque d'un demi-tour.";
+            etapeCalque = 1;
+        }
+
+        function pivoterCalque() {
+            if (etapeCalque < 1) return;
+            const calque = document.getElementById('calque');
+            if (etapeCalque === 1) {
+                calque.setAttribute('transform', 'rotate(180 355.5 439.5)');
+                document.getElementById('etape-legende').textContent =
+                    "Le tracé rouge a pivoté d'un demi-tour autour de O : A vient se superposer sur A' et B vient se superposer sur B' (les lettres sont maintenant à l'envers, comme la feuille de calque retournée).";
+                etapeCalque = 2;
+            } else {
+                calque.setAttribute('transform', 'rotate(0 355.5 439.5)');
+                document.getElementById('etape-legende').textContent =
+                    "Étape 2 : pique la pointe du compas sur le point O, puis fais pivoter le calque d'un demi-tour.";
+                etapeCalque = 1;
+            }
+        }
+
+        function reinitialiserCalque() {
+            const calque = document.getElementById('calque');
+            // on repositionne le calque au repos SANS animation (sinon on le voit
+            // "revoler" en pivotant pendant le fondu, ce qui donne l'impression
+            // que le rouge reste affiché) puis on ne fait fonduer que l'opacité.
+            calque.style.transition = 'none';
+            calque.setAttribute('transform', 'rotate(0 355.5 439.5)');
+            calque.getBoundingClientRect();
+            calque.style.transition = '';
+            calque.classList.add('calque-cache');
+            document.getElementById('pointe-compas').classList.add('pointe-cachee');
+            const btnDecalquer = document.getElementById('btn-decalquer');
+            btnDecalquer.disabled = false;
+            btnDecalquer.classList.remove('btn-inactif');
+            const btnPiquer = document.getElementById('btn-piquer');
+            btnPiquer.disabled = true;
+            btnPiquer.classList.add('btn-inactif');
+            document.getElementById('etape-legende').textContent =
+                "Étape 1 : au stylo rouge, décalque la droite d, les points A, B et O sur la feuille de papier calque.";
+            etapeCalque = 0;
+        }
+    </script>
+</body>
+</html>
