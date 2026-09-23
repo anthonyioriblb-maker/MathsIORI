@@ -189,7 +189,8 @@ async function compassPivot(tip, radius, a1, a2, duration) {
 3. **Ranger l'équerre EN PREMIER**, puis faire apparaître le codage de l'angle droit — jamais l'inverse
 4. Compas : `compassOpen` de I vers M, `compassPivot`, `compassSweep`
 
-**7. Calculs détaillés (`calcul-detail` / `calcul-etapes`) : soulignement, jamais surlignage** (sept. 2026)
+**7. Calculs détaillés (`calcul-detail` / `calcul-etapes`) : soulignement, jamais surlignage** (sept. 2026, corrigé sept. 2026)
+→ **Pas de boîte grise par ligne** : chaque ligne de calcul est un `<div class="step">` **simple, sans classe `calcul-detail`** sur le step lui-même. Mettre `calcul-detail` (ou toute autre classe de boîte définie en Règle n°10) sur chaque step individuel empile une boîte grise par ligne à l'intérieur de la boîte qui contient déjà l'exemple/le cours (ex. plusieurs cadres gris dans le cadre vert) — c'est une régression visuelle constatée et corrigée en sept. 2026 sur `Chapitre2_Pythagore_Partie1` et 14 autres présentations. La classe `calcul-detail` peut toujours servir de **wrapper englobant unique** autour de plusieurs `.step` simples si on veut un seul encadré visuel autour de tout le calcul (les lignes apparaissent alors les unes après les autres à l'intérieur de cette unique boîte).
 → Ce qu'on s'apprête à calculer se marque par un **soulignement rouge**, jamais par un fond jaune (`background-color: yellow` ou classe `.highlight`) :
 ```html
 <span style="text-decoration: underline; text-decoration-color: red; text-decoration-thickness: 2px; text-underline-offset: 3px;">4 × 7</span>
@@ -208,7 +209,7 @@ async function compassPivot(tip, radius, a1, a2, duration) {
 }
 ```
 ```html
-<div class="step calcul-detail"><em>A</em> = <span class="ul-reveal ulg1">...</span></div>
+<div class="step"><em>A</em> = <span class="ul-reveal ulg1">...</span></div>
 <div class="step ul-trigger" data-target="ulg1" style="height:0;overflow:hidden;margin:0;padding:0;"></div>
 ```
 Puis dans `updateSlide()` du script du chapitre, juste après la boucle qui bascule `.visible` sur les `.step` :
@@ -221,7 +222,7 @@ currentSlide.querySelectorAll('.ul-trigger').forEach(t => {
     });
 });
 ```
-→ Exemples de référence complets : `MathsIORI/4°/chapitre1 - Les nombres relatifs/cours.html` (+ présentation `COURSPRESENTATION/4/Chapitre1_Nombres_Relatifs/`) et `MathsIORI/5°/chapitre01 - Priorites operatoires/cours.html` (+ présentation `COURSPRESENTATION/5/Chapitre1_Priorites_Operatoires/`).
+→ Exemples de référence complets (aucune classe `calcul-detail` sur les steps individuels) : `MathsIORI/4°/chapitre1 - Les nombres relatifs/cours.html` (+ présentation `COURSPRESENTATION/4/Chapitre1_Nombres_Relatifs/`) et `MathsIORI/5°/chapitre01 - Priorites operatoires/cours.html` (+ présentation `COURSPRESENTATION/5/Chapitre1_Priorites_Operatoires/`).
 → Cette règle ne concerne que le marquage "ce qu'on calcule ensuite" dans une trace de calcul pas-à-pas. Un `.highlight` utilisé pour un tout autre usage (ex. suivre visuellement un même opérateur d'une ligne à l'autre, comme dans `4°/chapitre2 - Le theoreme de Pythagore partie 1`) n'est pas concerné et n'a pas besoin d'être changé.
 
 **8. Bouton volant (contrôle flottant des animations) — COURSPRESENTATION uniquement** (sept. 2026)
@@ -337,7 +338,7 @@ Le contenu apparaît **phrase par phrase / bloc par bloc** à la flèche droite 
 > ⚠️ **OBLIGATION ABSOLUE** : chaque phrase dans son propre `<div class="step">`. Toujours. Sans exception. Ne jamais regrouper deux phrases dans un même step. C'est la règle la plus importante de toute la présentation.
 
 - Chaque phrase / bloc logique distinct = `<div class="step">…</div>`
-- **Calcul (calcul-detail)** : chaque ligne d'égalité = un step séparé (la première ligne = step externe qui déclenche la boîte, les suivantes = steps imbriqués).
+- **Calcul (étapes de calcul)** : chaque ligne d'égalité = un `<div class="step">` séparé, **sans classe de boîte** (`calcul-detail` ou autre) sur les steps individuels — sinon chaque ligne empile sa propre boîte grise à l'intérieur de la boîte (verte/etc.) qui contient déjà l'exemple ("cadres gris dans le cadre vert"). Une classe de boîte ne peut être posée qu'une seule fois, comme **wrapper englobant** autour de plusieurs `.step` simples, si on veut un seul encadré visuel autour de tout le calcul. Voir détail complet en section « 7. Calculs détaillés » ci-dessus.
 - **Chaîne d'égalités inline** (ex. `a/b = a×k/b×k = c/d`) : première fraction dans le step parent, puis chaque terme après `=` dans un `<span class="step-inline">`.
 - **Méthode** : intro = un step, puis chaque item de liste = un step séparé (`<ol start="N">` pour la numérotation).
 - **Propriété** : intro = un step, chaque règle/puce = un step séparé.
