@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Symétrie centrale et démonstration</title>
+<style>
+  :root{ --rouge:#c0392b; --bleu:#2980b9; --vert:#27ae60; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; line-height:1.5; }
+  .page{ max-width:820px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:30px 40px; }
+  h1{ font-size:1.4em; text-align:center; color:var(--rouge); border-bottom:3px solid var(--rouge); padding-bottom:8px; margin-bottom:14px; }
+  p{ margin:5px 0; }
+  .fig{ display:block; margin:10px auto; max-width:100%; height:auto; }
+  .exercice{ margin:16px 0; padding:12px 18px; background:#f8f9fa; border-left:4px solid var(--bleu); border-radius:5px; break-inside:avoid; }
+  .exercice h2{ font-size:1.05em; color:var(--bleu); text-decoration:underline; margin-bottom:6px; }
+  .angle{ position:relative; display:inline-block; }
+  .angle::before{ content:'^'; position:absolute; top:-0.5em; left:50%; transform:translateX(-50%) scaleX(2.5) scaleY(1.2); font-size:1.5em; font-weight:300; }
+  .redaction{ margin-top:10px; border-left:4px solid var(--vert); background:#eefaf2; padding:8px 14px; border-radius:5px; }
+  .redaction p{ margin:6px 0; }
+  .mot{ font-weight:bold; color:var(--vert); }
+  .badge-correction{ display:block; margin:0 auto 10px; background:var(--rouge); color:#fff; font-weight:bold; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:0; max-width:none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Symétrie centrale et démonstration</h1>
+  <p>Pour les exercices de 1 à 5, on utilise la figure ci-dessous.</p>
+  <p>Cette figure n'est pas en vraie grandeur.</p>
+  <p>Les quadrilatères PAUL et ERIC sont symétriques par rapport au point O.</p>
+  <svg class="fig" viewBox="10 5 480 255" width="480" height="255" xmlns="http://www.w3.org/2000/svg"><polygon points="120,29 38,129 120,196 189,168" fill="#f5e6df" stroke="#6b2f1a" stroke-width="1.6"/><polygon points="378,233 460,133 378,66 309,94" fill="#e3e3fb" stroke="#3a3ad6" stroke-width="1.6"/><line x1="116" y1="25" x2="124" y2="33" stroke="#1f4e8c" stroke-width="1.8"/><line x1="116" y1="33" x2="124" y2="25" stroke="#1f4e8c" stroke-width="1.8"/><text x="124" y="21" font-size="13" fill="#1f4e8c" font-family="Arial">P</text><line x1="34" y1="125" x2="42" y2="133" stroke="#1f4e8c" stroke-width="1.8"/><line x1="34" y1="133" x2="42" y2="125" stroke="#1f4e8c" stroke-width="1.8"/><text x="20" y="129" font-size="13" fill="#1f4e8c" font-family="Arial">A</text><line x1="116" y1="192" x2="124" y2="200" stroke="#1f4e8c" stroke-width="1.8"/><line x1="116" y1="200" x2="124" y2="192" stroke="#1f4e8c" stroke-width="1.8"/><text x="104" y="212" font-size="13" fill="#1f4e8c" font-family="Arial">U</text><line x1="185" y1="164" x2="193" y2="172" stroke="#1f4e8c" stroke-width="1.8"/><line x1="185" y1="172" x2="193" y2="164" stroke="#1f4e8c" stroke-width="1.8"/><text x="197" y="162" font-size="13" fill="#1f4e8c" font-family="Arial">L</text><line x1="245" y1="127" x2="253" y2="135" stroke="#1f4e8c" stroke-width="1.8"/><line x1="245" y1="135" x2="253" y2="127" stroke="#1f4e8c" stroke-width="1.8"/><text x="255" y="123" font-size="13" fill="#1f4e8c" font-family="Arial">O</text><line x1="374" y1="229" x2="382" y2="237" stroke="#222" stroke-width="1.8"/><line x1="374" y1="237" x2="382" y2="229" stroke="#222" stroke-width="1.8"/><text x="360" y="249" font-size="13" fill="#1f4e8c" font-family="Arial">E</text><line x1="456" y1="129" x2="464" y2="137" stroke="#222" stroke-width="1.8"/><line x1="456" y1="137" x2="464" y2="129" stroke="#222" stroke-width="1.8"/><text x="466" y="127" font-size="13" fill="#1f4e8c" font-family="Arial">R</text><line x1="374" y1="62" x2="382" y2="70" stroke="#222" stroke-width="1.8"/><line x1="374" y1="70" x2="382" y2="62" stroke="#222" stroke-width="1.8"/><text x="382" y="58" font-size="13" fill="#1f4e8c" font-family="Arial">I</text><line x1="305" y1="90" x2="313" y2="98" stroke="#222" stroke-width="1.8"/><line x1="305" y1="98" x2="313" y2="90" stroke="#222" stroke-width="1.8"/><text x="289" y="88" font-size="13" fill="#1f4e8c" font-family="Arial">C</text></svg>
+  <div class="exercice">
+    <h2>EXERCICE 1 :</h2>
+    <p>On donne : PA = 4 cm, AU = 3 cm, UL = 1,5 cm et PL = 2,5 cm.</p>
+    <p>Déterminer la longueur IC. Justifier la réponse.</p>
+  </div>
+  <div class="exercice">
+    <h2>EXERCICE 2 :</h2>
+    <p>On donne : PA = 5 cm, AU = 4 cm et <span class="angle">AUL</span> = 80°.</p>
+    <p>Quelles mesures du quadrilatère ERIC peut-on alors déterminer ? Justifier la réponse.</p>
+  </div>
+  <div class="exercice">
+    <h2>EXERCICE 3 :</h2>
+    <p>On donne : PA = 5 m, AU = 4,1 m, UL = 2,5 m et PL = 4,8 m.</p>
+    <p>Déterminer le périmètre du quadrilatère ERIC. Justifier la réponse.</p>
+  </div>
+  <div class="exercice">
+    <h2>EXERCICE 4 :</h2>
+    <p>On donne <span class="angle">PAU</span> = 90°.</p>
+    <p>Démontrer que les droites (RI) et (RE) sont perpendiculaires.</p>
+  </div>
+  <div class="exercice">
+    <h2>EXERCICE 5 :</h2>
+    <p>L'aire du quadrilatère ERIC est 3 m².</p>
+    <p>Quelle est l'aire du quadrilatère PAUL ? Justifier la réponse.</p>
+  </div>
+</div>
+</body>
+</html>
