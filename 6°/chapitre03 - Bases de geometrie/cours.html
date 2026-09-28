@@ -8,6 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours : Bases de la géométrie</title>
     <link rel="stylesheet" href="../../styles.css?v=20251120143124">
+    <style>
+        .rappel-table { width: 100%; max-width: 1000px; margin: 15px auto 25px; border-collapse: collapse; table-layout: fixed; text-align: center; background: #fff; font-size: 1.15em; }
+        .rappel-table th, .rappel-table td { border: 2px solid #000; padding: 8px 12px; vertical-align: middle; white-space: normal; background: #fff; text-align: center !important; }
+        .rappel-table th { color: red; font-weight: normal; width: 40%; }
+        .rappel-table th.vide { border: none; border-bottom: 2px solid #000; width: 20%; background: transparent; }
+        .rappel-table td.lib { color: #000; }
+        .rappel-table td.bleu { color: #0070c0; }
+        .rappel-table svg.trace { display: block; width: 100%; max-width: 360px; height: auto; margin: 0 auto; }
+    </style>
 </head>
 <body>
     <a href="../classe-6e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
@@ -16,8 +25,18 @@
     
     <h2>Rappels</h2>
     
-    <img src="images/6-21.png" alt="Notations géométriques" style="display: block; margin: 0 auto; width: 100%;"><br>
-    <img src="images/6-22.png" alt="Notations géométriques" style="display: block; margin: 0 auto; width: 100%;">
+    <table class="rappel-table">
+        <tr><th class="vide"></th><th>Points</th><th>Droite</th></tr>
+        <tr><td class="lib">Tracé</td><td><svg viewBox="0 0 400 240" class="trace"><line x1="103" y1="93" x2="117" y2="107" stroke="#000" stroke-width="2"/><line x1="103" y1="107" x2="117" y2="93" stroke="#000" stroke-width="2"/><text x="110" y="70" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">E</text><line x1="62" y1="180" x2="78" y2="180" stroke="#000" stroke-width="2"/><line x1="70" y1="172" x2="70" y2="188" stroke="#000" stroke-width="2"/><text x="70" y="225" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">A</text><line x1="203" y1="173" x2="217" y2="187" stroke="#000" stroke-width="2"/><line x1="203" y1="187" x2="217" y2="173" stroke="#000" stroke-width="2"/><text x="210" y="150" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">C</text><line x1="282" y1="100" x2="298" y2="100" stroke="#000" stroke-width="2"/><line x1="290" y1="92" x2="290" y2="108" stroke="#000" stroke-width="2"/><text x="290" y="145" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">B</text><line x1="363" y1="173" x2="377" y2="187" stroke="#000" stroke-width="2"/><line x1="363" y1="187" x2="377" y2="173" stroke="#000" stroke-width="2"/><text x="370" y="150" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">D</text></svg></td><td><svg viewBox="0 0 400 240" class="trace"><line x1="20" y1="210" x2="380" y2="30" stroke="#000" stroke-width="2.5"/><line x1="132" y1="150" x2="148" y2="150" stroke="#000" stroke-width="2"/><line x1="140" y1="142" x2="140" y2="158" stroke="#000" stroke-width="2"/><text x="140" y="195" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">A</text><line x1="292" y1="70" x2="308" y2="70" stroke="#000" stroke-width="2"/><line x1="300" y1="62" x2="300" y2="78" stroke="#000" stroke-width="2"/><text x="300" y="115" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">B</text></svg></td></tr>
+        <tr><td class="lib">Remarques</td><td class="bleu">Un point est toujours représenté par une croix.</td><td class="bleu">Une droite est "illimitée" dans les deux directions.</td></tr>
+        <tr><td class="lib">Notation</td><td class="bleu">A ;B ;C</td><td class="bleu">(AB) ou (BA)</td></tr>
+    </table>
+    <table class="rappel-table">
+        <tr><th class="vide"></th><th>Segment</th><th>Demi-droite</th></tr>
+        <tr><td class="lib">Tracé</td><td><svg viewBox="0 0 400 240" class="trace"><line x1="70" y1="210" x2="330" y2="40" stroke="#000" stroke-width="2.5"/><line x1="63" y1="203" x2="77" y2="217" stroke="#000" stroke-width="2"/><line x1="63" y1="217" x2="77" y2="203" stroke="#000" stroke-width="2"/><text x="58" y="185" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">A</text><line x1="323" y1="33" x2="337" y2="47" stroke="#000" stroke-width="2"/><line x1="323" y1="47" x2="337" y2="33" stroke="#000" stroke-width="2"/><text x="330" y="28" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">B</text></svg></td><td><svg viewBox="0 0 400 240" class="trace"><line x1="50" y1="150" x2="380" y2="90" stroke="#000" stroke-width="2.5"/><line x1="42" y1="150" x2="58" y2="150" stroke="#000" stroke-width="2"/><line x1="50" y1="142" x2="50" y2="158" stroke="#000" stroke-width="2"/><text x="50" y="195" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">A</text><line x1="282" y1="106" x2="298" y2="106" stroke="#000" stroke-width="2"/><line x1="290" y1="98" x2="290" y2="114" stroke="#000" stroke-width="2"/><text x="290" y="150" font-size="34" font-family="Times New Roman, serif" text-anchor="middle">B</text></svg></td></tr>
+        <tr><td class="lib">Remarques</td><td class="bleu">Un segment est une portion (partie) de droite limitée par deux points:<br>Ces points sont les <span style="color:red">extrémités</span> du segment.</td><td class="bleu">Une demi-droite est "illimitée" dans une seule direction.</td></tr>
+        <tr><td class="lib">Notation</td><td class="bleu">[AB] ou [BA]</td><td class="bleu">[AB) ou (BA]</td></tr>
+    </table>
 
     <h2>Points alignés et droites</h2>
     
@@ -91,5 +110,6 @@
 
 
 <script src="../../iframe-autoresize.js"></script>
+    <script src="../../impression.js"></script>
 </body>
 </html>

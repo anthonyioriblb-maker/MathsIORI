@@ -53,7 +53,8 @@ PAGE_W, PAGE_H = A4
 MARGIN_TOP = 30
 MARGIN_BOTTOM = 30
 MAX_W = 420      # largeur max d'un élément (pt)
-MAX_H = 130      # hauteur max d'un élément (pt) -- borne les éléments "carrés"
+MAX_H = 180      # hauteur max d'un élément (pt) -- borne les éléments "carrés"
+SIDE_MARGIN = 28 # marge gauche/droite de la page (pt)
 PAD = 8          # marge intérieure de la bordure pointillée
 GAP = 14         # espace entre deux éléments (au sein d'une même copie)
 COPY_GAP = 26    # espace entre deux copies (avec trait de coupe) sur la même page
@@ -146,11 +147,19 @@ def build(chapter_dir, out_path=None, img_overrides=None, copies=None):
             if not drawing.width or not drawing.height:
                 print("! SVG sans dimensions exploitables, ignoré (index", key, ")")
                 continue
-            ratio = drawing.width / drawing.height
+            # recadrage sur le contenu réellement dessiné (le SVG peut contenir
+            # beaucoup de blanc autour du schéma, ex : repère 600x600)
+            try:
+                x0, y0, x1, y1 = drawing.getBounds()
+                x0, y0, x1, y1 = x0 - 4, y0 - 4, x1 + 4, y1 + 4
+            except Exception:
+                x0, y0, x1, y1 = 0, 0, drawing.width, drawing.height
+            cw, ch = x1 - x0, y1 - y0
+            ratio = cw / ch
             mw, mh = img_overrides.get(key, (MAX_W, MAX_H))
             infos.append({
                 "kind": "svg", "svg_path": tmp_path,
-                "orig_w": drawing.width, "orig_h": drawing.height,
+                "orig_w": cw, "orig_h": ch, "off_x": x0, "off_y": y0,
                 "ratio": ratio, "max_w": mw, "max_h": mh,
             })
 
@@ -158,13 +167,32 @@ def build(chapter_dir, out_path=None, img_overrides=None, copies=None):
         print("Rien à mettre dans le PDF pour", cours_html)
         return
 
+    # taille réelle d'un élément (cadre ajusté à l'élément, sans blanc inutile)
+    def elem_size(info, scale):
+        h = block_height(info["ratio"], info["max_w"] * scale, info["max_h"] * scale)
+        return h * info["ratio"], h
+
+    # range les éléments en lignes : côte à côte tant que la largeur de la page le permet
+    def layout_rows(scale):
+        rows, row, row_w = [], [], 0.0
+        usable = PAGE_W - 2 * SIDE_MARGIN
+        for info in infos:
+            w, h = elem_size(info, scale)
+            bw = w + 2 * PAD * scale
+            extra = bw if not row else bw + GAP * scale
+            if row and row_w + extra > usable:
+                rows.append(row); row, row_w = [], 0.0
+                extra = bw
+            row.append((info, w, h)); row_w += extra
+        if row:
+            rows.append(row)
+        return rows
+
     # calcule la hauteur nécessaire pour UNE copie du jeu complet, à un scale donné
     def one_copy_height(scale=1.0):
-        h = 0.0
-        for info in infos:
-            bh = block_height(info["ratio"], info["max_w"] * scale, info["max_h"] * scale)
-            h += bh + 2 * PAD * scale
-        h += GAP * scale * (len(infos) - 1)
+        rows = layout_rows(scale)
+        h = sum(max(e[2] for e in r) + 2 * PAD * scale for r in rows)
+        h += GAP * scale * (len(rows) - 1)
         return h
 
     available = PAGE_H - MARGIN_TOP - MARGIN_BOTTOM
@@ -214,32 +242,34 @@ def build(chapter_dir, out_path=None, img_overrides=None, copies=None):
     pad, gap, copy_gap = PAD * scale, GAP * scale, COPY_GAP * scale
 
     for copy_idx in range(copies):
-        for info in infos:
-            w = info["max_w"] * scale
-            h = block_height(info["ratio"], info["max_w"] * scale, info["max_h"] * scale)
-            x = (PAGE_W - w) / 2
-            y_img = y - h
-            bx, by, bw, bh = x - pad, y_img - pad, w + 2 * pad, h + 2 * pad
-            c.setDash(4, 3)
-            c.setLineWidth(0.8)
-            c.setStrokeColorRGB(0.55, 0.55, 0.55)
-            c.rect(bx, by, bw, bh, stroke=1, fill=0)
-            c.setDash()
+        for row in layout_rows(scale):
+            row_h = max(e[2] for e in row)
+            row_w = sum(e[1] + 2 * pad for e in row) + gap * (len(row) - 1)
+            x_cur = (PAGE_W - row_w) / 2
+            for info, w, h in row:
+                x = x_cur + pad
+                y_img = y - pad - (row_h - h) / 2 - h
+                bx, by, bw, bh = x - pad, y_img - pad, w + 2 * pad, h + 2 * pad
+                c.setDash(4, 3)
+                c.setLineWidth(0.8)
+                c.setStrokeColorRGB(0.55, 0.55, 0.55)
+                c.rect(bx, by, bw, bh, stroke=1, fill=0)
+                c.setDash()
 
-            if info["kind"] == "img":
-                c.drawImage(ImageReader(info["path"]), x, y_img, width=w, height=h,
-                            preserveAspectRatio=True, mask="auto")
-            else:
-                orig_w, orig_h = info["orig_w"], info["orig_h"]
-                fit_scale = min(w / orig_w, h / orig_h)
-                draw_w, draw_h = orig_w * fit_scale, orig_h * fit_scale
-                dx = x + (w - draw_w) / 2
-                dy = y_img + (h - draw_h) / 2
-                drawing = svg2rlg(info["svg_path"])  # instance neuve à chaque tirage
-                drawing.scale(fit_scale, fit_scale)
-                renderPDF.draw(drawing, c, dx, dy)
-
-            y = by - gap
+                if info["kind"] == "img":
+                    c.drawImage(ImageReader(info["path"]), x, y_img, width=w, height=h,
+                                preserveAspectRatio=True, mask="auto")
+                else:
+                    orig_w, orig_h = info["orig_w"], info["orig_h"]
+                    fit_scale = min(w / orig_w, h / orig_h)
+                    draw_w, draw_h = orig_w * fit_scale, orig_h * fit_scale
+                    dx = x + (w - draw_w) / 2 - info["off_x"] * fit_scale
+                    dy = y_img + (h - draw_h) / 2 - info["off_y"] * fit_scale
+                    drawing = svg2rlg(info["svg_path"])  # instance neuve à chaque tirage
+                    drawing.scale(fit_scale, fit_scale)
+                    renderPDF.draw(drawing, c, dx, dy)
+                x_cur += bw + gap
+            y = y - row_h - 2 * pad - gap
 
         if copy_idx < copies - 1:
             # simple espace entre deux copies (deux élèves sur la même feuille)

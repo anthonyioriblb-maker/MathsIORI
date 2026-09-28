@@ -487,10 +487,30 @@ a:hover {
     }
 
     .definition, .property, .important, .example, .remarque, .method, .exercice {
-        page-break-inside: avoid;
+        /* Les encadrés peuvent être coupés entre deux pages (évite les grands blancs) */
+        page-break-inside: auto;
+        break-inside: auto;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         color-adjust: exact !important;
+    }
+
+    /* Jamais coupés : images, figures, animations, lignes de tableau, lignes de calcul */
+    img, svg, figure, iframe, canvas, tr, li, .step, .calcul-detail > div, .frac, .fraction {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Un titre ne reste jamais seul en bas de page */
+    h1, h2, h3, h4 {
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+
+    /* Pas de ligne isolée en haut ou en bas de page */
+    p, div {
+        orphans: 2;
+        widows: 2;
     }
 
     /* Forcer l'impression des couleurs pour les rectangles de fractions */

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Réveil à segments</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:#222;
+        min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; gap:22px; }
+  .reveil{ background:#1b1b1b; border-radius:28px; padding:28px 36px; box-shadow:0 12px 30px rgba(0,0,0,.35), inset 0 0 0 6px #333;
+           width:min(95vw, 1100px); }
+  #ecran{ display:block; width:100%; height:auto; transition:transform 1.2s ease-in-out; }
+  #ecran.retourne{ transform:rotate(180deg); }
+  .seg{ fill:#3a1c1c; cursor:pointer; transition:fill .15s, filter .15s; }
+  .seg:hover{ fill:#5a2a2a; }
+  .seg.on{ fill:#ff3b30; filter:drop-shadow(0 0 6px rgba(255,59,48,.8)); }
+  .boutons{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  button{ border:none; border-radius:8px; padding:12px 22px; font-size:1.05em; font-weight:bold; color:#fff; cursor:pointer;
+          box-shadow:0 2px 6px rgba(0,0,0,.2); }
+  #btnDemiTour{ background:#2980b9; } #btnDemiTour:hover{ background:#1f6391; }
+  #btnPoints{ background:#7f8c8d; } #btnPoints:hover{ background:#61696a; }
+  #btnEteindre{ background:#e74c3c; } #btnEteindre:hover{ background:#c0392b; }
+  .aide{ color:#555; font-size:.95em; text-align:center; }
+</style>
+</head>
+<body>
+  <div class="reveil"><svg id="ecran" viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div class="boutons">
+    <button id="btnDemiTour" onclick="demiTour()">↻ Demi-tour</button>
+    <button id="btnPoints" onclick="basculerPoints()">Afficher / masquer les « : »</button>
+    <button id="btnEteindre" onclick="toutEteindre()">Tout éteindre</button>
+  </div>
+  <p class="aide">Clique sur un segment pour l'allumer ou l'éteindre.</p>
+
+<script>
+const svg = document.getElementById('ecran');
+const NS = 'http://www.w3.org/2000/svg';
+const W = 110, H = 200, T = 22, G = 3;          // largeur, hauteur d'un chiffre, épaisseur, jeu entre segments
+const Y0 = 30;
+const X = [45, 190, 400, 545];                   // position des 4 chiffres (le « : » est au milieu)
+
+function horiz(x, y) {
+  const a = x + T/2 + G, b = x + W - T/2 - G;
+  return [[a, y], [a + T/2, y - T/2], [b - T/2, y - T/2], [b, y], [b - T/2, y + T/2], [a + T/2, y + T/2]];
+}
+function vert(x, y1, y2) {
+  const a = y1 + T/2 + G, b = y2 - T/2 - G;
+  return [[x, a], [x + T/2, a + T/2], [x + T/2, b - T/2], [x, b], [x - T/2, b - T/2], [x - T/2, a + T/2]];
+}
+function poly(pts) {
+  const p = document.createElementNS(NS, 'polygon');
+  p.setAttribute('points', pts.map(q => q.join(',')).join(' '));
+  p.setAttribute('class', 'seg');
+  p.addEventListener('click', () => p.classList.toggle('on'));
+  svg.appendChild(p);
+}
+X.forEach(x => {
+  const m = Y0 + H/2, b = Y0 + H;
+  poly(horiz(x, Y0));          // a (haut)
+  poly(vert(x + W, Y0, m));    // b (haut droite)
+  poly(vert(x + W, m, b));     // c (bas droite)
+  poly(horiz(x, b));           // d (bas)
+  poly(vert(x, m, b));         // e (bas gauche)
+  poly(vert(x, Y0, m));        // f (haut gauche)
+  poly(horiz(x, m));           // g (milieu)
+});
+// les deux points « : »
+const points = [];
+[Y0 + H*0.3, Y0 + H*0.7].forEach(y => {
+  const c = document.createElementNS(NS, 'circle');
+  c.setAttribute('cx', 350); c.setAttribute('cy', y); c.setAttribute('r', 11);
+  c.setAttribute('class', 'seg on');
+  c.addEventListener('click', () => c.classList.toggle('on'));
+  svg.appendChild(c); points.push(c);
+});
+
+function demiTour() { svg.classList.toggle('retourne'); }
+function toutEteindre() { svg.querySelectorAll('polygon.seg').forEach(s => s.classList.remove('on')); }
+function basculerPoints() {
+  const vis = points[0].style.display !== 'none';
+  points.forEach(p => p.style.display = vis ? 'none' : '');
+}
+</script>
+</body>
+</html>
