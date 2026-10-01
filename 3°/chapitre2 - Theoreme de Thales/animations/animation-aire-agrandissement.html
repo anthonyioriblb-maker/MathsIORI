@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Animation – 9 triangles identiques à ABC remplissent ADE</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 30px;
+  }
+  .wrap {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    padding: 16px;
+    width: 100%;
+    max-width: 900px;
+  }
+  svg { width: 100%; height: auto; display: block; }
+  .info-box {
+    margin-top: 14px;
+    min-height: 56px;
+    width: 100%;
+    max-width: 900px;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-size: 1.3rem; padding: 8px 20px;
+    border-radius: 8px; background: #f5f5f5; color: #222;
+  }
+  .info-box strong { color: #8b1a1a; }
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 14px;
+  }
+  .controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .controls button:disabled { background: #bdbdbd !important; cursor: not-allowed; }
+  .btn-anim  { background: #2196f3; color: white; }
+  .btn-anim:hover { background: #1565c0; }
+  .btn-reset { background: #e74c3c; color: white; }
+  .btn-reset:hover { background: #c0392b; }
+  .btn-auto  { background: #4caf50; color: white; }
+  .btn-auto:hover { background: #388e3c; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <svg id="fig" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+    <g id="gridGroup"></g>
+    <g id="bigGroup"></g>
+    <g id="copiesGroup"></g>
+    <g id="numsGroup"></g>
+    <g id="pointsGroup"></g>
+  </svg>
+</div>
+
+<div class="info-box" id="info"></div>
+
+<div class="controls">
+  <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+  <button class="btn-anim" id="btnNext" onclick="nextStep()">Étape suivante ▶</button>
+  <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+  <button class="btn-reset" id="btnReset" onclick="resetAnimation()">Recommencer ↺</button>
+</div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const S = 70;                       // 1 carreau = 70 px
+const O = { x: 40, y: 250 };        // position de A
+function P(gx, gy) { return { x: O.x + S * gx, y: O.y - S * gy }; }
+
+// Figure du cours (image 3-26) : A(0;0) B(3;0) C(3;1) E(9;0) D(9;3)
+const A = P(0, 0), B = P(3, 0), C = P(3, 1), E = P(9, 0), D = P(9, 3);
+
+const FILL_ABC = '#d8c3d4', STROKE = '#8b1a1a', FILL_ADE = '#f3e4d8', BLUE = '#1f3fd1';
+
+function mk(tag, attrs) {
+  const el = document.createElementNS(NS, tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+function pts(arr) { return arr.map(p => p.x + ',' + p.y).join(' '); }
+
+// Quadrillage pointillé
+const grid = document.getElementById('gridGroup');
+for (let gx = 0; gx <= 9; gx++) {
+  const p = P(gx, 0);
+  grid.appendChild(mk('line', { x1: p.x, y1: O.y + 25, x2: p.x, y2: P(0, 3).y - 25, stroke: '#bbb', 'stroke-dasharray': '5 5', 'stroke-width': 1 }));
+}
+for (let gy = 0; gy <= 3; gy++) {
+  const p = P(0, gy);
+  grid.appendChild(mk('line', { x1: O.x - 25, y1: p.y, x2: P(9, 0).x + 25, y2: p.y, stroke: '#bbb', 'stroke-dasharray': '5 5', 'stroke-width': 1 }));
+}
+
+// Grand triangle ADE
+document.getElementById('bigGroup').appendChild(mk('polygon', { points: pts([A, E, D]), fill: FILL_ADE, stroke: STROKE, 'stroke-width': 2.5, 'stroke-linejoin': 'round' }));
+
+// Les 9 emplacements (réseau A + i·AB + j·BC)
+// type 'up' = même sens que ABC ; type 'down' = ABC retourné (demi-tour)
+const G = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };   // centre de gravité de ABC
+function L(i, j) { return P(3 * i, j); }
+const slots = [
+  { i: 0, j: 0, t: 'up' },
+  { i: 1, j: 0, t: 'up' }, { i: 1, j: 0, t: 'down' }, { i: 1, j: 1, t: 'up' },
+  { i: 2, j: 0, t: 'up' }, { i: 2, j: 0, t: 'down' }, { i: 2, j: 1, t: 'up' }, { i: 2, j: 1, t: 'down' }, { i: 2, j: 2, t: 'up' }
+];
+slots.forEach(s => {
+  if (s.t === 'up') {
+    const q = L(s.i, s.j);
+    s.tx = q.x - A.x; s.ty = q.y - A.y; s.rot = 0;
+    s.gx = G.x + s.tx; s.gy = G.y + s.ty;
+  } else {
+    // symétrie centrale : p -> L(i+1, j+1) + A - p
+    const q = L(s.i + 1, s.j + 1);
+    const fg = { x: q.x + A.x - G.x, y: q.y + A.y - G.y };
+    s.tx = fg.x - G.x; s.ty = fg.y - G.y; s.rot = 180;
+    s.gx = fg.x; s.gy = fg.y;
+  }
+});
+
+const copiesGroup = document.getElementById('copiesGroup');
+const numsGroup = document.getElementById('numsGroup');
+slots.forEach((s, k) => {
+  s.el = mk('polygon', { points: pts([A, B, C]), fill: FILL_ABC, stroke: STROKE, 'stroke-width': 2, 'stroke-linejoin': 'round' });
+  s.el.style.display = 'none';
+  copiesGroup.appendChild(s.el);
+  s.num = mk('text', { x: s.gx, y: s.gy, 'font-size': 15, 'font-weight': 'bold', fill: '#5a1010', 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
+  s.num.textContent = k + 1;
+  s.num.style.display = 'none';
+  numsGroup.appendChild(s.num);
+});
+
+function setTransform(s, t) {
+  s.el.setAttribute('transform', `translate(${s.tx * t},${s.ty * t}) rotate(${s.rot * t},${G.x},${G.y})`);
+}
+
+// Points (croix) et noms
+function drawCross(g, p, color) {
+  const r = 6;
+  g.appendChild(mk('line', { x1: p.x - r, y1: p.y - r, x2: p.x + r, y2: p.y + r, stroke: color, 'stroke-width': 2 }));
+  g.appendChild(mk('line', { x1: p.x - r, y1: p.y + r, x2: p.x + r, y2: p.y - r, stroke: color, 'stroke-width': 2 }));
+}
+const pg = document.getElementById('pointsGroup');
+[['A', A, 4, -12], ['B', B, 10, -12], ['C', C, 10, -14], ['D', D, 12, -12], ['E', E, 12, -12]].forEach(([n, p, dx, dy]) => {
+  drawCross(pg, p, BLUE);
+  const t = mk('text', { x: p.x + dx, y: p.y + dy, 'font-size': 20, fill: BLUE });
+  t.textContent = n;
+  pg.appendChild(t);
+});
+
+// ── Étapes ──
+// étape 0 : ABC seul ; étapes 1 à 8 : un nouveau triangle identique à ABC vient se placer ; étape 9 : conclusion
+const LAST = slots.length;   // 9
+let current = 0, autoMode = false, autoTimer = null, animId = null;
+const info = document.getElementById('info');
+
+function infoText(n) {
+  if (n >= LAST) {
+    return 'ADE est rempli par <strong>9</strong> triangles identiques à ABC : l\'aire de ADE est 3² = 9 fois plus grande que celle de ABC.';
+  }
+  const nb = n + 1;
+  return 'Nombre de triangles identiques à ABC : <strong>' + nb + '</strong>';
+}
+
+function renderStep(n) {
+  if (animId) { cancelAnimationFrame(animId); animId = null; }
+  slots.forEach((s, k) => {
+    const shown = k <= n;
+    s.el.style.display = shown ? '' : 'none';
+    s.num.style.display = shown ? '' : 'none';
+    setTransform(s, 1);
+  });
+  info.innerHTML = '<span>' + infoText(n) + '</span>';
+  updateButtons();
+}
+
+function updateButtons() {
+  document.getElementById('btnPrec').disabled = (current <= 0);
+  document.getElementById('btnNext').disabled = (current >= LAST);
+}
+
+function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+function animateSlot(k) {
+  const s = slots[k];
+  s.el.style.display = '';
+  s.num.style.display = 'none';
+  setTransform(s, 0);
+  copiesGroup.appendChild(s.el);   // au premier plan pendant le déplacement
+  const dur = 1000, t0 = performance.now();
+  function frame(now) {
+    const t = Math.min(1, (now - t0) / dur);
+    setTransform(s, ease(t));
+    if (t < 1) animId = requestAnimationFrame(frame);
+    else { animId = null; s.num.style.display = ''; }
+  }
+  animId = requestAnimationFrame(frame);
+}
+
+function nextStep() {
+  if (current >= LAST) return;
+  current++;
+  if (current < LAST) {
+    renderStep(current - 1);
+    info.innerHTML = '<span>' + infoText(current) + '</span>';
+    updateButtons();
+    animateSlot(current);
+  } else {
+    renderStep(current);
+  }
+  if (current >= LAST) stopAuto();
+}
+
+function prevStep() {
+  if (current <= 0) return;
+  current--;
+  renderStep(current);
+}
+
+function resetAnimation() {
+  stopAuto();
+  current = 0;
+  renderStep(0);
+}
+
+function toggleAuto() {
+  if (autoMode) { stopAuto(); return; }
+  if (current >= LAST) { current = 0; renderStep(0); }
+  autoMode = true;
+  const b = document.getElementById('btnAuto');
+  b.textContent = '⏸ Pause';
+  b.style.background = '#ff9800';
+  nextStep();
+  autoTimer = setInterval(() => { if (current >= LAST) stopAuto(); else nextStep(); }, 1600);
+}
+
+function stopAuto() {
+  autoMode = false;
+  clearInterval(autoTimer);
+  autoTimer = null;
+  const b = document.getElementById('btnAuto');
+  b.textContent = '⏵ Automatique';
+  b.style.background = '#4caf50';
+}
+
+renderStep(0);
+</script>
+<script>
+/* === Redimensionnement automatique (hauteur) === */
+(function () {
+    if (window.parent === window) return;
+    function postH() {
+        window.parent.postMessage({ type: 'iframe-resize', height: document.body.scrollHeight }, '*');
+    }
+    if (window.ResizeObserver) new ResizeObserver(postH).observe(document.body);
+    window.addEventListener('load', postH);
+    if (document.readyState !== 'loading') postH(); else document.addEventListener('DOMContentLoaded', postH);
+})();
+</script>
+</body>
+</html>

@@ -102,8 +102,11 @@ const linesGroup = document.getElementById('linesGroup');
 const crossesGroup = document.getElementById('crossesGroup');
 const pointsGroup = document.getElementById('pointsGroup');
 
+// Droites (et non segments) : prolongées au-delà des deux points
+const EXT = 0.15;
 function drawLine(k1, k2) {
-  linesGroup.appendChild(mk('line', { x1: pts[k1].x, y1: pts[k1].y, x2: pts[k2].x, y2: pts[k2].y, stroke: '#555', 'stroke-width': 2 }));
+  const p = pts[k1], q = pts[k2], dx = q.x - p.x, dy = q.y - p.y;
+  linesGroup.appendChild(mk('line', { x1: p.x - EXT * dx, y1: p.y - EXT * dy, x2: q.x + EXT * dx, y2: q.y + EXT * dy, stroke: '#555', 'stroke-width': 2 }));
 }
 drawLine('A', 'B');
 drawLine('C', 'D');
@@ -116,9 +119,13 @@ pointsGroup.appendChild(eLabel);
 ['A', 'B', 'C', 'D'].forEach(key => {
   const p = pts[key];
   drawCross(crossesGroup, p, '#555');
-  const lx = p.x + (p.x > E.x ? 14 : -24);
-  const ly = p.y + (p.y > E.y ? 18 : -8);
-  const t = mk('text', { x: lx, y: ly, 'font-size': 17, 'font-weight': 'bold', fill: '#333' });
+  // Lettre placée perpendiculairement à la droite (ne chevauche pas la droite prolongée)
+  const other = { A: 'B', B: 'A', C: 'D', D: 'C' }[key];
+  const ux = pts[other].x - p.x, uy = pts[other].y - p.y, L = Math.hypot(ux, uy);
+  let nx = -uy / L, ny = ux / L;
+  if (ny < 0) { nx = -nx; ny = -ny; }
+  const lx = p.x + 20 * nx, ly = p.y + 20 * ny;
+  const t = mk('text', { x: lx, y: ly, 'font-size': 17, 'font-weight': 'bold', fill: '#333', 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   t.textContent = key;
   pointsGroup.appendChild(t);
 });
@@ -162,6 +169,8 @@ function hatLabel(letters, color) {
   return `<span class="angle" style="color:${color}">${letters}</span>`;
 }
 
+// Dernière étape (index steps.length) : les 4 angles en couleur en même temps
+const LAST = steps.length;
 let current = -1, autoMode = false, autoTimer = null;
 const nameEl = document.getElementById('angleName');
 const btnPrev = document.getElementById('btnPrev');
@@ -172,19 +181,22 @@ function applyStep() {
   steps.forEach((s, idx) => {
     const el = document.getElementById(s.id);
     const len = el.getTotalLength();
-    const active = idx === current;
+    const active = idx === current || current === LAST;
     el.style.strokeDashoffset = active ? 0 : len;
     el.style.opacity = active ? '1' : '0.18';
   });
   if (current === -1) {
     nameEl.innerHTML = '';
     btnPrev.disabled = true;
+  } else if (current === LAST) {
+    nameEl.innerHTML = steps.map(s => hatLabel(s.n1 + 'E' + s.n2, s.color)).join('<span style="color:#777;font-weight:normal;">;</span>');
+    btnPrev.disabled = false;
   } else {
     const s = steps[current];
     nameEl.innerHTML = hatLabel(s.n1 + 'E' + s.n2, s.color) + '<span style="color:#777;font-weight:normal;">ou</span>' + hatLabel(s.n2 + 'E' + s.n1, s.color);
     btnPrev.disabled = false;
   }
-  btnNext.disabled = (current >= steps.length - 1);
+  btnNext.disabled = (current >= LAST);
 }
 
 function reset() {
@@ -193,8 +205,8 @@ function reset() {
   applyStep();
 }
 function next() {
-  if (current < steps.length - 1) { current++; applyStep(); }
-  if (current >= steps.length - 1) stopAuto();
+  if (current < LAST) { current++; applyStep(); }
+  if (current >= LAST) stopAuto();
 }
 function prev() {
   if (current > 0) { current--; applyStep(); }
@@ -204,7 +216,7 @@ function toggleAuto() {
   autoMode = true;
   btnAuto.textContent = '⏸ Pause';
   btnAuto.style.background = '#ff9800';
-  autoTimer = setInterval(() => { if (current >= steps.length - 1) { stopAuto(); } else { next(); } }, 2200);
+  autoTimer = setInterval(() => { if (current >= LAST) { stopAuto(); } else { next(); } }, 2200);
 }
 function stopAuto() {
   autoMode = false; clearInterval(autoTimer); autoTimer = null;

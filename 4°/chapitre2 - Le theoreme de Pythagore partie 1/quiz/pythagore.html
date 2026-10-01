@@ -742,7 +742,7 @@
 
                 calcHTML = `
                     Le triangle <input type="text" class="input-field input-small" id="q${questionNum}_tri" data-answer="${L1}${L2}${L3}" data-type="triangle" placeholder="...">
-                    est rectangle en <input type="text" class="input-field input-small" id="q${questionNum}_angle" data-answer="${L2}" placeholder="...">,
+                    est rectangle en <input type="text" class="input-field input-small" id="q${questionNum}_angle" data-answer="${L2}" data-type="letter" placeholder="...">,
                     d'après le théorème de Pythagore on a :<br><br>
 
                     <div class="calc-line">
@@ -784,7 +784,7 @@
                     </div>
 
                     <div class="calc-line">
-                        <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L1}${L3}" placeholder="...">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L1}${L3}" data-type="letter2" placeholder="...">
                         = <span class="sqrt"><input type="text" class="input-field input-medium" id="q${questionNum}_calc5b" data-answer="${formatNumber(hyp_sq)}" placeholder="..."></span>
                         = <input type="text" class="input-field input-medium" id="q${questionNum}_calc5c" data-answer="${isExactSquare ? formatNumber(Math.sqrt(hyp_sq)) : '√' + hyp_sq}" data-type="final-sqrt" data-sqrt-value="${hyp_sq}" placeholder="...">
                     </div>
@@ -815,7 +815,7 @@
 
                 calcHTML = `
                     Le triangle <input type="text" class="input-field input-small" id="q${questionNum}_tri" data-answer="${L1}${L2}${L3}" data-type="triangle" placeholder="...">
-                    est rectangle en <input type="text" class="input-field input-small" id="q${questionNum}_angle" data-answer="${L2}" placeholder="...">,
+                    est rectangle en <input type="text" class="input-field input-small" id="q${questionNum}_angle" data-answer="${L2}" data-type="letter" placeholder="...">,
                     d'après le théorème de Pythagore on a :<br><br>
 
                     <div class="calc-line">
@@ -857,7 +857,7 @@
                     </div>
 
                     <div class="calc-line">
-                        <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L2}${L3}" placeholder="...">
+                        <input type="text" class="input-field input-small" id="q${questionNum}_calc5a" data-answer="${L2}${L3}" data-type="letter2" placeholder="...">
                         = <span class="sqrt"><input type="text" class="input-field input-medium" id="q${questionNum}_calc5b" data-answer="${formatNumber(unknownSide_sq)}" placeholder="..."></span>
                         = <input type="text" class="input-field input-medium" id="q${questionNum}_calc5c" data-answer="${isExactSquare ? formatNumber(Math.sqrt(unknownSide_sq)) : '√' + unknownSide_sq}" data-type="final-sqrt" data-sqrt-value="${unknownSide_sq}" placeholder="...">
                     </div>
@@ -972,6 +972,13 @@
                     }
                 } else if (fieldType === 'squared' || fieldType === 'squared-num') {
                     isCorrect = checkSquared(userAnswer, expectedAnswer);
+                } else if (fieldType === 'letter') {
+                    isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(expectedAnswer);
+                } else if (fieldType === 'letter2') {
+                    const norm = normalizeAnswer(userAnswer);
+                    const exp = normalizeAnswer(expectedAnswer);
+                    const reversed = exp.length === 2 ? exp[1] + exp[0] : exp;
+                    isCorrect = norm === exp || norm === reversed;
                 } else if (expectedAnswer === '+' || expectedAnswer === '-' || expectedAnswer === '−') {
                     const norm = userAnswer.trim();
                     isCorrect = norm === expectedAnswer || (expectedAnswer === '-' && norm === '−') || (expectedAnswer === '−' && norm === '-');
