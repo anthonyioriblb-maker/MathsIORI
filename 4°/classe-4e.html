@@ -128,7 +128,7 @@
                 }
             },
             chapitre3: {
-                disponible: false,
+                disponible: true,
                 titre: "Écriture fractionnaire partie 1",
                 description: "Apprends à maîtriser les fractions et leurs opérations",
                 emoji: "➗",
@@ -651,6 +651,18 @@
                 }
             }
         };
+
+        // Devoirs portant sur plusieurs chapitres (section « Devoirs » sous les chapitres)
+        // actif: false → bouton grisé avec cadenas (ex. correction avant que le devoir soit rendu)
+        const configDevoirs = [
+            {
+                titre: "Calculs et Pythagore",
+                description: "Nombres relatifs, priorités opératoires, programme de calcul et théorème de Pythagore",
+                chapitres: [1, 2],
+                sujet:      { actif: true,  fichier: "Devoir/Devoir_Calculs_Pythagore_Sujet.html" },
+                correction: { actif: false, fichier: "Devoir/Devoir_Calculs_Pythagore_Correction.html" }
+            }
+        ];
     </script>
     <script src="../classe-page.js?v=20251120143124"></script>
 </body>

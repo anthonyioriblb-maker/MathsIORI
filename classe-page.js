@@ -21,6 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    // Devoirs multi-chapitres (optionnel) : window.configDevoirs = [{ titre, chapitres:[1,2], sujet:{actif,fichier}, correction:{actif,fichier} }]
+    const devoirsVisibles = (typeof configDevoirs !== 'undefined' && Array.isArray(configDevoirs))
+        ? configDevoirs.filter(d => (d.sujet && d.sujet.actif) || (d.correction && d.correction.actif))
+        : [];
+
     // Filtrer uniquement les chapitres disponibles
     const chapitresDisponibles = Object.keys(configChapitres).filter(key => configChapitres[key].disponible);
 
@@ -161,6 +166,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        // Lien vers les devoirs qui portent sur ce chapitre
+        const numChap = parseInt(key.replace('chapitre', ''), 10);
+        const devoirsLies = devoirsVisibles
+            .map((d, i) => ({ d, i }))
+            .filter(o => (o.d.chapitres || []).includes(numChap));
+        const devoirsLien = devoirsLies.length
+            ? `<div class="chapter-devoirs">${devoirsLies.map(o => `<a href="#devoir-${o.i}">📝 Devoir : ${o.d.titre}</a>`).join(' ')}</div>`
+            : '';
+
         card.innerHTML = `
             <div class="chapter-number">${chapitreNum}</div>
             <div class="chapter-header">
@@ -177,8 +191,51 @@ document.addEventListener('DOMContentLoaded', function() {
                 ${quizBtn}
                 ${evenementBtn}
             </div>
+            ${devoirsLien}
         `;
 
         container.appendChild(card);
     });
+
+    // Section « Devoirs » (devoirs portant sur plusieurs chapitres)
+    if (devoirsVisibles.length > 0) {
+        const titre = document.createElement('h2');
+        titre.className = 'devoirs-titre';
+        titre.textContent = '📝 Devoirs';
+        const zone = document.createElement('div');
+        zone.className = 'chapters devoirs';
+
+        devoirsVisibles.forEach((d, i) => {
+            const chips = (d.chapitres || []).map(n => {
+                const c = configChapitres['chapitre' + n];
+                const label = c ? `Ch. ${n} · ${c.titre}` : `Ch. ${n}`;
+                return (c && c.disponible && c.cours && c.cours.actif)
+                    ? `<a class="devoir-chip" href="${c.cours.fichier}">${label}</a>`
+                    : `<span class="devoir-chip">${label}</span>`;
+            }).join('');
+            const bouton = (o, txt) => {
+                if (!o || !o.fichier) return '';
+                return o.actif
+                    ? `<a href="${o.fichier}" class="action-button evaluations">${txt}</a>`
+                    : `<span class="action-button evaluations disabled">🔒 ${txt.replace(/^\S+\s/, '')}</span>`;
+            };
+            const card = document.createElement('div');
+            card.className = 'chapter-card devoir-card';
+            card.id = 'devoir-' + i;
+            card.innerHTML = `
+                <div class="chapter-header">
+                    <div class="chapter-title"><span class="emoji">📝</span>${d.titre}</div>
+                    <div class="chapter-desc">${d.description || 'Devoir sur plusieurs chapitres'}</div>
+                </div>
+                <div class="devoir-chips">${chips}</div>
+                <div class="chapter-actions">
+                    ${bouton(d.sujet, '📄 Sujet')}
+                    ${bouton(d.correction, '✅ Correction')}
+                </div>
+            `;
+            zone.appendChild(card);
+        });
+
+        container.after(titre, zone);
+    }
 });

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Devoir calculs et Pythagore - Sujet</title>
+<style>
+  :root{ --bleu:#2980b9; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; }
+  .page{ max-width:800px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:32px 44px 40px; }
+  .entete{ border:2px solid #333; border-radius:8px; padding:12px 16px; line-height:2; margin-bottom:14px; font-size:0.95em; }
+  .entete .ligne{ display:inline-block; min-width:60px; border-bottom:1px solid #333; margin-left:4px; }
+  .titre{ text-align:center; font-weight:bold; font-size:1.2em; margin-bottom:6px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); margin:20px 0 6px; font-weight:normal; }
+  h2.exo span{ text-decoration:underline; font-weight:bold; }
+  h2.exo em{ color:#555; font-size:.9em; }
+  .items2{ display:grid; grid-template-columns:1fr 1fr; gap:6px 40px; font-size:1.1em; }
+  .item{ display:flex; align-items:flex-end; white-space:nowrap; padding:12px 0 4px; }
+  .item .blanc{ flex:0 0 110px; border-bottom:1px solid #333; height:28px; margin-left:8px; }
+  .calc2{ display:grid; grid-template-columns:1fr 1.4fr; gap:10px 30px; font-size:1.1em; }
+  .programme{ -webkit-print-color-adjust:exact; print-color-adjust:exact; background:#fadbd2; border-radius:4px; padding:10px 18px; margin:6px 0 8px; display:inline-block; }
+  .programme ul{ list-style:none; }
+  .programme li::before{ content:"• "; color:#e00; font-weight:bold; }
+  ol.q{ padding-left:28px; }
+  ol.q li{ margin:3px 0; }
+  .figs{ display:grid; grid-template-columns:1.45fr 1fr; gap:12px 30px; align-items:end; }
+  .figs .rep{ border-bottom:1px solid #333; height:34px; margin-top:6px; }
+  .ex6{ display:grid; grid-template-columns:1fr 110px; gap:20px; align-items:start; }
+  .bonus-tab{ width:100%; border-collapse:collapse; margin-top:8px; }
+  .bonus-tab td{ border:1px solid #333; vertical-align:top; padding:6px 8px; width:25%; height:90px; }
+  .sqrt{ position:relative; display:inline-block; border-top:2px solid black; margin-left:.7em; padding-left:.2em; padding-right:.1em; }
+  .sqrt:before{ content:" "; position:absolute; display:inline-block; left:-.65em; height:56%; width:.6em; border-right:2px solid black; border-bottom:2.5px solid black; transform-origin:top right; transform:rotate(55deg) skew(50deg); }
+  svg text{ font-family:Arial, sans-serif; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+    h2.exo{ margin-top:14px; break-after:avoid; }
+    .figs, .ex6, .bonus-tab, .programme{ break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="entete">
+    Nom &ndash; Prénom : <span class="ligne" style="min-width:300px;"></span>
+    &nbsp;&nbsp; Classe : <span class="ligne" style="min-width:70px;"></span>
+  </div>
+
+  <div class="titre">Devoir de mathématiques : Calculs et Pythagore</div>
+
+  <!-- Exercice 1 -->
+  <h2 class="exo"><span>Exercice 1 :</span> Calculer <em>(à faire sur ce sujet &ndash; 2 points)</em></h2>
+  <div class="items2">
+    <div class="item">(&minus;7) + (+3) =<span class="blanc"></span></div>
+    <div class="item">(&minus;8) + (&minus;3) =<span class="blanc"></span></div>
+    <div class="item">(&minus;12) &minus; (+5) =<span class="blanc"></span></div>
+    <div class="item">(&minus;8) × 4 =<span class="blanc"></span></div>
+  </div>
+
+  <!-- Exercice 2 -->
+  <h2 class="exo"><span>Exercice 2 :</span> Calculer en détaillant toutes les étapes <em>(à faire sur la copie &ndash; 4 points)</em></h2>
+  <div class="calc2">
+    <div><em>A</em> = 2 + 3 × (5 &minus; 7) + 4 &minus; 2 × 6</div>
+    <div><em>B</em> = &minus;4 × (&minus;8) + 2 × [9 &minus; (&minus;8)] + 7</div>
+  </div>
+
+  <!-- Exercice 3 -->
+  <h2 class="exo"><span>Exercice 3 :</span> <em>(à faire sur la copie &ndash; 4 points)</em></h2>
+  <div>Voici un programme de calcul :</div>
+  <div class="programme">
+    <ul>
+      <li>Choisir un nombre</li>
+      <li>Soustraire 3 à ce nombre</li>
+      <li>Multiplier le résultat obtenu par (&minus;5)</li>
+      <li>Diviser le résultat obtenu par 4</li>
+      <li>Ajouter le nombre de départ au résultat obtenu.</li>
+    </ul>
+  </div>
+  <ol class="q">
+    <li>Effectuer ce programme de calcul pour les nombres 2 et &minus;7.</li>
+    <li>Le nombre obtenu est-il toujours un nombre décimal non entier ? Expliquer la réponse.</li>
+  </ol>
+
+  <!-- Exercice 4 -->
+  <h2 class="exo"><span>Exercice 4 :</span> Écrire l'égalité de Pythagore dans chacun des triangles <em>(à faire sur ce sujet &ndash; 2 points)</em></h2>
+  <div class="figs">
+    <div>
+      <svg viewBox="0 0 850 380" width="100%" style="max-width:400px;display:block;margin:0 auto;">
+        <polygon points="101,35 36,342 818,187" fill="none" stroke="#000" stroke-width="2"/>
+        <polygon points="101,35 92.7,74.1 131.8,82.4 140.1,43.3" fill="#e6e6e6" stroke="#000" stroke-width="2"/>
+        <g stroke="#000" stroke-width="3">
+          <line x1="90" y1="24" x2="112" y2="46"/><line x1="90" y1="46" x2="112" y2="24"/>
+          <line x1="25" y1="331" x2="47" y2="353"/><line x1="25" y1="353" x2="47" y2="331"/>
+          <line x1="807" y1="176" x2="829" y2="198"/><line x1="807" y1="198" x2="829" y2="176"/>
+        </g>
+        <text x="108" y="22" font-size="36">A</text>
+        <text x="8" y="375" font-size="36">B</text>
+        <text x="825" y="175" font-size="36">C</text>
+      </svg>
+      <div class="rep"></div>
+    </div>
+    <div>
+      <svg viewBox="0 0 545 420" width="100%" style="max-width:250px;display:block;margin:0 auto;">
+        <polygon points="129,42 65,205 515,383" fill="none" stroke="#000" stroke-width="2"/>
+        <polygon points="65,205 79.6,167.8 116.8,182.5 102.2,219.7" fill="#e6e6e6" stroke="#000" stroke-width="2"/>
+        <g stroke="#000" stroke-width="3">
+          <line x1="118" y1="31" x2="140" y2="53"/><line x1="118" y1="53" x2="140" y2="31"/>
+          <line x1="54" y1="194" x2="76" y2="216"/><line x1="54" y1="216" x2="76" y2="194"/>
+          <line x1="504" y1="372" x2="526" y2="394"/><line x1="504" y1="394" x2="526" y2="372"/>
+        </g>
+        <text x="140" y="32" font-size="36">S</text>
+        <text x="8" y="212" font-size="36">Z</text>
+        <text x="492" y="418" font-size="36">C</text>
+      </svg>
+      <div class="rep"></div>
+    </div>
+  </div>
+
+  <!-- Exercice 5 -->
+  <h2 class="exo"><span>Exercice 5 :</span> <em>(à faire sur la copie &ndash; 3 points)</em></h2>
+  <div>Soit TER un triangle rectangle en E tel que TE = 9 cm et TR = 15 cm. Calculer ER.</div>
+
+  <!-- Exercice 6 -->
+  <h2 class="exo"><span>Exercice 6 :</span> <em>(à faire sur la copie &ndash; 5 points)</em></h2>
+  <div class="ex6">
+    <div>
+      <p>Sur la figure ci-contre, AB = 1,5 cm ; AD = 6 cm et BC = 12 cm.</p>
+      <p style="margin-top:6px;">Calculer la valeur de DC.</p>
+      <p style="margin-top:12px;line-height:2.2;">Données : 1,5 × 1,5 = 2,25 ; <span class="sqrt">177,25</span> ≈ 13,33 ; <span class="sqrt">110,25</span> ≈ 10,5 ;
+        <span style="white-space:nowrap"><span class="sqrt">182,25</span> = 13,5</span> et <span style="white-space:nowrap"><span class="sqrt">105,75</span> ≈ 10,3</span></p>
+    </div>
+    <svg viewBox="0 0 175 330" width="110">
+      <polygon points="30,280 150,310 88.2,47.2" fill="#ec7063" stroke="#000" stroke-width="1.5"/>
+      <polygon points="30,310 150,310 30,280" fill="#f5b041" stroke="#000" stroke-width="1.5"/>
+      <polyline points="30,302 38,302 38,310" fill="none" stroke="#000" stroke-width="1.2"/>
+      <polygon points="30,280 37.76,281.94 39.7,274.18 31.94,272.24" fill="none" stroke="#000" stroke-width="1.2"/>
+      <text x="12" y="325" font-size="16">A</text>
+      <text x="12" y="282" font-size="16">B</text>
+      <text x="80" y="40" font-size="16">C</text>
+      <text x="154" y="325" font-size="16">D</text>
+    </svg>
+  </div>
+
+  <!-- Bonus -->
+  <h2 class="exo"><span>Bonus :</span> <em>(à faire sur la copie)</em></h2>
+  <p>Soit A et B deux nombres.</p>
+  <p>Le nombre A est le produit de 45 nombres relatifs (non nuls) comportant 25 facteurs négatifs.</p>
+  <p>Le nombre B est le produit de 21 nombres relatifs (non nuls) comportant 9 facteurs positifs.</p>
+  <p style="margin-top:6px;">Donner, <strong>lorsque cela est possible</strong>, le signe de chaque résultat, <strong>sinon expliquer</strong> pourquoi ce n'est pas possible :</p>
+  <table class="bonus-tab">
+    <tr><td>1) A</td><td>2) B</td><td>3) A × B</td><td>4) A + B</td></tr>
+  </table>
+
+</div>
+</body>
+</html>

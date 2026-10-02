@@ -340,3 +340,44 @@ h1 {
     font-size: 1.3em;
     margin-right: 8px;
 }
+
+/* ===== Devoirs multi-chapitres ===== */
+.devoirs-titre {
+    color: #333;
+    font-size: 1.6em;
+    margin: 10px 0 15px;
+}
+.devoir-card {
+    background: linear-gradient(135deg, #34495e 0%, #c0392b 100%);
+}
+.devoir-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+.devoir-chip {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.6);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+}
+a.devoir-chip:hover { background: rgba(255,255,255,0.35); }
+.chapter-devoirs {
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+    font-family: Arial, sans-serif;
+    font-size: 0.9em;
+}
+.chapter-devoirs a {
+    color: white;
+    text-decoration: underline;
+    margin-right: 12px;
+}
