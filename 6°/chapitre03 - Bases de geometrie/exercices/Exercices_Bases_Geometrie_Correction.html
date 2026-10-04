@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bases de géométrie - Exercices (correction)</title>
+    <style>
+    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 16px; line-height: 1.5; color:#111; }
+    h1 { text-align: center; color: #2E75B5; margin: 4px 0 2px; font-size: 1.6em; }
+    .subtitle { text-align: center; font-weight: bold; margin-bottom: 10px; }
+    h2 { color: #2E75B5; border-bottom: 2px solid #2E75B5; padding-bottom: 3px; margin: 14px 0 8px; font-size: 1.2em; }
+    .row { display: flex; gap: 16px; align-items: center; }
+    .row > div { flex: 1; }
+    .fig { width: 100%; height: auto; display: block; margin: 0 auto; }
+    ol, ul { margin: 4px 0; padding-left: 28px; }
+    li { margin: 3px 0; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 16px; margin: 6px 0 6px 20px; }
+    .rep { color: #c0392b; font-weight: bold; }
+    .note { color: #555; font-style: italic; font-size: 0.95em; }
+    .home-button { display:inline-block; text-decoration:none; }
+    @media print {
+      @page { margin: 10mm; }
+      body { padding: 0; max-width: 100%; font-size: 11pt; }
+      .home-button { display: none; }
+      h2 { break-after: avoid; }
+      .bloc { break-inside: avoid; }
+    }
+    @media (max-width: 700px) { .row { flex-direction: column; } .grid3 { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+    <a href="../../classe-6e.html" class="home-button" style="margin: 10px 0;">← Retour au choix des chapitres</a>
+    <h1>Exercices du chapitre 3</h1>
+    <div class="subtitle">Bases de géométrie — Correction</div>
+
+    <div class="bloc">
+    <h2>Exercice 1</h2>
+    <div class="row">
+        <div>
+            Sur la figure ci-contre,
+            <ol>
+                <li>Trace en <span style="color:blue">bleu</span> le segment [AB].</li>
+                <li>Trace en <span style="color:green">vert</span> la demi-droite (DC].</li>
+                <li>Trace en <span style="color:red">rouge</span> la droite (AC).</li>
+                <li>Trace en noir la demi-droite [DB).</li>
+            </ol>
+            <p class="note">Une demi-droite a une origine (côté crochet) et ne s’arrête pas de l’autre côté : (DC] commence en C et passe par D ; [DB) commence en D et passe par B. Une droite ne s’arrête d’aucun côté.</p>
+        </div>
+        <div><svg viewBox="0 0 765 439" class="fig" style="max-width:420px"><defs><clipPath id="c1"><rect x="0" y="0" width="765" height="439"/></clipPath></defs><g clip-path="url(#c1)"><line x1="252.0" y1="49.0" x2="61.0" y2="314.0" stroke="blue" stroke-width="3" stroke-linecap="round"/><line x1="723.0" y1="166.0" x2="-327.0" y2="1414.0" stroke="green" stroke-width="3" stroke-linecap="round"/><line x1="-2574.0" y1="-653.0" x2="3078.0" y2="751.0" stroke="red" stroke-width="3" stroke-linecap="round"/><line x1="548.0" y1="374.0" x2="-2374.0" y2="14.0" stroke="black" stroke-width="3" stroke-linecap="round"/></g><line x1="241" y1="38" x2="263" y2="60" stroke="#3a3ad6" stroke-width="3.5"/><line x1="241" y1="60" x2="263" y2="38" stroke="#3a3ad6" stroke-width="3.5"/><text x="264" y="33" font-size="34" fill="#3a3ad6" font-family="Arial" text-anchor="start">A</text><line x1="50" y1="303" x2="72" y2="325" stroke="#3a3ad6" stroke-width="3.5"/><line x1="50" y1="325" x2="72" y2="303" stroke="#3a3ad6" stroke-width="3.5"/><text x="47" y="294" font-size="34" fill="#3a3ad6" font-family="Arial" text-anchor="start">B</text><line x1="712" y1="155" x2="734" y2="177" stroke="#3a3ad6" stroke-width="3.5"/><line x1="712" y1="177" x2="734" y2="155" stroke="#3a3ad6" stroke-width="3.5"/><text x="693" y="146" font-size="34" fill="#3a3ad6" font-family="Arial" text-anchor="start">C</text><line x1="537" y1="363" x2="559" y2="385" stroke="#3a3ad6" stroke-width="3.5"/><line x1="537" y1="385" x2="559" y2="363" stroke="#3a3ad6" stroke-width="3.5"/><text x="562" y="406" font-size="34" fill="#3a3ad6" font-family="Arial" text-anchor="start">D</text></svg></div>
+    </div>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 2</h2>
+    Place les points suivants en lisant bien les consignes :
+    <div class="row" style="margin-top:6px;">
+        <div>• I ∈ [AC) mais I ∉ [CD) ;<br><span class="note">I doit être sur la demi-droite [AC) mais pas sur [CD) : I est entre A et C (A compris, C exclu). La zone possible est en couleur, un exemple de point est placé.</span></div>
+        <div><svg viewBox="60 460 690 240" class="fig" style="max-width:460px"><line x1="83.0" y1="513.0" x2="715.0" y2="655.0" stroke="#222" stroke-width="2.2" stroke-linecap="round"/><line x1="160.0" y1="530.3" x2="431.5" y2="591.3" stroke="#c0392b" stroke-width="7" stroke-linecap="round"/><line x1="230.0" y1="538.2753164556962" x2="250.0" y2="558.2753164556962" stroke="#c0392b" stroke-width="3.2"/><line x1="230.0" y1="558.2753164556962" x2="250.0" y2="538.2753164556962" stroke="#c0392b" stroke-width="3.2"/><text x="244.0" y="592.2753164556962" font-size="32" fill="#c0392b" font-family="Arial" text-anchor="middle">I</text><line x1="150.0" y1="520.3006329113924" x2="170.0" y2="540.3006329113924" stroke="#222" stroke-width="3"/><line x1="150.0" y1="540.3006329113924" x2="170.0" y2="520.3006329113924" stroke="#222" stroke-width="3"/><text x="156.0" y="510.3006329113924" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">A</text><line x1="310.0" y1="556.25" x2="330.0" y2="576.25" stroke="#222" stroke-width="3"/><line x1="310.0" y1="576.25" x2="330.0" y2="556.25" stroke="#222" stroke-width="3"/><text x="316.0" y="546.25" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">B</text><line x1="424.0" y1="581.8639240506329" x2="444.0" y2="601.8639240506329" stroke="#222" stroke-width="3"/><line x1="424.0" y1="601.8639240506329" x2="444.0" y2="581.8639240506329" stroke="#222" stroke-width="3"/><text x="430.0" y="571.8639240506329" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">C</text><line x1="622.0" y1="626.3512658227849" x2="642.0" y2="646.3512658227849" stroke="#222" stroke-width="3"/><line x1="622.0" y1="646.3512658227849" x2="642.0" y2="626.3512658227849" stroke="#222" stroke-width="3"/><text x="628.0" y="616.3512658227849" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">D</text></svg></div>
+    </div>
+    <div class="row" style="margin-top:6px;">
+        <div>• J ∈ [BC) mais J ∉ [BC] ;<br><span class="note">J doit être sur la demi-droite [BC) mais pas sur le segment [BC] : J est au-delà de C (C exclu). La zone possible est en couleur, un exemple de point est placé.</span></div>
+        <div><svg viewBox="60 460 690 240" class="fig" style="max-width:460px"><line x1="83.0" y1="513.0" x2="715.0" y2="655.0" stroke="#222" stroke-width="2.2" stroke-linecap="round"/><line x1="436.5" y1="592.4" x2="715.0" y2="655.0" stroke="#27ae60" stroke-width="7" stroke-linecap="round"/><line x1="673.4" y1="637.9" x2="693.4" y2="657.9" stroke="#27ae60" stroke-width="3.2"/><line x1="673.4" y1="657.9" x2="693.4" y2="637.9" stroke="#27ae60" stroke-width="3.2"/><text x="687.4" y="691.9" font-size="32" fill="#27ae60" font-family="Arial" text-anchor="middle">J</text><line x1="150.0" y1="520.3006329113924" x2="170.0" y2="540.3006329113924" stroke="#222" stroke-width="3"/><line x1="150.0" y1="540.3006329113924" x2="170.0" y2="520.3006329113924" stroke="#222" stroke-width="3"/><text x="156.0" y="510.3006329113924" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">A</text><line x1="310.0" y1="556.25" x2="330.0" y2="576.25" stroke="#222" stroke-width="3"/><line x1="310.0" y1="576.25" x2="330.0" y2="556.25" stroke="#222" stroke-width="3"/><text x="316.0" y="546.25" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">B</text><line x1="424.0" y1="581.8639240506329" x2="444.0" y2="601.8639240506329" stroke="#222" stroke-width="3"/><line x1="424.0" y1="601.8639240506329" x2="444.0" y2="581.8639240506329" stroke="#222" stroke-width="3"/><text x="430.0" y="571.8639240506329" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">C</text><line x1="622.0" y1="626.3512658227849" x2="642.0" y2="646.3512658227849" stroke="#222" stroke-width="3"/><line x1="622.0" y1="646.3512658227849" x2="642.0" y2="626.3512658227849" stroke="#222" stroke-width="3"/><text x="628.0" y="616.3512658227849" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">D</text></svg></div>
+    </div>
+    <div class="row" style="margin-top:6px;">
+        <div>• K ∈ [AC] mais K ∉ [BA) ;<br><span class="note">K doit être sur le segment [AC] mais pas sur la demi-droite [BA) : K est entre B et C (B exclu, C compris). La zone possible est en couleur, un exemple de point est placé.</span></div>
+        <div><svg viewBox="60 460 690 240" class="fig" style="max-width:460px"><line x1="83.0" y1="513.0" x2="715.0" y2="655.0" stroke="#222" stroke-width="2.2" stroke-linecap="round"/><line x1="322.5" y1="566.8" x2="434.0" y2="591.9" stroke="#2471a3" stroke-width="7" stroke-linecap="round"/><line x1="367.0" y1="569.0569620253165" x2="387.0" y2="589.0569620253165" stroke="#2471a3" stroke-width="3.2"/><line x1="367.0" y1="589.0569620253165" x2="387.0" y2="569.0569620253165" stroke="#2471a3" stroke-width="3.2"/><text x="381.0" y="623.0569620253165" font-size="32" fill="#2471a3" font-family="Arial" text-anchor="middle">K</text><line x1="150.0" y1="520.3006329113924" x2="170.0" y2="540.3006329113924" stroke="#222" stroke-width="3"/><line x1="150.0" y1="540.3006329113924" x2="170.0" y2="520.3006329113924" stroke="#222" stroke-width="3"/><text x="156.0" y="510.3006329113924" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">A</text><line x1="310.0" y1="556.25" x2="330.0" y2="576.25" stroke="#222" stroke-width="3"/><line x1="310.0" y1="576.25" x2="330.0" y2="556.25" stroke="#222" stroke-width="3"/><text x="316.0" y="546.25" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">B</text><line x1="424.0" y1="581.8639240506329" x2="444.0" y2="601.8639240506329" stroke="#222" stroke-width="3"/><line x1="424.0" y1="601.8639240506329" x2="444.0" y2="581.8639240506329" stroke="#222" stroke-width="3"/><text x="430.0" y="571.8639240506329" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">C</text><line x1="622.0" y1="626.3512658227849" x2="642.0" y2="646.3512658227849" stroke="#222" stroke-width="3"/><line x1="622.0" y1="646.3512658227849" x2="642.0" y2="626.3512658227849" stroke="#222" stroke-width="3"/><text x="628.0" y="616.3512658227849" font-size="32" fill="#222" font-family="Arial" text-anchor="middle">D</text></svg></div>
+    </div>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 3</h2>
+    <svg viewBox="60 30 1290 620" class="fig" style="max-width:480px"><line x1="550.0" y1="92.0" x2="130.0" y2="512.0" stroke="blue" stroke-width="4" stroke-linecap="round"/><line x1="550.0" y1="92.0" x2="1288.0" y2="583.0" stroke="blue" stroke-width="4" stroke-linecap="round"/><line x1="130.0" y1="512.0" x2="1188.0" y2="325.0" stroke="blue" stroke-width="4" stroke-linecap="round"/><line x1="1188.0" y1="325.0" x2="1288.0" y2="583.0" stroke="blue" stroke-width="4" stroke-linecap="round"/><line x1="538" y1="80" x2="562" y2="104" stroke="blue" stroke-width="4"/><line x1="538" y1="104" x2="562" y2="80" stroke="blue" stroke-width="4"/><text x="550" y="68" font-size="44" fill="#111" font-family="Arial" text-anchor="middle">A</text><line x1="118" y1="500" x2="142" y2="524" stroke="blue" stroke-width="4"/><line x1="118" y1="524" x2="142" y2="500" stroke="blue" stroke-width="4"/><text x="96" y="546" font-size="44" fill="#111" font-family="Arial" text-anchor="middle">R</text><line x1="946" y1="354" x2="970" y2="378" stroke="blue" stroke-width="4"/><line x1="946" y1="378" x2="970" y2="354" stroke="blue" stroke-width="4"/><text x="958" y="418" font-size="44" fill="#111" font-family="Arial" text-anchor="middle">G</text><line x1="1176" y1="313" x2="1200" y2="337" stroke="blue" stroke-width="4"/><line x1="1176" y1="337" x2="1200" y2="313" stroke="blue" stroke-width="4"/><text x="1228" y="321" font-size="44" fill="#111" font-family="Arial" text-anchor="middle">S</text><line x1="1276" y1="571" x2="1300" y2="595" stroke="blue" stroke-width="4"/><line x1="1276" y1="595" x2="1300" y2="571" stroke="blue" stroke-width="4"/><text x="1320" y="639" font-size="44" fill="#111" font-family="Arial" text-anchor="middle">U</text></svg>
+    <p><strong>a.</strong> Après avoir observé la figure, recopie et complète les pointillés avec ∈ ou ∉.</p>
+    <div class="grid3">
+        <div>• G <span class="rep">∈</span> [AU]</div><div>• A <span class="rep">∉</span> [GU]</div><div>• S <span class="rep">∉</span> [RG]</div>
+        <div>• G <span class="rep">∈</span> (AU)</div><div>• U <span class="rep">∈</span> (AG)</div><div>• S <span class="rep">∈</span> (RG)</div>
+    </div>
+    <p><strong>b.</strong> Quels sont les points alignés ? Fais deux phrases.</p>
+    <p class="rep">Les points A, G et U sont alignés.<br>Les points R, G et S sont alignés.</p>
+    <p><strong>c.</strong> Comment peux-tu définir le point G ?</p>
+    <p class="rep">G est le point d’intersection des droites (AU) et (RS) (c’est aussi le point d’intersection des segments [AU] et [RS]).</p>
+    </div>
+
+    <script src="../../../impression.js"></script>
+</body>
+</html>

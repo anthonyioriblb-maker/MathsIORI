@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Devoir calculs et Pythagore - Correction</title>
+<style>
+  :root{ --bleu:#2980b9; --vert:#1e8449; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; }
+  .page{ max-width:800px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:32px 44px 40px; }
+  .titre{ text-align:center; font-weight:bold; font-size:1.2em; margin-bottom:6px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); margin:20px 0 6px; font-weight:normal; }
+  h2.exo span{ text-decoration:underline; font-weight:bold; }
+  h2.exo em{ color:#555; font-size:.9em; }
+  .rep{ color:var(--vert); font-weight:bold; }
+  .items2{ display:grid; grid-template-columns:1fr 1fr; gap:6px 40px; font-size:1.05em; }
+  .calc2{ display:grid; grid-template-columns:1fr 1.3fr; gap:10px 30px; font-size:1.05em; }
+  .calc .step{ line-height:1.9; }
+  .ul{ text-decoration:underline; text-decoration-color:red; text-decoration-thickness:2px; text-underline-offset:3px; }
+  .q{ font-weight:bold; margin-top:8px; }
+  .redac{ line-height:1.9; margin-left:10px; }
+  .prog{ margin-left:10px; display:grid; grid-template-columns:1fr 1fr; gap:6px 30px; }
+  .prog .titre-prog{ font-style:italic; margin:6px 0 2px; }
+  .prog .concl{ grid-column:1 / -1; }
+  .chaine{ display:flex; flex-direction:column; align-items:flex-start; margin:6px 0 8px; }
+  .bx{ border:2px solid #333; border-radius:6px; padding:3px 10px; min-width:60px; text-align:center; background:#fff; }
+  .rep-bx{ border-color:var(--vert); color:var(--vert); font-weight:bold; }
+  .fl{ -webkit-print-color-adjust:exact; print-color-adjust:exact; position:relative; display:block; width:2px; height:30px; background:#333; margin:0 0 8px 30px; }
+  .fl::after{ content:""; position:absolute; bottom:-8px; left:-5px; border-top:9px solid #333; border-left:6px solid transparent; border-right:6px solid transparent; }
+  .fl .op{ position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:.9em; color:#c0392b; white-space:nowrap; }
+  .bonus-tab{ width:100%; border-collapse:collapse; margin-top:8px; }
+  .bonus-tab td{ border:1px solid #333; vertical-align:top; padding:6px 8px; width:25%; }
+  .sqrt{ position:relative; display:inline-block; border-top:2px solid black; margin-left:.7em; padding-left:.2em; padding-right:.1em; }
+  .sqrt:before{ content:" "; position:absolute; display:inline-block; left:-.65em; height:56%; width:.6em; border-right:2px solid black; border-bottom:2.5px solid black; transform-origin:top right; transform:rotate(55deg) skew(50deg); }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+    h2.exo{ margin-top:14px; break-after:avoid; }
+    .calc2, .prog, .redac, .bonus-tab{ break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="titre">Devoir de mathématiques : Calculs et Pythagore &ndash; Correction</div>
+
+  <!-- Exercice 1 -->
+  <h2 class="exo"><span>Exercice 1 :</span> <em>(2 points)</em></h2>
+  <div class="items2">
+    <div>(&minus;7) + (+3) = <span class="rep">&minus;4</span></div>
+    <div>(&minus;8) + (&minus;3) = <span class="rep">&minus;11</span></div>
+    <div>(&minus;12) &minus; (+5) = <span class="rep">&minus;17</span></div>
+    <div>(&minus;8) × 4 = <span class="rep">&minus;32</span></div>
+  </div>
+
+  <!-- Exercice 2 -->
+  <h2 class="exo"><span>Exercice 2 :</span> <em>(4 points)</em></h2>
+  <div class="calc2">
+    <div class="calc">
+      <div class="step"><em>A</em> = 2 + 3 × <span class="ul">(5 &minus; 7)</span> + 4 &minus; 2 × 6</div>
+      <div class="step"><em>A</em> = 2 + <span class="ul">3 × (&minus;2)</span> + 4 &minus; 2 × 6</div>
+      <div class="step"><em>A</em> = 2 + (&minus;6) + 4 &minus; <span class="ul">2 × 6</span></div>
+      <div class="step"><em>A</em> = <span class="ul">2 + (&minus;6)</span> + 4 &minus; 12</div>
+      <div class="step"><em>A</em> = <span class="ul">&minus;4 + 4</span> &minus; 12</div>
+      <div class="step"><em>A</em> = <span class="ul">0 &minus; 12</span></div>
+      <div class="step"><em>A</em> = <span class="rep">&minus;12</span></div>
+    </div>
+    <div class="calc">
+      <div class="step"><em>B</em> = &minus;4 × (&minus;8) + 2 × [<span class="ul">9 &minus; (&minus;8)</span>] + 7</div>
+      <div class="step"><em>B</em> = <span class="ul">&minus;4 × (&minus;8)</span> + 2 × 17 + 7</div>
+      <div class="step"><em>B</em> = 32 + <span class="ul">2 × 17</span> + 7</div>
+      <div class="step"><em>B</em> = <span class="ul">32 + 34</span> + 7</div>
+      <div class="step"><em>B</em> = <span class="ul">66 + 7</span></div>
+      <div class="step"><em>B</em> = <span class="rep">73</span></div>
+    </div>
+  </div>
+
+  <!-- Exercice 3 -->
+  <h2 class="exo"><span>Exercice 3 :</span> <em>(4 points)</em></h2>
+  <div class="q">1) Programme de calcul pour 2 et &minus;7</div>
+  <div class="prog">
+    <div><div class="titre-prog">Avec 2 comme nombre de départ :</div>
+    <div class="chaine"><span class="bx">2</span><span class="fl"><span class="op">&minus; 3</span></span><span class="bx">&minus;1</span><span class="fl"><span class="op">× (&minus;5)</span></span><span class="bx">5</span><span class="fl"><span class="op">÷ 4</span></span><span class="bx">1,25</span><span class="fl"><span class="op">+ 2</span></span><span class="bx rep-bx">3,25</span></div></div>
+    <div><div class="titre-prog">Avec &minus;7 comme nombre de départ :</div>
+    <div class="chaine"><span class="bx">&minus;7</span><span class="fl"><span class="op">&minus; 3</span></span><span class="bx">&minus;10</span><span class="fl"><span class="op">× (&minus;5)</span></span><span class="bx">50</span><span class="fl"><span class="op">÷ 4</span></span><span class="bx">12,5</span><span class="fl"><span class="op">+ (&minus;7)</span></span><span class="bx rep-bx">5,5</span></div></div>
+    <div class="concl">Le programme donne <span class="rep">3,25</span> pour 2 et <span class="rep">5,5</span> pour &minus;7.</div>
+  </div>
+  <div class="q">2) Le nombre obtenu est-il toujours un nombre décimal non entier ?</div>
+  <div class="redac">
+    <div><span class="rep">Non.</span> Il suffit de trouver un contre-exemple. Avec 3 comme nombre de départ :</div>
+    <div class="chaine"><span class="bx">3</span><span class="fl"><span class="op">&minus; 3</span></span><span class="bx">0</span><span class="fl"><span class="op">× (&minus;5)</span></span><span class="bx">0</span><span class="fl"><span class="op">÷ 4</span></span><span class="bx">0</span><span class="fl"><span class="op">+ 3</span></span><span class="bx rep-bx">3</span></div>
+    <div>On obtient 3, qui est un nombre entier : le résultat n'est donc pas toujours un décimal non entier.</div>
+    <div style="color:#555;font-style:italic;">(Autre contre-exemple accepté : 15 donne 0.)</div>
+  </div>
+
+  <!-- Exercice 4 -->
+  <h2 class="exo"><span>Exercice 4 :</span> <em>(2 points)</em></h2>
+  <div class="items2">
+    <div>Triangle ABC rectangle en A : <span class="rep" style="white-space:nowrap">BC² = AB² + AC²</span></div>
+    <div>Triangle SZC rectangle en Z : <span class="rep" style="white-space:nowrap">SC² = SZ² + ZC²</span></div>
+  </div>
+
+  <!-- Exercice 5 -->
+  <h2 class="exo"><span>Exercice 5 :</span> <em>(3 points)</em></h2>
+  <div class="redac">
+    <div>Le triangle TER est rectangle en E, d'après le théorème de Pythagore on a :</div>
+    <div>ER² = TR² &minus; TE²</div>
+    <div>ER² = 15² &minus; 9²</div>
+    <div>ER² = 225 &minus; 81</div>
+    <div>ER² = 144</div>
+    <div>ER = <span class="sqrt">144</span> = 12</div>
+    <div><span class="rep">[ER] mesure 12 cm.</span></div>
+  </div>
+
+  <!-- Exercice 6 -->
+  <h2 class="exo"><span>Exercice 6 :</span> <em>(5 points)</em></h2>
+  <div class="redac">
+    <div><strong>Étape 1 :</strong> Le triangle ABD est rectangle en A, d'après le théorème de Pythagore on a :</div>
+    <div>BD² = AB² + AD²</div>
+    <div>BD² = 1,5² + 6²</div>
+    <div>BD² = 2,25 + 36</div>
+    <div>BD² = 38,25</div>
+    <div style="margin-top:8px;"><strong>Étape 2 :</strong> Le triangle BCD est rectangle en B, d'après le théorème de Pythagore on a :</div>
+    <div>DC² = BD² + BC²</div>
+    <div>DC² = 38,25 + 12²</div>
+    <div>DC² = 38,25 + 144</div>
+    <div>DC² = 182,25</div>
+    <div>DC = <span class="sqrt">182,25</span> = 13,5</div>
+    <div><span class="rep">[DC] mesure 13,5 cm.</span></div>
+    <div style="color:#555;font-style:italic;margin-top:4px;">Remarque : il n'est pas nécessaire de calculer BD, seul BD² sert dans l'étape 2.</div>
+  </div>
+
+  <!-- Bonus -->
+  <h2 class="exo"><span>Bonus :</span></h2>
+  <table class="bonus-tab">
+    <tr>
+      <td>1) A<br><span class="rep">A est négatif</span><br>25 facteurs négatifs : nombre impair.</td>
+      <td>2) B<br><span class="rep">B est positif</span><br>21 &minus; 9 = 12 facteurs négatifs : nombre pair.</td>
+      <td>3) A × B<br><span class="rep">A × B est négatif</span><br>Produit d'un négatif par un positif.</td>
+      <td>4) A + B<br><span class="rep">Impossible</span><br>A et B sont de signes contraires : le signe de la somme dépend de celui qui a la plus grande distance à zéro, qu'on ne connaît pas.</td>
+    </tr>
+  </table>
+
+</div>
+</body>
+</html>
