@@ -40,7 +40,11 @@
   .fl::after{ content:""; position:absolute; bottom:-8px; left:-5px; border-top:9px solid #333; border-left:6px solid transparent; border-right:6px solid transparent; }
   .fl .op{ position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:.9em; color:#c0392b; white-space:nowrap; }
   ol.q{ padding-left:28px; } ol.q li{ margin:3px 0; }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:var(--bleu); color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
   @media print{
+    .toolbar{ display:none; }
     @page{ margin:10mm; }
     body{ background:#fff; padding:0; }
     .page{ box-shadow:none; border-radius:0; padding:4mm; }
@@ -51,6 +55,7 @@
 </style>
 </head>
 <body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
 <div class="page">
   <div class="titre">Devoir de mathématiques : Priorités opératoires et symétrie centrale &ndash; Correction</div>
 

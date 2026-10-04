@@ -238,4 +238,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
         container.after(titre, zone);
     }
+
+    // Bandeau d'annonce en haut de page pour les devoirs marqués « alerte: true »
+    // (option « date » : texte libre affiché dans le bandeau, ex. "jeudi 8 octobre")
+    // option « diffusion » ("AAAA-MM-JJ") : le bandeau ne s'affiche que pendant 7 jours à partir de cette date
+    devoirsVisibles.forEach((d, i) => {
+        if (!d.alerte) return;
+        if (d.diffusion) {
+            const debut = new Date(d.diffusion + 'T00:00:00');
+            const fin = new Date(debut.getTime() + 7 * 24 * 3600 * 1000);
+            const maintenant = new Date();
+            if (isNaN(debut) || maintenant < debut || maintenant >= fin) return;
+        }
+        const lien = (d.sujet && d.sujet.actif) ? d.sujet.fichier : ('#devoir-' + i);
+        const banniere = document.createElement('a');
+        banniere.className = 'alerte-devoir';
+        banniere.href = lien;
+        banniere.innerHTML = `
+            <span class="alerte-devoir-icone">📢</span>
+            <span class="alerte-devoir-texte">
+                <strong>Devoir à venir${d.date ? ' : ' + d.date : ''}</strong>
+                <span>${d.titre}</span>
+            </span>
+            <span class="alerte-devoir-bouton">📄 Voir le sujet</span>
+        `;
+        container.before(banniere);
+    });
 });
