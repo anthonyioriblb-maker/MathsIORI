@@ -33,6 +33,9 @@ Ajustements possibles au cas par cas (ex : rendre un élément encore plus
 petit qu'un autre, changer l'ordre, exclure un élément décoratif) :
 éditer IMG_OVERRIDES en bas du fichier, ou repartir de ce script pour un
 réglage manuel comme pour le chapitre 1 (6ème).
+
+Taille réelle : un <svg data-taille-reelle="1" ...> (dimensions en cm/mm, ex : demi-droite
+d'unité 2 cm) est imprimé exactement à sa taille, jamais agrandi ni réduit.
 """
 import os
 import re
@@ -140,8 +143,11 @@ def build(chapter_dir, out_path=None, img_overrides=None, copies=None):
                 )
             key = f"svg{svg_index}"
             tmp_path = os.path.join(tmp_dir, f"_svg_{svg_index}.svg")
+            markup = el["markup"]
+            if "xmlns=" not in markup.split(">", 1)[0]:
+                markup = markup.replace("<svg", '<svg xmlns="http://www.w3.org/2000/svg"', 1)
             with open(tmp_path, "w", encoding="utf-8") as f:
-                f.write(el["markup"])
+                f.write(markup)
             svg_index += 1
             drawing = svg2rlg(tmp_path)
             if not drawing.width or not drawing.height:
@@ -157,8 +163,11 @@ def build(chapter_dir, out_path=None, img_overrides=None, copies=None):
             cw, ch = x1 - x0, y1 - y0
             ratio = cw / ch
             mw, mh = img_overrides.get(key, (MAX_W, MAX_H))
+            reel = "data-taille-reelle" in el["markup"].split(">", 1)[0]
+            if reel:
+                mw, mh = cw, ch
             infos.append({
-                "kind": "svg", "svg_path": tmp_path,
+                "kind": "svg", "svg_path": tmp_path, "fixed": reel,
                 "orig_w": cw, "orig_h": ch, "off_x": x0, "off_y": y0,
                 "ratio": ratio, "max_w": mw, "max_h": mh,
             })
@@ -169,6 +178,8 @@ def build(chapter_dir, out_path=None, img_overrides=None, copies=None):
 
     # taille réelle d'un élément (cadre ajusté à l'élément, sans blanc inutile)
     def elem_size(info, scale):
+        if info.get("fixed"):
+            return info["max_w"], info["max_h"]
         h = block_height(info["ratio"], info["max_w"] * scale, info["max_h"] * scale)
         return h * info["ratio"], h
 

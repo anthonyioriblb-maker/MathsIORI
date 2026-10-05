@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Placer un nombre décimal sur une demi-droite graduée</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: white;
+        padding: 10px;
+    }
+    .btn-anim {
+        background: #2196f3; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-anim:hover { background: #1565c0; }
+    .btn-anim:disabled { opacity: 0.5; cursor: default; }
+    .btn-reset {
+        background: #e74c3c; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-reset:hover { background: #c0392b; }
+    .btn-auto {
+        background: #4caf50; color: white; border: none;
+        padding: 10px 22px; border-radius: 6px; font-size: 16px;
+        cursor: pointer; margin: 4px;
+    }
+    .btn-auto:hover { background: #388e3c; }
+    .step-box {
+        background: #e3f2fd; border-left: 5px solid #2196f3;
+        padding: 12px 18px; margin-bottom: 8px; color: #1565c0;
+        font-size: 16px; font-weight: 500; min-height: 54px;
+        display: block; line-height: 1.6;
+    }
+    .svg-wrap {
+        text-align: center; background: white; padding: 6px;
+        border-radius: 5px; border: 2px solid #ddd;
+    }
+    .anim-el { transition: opacity 0.5s ease; }
+</style>
+</head>
+<body>
+
+<div class="step-box"><span id="stepText"></span></div>
+<div class="svg-wrap">
+    <svg width="640" height="130" viewBox="0 0 640 130" style="max-width:100%; height:auto; background:#fafafa; display:block; margin:0 auto;">
+        <!-- Segment [2 ; 3] mis en évidence (étape 1) -->
+        <line id="seg23" class="anim-el" x1="300" y1="80" x2="430" y2="80" stroke="#f39c12" stroke-width="8" stroke-linecap="round" opacity="0"/>
+        <!-- Ligne principale + flèche -->
+        <line x1="40" y1="80" x2="606" y2="80" stroke="black" stroke-width="2.5"/>
+        <polygon points="606,73 622,80 606,87" fill="black"/>
+        <!-- Origine O : une croix, jamais un cercle -->
+        <line x1="34" y1="74" x2="46" y2="86" stroke="black" stroke-width="2"/><line x1="46" y1="74" x2="34" y2="86" stroke="black" stroke-width="2"/>
+        <text x="40" y="52" text-anchor="middle" font-size="20" font-weight="bold">O</text>
+        <!-- Graduations des unités -->
+        <line x1="170" y1="70" x2="170" y2="90" stroke="black" stroke-width="2"/>
+        <text x="170" y="52" text-anchor="middle" font-size="20" font-weight="bold">1</text>
+        <line x1="300" y1="70" x2="300" y2="90" stroke="black" stroke-width="2"/>
+        <text x="300" y="52" text-anchor="middle" font-size="20" font-weight="bold">2</text>
+        <line x1="430" y1="70" x2="430" y2="90" stroke="black" stroke-width="2"/>
+        <text x="430" y="52" text-anchor="middle" font-size="20" font-weight="bold">3</text>
+        <line x1="560" y1="70" x2="560" y2="90" stroke="black" stroke-width="2"/>
+        <text x="560" y="52" text-anchor="middle" font-size="20" font-weight="bold">4</text>
+        <!-- Dixièmes entre 2 et 3 (étape 2) -->
+        <g id="tenths" class="anim-el" opacity="0">
+            <line x1="313" y1="74" x2="313" y2="86" stroke="black" stroke-width="1.3"/>
+            <line x1="326" y1="74" x2="326" y2="86" stroke="black" stroke-width="1.3"/>
+            <line x1="339" y1="74" x2="339" y2="86" stroke="black" stroke-width="1.3"/>
+            <line x1="352" y1="74" x2="352" y2="86" stroke="black" stroke-width="1.3"/>
+            <line x1="365" y1="74" x2="365" y2="86" stroke="black" stroke-width="1.3"/>
+            <line x1="378" y1="74" x2="378" y2="86" stroke="black" stroke-width="1.3"/>
+            <line x1="391" y1="74" x2="391" y2="86" stroke="black" stroke-width="1.3"/>
+            <line x1="404" y1="74" x2="404" y2="86" stroke="black" stroke-width="1.3"/>
+            <line x1="417" y1="74" x2="417" y2="86" stroke="black" stroke-width="1.3"/>
+        </g>
+        <!-- Un dixième en rouge (étape 2) -->
+        <g id="firstTenth" class="anim-el" opacity="0"><line x1="300" y1="102" x2="313" y2="102" stroke="#e74c3c" stroke-width="4"/><text x="306.5" y="124" text-anchor="middle" font-size="16" font-weight="bold" fill="#e74c3c">0,1</text></g>
+        <!-- Report de 7 dixièmes à partir de 2 (étape 3) -->
+        <line id="sevenTenths" class="anim-el" x1="300" y1="102" x2="391" y2="102" stroke="#e74c3c" stroke-width="4" opacity="0"/>
+        <!-- Point A (étape 4) -->
+        <g id="pointA" class="anim-el" opacity="0"><line x1="384" y1="73" x2="398" y2="87" stroke="#27ae60" stroke-width="3"/><line x1="398" y1="73" x2="384" y2="87" stroke="#27ae60" stroke-width="3"/><text x="391" y="52" text-anchor="middle" font-size="20" font-weight="bold" fill="#27ae60">A</text></g>
+    </svg>
+</div>
+<div style="text-align:center; margin-top:10px;">
+    <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="btnNext" onclick="nextStep()">Étape suivante ▶</button>
+    <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation()">Recommencer ↺</button>
+</div>
+
+<script>
+const STEPS = [
+    { text: "Cliquez sur « Étape suivante » pour voir comment placer A(2,7) sur cette demi-droite graduée." },
+    { text: "Étape 1 : 2,7 = 2 + 0,7. La partie entière est 2, donc le point A est entre 2 et 3.", show: ['seg23'] },
+    { text: "Étape 2 : On partage l'unité en 10 parties égales. Chaque écart représente un dixième : 0,1.", hide: ['seg23'], show: ['tenths', 'firstTenth'] },
+    { text: "Étape 3 : On part de 2 et on reporte 7 fois un dixième.", hide: ['firstTenth'], show: ['sevenTenths'] },
+    { text: "Étape 4 : Le point A(2,7) est placé !", show: ['pointA'] }
+];
+const LAST = STEPS.length - 1;
+let step = 0;
+let autoTimer = null;
+
+function setOpacity(id, v) {
+    const el = document.getElementById(id);
+    if (el) el.setAttribute('opacity', v);
+}
+
+// Applique uniquement la nouveauté de l'étape n
+function applyStepChanges(n) {
+    document.getElementById('stepText').innerHTML = STEPS[n].text;
+    (STEPS[n].hide || []).forEach(id => setOpacity(id, 0));
+    (STEPS[n].show || []).forEach(id => setOpacity(id, 1));
+}
+
+function hideAll() {
+    document.querySelectorAll('.anim-el').forEach(el => el.setAttribute('opacity', 0));
+}
+
+function updateButtons() {
+    document.getElementById('btnPrec').disabled = (step <= 0);
+    document.getElementById('btnNext').disabled = (step >= LAST);
+}
+
+function advanceStep() {
+    if (step >= LAST) return;
+    step++;
+    applyStepChanges(step);
+    updateButtons();
+}
+
+// Reconstruit instantanément l'état visuel de l'étape n (utilisé par « précédent »)
+function renderStep(n) {
+    if (n < 0) n = 0;
+    if (n > LAST) n = LAST;
+    hideAll();
+    for (let i = 0; i <= n; i++) applyStepChanges(i);
+    step = n;
+    updateButtons();
+}
+
+function nextStep() { stopAuto(); advanceStep(); }
+function prevStep() { stopAuto(); if (step > 0) renderStep(step - 1); }
+function resetAnimation() { stopAuto(); renderStep(0); }
+
+function toggleAuto() {
+    const btn = document.getElementById('btnAuto');
+    if (autoTimer) { stopAuto(); return; }
+    if (step >= LAST) renderStep(0);
+    btn.textContent = '⏸ Pause';
+    btn.style.background = '#ff9800';
+    autoTimer = setInterval(() => {
+        if (step >= LAST) { stopAuto(); return; }
+        advanceStep();
+    }, 2800);
+}
+
+function stopAuto() {
+    clearInterval(autoTimer);
+    autoTimer = null;
+    const btn = document.getElementById('btnAuto');
+    if (btn) { btn.textContent = '⏵ Automatique'; btn.style.background = ''; }
+}
+
+renderStep(0);
+</script>
+<script>
+/* === Redimensionnement automatique (hauteur) === */
+(function () {
+    if (window.parent === window) return;
+    function postH() {
+        window.parent.postMessage({ type: 'iframe-resize', height: document.body.scrollHeight }, '*');
+    }
+    if (window.ResizeObserver) new ResizeObserver(postH).observe(document.body);
+    window.addEventListener('load', postH);
+    if (document.readyState !== 'loading') postH(); else document.addEventListener('DOMContentLoaded', postH);
+})();
+</script>
+</body>
+</html>

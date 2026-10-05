@@ -776,3 +776,11 @@ a:hover {
     flex-wrap: wrap;
     margin: 20px 0;
 }
+
+
+/* Contenu réservé à l'écran / à l'impression (ex. animation à l'écran, figure à l'échelle sur papier) */
+.impression-seule { display: none; }
+@media print {
+    .impression-seule { display: block; }
+    .ecran-seul { display: none !important; }
+}
