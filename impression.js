@@ -16,7 +16,8 @@
         'box-shadow:0 2px 8px rgba(0,0,0,.25)}' +
         '#btnImprimerIORI:hover{background:#1f6391}' +
         '#btnImprimerIORI:disabled{background:#7f8c8d;cursor:wait}' +
-        '@media print{#btnImprimerIORI,#symFloatingCtrl,#floatAnimCtrl{display:none!important}}';
+        '@media print{#btnImprimerIORI,#symFloatingCtrl,#floatAnimCtrl{display:none!important}}' +
+        '.garde-entier{display:block;break-inside:avoid;page-break-inside:avoid}';
     document.head.appendChild(style);
 
     var btn = document.createElement('button');
@@ -25,7 +26,22 @@
     btn.textContent = '🖨 Imprimer';
     btn.addEventListener('click', imprimer);
 
-    function ajouterBouton() { document.body.appendChild(btn); }
+    /* Images (schémas, tableaux) jamais coupées entre deux pages, y compris sous Firefox :
+       chaque image affichée en bloc est enveloppée dans un <div class="garde-entier">
+       (break-inside:avoid sur l'image seule n'est pas respecté par tous les navigateurs). */
+    function protegerImages() {
+        Array.prototype.forEach.call(document.querySelectorAll('img'), function (img) {
+            if (getComputedStyle(img).display !== 'block') return;
+            var p = img.parentElement;
+            if (!p || p.classList.contains('garde-entier')) return;
+            var w = document.createElement('div');
+            w.className = 'garde-entier';
+            p.insertBefore(w, img);
+            w.appendChild(img);
+        });
+    }
+
+    function ajouterBouton() { protegerImages(); document.body.appendChild(btn); }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ajouterBouton);
     else ajouterBouton();
 
