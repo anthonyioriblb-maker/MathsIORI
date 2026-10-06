@@ -114,17 +114,30 @@
 
     var LARGEUR_PAPIER = 640;   // largeur utile approximative d'une page A4 (px CSS)
 
+    var HAUTEUR_MAX = 600;      // hauteur maximale d'une animation sur papier (px CSS) : évite les grands blancs
+
+    /* Prépare une animation pour le papier : boutons masqués (inutiles à l'impression),
+       puis réduction si elle est trop large ou trop haute pour tenir sur la page. */
     function reduire(frame) {
         var doc;
         try { doc = frame.contentDocument; } catch (e) { return null; }
-        if (!doc || !doc.documentElement) return null;
-        var largeur = frame.getBoundingClientRect().width;
-        if (largeur <= LARGEUR_PAPIER) return null;
-        var z = LARGEUR_PAPIER / largeur;
+        if (!doc || !doc.documentElement || !doc.body) return null;
         var sauvegarde = { width: frame.style.width, height: frame.style.height, maxWidth: frame.style.maxWidth };
+        var st = doc.createElement('style');
+        st.textContent = 'button{display:none!important}';
+        doc.head.appendChild(st);
+        Array.prototype.forEach.call(doc.querySelectorAll('div'), function (d) {
+            var enfants = Array.prototype.slice.call(d.children);
+            if (enfants.length && enfants.every(function (c) { return c.tagName === 'BUTTON'; })) d.style.display = 'none';
+        });
+        var largeur = frame.getBoundingClientRect().width;
+        var hauteur = doc.body.scrollHeight;
+        var z = Math.min(1, LARGEUR_PAPIER / largeur, HAUTEUR_MAX / hauteur);
         doc.documentElement.style.zoom = z;
         frame.style.maxWidth = 'none';
         frame.style.width = Math.floor(largeur * z) + 'px';
+        frame.style.marginLeft = 'auto';
+        frame.style.marginRight = 'auto';
         return { frame: frame, doc: doc, sauvegarde: sauvegarde };
     }
 
@@ -141,7 +154,7 @@
             return terminer(f).catch(function (e) { console.warn('Impression : animation ignorée', e); });
         }));
         await sleep(600);                                     // laisser les iframes se redimensionner
-        var reduits = frames.map(reduire).filter(Boolean);    // animations trop larges : réduites pour tenir sur la feuille
+        var reduits = frames.map(reduire).filter(Boolean);    // animations sans boutons, réduites pour tenir sur la feuille
         await sleep(300);
         reduits.forEach(fixerHauteur);
         btn.disabled = false;
