@@ -16,7 +16,7 @@
         'box-shadow:0 2px 8px rgba(0,0,0,.25)}' +
         '#btnImprimerIORI:hover{background:#1f6391}' +
         '#btnImprimerIORI:disabled{background:#7f8c8d;cursor:wait}' +
-        '@media print{#btnImprimerIORI,#symFloatingCtrl,#floatAnimCtrl{display:none!important}}' +
+        '@media print{#btnImprimerIORI,#symFloatingCtrl,#floatAnimCtrl,.home-button{display:none!important}}' +
         '.garde-entier{display:block;break-inside:avoid;page-break-inside:avoid}';
     document.head.appendChild(style);
 
