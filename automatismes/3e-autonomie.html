@@ -2760,7 +2760,7 @@ A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
                                 
                                 return {
                                     question: `<strong>Triangle ABC rectangle en A</strong><br>AB = ${b} cm et AC = ${a} cm<br>Calculer BC.`,
-                                    answer: `BC² = AB² + AC² = ${b}² + ${a}² = ${b*b} + ${a*a} = ${a*a + b*b}<br>BC = √${a*a + b*b} ≈ ${toFrenchNumber(c.toFixed(2))} cm`
+                                    answer: `BC² = AB² + AC² = ${b}² + ${a}² = ${b*b} + ${a*a} = ${a*a + b*b}<br>BC = √<span style="border-top:1.5px solid currentColor;padding:0 2px 0 1px;margin-left:-1px">${a*a + b*b}</span> ≈ ${toFrenchNumber(c.toFixed(2))} cm`
                                 };
                             },
                             () => {
@@ -2770,7 +2770,7 @@ A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
                                 
                                 return {
                                     question: `<strong>Triangle ABC rectangle en A</strong><br>BC = ${c} cm et AC = ${a} cm<br>Calculer AB.`,
-                                    answer: `AB² = BC² - AC² = ${c}² - ${a}² = ${c*c} - ${a*a} = ${c*c - a*a}<br>AB = √${c*c - a*a} ≈ ${toFrenchNumber(b.toFixed(2))} cm`
+                                    answer: `AB² = BC² - AC² = ${c}² - ${a}² = ${c*c} - ${a*a} = ${c*c - a*a}<br>AB = √<span style="border-top:1.5px solid currentColor;padding:0 2px 0 1px;margin-left:-1px">${c*c - a*a}</span> ≈ ${toFrenchNumber(b.toFixed(2))} cm`
                                 };
                             },
                             () => {
@@ -2785,7 +2785,7 @@ A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
                                     },
                                     {
                                         question: `<strong>Triangle ABC rectangle en A</strong><br>AB = ${b} cm et AC = ${a} cm<br>Calculer BC.`,
-                                        answer: `BC² = AB² + AC² = ${b}² + ${a}² = ${b*b} + ${a*a} = ${a*a + b*b}<br>BC = √${a*a + b*b} ≈ ${toFrenchNumber(c.toFixed(2))} cm`
+                                        answer: `BC² = AB² + AC² = ${b}² + ${a}² = ${b*b} + ${a*a} = ${a*a + b*b}<br>BC = √<span style="border-top:1.5px solid currentColor;padding:0 2px 0 1px;margin-left:-1px">${a*a + b*b}</span> ≈ ${toFrenchNumber(c.toFixed(2))} cm`
                                     }
                                 ];
                             },
@@ -2804,7 +2804,7 @@ A. 15 min &nbsp;&nbsp; B. 30 min &nbsp;&nbsp; C. 45 min &nbsp;&nbsp; D. 1 h`,
                                 
                                 return {
                                     question: `<strong>Carré de côté ${c} cm</strong><br>Calculer la diagonale (arrondir au dixième).`,
-                                    answer: `d² = ${c}² + ${c}² = ${c*c} + ${c*c} = ${2*c*c}<br>d = √${2*c*c} ≈ ${toFrenchNumber(diag.toFixed(1))} cm`
+                                    answer: `d² = ${c}² + ${c}² = ${c*c} + ${c*c} = ${2*c*c}<br>d = √<span style="border-top:1.5px solid currentColor;padding:0 2px 0 1px;margin-left:-1px">${2*c*c}</span> ≈ ${toFrenchNumber(diag.toFixed(1))} cm`
                                 };
                             }
                         ];
