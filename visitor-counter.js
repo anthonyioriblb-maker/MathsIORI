@@ -9,6 +9,29 @@ class VisitorCounter {
         this.firebaseInitialized = false;
         this.db = null;
         this.counterRef = null;
+        this.lastVisitKey = 'mathsiori_derniere_visite_comptee';
+        this.delaiMs = 2 * 60 * 60 * 1000; // une nouvelle visite n'est comptée qu'après 2 heures
+    }
+
+    /**
+     * Vrai si ce navigateur a déjà été compté il y a moins de 2 heures
+     */
+    dejaCompte() {
+        try {
+            const derniere = parseInt(localStorage.getItem(this.lastVisitKey), 10);
+            return !isNaN(derniere) && (Date.now() - derniere) < this.delaiMs;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    /**
+     * Mémorise l'heure de la visite comptée
+     */
+    marquerCompte() {
+        try {
+            localStorage.setItem(this.lastVisitKey, Date.now().toString());
+        } catch (e) {}
     }
 
     /**
@@ -63,24 +86,20 @@ class VisitorCounter {
     }
 
     /**
-     * Increment the Firebase counter (only once per session)
+     * Increment the Firebase counter (au plus une fois toutes les 2 heures par navigateur)
      */
     async incrementFirebaseCounter() {
         try {
-            // Check if visitor was already counted in this session
-            const sessionKey = 'mathsiori_visitor_counted';
-            const alreadyCounted = sessionStorage.getItem(sessionKey);
-
-            if (!alreadyCounted) {
+            // Compté seulement si la dernière visite comptée date de plus de 2 heures
+            if (!this.dejaCompte()) {
                 // Use transaction to safely increment
                 await this.counterRef.transaction((currentCount) => {
                     return (currentCount || 0) + 1;
                 });
 
-                // Mark as counted for this session
-                sessionStorage.setItem(sessionKey, 'true');
+                this.marquerCompte();
             } else {
-                console.log('Visiteur déjà compté dans cette session');
+                console.log('Visiteur déjà compté il y a moins de 2 heures');
             }
         } catch (error) {
             console.error('Erreur incrémentation Firebase:', error);
@@ -92,25 +111,18 @@ class VisitorCounter {
      */
     useLocalStorage() {
         const storageKey = 'mathsiori_visits';
-        const sessionKey = 'mathsiori_visitor_counted';
 
         // Get current count
-        let count = parseInt(localStorage.getItem(storageKey)) || 0;
+        let count = 0;
+        try { count = parseInt(localStorage.getItem(storageKey)) || 0; } catch (e) {}
 
-        // Check if visitor was already counted in this session
-        const alreadyCounted = sessionStorage.getItem(sessionKey);
-
-        if (!alreadyCounted) {
-            // Increment count only if not already counted
+        // Compté seulement si la dernière visite comptée date de plus de 2 heures
+        if (!this.dejaCompte()) {
             count++;
-
-            // Save back to localStorage
-            localStorage.setItem(storageKey, count.toString());
-
-            // Mark as counted for this session
-            sessionStorage.setItem(sessionKey, 'true');
+            try { localStorage.setItem(storageKey, count.toString()); } catch (e) {}
+            this.marquerCompte();
         } else {
-            console.log('Visiteur déjà compté dans cette session');
+            console.log('Visiteur déjà compté il y a moins de 2 heures');
         }
 
         // Display count
