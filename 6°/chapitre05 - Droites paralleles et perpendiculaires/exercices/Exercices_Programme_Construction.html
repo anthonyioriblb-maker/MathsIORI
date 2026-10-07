@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme de construction - Exercices</title>
+    <style>
+    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 16px; line-height: 1.5; color:#111; }
+    h1 { text-align: center; color: #2E75B5; margin: 4px 0 2px; font-size: 1.6em; }
+    .subtitle { text-align: center; font-weight: bold; margin-bottom: 10px; }
+    h2 { color: #2E75B5; border-bottom: 2px solid #2E75B5; padding-bottom: 3px; margin: 14px 0 8px; font-size: 1.2em; }
+    .fig { width: 100%; height: auto; display: block; margin: 6px auto; }
+    .etapes { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 820px; margin: 6px auto; border: 1.5px solid #4a6fd8; }
+    .etape { background: #eef0fb; border-right: 1.5px solid #4a6fd8; }
+    .etape:last-child { border-right: none; }
+    .etape svg { width: 100%; height: auto; display: block; }
+    ol, ul { margin: 4px 0; padding-left: 28px; }
+    li { margin: 3px 0; }
+    .phr { margin: 3px 0; }
+    .phr u { margin-right: 4px; }
+    .rep { color: #c0392b; font-weight: bold; }
+    .home-button { display:inline-block; text-decoration:none; }
+    @media print {
+      @page { margin: 10mm; }
+      body { padding: 0; max-width: 100%; font-size: 11pt; }
+      .home-button { display: none; }
+      h2 { break-after: avoid; }
+      .bloc { break-inside: avoid; }
+      .etape { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    @media (max-width: 700px) { .etapes { grid-template-columns: 1fr 1fr; } .etape:nth-child(2) { border-right: none; } }
+</style>
+</head>
+<body>
+    <a href="../../classe-6e.html" class="home-button" style="margin: 10px 0;">← Retour au choix des chapitres</a>
+    <h1>Exercices du chapitre 5</h1>
+    <div class="subtitle">Programme de construction</div>
+
+    <div class="bloc">
+    <h2>Exercice 1</h2>
+    Pour chacune des quatre phrases suivantes, dis à quelle étape elle correspond.
+    <div class="etapes"><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial" text-anchor="start">Étape 1 :</text><line x1="23" y1="110" x2="33" y2="120" stroke="#2e9e2e" stroke-width="1.8"/><line x1="23" y1="120" x2="33" y2="110" stroke="#2e9e2e" stroke-width="1.8"/><line x1="93" y1="65" x2="103" y2="75" stroke="#2e9e2e" stroke-width="1.8"/><line x1="93" y1="75" x2="103" y2="65" stroke="#2e9e2e" stroke-width="1.8"/><text x="22" y="106" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="100" y="60" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">B</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial" text-anchor="start">Étape 2 :</text><line x1="7.0" y1="128.5" x2="171.0" y2="23.1" stroke="#2e9e2e" stroke-width="1.6" stroke-linecap="round"/><line x1="23" y1="110" x2="33" y2="120" stroke="#222" stroke-width="1.8"/><line x1="23" y1="120" x2="33" y2="110" stroke="#222" stroke-width="1.8"/><line x1="93" y1="65" x2="103" y2="75" stroke="#222" stroke-width="1.8"/><line x1="93" y1="75" x2="103" y2="65" stroke="#222" stroke-width="1.8"/><text x="22" y="106" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="100" y="60" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">B</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial" text-anchor="start">Étape 3 :</text><line x1="7.0" y1="128.5" x2="171.0" y2="23.1" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="23" y1="110" x2="33" y2="120" stroke="#222" stroke-width="1.8"/><line x1="23" y1="120" x2="33" y2="110" stroke="#222" stroke-width="1.8"/><line x1="93" y1="65" x2="103" y2="75" stroke="#222" stroke-width="1.8"/><line x1="93" y1="75" x2="103" y2="65" stroke="#222" stroke-width="1.8"/><line x1="160" y1="83" x2="170" y2="93" stroke="#2e9e2e" stroke-width="1.8"/><line x1="160" y1="93" x2="170" y2="83" stroke="#2e9e2e" stroke-width="1.8"/><text x="22" y="106" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="100" y="60" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">B</text><text x="169" y="78" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">M</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial" text-anchor="start">Étape 4 :</text><line x1="7.0" y1="128.5" x2="171.0" y2="23.1" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="122.1" y1="21.2" x2="186.6" y2="121.6" stroke="#2e9e2e" stroke-width="1.6" stroke-linecap="round"/><polyline points="143.9,40.5 148.3,47.2 141.5,51.5" fill="none" stroke="#2e9e2e" stroke-width="1.3"/><line x1="23" y1="110" x2="33" y2="120" stroke="#222" stroke-width="1.8"/><line x1="23" y1="120" x2="33" y2="110" stroke="#222" stroke-width="1.8"/><line x1="93" y1="65" x2="103" y2="75" stroke="#222" stroke-width="1.8"/><line x1="93" y1="75" x2="103" y2="65" stroke="#222" stroke-width="1.8"/><line x1="160" y1="83" x2="170" y2="93" stroke="#222" stroke-width="1.8"/><line x1="160" y1="93" x2="170" y2="83" stroke="#222" stroke-width="1.8"/><text x="22" y="106" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="100" y="60" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">B</text><text x="175" y="80" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">M</text><text x="169.38575810465895" y="116.60006816280281" font-size="13" fill="#2e9e2e" font-family="Arial" text-anchor="middle">(d)</text></svg></div></div>
+    <div class="phr"><u>Phrase A :</u> Trace la droite (d), perpendiculaire à la droite (AB) passant par le point M.</div>
+    <div class="phr"><u>Phrase B :</u> Place deux points distincts A et B.</div>
+    <div class="phr"><u>Phrase C :</u> Place un point M n’appartenant pas à la droite (AB).</div>
+    <div class="phr"><u>Phrase D :</u> Trace la droite (AB).</div>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 2</h2>
+    Malheureusement, les cinq étapes du texte sont dans le désordre ! Réécris, dans l’ordre, le programme de construction.
+    <ol type="a">
+        <li>Trace la droite (d’), parallèle à la droite (d) passant par le point S.</li>
+        <li>Trace une droite (d), sécante en T à la droite (TR).</li>
+        <li>Trace la droite (TR).</li>
+        <li>Place deux points distincts T et R.</li>
+        <li>Place un point S n’appartenant pas à la droite (d).</li>
+    </ol>
+    
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 3</h2>
+    Pour chaque étape de la construction, écris la consigne qui a été donnée (on ne tient pas compte des mesures).
+    <div class="etapes"><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial" text-anchor="start">Étape 1 :</text><line x1="22.0" y1="100.0" x2="190.0" y2="64.0" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="21.0" y1="95.1" x2="23.0" y2="104.9" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="189.0" y1="59.1" x2="191.0" y2="68.9" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><text x="22" y="118" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">C</text><text x="186" y="55" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">D</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial" text-anchor="start">Étape 2 :</text><line x1="22.0" y1="100.0" x2="190.0" y2="64.0" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="21.0" y1="95.1" x2="23.0" y2="104.9" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="189.0" y1="59.1" x2="191.0" y2="68.9" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><text x="22" y="118" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">C</text><text x="186" y="55" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">D</text><line x1="100" y1="107" x2="110" y2="117" stroke="#222" stroke-width="1.8"/><line x1="100" y1="117" x2="110" y2="107" stroke="#222" stroke-width="1.8"/><text x="117" y="117" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">E</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial" text-anchor="start">Étape 3 :</text><line x1="22.0" y1="100.0" x2="190.0" y2="64.0" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="21.0" y1="95.1" x2="23.0" y2="104.9" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="189.0" y1="59.1" x2="191.0" y2="68.9" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><text x="22" y="118" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">C</text><text x="186" y="55" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">D</text><line x1="100" y1="107" x2="110" y2="117" stroke="#222" stroke-width="1.8"/><line x1="100" y1="117" x2="110" y2="107" stroke="#222" stroke-width="1.8"/><text x="117" y="117" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">E</text><line x1="125.1" y1="72.8" x2="127.2" y2="82.6" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><text x="124.16" y="68.68" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial" text-anchor="start">Étape 4 :</text><line x1="22.0" y1="100.0" x2="190.0" y2="64.0" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="21.0" y1="95.1" x2="23.0" y2="104.9" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="189.0" y1="59.1" x2="191.0" y2="68.9" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><text x="22" y="118" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">C</text><text x="186" y="55" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">D</text><line x1="149.8" y1="39.4" x2="95.6" y2="127.3" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="100" y1="107" x2="110" y2="117" stroke="#222" stroke-width="1.8"/><line x1="100" y1="117" x2="110" y2="107" stroke="#222" stroke-width="1.8"/><text x="117" y="117" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">E</text><text x="116.16" y="68.68" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text></svg></div></div>
+    
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 4</h2>
+    Écris un programme de construction permettant d’obtenir cette figure.
+    <svg viewBox="0 20 430 210" class="fig" style="max-width:430px"><line x1="20.0" y1="150.0" x2="410.0" y2="150.0" stroke="#2e9e2e" stroke-width="2" stroke-linecap="round"/><line x1="85.2" y1="178.5" x2="296.4" y2="44.0" stroke="#2b4fd6" stroke-width="2" stroke-linecap="round"/><line x1="336.0" y1="190.8" x2="229.5" y2="23.6" stroke="#e8551c" stroke-width="2" stroke-linecap="round"/><polyline points="250.4,73.3 255.3,80.9 262.9,76.0" fill="none" stroke="#222" stroke-width="1.3"/><text x="116" y="142" font-size="15" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="322" y="142" font-size="15" fill="#222" font-family="Arial" text-anchor="middle">B</text><text x="242.03564355666293" y="62.43229916670151" font-size="15" fill="#222" font-family="Arial" text-anchor="middle">O</text><text x="395" y="140" font-size="15" fill="#222" font-family="Arial" text-anchor="middle">(d<tspan font-size='10' dy='4'>3</tspan>)</text><text x="314.4463366236618" y="55.96198891671197" font-size="15" fill="#222" font-family="Arial" text-anchor="middle">(d<tspan font-size='10' dy='4'>2</tspan>)</text><text x="309.9821782216685" y="190.78385041664924" font-size="15" fill="#222" font-family="Arial" text-anchor="middle">(d<tspan font-size='10' dy='4'>1</tspan>)</text></svg>
+    
+    </div>
+
+    <script src="../../../impression.js"></script>
+</body>
+</html>

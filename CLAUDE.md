@@ -26,7 +26,7 @@ Site officiel de l'académie de Reims pour les mathématiques : **https://mathem
 ### Règle n°0 — Déclencheur automatique
 Dès qu'un `cours.html` dans MathsIORI est **terminé ou modifié** (contenu, image remplacée par une animation, correction quelconque), la présentation `COURSPRESENTATION` correspondante doit être créée ou mise à jour pour refléter exactement ce changement. **Ne pas attendre qu'on le demande.**
 
-Même principe pour la fiche « images à coller » (voir section « MathsIORI — spécifique aux cours » ci-dessous) : dès qu'un `cours.html` avec des images statiques est terminé ou modifié, le PDF correspondant dans `a distribuer/` doit être créé ou mis à jour. **Ne pas attendre qu'on le demande.**
+Même principe pour la fiche « images à coller » (voir section « MathsIORI — spécifique aux cours » ci-dessous) : dès qu'un `cours.html` avec des images statiques est terminé ou modifié, le PDF correspondant dans `Cours PDF/Chapitre <N> - <Nom>/A distribuer/` doit être créé ou mis à jour. **Ne pas attendre qu'on le demande.**
 
 ## Automatismes — règles spécifiques
 
@@ -272,7 +272,9 @@ Exemple : `Archives/MathsIORI/6°/chapitre10 - Les angles/cours_2026-05-06_14h32
 → Taille par défaut par image : largeur max ~420pt, hauteur max ~130pt → les images presque carrées (ex. cubes de numération) sont donc automatiquement plus petites que les images larges (tableaux, demi-droites graduées), pour rester proportionnées entre elles.
 → Si tout ne tient pas sur une page à taille normale, réduction **uniforme** de toutes les images (jamais de passage à une 2ᵉ page).
 → Réglage manuel possible image par image (`img_overrides` dans le script) si le rendu automatique ne convient pas pour un chapitre précis — cas vécu : chapitre 1 (6ème), 2 premières images réduites à la main.
-→ Nom de sortie : `Chapitre_<N>_<niveau>_images_a_coller.pdf`, dans `MathsIORI/<niveau>°/chapitre<N> - <Nom>/a distribuer/`.
+→ Nom de sortie : `Chapitre_<N>_<niveau>_images_a_coller.pdf`, dans `MathsIORI/<niveau>°/Cours PDF/Chapitre <N> - <Nom>/A distribuer/`.
+→ **Dossier `Cours PDF`** (oct. 2026) : `<niveau>°/Cours PDF/Chapitre <N> - <Nom>/` avec les sous-dossiers `Cours/`, `Activite/`, `Exercices/`, `A distribuer/`. Les PDF/DOCX imprimables à distribuer vont dans `A distribuer/` ; les HTML restent dans le `a distribuer/` du chapitre (liés depuis classe-Xe.html).
+→ **Exercices en ligne = toujours une page HTML** (oct. 2026) : si des exercices mis en ligne n'existent qu'en PDF (ou iframe vers un PDF), les refaire en page HTML dans `exercices/` (`Exercices_<Nom>.html` + `Exercices_<Nom>_Correction.html`, sur le modèle de `6°/chapitre03 - Bases de geometrie/exercices/`, figures en SVG), mettre à jour classe-Xe.html, et ranger le PDF d'origine dans `Cours PDF/Chapitre <N> - <Nom>/Exercices/`.
 → Certains chapitres n'ont aucune image statique à coller (tout est en animations interactives, ex. chapitre07 - Les angles) : dans ce cas, rien à générer.
 
 **Évaluations (dossier `evaluation/`)** (créé sept. 2026)

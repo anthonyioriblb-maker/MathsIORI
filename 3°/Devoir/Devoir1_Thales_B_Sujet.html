@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Devoir n°1 (version B) - Sujet</title>
+<style>
+  :root{ --bleu:#2980b9; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; }
+  .page{ max-width:800px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:32px 44px 40px; }
+  .entete{ border:2px solid #333; border-radius:8px; padding:12px 16px; line-height:2; margin-bottom:14px; font-size:0.95em; }
+  .entete .ligne{ display:inline-block; min-width:60px; border-bottom:1px solid #333; margin-left:4px; }
+  .titre{ text-align:center; font-weight:bold; font-size:1.2em; margin-bottom:6px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); margin:20px 0 6px; font-weight:normal; }
+  h2.exo span{ text-decoration:underline; font-weight:bold; }
+  h2.exo em{ color:#555; font-size:.9em; }
+  .fig-txt{ display:grid; grid-template-columns:300px 1fr; gap:10px 18px; align-items:center; padding:8px 0; }
+  .fig-txt + .fig-txt{ border-top:1px solid #999; }
+  .trou{ line-height:2.3; font-size:1em; white-space:nowrap; }
+  .egal{ display:flex; align-items:center; gap:8px; margin-top:14px; }
+  .egal .fr{ display:inline-flex; flex-direction:column; align-items:center; }
+  .egal .fr i{ display:block; width:70px; height:26px; }
+  .egal .fr i:first-child{ border-bottom:2px solid #000; }
+  .txt-fig{ display:grid; grid-template-columns:1fr 260px; gap:20px; align-items:start; }
+  ol.q{ padding-left:28px; }
+  ol.q li{ margin:3px 0; }
+  .calc2{ display:grid; grid-template-columns:1fr 1fr; gap:14px 30px; font-size:1.1em; align-items:center; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; }
+  .frac > span:first-child{ border-bottom:1.5px solid #000; padding:0 3px; }
+  .frac > span{ line-height:1.25; }
+  .source{ font-size:.85em; color:#555; font-style:italic; }
+  .cc{ font-family:"Times New Roman",serif; font-size:1.15em; }
+  .figs3{ display:flex; gap:14px; align-items:flex-end; }
+  .fg{ text-align:center; }
+  .fg figcaption{ font-size:.85em; font-style:italic; color:#444; }
+  .ex3{ grid-template-columns:1fr 350px !important; }
+  svg text{ font-family:Arial, sans-serif; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+    h2.exo{ margin-top:14px; break-after:avoid; }
+    .fig-txt, .txt-fig, .calc2{ break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="entete">
+    Nom &ndash; Prénom : <span class="ligne" style="min-width:300px;"></span>
+    &nbsp;&nbsp; Classe : <span class="ligne" style="min-width:70px;"></span>
+  </div>
+
+  <div class="titre">Devoir n°1</div>
+
+  <!-- Exercice 1 -->
+  <h2 class="exo"><span>Exercice 1 :</span> Compléter sachant que les droites en gras sont parallèles <em>(à faire sur ce sujet &ndash; 3 points)</em></h2>
+
+  <div class="fig-txt">
+    <svg viewBox="0 0 330 270" width="300">
+      <line x1="20" y1="150" x2="320" y2="40" stroke="#000" stroke-width="1.3"/>
+      <line x1="20" y1="150" x2="320" y2="260" stroke="#000" stroke-width="1.3"/>
+      <line x1="150" y1="78" x2="150" y2="222" stroke="#000" stroke-width="4"/>
+      <line x1="280" y1="30" x2="280" y2="270" stroke="#000" stroke-width="4"/>
+      <text x="4" y="142" font-size="20">R</text>
+      <text x="128" y="96" font-size="20">F</text>
+      <text x="128" y="222" font-size="20">H</text>
+      <text x="290" y="70" font-size="20">G</text>
+      <text x="290" y="242" font-size="20">J</text>
+    </svg>
+    <div class="trou">
+      Les droites (.......) et (.......) sont sécantes en ...... .<br>
+      Les droites (.......) et (.......) sont parallèles.<br>
+      D'après le théorème de Thalès, on a donc :
+      <div class="egal"><span class="fr"><i></i><i></i></span>=<span class="fr"><i></i><i></i></span>=<span class="fr"><i></i><i></i></span></div>
+    </div>
+  </div>
+
+  <div class="fig-txt">
+    <svg viewBox="0 0 330 260" width="300">
+      <line x1="10" y1="103" x2="320" y2="175" stroke="#000" stroke-width="1.3"/>
+      <line x1="95" y1="240" x2="245" y2="40" stroke="#000" stroke-width="1.3"/>
+      <line x1="20" y1="79" x2="130" y2="251" stroke="#000" stroke-width="4"/>
+      <line x1="198" y1="45" x2="294" y2="195" stroke="#000" stroke-width="4"/>
+      <text x="50" y="104" font-size="20">P</text>
+      <text x="78" y="228" font-size="20">N</text>
+      <text x="160" y="164" font-size="20">O</text>
+      <text x="284" y="156" font-size="20">M</text>
+      <text x="232" y="92" font-size="20">L</text>
+    </svg>
+    <div class="trou">
+      Les droites (.......) et (.......) sont sécantes en ...... .<br>
+      Les droites (.......) et (.......) sont parallèles.<br>
+      D'après le théorème de Thalès, on a donc :
+      <div class="egal"><span class="fr"><i></i><i></i></span>=<span class="fr"><i></i><i></i></span>=<span class="fr"><i></i><i></i></span></div>
+    </div>
+  </div>
+
+  <!-- Exercice 2 -->
+  <h2 class="exo"><span>Exercice 2 :</span> <em>(à faire sur la copie &ndash; 4 points)</em></h2>
+  <div class="txt-fig">
+    <div>
+      <p>Sur la figure ci-contre, les points D, E, F et G, E, H sont alignés.</p>
+      <p>On donne : ED = 4,2 cm ; EF = 7 cm ; EG = 5,4 cm et EH = 9,6 cm.</p>
+      <p style="margin-top:6px;">Les droites (DG) et (FH) sont-elles parallèles ?</p>
+    </div>
+    <svg viewBox="0 0 300 145" width="260">
+      <line x1="8" y1="22" x2="295" y2="122" stroke="#000" stroke-width="1.3"/>
+      <line x1="8" y1="100" x2="295" y2="8" stroke="#000" stroke-width="1.3"/>
+      <line x1="32" y1="14" x2="20" y2="110" stroke="#000" stroke-width="1.3"/>
+      <line x1="260" y1="10" x2="287" y2="127" stroke="#000" stroke-width="1.3"/>
+      <text x="14" y="22" font-size="15">D</text>
+      <text x="4" y="110" font-size="15">G</text>
+      <text x="120" y="84" font-size="15">E</text>
+      <text x="244" y="16" font-size="15">H</text>
+      <text x="270" y="140" font-size="15">F</text>
+      <text x="68" y="38" font-size="13">4,2</text>
+      <text x="64" y="100" font-size="13">5,4</text>
+      <text x="186" y="30" font-size="13">9,6</text>
+      <text x="200" y="110" font-size="13">7</text>
+    </svg>
+  </div>
+
+  <!-- Exercice 3 -->
+  <h2 class="exo"><span>Exercice 3 :</span> <em>(à faire sur la copie &ndash; 5 points)</em> <span class="source" style="text-decoration:none;font-weight:normal;">D'après DNB Centres étrangers 2019</span></h2>
+  <div class="txt-fig ex3">
+    <div>
+      <p>Un meuble de rangement est formé de 4 étages identiques posés les uns sur les autres. La figure 1 représente le meuble vu de côté. Les structures métalliques des étages sont toutes identiques ; la figure 2 représente l'une d'elles. Le meuble comporte 5 planches de bois de 2 cm d'épaisseur.</p>
+      <p style="margin-top:6px;">Les points A, O, D et B, O, C sont alignés. Les droites (AC) et (CD) sont perpendiculaires.</p>
+      <p>On donne : OC = 48 cm ; OD = 64 cm ; OB = 27 cm ; OA = 36 cm et CD = 80 cm.</p>
+      <ol class="q" style="margin-top:6px;">
+        <li>Démontrer que les droites (AB) et (CD) sont parallèles.</li>
+        <li>Montrer par le calcul que AB = 45 cm.</li>
+        <li>Calculer la hauteur totale du meuble de rangement.</li>
+      </ol>
+    </div>
+    <div class="figs3"><figure class="fg"><svg viewBox="0 0 110 260" width="125"><g stroke="#555" stroke-width="2.5"><line x1="15" y1="11.5" x2="60" y2="11.5"/><line x1="15" y1="66.5" x2="95" y2="66.5"/><line x1="15" y1="11.5" x2="15" y2="66.5"/><line x1="15" y1="11.5" x2="95" y2="66.5"/><line x1="60" y1="11.5" x2="15" y2="66.5"/><line x1="15" y1="73.5" x2="60" y2="73.5"/><line x1="15" y1="128.5" x2="95" y2="128.5"/><line x1="15" y1="73.5" x2="15" y2="128.5"/><line x1="15" y1="73.5" x2="95" y2="128.5"/><line x1="60" y1="73.5" x2="15" y2="128.5"/><line x1="15" y1="135.5" x2="60" y2="135.5"/><line x1="15" y1="190.5" x2="95" y2="190.5"/><line x1="15" y1="135.5" x2="15" y2="190.5"/><line x1="15" y1="135.5" x2="95" y2="190.5"/><line x1="60" y1="135.5" x2="15" y2="190.5"/><line x1="15" y1="197.5" x2="60" y2="197.5"/><line x1="15" y1="252.5" x2="95" y2="252.5"/><line x1="15" y1="197.5" x2="15" y2="252.5"/><line x1="15" y1="197.5" x2="95" y2="252.5"/><line x1="60" y1="197.5" x2="15" y2="252.5"/></g><rect x="10" y="6" width="90" height="4" fill="#8b5a2b"/><rect x="10" y="68" width="90" height="4" fill="#8b5a2b"/><rect x="10" y="130" width="90" height="4" fill="#8b5a2b"/><rect x="10" y="192" width="90" height="4" fill="#8b5a2b"/><rect x="10" y="254" width="90" height="4" fill="#8b5a2b"/></svg><figcaption>Figure 1</figcaption></figure><figure class="fg"><svg viewBox="0 0 300 240" width="210">
+      <line x1="30" y1="30" x2="30" y2="210" stroke="#555" stroke-width="3"/>
+      <line x1="30" y1="30" x2="270" y2="210" stroke="#555" stroke-width="3"/>
+      <line x1="165" y1="30" x2="30" y2="210" stroke="#555" stroke-width="3"/>
+      <line x1="30" y1="30" x2="165" y2="30" stroke="#555" stroke-width="3"/>
+      <line x1="30" y1="210" x2="270" y2="210" stroke="#555" stroke-width="3"/>
+      <polyline points="30,196 44,196 44,210" fill="none" stroke="#000" stroke-width="1.3"/>
+      <text x="10" y="30" font-size="16">A</text>
+      <text x="168" y="24" font-size="16">B</text>
+      <text x="10" y="226" font-size="16">C</text>
+      <text x="268" y="230" font-size="16">D</text>
+      <text x="112" y="84" font-size="16">O</text>
+    </svg><figcaption>Figure 2 : un étage</figcaption></figure></div>
+  </div>
+
+  <!-- Exercice 4 -->
+  <h2 class="exo"><span>Exercice 4 :</span> <em>(à faire sur la copie &ndash; 3 points)</em></h2>
+  <p>Un objet a une hauteur de 2,50 m et un volume V égal à 250 dm³.</p>
+  <p>Un autre objet est une réduction du premier. Sa hauteur est égale à 2 m.</p>
+  <ol class="q">
+    <li>Calculer le coefficient de réduction.</li>
+    <li>Calculer son volume V'.</li>
+  </ol>
+
+  <!-- Exercice 5 -->
+  <h2 class="exo"><span>Exercice 5 :</span> <em>(à faire sur la copie &ndash; 5 points)</em></h2>
+  <p>Calculer les expressions suivantes en détaillant les étapes :</p>
+  <div class="calc2" style="margin:6px 0 10px;">
+    <div><em>A</em> = 18 &minus; (5 × 4 &minus; 11)</div>
+    <div><em>B</em> = <span class="frac"><span>2</span><span>5</span></span> &minus; <span class="frac"><span>4</span><span>5</span></span> ÷ <span class="frac"><span>8</span><span>3</span></span></div>
+  </div>
+  <p>Écrire les nombres suivants en écriture scientifique :</p>
+  <div class="calc2" style="margin-top:6px;">
+    <div><em>C</em> = 2&nbsp;584,6</div>
+    <div><em>D</em> = <span class="frac"><span>4 × 10<sup>&minus;3</sup> × 15 × 10<sup>5</sup></span><span>2 × 10<sup>&minus;4</sup></span></span></div>
+  </div>
+
+  <!-- Bonus -->
+  <h2 class="exo"><span>Bonus :</span> <em>(à faire sur la copie)</em></h2>
+  <div class="txt-fig">
+    <div>
+      <p>On considère deux cercles <i class="cc">C</i> et <i class="cc">C'</i> de même centre O et de rayons r et r' tels que :</p>
+      <ul style="padding-left:24px;margin:4px 0;">
+        <li>[Ox) et [Oy) sont deux demi-droites d'origine O ;</li>
+        <li>[Ox) coupe le cercle <i class="cc">C</i> en A et le cercle <i class="cc">C'</i> en C ;</li>
+        <li>[Oy) coupe le cercle <i class="cc">C</i> en B et le cercle <i class="cc">C'</i> en D.</li>
+      </ul>
+      <p>Démontrer que les droites (AB) et (CD) sont parallèles.</p>
+    </div>
+    <svg viewBox="0 0 360 330" width="240">
+      <circle cx="150" cy="180" r="60" fill="none" stroke="#000" stroke-width="1.3"/>
+      <circle cx="150" cy="180" r="140" fill="none" stroke="#000" stroke-width="1.3"/>
+      <line x1="150" y1="180" x2="343" y2="128" stroke="#000" stroke-width="1.3"/>
+      <line x1="150" y1="180" x2="245" y2="15" stroke="#000" stroke-width="1.3"/>
+      <g fill="#000"><circle cx="150" cy="180" r="3"/><circle cx="208" cy="164.5" r="3"/><circle cx="285.2" cy="143.8" r="3"/><circle cx="180" cy="128" r="3"/><circle cx="220" cy="58.8" r="3"/></g>
+      <text x="130" y="200" font-size="18">O</text>
+      <text x="206" y="186" font-size="18">A</text>
+      <text x="282" y="166" font-size="18">C</text>
+      <text x="160" y="124" font-size="18">B</text>
+      <text x="196" y="56" font-size="18">D</text>
+      <text x="330" y="122" font-size="18">x</text>
+      <text x="250" y="18" font-size="18">y</text>
+      <text x="86" y="222" font-size="20" font-style="italic" font-family="Times New Roman, serif">C</text>
+      <text x="30" y="80" font-size="20" font-style="italic" font-family="Times New Roman, serif">C'</text>
+    </svg>
+  </div>
+
+</div>
+</body>
+</html>

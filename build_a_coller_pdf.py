@@ -27,7 +27,7 @@ Si [nb_copies] est omis, le nombre de copies qui tiennent sur la page à
 taille normale est calculé automatiquement. Passer 1 pour forcer une seule
 copie (comportement d'origine).
 
-Le PDF est écrit dans "<dossier_du_chapitre>/a distribuer/Chapitre_<N>_<niveau>_images_a_coller.pdf".
+Le PDF est écrit dans "<niveau>°/Cours PDF/Chapitre <N> - <Nom>/A distribuer/Chapitre_<N>_<niveau>_images_a_coller.pdf".
 
 Ajustements possibles au cas par cas (ex : rendre un élément encore plus
 petit qu'un autre, changer l'ordre, exclure un élément décoratif) :
@@ -240,11 +240,12 @@ def build(chapter_dir, out_path=None, img_overrides=None, copies=None):
 
     if out_path is None:
         chapter_name = os.path.basename(os.path.normpath(chapter_dir))
-        m = re.match(r"chapitre0*(\d+)", chapter_name, re.IGNORECASE)
+        m = re.match(r"chapitre\s*0*(\d+)\s*-\s*(.+)", chapter_name, re.IGNORECASE)
         num = m.group(1) if m else "X"
-        niveau_dir = os.path.basename(os.path.dirname(os.path.normpath(chapter_dir)))
-        niveau = niveau_dir.replace("°", "e")
-        out_dir = os.path.join(chapter_dir, "a distribuer")
+        nom = m.group(2).strip() if m else chapter_name
+        niveau_path = os.path.dirname(os.path.normpath(chapter_dir))
+        niveau = os.path.basename(niveau_path).replace("°", "e")
+        out_dir = os.path.join(niveau_path, "Cours PDF", f"Chapitre {num} - {nom}", "A distribuer")
         os.makedirs(out_dir, exist_ok=True)
         out_path = os.path.join(out_dir, f"Chapitre_{num}_{niveau}_images_a_coller.pdf")
 

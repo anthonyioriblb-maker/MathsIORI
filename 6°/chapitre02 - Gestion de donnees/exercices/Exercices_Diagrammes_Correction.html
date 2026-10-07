@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagrammes - Exercices (correction)</title>
+    <style>
+    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 16px; line-height: 1.5; color:#111; }
+    h1 { text-align: center; color: #2E75B5; margin: 4px 0 2px; font-size: 1.6em; }
+    .subtitle { text-align: center; font-weight: bold; margin-bottom: 10px; }
+    h2 { color: #2E75B5; border-bottom: 2px solid #2E75B5; padding-bottom: 3px; margin: 14px 0 8px; font-size: 1.2em; }
+    p { margin: 5px 0; }
+    .fig { width: 100%; height: auto; display: block; margin: 8px auto; }
+    table.t { border-collapse: collapse; text-align: center; margin: 8px 0; }
+    table.t td, table.t th { border: 1px solid #222; padding: 4px 10px; min-width: 60px; height: 26px; }
+    table.t th { background: #f2f6fb; }
+    ol { margin: 4px 0; padding-left: 28px; }
+    .rep { color: #c0392b; font-weight: bold; }
+    .home-button { display:inline-block; text-decoration:none; }
+    @media print {
+      @page { margin: 10mm; }
+      body { padding: 0; max-width: 100%; font-size: 11pt; }
+      .home-button { display: none; }
+      h2 { break-after: avoid; }
+      .bloc { break-inside: avoid; }
+      table.t th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+</style>
+</head>
+<body>
+    <a href="../../classe-6e.html" class="home-button" style="margin: 10px 0;">← Retour au choix des chapitres</a>
+    <h1>Exercices du chapitre 2 — Correction</h1>
+    <div class="subtitle">Diagrammes</div>
+
+    <div class="bloc">
+    <h2>Exercice 1</h2>
+    <p>Yannick a 45 albums de bandes dessinées : 15 Tintin ; 6 Boule et Bill ; 10 Lucky Luke et 14 Astérix.</p>
+    <p>Pour représenter la répartition des BD de Yannick par un diagramme circulaire, calcule les angles avec le tableau de proportionnalité ci-dessous, puis fais la construction.</p>
+    <table class="t"><tr><th></th><th>Tintin</th><th>Boule et Bill</th><th>Lucky Luke</th><th>Astérix</th><th>Total</th></tr><tr><th>Effectif</th><td><span class="rep">15</span></td><td><span class="rep">6</span></td><td><span class="rep">10</span></td><td><span class="rep">14</span></td><td><span class="rep">45</span></td></tr><tr><th>Angle en °</th><td><span class="rep">120</span></td><td><span class="rep">48</span></td><td><span class="rep">80</span></td><td><span class="rep">112</span></td><td><span class="rep">360</span></td></tr></table>
+    <p class="rep">360 ÷ 45 = 8 donc on multiplie la ligne « Effectif » par 8 pour obtenir la ligne « Angle en ° ».</p><svg viewBox="0 0 400 240" class="fig" style="max-width:420px"><path d="M130,120 L130.0,25.0 A95,95 0 0 1 212.3,167.5 Z" fill="#5b8def" stroke="#222" stroke-width="1.2"/><text x="181.0" y="94.6" font-size="12" text-anchor="middle" font-family="Arial">120°</text><rect x="260" y="55" width="16" height="16" fill="#5b8def" stroke="#222"/><text x="284" y="68" font-size="13" font-family="Arial">Tintin</text><path d="M130,120 L212.3,167.5 A95,95 0 0 1 149.8,212.9 Z" fill="#f4a261" stroke="#222" stroke-width="1.2"/><text x="164.6" y="171.7" font-size="12" text-anchor="middle" font-family="Arial">48°</text><rect x="260" y="85" width="16" height="16" fill="#f4a261" stroke="#222"/><text x="284" y="98" font-size="13" font-family="Arial">Boule et Bill</text><path d="M130,120 L149.8,212.9 A95,95 0 0 1 41.9,155.6 Z" fill="#7cc47f" stroke="#222" stroke-width="1.2"/><text x="102.3" y="176.0" font-size="12" text-anchor="middle" font-family="Arial">80°</text><rect x="260" y="115" width="16" height="16" fill="#7cc47f" stroke="#222"/><text x="284" y="128" font-size="13" font-family="Arial">Lucky Luke</text><path d="M130,120 L41.9,155.6 A95,95 0 0 1 130.0,25.0 Z" fill="#e76f8a" stroke="#222" stroke-width="1.2"/><text x="81.2" y="91.1" font-size="12" text-anchor="middle" font-family="Arial">112°</text><rect x="260" y="145" width="16" height="16" fill="#e76f8a" stroke="#222"/><text x="284" y="158" font-size="13" font-family="Arial">Astérix</text></svg>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 2</h2>
+    <p>Voici la répartition de 450 collégiens selon la marque de leurs baskets.</p>
+    <table class="t"><tr><th>Marque</th><td>Adidas</td><td>Nike</td><td>Puma</td><td>Autres marques</td><th>Total</th></tr><tr><th>Effectif</th><td>100</td><td>70</td><td><span class="rep">120</span></td><td>160</td><th>450</th></tr></table>
+    <ol>
+        <li>Remplis la case manquante.<p class="rep">450 − 100 − 70 − 160 = 120<br>Il y a donc 120 collégiens qui portent des baskets Puma.</p></li>
+        <li>Représente cette répartition sous la forme d’un diagramme en barres.<svg viewBox="0 0 490 275" class="fig" style="max-width:480px"><line x1="55" y1="230.0" x2="470" y2="230.0" stroke="#ccc" stroke-width="0.8"/><text x="49" y="234.0" font-size="11" text-anchor="end" font-family="Arial">0</text><line x1="55" y1="207.8" x2="470" y2="207.8" stroke="#ccc" stroke-width="0.8"/><text x="49" y="211.8" font-size="11" text-anchor="end" font-family="Arial">20</text><line x1="55" y1="185.6" x2="470" y2="185.6" stroke="#ccc" stroke-width="0.8"/><text x="49" y="189.6" font-size="11" text-anchor="end" font-family="Arial">40</text><line x1="55" y1="163.3" x2="470" y2="163.3" stroke="#ccc" stroke-width="0.8"/><text x="49" y="167.3" font-size="11" text-anchor="end" font-family="Arial">60</text><line x1="55" y1="141.1" x2="470" y2="141.1" stroke="#ccc" stroke-width="0.8"/><text x="49" y="145.1" font-size="11" text-anchor="end" font-family="Arial">80</text><line x1="55" y1="118.9" x2="470" y2="118.9" stroke="#ccc" stroke-width="0.8"/><text x="49" y="122.9" font-size="11" text-anchor="end" font-family="Arial">100</text><line x1="55" y1="96.7" x2="470" y2="96.7" stroke="#ccc" stroke-width="0.8"/><text x="49" y="100.7" font-size="11" text-anchor="end" font-family="Arial">120</text><line x1="55" y1="74.4" x2="470" y2="74.4" stroke="#ccc" stroke-width="0.8"/><text x="49" y="78.4" font-size="11" text-anchor="end" font-family="Arial">140</text><line x1="55" y1="52.2" x2="470" y2="52.2" stroke="#ccc" stroke-width="0.8"/><text x="49" y="56.2" font-size="11" text-anchor="end" font-family="Arial">160</text><line x1="55" y1="30.0" x2="470" y2="30.0" stroke="#ccc" stroke-width="0.8"/><text x="49" y="34.0" font-size="11" text-anchor="end" font-family="Arial">180</text><rect x="80.9" y="118.9" width="51.9" height="111.1" fill="#5b8def" stroke="#222"/><text x="106.9" y="246" font-size="12" text-anchor="middle" font-family="Arial">Adidas</text><rect x="184.7" y="152.2" width="51.9" height="77.8" fill="#5b8def" stroke="#222"/><text x="210.6" y="246" font-size="12" text-anchor="middle" font-family="Arial">Nike</text><rect x="288.4" y="96.7" width="51.9" height="133.3" fill="#5b8def" stroke="#222"/><text x="314.4" y="246" font-size="12" text-anchor="middle" font-family="Arial">Puma</text><rect x="392.2" y="52.2" width="51.9" height="177.8" fill="#5b8def" stroke="#222"/><text x="418.1" y="246" font-size="12" text-anchor="middle" font-family="Arial">Autres marques</text><line x1="55" y1="20" x2="55" y2="230" stroke="#222" stroke-width="1.2"/><line x1="55" y1="230" x2="470" y2="230" stroke="#222" stroke-width="1.2"/><text x="262.5" y="268" font-size="12" font-weight="bold" text-anchor="middle" font-family="Arial">Marque</text><text transform="translate(14 130.0) rotate(-90)" font-size="12" font-weight="bold" text-anchor="middle" font-family="Arial">Effectif</text></svg></li>
+    </ol>
+    </div>
+
+    <script src="../../../impression.js"></script>
+</body>
+</html>
