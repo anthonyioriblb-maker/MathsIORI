@@ -43,9 +43,14 @@
     h2.exo{ margin-top:14px; break-after:avoid; }
     .fig-txt, .txt-fig, .calc2{ break-inside:avoid; }
   }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
 </style>
 </head>
 <body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
 <div class="page">
 
   <div class="entete">

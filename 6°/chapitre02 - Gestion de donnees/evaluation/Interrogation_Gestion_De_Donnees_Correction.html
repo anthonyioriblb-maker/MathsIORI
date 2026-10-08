@@ -40,9 +40,14 @@
     .entete{ padding:6px 14px; margin-bottom:4px; }
     .ligne-ecrire{ height:30px; }
   }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
 </style>
 </head>
 <body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
 <div class="page">
 
   <div class="badge-correction">CORRECTION</div>
