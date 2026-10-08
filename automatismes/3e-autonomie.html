@@ -4662,5 +4662,33 @@ mettre [périmètre v] à (((longueur) + (largeur)) * (2))`;
     <div style="position: fixed; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 3px 8px; border-radius: 5px; font-size: 11px; z-index: 9999;">
         v2024-12-08-SOUS-THEMES-DNB
     </div>
+<script>
+// Lettre x / y des expressions littérales affichée comme en maths (𝑥, 𝑦 : italique mathématique, comme dans Word)
+(function(){
+    const X='\u{1D465}', Y='\u{1D466}';
+    const re=/(^|[^A-Za-zÀ-ÿ_\[])([xy])(?![A-Za-zÀ-ÿ0-9_\]])/g;
+    function conv(s){
+        return s.replace(re,(m,a,c,off,str)=>{
+            const before=str.slice(Math.max(0,off-12),off+a.length), after=str.slice(off+m.length,off+m.length+4);
+            if(/\d\s+$/.test(before)&&/^\s+\d/.test(after)) return m;          // 3 x 4 = multiplication
+            if(/ v\]/.test(str.slice(off+m.length,off+m.length+3))) return m;   // variable Scratch [x v]
+            if(c==='y'&&/(il|Il|n')\s+$/.test(before)) return m;                // « il y a »
+            return a+(c==='x'?X:Y);
+        });
+    }
+    function walk(root){
+        const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{
+            const p=n.parentNode&&n.parentNode.nodeName;
+            return (p==='SCRIPT'||p==='STYLE'||p==='TEXTAREA'||p==='CODE'||p==='PRE')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT;}});
+        const L=[];while(w.nextNode())L.push(w.currentNode);
+        L.forEach(n=>{const v=conv(n.nodeValue); if(v!==n.nodeValue) n.nodeValue=v;});
+    }
+    function go(){ walk(document.body);
+        new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{
+            if(n.nodeType===3){const v=conv(n.nodeValue); if(v!==n.nodeValue) n.nodeValue=v;} else if(n.nodeType===1) walk(n);
+        }))).observe(document.body,{childList:true,subtree:true}); }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',go); else go();
+})();
+</script>
 </body>
 </html>
