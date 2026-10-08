@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours de 3ème</title>
-    <link rel="stylesheet" href="../classe-page.css?v=20251120143124">
+    <link rel="stylesheet" href="../classe-page.css?v=20261004b">
     <style>
         :root {
             --main-gradient: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
@@ -687,7 +687,22 @@
                 }
             }
         };
+
+        // Devoirs portant sur plusieurs chapitres (section « Devoirs » sous les chapitres)
+        // actif: false → bouton grisé avec cadenas (ex. correction avant que le devoir soit rendu)
+        const configDevoirs = [
+            {
+                titre: "Devoir n°1 : Thalès et calculs",
+                description: "Théorème de Thalès et sa réciproque, agrandissement-réduction, calculs, fractions et écriture scientifique",
+                chapitres: [1, 2],
+                alerte: true,   // bandeau clignotant en haut de page
+                diffusion: "2026-10-08",   // date de mise en ligne du sujet : bandeau affiché 7 jours à partir de cette date
+                date: "",       // ex. "jeudi 15 octobre" (laisser vide pour ne pas afficher de date)
+                sujet:      { actif: true,  fichier: "Devoir/Devoir1_Thales_B_Sujet.html" },
+                correction: { actif: false, fichier: "Devoir/Devoir1_Thales_B_Correction.html" }
+            }
+        ];
     </script>
-    <script src="../classe-page.js?v=20251120143124"></script>
+    <script src="../classe-page.js?v=20261004b"></script>
 </body>
 </html>
