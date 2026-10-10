@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Calcul littéral — Développement et réduction</title>
+    <link rel="stylesheet" href="../../styles.css?v=20260616">
+    <style>
+        .fleche-dev {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 14px 0;
+            flex-wrap: wrap;
+        }
+        .fleche-dev .expr {
+            background: #f5f6ff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .fleche-dev .arrow { font-size: 1.4em; color: #667eea; }
+        .etapes { background: #f9f9f9; border-left: 4px solid #667eea; padding: 12px 16px; margin: 12px 0; border-radius: 0 8px 8px 0; }
+        .etapes li { margin: 6px 0; }
+        .ex-ligne {
+            display: flex; align-items: center; gap: 10px;
+            margin: 10px 0; flex-wrap: wrap;
+        }
+        .ex-ligne input {
+            width: 160px; font-size: 1em; padding: 5px 8px;
+            border: 2px solid #999; border-radius: 6px; text-align: center;
+        }
+        .ex-ligne input.ok  { border-color: #27ae60; background: #eafaf1; }
+        .ex-ligne input.err { border-color: #e74c3c; background: #fdecea; }
+        .feedback.ok  { color: #27ae60; font-weight: bold; }
+        .feedback.err { color: #e74c3c; font-weight: bold; }
+        .double-dist {
+            background: #fff8e1;
+            border: 2px solid #f7971e;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            font-size: 1.05em;
+        }
+        .calcul-detail {
+            background: #f5f6ff;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <a href="../classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Calcul littéral — Développement et réduction</h1>
+
+    <!-- ===================================================== -->
+    <h2>1. Rappel — Distributivité simple</h2>
+    <!-- ===================================================== -->
+
+    <div class="definition">
+        <span style="color:red;">Propriété :</span>
+        Pour tous nombres a, b, k :<br><br>
+        <div style="text-align:center; font-size:1.2em; font-weight:bold;">
+            k × (a + b) = k×a + k×b
+        </div>
+        <br>
+        Cette propriété permet de <span style="color:red;"><strong>développer</strong></span> (enlever les parenthèses) ou de <span style="color:red;"><strong>factoriser</strong></span> (mettre en facteur).
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong>
+        <ul>
+            <li>3(x + 5) = 3x + 15</li>
+            <li>−2(4x − 1) = −8x + 2 &nbsp;<span style="color:#888;">(attention au signe !)</span></li>
+            <li>x(x + 7) = x² + 7x</li>
+            <li>Factoriser 6x + 10 = <strong>2(3x + 5)</strong></li>
+        </ul>
+    </div>
+
+    <div class="method">
+        <strong>Réduire une expression :</strong> regrouper les termes semblables (même puissance de x).
+        <div class="calcul-detail">
+3x + 5 + 2x − 1
+= (3x + 2x) + (5 − 1)
+= 5x + 4
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>2. Double distributivité</h2>
+    <!-- ===================================================== -->
+
+    <div class="double-dist">
+        <span style="color:red; font-weight:bold;">Propriété :</span>
+        Pour tous nombres a, b, c, d :<br><br>
+        <div style="text-align:center; font-size:1.2em; font-weight:bold;">
+            (a + b)(c + d) = ac + ad + bc + bd
+        </div>
+    </div>
+
+    <div class="method">
+        <strong>Méthode — développer (a + b)(c + d) :</strong>
+        <p>Chaque terme du premier facteur multiplie <em>chacun</em> des termes du second.</p>
+        <ol class="etapes">
+            <li>a × c = ac</li>
+            <li>a × d = ad</li>
+            <li>b × c = bc</li>
+            <li>b × d = bd</li>
+            <li>On additionne et on réduit.</li>
+        </ol>
+        <p>Astuce mémo : <strong>«&nbsp;chaque terme de gauche multiplie chaque terme de droite&nbsp;»</strong></p>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong> Développer et réduire (x + 3)(x + 5).<br><br>
+        <div class="calcul-detail">
+(x + 3)(x + 5)
+= x×x + x×5 + 3×x + 3×5
+= x² + 5x + 3x + 15
+= x² + 8x + 15
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 :</strong> Développer et réduire (2x − 1)(x + 4).<br><br>
+        <div class="calcul-detail">
+(2x − 1)(x + 4)
+= 2x×x + 2x×4 + (−1)×x + (−1)×4
+= 2x² + 8x − x − 4
+= 2x² + 7x − 4
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 3 :</strong> Développer et réduire (x − 2)(3x + 1).<br><br>
+        <div class="calcul-detail">
+(x − 2)(3x + 1)
+= x×3x + x×1 + (−2)×3x + (−2)×1
+= 3x² + x − 6x − 2
+= 3x² − 5x − 2
+        </div>
+    </div>
+
+    <div class="remarque">
+        <strong>Attention aux signes !</strong> Quand un terme est négatif, le produit change de signe :<br>
+        (−1) × (−4) = +4 &nbsp;✓ &nbsp;&nbsp;&nbsp; (−2) × 3x = −6x &nbsp;✓
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>3. Cas particulier : carré d'une somme</h2>
+    <!-- ===================================================== -->
+
+    <div class="important">
+        <span style="color:red;">À savoir :</span> (a + b)² = (a + b)(a + b)<br><br>
+        On applique la double distributivité :<br>
+        <div class="calcul-detail">
+(a + b)² = a×a + a×b + b×a + b×b
+         = a² + ab + ab + b²
+         = a² + 2ab + b²
+        </div>
+        <strong>Résultat : (a + b)² = a² + 2ab + b²</strong><br><br>
+        ⚠️ <strong>(a + b)² ≠ a² + b²</strong> — ne jamais oublier le terme 2ab !
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> (x + 3)² = x² + 2×x×3 + 3² = x² + 6x + 9
+    </div>
+
+    <!-- ===================================================== -->
+    <h2>4. Exercices interactifs</h2>
+    <!-- ===================================================== -->
+
+    <h3>Distributivité simple</h3>
+
+    <div class="example">
+        <strong>Exercice 1 :</strong> Développer et réduire.
+        <div class="ex-ligne">a) 4(x + 2) = <input type="text" id="e1a" placeholder="?"> <span id="fb1a" class="feedback"></span></div>
+        <div class="ex-ligne">b) −3(2x − 5) = <input type="text" id="e1b" placeholder="?"> <span id="fb1b" class="feedback"></span></div>
+        <div class="ex-ligne">c) 5x + 2x − 3 = <input type="text" id="e1c" placeholder="?"> <span id="fb1c" class="feedback"></span></div>
+        <button onclick="checkEx1()">Vérifier</button>
+    </div>
+
+    <h3>Double distributivité</h3>
+
+    <div class="example">
+        <strong>Exercice 2 :</strong> Développer et réduire. Écrire sous la forme ax² + bx + c.
+        <div class="ex-ligne">a) (x + 2)(x + 6) = <input type="text" id="e2a" placeholder="ax²+bx+c"> <span id="fb2a" class="feedback"></span></div>
+        <div class="ex-ligne">b) (x − 3)(x + 4) = <input type="text" id="e2b" placeholder="ax²+bx+c"> <span id="fb2b" class="feedback"></span></div>
+        <div class="ex-ligne">c) (2x + 1)(x − 5) = <input type="text" id="e2c" placeholder="ax²+bx+c"> <span id="fb2c" class="feedback"></span></div>
+        <button onclick="checkEx2()">Vérifier</button>
+    </div>
+
+    <div class="example">
+        <strong>Exercice 3 :</strong> Développer et réduire (x + 4)².
+        <div class="ex-ligne">(x + 4)² = <input type="text" id="e3" placeholder="ax²+bx+c"> <span id="fb3" class="feedback"></span></div>
+        <button onclick="checkEx3()">Vérifier</button>
+    </div>
+
+    <h3>Problème</h3>
+
+    <div class="example">
+        <strong>Exercice 4 :</strong> Un rectangle a pour dimensions (x + 3) cm et (x + 5) cm.<br>
+        Exprimer son aire A en développant l'expression.<br><br>
+        A = <input type="text" id="e4" placeholder="ax²+bx+c" style="width:200px"> cm²
+        <span id="fb4" class="feedback"></span>
+        <br><button onclick="checkEx4()" style="margin-top:8px;">Vérifier</button>
+    </div>
+
+    <script>
+        function norm(s) {
+            // Normalise une expression : enlève espaces, met en minuscules
+            return s.trim().toLowerCase()
+                .replace(/\s+/g,'')
+                .replace(/\+0x/g,'')
+                .replace(/\+-/g,'-');
+        }
+        function showFb(id, ok, msgOk, msgErr) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = ok ? '✓ ' + msgOk : '✗ ' + msgErr;
+            el.className = 'feedback ' + (ok ? 'ok' : 'err');
+            var inp = el.previousElementSibling;
+            if (inp && inp.tagName === 'INPUT') inp.className = ok ? 'ok' : 'err';
+        }
+        function match(id, ...accepted) {
+            var v = norm(document.getElementById(id).value);
+            return accepted.some(function(a){ return norm(a) === v; });
+        }
+
+        function checkEx1() {
+            showFb('fb1a', match('e1a','4x+8','4x + 8'), '4x + 8', '4×x + 4×2 = 4x + 8');
+            showFb('fb1b', match('e1b','-6x+15','−6x+15','-6x + 15'), '−6x + 15', '−3×2x + (−3)×(−5) = −6x + 15');
+            showFb('fb1c', match('e1c','7x-3','7x − 3','7x-3'), '7x − 3', '5x + 2x − 3 = 7x − 3');
+        }
+
+        function checkEx2() {
+            // (x+2)(x+6) = x²+8x+12
+            showFb('fb2a', match('e2a','x²+8x+12','x^2+8x+12','x²+8x+12'), 'x² + 8x + 12', 'x²+6x+2x+12 = x²+8x+12');
+            // (x-3)(x+4) = x²+x-12
+            showFb('fb2b', match('e2b','x²+x-12','x^2+x-12','x²+x−12'), 'x² + x − 12', 'x²+4x−3x−12 = x²+x−12');
+            // (2x+1)(x-5) = 2x²-9x-5
+            showFb('fb2c', match('e2c','2x²-9x-5','2x^2-9x-5','2x²−9x−5'), '2x² − 9x − 5', '2x²−10x+x−5 = 2x²−9x−5');
+        }
+
+        function checkEx3() {
+            // (x+4)² = x²+8x+16
+            showFb('fb3', match('e3','x²+8x+16','x^2+8x+16'), 'x² + 8x + 16', 'x²+2×4x+16 = x²+8x+16');
+        }
+
+        function checkEx4() {
+            // (x+3)(x+5) = x²+8x+15
+            showFb('fb4', match('e4','x²+8x+15','x^2+8x+15'), 'x² + 8x + 15', '(x+3)(x+5) = x²+5x+3x+15 = x²+8x+15');
+        }
+    </script>
+
+</body>
+</html>

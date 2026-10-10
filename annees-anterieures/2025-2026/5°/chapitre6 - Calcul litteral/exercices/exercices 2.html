@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcul littéral — Feuille d'exercices</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6fa;
+      color: #222;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8em;
+      margin-bottom: 6px;
+      color: #2E4057;
+    }
+
+    .sous-titre {
+      text-align: center;
+      font-size: 0.95em;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    .partie {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+
+    .partie-header {
+      color: white;
+      font-weight: bold;
+      font-size: 1.05em;
+      padding: 9px 16px;
+    }
+
+    .p1 .partie-header { background: #2E4057; }
+    .p2 .partie-header { background: #1B6CA8; }
+    .p3 .partie-header { background: #157A6E; }
+    .p4 .partie-header { background: #8B2FC9; }
+
+    .partie-consigne {
+      font-style: italic;
+      color: #555;
+      font-size: 0.92em;
+      padding: 8px 16px 4px;
+    }
+
+    .grille {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px 0;
+      padding: 8px 12px 10px;
+    }
+
+    .grille-1col {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 8px 12px 10px;
+      gap: 2px;
+    }
+
+    .exo-item {
+      padding: 6px 6px;
+      font-size: 1em;
+      line-height: 1.6;
+    }
+
+    .exo-item .lettre {
+      font-weight: bold;
+      color: #444;
+      margin-right: 4px;
+    }
+
+    sup { font-size: 0.75em; vertical-align: super; }
+
+    /* Bouton correction */
+    .btn-correction {
+      display: block;
+      margin: 0 16px 12px;
+      padding: 7px 18px;
+      background: #eef3fb;
+      border: 1.5px solid #1B6CA8;
+      border-radius: 5px;
+      color: #1B6CA8;
+      font-size: 0.92em;
+      font-weight: bold;
+      cursor: pointer;
+      width: fit-content;
+      transition: background 0.2s;
+    }
+    .btn-correction:hover { background: #d6e6f7; }
+
+    /* Correction cachée / visible */
+    .correction { display: none; }
+    .correction.visible { display: block; }
+
+    .correction-grille {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px 0;
+      padding: 4px 12px 10px;
+      background: #f8fbff;
+      border-top: 1px dashed #c0d6ed;
+    }
+
+    .correction-grille-1col {
+      padding: 4px 12px 10px;
+      background: #f8fbff;
+      border-top: 1px dashed #c0d6ed;
+    }
+
+    .corr-item {
+      padding: 5px 6px;
+      font-size: 0.95em;
+      line-height: 1.7;
+    }
+
+    .corr-item .lettre { font-weight: bold; color: #444; margin-right: 4px; }
+
+    .res { color: #1B6CA8; font-weight: bold; }
+    .etape { color: #777; font-size: 0.92em; display: block; padding-left: 14px; }
+    .vrai { color: #157A6E; font-weight: bold; }
+
+    /* Partie 3 : tableau test égalité */
+    .test-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93em;
+      margin-bottom: 6px;
+    }
+    .test-table th {
+      background: #e0f0eb;
+      color: #157A6E;
+      padding: 5px 8px;
+      text-align: left;
+      font-weight: bold;
+      border: 1px solid #b5ddd3;
+    }
+    .test-table td {
+      border: 1px solid #dde;
+      padding: 5px 8px;
+      vertical-align: top;
+    }
+    .test-table tr:nth-child(even) td { background: #f5faf8; }
+
+    .enonce-test {
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+      padding: 6px 12px 2px;
+    }
+
+    @media (max-width: 600px) {
+      .grille, .correction-grille { grid-template-columns: 1fr; }
+      body { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Calcul littéral</h1>
+<p class="sous-titre">Réduction · Développement · Test d'égalité · Substitution</p>
+
+<!-- ══════════════════════════════════════════
+     PARTIE 1 — Réduction
+══════════════════════════════════════════ -->
+<div class="partie p1">
+  <div class="partie-header">Partie 1 — Réduction d'expressions</div>
+  <div class="partie-consigne">Réduis les expressions suivantes en regroupant les termes semblables.</div>
+  <div class="grille">
+    <div class="exo-item"><span class="lettre">a)</span> 3x + 5x</div>
+    <div class="exo-item"><span class="lettre">b)</span> 4x² + 2x² + x²</div>
+    <div class="exo-item"><span class="lettre">c)</span> 4x + 3 + 2x + 8</div>
+    <div class="exo-item"><span class="lettre">d)</span> 8a + 3b − 2a + 7b</div>
+    <div class="exo-item"><span class="lettre">e)</span> 3x² + 5x + 2x² − x</div>
+    <div class="exo-item"><span class="lettre">f)</span> 5a³ + 6 − 2a³ + 4</div>
+    <div class="exo-item"><span class="lettre">g)</span> 4x² + 2x − x² + 3x + 5</div>
+    <div class="exo-item"><span class="lettre">h)</span> 6a³ + 4a − 2a³ + 2a + a³</div>
+  </div>
+  <button class="btn-correction" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="correction-grille">
+      <div class="corr-item"><span class="lettre">a)</span> 3x + 5x <span class="res">= 8x</span></div>
+      <div class="corr-item"><span class="lettre">b)</span> 4x² + 2x² + x² <span class="res">= 7x²</span></div>
+      <div class="corr-item"><span class="lettre">c)</span> 4x + 3 + 2x + 8 <span class="res">= 6x + 11</span></div>
+      <div class="corr-item"><span class="lettre">d)</span> 8a + 3b − 2a + 7b <span class="res">= 6a + 10b</span></div>
+      <div class="corr-item"><span class="lettre">e)</span> 3x² + 5x + 2x² − x <span class="res">= 5x² + 4x</span></div>
+      <div class="corr-item"><span class="lettre">f)</span> 5a³ + 6 − 2a³ + 4 <span class="res">= 3a³ + 10</span></div>
+      <div class="corr-item"><span class="lettre">g)</span> 4x² + 2x − x² + 3x + 5 <span class="res">= 3x² + 5x + 5</span></div>
+      <div class="corr-item"><span class="lettre">h)</span> 6a³ + 4a − 2a³ + 2a + a³ <span class="res">= 5a³ + 6a</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PARTIE 2 — Développer et réduire
+══════════════════════════════════════════ -->
+<div class="partie p2">
+  <div class="partie-header">Partie 2 — Développer et réduire</div>
+  <div class="partie-consigne">Développe puis réduis si possible les expressions suivantes.</div>
+  <div class="grille">
+    <div class="exo-item"><span class="lettre">a)</span> 3(x + 5)</div>
+    <div class="exo-item"><span class="lettre">b)</span> 4(2a + 3)</div>
+    <div class="exo-item"><span class="lettre">c)</span> 5(3x + 1) − 2x</div>
+    <div class="exo-item"><span class="lettre">d)</span> x(x + 4) + 2x</div>
+    <div class="exo-item"><span class="lettre">e)</span> 4(2x + 3) − 5(x + 1)</div>
+    <div class="exo-item"><span class="lettre">f)</span> a(a + 3) + 2(a + 1)</div>
+    <div class="exo-item"><span class="lettre">g)</span> 2(3a + 5) − 4a + 3</div>
+    <div class="exo-item"><span class="lettre">h)</span> x(x² + 2) − 3x</div>
+  </div>
+  <button class="btn-correction" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="correction-grille">
+      <div class="corr-item">
+        <span class="lettre">a)</span> 3(x + 5)
+        <span class="etape">= 3×x + 3×5</span>
+        <span class="res" style="padding-left:14px">= 3x + 15</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">b)</span> 4(2a + 3)
+        <span class="etape">= 4×2a + 4×3</span>
+        <span class="res" style="padding-left:14px">= 8a + 12</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">c)</span> 5(3x + 1) − 2x
+        <span class="etape">= 5×3x + 5×1 − 2x</span>
+        <span class="etape">= 15x + 5 − 2x</span>
+        <span class="res" style="padding-left:14px">= 13x + 5</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">d)</span> x(x + 4) + 2x
+        <span class="etape">= x×x + x×4 + 2x</span>
+        <span class="etape">= x² + 4x + 2x</span>
+        <span class="res" style="padding-left:14px">= x² + 6x</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">e)</span> 4(2x + 3) − 5(x + 1)
+        <span class="etape">= 4×2x + 4×3 − 5×x − 5×1</span>
+        <span class="etape">= 8x + 12 − 5x − 5</span>
+        <span class="res" style="padding-left:14px">= 3x + 7</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">f)</span> a(a + 3) + 2(a + 1)
+        <span class="etape">= a×a + a×3 + 2×a + 2×1</span>
+        <span class="etape">= a² + 3a + 2a + 2</span>
+        <span class="res" style="padding-left:14px">= a² + 5a + 2</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">g)</span> 2(3a + 5) − 4a + 3
+        <span class="etape">= 2×3a + 2×5 − 4a + 3</span>
+        <span class="etape">= 6a + 10 − 4a + 3</span>
+        <span class="res" style="padding-left:14px">= 2a + 13</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">h)</span> x(x² + 2) − 3x
+        <span class="etape">= x×x² + x×2 − 3x</span>
+        <span class="etape">= x³ + 2x − 3x</span>
+        <span class="res" style="padding-left:14px">= x³ − x</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PARTIE 3 — Test d'égalité
+══════════════════════════════════════════ -->
+<div class="partie p3">
+  <div class="partie-header">Partie 3 — Test d'égalité</div>
+  <div class="partie-consigne">Pour chaque question, teste si l'égalité est vraie pour la valeur donnée. Remplace la variable, calcule les deux membres et conclure.</div>
+
+  <div style="padding: 8px 12px 4px;">
+    <div class="enonce-test">1.&nbsp; L'égalité <b>3x + 2 = 2x + 5</b> est-elle vraie pour <b>x = 3</b> ?</div>
+    <div class="enonce-test">2.&nbsp; L'égalité <b>2(a + 4) = 3a + 5</b> est-elle vraie pour <b>a = 3</b> ?</div>
+    <div class="enonce-test">3.&nbsp; L'égalité <b>5x + 1 = 4x + 4</b> est-elle vraie pour <b>x = 3</b> ?</div>
+    <div class="enonce-test">4.&nbsp; L'égalité <b>4(b + 1) = 3b + 6</b> est-elle vraie pour <b>b = 2</b> ?</div>
+  </div>
+
+  <button class="btn-correction" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div style="padding: 6px 12px 10px; background:#f8fbff; border-top:1px dashed #b5ddd3;">
+      <table class="test-table">
+        <tr><th>#</th><th>Membre gauche</th><th>Membre droit</th><th>Conclusion</th></tr>
+        <tr>
+          <td><b>1.</b></td>
+          <td>3×3 + 2 = 9 + 2 = <b>11</b></td>
+          <td>2×3 + 5 = 6 + 5 = <b>11</b></td>
+          <td class="vrai">11 = 11 ✓ VRAIE</td>
+        </tr>
+        <tr>
+          <td><b>2.</b></td>
+          <td>2×(3+4) = 2×7 = <b>14</b></td>
+          <td>3×3 + 5 = 9 + 5 = <b>14</b></td>
+          <td class="vrai">14 = 14 ✓ VRAIE</td>
+        </tr>
+        <tr>
+          <td><b>3.</b></td>
+          <td>5×3 + 1 = 15 + 1 = <b>16</b></td>
+          <td>4×3 + 4 = 12 + 4 = <b>16</b></td>
+          <td class="vrai">16 = 16 ✓ VRAIE</td>
+        </tr>
+        <tr>
+          <td><b>4.</b></td>
+          <td>4×(2+1) = 4×3 = <b>12</b></td>
+          <td>3×2 + 6 = 6 + 6 = <b>12</b></td>
+          <td class="vrai">12 = 12 ✓ VRAIE</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PARTIE 4 — Substitution
+══════════════════════════════════════════ -->
+<div class="partie p4">
+  <div class="partie-header">Partie 4 — Substitution</div>
+  <div class="partie-consigne">Calcule la valeur de chaque expression pour la valeur indiquée.</div>
+  <div class="grille">
+    <div class="exo-item"><span class="lettre">a)</span> 3x + 7 &nbsp; pour <b>x = 4</b></div>
+    <div class="exo-item"><span class="lettre">b)</span> 2a + 5 &nbsp; pour <b>a = 3</b></div>
+    <div class="exo-item"><span class="lettre">c)</span> 4y² + 1 &nbsp; pour <b>y = 2</b></div>
+    <div class="exo-item"><span class="lettre">d)</span> 5 + 2b &nbsp; pour <b>b = 3</b></div>
+    <div class="exo-item"><span class="lettre">e)</span> 3a + 2b &nbsp; pour <b>a = 5 et b = 2</b></div>
+    <div class="exo-item"><span class="lettre">f)</span> x² + 3x + 1 &nbsp; pour <b>x = 3</b></div>
+  </div>
+  <button class="btn-correction" onclick="toggleCorr(this)">▶ Voir la correction</button>
+  <div class="correction">
+    <div class="correction-grille">
+      <div class="corr-item">
+        <span class="lettre">a)</span> 3×4 + 7 = 12 + 7 <span class="res">= 19</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">b)</span> 2×3 + 5 = 6 + 5 <span class="res">= 11</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">c)</span> 4×2² + 1 = 4×4 + 1 = 16 + 1 <span class="res">= 17</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">d)</span> 5 + 2×3 = 5 + 6 <span class="res">= 11</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">e)</span> 3×5 + 2×2 = 15 + 4 <span class="res">= 19</span>
+      </div>
+      <div class="corr-item">
+        <span class="lettre">f)</span> 3² + 3×3 + 1 = 9 + 9 + 1 <span class="res">= 19</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleCorr(btn) {
+    const corr = btn.nextElementSibling;
+    const visible = corr.classList.toggle('visible');
+    btn.textContent = visible ? '▼ Masquer la correction' : '▶ Voir la correction';
+  }
+</script>
+
+</body>
+</html>

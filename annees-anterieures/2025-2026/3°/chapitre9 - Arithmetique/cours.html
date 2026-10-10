@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Arithmétique</title>
+    <link rel="stylesheet" href="../../styles.css?v=20250310">
+    <style>
+        /* ── Décomposition animée ── */
+        .decomp-wrap {
+            display: inline-block;
+            vertical-align: top;
+            margin: 5px 20px 5px 0;
+        }
+        .decomp {
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            line-height: 1;
+            position: relative;
+            display: inline-block;
+        }
+        .decomp::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            border-left: 2px solid #333;
+            pointer-events: none;
+        }
+        .decomp-row {
+            display: flex;
+            align-items: center;
+            height: 1.55em;
+            opacity: 0;
+            transform: translateY(-3px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .decomp-row.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .decomp-n {
+            min-width: 45px;
+            text-align: right;
+            padding-right: 5px;
+            color: blue;
+            font-weight: bold;
+        }
+        .decomp-d {
+            padding-left: 7px;
+            min-width: 28px;
+            color: red;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .decomp-d.visible {
+            opacity: 1;
+        }
+        .decomp-btn {
+            margin-top: 5px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 2px 9px;
+            cursor: pointer;
+            font-size: 11px;
+            display: block;
+        }
+        .decomp-btn:hover:not(:disabled) { background: #217dbb; }
+        .decomp-btn:disabled { background: #aaa; cursor: default; }
+
+        .decomp-result {
+            margin-top: 5px;
+            font-style: italic;
+            color: #333;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .decomp-result.visible { opacity: 1; }
+
+        /* ── Facteurs communs mis en évidence ── */
+        .fc1 { background: #ffe0b2; font-weight: bold; padding: 1px 3px; border-radius: 3px; color: #e65100; }
+        .fc2 { background: #c8e6c9; font-weight: bold; padding: 1px 3px; border-radius: 3px; color: #1b5e20; }
+        .fc3 { background: #bbdefb; font-weight: bold; padding: 1px 3px; border-radius: 3px; color: #0d47a1; }
+    </style>
+</head>
+<body>
+    <a href="../classe-3e.html" style="margin: 20px; display:inline-block;">← Retour au choix des chapitres</a>
+
+    <h1>Arithmétique</h1>
+
+    <!-- ============================================================ -->
+    <h2>Les différents types de nombres</h2>
+    <!-- ============================================================ -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Les <strong>entiers naturels</strong> sont les nombres entiers positifs.<br>
+        <em>Exemples : 0 ; 1 ; 2 ; 3 ; 4 …</em>
+    </div>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Les <strong>entiers relatifs</strong> sont les nombres entiers positifs et les nombres entiers négatifs.<br>
+        <em>Exemples : −6 ; 7 ; −624</em>
+    </div>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Les <strong>nombres décimaux</strong> sont les nombres qui peuvent s'écrire sous la forme d'un quotient d'un entier relatif par une puissance de dix.<br>
+        <em>Exemples :
+        &nbsp;3,4 =
+        <span class="frac"><span class="num">34</span><span class="den">10</span></span>
+        &nbsp;&nbsp;;&nbsp;&nbsp;
+        −9,87 =
+        <span class="frac"><span class="num">−987</span><span class="den">100</span></span>
+        =
+        <span class="frac"><span class="num">−987</span><span class="den">10²</span></span>
+        &nbsp;&nbsp;;&nbsp;&nbsp;
+        4 =
+        <span class="frac"><span class="num">4</span><span class="den">1</span></span>
+        =
+        <span class="frac"><span class="num">4</span><span class="den">10⁰</span></span>
+        </em>
+    </div>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Les <strong>nombres rationnels</strong> sont les nombres qui peuvent s'écrire sous la forme d'un quotient de deux entiers relatifs (dénominateur non nul).<br>
+        <em>Exemples :
+        <span class="frac"><span class="num">8</span><span class="den">9</span></span>
+        &nbsp;&nbsp;;&nbsp;&nbsp;
+        −<span class="frac"><span class="num">5</span><span class="den">7</span></span>
+        </em>
+    </div>
+
+    <div class="remarque">
+        <span style="color:red;">Remarque :</span> Tout nombre décimal est un nombre rationnel, mais la réciproque est fausse.<br>
+        Un rationnel s'écrit en décimal avec une partie décimale <strong>finie</strong> ou <strong>périodique</strong>.<br>
+        <em>Exemple :
+        <span class="frac"><span class="num">2</span><span class="den">7</span></span>
+        ≈ 0,<u>285714</u> <u>285714</u> … (période 285714)
+        </em>
+    </div>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Les <strong>nombres irrationnels</strong> sont les nombres qui ne peuvent pas s'écrire comme quotient de deux entiers. Leur écriture décimale est infinie et sans période.<br>
+        <em>Exemple : π ≈ 3,14159265358979… (infini, sans répétition)</em>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Divisibilité</h2>
+    <!-- ============================================================ -->
+
+    <h3>Diviseurs et multiples</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Un entier <em>a</em> est <strong>divisible</strong> par un entier <em>b</em> (non nul) lorsque le <strong>reste de la division euclidienne</strong> de <em>a</em> par <em>b</em> est <strong>nul</strong>.<br>
+        On dit alors que <em>b</em> est un <strong>diviseur</strong> de <em>a</em>, et que <em>a</em> est un <strong>multiple</strong> de <em>b</em>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> 18 est divisible par 6 car 18 ÷ 6 = 3 reste <strong>0</strong>.<br>
+        → 6 est un <strong>diviseur</strong> de 18 &nbsp;|&nbsp; 18 est un <strong>multiple</strong> de 6.<br>
+        Les diviseurs de 18 sont : <strong>1, 2, 3, 6, 9, 18</strong>.
+    </div>
+
+    <div class="remarque">
+        <span style="color:red;">Remarque :</span> 1 est un diviseur de tout entier et chaque entier est divisible par lui-même.
+    </div>
+
+    <h3>Critères de divisibilité</h3>
+
+    <div class="property">
+        <span style="color:red;">Propriété :</span> Un nombre entier est divisible :<br><br>
+        &nbsp;— <strong>par 2</strong>, si son chiffre des unités est pair (0, 2, 4, 6 ou 8). &nbsp;<em>Ex : 348</em><br>
+        &nbsp;— <strong>par 5</strong>, si son chiffre des unités est 0 ou 5. &nbsp;<em>Ex : 245</em><br>
+        &nbsp;— <strong>par 10</strong>, si son chiffre des unités est 0. &nbsp;<em>Ex : 560</em><br>
+        &nbsp;— <strong>par 3</strong>, si la somme de ses chiffres est divisible par 3. &nbsp;<em>Ex : 312 → 3+1+2 = 6</em><br>
+        &nbsp;— <strong>par 9</strong>, si la somme de ses chiffres est divisible par 9. &nbsp;<em>Ex : 729 → 7+2+9 = 18</em>
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> 75 204 est divisible par 2 (chiffre des unités = 4, pair).<br>
+        Il est aussi divisible par 3 et par 9 car 7+5+2+0+4 = 18, et 18 est divisible par 9 et par 3.
+    </div>
+
+    <h3>Nombres premiers</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Un entier naturel est <strong>premier</strong> s'il possède exactement <strong>deux diviseurs distincts positifs : 1 et lui-même</strong>.
+    </div>
+
+    <div class="example">
+        <strong>Exemples :</strong> 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71… sont des nombres premiers. Cette liste est <strong>infinie</strong>.
+    </div>
+
+    <div class="remarque">
+        <span style="color:red;">Remarque :</span> 1 n'est <strong>pas</strong> premier car il ne possède qu'un seul diviseur positif : lui-même.
+    </div>
+
+    <div class="exercice">
+        <strong>Application :</strong> 12 est-il premier ?<br><br>
+        12 est divisible par 1, 2, 3, 4, 6 et 12. Il possède plus de deux diviseurs donc <strong>12 n'est pas un nombre premier</strong>.
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Décomposition en produit de facteurs premiers</h2>
+    <!-- ============================================================ -->
+
+    <div class="property">
+        <span style="color:red;">Propriété :</span> Tout entier naturel supérieur à 1 peut s'écrire comme un <strong>produit de facteurs premiers</strong>. Cette décomposition est <strong>unique</strong> (à l'ordre des facteurs près).
+    </div>
+
+    <div class="method">
+        <strong>Méthode :</strong> On divise successivement par les nombres premiers dans l'ordre croissant (2, 3, 5, 7, 11, …) jusqu'à obtenir 1.<br><br>
+        <strong>Exemple : décomposer 252 en facteurs premiers.</strong><br><br>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-252">
+                <div class="decomp-row"><span class="decomp-n">252</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">126</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">63</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">21</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">7</span><span class="decomp-d">7</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-252">▶ Suivant</button>
+            <div class="decomp-result" id="r-252">252 = 2 × 2 × 3 × 3 × 7 = 2<sup>2</sup> × 3<sup>2</sup> × 7</div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Autres exemples :</strong><br><br>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-180">
+                <div class="decomp-row"><span class="decomp-n">180</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">90</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">45</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">15</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">5</span><span class="decomp-d">5</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-180">▶ Suivant</button>
+            <div class="decomp-result" id="r-180">180 = 2 × 2 × 3 × 3 × 5 = 2<sup>2</sup> × 3<sup>2</sup> × 5</div>
+        </div>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-105">
+                <div class="decomp-row"><span class="decomp-n">105</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">35</span><span class="decomp-d">5</span></div>
+                <div class="decomp-row"><span class="decomp-n">7</span><span class="decomp-d">7</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-105">▶ Suivant</button>
+            <div class="decomp-result" id="r-105">105 = 3 × 5 × 7</div>
+        </div>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-350">
+                <div class="decomp-row"><span class="decomp-n">350</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">175</span><span class="decomp-d">5</span></div>
+                <div class="decomp-row"><span class="decomp-n">35</span><span class="decomp-d">5</span></div>
+                <div class="decomp-row"><span class="decomp-n">7</span><span class="decomp-d">7</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-350">▶ Suivant</button>
+            <div class="decomp-result" id="r-350">350 = 2 × 5 × 5 × 7 = 2 × 5<sup>2</sup> × 7</div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Plus Grand Commun Diviseur (PGCD)</h2>
+    <!-- ============================================================ -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Le <strong>Plus Grand Commun Diviseur</strong> (PGCD) de deux entiers <em>a</em> et <em>b</em> est le plus grand entier qui divise à la fois <em>a</em> et <em>b</em>. On le note <strong>PGCD(<em>a</em> ; <em>b</em>)</strong>.
+    </div>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour calculer le PGCD par décomposition en facteurs premiers :<br><br>
+        <ol>
+            <li>Décomposer chaque nombre en produit de facteurs premiers.</li>
+            <li>Identifier les facteurs premiers <strong>communs</strong> aux deux décompositions.</li>
+            <li>Le PGCD est le produit de ces facteurs communs, chacun avec le plus <strong>petit exposant</strong>.</li>
+        </ol><br>
+        <strong>Exemple : calculer PGCD(60 ; 126).</strong><br><br>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-60a">
+                <div class="decomp-row"><span class="decomp-n">60</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">30</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">15</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">5</span><span class="decomp-d">5</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-60a">▶ Suivant</button>
+            <div class="decomp-result" id="r-60a">60 = 2 × 2 × 3 × 5 = 2<sup>2</sup> × 3 × 5</div>
+        </div>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-126a">
+                <div class="decomp-row"><span class="decomp-n">126</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">63</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">21</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">7</span><span class="decomp-d">7</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-126a">▶ Suivant</button>
+            <div class="decomp-result" id="r-126a">126 = 2 × 3 × 3 × 7 = 2 × 3<sup>2</sup> × 7</div>
+        </div>
+        <br>
+        60 = <span class="fc1">2</span> × 2 × <span class="fc2">3</span> × 5
+        &nbsp;&nbsp; et &nbsp;&nbsp;
+        126 = <span class="fc1">2</span> × <span class="fc2">3</span> × 3 × 7<br><br>
+        Facteurs communs : <span class="fc1">2</span> (exposant min = 1) et <span class="fc2">3</span> (exposant min = 1).<br>
+        <strong>PGCD(60 ; 126) = 2 × 3 = 6</strong>
+    </div>
+
+    <div class="example">
+        <strong>Application – Partage équitable :</strong><br><br>
+        Une association dispose de <strong>96 carnets</strong> et <strong>60 stylos</strong> à distribuer à des élèves. Elle veut constituer des lots <em>tous identiques</em>, en utilisant <strong>tous</strong> les carnets et tous les stylos. Quel est le nombre maximal de lots ? Quel sera le contenu de chaque lot ?<br><br>
+        <strong>Décomposons 96 et 60 :</strong><br><br>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-96">
+                <div class="decomp-row"><span class="decomp-n">96</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">48</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">24</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">12</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">6</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">3</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-96">▶ Suivant</button>
+            <div class="decomp-result" id="r-96">96 = 2 × 2 × 2 × 2 × 2 × 3 = 2<sup>5</sup> × 3</div>
+        </div>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-60b">
+                <div class="decomp-row"><span class="decomp-n">60</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">30</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">15</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">5</span><span class="decomp-d">5</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-60b">▶ Suivant</button>
+            <div class="decomp-result" id="r-60b">60 = 2 × 2 × 3 × 5 = 2<sup>2</sup> × 3 × 5</div>
+        </div>
+        <br>
+        96 = <span class="fc1">2</span> × <span class="fc1">2</span> × 2 × 2 × 2 × <span class="fc2">3</span>
+        &nbsp;&nbsp; et &nbsp;&nbsp;
+        60 = <span class="fc1">2</span> × <span class="fc1">2</span> × <span class="fc2">3</span> × 5<br><br>
+        Facteurs communs : <span class="fc1">2 × 2</span> (exposant min = 2) et <span class="fc2">3</span> (exposant min = 1).<br>
+        <strong>PGCD(96 ; 60) = 2<sup>2</sup> × 3 = 12</strong><br><br>
+        L'association peut former <strong>12 lots</strong>, chacun contenant
+        96 ÷ 12 = <strong>8 carnets</strong> et 60 ÷ 12 = <strong>5 stylos</strong>.
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Plus Petit Commun Multiple (PPCM)</h2>
+    <!-- ============================================================ -->
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Le <strong>Plus Petit Commun Multiple</strong> (PPCM) de deux entiers <em>a</em> et <em>b</em> est le plus petit entier strictement positif multiple à la fois de <em>a</em> et de <em>b</em>. On le note <strong>PPCM(<em>a</em> ; <em>b</em>)</strong>.
+    </div>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour calculer le PPCM par décomposition en facteurs premiers :<br><br>
+        <ol>
+            <li>Décomposer chaque nombre en produit de facteurs premiers.</li>
+            <li>Relever <strong>tous</strong> les facteurs premiers qui apparaissent dans l'une ou l'autre décomposition.</li>
+            <li>Le PPCM est le produit de tous ces facteurs, chacun avec le plus <strong>grand exposant</strong>.</li>
+        </ol><br>
+        <strong>Exemple : calculer PPCM(60 ; 126).</strong><br><br>
+        60 = <span class="fc1">2 × 2</span> × <span class="fc2">3</span> × <span class="fc3">5</span>
+        &nbsp;&nbsp; et &nbsp;&nbsp;
+        126 = <span class="fc1">2</span> × <span class="fc2">3 × 3</span> × <strong>7</strong><br><br>
+        On relève tous les facteurs premiers qui apparaissent : 2, 3, 5 et 7.<br>
+        Pour chacun, on prend le plus grand exposant rencontré dans les deux décompositions :<br>
+        le facteur 2 avec l'exposant 2 (car 2<sup>2</sup> dans 60), le facteur 3 avec l'exposant 2 (car 3<sup>2</sup> dans 126), le facteur 5 et le facteur 7 chacun avec l'exposant 1.<br><br>
+        <strong>PPCM(60 ; 126) = 2<sup>2</sup> × 3<sup>2</sup> × 5 × 7 = 4 × 9 × 5 × 7 = 1 260</strong>
+    </div>
+
+    <div class="example">
+        <strong>Application – Problème de clignotants :</strong><br><br>
+        Deux guirlandes lumineuses s'allument simultanément à minuit. La première s'allume toutes les <strong>84 secondes</strong>, la seconde toutes les <strong>90 secondes</strong>.<br><br>
+        On cherche au bout de combien de secondes elles s'allumeront à nouveau <strong>en même temps</strong>.<br><br>
+        Ce nombre de secondes doit être un multiple de 84 <em>et</em> un multiple de 90. Le plus petit de ces multiples communs est le <strong>PPCM(84 ; 90)</strong>.<br><br>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-45">
+                <div class="decomp-row"><span class="decomp-n">84</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">42</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">21</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">7</span><span class="decomp-d">7</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-45">▶ Suivant</button>
+            <div class="decomp-result" id="r-45">84 = 2 × 2 × 3 × 7 = 2<sup>2</sup> × 3 × 7</div>
+        </div>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-60c">
+                <div class="decomp-row"><span class="decomp-n">90</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">45</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">15</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">5</span><span class="decomp-d">5</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-60c">▶ Suivant</button>
+            <div class="decomp-result" id="r-60c">90 = 2 × 3 × 3 × 5 = 2 × 3<sup>2</sup> × 5</div>
+        </div>
+        <br>
+        84 = 2 × 2 × 3 × 7 &nbsp;&nbsp; et &nbsp;&nbsp; 90 = 2 × 3 × 3 × 5<br><br>
+        On relève tous les facteurs premiers qui apparaissent : 2, 3, 5 et 7.<br>
+        Pour chacun, on prend le plus grand exposant rencontré dans les deux décompositions :<br>
+        le facteur 2 avec l'exposant 2 (car 2<sup>2</sup> dans 84), le facteur 3 avec l'exposant 2 (car 3<sup>2</sup> dans 90), le facteur 5 (présent seulement dans 90) et le facteur 7 (présent seulement dans 84).<br><br>
+        PPCM(84 ; 90) = 2<sup>2</sup> × 3<sup>2</sup> × 5 × 7 = 4 × 9 × 5 × 7 = <strong>1 260</strong><br><br>
+        Les deux guirlandes s'allumeront à nouveau ensemble après <strong>1 260 secondes, soit 21 minutes</strong>.
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>Application aux fractions</h2>
+    <!-- ============================================================ -->
+
+    <h3>Fraction irréductible</h3>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Une fraction est <strong>irréductible</strong> lorsque son numérateur et son dénominateur sont <strong>premiers entre eux</strong>, c'est-à-dire que leur PGCD est égal à 1.
+    </div>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour rendre une fraction irréductible :<br><br>
+        <ol>
+            <li>Calculer le PGCD du numérateur et du dénominateur.</li>
+            <li>Diviser le numérateur et le dénominateur par ce PGCD.</li>
+        </ol><br>
+        <strong>Exemple : rendre irréductible
+        <span class="frac"><span class="num">56</span><span class="den">42</span></span>.
+        </strong><br><br>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-84">
+                <div class="decomp-row"><span class="decomp-n">56</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">28</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">14</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">7</span><span class="decomp-d">7</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-84">▶ Suivant</button>
+            <div class="decomp-result" id="r-84">56 = 2 × 2 × 2 × 7 = 2<sup>3</sup> × 7</div>
+        </div>
+
+        <div class="decomp-wrap">
+            <div class="decomp" id="d-60d">
+                <div class="decomp-row"><span class="decomp-n">42</span><span class="decomp-d">2</span></div>
+                <div class="decomp-row"><span class="decomp-n">21</span><span class="decomp-d">3</span></div>
+                <div class="decomp-row"><span class="decomp-n">7</span><span class="decomp-d">7</span></div>
+                <div class="decomp-row"><span class="decomp-n">1</span><span class="decomp-d"></span></div>
+            </div>
+            <button class="decomp-btn" data-target="d-60d">▶ Suivant</button>
+            <div class="decomp-result" id="r-60d">42 = 2 × 3 × 7</div>
+        </div>
+        <br>
+        56 = <span class="fc1">2</span> × 2 × 2 × <span class="fc2">7</span>
+        &nbsp;&nbsp; et &nbsp;&nbsp;
+        42 = <span class="fc1">2</span> × 3 × <span class="fc2">7</span><br><br>
+        Facteurs communs : <span class="fc1">2</span> et <span class="fc2">7</span>, donc
+        PGCD(56 ; 42) = 2 × 7 = <strong>14</strong>.<br><br>
+        On divise le numérateur et le dénominateur par 14. Dans les décompositions, cela revient à supprimer les facteurs communs (barrés en couleur) :<br><br>
+        <span class="frac"><span class="num">56</span><span class="den">42</span></span>
+        &nbsp;=&nbsp;
+        <span class="frac">
+            <span class="num"><span class="strikethrough-red">2</span> × 2 × 2 × <span class="strikethrough-blue">7</span></span>
+            <span class="den"><span class="strikethrough-red">2</span> × 3 × <span class="strikethrough-blue">7</span></span>
+        </span>
+        &nbsp;=&nbsp;
+        <span class="frac"><span class="num">2 × 2</span><span class="den">3</span></span>
+        &nbsp;=&nbsp;
+        <span class="frac"><span class="num">4</span><span class="den">3</span></span>
+        &nbsp;&nbsp;&nbsp; La fraction
+        <span class="frac"><span class="num">4</span><span class="den">3</span></span>
+        est irréductible car PGCD(4 ; 3) = 1.
+    </div>
+
+    <div class="exercice">
+        <strong>Application – Le chocolatier de la Saint-Valentin :</strong><br><br>
+        Un chocolatier dispose de <strong>1 155 chocolats cœur</strong> et <strong>255 chocolats Cupidon</strong>. Il veut réaliser des ballotins pour la Saint-Valentin, <em>tous de même composition</em>, en utilisant <strong>tous</strong> ses chocolats.<br><br>
+        1) Peut-il réaliser 15 ballotins ?<br>
+        2) Peut-il réaliser 25 ballotins ?<br>
+        3) Quel est le nombre <strong>maximal</strong> de ballotins ? Combien de chocolats de chaque sorte par ballotin ?<br><br>
+
+        <strong>1)</strong> Si le chocolatier réalise 15 ballotins, chaque ballotin contiendra 1 155 ÷ 15 = 77 chocolats cœur et 255 ÷ 15 = 17 chocolats Cupidon. Les deux divisions tombent juste : <strong>oui, il peut faire 15 ballotins.</strong><br><br>
+
+        <strong>2)</strong> 255 ÷ 25 = 10,2 : ce n'est pas un entier, donc 25 ne divise pas 255. <strong>Il ne peut pas faire 25 ballotins.</strong><br><br>
+
+        <strong>3)</strong> Le nombre de ballotins doit être un <strong>diviseur de 1 155</strong> et un <strong>diviseur de 255</strong> pour que tous les chocolats soient répartis sans reste. On veut faire le maximum de ballotins, donc on cherche le <strong>plus grand diviseur commun</strong> à 1 155 et 255, c'est-à-dire <strong>PGCD(1 155 ; 255)</strong>.<br><br>
+
+        1 155 = 3 × 5 × 7 × 11 &nbsp;&nbsp; et &nbsp;&nbsp; 255 = 3 × 5 × 17<br><br>
+        Les facteurs communs sont 3 et 5, donc <strong>PGCD(1 155 ; 255) = 3 × 5 = 15</strong>.<br><br>
+        Le chocolatier peut réaliser au maximum <strong>15 ballotins</strong>, chacun contenant
+        1 155 ÷ 15 = <strong>77 chocolats cœur</strong> et 255 ÷ 15 = <strong>17 chocolats Cupidon</strong>.
+    </div>
+
+    <div class="exercice">
+        <strong>Application – Dallage d'un terrain :</strong><br><br>
+        Un jardinier veut paver entièrement un terrain rectangulaire de <strong>252 m de long</strong> et <strong>180 m de large</strong> avec des dalles carrées identiques, sans les couper. Quelle est la plus grande dimension possible pour les dalles ? Combien de dalles faudra-t-il ?<br><br>
+
+        Le côté des dalles doit diviser 252 <em>et</em> 180. On veut des dalles les plus grandes possible, donc on cherche le <strong>plus grand diviseur commun</strong>, c'est-à-dire <strong>PGCD(252 ; 180)</strong>.<br><br>
+
+        252 = 2 × 2 × 3 × 3 × 7 = 2<sup>2</sup> × 3<sup>2</sup> × 7 &nbsp;&nbsp; et &nbsp;&nbsp; 180 = 2 × 2 × 3 × 3 × 5 = 2<sup>2</sup> × 3<sup>2</sup> × 5<br><br>
+        Les facteurs communs sont 2<sup>2</sup> et 3<sup>2</sup>, donc <strong>PGCD(252 ; 180) = 2<sup>2</sup> × 3<sup>2</sup> = 4 × 9 = 36</strong>.<br><br>
+        Les dalles auront un côté de <strong>36 m</strong>. Le terrain comptera 252 ÷ 36 = 7 dalles en longueur et 180 ÷ 36 = 5 dalles en largeur, soit <strong>7 × 5 = 35 dalles</strong> au total.
+
+    <script>
+    document.querySelectorAll('.decomp-btn').forEach(function(btn) {
+        var targetId = btn.getAttribute('data-target');
+        var decomp   = document.getElementById(targetId);
+        var rows     = decomp.querySelectorAll('.decomp-row');
+        var resultId = targetId.replace('d-', 'r-');
+        var result   = document.getElementById(resultId);
+        var current  = 1;
+
+        // Afficher uniquement le premier nombre (sans son diviseur)
+        rows[0].classList.add('visible');
+
+        btn.addEventListener('click', function() {
+            // Révéler le diviseur de la ligne précédente
+            rows[current - 1].querySelector('.decomp-d').classList.add('visible');
+
+            // Afficher le nombre suivant (sans son diviseur)
+            if (current < rows.length) {
+                rows[current].classList.add('visible');
+                current++;
+            }
+
+            // Si on vient d'afficher la dernière ligne (le "1")
+            if (current >= rows.length) {
+                btn.disabled = true;
+                btn.textContent = '✓ Terminé';
+                if (result) result.classList.add('visible');
+            }
+        });
+    });
+    </script>
+
+</body>
+</html>

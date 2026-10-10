@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Équations</title>
+    <link rel="stylesheet" href="../../styles.css?v=20260414">
+</head>
+<body>
+    <a href="../classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre 12 : Les Équations</h1>
+
+    <!-- ===== I ===== -->
+    <h2>Qu'est-ce qu'une équation ?</h2>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> Une <span style="color:red;"><strong>équation</strong></span> est une égalité comportant une ou plusieurs <span style="color:red;"><strong>inconnues</strong></span> (représentées par une lettre).<br><br>
+        On appelle <span style="color:red;"><strong>membre de gauche</strong></span> l'expression à gauche du signe =, et <span style="color:red;"><strong>membre de droite</strong></span> l'expression à droite du signe =.
+    </div>
+
+    <div class="example">
+        <strong>Exemples d'équations :</strong><br><br>
+        <table style="margin:10px auto;">
+            <tr>
+                <th>Équation</th>
+                <th>Membre de gauche</th>
+                <th>Membre de droite</th>
+                <th>Degré</th>
+            </tr>
+            <tr>
+                <td><span class="math">3x + 5 = 14</span></td>
+                <td><span class="math">3x + 5</span></td>
+                <td><span class="math">14</span></td>
+                <td>1 (équation du 1<sup>er</sup> degré)</td>
+            </tr>
+            <tr>
+                <td><span class="math">2x − 1 = x + 4</span></td>
+                <td><span class="math">2x − 1</span></td>
+                <td><span class="math">x + 4</span></td>
+                <td>1 (équation du 1<sup>er</sup> degré)</td>
+            </tr>
+            <tr>
+                <td><span class="math">x² + 3 = 7x</span></td>
+                <td><span class="math">x² + 3</span></td>
+                <td><span class="math">7x</span></td>
+                <td>2 (hors programme de 4<sup>e</sup>)</td>
+            </tr>
+        </table>
+        <div class="remarque" style="margin-top:10px;">
+            <span style="color:red;">⚠ Remarque :</span> En 4<sup>e</sup>, on étudie uniquement les équations du 1<sup>er</sup> degré à une inconnue, c'est-à-dire de la forme <span class="math">ax + b = cx + d</span>.
+        </div>
+    </div>
+
+    <div class="definition">
+        <span style="color:red;">Définition :</span> <strong>Résoudre une équation</strong>, c'est trouver toutes les valeurs de l'inconnue qui rendent l'égalité vraie.<br>
+        Une telle valeur s'appelle une <span style="color:red;"><strong>solution</strong></span> de l'équation.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> Considérons l'équation <span class="math">3x + 5 = 14</span>.<br><br>
+        Si on remplace <span class="math">x</span> par <span class="math">3</span> :
+        <div style="text-align:center;margin:10px 0;font-size:1.1em;">
+            <span class="math">3 × 3 + 5 = 9 + 5 = 14</span> ✔
+        </div>
+        L'égalité est vraie : <span style="color:green;font-weight:bold;">3 est solution de l'équation</span>.<br><br>
+        Si on remplace <span class="math">x</span> par <span class="math">2</span> :
+        <div style="text-align:center;margin:10px 0;font-size:1.1em;">
+            <span class="math">3 × 2 + 5 = 6 + 5 = 11 ≠ 14</span> ✘
+        </div>
+        L'égalité est fausse : <span style="color:red;font-weight:bold;">2 n'est pas solution de l'équation</span>.
+    </div>
+
+    <!-- ===== II ===== -->
+    <h2>Vérifier si un nombre est solution</h2>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour vérifier si un nombre est solution d'une équation, on remplace l'inconnue par ce nombre dans les <strong>deux membres séparément</strong>, puis on compare les résultats.<br><br>
+        <strong>Important :</strong> Les calculs des deux membres doivent toujours être écrits séparément (ne pas mélanger).
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong> L'équation est <span class="math">2x + 3 = x + 16</span>. Vérifier que <span class="math">x = 13</span> est solution.<br><br>
+
+        <!-- Vérification interactive -->
+        <div style="text-align:center;margin:15px 0;">
+            <button id="btnVerif1" onclick="showVerif1()"
+                style="padding:10px 22px;font-size:15px;background:#e74c3c;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                ▶ Afficher la vérification
+            </button>
+            <button onclick="resetVerif1()"
+                style="padding:10px 22px;font-size:15px;background:#7f8c8d;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;margin-left:10px;">
+                ↻ Réinitialiser
+            </button>
+        </div>
+
+        <div id="verifBox1" style="opacity:0;transition:opacity 0.5s;">
+            <table style="margin:10px auto;border-collapse:collapse;">
+                <tr>
+                    <th style="background:#dbeafe;color:#1a56db;padding:8px 20px;">Membre de gauche</th>
+                    <th style="background:#fce8e8;color:#c0392b;padding:8px 20px;">Membre de droite</th>
+                </tr>
+                <tr>
+                    <td style="padding:8px 20px;text-align:center;font-size:1.1em;">
+                        <span class="math">2 × 13 + 3</span><br>
+                        <span class="math">= 26 + 3</span><br>
+                        <span class="math" style="font-weight:bold;color:#1a56db;">= 29</span>
+                    </td>
+                    <td style="padding:8px 20px;text-align:center;font-size:1.1em;">
+                        <span class="math">13 + 16</span><br><br>
+                        <span class="math" style="font-weight:bold;color:#c0392b;">= 29</span>
+                    </td>
+                </tr>
+            </table>
+            <div style="text-align:center;margin-top:10px;font-size:1.15em;font-weight:bold;color:green;">
+                Les deux membres sont égaux à 29 → <span class="math">x = 13</span> est bien solution ✔
+            </div>
+        </div>
+    </div>
+
+    <div class="exercice">
+        <strong>À vous :</strong> L'équation est <span class="math">3x − 2 = x + 8</span>.<br>
+        <ul>
+            <li>Vérifier que <span class="math">x = 5</span> est solution.</li>
+            <li>Vérifier que <span class="math">x = 3</span> n'est pas solution.</li>
+        </ul>
+    </div>
+
+    <!-- ===== III ===== -->
+    <h2>Résoudre une équation</h2>
+
+    <h3>Les règles de résolution</h3>
+
+    <div class="property">
+        <span style="color:red;">Propriétés :</span> On peut effectuer les mêmes opérations sur les deux membres d'une équation sans changer les solutions. En particulier :<br><br>
+        <ul>
+            <li><strong>Règle d'addition :</strong> on peut <span style="color:red;">ajouter ou soustraire un même nombre</span> des deux membres.</li>
+            <li><strong>Règle de multiplication :</strong> on peut <span style="color:red;">multiplier ou diviser les deux membres par un même nombre non nul</span>.</li>
+        </ul>
+    </div>
+
+    <div class="remarque">
+        <span style="color:red;">Remarque :</span> Ces propriétés permettent d'obtenir des équations plus simples, ayant les mêmes solutions. On dit que les équations sont <strong>équivalentes</strong>.
+    </div>
+
+    <h3>Équations du type <span class="math" style="font-size:0.9em;">ax + b = cx + d</span></h3>
+
+    <div class="method">
+        <strong>Méthode :</strong> Pour résoudre une équation du type <span class="math">ax + b = cx + d</span> :<br>
+        <ol>
+            <li>On <strong>regroupe les termes en <span class="math">x</span> d'un même côté</strong> en soustrayant (ou ajoutant) le terme en <span class="math">x</span> le plus petit.</li>
+            <li>On <strong>regroupe les nombres de l'autre côté</strong>.</li>
+            <li>On résout l'équation obtenue et on vérifie.</li>
+        </ol>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 3 :</strong> Résoudre <span class="math">2x + 3 = x + 16</span><br><br>
+
+        <!-- Bandeau de navigation -->
+        <div style="display:flex;align-items:center;gap:12px;margin:14px 0;">
+            <button onclick="nextStep3()" id="btnNext3"
+                style="padding:9px 20px;font-size:14px;background:#27ae60;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                ▶ Étape suivante
+            </button>
+            <button onclick="resetSolve3()"
+                style="padding:9px 18px;font-size:14px;background:#7f8c8d;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                ↻ Recommencer
+            </button>
+            <span id="s3counter" style="color:#555;font-size:0.95em;">Étape 0 / 5</span>
+        </div>
+
+        <!-- Zone d'affichage des étapes -->
+        <div style="max-width:580px;">
+
+            <!-- Étape 0 : équation de départ (toujours visible) -->
+            <div class="calcul-detail" style="margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">Équation de départ</span><br>
+                <span class="math">2x + 3 = <span style="color:#e67e22;font-weight:bold;">x</span> + 16</span>
+                &nbsp;&nbsp;<span style="color:#e67e22;font-size:0.85em;">← on veut supprimer ce <span class="math">x</span></span>
+            </div>
+
+            <!-- Étape 1 : on soustrait x dans les 2 membres (opération en rouge, terme visé en orange) -->
+            <div class="calcul-detail" id="s3step1" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On soustrait <span class="math" style="color:#c0392b;font-weight:bold;">x</span> des deux membres pour faire disparaître le <span class="math" style="color:#e67e22;">x</span> à droite</span><br>
+                <span class="math">
+                    2x + 3 <span style="color:#c0392b;font-weight:bold;">− x</span>
+                    &nbsp;=&nbsp;
+                    <span style="color:#e67e22;font-weight:bold;">x</span> + 16 <span style="color:#c0392b;font-weight:bold;">− x</span>
+                </span>
+            </div>
+
+            <!-- Étape 2 : résultat de la simplification -->
+            <div class="calcul-detail" id="s3step2" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On simplifie, le <span class="math">x</span> de droite a disparu. Maintenant on veut supprimer le <span style="color:#e67e22;font-weight:bold;">3</span></span><br>
+                <span class="math">x + <span style="color:#e67e22;font-weight:bold;">3</span> = 16</span>
+            </div>
+
+            <!-- Étape 3 : on soustrait 3 dans les 2 membres -->
+            <div class="calcul-detail" id="s3step3" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On soustrait <span style="color:#c0392b;font-weight:bold;">3</span> des deux membres pour faire disparaître le <span style="color:#e67e22;">3</span> à gauche</span><br>
+                <span class="math">
+                    x + <span style="color:#e67e22;font-weight:bold;">3</span> <span style="color:#c0392b;font-weight:bold;">− 3</span>
+                    &nbsp;=&nbsp;
+                    16 <span style="color:#c0392b;font-weight:bold;">− 3</span>
+                </span>
+            </div>
+
+            <!-- Étape 4 : solution -->
+            <div class="calcul-detail" id="s3step4" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">Le 3 a disparu → solution</span><br>
+                <strong>Solution :</strong>&nbsp;
+                <span class="math" style="color:#c0392b;font-size:1.15em;">x = 13</span>
+            </div>
+
+            <!-- Étape 5 : vérification -->
+            <div class="calcul-detail" id="s3step5" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">Vérification dans l'équation de départ</span><br>
+                MG : <span class="math">2 × 13 + 3 = 26 + 3 = 29</span><br>
+                MD : <span class="math">13 + 16 = 29</span><br>
+                <span style="color:green;font-weight:bold;">MG = MD = 29 ✔</span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 4 :</strong> Résoudre <span class="math">5x − 2 = 2x + 7</span><br><br>
+
+        <!-- Bandeau de navigation -->
+        <div style="display:flex;align-items:center;gap:12px;margin:14px 0;">
+            <button onclick="nextStep4()" id="btnNext4"
+                style="padding:9px 20px;font-size:14px;background:#27ae60;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                ▶ Étape suivante
+            </button>
+            <button onclick="resetSolve4()"
+                style="padding:9px 18px;font-size:14px;background:#7f8c8d;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                ↻ Recommencer
+            </button>
+            <span id="s4counter" style="color:#555;font-size:0.95em;">Étape 0 / 7</span>
+        </div>
+
+        <div style="max-width:600px;">
+
+            <!-- Étape 0 : équation de départ -->
+            <div class="calcul-detail" style="margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">Équation de départ</span><br>
+                <span class="math">5x − 2 = <span style="color:#e67e22;font-weight:bold;">2x</span> + 7</span>
+                &nbsp;&nbsp;<span style="color:#e67e22;font-size:0.85em;">← on veut supprimer ce <span class="math">2x</span></span>
+            </div>
+
+            <!-- Étape 1 : soustraire 2x des deux membres -->
+            <div class="calcul-detail" id="s4step1" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On soustrait <span class="math" style="color:#c0392b;font-weight:bold;">2x</span> des deux membres pour faire disparaître le <span class="math" style="color:#e67e22;">2x</span> à droite</span><br>
+                <span class="math">5x − 2 <span style="color:#c0392b;font-weight:bold;">− 2x</span>
+                &nbsp;=&nbsp;
+                <span style="color:#e67e22;font-weight:bold;">2x</span> + 7 <span style="color:#c0392b;font-weight:bold;">− 2x</span></span>
+            </div>
+
+            <!-- Étape 2 : simplification, 2x disparu, viser −2 -->
+            <div class="calcul-detail" id="s4step2" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On simplifie, le <span class="math">2x</span> de droite a disparu. Maintenant on veut supprimer le <span style="color:#e67e22;font-weight:bold;">−2</span></span><br>
+                <span class="math">3x <span style="color:#e67e22;font-weight:bold;">− 2</span> = 7</span>
+            </div>
+
+            <!-- Étape 3 : ajouter 2 des deux membres -->
+            <div class="calcul-detail" id="s4step3" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On ajoute <span style="color:#c0392b;font-weight:bold;">2</span> des deux membres pour faire disparaître le <span style="color:#e67e22;">−2</span> à gauche</span><br>
+                <span class="math">3x <span style="color:#e67e22;font-weight:bold;">− 2</span> <span style="color:#c0392b;font-weight:bold;">+ 2</span>
+                &nbsp;=&nbsp;
+                7 <span style="color:#c0392b;font-weight:bold;">+ 2</span></span>
+            </div>
+
+            <!-- Étape 4 : simplification, −2 disparu -->
+            <div class="calcul-detail" id="s4step4" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On simplifie, le −2 a disparu. Il reste à isoler <span class="math">x</span></span><br>
+                <span class="math">3x = 9</span>
+            </div>
+
+            <!-- Étape 5 : diviser par 3 (fraction) -->
+            <div class="calcul-detail" id="s4step5" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On divise les deux membres par <span style="color:#c0392b;font-weight:bold;">3</span> pour isoler <span class="math">x</span></span><br>
+                <span class="frac"><span class="num"><span class="math"><span style="color:#c0392b;font-weight:bold;">3</span>x</span></span><span class="den"><span style="color:#c0392b;font-weight:bold;">3</span></span></span>
+                &nbsp;=&nbsp;
+                <span class="frac"><span class="num">9</span><span class="den"><span style="color:#c0392b;font-weight:bold;">3</span></span></span>
+            </div>
+
+            <!-- Étape 6 : solution -->
+            <div class="calcul-detail" id="s4step6" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">On simplifie → solution</span><br>
+                <strong>Solution :</strong>&nbsp;
+                <span class="math" style="color:#c0392b;font-size:1.15em;">x = 3</span>
+            </div>
+
+            <!-- Étape 7 : vérification -->
+            <div class="calcul-detail" id="s4step7" style="display:none;margin:3px 0;padding:7px 12px;">
+                <span style="color:#888;font-size:0.85em;">Vérification dans l'équation de départ</span><br>
+                MG : <span class="math">5 × 3 − 2 = 15 − 2 = 13</span><br>
+                MD : <span class="math">2 × 3 + 7 = 6 + 7 = 13</span><br>
+                <span style="color:green;font-weight:bold;">MG = MD = 13 ✔</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Outil de vérification interactif -->
+    <h3>Outil de vérification interactif</h3>
+
+    <div class="example">
+        <strong>Tester une valeur :</strong> Entrez une équation du type <span class="math">ax + b = cx + d</span> et vérifiez si votre solution est correcte.<br><br>
+
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px;">
+            <div>
+                <label style="font-weight:bold;color:blue;">a :</label>
+                <input type="number" id="coefA" value="2" style="width:55px;padding:5px;font-size:1em;border:1px solid #bbb;border-radius:4px;text-align:center;">
+            </div>
+            <div style="font-size:1.2em;font-style:italic;">x +</div>
+            <div>
+                <label style="font-weight:bold;color:blue;">b :</label>
+                <input type="number" id="coefB" value="3" style="width:55px;padding:5px;font-size:1em;border:1px solid #bbb;border-radius:4px;text-align:center;">
+            </div>
+            <div style="font-size:1.2em;">=</div>
+            <div>
+                <label style="font-weight:bold;color:blue;">c :</label>
+                <input type="number" id="coefC" value="1" style="width:55px;padding:5px;font-size:1em;border:1px solid #bbb;border-radius:4px;text-align:center;">
+            </div>
+            <div style="font-size:1.2em;font-style:italic;">x +</div>
+            <div>
+                <label style="font-weight:bold;color:blue;">d :</label>
+                <input type="number" id="coefD" value="16" style="width:55px;padding:5px;font-size:1em;border:1px solid #bbb;border-radius:4px;text-align:center;">
+            </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+            <label style="font-weight:bold;color:blue;">Ma solution x =</label>
+            <!-- Saisie fraction : numérateur / dénominateur -->
+            <div style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;">
+                <input type="number" id="solNum" value="13"
+                    style="width:60px;padding:4px;font-size:1em;border:1px solid #bbb;border-radius:4px;text-align:center;">
+                <div style="width:60px;border-top:2px solid #333;"></div>
+                <input type="number" id="solDen" value="1"
+                    style="width:60px;padding:4px;font-size:1em;border:1px solid #bbb;border-radius:4px;text-align:center;">
+            </div>
+            <span style="color:#888;font-size:0.9em;">(dénominateur = 1 si solution entière)</span>
+            <button onclick="verifSolution()"
+                style="padding:8px 18px;font-size:14px;background:#2980b9;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                Vérifier ✓
+            </button>
+        </div>
+        <div id="verifResult" style="font-size:1.1em;font-weight:bold;padding:8px 12px;border-radius:5px;display:none;"></div>
+    </div>
+
+    <!-- ===== IV ===== -->
+    <h2>Mettre un problème en équation</h2>
+
+    <div class="method">
+        <strong>Méthode en 4 étapes :</strong>
+        <ol>
+            <li><strong>Choisir l'inconnue :</strong> nommer la quantité cherchée par une lettre (souvent <span class="math">x</span>).</li>
+            <li><strong>Traduire le problème en équation :</strong> exprimer toutes les données à l'aide de <span class="math">x</span> et écrire l'égalité correspondant à la condition du problème.</li>
+            <li><strong>Résoudre l'équation.</strong></li>
+            <li><strong>Vérifier et conclure</strong> en répondant à la question posée dans le contexte.</li>
+        </ol>
+    </div>
+
+    <h3>Exemples de mise en équation simple</h3>
+
+    <div class="example">
+        <strong>Exemple 1 (triangle isocèle) :</strong><br>
+        Les deux côtés égaux d'un triangle isocèle mesurent 2,8 cm. Son périmètre est 10,1 cm. Calculer la longueur de sa base.<br><br>
+
+        <div style="text-align:center;margin:10px 0;">
+            <button onclick="showProb1()" id="btnP1"
+                style="padding:9px 18px;font-size:14px;background:#8e44ad;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                ▶ Voir la mise en équation
+            </button>
+            <button onclick="resetProb1()"
+                style="padding:9px 18px;font-size:14px;background:#7f8c8d;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;margin-left:8px;">
+                ↻ Réinitialiser
+            </button>
+        </div>
+
+        <div id="probSteps1" style="opacity:0;transition:opacity 0.6s;">
+            <div style="max-width:520px;margin:0 auto;">
+                <div style="margin:6px 0;padding:8px 14px;background:#f4eafc;border-left:3px solid #8e44ad;font-size:1.05em;">
+                    <strong style="color:#8e44ad;">Étape 1 – Inconnue :</strong><br>
+                    Soit <span class="math">x</span> la longueur de la base (en cm).
+                </div>
+                <div style="margin:6px 0;padding:8px 14px;background:#f4eafc;border-left:3px solid #8e44ad;font-size:1.05em;">
+                    <strong style="color:#8e44ad;">Étape 2 – Équation :</strong><br>
+                    Périmètre = côté + côté + base<br>
+                    <span class="math">2,8 + 2,8 + x = 10,1</span><br>
+                    soit&nbsp;&nbsp;<span class="math">5,6 + x = 10,1</span>
+                </div>
+                <div style="margin:6px 0;padding:8px 14px;background:#f4eafc;border-left:3px solid #8e44ad;font-size:1.05em;">
+                    <strong style="color:#8e44ad;">Étape 3 – Résolution :</strong><br>
+                    <span class="math">5,6 + x − 5,6 = 10,1 − 5,6</span><br>
+                    <span class="math" style="color:#c0392b;font-weight:bold;">x = 4,5</span>
+                </div>
+                <div style="margin:6px 0;padding:8px 14px;background:#fff3cd;border-left:3px solid #e67e22;font-size:1.05em;">
+                    <strong style="color:#e67e22;">Étape 4 – Vérification et conclusion :</strong><br>
+                    <span class="math">2,8 + 2,8 + 4,5 = 10,1</span> ✔<br>
+                    La base du triangle mesure <span style="color:#1a7a3c;font-weight:bold;">4,5 cm</span>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 2 (prix au kg) :</strong><br>
+        3 kg de pommes coûtent 7,50 €. Quel est le prix d'un kilogramme de pommes ?<br><br>
+
+        <div style="max-width:520px;margin:0 auto;">
+            <div style="margin:6px 0;padding:8px 14px;background:#f4eafc;border-left:3px solid #8e44ad;font-size:1.05em;">
+                <strong style="color:#8e44ad;">Inconnue :</strong> Soit <span class="math">x</span> le prix d'un kg (en €).
+            </div>
+            <div style="margin:6px 0;padding:8px 14px;background:#f4eafc;border-left:3px solid #8e44ad;font-size:1.05em;">
+                <strong style="color:#8e44ad;">Équation :</strong> 3 kg coûtent 3 × prix d'un kg, donc<br>
+                <span class="math">3 × x = 7,50</span>
+            </div>
+            <div style="margin:6px 0;padding:8px 14px;background:#f4eafc;border-left:3px solid #8e44ad;font-size:1.05em;">
+                <strong style="color:#8e44ad;">Résolution :</strong><br>
+                <span class="frac"><span class="num"><span class="math">3x</span></span><span class="den">3</span></span>
+                &nbsp;=&nbsp;
+                <span class="frac"><span class="num">7,50</span><span class="den">3</span></span><br>
+                <span class="math" style="color:#c0392b;font-weight:bold;">x = 2,50</span>
+            </div>
+            <div style="margin:6px 0;padding:8px 14px;background:#fff3cd;border-left:3px solid #e67e22;font-size:1.05em;">
+                <strong style="color:#e67e22;">Conclusion :</strong> Un kilogramme de pommes coûte <strong style="color:#1a7a3c;">2,50 €</strong>. ✔
+            </div>
+        </div>
+    </div>
+
+    <h3>Problème avec plusieurs inconnues : le choix de l'inconnue</h3>
+
+    <div class="example">
+        <strong>Problème :</strong> Léa, Emma et Céline collectionnent les cartes postales. Voici leur conversation :<br><br>
+        <div style="background:#f0f0f0;border-radius:8px;padding:14px 20px;margin:10px 0;font-style:italic;color:#2c3e50;">
+            <p>Emma : « Tu as vu Céline, j'ai <strong>deux fois plus</strong> de cartes que toi. »</p>
+            <p>Céline : « C'est vrai mais j'en ai <strong>5 de plus</strong> que Léa. »</p>
+            <p>Léa : « À nous trois, on a <strong>87 cartes</strong>. »</p>
+        </div>
+        Combien de cartes postales possèdent-elles chacune ?<br><br>
+
+        <em>Selon le choix de l'inconnue, l'équation change. Voici les 3 possibilités :</em><br><br>
+
+        <div style="text-align:center;margin:10px 0;">
+            <button onclick="showCas(1)" id="btnCas1"
+                style="padding:8px 16px;font-size:14px;background:#1a56db;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                Cas 1 : x = nb de cartes d'Emma
+            </button>
+            <button onclick="showCas(2)" id="btnCas2"
+                style="padding:8px 16px;font-size:14px;background:#c0392b;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;margin:4px;">
+                Cas 2 : x = nb de cartes de Léa
+            </button>
+            <button onclick="showCas(3)" id="btnCas3"
+                style="padding:8px 16px;font-size:14px;background:#27ae60;color:white;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">
+                Cas 3 : x = nb de cartes de Céline
+            </button>
+        </div>
+
+        <!-- CAS 1 -->
+        <div id="cas1" style="display:none;margin-top:10px;">
+            <div style="padding:12px;background:#dbeafe;border-radius:8px;border-left:4px solid #1a56db;">
+                <strong style="color:#1a56db;">Cas 1 : Soit <span class="math">x</span> le nombre de cartes d'Emma.</strong><br><br>
+                <table style="margin:10px auto;">
+                    <tr>
+                        <th>Emma</th>
+                        <th>Céline</th>
+                        <th>Léa</th>
+                    </tr>
+                    <tr>
+                        <td><span class="math">x</span></td>
+                        <td><span class="frac"><span class="num"><span class="math">x</span></span><span class="den">2</span></span></td>
+                        <td><span class="frac"><span class="num"><span class="math">x</span></span><span class="den">2</span></span> − 5</td>
+                    </tr>
+                </table>
+                <em>Elles ont 87 cartes à elles trois donc :</em><br>
+                <div style="text-align:center;margin:8px 0;font-size:1.1em;">
+                    <span class="math">x +</span>
+                    <span class="frac"><span class="num"><span class="math">x</span></span><span class="den">2</span></span>
+                    <span class="math">+</span>
+                    <span class="frac"><span class="num"><span class="math">x</span></span><span class="den">2</span></span>
+                    <span class="math">− 5 = 87</span>
+                    &nbsp; soit &nbsp;
+                    <span class="math">2x − 5 = 87</span>
+                </div>
+                <div style="margin-top:10px;">
+                    <span class="math">2x = 92</span> &nbsp;→&nbsp; <span class="math" style="color:#c0392b;font-weight:bold;">x = 46</span><br><br>
+                    Emma : <strong>46</strong> cartes &nbsp;|&nbsp; Céline : <strong>23</strong> cartes &nbsp;|&nbsp; Léa : <strong>18</strong> cartes<br>
+                    Vérification : <span class="math">46 + 23 + 18 = 87</span> ✔
+                </div>
+            </div>
+        </div>
+
+        <!-- CAS 2 -->
+        <div id="cas2" style="display:none;margin-top:10px;">
+            <div style="padding:12px;background:#fce8e8;border-radius:8px;border-left:4px solid #c0392b;">
+                <strong style="color:#c0392b;">Cas 2 : Soit <span class="math">x</span> le nombre de cartes de Léa.</strong><br><br>
+                <table style="margin:10px auto;">
+                    <tr>
+                        <th>Emma</th>
+                        <th>Céline</th>
+                        <th>Léa</th>
+                    </tr>
+                    <tr>
+                        <td><span class="math">2 × (x + 5)</span></td>
+                        <td><span class="math">x + 5</span></td>
+                        <td><span class="math">x</span></td>
+                    </tr>
+                </table>
+                <em>Elles ont 87 cartes à elles trois donc :</em><br>
+                <div style="text-align:center;margin:8px 0;font-size:1.1em;">
+                    <span class="math">2 × (x + 5) + (x + 5) + x = 87</span>
+                </div>
+                <div style="text-align:center;font-size:1.05em;">
+                    <span class="math">2x + 10 + x + 5 + x = 87</span><br>
+                    <span class="math">4x + 15 = 87</span><br>
+                    <span class="math">4x = 72</span> &nbsp;→&nbsp; <span class="math" style="color:#c0392b;font-weight:bold;">x = 18</span>
+                </div>
+                <div style="margin-top:10px;">
+                    Léa : <strong>18</strong> cartes &nbsp;|&nbsp; Céline : <strong>23</strong> cartes &nbsp;|&nbsp; Emma : <strong>46</strong> cartes<br>
+                    Vérification : <span class="math">46 + 23 + 18 = 87</span> ✔
+                </div>
+            </div>
+        </div>
+
+        <!-- CAS 3 -->
+        <div id="cas3" style="display:none;margin-top:10px;">
+            <div style="padding:12px;background:#e8f9f0;border-radius:8px;border-left:4px solid #27ae60;">
+                <strong style="color:#27ae60;">Cas 3 : Soit <span class="math">x</span> le nombre de cartes de Céline.</strong><br><br>
+                <table style="margin:10px auto;">
+                    <tr>
+                        <th>Emma</th>
+                        <th>Céline</th>
+                        <th>Léa</th>
+                    </tr>
+                    <tr>
+                        <td><span class="math">2x</span></td>
+                        <td><span class="math">x</span></td>
+                        <td><span class="math">x − 5</span></td>
+                    </tr>
+                </table>
+                <em>Elles ont 87 cartes à elles trois donc :</em><br>
+                <div style="text-align:center;margin:8px 0;font-size:1.1em;">
+                    <span class="math">2x + x + (x − 5) = 87</span><br>
+                    <span class="math">4x − 5 = 87</span><br>
+                    <span class="math">4x = 92</span> &nbsp;→&nbsp; <span class="math" style="color:#c0392b;font-weight:bold;">x = 23</span>
+                </div>
+                <div style="margin-top:10px;">
+                    Céline : <strong>23</strong> cartes &nbsp;|&nbsp; Emma : <strong>46</strong> cartes &nbsp;|&nbsp; Léa : <strong>18</strong> cartes<br>
+                    Vérification : <span class="math">4 × 23 − 5 = 87</span> ✔
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="exercice">
+        <strong>Exercices de mise en équation :</strong><br>
+        <ol>
+            <li>J'ai choisi un nombre entier <span class="math">x</span>. Je l'ai multiplié par 3,5 et j'ai ajouté 2. J'ai trouvé 30. Que vaut <span class="math">x</span> ?</li>
+            <li>Le quart d'un gâteau pèse 75 g. Quel est le poids de ce gâteau ?</li>
+            <li>Tom a 3 fois l'âge d'Axel plus 4 ans et il a 4 fois l'âge de Lisa plus 2 ans. Axel et Lisa ont le même âge. Quel est cet âge ?</li>
+            <li>Trouver un nombre sachant que son triple augmenté de 2 est égal à son double diminué de 3.</li>
+        </ol>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        /* ——— Vérification II ——— */
+        function showVerif1() {
+            document.getElementById('verifBox1').style.opacity = '1';
+            document.getElementById('btnVerif1').disabled = true;
+            document.getElementById('btnVerif1').style.background = '#95a5a6';
+        }
+        function resetVerif1() {
+            document.getElementById('verifBox1').style.opacity = '0';
+            document.getElementById('btnVerif1').disabled = false;
+            document.getElementById('btnVerif1').style.background = '#e74c3c';
+        }
+
+        /* ——— Exemple 3 : pas à pas contrôlé par l'utilisateur ——— */
+        let s3currentStep = 0;
+        const s3totalSteps = 5;
+
+        function nextStep3() {
+            if (s3currentStep >= s3totalSteps) return;
+            s3currentStep++;
+            const el = document.getElementById('s3step' + s3currentStep);
+            if (el) {
+                el.style.display = 'block';
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.4s';
+                setTimeout(() => { el.style.opacity = '1'; }, 10);
+            }
+            document.getElementById('s3counter').textContent = 'Étape ' + s3currentStep + ' / ' + s3totalSteps;
+            if (s3currentStep >= s3totalSteps) {
+                document.getElementById('btnNext3').disabled = true;
+                document.getElementById('btnNext3').style.background = '#95a5a6';
+                document.getElementById('btnNext3').style.cursor = 'default';
+            }
+        }
+
+        function resetSolve3() {
+            s3currentStep = 0;
+            for (let i = 1; i <= s3totalSteps; i++) {
+                const el = document.getElementById('s3step' + i);
+                if (el) el.style.display = 'none';
+            }
+            document.getElementById('s3counter').textContent = 'Étape 0 / ' + s3totalSteps;
+            document.getElementById('btnNext3').disabled = false;
+            document.getElementById('btnNext3').style.background = '#27ae60';
+            document.getElementById('btnNext3').style.cursor = 'pointer';
+        }
+
+        /* ——— Exemple 4 : pas à pas contrôlé par l'utilisateur ——— */
+        let s4currentStep = 0;
+        const s4totalSteps = 7;
+
+        function nextStep4() {
+            if (s4currentStep >= s4totalSteps) return;
+            s4currentStep++;
+            const el = document.getElementById('s4step' + s4currentStep);
+            if (el) {
+                el.style.display = 'block';
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.4s';
+                setTimeout(() => { el.style.opacity = '1'; }, 10);
+            }
+            document.getElementById('s4counter').textContent = 'Étape ' + s4currentStep + ' / ' + s4totalSteps;
+            if (s4currentStep >= s4totalSteps) {
+                document.getElementById('btnNext4').disabled = true;
+                document.getElementById('btnNext4').style.background = '#95a5a6';
+                document.getElementById('btnNext4').style.cursor = 'default';
+            }
+        }
+
+        function resetSolve4() {
+            s4currentStep = 0;
+            for (let i = 1; i <= s4totalSteps; i++) {
+                const el = document.getElementById('s4step' + i);
+                if (el) el.style.display = 'none';
+            }
+            document.getElementById('s4counter').textContent = 'Étape 0 / ' + s4totalSteps;
+            document.getElementById('btnNext4').disabled = false;
+            document.getElementById('btnNext4').style.background = '#27ae60';
+            document.getElementById('btnNext4').style.cursor = 'pointer';
+        }
+
+        /* ——— Outil de vérification ——— */
+        function verifSolution() {
+            let a = parseFloat(document.getElementById('coefA').value) || 0;
+            let b = parseFloat(document.getElementById('coefB').value) || 0;
+            let c = parseFloat(document.getElementById('coefC').value) || 0;
+            let d = parseFloat(document.getElementById('coefD').value) || 0;
+            let num = parseFloat(document.getElementById('solNum').value);
+            let den = parseFloat(document.getElementById('solDen').value) || 1;
+            if (den === 0) {
+                alert('Le dénominateur ne peut pas être 0 !');
+                return;
+            }
+            let x = num / den;
+            // Affichage lisible de la solution
+            let xLabel = (den === 1) ? num : num + '/' + den;
+            let mg = a * x + b;
+            let md = c * x + d;
+            let div = document.getElementById('verifResult');
+            div.style.display = 'block';
+            // Arrondi à la fraction exacte pour éviter les erreurs flottantes
+            let diff = Math.abs(mg - md);
+            if (diff < 1e-9) {
+                div.style.background = '#dff5e7';
+                div.style.color = '#1a7a3c';
+                div.style.border = '1px solid #1a7a3c';
+                div.innerHTML = '✔ Correct ! x = ' + xLabel + ' est bien solution.<br>'
+                    + 'Membre de gauche = ' + mg.toFixed(4).replace(/\.?0+$/, '')
+                    + ' = Membre de droite = ' + md.toFixed(4).replace(/\.?0+$/, '');
+            } else {
+                div.style.background = '#fce8e8';
+                div.style.color = '#c0392b';
+                div.style.border = '1px solid #c0392b';
+                div.innerHTML = '✘ Incorrect. Pour x = ' + xLabel
+                    + ', membre de gauche = ' + mg.toFixed(4).replace(/\.?0+$/, '')
+                    + ' ≠ membre de droite = ' + md.toFixed(4).replace(/\.?0+$/, '') + '.';
+            }
+        }
+
+        /* ——— Problème 1 ——— */
+        function showProb1() {
+            document.getElementById('probSteps1').style.opacity = '1';
+            document.getElementById('btnP1').disabled = true;
+            document.getElementById('btnP1').style.background = '#95a5a6';
+        }
+        function resetProb1() {
+            document.getElementById('probSteps1').style.opacity = '0';
+            document.getElementById('btnP1').disabled = false;
+            document.getElementById('btnP1').style.background = '#8e44ad';
+        }
+
+        /* ——— Cartes (cas 1/2/3) ——— */
+        function showCas(n) {
+            ['cas1','cas2','cas3'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('cas' + n).style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Années antérieures</title>
+<style>
+:root{--fond:#f4f6fb;--carte:#fff;--texte:#1f2a44;--doux:#5b6785;--ligne:#dfe4ef;--accent:#3b5bdb;--accent2:#e8edff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--fond);color:var(--texte);font:16px/1.5 "Segoe UI",system-ui,Arial,sans-serif;padding:0 16px 40px}
+a{color:var(--accent)}
+header.top{max-width:1100px;margin:0 auto;padding:22px 0 10px;display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+header.top h1{margin:0;font-size:28px}
+.annee{color:var(--doux);font-weight:600}
+.retour{font-size:14px;text-decoration:none}
+main{max-width:1100px;margin:0 auto}
+.note{color:var(--doux);font-size:14px;margin:0 0 14px}
+
+ul.annees{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.carte{background:var(--carte);border:1px solid var(--ligne);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.carte .titre{font-size:24px;font-weight:700;text-decoration:none}
+.liens{font-size:15px}
+</style>
+</head>
+<body>
+<header class="top"><h1>📚 Années antérieures</h1><a class="retour" href="../index.html">← Accueil</a></header>
+<main>
+  <p class="note">Pour chaque année, un livre par niveau avec tous les cours, exercices et évaluations.</p>
+  <ul class="annees">
+    <li class="carte">
+      <a class="titre" href="2025-2026/index.html">2025-2026</a>
+      <span class="liens"><a href="2025-2026/6%C2%B0/livre.html">6e</a> · <a href="2025-2026/5%C2%B0/livre.html">5e</a> · <a href="2025-2026/4%C2%B0/livre.html">4e</a> · <a href="2025-2026/3%C2%B0/livre.html">3e</a></span>
+    </li></ul>
+</main>
+</body>
+</html>

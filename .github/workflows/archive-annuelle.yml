@@ -1,0 +1,89 @@
+# Archivage automatique de l'année scolaire (MathsIORI)
+# ------------------------------------------------------------------
+# Le premier jour des vacances d'été (académie de Reims, d'après le
+# calendrier scolaire officiel), fige l'état du site et fabrique dans
+# annees-anterieures/<année>/ un « livre » par niveau (page web + PDF),
+# puis l'ajoute à la page « Années antérieures ».
+#
+# Lancement à la main : onglet « Actions » du dépôt sur GitHub →
+# « Archivage de l'année scolaire » → « Run workflow »
+# (on peut y préciser l'année et le commit à archiver).
+name: Archivage de l'année scolaire
+
+on:
+  schedule:
+    # vérifie chaque matin (6 h, heure de Paris) de fin juin à fin juillet
+    # si les vacances d'été ont commencé ; n'archive qu'une seule fois
+    - cron: "0 4 25-30 6 *"
+    - cron: "0 4 1-31 7 *"
+  workflow_dispatch:
+    inputs:
+      annee:
+        description: "Année à archiver (ex. 2026-2027) — vide = l'année qui se termine"
+        required: false
+        default: ""
+      ref:
+        description: "Commit ou branche à archiver — vide = état actuel"
+        required: false
+        default: ""
+      force:
+        description: "Refaire l'archive si elle existe déjà"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  archiver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Est-ce le premier jour des vacances d'été ?
+        id: date
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "archiver=true" >> "$GITHUB_OUTPUT"   # lancement à la main : toujours
+          else
+            node outils/vacances-ete.mjs --aujourdhui
+          fi
+
+      - name: Déjà archivée ?
+        id: deja
+        if: steps.date.outputs.archiver == 'true' && github.event_name != 'workflow_dispatch'
+        run: |
+          Y=$(TZ=Europe/Paris date +%Y)
+          if [ -d "annees-anterieures/$((Y-1))-$Y" ]; then echo "fait=true" >> "$GITHUB_OUTPUT"; echo "Année $((Y-1))-$Y déjà archivée."; fi
+
+      - name: Outils (navigateur pour les PDF)
+        if: steps.date.outputs.archiver == 'true' && steps.deja.outputs.fait != 'true'
+        run: |
+          npm install --no-save --no-package-lock playwright@1.47.2 pdf-lib@1.17.1
+          npx playwright install --with-deps chromium
+
+      - name: Fabrication des livres
+        if: steps.date.outputs.archiver == 'true' && steps.deja.outputs.fait != 'true'
+        run: |
+          ARGS="--pdf"
+          if [ -n "${{ inputs.annee }}" ]; then ARGS="$ARGS --annee ${{ inputs.annee }}"; fi
+          if [ -n "${{ inputs.ref }}" ];   then ARGS="$ARGS --ref ${{ inputs.ref }}"; fi
+          if [ "${{ inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          node outils/archiver-annee.mjs $ARGS
+
+      - name: Enregistrement sur le dépôt
+        if: steps.date.outputs.archiver == 'true' && steps.deja.outputs.fait != 'true'
+        run: |
+          git config user.name  "Archivage automatique"
+          git config user.email "actions@github.com"
+          git add annees-anterieures
+          if git diff --cached --quiet; then echo "Rien de nouveau à archiver."; exit 0; fi
+          git commit -m "Archivage automatique de l'année scolaire"
+          git push

@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Générateur de dessin mystère</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Atelier : panneau d'outils à gauche, repère de travail à droite. Feuilles d'impression cachées à l'écran. */
+:root{
+  --bg:#f3f5f4; --panel:#ffffff; --fg:#1d2422; --muted:#5d6a66; --line:#d5dcd9; --accent:#2f6f4e; --accent-fg:#ffffff;
+  --grid:#e2e7e5; --axis:#1d2422; --cellbg:#ffffff; --path:#1f4fa8; --cur:#d0441f;
+  --sans:"IBM Plex Sans",system-ui,"Segoe UI",Arial,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141917; --panel:#1c2320; --fg:#e6ece9; --muted:#9aa8a3; --line:#2f3935; --accent:#6cbf92; --accent-fg:#0d1210;
+  --grid:#2a3330; --axis:#e6ece9; --cellbg:#161c1a; --path:#7fa8ff; --cur:#ff8a5c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141917; --panel:#1c2320; --fg:#e6ece9; --muted:#9aa8a3; --line:#2f3935; --accent:#6cbf92; --accent-fg:#0d1210;
+  --grid:#2a3330; --axis:#e6ece9; --cellbg:#161c1a; --path:#7fa8ff; --cur:#ff8a5c; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 var(--sans);padding:16px}
+.app{display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px;max-width:1150px;margin:0 auto}
+@media (max-width:820px){.app{grid-template-columns:1fr}}
+h1{font-size:20px;font-weight:600;margin:0 0 2px}
+.sub{color:var(--muted);font-size:13px;margin:0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:16px;align-self:start}
+.sec{display:flex;flex-direction:column;gap:8px}
+.lab{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+button,.filebtn{font:inherit;font-size:13.5px;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:6px;padding:6px 10px;cursor:pointer}
+button:hover,.filebtn:hover{border-color:var(--accent)}
+button:focus-visible,input:focus-visible,select:focus-visible,.filebtn:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+button.on{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:600;padding:9px 12px}
+.filebtn input{display:none}
+input[type=text],select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--fg);width:100%}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.stats{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.stats b{color:var(--fg);font-weight:500}
+.warn{color:#b5541c}
+.work{display:flex;flex-direction:column;gap:10px;min-width:0}
+.canvas-wrap{position:relative;width:100%;max-width:680px;aspect-ratio:1;background:var(--cellbg);border:1px solid var(--line);border-radius:8px;overflow:hidden;touch-action:none}
+canvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+.hint{font-size:13px;color:var(--muted);margin:0;max-width:680px}
+.series{display:flex;flex-wrap:wrap;gap:6px;max-width:680px}
+.chip{font-family:var(--mono);font-size:12.5px;padding:4px 8px}
+.chip.on{background:var(--cur);border-color:var(--cur);color:#fff}
+.sheets{display:none}
+
+/* ---------- Impression ---------- */
+@page{size:A4;margin:12mm}
+@media print{
+  :root{color-scheme:light}
+  body{background:#fff;color:#000;padding:0;font-family:Arial,Helvetica,sans-serif}
+  .app{display:none}
+  .sheets{display:block}
+  .sheet{page-break-after:always;break-after:page}
+  .sheet:last-child{page-break-after:auto;break-after:auto}
+  .sh-title{text-align:center;font-size:17pt;font-weight:700;margin:0 0 2mm}
+  .sh-cons{text-align:center;font-size:10.5pt;margin:0 0 5mm}
+  .sh-list{font-size:10pt;margin:0 0 5mm 4mm;padding:0;list-style:none}
+  .sh-list li{margin:0 0 1.2mm}
+  .tables{columns:5;column-gap:3mm;font-size:9.5pt}
+  .grp{border:1px solid #000;margin:0 0 3mm;break-inside:auto}
+  .pt{display:grid;grid-template-columns:9mm 3mm 7mm 3mm 7mm 3mm;padding:.35mm 1mm;break-inside:avoid;font-variant-numeric:tabular-nums}
+  .pt span:nth-child(3),.pt span:nth-child(5){text-align:right}
+  .repere{display:flex;justify-content:center;padding-top:8mm}
+  .repere svg{width:186mm;height:186mm}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <div><h1>Dessin mystère</h1><p class="sub">Clique sur les nœuds du quadrillage pour tracer les contours. La fiche se construit toute seule.</p></div>
+
+    <div class="sec">
+      <span class="lab">Tracé</span>
+      <div class="row">
+        <button id="tAdd" class="on" type="button">Ajouter des points</button>
+        <button id="tEdit" type="button">Déplacer un point</button>
+      </div>
+      <div class="row">
+        <button id="newS" type="button">Nouvelle série</button>
+        <button id="closeS" type="button">Fermer la série</button>
+      </div>
+      <div class="row">
+        <button id="undo" type="button">Annuler le dernier point</button>
+        <button id="delS" type="button">Supprimer la série</button>
+      </div>
+      <p class="sub">Cliquer sur le premier point d’une série la ferme. Clic droit sur un point = le supprimer. Ctrl+Z = annuler.</p>
+    </div>
+
+    <div class="sec">
+      <span class="lab">Modèle à décalquer</span>
+      <div class="row">
+        <label class="filebtn">Importer une image<input id="imgIn" type="file" accept="image/*"></label>
+        <button id="imgDel" type="button">Retirer</button>
+      </div>
+      <label class="sub" for="imgSize">Taille du modèle : <span id="imgSizeV">100 %</span></label>
+      <input id="imgSize" type="range" min="10" max="400" value="100">
+      <div class="row">
+        <button id="tMove" type="button">Déplacer le modèle</button>
+        <button id="imgReset" type="button">Recentrer</button>
+      </div>
+      <label class="sub" for="imgOp">Transparence du modèle</label>
+      <input id="imgOp" type="range" min="0" max="100" value="55">
+    </div>
+
+    <div class="sec">
+      <span class="lab">Fiche</span>
+      <label class="sub" for="title">Titre</label>
+      <input id="title" type="text" value="Dessin mystère">
+      <label class="sub" for="mode">Repère</label>
+      <select id="mode">
+        <option value="rel">5e – relatifs (−16 à 16)</option>
+        <option value="pos">6e – positifs (0 à 32)</option>
+      </select>
+      <div class="stats" id="stats"></div>
+      <button class="primary" id="print" type="button">Imprimer la fiche (3 pages)</button>
+    </div>
+
+    <div class="sec">
+      <span class="lab">Dessin</span>
+      <div class="row">
+        <button id="save" type="button">Enregistrer…</button>
+        <label class="filebtn">Ouvrir…<input id="openIn" type="file" accept=".json,application/json"></label>
+        <button id="clear" type="button">Tout effacer</button>
+      </div>
+      <p class="sub" id="clearMsg" hidden>Clique encore pour confirmer.</p>
+    </div>
+  </aside>
+
+  <main class="work">
+    <div class="canvas-wrap" id="wrap"><canvas id="cv"></canvas></div>
+    <div class="series" id="series"></div>
+    <p class="hint">Exemple chargé : la citrouille. Clique sur une série pour la reprendre. Avec « Déplacer le modèle », fais glisser l’image et utilise la molette pour la redimensionner.</p>
+  </main>
+</div>
+
+<div class="sheets" id="sheets"></div>
+
+<script>
+const N=32; // 32 carreaux, nœuds de 0 à 32 (stockage interne)
+const $=id=>document.getElementById(id);
+// séries : {pts:[[i,j],...], closed:bool}, i,j entiers 0..32 (j vers le haut)
+let S=[], cur=0, tool='add';
+const SAMPLE=[
+ {c:1,p:[[0,10],[3,10],[6,10],[8,9],[9,8],[11,9],[13,8],[14,6],[15,3],[15,-2],[14,-5],[13,-8],[11,-11],[9,-12],[7,-12],[4,-13],[0,-13],[-4,-13],[-7,-12],[-9,-12],[-11,-11],[-13,-8],[-14,-5],[-15,-2],[-15,3],[-14,6],[-13,8],[-11,9],[-9,8],[-8,9],[-6,10],[-3,10]]},
+ {c:0,p:[[-2,10],[-1,13],[0,15],[2,15],[1,13],[2,10]]},
+ {c:1,p:[[2,12],[4,14],[7,14],[9,13],[6,11],[3,11]]},
+ {c:0,p:[[-1,13],[-4,14],[-6,14],[-7,13],[-6,12],[-5,13]]},
+ {c:0,p:[[9,8],[11,4],[12,-2],[11,-8],[9,-12]]},
+ {c:0,p:[[-9,8],[-11,4],[-12,-2],[-11,-8],[-9,-12]]},
+ {c:1,p:[[-9,2],[-3,2],[-5,6]]},{c:1,p:[[3,2],[9,2],[5,6]]},{c:1,p:[[-2,-2],[2,-2],[0,1]]},
+ {c:1,p:[[-10,-3],[-7,-5],[-5,-5],[-5,-7],[-3,-7],[-3,-5],[3,-5],[3,-7],[5,-7],[5,-5],[7,-5],[10,-3],[8,-7],[6,-9],[2,-10],[1,-8],[-1,-8],[-2,-10],[-6,-9],[-8,-7]]}];
+function loadSample(){S=SAMPLE.map(s=>({closed:!!s.c,pts:s.p.map(([x,y])=>[x+16,y+16])}));S.push({closed:false,pts:[]});cur=S.length-1;}
+
+const cv=$('cv'),ctx=cv.getContext('2d'),wrap=$('wrap');
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function mode(){return $('mode').value;}
+function off(){return mode()==='rel'?-16:0;}
+function letter(j){let s='';j++;while(j>0){j--;s=String.fromCharCode(65+j%26)+s;j=Math.floor(j/26);}return s;}
+function used(){return S.filter(s=>s.pts.length>=2);} // séries imprimées
+
+// ---------- modèle
+let img=null; const imgT={dx:0,dy:0};
+function imgRect(Z){const W=img.naturalWidth,H=img.naturalHeight,k=Math.min(Z/W,Z/H)*$('imgSize').value/100;const w=W*k,h=H*k;return {x:(Z-w)/2+imgT.dx*Z/N,y:(Z-h)/2+imgT.dy*Z/N,w,h};}
+
+// ---------- dessin écran
+const M=0.6; // marge en carreaux autour du repère
+function geo(){const r=wrap.getBoundingClientRect(),dpr=devicePixelRatio||1,Z=Math.round(r.width*dpr);const u=Z/(N+2*M);return {Z,u,dpr,X:i=>(i+M)*u,Y:j=>(N-j+M)*u};}
+function draw(){
+  const g=geo();if(cv.width!==g.Z){cv.width=g.Z;cv.height=g.Z;}
+  const {Z,u,dpr,X,Y}=g;ctx.clearRect(0,0,Z,Z);
+  if(img){ctx.save();ctx.translate(M*u,M*u);const R=imgRect(N*u);ctx.globalAlpha=1-$('imgOp').value/100;ctx.drawImage(img,R.x,R.y,R.w,R.h);ctx.restore();ctx.globalAlpha=1;}
+  ctx.strokeStyle=css('--grid');ctx.lineWidth=1;ctx.beginPath();
+  for(let k=0;k<=N;k++){const p=Math.round(X(k))+.5;ctx.moveTo(p,Y(N));ctx.lineTo(p,Y(0));const q=Math.round(Y(k))+.5;ctx.moveTo(X(0),q);ctx.lineTo(X(N),q);}ctx.stroke();
+  const o=off();ctx.strokeStyle=css('--axis');ctx.lineWidth=1.5*dpr;ctx.beginPath();
+  const ax=X(-o),ay=Y(-o);ctx.moveTo(ax,Y(0));ctx.lineTo(ax,Y(N));ctx.moveTo(X(0),ay);ctx.lineTo(X(N),ay);ctx.stroke();
+  ctx.fillStyle=css('--muted');ctx.font=`${9*dpr}px ${css('--mono')}`;ctx.textAlign='center';
+  for(let k=0;k<=N;k+=2){const v=k+o;if(v===0)continue;ctx.fillText(v,X(k),ay+11*dpr);}
+  ctx.textAlign='right';for(let k=0;k<=N;k+=2){const v=k+o;if(v===0)continue;ctx.fillText(v,ax-3*dpr,Y(k)+3*dpr);}
+  S.forEach((s,n)=>{if(!s.pts.length)return;const isC=n===cur;
+    ctx.strokeStyle=isC?css('--cur'):css('--path');ctx.lineWidth=(isC?2.2:1.8)*dpr;ctx.lineJoin='round';
+    ctx.beginPath();s.pts.forEach(([i,j],k)=>k?ctx.lineTo(X(i),Y(j)):ctx.moveTo(X(i),Y(j)));if(s.closed)ctx.closePath();ctx.stroke();
+    ctx.fillStyle=ctx.strokeStyle;s.pts.forEach(([i,j],k)=>{ctx.beginPath();ctx.arc(X(i),Y(j),(k===0?3.6:2.4)*dpr,0,7);ctx.fill();});});
+  if(hover&&tool!=='move'){ctx.strokeStyle=css('--cur');ctx.lineWidth=1.2*dpr;ctx.beginPath();ctx.arc(X(hover[0]),Y(hover[1]),5*dpr,0,7);ctx.stroke();}
+  info();
+}
+
+// ---------- saisie
+let hover=null,drag=null,moving=null;
+function node(e){const r=cv.getBoundingClientRect(),u=r.width/(N+2*M);const i=Math.round((e.clientX-r.left)/u-M),j=Math.round(N-((e.clientY-r.top)/u-M));if(i<0||j<0||i>N||j>N)return null;return [i,j];}
+function findPt(nd){for(let n=S.length-1;n>=0;n--){const k=S[n].pts.findIndex(p=>p[0]===nd[0]&&p[1]===nd[1]);if(k>=0)return [n,k];}return null;}
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+cv.addEventListener('pointerdown',e=>{
+  if(tool==='move'&&e.button!==2){if(!img)return;moving={x:e.clientX,y:e.clientY,dx:imgT.dx,dy:imgT.dy};cv.setPointerCapture(e.pointerId);return;}
+  const nd=node(e);if(!nd)return;
+  if(e.button===2){const f=findPt(nd);if(f){S[f[0]].pts.splice(f[1],1);if(S[f[0]].pts.length<3)S[f[0]].closed=false;commit();}return;}
+  if(tool==='edit'){const f=findPt(nd);if(f){drag=f;cur=f[0];cv.setPointerCapture(e.pointerId);}draw();return;}
+  let s=S[cur];if(!s||s.closed){S.push({closed:false,pts:[]});cur=S.length-1;s=S[cur];}
+  if(s.pts.length>=3&&s.pts[0][0]===nd[0]&&s.pts[0][1]===nd[1]){s.closed=true;newSeries();commit();return;}
+  const last=s.pts[s.pts.length-1];if(last&&last[0]===nd[0]&&last[1]===nd[1])return;
+  s.pts.push(nd);commit();});
+cv.addEventListener('pointermove',e=>{
+  if(moving){const r=cv.getBoundingClientRect(),u=r.width/(N+2*M);imgT.dx=moving.dx+(e.clientX-moving.x)/u;imgT.dy=moving.dy+(e.clientY-moving.y)/u;draw();return;}
+  const nd=node(e);if(drag&&nd){S[drag[0]].pts[drag[1]]=nd;}
+  hover=nd;draw();});
+cv.addEventListener('pointerleave',()=>{hover=null;draw();});
+addEventListener('pointerup',()=>{moving=null;if(drag){drag=null;commit();}});
+cv.addEventListener('wheel',e=>{if(tool!=='move'||!img)return;e.preventDefault();const s=$('imgSize');s.value=Math.max(10,Math.min(400,+s.value*(e.deltaY<0?1.05:1/1.05)));sizeChanged();},{passive:false});
+
+function setTool(t){tool=t;['tAdd','tEdit','tMove'].forEach(id=>$(id).classList.toggle('on',{tAdd:'add',tEdit:'edit',tMove:'move'}[id]===t));cv.style.cursor=t==='move'?'move':t==='edit'?'grab':'crosshair';draw();}
+$('tAdd').onclick=()=>setTool('add');$('tEdit').onclick=()=>setTool('edit');$('tMove').onclick=()=>setTool('move');
+function newSeries(){S=S.filter((s,n)=>s.pts.length||n===cur&&false);S.push({closed:false,pts:[]});cur=S.length-1;}
+$('newS').onclick=()=>{newSeries();setTool('add');commit();};
+$('closeS').onclick=()=>{const s=S[cur];if(s&&s.pts.length>=3){s.closed=!s.closed;commit();}};
+function undo(){let s=S[cur];if(s&&!s.pts.length&&cur>0){S.splice(cur,1);cur=S.length-1;s=S[cur];}if(!s)return;if(s.closed){s.closed=false;}else s.pts.pop();commit();}
+$('undo').onclick=undo;
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();undo();}});
+$('delS').onclick=()=>{if(!S[cur])return;S.splice(cur,1);if(!S.length||S[S.length-1].pts.length)S.push({closed:false,pts:[]});cur=S.length-1;commit();};
+
+function info(){
+  const L=used(),tot=L.reduce((a,s)=>a+s.pts.length,0);
+  $('stats').innerHTML=`<b>${tot}</b> points · <b>${L.length}</b> série${L.length>1?'s':''}`+(tot>150?'<br><span class="warn">Plus de 150 points : la fiche sera longue.</span>':'');
+  const box=$('series');box.innerHTML='';let n=0;
+  S.forEach((s,k)=>{const b=document.createElement('button');b.type='button';b.className='chip'+(k===cur?' on':'');
+    if(s.pts.length>=2){b.textContent=`${letter(n++)} · ${s.pts.length} pts${s.closed?' · fermée':''}`;}else{b.textContent=k===cur?'Série en cours…':'Série vide';}
+    b.onclick=()=>{cur=k;setTool('add');draw();};box.appendChild(b);});
+}
+function commit(){draw();persist();}
+
+// ---------- modèle : événements
+$('imgIn').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();
+  rd.onload=()=>{const im=new Image();im.onload=()=>{img=im;imgT.dx=imgT.dy=0;$('imgSize').value=100;sizeChanged();};im.src=rd.result;};rd.readAsDataURL(f);e.target.value='';};
+$('imgDel').onclick=()=>{img=null;if(tool==='move')setTool('add');draw();};
+$('imgReset').onclick=()=>{imgT.dx=imgT.dy=0;$('imgSize').value=100;sizeChanged();};
+function sizeChanged(){$('imgSizeV').textContent=Math.round($('imgSize').value)+' %';draw();}
+$('imgSize').oninput=sizeChanged;$('imgOp').oninput=draw;
+
+// ---------- fichiers
+function state(){return {title:$('title').value,mode:mode(),series:S.filter(s=>s.pts.length)};}
+function setState(o){S=(o.series||[]).map(s=>({closed:!!s.closed,pts:s.pts.map(p=>[p[0],p[1]])}));S.push({closed:false,pts:[]});cur=S.length-1;$('title').value=o.title??'Dessin mystère';$('mode').value=o.mode||'rel';}
+$('save').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(state())],{type:'application/json'}));a.download=($('title').value||'dessin').replace(/[^\w\-]+/g,'_')+'.json';a.click();};
+$('openIn').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{try{setState(JSON.parse(t));commit();}catch(err){}});e.target.value='';};
+let armed=false;
+$('clear').onclick=()=>{if(!armed){armed=true;$('clearMsg').hidden=false;setTimeout(()=>{armed=false;$('clearMsg').hidden=true;},3000);return;}S=[{closed:false,pts:[]}];cur=0;armed=false;$('clearMsg').hidden=true;commit();};
+$('mode').onchange=commit;$('title').oninput=persist;
+function persist(){try{localStorage.setItem('dessinMystereContours',JSON.stringify(state()));}catch(e){}}
+function restore(){try{const o=JSON.parse(localStorage.getItem('dessinMystereContours'));if(o&&o.series){setState(o);return true;}}catch(e){}return false;}
+
+// ---------- feuilles d'impression
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function repereSVG(L){
+  const o=off(),U=10,P=26,Z=N*U+2*P,X=i=>P+i*U,Y=j=>P+(N-j)*U;
+  let s=`<svg viewBox="0 0 ${Z} ${Z}" xmlns="http://www.w3.org/2000/svg" font-family="Arial" font-size="6.2">`;
+  for(let k=0;k<=N;k++)s+=`<line x1="${X(k)}" y1="${P}" x2="${X(k)}" y2="${P+N*U}" stroke="#bbb" stroke-width=".4"/><line x1="${P}" y1="${Y(k)}" x2="${P+N*U}" y2="${Y(k)}" stroke="#bbb" stroke-width=".4"/>`;
+  const ox=X(-o),oy=Y(-o);
+  s+=`<line x1="${P}" y1="${oy}" x2="${P+N*U+8}" y2="${oy}" stroke="#000"/><line x1="${ox}" y1="${P+N*U}" x2="${ox}" y2="${P-8}" stroke="#000"/>`;
+  s+=`<path d="M${P+N*U+10} ${oy} l-5 -2.5 v5z M${ox} ${P-10} l-2.5 5 h5z" fill="#000"/>`;
+  for(let k=0;k<=N;k++){const v=k+o;if(v===0)continue;
+    s+=`<line x1="${X(k)}" y1="${oy-1.5}" x2="${X(k)}" y2="${oy+1.5}" stroke="#000" stroke-width=".7"/><text x="${X(k)}" y="${oy+8}" text-anchor="middle">${v}</text>`;
+    s+=`<line x1="${ox-1.5}" y1="${Y(k)}" x2="${ox+1.5}" y2="${Y(k)}" stroke="#000" stroke-width=".7"/><text x="${ox-3}" y="${Y(k)+2.2}" text-anchor="end">${v}</text>`;}
+  s+=`<text x="${ox-3}" y="${oy+8}" text-anchor="end">0</text>`;
+  if(L)for(const r of L){const pts=r.pts.map(p=>X(p[0])+','+Y(p[1])).join(' ');s+=r.closed?`<polygon points="${pts}" fill="none" stroke="#1a3a8f" stroke-width="1.5" stroke-linejoin="round"/>`:`<polyline points="${pts}" fill="none" stroke="#1a3a8f" stroke-width="1.5" stroke-linejoin="round"/>`;}
+  return s+'</svg>';
+}
+function buildSheets(){
+  const L=used(),o=off(),t=esc($('title').value.trim());
+  const list=L.map((r,j)=>{const n=r.pts.length,nm=letter(j);
+    const txt=n<=6?'Relier '+r.pts.map((_,k)=>nm+(k+1)).join(' - ')+(r.closed?' - '+nm+'1':''):`Relier dans l’ordre les points de ${nm}1 à ${nm}${n}`+(r.closed?`, puis ${nm}${n} - ${nm}1`:'');
+    return `<li>${j+1}- ${txt}</li>`;}).join('');
+  const tables=L.map((r,j)=>`<div class="grp">${r.pts.map((p,k)=>`<div class="pt"><span>${letter(j)}${k+1}</span><span>(</span><span>${p[0]+o}</span><span>;</span><span>${p[1]+o}</span><span>)</span></div>`).join('')}</div>`).join('');
+  $('sheets').innerHTML=`<section class="sheet">${t?`<p class="sh-title">${t}</p>`:''}<p class="sh-cons">Placer les points dans le repère puis les relier dans l’ordre indiqué.</p><ol class="sh-list">${list}</ol><div class="tables">${tables}</div></section>`+
+   `<section class="sheet"><div class="repere">${repereSVG(null)}</div></section>`+
+   `<section class="sheet"><p class="sh-title">Corrigé</p><div class="repere">${repereSVG(L)}</div></section>`;
+}
+$('print').onclick=()=>{buildSheets();window.print();};
+addEventListener('beforeprint',buildSheets);
+
+if(!restore())loadSample();
+new ResizeObserver(draw).observe(wrap);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);
+draw();
+</script>
+</body>
+</html>

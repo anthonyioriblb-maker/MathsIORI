@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathématiques 5e — 2025-2026</title>
+<style>
+:root{--fond:#f4f6fb;--carte:#fff;--texte:#1f2a44;--doux:#5b6785;--ligne:#dfe4ef;--accent:#3b5bdb;--accent2:#e8edff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--fond);color:var(--texte);font:16px/1.5 "Segoe UI",system-ui,Arial,sans-serif;padding:0 16px 40px}
+a{color:var(--accent)}
+header.top{max-width:1100px;margin:0 auto;padding:22px 0 10px;display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+header.top h1{margin:0;font-size:28px}
+.annee{color:var(--doux);font-weight:600}
+.retour{font-size:14px;text-decoration:none}
+main{max-width:1100px;margin:0 auto}
+.note{color:var(--doux);font-size:14px;margin:0 0 14px}
+
+.outils{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;font-size:14px;border:0;cursor:pointer}
+.btn.clair{background:var(--accent2);color:var(--accent)}
+nav.sommaire{background:var(--carte);border:1px solid var(--ligne);border-radius:12px;padding:14px 18px;margin-bottom:22px}
+nav.sommaire h2{margin:0 0 8px;font-size:18px}
+nav.sommaire ol{margin:0;padding-left:22px;columns:2 320px;column-gap:28px}
+nav.sommaire li{break-inside:avoid;margin:0 0 8px}
+nav.sommaire li>a{font-weight:600;text-decoration:none}
+.mini{display:block;font-size:13px;color:var(--doux)}
+.mini a{color:var(--doux)}
+section.chapitre{background:var(--carte);border:1px solid var(--ligne);border-radius:12px;padding:16px 18px;margin:0 0 22px;scroll-margin-top:12px}
+section.chapitre h2{margin:0 0 4px;font-size:22px}
+.num{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--doux)}
+.desc{margin:0 0 10px;color:var(--doux)}
+details.doc{border-top:1px solid var(--ligne);padding:8px 0;scroll-margin-top:12px}
+details.doc summary{cursor:pointer;font-weight:600;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cat{font-size:12px;background:var(--accent2);color:var(--accent);border-radius:6px;padding:2px 8px}
+.ouvrir{margin-left:auto;font-size:13px;font-weight:400}
+details.doc iframe{display:block;width:100%;height:400px;border:0;margin-top:8px;background:#fff}
+@media print{.outils,nav.sommaire,.ouvrir{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Mathématiques 5e <span class="annee">· 2025-2026</span></h1>
+  <a class="retour" href="../index.html">← Années antérieures</a>
+</header>
+<main>
+  <p class="note">Les cours, exercices et évaluations de l'année 2025-2026, tels qu'ils étaient en fin d'année.</p>
+  <div class="outils">
+    <a class="btn" href="livre-5e-2025-2026.pdf" target="_blank" rel="noopener">📄 Livre complet en PDF</a>
+    <button class="btn clair" type="button" id="toutOuvrir">Tout déplier</button>
+    <button class="btn clair" type="button" id="toutFermer">Tout replier</button>
+  </div>
+  <nav class="sommaire"><h2>Sommaire</h2><ol>
+        <li><a href="#ch1">🧮 Priorités opératoires</a>
+          <span class="mini"><a href="#ch1-1">Cours</a></span></li>
+        <li><a href="#ch2">🔄 La symétrie centrale</a>
+          <span class="mini"><a href="#ch2-1">Cours</a></span></li>
+        <li><a href="#ch3">💸 Proportionnalité et ratio</a>
+          <span class="mini"><a href="#ch3-1">Cours</a> · <a href="#ch3-2">Cas de proportionnalité?</a> · <a href="#ch3-3">Calculer une valeur dans un cas de proportionnalité.</a></span></li>
+        <li><a href="#ch4">🔢 Les nombres relatifs</a>
+          <span class="mini"><a href="#ch4-1">Cours</a> · <a href="#ch4-2">Comparaison de relatifs</a> · <a href="#ch4-3">Comparaison de relatifs correction.</a></span></li>
+        <li><a href="#ch5">📚 Angles et parallélisme</a>
+          <span class="mini"><a href="#ch5-1">Cours</a> · <a href="#ch5-2">Évaluation</a></span></li>
+        <li><a href="#ch6">📚 Calcul littéral</a>
+          <span class="mini"><a href="#ch6-1">Cours</a> · <a href="#ch6-2">Feuille d'exercices 1</a> · <a href="#ch6-3">Feuille d'exercices 2</a> · <a href="#ch6-4">Simplification d'expressions</a></span></li>
+        <li><a href="#ch7">➕ Opérations avec les relatifs</a>
+          <span class="mini"><a href="#ch7-1">Cours</a></span></li>
+        <li><a href="#ch8">📐 Les triangles</a>
+          <span class="mini"><a href="#ch8-1">Cours</a></span></li>
+        <li><a href="#ch9">➗ Addition et soustraction de fractions</a>
+          <span class="mini"><a href="#ch9-1">Cours</a></span></li></ol></nav>
+  
+    <section class="chapitre" id="ch1">
+      <h2><span class="num">Chapitre 1</span>🧮 Priorités opératoires</h2>
+      <p class="desc">Maîtrise l'ordre des opérations et passe ton permis de calcul</p>
+      
+      <details class="doc cours" id="ch1-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre1%20-%20Priorites%20operatoires/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre1%20-%20Priorites%20operatoires/cours.html" title="Priorités opératoires — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch2">
+      <h2><span class="num">Chapitre 2</span>🔄 La symétrie centrale</h2>
+      <p class="desc">Découvre les propriétés de la symétrie centrale</p>
+      
+      <details class="doc cours" id="ch2-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre2%20-%20La%20symetrie%20centrale/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre2%20-%20La%20symetrie%20centrale/cours.html" title="La symétrie centrale — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch3">
+      <h2><span class="num">Chapitre 3</span>💸 Proportionnalité et ratio</h2>
+      <p class="desc">Pour devenir un pro des pourcentages</p>
+      
+      <details class="doc cours" id="ch3-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre3%20-%20Proportionnalite%20et%20ratio/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre3%20-%20Proportionnalite%20et%20ratio/cours.html" title="Proportionnalité et ratio — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch3-2">
+        <summary><span class="cat">Quiz</span> Cas de proportionnalité?
+          <a class="ouvrir" href="chapitre3%20-%20Proportionnalite%20et%20ratio/quiz/verif-proportionnalite.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre3%20-%20Proportionnalite%20et%20ratio/quiz/verif-proportionnalite.html" title="Proportionnalité et ratio — Cas de proportionnalité?" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch3-3">
+        <summary><span class="cat">Quiz</span> Calculer une valeur dans un cas de proportionnalité.
+          <a class="ouvrir" href="chapitre3%20-%20Proportionnalite%20et%20ratio/quiz/calc-proportionnalite.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre3%20-%20Proportionnalite%20et%20ratio/quiz/calc-proportionnalite.html" title="Proportionnalité et ratio — Calculer une valeur dans un cas de proportionnalité." loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch4">
+      <h2><span class="num">Chapitre 4</span>🔢 Les nombres relatifs</h2>
+      <p class="desc">Plonge dans le monde des nombres positifs et négatifs</p>
+      
+      <details class="doc cours" id="ch4-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre4%20-%20Les%20nombres%20relatifs/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre4%20-%20Les%20nombres%20relatifs/cours.html" title="Les nombres relatifs — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch4-2">
+        <summary><span class="cat">Exercices</span> Comparaison de relatifs
+          <a class="ouvrir" href="chapitre4%20-%20Les%20nombres%20relatifs/exercices/exercice.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre4%20-%20Les%20nombres%20relatifs/exercices/exercice.html" title="Les nombres relatifs — Comparaison de relatifs" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch4-3">
+        <summary><span class="cat">Exercices</span> Comparaison de relatifs correction.
+          <a class="ouvrir" href="chapitre4%20-%20Les%20nombres%20relatifs/exercices/correction.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre4%20-%20Les%20nombres%20relatifs/exercices/correction.html" title="Les nombres relatifs — Comparaison de relatifs correction." loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch5">
+      <h2><span class="num">Chapitre 5</span>📚 Angles et parallélisme</h2>
+      <p class="desc">Apprends à reconnaître et utiliser les angles alternes-internes et correspondants</p>
+      
+      <details class="doc cours" id="ch5-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre5%20-%20Angles%20et%20parallelisme/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Angles%20et%20parallelisme/cours.html" title="Angles et parallélisme — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc evenement" id="ch5-2">
+        <summary><span class="cat">Évaluation</span> Évaluation
+          <a class="ouvrir" href="chapitre5%20-%20Angles%20et%20parallelisme/devoirs/devoir.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Angles%20et%20parallelisme/devoirs/devoir.html" title="Angles et parallélisme — Évaluation" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch6">
+      <h2><span class="num">Chapitre 6</span>📚 Calcul littéral</h2>
+      <p class="desc">Les bases du calcul avec des lettres!</p>
+      
+      <details class="doc cours" id="ch6-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre6%20-%20Calcul%20litteral/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre6%20-%20Calcul%20litteral/cours.html" title="Calcul littéral — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch6-2">
+        <summary><span class="cat">Exercices</span> Feuille d'exercices 1
+          <a class="ouvrir" href="chapitre6%20-%20Calcul%20litteral/exercices/exercices%201.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre6%20-%20Calcul%20litteral/exercices/exercices%201.html" title="Calcul littéral — Feuille d'exercices 1" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch6-3">
+        <summary><span class="cat">Exercices</span> Feuille d'exercices 2
+          <a class="ouvrir" href="chapitre6%20-%20Calcul%20litteral/exercices/exercices%202.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre6%20-%20Calcul%20litteral/exercices/exercices%202.html" title="Calcul littéral — Feuille d'exercices 2" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch6-4">
+        <summary><span class="cat">Quiz</span> Simplification d'expressions
+          <a class="ouvrir" href="chapitre6%20-%20Calcul%20litteral/quiz/simplification.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre6%20-%20Calcul%20litteral/quiz/simplification.html" title="Calcul littéral — Simplification d'expressions" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch7">
+      <h2><span class="num">Chapitre 7</span>➕ Opérations avec les relatifs</h2>
+      <p class="desc">Apprends à additionner, soustraire, multiplier et diviser les nombres relatifs</p>
+      
+      <details class="doc cours" id="ch7-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre7-%20Op%C3%A9rations%20avec%20les%20relatifs/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre7-%20Op%C3%A9rations%20avec%20les%20relatifs/cours.html" title="Opérations avec les relatifs — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch8">
+      <h2><span class="num">Chapitre 8</span>📐 Les triangles</h2>
+      <p class="desc">Somme des angles, types de triangles, inégalité triangulaire, médiatrice</p>
+      
+      <details class="doc cours" id="ch8-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre8-%20Triangles/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre8-%20Triangles/cours.html" title="Les triangles — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch9">
+      <h2><span class="num">Chapitre 9</span>➗ Addition et soustraction de fractions</h2>
+      <p class="desc">Fractions égales, simplification, et opérations sur les fractions</p>
+      
+      <details class="doc cours" id="ch9-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre9%20-%20Fractions/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre9%20-%20Fractions/cours.html" title="Addition et soustraction de fractions — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+</main>
+<script>
+(function () {
+  // Charge un document quand on déplie sa rubrique, puis ajuste la hauteur à son contenu.
+  function ajuster(f) {
+    try {
+      var d = f.contentDocument; if (!d) return;
+      var h = Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0);
+      if (h) f.style.height = (h + 8) + 'px';
+    } catch (e) { f.style.height = '900px'; f.setAttribute('scrolling', 'yes'); }
+  }
+  function charger(det) {
+    var f = det.querySelector('iframe');
+    if (!f || f.src) return;
+    f.addEventListener('load', function () {
+      try {   // les liens « retour » du site n'ont pas de sens dans le livre
+        Array.prototype.forEach.call(f.contentDocument.querySelectorAll('a[href]'), function (a) {
+          if (/(^|/)(classe-[^/]*|index).html$/.test(a.getAttribute('href').split(/[?#]/)[0])) a.style.display = 'none';
+        });
+      } catch (e) {}
+      ajuster(f);
+      try {
+        var d = f.contentDocument;
+        if (window.ResizeObserver) new ResizeObserver(function () { ajuster(f); }).observe(d.body);
+        setTimeout(function () { ajuster(f); }, 800);
+      } catch (e) {}
+    });
+    f.src = f.getAttribute('data-src');
+  }
+  var docs = Array.prototype.slice.call(document.querySelectorAll('details.doc'));
+  docs.forEach(function (det) {
+    if (det.open) charger(det);
+    det.addEventListener('toggle', function () { if (det.open) charger(det); });
+  });
+  // Lien du sommaire vers un document replié : on le déplie
+  function depuisAncre() {
+    var el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el && el.tagName === 'DETAILS') { el.open = true; charger(el); }
+  }
+  window.addEventListener('hashchange', depuisAncre); depuisAncre();
+  document.getElementById('toutOuvrir').onclick = function () { docs.forEach(function (d) { d.open = true; charger(d); }); };
+  document.getElementById('toutFermer').onclick = function () { docs.forEach(function (d) { d.open = false; }); };
+})();
+</script>
+</body>
+</html>

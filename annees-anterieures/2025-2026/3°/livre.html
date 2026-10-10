@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathématiques 3e — 2025-2026</title>
+<style>
+:root{--fond:#f4f6fb;--carte:#fff;--texte:#1f2a44;--doux:#5b6785;--ligne:#dfe4ef;--accent:#3b5bdb;--accent2:#e8edff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--fond);color:var(--texte);font:16px/1.5 "Segoe UI",system-ui,Arial,sans-serif;padding:0 16px 40px}
+a{color:var(--accent)}
+header.top{max-width:1100px;margin:0 auto;padding:22px 0 10px;display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+header.top h1{margin:0;font-size:28px}
+.annee{color:var(--doux);font-weight:600}
+.retour{font-size:14px;text-decoration:none}
+main{max-width:1100px;margin:0 auto}
+.note{color:var(--doux);font-size:14px;margin:0 0 14px}
+
+.outils{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;font-size:14px;border:0;cursor:pointer}
+.btn.clair{background:var(--accent2);color:var(--accent)}
+nav.sommaire{background:var(--carte);border:1px solid var(--ligne);border-radius:12px;padding:14px 18px;margin-bottom:22px}
+nav.sommaire h2{margin:0 0 8px;font-size:18px}
+nav.sommaire ol{margin:0;padding-left:22px;columns:2 320px;column-gap:28px}
+nav.sommaire li{break-inside:avoid;margin:0 0 8px}
+nav.sommaire li>a{font-weight:600;text-decoration:none}
+.mini{display:block;font-size:13px;color:var(--doux)}
+.mini a{color:var(--doux)}
+section.chapitre{background:var(--carte);border:1px solid var(--ligne);border-radius:12px;padding:16px 18px;margin:0 0 22px;scroll-margin-top:12px}
+section.chapitre h2{margin:0 0 4px;font-size:22px}
+.num{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--doux)}
+.desc{margin:0 0 10px;color:var(--doux)}
+details.doc{border-top:1px solid var(--ligne);padding:8px 0;scroll-margin-top:12px}
+details.doc summary{cursor:pointer;font-weight:600;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cat{font-size:12px;background:var(--accent2);color:var(--accent);border-radius:6px;padding:2px 8px}
+.ouvrir{margin-left:auto;font-size:13px;font-weight:400}
+details.doc iframe{display:block;width:100%;height:400px;border:0;margin-top:8px;background:#fff}
+@media print{.outils,nav.sommaire,.ouvrir{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Mathématiques 3e <span class="annee">· 2025-2026</span></h1>
+  <a class="retour" href="../index.html">← Années antérieures</a>
+</header>
+<main>
+  <p class="note">Les cours, exercices et évaluations de l'année 2025-2026, tels qu'ils étaient en fin d'année.</p>
+  <div class="outils">
+    <a class="btn" href="livre-3e-2025-2026.pdf" target="_blank" rel="noopener">📄 Livre complet en PDF</a>
+    <button class="btn clair" type="button" id="toutOuvrir">Tout déplier</button>
+    <button class="btn clair" type="button" id="toutFermer">Tout replier</button>
+  </div>
+  <nav class="sommaire"><h2>Sommaire</h2><ol>
+        <li><a href="#ch1">🔢 Rappels de calculs</a>
+          <span class="mini"><a href="#ch1-1">Cours</a> · <a href="#ch1-2">Exercices fractions</a> · <a href="#ch1-3">Exercices fractions</a> · <a href="#ch1-4">Quiz puissances</a></span></li>
+        <li><a href="#ch2">📐 Théorème de Thalès</a>
+          <span class="mini"><a href="#ch2-1">Cours</a></span></li>
+        <li><a href="#ch3">🔢 Calcul littéral</a>
+          <span class="mini"><a href="#ch3-1">Cours</a> · <a href="#ch3-2">Distributivité simple.</a> · <a href="#ch3-3">Double distributivité.</a></span></li>
+        <li><a href="#ch4">📐 Trigonométrie dans le triangle rectangle</a>
+          <span class="mini"><a href="#ch4-1">Cours</a></span></li>
+        <li><a href="#ch5">📚 Equations</a>
+          <span class="mini"><a href="#ch5-1">Cours</a> · <a href="#ch5-2">Exercices équations</a> · <a href="#ch5-3">Correction exercices équations</a> · <a href="#ch5-4">Quiz équations</a> · <a href="#ch5-5">Quiz equation produit nul</a> · <a href="#ch5-6">Quiz équations x²=a</a></span></li>
+        <li><a href="#ch6">📚 Statistiques</a>
+          <span class="mini"><a href="#ch6-1">Cours</a></span></li>
+        <li><a href="#ch7">📚 Notion de fonction</a>
+          <span class="mini"><a href="#ch7-1">Cours</a> · <a href="#ch7-2">Exercices fonctions</a> · <a href="#ch7-3">Correction exercices fonctions</a></span></li>
+        <li><a href="#ch8">🎲 Probabilités</a>
+          <span class="mini"><a href="#ch8-1">Cours</a> · <a href="#ch8-2">Feuille d'exercices</a></span></li>
+        <li><a href="#ch9">🔢 Arithmétique</a>
+          <span class="mini"><a href="#ch9-1">Cours</a></span></li>
+        <li><a href="#ch10">📈 Fonctions affines et linéaires</a>
+          <span class="mini"><a href="#ch10-1">Cours</a></span></li>
+        <li><a href="#ch11">🌐 Géométrie dans l'espace</a>
+          <span class="mini"><a href="#ch11-1">Cours</a></span></li>
+        <li><a href="#ch12">🔄 Transformations du plan</a>
+          <span class="mini"><a href="#ch12-1">Cours</a></span></li></ol></nav>
+  
+    <section class="chapitre" id="ch1">
+      <h2><span class="num">Chapitre 1</span>🔢 Rappels de calculs</h2>
+      <p class="desc">Mise à niveau pour être au point pour cette année !</p>
+      
+      <details class="doc cours" id="ch1-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre1%20-%20Rappels%20de%20calculs/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre1%20-%20Rappels%20de%20calculs/cours.html" title="Rappels de calculs — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch1-2">
+        <summary><span class="cat">Exercices</span> Exercices fractions
+          <a class="ouvrir" href="chapitre1%20-%20Rappels%20de%20calculs/exercices/exercice1.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre1%20-%20Rappels%20de%20calculs/exercices/exercice1.html" title="Rappels de calculs — Exercices fractions" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch1-3">
+        <summary><span class="cat">Exercices</span> Exercices fractions
+          <a class="ouvrir" href="chapitre1%20-%20Rappels%20de%20calculs/exercices/correction-exercice1.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre1%20-%20Rappels%20de%20calculs/exercices/correction-exercice1.html" title="Rappels de calculs — Exercices fractions" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch1-4">
+        <summary><span class="cat">Quiz</span> Quiz puissances
+          <a class="ouvrir" href="chapitre1%20-%20Rappels%20de%20calculs/quiz/puissances.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre1%20-%20Rappels%20de%20calculs/quiz/puissances.html" title="Rappels de calculs — Quiz puissances" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch2">
+      <h2><span class="num">Chapitre 2</span>📐 Théorème de Thalès</h2>
+      <p class="desc">Découvre les propriétés de proportionnalité dans les triangles</p>
+      
+      <details class="doc cours" id="ch2-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre2%20-%20Theoreme%20de%20Thales/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre2%20-%20Theoreme%20de%20Thales/cours.html" title="Théorème de Thalès — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch3">
+      <h2><span class="num">Chapitre 3</span>🔢 Calcul littéral</h2>
+      <p class="desc">Maîtrise les expressions algébriques et sois un pro du calcul avec des lettres !</p>
+      
+      <details class="doc cours" id="ch3-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre3%20-%20Calcul%20litteral/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre3%20-%20Calcul%20litteral/cours.html" title="Calcul littéral — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch3-2">
+        <summary><span class="cat">Quiz</span> Distributivité simple.
+          <a class="ouvrir" href="chapitre3%20-%20Calcul%20litteral/quiz/distributivite-simple.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre3%20-%20Calcul%20litteral/quiz/distributivite-simple.html" title="Calcul littéral — Distributivité simple." loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch3-3">
+        <summary><span class="cat">Quiz</span> Double distributivité.
+          <a class="ouvrir" href="chapitre3%20-%20Calcul%20litteral/quiz/double-distributivite.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre3%20-%20Calcul%20litteral/quiz/double-distributivite.html" title="Calcul littéral — Double distributivité." loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch4">
+      <h2><span class="num">Chapitre 4</span>📐 Trigonométrie dans le triangle rectangle</h2>
+      <p class="desc">Utilise le sinus, le cosinus et la tangente pour résoudre des problèmes de triangles rectangles et calcule des distances !</p>
+      
+      <details class="doc cours" id="ch4-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre4%20-%20Trigonometrie%20dans%20le%20triangle%20rectangle/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre4%20-%20Trigonometrie%20dans%20le%20triangle%20rectangle/cours.html" title="Trigonométrie dans le triangle rectangle — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch5">
+      <h2><span class="num">Chapitre 5</span>📚 Equations</h2>
+      <p class="desc">Résous des équations et découvre comment elles modélisent des situations réelles !</p>
+      
+      <details class="doc cours" id="ch5-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre5%20-%20Equations/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Equations/cours.html" title="Equations — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch5-2">
+        <summary><span class="cat">Exercices</span> Exercices équations
+          <a class="ouvrir" href="chapitre5%20-%20Equations/exercices/exercice.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Equations/exercices/exercice.html" title="Equations — Exercices équations" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch5-3">
+        <summary><span class="cat">Exercices</span> Correction exercices équations
+          <a class="ouvrir" href="chapitre5%20-%20Equations/exercices/correction.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Equations/exercices/correction.html" title="Equations — Correction exercices équations" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch5-4">
+        <summary><span class="cat">Quiz</span> Quiz équations
+          <a class="ouvrir" href="chapitre5%20-%20Equations/quiz/equations.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Equations/quiz/equations.html" title="Equations — Quiz équations" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch5-5">
+        <summary><span class="cat">Quiz</span> Quiz equation produit nul
+          <a class="ouvrir" href="chapitre5%20-%20Equations/quiz/produit-nul.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Equations/quiz/produit-nul.html" title="Equations — Quiz equation produit nul" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch5-6">
+        <summary><span class="cat">Quiz</span> Quiz équations x²=a
+          <a class="ouvrir" href="chapitre5%20-%20Equations/quiz/x2-egal-a.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Equations/quiz/x2-egal-a.html" title="Equations — Quiz équations x²=a" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch6">
+      <h2><span class="num">Chapitre 6</span>📚 Statistiques</h2>
+      <p class="desc">moyenne, médiane, étendue n'auront plus de secret pour toi !</p>
+      
+      <details class="doc cours" id="ch6-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre6%20-%20Statistiques/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre6%20-%20Statistiques/cours.html" title="Statistiques — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch7">
+      <h2><span class="num">Chapitre 7</span>📚 Notion de fonction</h2>
+      <p class="desc">decouvre les fonctions, les images et les antécédents !</p>
+      
+      <details class="doc cours" id="ch7-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre7%20-%20Notion%20de%20fonction/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre7%20-%20Notion%20de%20fonction/cours.html" title="Notion de fonction — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch7-2">
+        <summary><span class="cat">Exercices</span> Exercices fonctions
+          <a class="ouvrir" href="chapitre7%20-%20Notion%20de%20fonction/exercices/feuille_exercices_fonctions_3eme.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre7%20-%20Notion%20de%20fonction/exercices/feuille_exercices_fonctions_3eme.html" title="Notion de fonction — Exercices fonctions" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch7-3">
+        <summary><span class="cat">Exercices</span> Correction exercices fonctions
+          <a class="ouvrir" href="chapitre7%20-%20Notion%20de%20fonction/exercices/correction_exercices_fonctions_3eme.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre7%20-%20Notion%20de%20fonction/exercices/correction_exercices_fonctions_3eme.html" title="Notion de fonction — Correction exercices fonctions" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch8">
+      <h2><span class="num">Chapitre 8</span>🎲 Probabilités</h2>
+      <p class="desc">Calcule des probabilités et interprète des expériences aléatoires</p>
+      
+      <details class="doc cours" id="ch8-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre8%20-%20Probabilite/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre8%20-%20Probabilite/cours.html" title="Probabilités — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch8-2">
+        <summary><span class="cat">Exercices</span> Feuille d'exercices
+          <a class="ouvrir" href="chapitre8%20-%20Probabilite/exos_probabilites.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre8%20-%20Probabilite/exos_probabilites.html" title="Probabilités — Feuille d'exercices" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch9">
+      <h2><span class="num">Chapitre 9</span>🔢 Arithmétique</h2>
+      <p class="desc">Divisibilité, nombres premiers, PGCD et PPCM : maîtrise les outils fondamentaux du calcul !</p>
+      
+      <details class="doc cours" id="ch9-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre9%20-%20Arithmetique/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre9%20-%20Arithmetique/cours.html" title="Arithmétique — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch10">
+      <h2><span class="num">Chapitre 10</span>📈 Fonctions affines et linéaires</h2>
+      <p class="desc">Représentation graphique, coefficient directeur et ordonnée à l'origine</p>
+      
+      <details class="doc cours" id="ch10-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre10%20-%20Fonctions%20affines%20et%20lineaires/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre10%20-%20Fonctions%20affines%20et%20lineaires/cours.html" title="Fonctions affines et linéaires — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch11">
+      <h2><span class="num">Chapitre 11</span>🌐 Géométrie dans l'espace</h2>
+      <p class="desc">Sphère, boule, sections de solides, agrandissements/réductions et repérage dans l'espace</p>
+      
+      <details class="doc cours" id="ch11-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre11%20-%20Geometrie%20dans%20l%20espace/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre11%20-%20Geometrie%20dans%20l%20espace/cours.html" title="Géométrie dans l'espace — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch12">
+      <h2><span class="num">Chapitre 12</span>🔄 Transformations du plan</h2>
+      <p class="desc">Rappels sur les symétries, la translation et la rotation. Nouveauté : les homothéties !</p>
+      
+      <details class="doc cours" id="ch12-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre12%20-%20Transformations%20du%20plan/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre12%20-%20Transformations%20du%20plan/cours.html" title="Transformations du plan — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+</main>
+<script>
+(function () {
+  // Charge un document quand on déplie sa rubrique, puis ajuste la hauteur à son contenu.
+  function ajuster(f) {
+    try {
+      var d = f.contentDocument; if (!d) return;
+      var h = Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0);
+      if (h) f.style.height = (h + 8) + 'px';
+    } catch (e) { f.style.height = '900px'; f.setAttribute('scrolling', 'yes'); }
+  }
+  function charger(det) {
+    var f = det.querySelector('iframe');
+    if (!f || f.src) return;
+    f.addEventListener('load', function () {
+      try {   // les liens « retour » du site n'ont pas de sens dans le livre
+        Array.prototype.forEach.call(f.contentDocument.querySelectorAll('a[href]'), function (a) {
+          if (/(^|/)(classe-[^/]*|index).html$/.test(a.getAttribute('href').split(/[?#]/)[0])) a.style.display = 'none';
+        });
+      } catch (e) {}
+      ajuster(f);
+      try {
+        var d = f.contentDocument;
+        if (window.ResizeObserver) new ResizeObserver(function () { ajuster(f); }).observe(d.body);
+        setTimeout(function () { ajuster(f); }, 800);
+      } catch (e) {}
+    });
+    f.src = f.getAttribute('data-src');
+  }
+  var docs = Array.prototype.slice.call(document.querySelectorAll('details.doc'));
+  docs.forEach(function (det) {
+    if (det.open) charger(det);
+    det.addEventListener('toggle', function () { if (det.open) charger(det); });
+  });
+  // Lien du sommaire vers un document replié : on le déplie
+  function depuisAncre() {
+    var el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el && el.tagName === 'DETAILS') { el.open = true; charger(el); }
+  }
+  window.addEventListener('hashchange', depuisAncre); depuisAncre();
+  document.getElementById('toutOuvrir').onclick = function () { docs.forEach(function (d) { d.open = true; charger(d); }); };
+  document.getElementById('toutFermer').onclick = function () { docs.forEach(function (d) { d.open = false; }); };
+})();
+</script>
+</body>
+</html>

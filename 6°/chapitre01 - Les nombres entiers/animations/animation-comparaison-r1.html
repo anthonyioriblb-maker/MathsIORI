@@ -106,28 +106,28 @@ button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allow
 
 <div class="compare-wrap">
   <div class="nombres-row">
+    <div class="nombre-bloc" id="blocB">
+      <div class="chiffre-box"><div class="chiffre-val" id="cB0">8</div><div class="chiffre-label">dizaines</div></div>
+      <div class="chiffre-box"><div class="chiffre-val" id="cB1">9</div><div class="chiffre-label">unités</div></div>
+    </div>
+    <div class="symbole-comp" id="symbole"></div>
     <div class="nombre-bloc" id="blocA">
       <div class="chiffre-box"><div class="chiffre-val" id="cA0">5</div><div class="chiffre-label">centaines</div></div>
       <div class="chiffre-box"><div class="chiffre-val" id="cA1">3</div><div class="chiffre-label">dizaines</div></div>
       <div class="chiffre-box"><div class="chiffre-val" id="cA2">7</div><div class="chiffre-label">unités</div></div>
     </div>
-    <div class="symbole-comp" id="symbole"></div>
-    <div class="nombre-bloc" id="blocB">
-      <div class="chiffre-box"><div class="chiffre-val" id="cB0">8</div><div class="chiffre-label">dizaines</div></div>
-      <div class="chiffre-box"><div class="chiffre-val" id="cB1">9</div><div class="chiffre-label">unités</div></div>
-    </div>
   </div>
   <div class="comptage-row">
-    <div class="comptage-bloc" id="countA">
-      <span class="comptage-val" style="color:#2196f3">3</span>
-      <span>chiffres</span>
-    </div>
     <div class="comptage-bloc" id="countB">
       <span class="comptage-val" style="color:#e91e63">2</span>
       <span>chiffres</span>
     </div>
+    <div class="comptage-bloc" id="countA">
+      <span class="comptage-val" style="color:#2196f3">3</span>
+      <span>chiffres</span>
+    </div>
   </div>
-  <div class="conclusion" id="conclusion">537 &gt; 89</div>
+  <div class="conclusion" id="conclusion">89 &lt; 537</div>
 </div>
 
 <div class="step-box" id="stepBox"></div>
@@ -146,11 +146,11 @@ const steps = [
     action: 'count'
   },
   {
-    msg: '<strong>537</strong> a <strong>3 chiffres</strong> et <strong>89</strong> a <strong>2 chiffres</strong>. Le nombre avec le plus de chiffres est le plus grand.',
+    msg: '<strong>89</strong> a <strong>2 chiffres</strong> et <strong>537</strong> a <strong>3 chiffres</strong>. Le nombre avec le moins de chiffres est le plus petit.',
     action: 'highlight_count'
   },
   {
-    msg: '✅ <strong>537 &gt; 89</strong> car 537 possède plus de chiffres que 89.',
+    msg: '✅ <strong>89 &lt; 537</strong> car 89 possède moins de chiffres que 537.',
     action: 'result'
   }
 ];
@@ -191,7 +191,7 @@ function applyStep(i) {
     document.getElementById('blocA').classList.add('winner');
     document.getElementById('blocB').classList.add('loser');
     const sym = document.getElementById('symbole');
-    sym.textContent = '>'; sym.className = 'symbole-comp visible gt';
+    sym.textContent = '<'; sym.className = 'symbole-comp visible gt';
     const conclu = document.getElementById('conclusion');
     conclu.style.color = '#4caf50'; conclu.style.border = '3px solid #4caf50';
     conclu.classList.add('visible');

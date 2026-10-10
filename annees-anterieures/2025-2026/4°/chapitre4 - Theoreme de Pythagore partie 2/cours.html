@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Théorème de Pythagore</title>
+    <link rel="stylesheet" href="../../styles.css?v=20251120143124">
+</head>
+<body>
+    <a href="../classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+
+    <h1>Chapitre 4: Théorème de Pythagore partie 2</h1>
+    
+    <h2>Notion de réciproque</h2>
+    
+    <div class="remarque">
+        <strong>Vidéo explicative :</strong> <a href="https://www.youtube.com/watch?v=kMUD9XF06No" target="_blank">https://www.youtube.com/watch?v=kMUD9XF06No</a>
+    </div>
+    
+    <h3>Partons du français</h3>
+    <div class="remarque">
+        En mathématiques on parle souvent de théorème, de réciproque, et des fois de contraposée... Mais il est parfois difficile de comprendre quand utiliser quoi et comment.<br><br>
+        <strong>Exemple :</strong> <span style="color: blue; font-weight: bold;">Roméo aime Juliette</span> et <span style="color: green; font-weight: bold;">Juliette aime Roméo</span>, c'est réciproque.<br>
+        Cela signifie que ça fonctionne dans les deux sens.
+    </div>
+
+    <h3>Construction grammaticale de la réciproque</h3>
+    <div class="definition">
+        <span style="color: red;">Phrase conditionnelle :</span> Si <span style="color: blue; font-weight: bold;">il pleut</span>, alors <span style="color: green; font-weight: bold;">j'ouvre mon parapluie</span>.<br><br>
+        <span style="color: red;">La réciproque sera donc :</span> Si <span style="color: green; font-weight: bold;">j'ouvre mon parapluie</span>, alors <span style="color: blue; font-weight: bold;">il pleut</span>. (Ce qui est totalement faux, mais c'est la réciproque)<br><br>
+        À partir d'une phrase conditionnelle (avec un <em>Si <span style="color: blue;">condition</span> alors <span style="color: green;">conséquence</span></em>), on peut toujours construire une <span style="color: red;">réciproque</span> (après elle n'est pas toujours vraie).<br><br>
+        Pour construire une réciproque il faut <span style="color: red;">échanger condition et conséquence</span>.
+    </div>
+
+    <h3>Contraposée</h3>
+    <div class="definition">
+        Ce mot fait penser à contraire... La <span style="color: red;">contraposée</span> sera le contraire de la réciproque.<br><br>
+        <span style="color: red;">Phrase conditionnelle :</span> Si <span style="color: blue; font-weight: bold;">il pleut</span>, alors <span style="color: green; font-weight: bold;">j'ouvre mon parapluie</span><br><br>
+        <span style="color: red;">Réciproque :</span> Si <span style="color: green; font-weight: bold;">j'ouvre mon parapluie</span>, alors <span style="color: blue; font-weight: bold;">il pleut</span><br><br>
+        Si je réécrit cette phrase en <span style="color: red;">mode négatif</span>, j'ai :<br>
+        <span style="color: red;">Contraposée :</span> Si <span style="color: green; font-weight: bold;">je n'ouvre pas mon parapluie</span>, alors <span style="color: blue; font-weight: bold;">il ne pleut pas</span>. (C'est faux dans ce cas aussi, mais c'est la contraposée)
+    </div>
+
+    <h3>Oui mais en maths du coup ?</h3>
+    <div class="important">
+        En maths, toute propriété qui est donnée en cours est vraie.<br><br>
+        On peut toujours construire la propriété réciproque mais elle n'est pas toujours vraie.<br><br>
+        Par contre la propriété contraposée elle est toujours vraie (si la propriété est vraie).<br><br>
+        <strong>Exemple avec un quadrilatère :</strong><br>
+        <span style="color: red;">Propriété :</span> Si <span style="color: blue; font-weight: bold;">un quadrilatère est un carré</span>, alors <span style="color: green; font-weight: bold;">ses diagonales sont de même longueur</span>.<br><br>
+        <span style="color: red;">Réciproque :</span> Si <span style="color: green; font-weight: bold;">les diagonales d'un quadrilatère sont de même longueur</span>, alors <span style="color: blue; font-weight: bold;">c'est un carré</span>. <em>(FAUX ! Un rectangle a aussi des diagonales de même longueur)</em><br><br>
+        <span style="color: red;">Contraposée :</span> Si <span style="color: green; font-weight: bold;">les diagonales d'un quadrilatère ne sont pas de même longueur</span>, alors <span style="color: blue; font-weight: bold;">ce n'est pas un carré</span>. <em>(VRAI !)</em>
+    </div>
+
+    <h2>Réciproque du théorème de Pythagore</h2>
+    
+    <div class="important">
+        <span style="color: red;">Réciproque du théorème de Pythagore :</span><br>
+        Si dans un triangle ABC, AB² + AC² = BC², alors ce triangle est rectangle en A.<br><br>
+        On utilise la réciproque du théorème de Pythagore pour <span style="color: red;">montrer qu'un triangle est rectangle</span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong><br>
+        Soit ABC un triangle tel que AB = 5,2 cm, AC = 3,9 cm et BC = 6,5 cm.<br>
+        Ce triangle est-il rectangle ?<br><br>
+        
+        <div class="method">
+            <strong>Résolution :</strong><br><br>
+            <img src="images/4-41.png" alt="Triangle ABC" style="float: right; width: 200px; margin-left: 20px;">
+            Dans le triangle ABC le côté le plus long est [BC].<br><br>
+            
+            <div class="calcul">
+                D'une part, BC² = 6,5² = <strong>42,25</strong>
+            </div>
+            
+            <div class="calcul">
+                D'autre part, AB² + AC² = 5,2² + 3,9² = 27,04 + 15,21 = <strong>42,25</strong>
+            </div>
+            
+            <div class="calcul">
+                Ainsi AB² + AC² = BC², d'après la réciproque du théorème de Pythagore, <strong>le triangle ABC est rectangle en A</strong>.
+            </div>
+        </div>
+    </div>
+
+    <h2>Contraposée du théorème de Pythagore</h2>
+    
+    <div class="important">
+        <span style="color: red;">Contraposée du théorème de Pythagore :</span><br>
+        Si dans un triangle ABC (avec BC comme plus grand côté), AB² + AC² ≠ BC², alors ce triangle n'est pas rectangle.<br><br>
+        On utilise la contraposée du théorème de Pythagore pour <span style="color: red;">montrer qu'un triangle n'est pas rectangle</span>.
+    </div>
+
+    <div class="example">
+        <strong>Exemple :</strong><br>
+        Soit JKL un triangle tel que JK = 15 cm, KL = 11 cm et LJ = 10 cm.<br>
+        Ce triangle est-il rectangle ?<br><br>
+        
+        <div class="method">
+            <strong>Résolution :</strong><br><br>
+            <img src="images/4-42.png" alt="Triangle JKL" style="float: right; width: 200px; margin-left: 20px;">
+            Dans le triangle JKL, le côté le plus long est [JK].<br><br>
+            
+            <div class="calcul">
+                D'une part, JK² = 15² = <strong>225</strong>
+            </div>
+            
+            <div class="calcul">
+                D'autre part, KL² + LJ² = 11² + 10² = 121 + 100 = <strong>221</strong>
+            </div>
+            
+            <div class="calcul">
+                Ainsi KL² + LJ² ≠ JK², d'après la contraposée du théorème de Pythagore, <strong>le triangle JKL n'est pas rectangle</strong>.
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

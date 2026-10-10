@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathématiques 4e — 2025-2026</title>
+<style>
+:root{--fond:#f4f6fb;--carte:#fff;--texte:#1f2a44;--doux:#5b6785;--ligne:#dfe4ef;--accent:#3b5bdb;--accent2:#e8edff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--fond);color:var(--texte);font:16px/1.5 "Segoe UI",system-ui,Arial,sans-serif;padding:0 16px 40px}
+a{color:var(--accent)}
+header.top{max-width:1100px;margin:0 auto;padding:22px 0 10px;display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+header.top h1{margin:0;font-size:28px}
+.annee{color:var(--doux);font-weight:600}
+.retour{font-size:14px;text-decoration:none}
+main{max-width:1100px;margin:0 auto}
+.note{color:var(--doux);font-size:14px;margin:0 0 14px}
+
+.outils{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;font-size:14px;border:0;cursor:pointer}
+.btn.clair{background:var(--accent2);color:var(--accent)}
+nav.sommaire{background:var(--carte);border:1px solid var(--ligne);border-radius:12px;padding:14px 18px;margin-bottom:22px}
+nav.sommaire h2{margin:0 0 8px;font-size:18px}
+nav.sommaire ol{margin:0;padding-left:22px;columns:2 320px;column-gap:28px}
+nav.sommaire li{break-inside:avoid;margin:0 0 8px}
+nav.sommaire li>a{font-weight:600;text-decoration:none}
+.mini{display:block;font-size:13px;color:var(--doux)}
+.mini a{color:var(--doux)}
+section.chapitre{background:var(--carte);border:1px solid var(--ligne);border-radius:12px;padding:16px 18px;margin:0 0 22px;scroll-margin-top:12px}
+section.chapitre h2{margin:0 0 4px;font-size:22px}
+.num{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--doux)}
+.desc{margin:0 0 10px;color:var(--doux)}
+details.doc{border-top:1px solid var(--ligne);padding:8px 0;scroll-margin-top:12px}
+details.doc summary{cursor:pointer;font-weight:600;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cat{font-size:12px;background:var(--accent2);color:var(--accent);border-radius:6px;padding:2px 8px}
+.ouvrir{margin-left:auto;font-size:13px;font-weight:400}
+details.doc iframe{display:block;width:100%;height:400px;border:0;margin-top:8px;background:#fff}
+@media print{.outils,nav.sommaire,.ouvrir{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Mathématiques 4e <span class="annee">· 2025-2026</span></h1>
+  <a class="retour" href="../index.html">← Années antérieures</a>
+</header>
+<main>
+  <p class="note">Les cours, exercices et évaluations de l'année 2025-2026, tels qu'ils étaient en fin d'année.</p>
+  <div class="outils">
+    <a class="btn" href="livre-4e-2025-2026.pdf" target="_blank" rel="noopener">📄 Livre complet en PDF</a>
+    <button class="btn clair" type="button" id="toutOuvrir">Tout déplier</button>
+    <button class="btn clair" type="button" id="toutFermer">Tout replier</button>
+  </div>
+  <nav class="sommaire"><h2>Sommaire</h2><ol>
+        <li><a href="#ch1">➖ Les nombres relatifs</a>
+          <span class="mini"><a href="#ch1-1">Cours</a></span></li>
+        <li><a href="#ch2">◤ Le théorème de Pythagore partie 1</a>
+          <span class="mini"><a href="#ch2-1">Cours</a> · <a href="#ch2-2">Quiz Pythagore - Calculs</a></span></li>
+        <li><a href="#ch3">➗ Écriture fractionnaire partie 1</a>
+          <span class="mini"><a href="#ch3-1">Cours</a></span></li>
+        <li><a href="#ch4">📚 Théorème de Pythagore partie 2</a>
+          <span class="mini"><a href="#ch4-1">Cours</a> · <a href="#ch4-2">Quiz Pythagore - Réciproque et contraposée</a></span></li>
+        <li><a href="#ch5">📚 Écriture fractionnaire partie 2</a>
+          <span class="mini"><a href="#ch5-1">Cours</a></span></li>
+        <li><a href="#ch6">📊 statistiques et probabilités</a>
+          <span class="mini"><a href="#ch6-1">Cours</a> · <a href="#ch6-2">Évaluation</a></span></li>
+        <li><a href="#ch7">📚 Géométrie dans l'espace</a>
+          <span class="mini"><a href="#ch7-1">Cours</a></span></li>
+        <li><a href="#ch8">📚 Cosinus d'un angle aigu</a>
+          <span class="mini"><a href="#ch8-1">Cours</a></span></li>
+        <li><a href="#ch9">📚 La translation</a>
+          <span class="mini"><a href="#ch9-1">Cours</a></span></li>
+        <li><a href="#ch10">⚡ Puissances</a>
+          <span class="mini"><a href="#ch10-1">Cours</a></span></li>
+        <li><a href="#ch11">📐 Proportionnalité</a>
+          <span class="mini"><a href="#ch11-1">Cours</a> · <a href="#ch11-2">Évaluation</a></span></li>
+        <li><a href="#ch12">⚖️ Les Équations</a>
+          <span class="mini"><a href="#ch12-1">Cours</a> · <a href="#ch12-2">Corrigé — Mise en équation du 1er degré</a></span></li>
+        <li><a href="#ch13">🔢 Arithmétique</a>
+          <span class="mini"><a href="#ch13-1">Cours</a></span></li>
+        <li><a href="#ch14">📐 Théorème de Thalès</a>
+          <span class="mini"><a href="#ch14-1">Cours</a></span></li>
+        <li><a href="#ch15">🔡 Calcul littéral</a>
+          <span class="mini"><a href="#ch15-1">Cours</a></span></li></ol></nav>
+  
+    <section class="chapitre" id="ch1">
+      <h2><span class="num">Chapitre 1</span>➖ Les nombres relatifs</h2>
+      <p class="desc">Deviens un pro des nombres positifs et négatifs !</p>
+      
+      <details class="doc cours" id="ch1-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre1%20-%20Les%20nombres%20relatifs/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre1%20-%20Les%20nombres%20relatifs/cours.html" title="Les nombres relatifs — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch2">
+      <h2><span class="num">Chapitre 2</span>◤ Le théorème de Pythagore partie 1</h2>
+      <p class="desc">Calcule la longueur d'un côté dans un triangle rectangle</p>
+      
+      <details class="doc cours" id="ch2-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre2%20-%20Le%20theoreme%20de%20Pythagore%20partie%201/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre2%20-%20Le%20theoreme%20de%20Pythagore%20partie%201/cours.html" title="Le théorème de Pythagore partie 1 — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch2-2">
+        <summary><span class="cat">Quiz</span> Quiz Pythagore - Calculs
+          <a class="ouvrir" href="chapitre2%20-%20Le%20theoreme%20de%20Pythagore%20partie%201/quiz/pythagore.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre2%20-%20Le%20theoreme%20de%20Pythagore%20partie%201/quiz/pythagore.html" title="Le théorème de Pythagore partie 1 — Quiz Pythagore - Calculs" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch3">
+      <h2><span class="num">Chapitre 3</span>➗ Écriture fractionnaire partie 1</h2>
+      <p class="desc">Apprends à maîtriser les fractions et leurs opérations</p>
+      
+      <details class="doc cours" id="ch3-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre3%20-%20Ecriture%20fractionnaire%20partie%201/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre3%20-%20Ecriture%20fractionnaire%20partie%201/cours.html" title="Écriture fractionnaire partie 1 — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch4">
+      <h2><span class="num">Chapitre 4</span>📚 Théorème de Pythagore partie 2</h2>
+      <p class="desc">Apprends à expliquer si un triangle est un triangle rectangle</p>
+      
+      <details class="doc cours" id="ch4-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre4%20-%20Theoreme%20de%20Pythagore%20partie%202/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre4%20-%20Theoreme%20de%20Pythagore%20partie%202/cours.html" title="Théorème de Pythagore partie 2 — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc quiz" id="ch4-2">
+        <summary><span class="cat">Quiz</span> Quiz Pythagore - Réciproque et contraposée
+          <a class="ouvrir" href="chapitre4%20-%20Theoreme%20de%20Pythagore%20partie%202/quiz/pythagore.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre4%20-%20Theoreme%20de%20Pythagore%20partie%202/quiz/pythagore.html" title="Théorème de Pythagore partie 2 — Quiz Pythagore - Réciproque et contraposée" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch5">
+      <h2><span class="num">Chapitre 5</span>📚 Écriture fractionnaire partie 2</h2>
+      <p class="desc">Apprends à utiliser la division avec les fractions</p>
+      
+      <details class="doc cours" id="ch5-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre5%20-%20Ecriture%20fractionnaire%20partie%202/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre5%20-%20Ecriture%20fractionnaire%20partie%202/cours.html" title="Écriture fractionnaire partie 2 — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch6">
+      <h2><span class="num">Chapitre 6</span>📊 statistiques et probabilités</h2>
+      <p class="desc">Introduction aux concepts de base des statistiques et des probabilités</p>
+      
+      <details class="doc cours" id="ch6-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre6%20-%20Statistiques%20et%20probabilites/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre6%20-%20Statistiques%20et%20probabilites/cours.html" title="statistiques et probabilités — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc evenement" id="ch6-2">
+        <summary><span class="cat">Évaluation</span> Évaluation
+          <a class="ouvrir" href="chapitre6%20-%20Statistiques%20et%20probabilites/devoirs/stat-proba.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre6%20-%20Statistiques%20et%20probabilites/devoirs/stat-proba.html" title="statistiques et probabilités — Évaluation" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch7">
+      <h2><span class="num">Chapitre 7</span>📚 Géométrie dans l'espace</h2>
+      <p class="desc">Du nouveau, les pyramides et les cônes !</p>
+      
+      <details class="doc cours" id="ch7-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre7%20-%20Geometrie%20dans%20l%20espace/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre7%20-%20Geometrie%20dans%20l%20espace/cours.html" title="Géométrie dans l'espace — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch8">
+      <h2><span class="num">Chapitre 8</span>📚 Cosinus d'un angle aigu</h2>
+      <p class="desc">Continue les calculs dans le triangle rectangle</p>
+      
+      <details class="doc cours" id="ch8-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre8%20-%20Cosinus%20d%20un%20angle%20aigu/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre8%20-%20Cosinus%20d%20un%20angle%20aigu/cours.html" title="Cosinus d'un angle aigu — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch9">
+      <h2><span class="num">Chapitre 9</span>📚 La translation</h2>
+      <p class="desc">Découvre cette transformation géométrique</p>
+      
+      <details class="doc cours" id="ch9-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre9%20-%20Translation/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre9%20-%20Translation/cours.html" title="La translation — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch10">
+      <h2><span class="num">Chapitre 10</span>⚡ Puissances</h2>
+      <p class="desc">Découvre les puissances et leurs propriétés</p>
+      
+      <details class="doc cours" id="ch10-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="Chapitre10-%20Puissances/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="Chapitre10-%20Puissances/cours.html" title="Puissances — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch11">
+      <h2><span class="num">Chapitre 11</span>📐 Proportionnalité</h2>
+      <p class="desc">Tableaux, produit en croix, pourcentages et échelles</p>
+      
+      <details class="doc cours" id="ch11-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre11%20-%20Proportionnalite/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre11%20-%20Proportionnalite/cours.html" title="Proportionnalité — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc evenement" id="ch11-2">
+        <summary><span class="cat">Évaluation</span> Évaluation
+          <a class="ouvrir" href="chapitre11%20-%20Proportionnalite/devoirs/Test-proportionnalite.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre11%20-%20Proportionnalite/devoirs/Test-proportionnalite.html" title="Proportionnalité — Évaluation" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch12">
+      <h2><span class="num">Chapitre 12</span>⚖️ Les Équations</h2>
+      <p class="desc">Résoudre des équations du 1er degré et mettre un problème en équation</p>
+      
+      <details class="doc cours" id="ch12-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre12%20-%20Equations/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre12%20-%20Equations/cours.html" title="Les Équations — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+      <details class="doc exercices" id="ch12-2">
+        <summary><span class="cat">Exercices</span> Corrigé — Mise en équation du 1er degré
+          <a class="ouvrir" href="chapitre12%20-%20Equations/exercices/corrige_equations.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre12%20-%20Equations/exercices/corrige_equations.html" title="Les Équations — Corrigé — Mise en équation du 1er degré" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch13">
+      <h2><span class="num">Chapitre 13</span>🔢 Arithmétique</h2>
+      <p class="desc">Divisibilité, nombres premiers, crible d'Ératosthène, PGCD et PPCM</p>
+      
+      <details class="doc cours" id="ch13-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre13%20-%20Arithmetique/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre13%20-%20Arithmetique/cours.html" title="Arithmétique — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch14">
+      <h2><span class="num">Chapitre 14</span>📐 Théorème de Thalès</h2>
+      <p class="desc">Cas d'égalité des triangles (SSS, SAS, AAS), configuration de Thalès, réciproque.</p>
+      
+      <details class="doc cours" id="ch14-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre14%20-%20Thales/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre14%20-%20Thales/cours.html" title="Théorème de Thalès — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+    <section class="chapitre" id="ch15">
+      <h2><span class="num">Chapitre 15</span>🔡 Calcul littéral</h2>
+      <p class="desc">Distributivité simple (rappel), double distributivité, développer et réduire.</p>
+      
+      <details class="doc cours" id="ch15-1" open>
+        <summary><span class="cat">Cours</span> Cours
+          <a class="ouvrir" href="chapitre15%20-%20Calcul%20litteral/cours.html" target="_blank" rel="noopener">Ouvrir seul ↗</a></summary>
+        <iframe data-src="chapitre15%20-%20Calcul%20litteral/cours.html" title="Calcul littéral — Cours" loading="lazy" scrolling="no"></iframe>
+      </details>
+    </section>
+</main>
+<script>
+(function () {
+  // Charge un document quand on déplie sa rubrique, puis ajuste la hauteur à son contenu.
+  function ajuster(f) {
+    try {
+      var d = f.contentDocument; if (!d) return;
+      var h = Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0);
+      if (h) f.style.height = (h + 8) + 'px';
+    } catch (e) { f.style.height = '900px'; f.setAttribute('scrolling', 'yes'); }
+  }
+  function charger(det) {
+    var f = det.querySelector('iframe');
+    if (!f || f.src) return;
+    f.addEventListener('load', function () {
+      try {   // les liens « retour » du site n'ont pas de sens dans le livre
+        Array.prototype.forEach.call(f.contentDocument.querySelectorAll('a[href]'), function (a) {
+          if (/(^|/)(classe-[^/]*|index).html$/.test(a.getAttribute('href').split(/[?#]/)[0])) a.style.display = 'none';
+        });
+      } catch (e) {}
+      ajuster(f);
+      try {
+        var d = f.contentDocument;
+        if (window.ResizeObserver) new ResizeObserver(function () { ajuster(f); }).observe(d.body);
+        setTimeout(function () { ajuster(f); }, 800);
+      } catch (e) {}
+    });
+    f.src = f.getAttribute('data-src');
+  }
+  var docs = Array.prototype.slice.call(document.querySelectorAll('details.doc'));
+  docs.forEach(function (det) {
+    if (det.open) charger(det);
+    det.addEventListener('toggle', function () { if (det.open) charger(det); });
+  });
+  // Lien du sommaire vers un document replié : on le déplie
+  function depuisAncre() {
+    var el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el && el.tagName === 'DETAILS') { el.open = true; charger(el); }
+  }
+  window.addEventListener('hashchange', depuisAncre); depuisAncre();
+  document.getElementById('toutOuvrir').onclick = function () { docs.forEach(function (d) { d.open = true; charger(d); }); };
+  document.getElementById('toutFermer').onclick = function () { docs.forEach(function (d) { d.open = false; }); };
+})();
+</script>
+</body>
+</html>
