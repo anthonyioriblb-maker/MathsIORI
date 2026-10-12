@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation : Dessin mystère d'Halloween (correction)</title>
+<style>
+    body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: white; padding: 10px; }
+    .btn-anim { background: #2196f3; color: white; border: none; padding: 10px 22px; border-radius: 6px; font-size: 16px; cursor: pointer; margin: 4px; }
+    .btn-anim:hover { background: #1565c0; }
+    .btn-anim:disabled { background: #90caf9; cursor: not-allowed; }
+    .btn-reset { background: #e74c3c; color: white; border: none; padding: 10px 22px; border-radius: 6px; font-size: 16px; cursor: pointer; margin: 4px; }
+    .btn-reset:hover { background: #c0392b; }
+    .btn-auto { background: #4caf50; color: white; border: none; padding: 10px 22px; border-radius: 6px; font-size: 16px; cursor: pointer; margin: 4px; }
+    .btn-auto:hover { background: #388e3c; }
+    .btn-auto.playing { background: #ff9800; }
+    .step-box { background: #f5f5f5; border-left: 5px solid #555; padding: 10px 16px; margin-bottom: 8px; color: #222;
+        font-size: 17px; font-weight: 500; min-height: 52px; line-height: 1.5; text-align: center; }
+    .consigne { color: #8e44ad; font-size: 15px; }
+    .svg-wrap { text-align: center; background: white; padding: 6px; border-radius: 5px; border: 2px solid #ddd; max-width: 660px; margin: 0 auto; }
+    .controls { text-align: center; margin-top: 8px; }
+    .counter { text-align: center; color: #777; font-size: 14px; margin-top: 2px; }
+    #segs line.anim { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: trace .6s ease forwards; }
+    @keyframes trace { to { stroke-dashoffset: 0; } }
+    .guide { stroke: #ff9800; stroke-width: 2; stroke-dasharray: 6 4; }
+    .guide.anim { animation: apparait .4s ease; }
+    @keyframes apparait { from { opacity: 0; } to { opacity: 1; } }
+    .fill { transition: opacity 1s; }
+</style>
+</head>
+<body>
+
+<div class="step-box" id="stepBox">Correction du dessin mystère : on place les points un par un, puis on les relie dans l'ordre.</div>
+
+<div class="svg-wrap">
+<svg id="svg" viewBox="0 0 660 660" style="max-width:100%; height:auto; display:block; margin:0 auto;" xmlns="http://www.w3.org/2000/svg">
+    <g id="grid"></g>
+    <g id="fills"></g>
+    <g id="segs" stroke="#222" stroke-width="2.5" stroke-linecap="round"></g>
+    <g id="pts"></g>
+    <g id="guides"></g>
+    <g id="cur"></g>
+</svg>
+</div>
+
+<div class="controls">
+    <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="btnSuiv" onclick="nextStep()">Étape suivante ▶</button>
+    <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation()">Recommencer ↺</button>
+</div>
+<div class="counter" id="counter"></div>
+
+<script>
+const U = 19, O = 330;               // 1 unité = 19 px, origine au centre
+const X = x => O + x * U, Y = y => O - y * U;
+const NS = 'http://www.w3.org/2000/svg';
+
+const GROUPES = [
+  { n: 'A', ferme: true,  consigne: '1- Relier dans l’ordre les points de A1 à A32, puis A32 - A1', fill: '#ff8c1a',
+    p: [[0,10],[3,10],[6,10],[8,9],[9,8],[11,9],[13,8],[14,6],[15,3],[15,-2],[14,-5],[13,-8],[11,-11],[9,-12],[7,-12],[4,-13],
+        [0,-13],[-4,-13],[-7,-12],[-9,-12],[-11,-11],[-13,-8],[-14,-5],[-15,-2],[-15,3],[-14,6],[-13,8],[-11,9],[-9,8],[-8,9],[-6,10],[-3,10]] },
+  { n: 'B', ferme: false, consigne: '2- Relier B1 - B2 - B3 - B4 - B5 - B6', fill: '#6d4c2f', p: [[-2,10],[-1,13],[0,15],[2,15],[1,13],[2,10]] },
+  { n: 'C', ferme: true,  consigne: '3- Relier C1 - C2 - C3 - C4 - C5 - C6 - C1', fill: '#3fa34d', p: [[2,12],[4,14],[7,14],[9,13],[6,11],[3,11]] },
+  { n: 'D', ferme: false, consigne: '4- Relier D1 - D2 - D3 - D4 - D5 - D6', p: [[-1,13],[-4,14],[-6,14],[-7,13],[-6,12],[-5,13]] },
+  { n: 'E', ferme: false, consigne: '5- Relier E1 - E2 - E3 - E4 - E5', p: [[9,8],[11,4],[12,-2],[11,-8],[9,-12]] },
+  { n: 'F', ferme: false, consigne: '6- Relier F1 - F2 - F3 - F4 - F5', p: [[-9,8],[-11,4],[-12,-2],[-11,-8],[-9,-12]] },
+  { n: 'G', ferme: true,  consigne: '7- Relier G1 - G2 - G3 - G1', fill: '#3a2a12', p: [[-9,2],[-3,2],[-5,6]] },
+  { n: 'H', ferme: true,  consigne: '8- Relier H1 - H2 - H3 - H1', fill: '#3a2a12', p: [[3,2],[9,2],[5,6]] },
+  { n: 'I', ferme: true,  consigne: '9- Relier I1 - I2 - I3 - I1', fill: '#3a2a12', p: [[-2,-2],[2,-2],[0,1]] },
+  { n: 'J', ferme: true,  consigne: '10- Relier dans l’ordre les points de J1 à J20, puis J20 - J1', fill: '#3a2a12',
+    p: [[-10,-3],[-7,-5],[-5,-5],[-5,-7],[-3,-7],[-3,-5],[3,-5],[3,-7],[5,-7],[5,-5],[7,-5],[10,-3],[8,-7],[6,-9],[2,-10],[1,-8],[-1,-8],[-2,-10],[-6,-9],[-8,-7]] }
+];
+
+// Liste des étapes : un point par étape, + une étape de fermeture par figure fermée, + coloriage final
+const STEPS = [];
+GROUPES.forEach((g, gi) => {
+  g.p.forEach((pt, i) => STEPS.push({ type: 'pt', g: gi, i }));
+  if (g.ferme) STEPS.push({ type: 'close', g: gi });
+});
+STEPS.push({ type: 'colorie' });
+
+function fmt(v) { return v < 0 ? '−' + (-v) : '' + v; }
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+
+// Quadrillage et axes
+(function () {
+  const g = document.getElementById('grid');
+  for (let k = -16; k <= 16; k++) {
+    el('line', { x1: X(k), y1: Y(-16), x2: X(k), y2: Y(16), stroke: '#e2e2e2', 'stroke-width': 1 }, g);
+    el('line', { x1: X(-16), y1: Y(k), x2: X(16), y2: Y(k), stroke: '#e2e2e2', 'stroke-width': 1 }, g);
+  }
+  el('line', { x1: X(-16.5), y1: O, x2: X(16.6), y2: O, stroke: 'black', 'stroke-width': 1.6 }, g);
+  el('line', { x1: O, y1: Y(-16.5), x2: O, y2: Y(16.6), stroke: 'black', 'stroke-width': 1.6 }, g);
+  el('polygon', { points: `${X(16.9)},${O} ${X(16.4)},${O-4} ${X(16.4)},${O+4}`, fill: 'black' }, g);
+  el('polygon', { points: `${O},${Y(16.9)} ${O-4},${Y(16.4)} ${O+4},${Y(16.4)}`, fill: 'black' }, g);
+  for (let k = -16; k <= 16; k += 2) {
+    if (k === 0) continue;
+    const tx = el('text', { x: X(k), y: O + 14, 'font-size': 10, 'text-anchor': 'middle', fill: '#555' }, g); tx.textContent = fmt(k);
+    const ty = el('text', { x: O - 5, y: Y(k) + 3.5, 'font-size': 10, 'text-anchor': 'end', fill: '#555' }, g); ty.textContent = fmt(k);
+    el('line', { x1: X(k), y1: O - 3, x2: X(k), y2: O + 3, stroke: 'black' }, g);
+    el('line', { x1: O - 3, y1: Y(k), x2: O + 3, y2: Y(k), stroke: 'black' }, g);
+  }
+  const t0 = el('text', { x: O - 5, y: O + 13, 'font-size': 10, 'text-anchor': 'end', fill: '#555' }, g); t0.textContent = '0';
+})();
+
+let current = 0, autoTimer = null;
+
+function addSeg(a, b, animate) {
+  const l = el('line', { x1: X(a[0]), y1: Y(a[1]), x2: X(b[0]), y2: Y(b[1]) }, document.getElementById('segs'));
+  if (animate) { const len = Math.hypot((a[0]-b[0])*U, (a[1]-b[1])*U); l.style.setProperty('--len', len); l.classList.add('anim'); }
+}
+function addPoint(pt) {
+  const g = document.getElementById('pts'), x = X(pt[0]), y = Y(pt[1]), s = 3.5;
+  el('line', { x1: x-s, y1: y-s, x2: x+s, y2: y+s, stroke: '#1565c0', 'stroke-width': 1.6 }, g);
+  el('line', { x1: x-s, y1: y+s, x2: x+s, y2: y-s, stroke: '#1565c0', 'stroke-width': 1.6 }, g);
+}
+function showCurrent(name, pt, animate) {
+  const gd = document.getElementById('guides'), cur = document.getElementById('cur');
+  const x = X(pt[0]), y = Y(pt[1]);
+  if (pt[0] !== 0) el('line', { x1: O, y1: y, x2: x, y2: y, class: 'guide' + (animate ? ' anim' : '') }, gd);
+  if (pt[1] !== 0) el('line', { x1: x, y1: O, x2: x, y2: y, class: 'guide' + (animate ? ' anim' : '') }, gd);
+  el('circle', { cx: x, cy: y, r: 6, fill: 'none', stroke: '#e53935', 'stroke-width': 2 }, cur);
+  const lx = pt[0] >= 0 ? x + 8 : x - 8;
+  const t = el('text', { x: lx, y: y - 8, 'font-size': 15, 'font-weight': 'bold', fill: '#e53935', 'text-anchor': pt[0] >= 0 ? 'start' : 'end',
+    stroke: 'white', 'stroke-width': 3, 'paint-order': 'stroke' }, cur);
+  t.textContent = name;
+}
+function clearAll() { ['fills','segs','pts','guides','cur'].forEach(id => document.getElementById(id).innerHTML = ''); }
+
+function texte(st) {
+  if (!st) return 'Correction du dessin mystère : on place les points un par un, puis on les relie dans l\'ordre.';
+  if (st.type === 'colorie') return '🎃 Le dessin mystère est une citrouille d\'Halloween !';
+  const g = GROUPES[st.g];
+  if (st.type === 'close') {
+    const last = g.n + g.p.length;
+    return `<span class="consigne">${g.consigne}</span><br>On ferme la figure : on relie <b>${last}</b> à <b>${g.n}1</b>.`;
+  }
+  const pt = g.p[st.i], nom = g.n + (st.i + 1);
+  let s = `<span class="consigne">${g.consigne}</span><br><b style="color:#e53935">${nom}</b> ( ${fmt(pt[0])} ; ${fmt(pt[1])} )`;
+  if (st.i > 0) s += ` — on relie ${g.n + st.i} à ${nom}.`;
+  return s;
+}
+
+// Recalcule instantanément l'état de l'étape n (sans animation), puis anime éventuellement la dernière
+function renderStep(n, animateLast) {
+  clearAll();
+  for (let k = 0; k < n; k++) {
+    const st = STEPS[k], anim = animateLast && k === n - 1;
+    if (st.type === 'pt') {
+      const g = GROUPES[st.g], pt = g.p[st.i];
+      addPoint(pt);
+      if (st.i > 0) addSeg(g.p[st.i - 1], pt, anim);
+      if (k === n - 1) showCurrent(g.n + (st.i + 1), pt, anim);
+    } else if (st.type === 'close') {
+      const g = GROUPES[st.g];
+      addSeg(g.p[g.p.length - 1], g.p[0], anim);
+    } else if (st.type === 'colorie') {
+      const fills = document.getElementById('fills');
+      GROUPES.forEach(g => {
+        if (!g.fill) return;
+        const poly = el('polygon', { points: g.p.map(p => X(p[0]) + ',' + Y(p[1])).join(' '), fill: g.fill, class: 'fill' }, fills);
+        if (anim) { poly.style.opacity = 0; requestAnimationFrame(() => requestAnimationFrame(() => poly.style.opacity = 1)); }
+      });
+      // les yeux, le nez et la bouche par-dessus le corps orange : on remet les éléments sombres au premier plan
+    }
+  }
+  document.getElementById('stepBox').innerHTML = texte(STEPS[n - 1]);
+  document.getElementById('counter').textContent = n ? `Étape ${n} / ${STEPS.length}` : '';
+  document.getElementById('btnPrec').disabled = n === 0;
+  document.getElementById('btnSuiv').disabled = n >= STEPS.length;
+  if (n >= STEPS.length) stopAuto();
+}
+
+function nextStep() { if (current >= STEPS.length) return; current++; renderStep(current, true); }
+function prevStep() { if (current <= 0) return; current--; renderStep(current, false); }
+function resetAnimation() { stopAuto(); current = 0; renderStep(0, false); }
+function toggleAuto() {
+  if (autoTimer) { stopAuto(); return; }
+  if (current >= STEPS.length) { current = 0; renderStep(0, false); }
+  const b = document.getElementById('btnAuto'); b.textContent = '⏸ Pause'; b.classList.add('playing');
+  nextStep();
+  autoTimer = setInterval(() => { if (current >= STEPS.length) stopAuto(); else nextStep(); }, 900);
+}
+function stopAuto() {
+  if (autoTimer) clearInterval(autoTimer); autoTimer = null;
+  const b = document.getElementById('btnAuto'); b.textContent = '⏵ Automatique'; b.classList.remove('playing');
+}
+renderStep(0, false);
+</script>
+
+<script>
+/* === Pont bouton volant (présentation) === */
+(function () {
+    if (window.parent === window) return;
+    var btnNext = document.getElementById('btnSuiv'), btnPrev = document.getElementById('btnPrec');
+    var btnReset = document.querySelector('.btn-reset');
+    function postState() {
+        window.parent.postMessage({ type: 'symAnimState', nextText: btnNext.textContent.trim(),
+            nextDisabled: !!btnNext.disabled, prevDisabled: !!btnPrev.disabled }, '*');
+    }
+    [btnPrev, btnNext].forEach(function (b) { new MutationObserver(postState).observe(b, { attributes: true, attributeFilter: ['disabled'] }); });
+    window.addEventListener('message', function (e) {
+        if (!e.data || e.data.type !== 'symAnimCmd') return;
+        if (e.data.cmd === 'next' && !btnNext.disabled) btnNext.click();
+        else if (e.data.cmd === 'prev' && !btnPrev.disabled) btnPrev.click();
+        else if (e.data.cmd === 'reset') btnReset.click();
+        else if (e.data.cmd === 'sync') postState();
+    });
+    postState();
+})();
+</script>
+<script>
+/* === Redimensionnement automatique (hauteur) === */
+(function () {
+    if (window.parent === window) return;
+    function postH() { window.parent.postMessage({ type: 'iframe-resize', height: document.body.scrollHeight }, '*'); }
+    if (window.ResizeObserver) new ResizeObserver(postH).observe(document.body);
+    window.addEventListener('load', postH);
+})();
+</script>
+</body>
+</html>
