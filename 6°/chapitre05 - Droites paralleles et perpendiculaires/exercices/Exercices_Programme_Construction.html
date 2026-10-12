@@ -21,15 +21,17 @@
     .rep { color: #c0392b; font-weight: bold; }
     .home-button { display:inline-block; text-decoration:none; }
     @media print {
-      @page { margin: 10mm; }
+      @page { margin: 14mm 10mm; }
       body { padding: 0; max-width: 100%; font-size: 11pt; }
       .home-button { display: none; }
       h2 { break-after: avoid; }
       .bloc { break-inside: avoid; }
-      .etapes { max-width: 150mm; } .fig { max-width: 95mm !important; } h1 { font-size: 1.3em; } h2 { margin-top: 8px; }
+      body { font-size: 10.5pt; line-height: 1.35; }
+      .etapes { max-width: 140mm; } .fig { max-width: 85mm !important; margin: 2px auto; } h1 { font-size: 1.3em; } h2 { margin: 6px 0 4px; }
+      ol, ul { margin: 2px 0; } li, .phr { margin: 1px 0; }
       .etape { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
-    @media (max-width: 700px) { .etapes { grid-template-columns: 1fr 1fr; } .etape:nth-child(2) { border-right: none; } }
+    @media screen and (max-width: 700px) { .etapes { grid-template-columns: 1fr 1fr; } .etape:nth-child(2) { border-right: none; } }
 </style>
 </head>
 <body>

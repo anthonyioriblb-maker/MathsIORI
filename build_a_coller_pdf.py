@@ -66,7 +66,7 @@ MIN_SCALE_FOR_MULTI = 0.75  # échelle minimale tolérée pour gagner une copie 
 # Regex combinée : capture les <img src="images/...> ET les <svg>...</svg>,
 # dans l'ordre où ils apparaissent dans le fichier.
 VISUAL_RE = re.compile(
-    r'(?P<img><img[^>]+src="(?P<imgsrc>images/[^"]+)"[^>]*/?>)'
+    r'(?P<img><img[^>]+src="(?P<imgsrc>(?:\.\./[^"/]+/)?images/[^"]+)"[^>]*/?>)'
     r'|(?P<svg><svg\b[^>]*>.*?</svg>)',
     re.DOTALL,
 )
@@ -126,7 +126,8 @@ def build(chapter_dir, out_path=None, img_overrides=None, copies=None):
     for el in elements:
         if el["kind"] == "img":
             fname = os.path.basename(el["src"])
-            path = os.path.join(img_dir, fname)
+            # image d'un autre chapitre (src="../chapitreXX/images/...") ou du chapitre
+            path = os.path.normpath(os.path.join(chapter_dir, el["src"]))
             if not os.path.isfile(path):
                 print("! image manquante, ignorée:", path)
                 continue

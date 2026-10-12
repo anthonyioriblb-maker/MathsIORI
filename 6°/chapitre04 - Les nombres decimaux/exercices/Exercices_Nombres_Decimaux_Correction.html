@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les nombres décimaux - Exercices (correction)</title>
+    <style>
+    body { font-family: Arial, sans-serif; max-width: 1000px; margin: 0 auto; padding: 16px; line-height: 1.5; color:#111; }
+    h1 { text-align: center; color: #2E75B5; margin: 4px 0 2px; font-size: 1.6em; }
+    .subtitle { text-align: center; font-weight: bold; margin-bottom: 10px; }
+    h2 { color: #2E75B5; border-bottom: 2px solid #2E75B5; padding-bottom: 3px; margin: 14px 0 8px; font-size: 1.2em; }
+    .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 24px; margin: 6px 0 6px 20px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 16px; margin: 6px 0 6px 20px; }
+    .nb { font-weight: bold; }
+    .rep { color: #c0392b; font-weight: bold; }
+    .note { color: #555; font-style: italic; font-size: 0.95em; }
+    p { margin: 6px 0; }
+    .home-button { display:inline-block; text-decoration:none; }
+    @media print {
+      @page { margin: 14mm 10mm; }
+      body { padding: 0; max-width: 100%; font-size: 11pt; line-height: 1.4; }
+      .home-button { display: none; }
+      h1 { font-size: 1.3em; } h2 { margin: 8px 0 4px; break-after: avoid; }
+      .bloc { break-inside: avoid; }
+      .rep { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    @media screen and (max-width: 700px) { .grid2, .grid3 { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+    <a href="../../classe-6e.html" class="home-button" style="margin: 10px 0;">← Retour au choix des chapitres</a>
+    <h1>Exercices du chapitre 4</h1>
+    <div class="subtitle">Les nombres décimaux</div>
+
+    <div class="bloc">
+    <h2>Exercice 1</h2>
+    <p><strong>a.</strong> On considère le nombre <span class="nb">6 482,159</span>. Quel est :</p>
+    <div class="grid2">
+        <div>① le chiffre des dixièmes ? <span class="rep">1</span></div>
+        <div>② le chiffre des centaines ? <span class="rep">4</span></div>
+        <div>③ le chiffre des millièmes ? <span class="rep">9</span></div>
+        <div>④ le nombre de dizaines ? <span class="rep">648</span></div>
+        <div>⑤ le nombre de dixièmes ? <span class="rep">64 821</span></div>
+        <div>⑥ le nombre de centièmes ? <span class="rep">648 215</span></div>
+    </div>
+    <p><strong>b.</strong> On considère le nombre <span class="nb">30,705</span>. Quel est :</p>
+    <div class="grid2">
+        <div>① le chiffre des centièmes ? <span class="rep">0</span></div>
+        <div>② le chiffre des dizaines ? <span class="rep">3</span></div>
+        <div>③ le nombre de dixièmes ? <span class="rep">307</span></div>
+        <div>④ le nombre d’unités ? <span class="rep">30</span></div>
+    </div>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 2</h2>
+    Complète : « Dans le nombre …, 5 est le chiffre des … »
+    <div class="grid2">
+        <div><strong>a.</strong> 352,8 : 5 est le chiffre des <span class="rep">dizaines</span></div>
+        <div><strong>b.</strong> 12,503 : 5 est le chiffre des <span class="rep">dixièmes</span></div>
+        <div><strong>c.</strong> 7,045 : 5 est le chiffre des <span class="rep">millièmes</span></div>
+        <div><strong>d.</strong> 5 041,2 : 5 est le chiffre des <span class="rep">milliers</span></div>
+        <div><strong>e.</strong> 0,25 : 5 est le chiffre des <span class="rep">centièmes</span></div>
+        <div><strong>f.</strong> 6 875 : 5 est le chiffre des <span class="rep">unités</span></div>
+    </div>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 3</h2>
+    Compare les nombres en complétant avec &lt;, &gt; ou =.
+    <div class="grid3" style="grid-template-columns: repeat(4, 1fr);">
+        <div><strong>a.</strong> 12,7 <span class="rep">&gt;</span> 9,85</div>
+        <div><strong>b.</strong> 0,62 <span class="rep">&lt;</span> 0,7</div>
+        <div><strong>c.</strong> 3,8 <span class="rep">&gt;</span> 3,45</div>
+        <div><strong>d.</strong> 5,09 <span class="rep">&lt;</span> 5,1</div>
+        <div><strong>e.</strong> 14,250 <span class="rep">=</span> 14,25</div>
+        <div><strong>f.</strong> 7,456 <span class="rep">&lt;</span> 7,465</div>
+        <div><strong>g.</strong> 101,3 <span class="rep">&gt;</span> 99,99</div>
+        <div><strong>h.</strong> 0,08 <span class="rep">&lt;</span> 0,1</div>
+    </div>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 4</h2>
+    <p><strong>a.</strong> Range dans l’ordre croissant : 4,5 ; 4,05 ; 40,5 ; 4,55 ; 4,505 ; 4,055</p>
+    <p style="margin-left:20px"><span class="rep">4,05 &lt; 4,055 &lt; 4,5 &lt; 4,505 &lt; 4,55 &lt; 40,5</span></p>
+    <p><strong>b.</strong> Range dans l’ordre décroissant : 0,9 ; 0,19 ; 1,09 ; 0,091 ; 0,91 ; 1,9</p>
+    <p style="margin-left:20px"><span class="rep">1,9 &gt; 1,09 &gt; 0,91 &gt; 0,9 &gt; 0,19 &gt; 0,091</span></p>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 5</h2>
+    Encadre chaque nombre comme demandé.
+    <div class="grid2">
+        <div><strong>a.</strong> 18,63 à l’unité : <span class="rep">18</span> &lt; 18,63 &lt; <span class="rep">19</span></div>
+        <div><strong>b.</strong> 7,284 au dixième : <span class="rep">7,2</span> &lt; 7,284 &lt; <span class="rep">7,3</span></div>
+        <div><strong>c.</strong> 0,957 au centième : <span class="rep">0,95</span> &lt; 0,957 &lt; <span class="rep">0,96</span></div>
+        <div><strong>d.</strong> 129,4 à l’unité : <span class="rep">129</span> &lt; 129,4 &lt; <span class="rep">130</span></div>
+        <div><strong>e.</strong> 3,96 au dixième : <span class="rep">3,9</span> &lt; 3,96 &lt; <span class="rep">4,0</span></div>
+        <div><strong>f.</strong> 12,999 au centième : <span class="rep">12,99</span> &lt; 12,999 &lt; <span class="rep">13,00</span></div>
+    </div>
+    </div>
+
+    <div class="bloc">
+    <h2>Exercice 6</h2>
+    Intercale un nombre entre les deux nombres donnés. <span class="note">(plusieurs réponses possibles, en voici une)</span>
+    <div class="grid3" style="grid-template-columns: repeat(4, 1fr);">
+        <div><strong>a.</strong> 14 &lt; <span class="rep">14,5</span> &lt; 15</div>
+        <div><strong>b.</strong> 6,3 &lt; <span class="rep">6,35</span> &lt; 6,4</div>
+        <div><strong>c.</strong> 7,2 &gt; <span class="rep">7,15</span> &gt; 7,1</div>
+        <div><strong>d.</strong> 5 &lt; <span class="rep">5,05</span> &lt; 5,1</div>
+        <div><strong>e.</strong> 9,99 &lt; <span class="rep">9,995</span> &lt; 10</div>
+        <div><strong>f.</strong> 0,9 &gt; <span class="rep">0,85</span> &gt; 0,8</div>
+        <div><strong>g.</strong> 3,41 &lt; <span class="rep">3,415</span> &lt; 3,42</div>
+        <div><strong>h.</strong> 2 &gt; <span class="rep">1,95</span> &gt; 1,9</div>
+    </div>
+    </div>
+
+    <script src="../../../impression.js"></script>
+</body>
+</html>
