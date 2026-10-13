@@ -21,6 +21,19 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    // Option « aPartirDu » ("AAAA-MM-JJ") sur un item (exercice, activité, évaluation, quiz) :
+    // l'item n'apparaît dans le menu qu'à partir de cette date (ex. une correction).
+    function itemVisible(it) {
+        if (!it || !it.aPartirDu) return true;
+        return new Date() >= new Date(it.aPartirDu + 'T00:00:00');
+    }
+    ['activites', 'exercices', 'evaluations', 'quiz'].forEach(function (k) {
+        Object.keys(configChapitres).forEach(function (c) {
+            const bloc = configChapitres[c][k];
+            if (bloc && Array.isArray(bloc.items)) bloc.items = bloc.items.filter(itemVisible);
+        });
+    });
+
     // Devoirs multi-chapitres (optionnel) : window.configDevoirs = [{ titre, chapitres:[1,2], sujet:{actif,fichier}, correction:{actif,fichier} }]
     const devoirsVisibles = (typeof configDevoirs !== 'undefined' && Array.isArray(configDevoirs))
         ? configDevoirs.filter(d => (d.sujet && d.sujet.actif) || (d.correction && d.correction.actif))
