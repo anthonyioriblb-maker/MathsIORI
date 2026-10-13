@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel art – Fractions</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f4f6fb;color:#222;}
+
+.frac{display:inline-block;margin:0 .1em;vertical-align:middle;text-align:center;}
+.frac>.num{display:block;padding:0 .1em;border-bottom:1px solid black;padding-bottom:2px;}
+.frac>.den{display:block;padding:0 .1em;padding-top:2px;}
+.frac>.fracbar{display:none;}
+
+.wrap{max-width:1300px;margin:0 auto;padding:16px;display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+.left{flex:1 1 520px;}
+.right{flex:0 0 auto;position:sticky;top:16px;text-align:center;}
+.consigne{background:#fff;border-left:5px solid #2980b9;padding:10px 14px;border-radius:6px;margin:0 0 14px;}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
+.card{background:#fff;border:2px solid #dde3ee;border-radius:10px;padding:12px;transition:border-color .3s,background .3s;}
+.card.ok{border-color:#27ae60;background:#eafaf1;}
+.enonce{min-height:48px;line-height:1.5;}
+.saisie{display:flex;gap:6px;margin-top:8px;}
+.saisie input{flex:1;font-size:16px;padding:6px 8px;border:1px solid #bbb;border-radius:6px;min-width:0;}
+.saisie button,.top button{font-size:15px;padding:6px 12px;border:0;border-radius:6px;background:#2980b9;color:#fff;cursor:pointer;}
+.saisie button:hover{background:#1f6391;}
+.msg{min-height:20px;margin-top:6px;font-size:14px;font-weight:bold;}
+.msg.bad{color:#c0392b;} .msg.warn{color:#e67e22;} .msg.good{color:#27ae60;}
+.card.shake{animation:shake .35s;}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.grid{border-collapse:collapse;background:#fff;}
+.grid td{width:28px;height:28px;border:1px solid #9aa3b5;text-align:center;font-size:12px;color:#555;padding:0;transition:background .5s,color .5s;}
+.grid td.on{color:rgba(255,255,255,.35);}
+.top{display:flex;justify-content:space-between;align-items:center;margin:10px 0;gap:12px;}
+.score{font-size:18px;font-weight:bold;}
+.top button.reset{background:#e74c3c;} .top button.reset:hover{background:#c0392b;}
+.bravo{font-size:22px;font-weight:bold;color:#27ae60;min-height:30px;}
+</style></head><body>
+<div class="wrap">
+ <div class="left">
+  <p class="consigne">Donne chaque résultat sous forme de fraction irréductible (ou de produit de facteurs premiers pour les décompositions). Quand ta réponse est juste, les cases portant le numéro de la question se colorient.</p>
+  <div class="cards"><div class="card" id="card1">
+  <div class="enonce"><b>1.</b> Décompose 60 en produit de facteurs premiers.</div>
+  <div class="saisie"><input type="text" id="in1" autocomplete="off" placeholder="ex : 2 × 3 × 5">
+  <button onclick="valider(1)">Valider</button></div>
+  <div class="msg" id="msg1"></div></div><div class="card" id="card2">
+  <div class="enonce"><b>2.</b> Décompose 126 en produit de facteurs premiers.</div>
+  <div class="saisie"><input type="text" id="in2" autocomplete="off" placeholder="ex : 2 × 3 × 5">
+  <button onclick="valider(2)">Valider</button></div>
+  <div class="msg" id="msg2"></div></div><div class="card" id="card3">
+  <div class="enonce"><b>3.</b> Simplifie <span class="frac"><span class="num">36</span><span class="fracbar">/</span><span class="den">48</span></span>.</div>
+  <div class="saisie"><input type="text" id="in3" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(3)">Valider</button></div>
+  <div class="msg" id="msg3"></div></div><div class="card" id="card4">
+  <div class="enonce"><b>4.</b> Simplifie −<span class="frac"><span class="num">45</span><span class="fracbar">/</span><span class="den">75</span></span>.</div>
+  <div class="saisie"><input type="text" id="in4" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(4)">Valider</button></div>
+  <div class="msg" id="msg4"></div></div><div class="card" id="card5">
+  <div class="enonce"><b>5.</b> Calcule <span class="frac"><span class="num">2</span><span class="fracbar">/</span><span class="den">3</span></span> + <span class="frac"><span class="num">1</span><span class="fracbar">/</span><span class="den">6</span></span>.</div>
+  <div class="saisie"><input type="text" id="in5" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(5)">Valider</button></div>
+  <div class="msg" id="msg5"></div></div><div class="card" id="card6">
+  <div class="enonce"><b>6.</b> Calcule <span class="frac"><span class="num">5</span><span class="fracbar">/</span><span class="den">4</span></span> − <span class="frac"><span class="num">7</span><span class="fracbar">/</span><span class="den">12</span></span>.</div>
+  <div class="saisie"><input type="text" id="in6" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(6)">Valider</button></div>
+  <div class="msg" id="msg6"></div></div><div class="card" id="card7">
+  <div class="enonce"><b>7.</b> Calcule −<span class="frac"><span class="num">3</span><span class="fracbar">/</span><span class="den">10</span></span> + <span class="frac"><span class="num">2</span><span class="fracbar">/</span><span class="den">5</span></span>.</div>
+  <div class="saisie"><input type="text" id="in7" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(7)">Valider</button></div>
+  <div class="msg" id="msg7"></div></div><div class="card" id="card8">
+  <div class="enonce"><b>8.</b> Calcule <span class="frac"><span class="num">1</span><span class="fracbar">/</span><span class="den">4</span></span> − <span class="frac"><span class="num">5</span><span class="fracbar">/</span><span class="den">6</span></span>.</div>
+  <div class="saisie"><input type="text" id="in8" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(8)">Valider</button></div>
+  <div class="msg" id="msg8"></div></div><div class="card" id="card9">
+  <div class="enonce"><b>9.</b> Calcule <span class="frac"><span class="num">4</span><span class="fracbar">/</span><span class="den">9</span></span> × <span class="frac"><span class="num">3</span><span class="fracbar">/</span><span class="den">8</span></span>.</div>
+  <div class="saisie"><input type="text" id="in9" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(9)">Valider</button></div>
+  <div class="msg" id="msg9"></div></div><div class="card" id="card10">
+  <div class="enonce"><b>10.</b> Calcule −<span class="frac"><span class="num">7</span><span class="fracbar">/</span><span class="den">4</span></span> × <span class="frac"><span class="num">6</span><span class="fracbar">/</span><span class="den">5</span></span>.</div>
+  <div class="saisie"><input type="text" id="in10" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(10)">Valider</button></div>
+  <div class="msg" id="msg10"></div></div><div class="card" id="card11">
+  <div class="enonce"><b>11.</b> Calcule −<span class="frac"><span class="num">2</span><span class="fracbar">/</span><span class="den">3</span></span> × (−<span class="frac"><span class="num">9</span><span class="fracbar">/</span><span class="den">14</span></span>).</div>
+  <div class="saisie"><input type="text" id="in11" autocomplete="off" placeholder="ex : -3/4">
+  <button onclick="valider(11)">Valider</button></div>
+  <div class="msg" id="msg11"></div></div><div class="card" id="card12">
+  <div class="enonce"><b>12.</b> Léa a 35 €. Elle dépense les <span class="frac"><span class="num">2</span><span class="fracbar">/</span><span class="den">5</span></span> de cette somme. Combien d'euros dépense-t-elle ?</div>
+  <div class="saisie"><input type="text" id="in12" autocomplete="off" placeholder="nombre">
+  <button onclick="valider(12)">Valider</button></div>
+  <div class="msg" id="msg12"></div></div></div>
+ </div>
+ <div class="right">
+  <div class="top"><span class="score"><span id="score">0</span> / 12</span><button class="reset" onclick="recommencer()">Recommencer ↺</button></div>
+  <table class="grid"><tr><td data-q="12">12</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="3">3</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="8">8</td></tr><tr><td data-q="8">8</td><td data-q="4">4</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="12">12</td><td data-q="9">9</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="8">8</td><td data-q="12">12</td><td data-q="10">10</td><td data-q="5">5</td></tr><tr><td data-q="8">8</td><td data-q="10">10</td><td data-q="10">10</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="3">3</td><td data-q="12">12</td><td data-q="5">5</td><td data-q="5">5</td><td data-q="5">5</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="4">4</td><td data-q="10">10</td><td data-q="8">8</td></tr><tr><td data-q="5">5</td><td data-q="8">8</td><td data-q="4">4</td><td data-q="4">4</td><td data-q="12">12</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="5">5</td><td data-q="10">10</td><td data-q="10">10</td><td data-q="5">5</td><td data-q="5">5</td></tr><tr><td data-q="5">5</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="10">10</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="10">10</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="8">8</td></tr><tr><td data-q="10">10</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="5">5</td><td data-q="5">5</td><td data-q="10">10</td></tr><tr><td data-q="4">4</td><td data-q="4">4</td><td data-q="4">4</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="7">7</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="7">7</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="10">10</td><td data-q="4">4</td><td data-q="10">10</td></tr><tr><td data-q="4">4</td><td data-q="5">5</td><td data-q="12">12</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="7">7</td><td data-q="1">1</td><td data-q="7">7</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="7">7</td><td data-q="6">6</td><td data-q="7">7</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="4">4</td></tr><tr><td data-q="5">5</td><td data-q="12">12</td><td data-q="10">10</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="10">10</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="7">7</td><td data-q="7">7</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="4">4</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="10">10</td><td data-q="12">12</td><td data-q="5">5</td></tr><tr><td data-q="12">12</td><td data-q="4">4</td><td data-q="10">10</td><td data-q="5">5</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="12">12</td><td data-q="4">4</td><td data-q="4">4</td><td data-q="12">12</td></tr><tr><td data-q="4">4</td><td data-q="10">10</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="12">12</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="10">10</td><td data-q="10">10</td></tr><tr><td data-q="5">5</td><td data-q="8">8</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="8">8</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="9">9</td><td data-q="12">12</td><td data-q="12">12</td></tr><tr><td data-q="5">5</td><td data-q="3">3</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="5">5</td><td data-q="8">8</td><td data-q="5">5</td><td data-q="5">5</td></tr><tr><td data-q="12">12</td><td data-q="5">5</td><td data-q="8">8</td><td data-q="4">4</td><td data-q="4">4</td><td data-q="12">12</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="8">8</td><td data-q="10">10</td><td data-q="4">4</td><td data-q="5">5</td><td data-q="9">9</td><td data-q="8">8</td></tr><tr><td data-q="8">8</td><td data-q="5">5</td><td data-q="5">5</td><td data-q="5">5</td><td data-q="5">5</td><td data-q="5">5</td><td data-q="6">6</td><td data-q="1">1</td><td data-q="1">1</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="6">6</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="12">12</td><td data-q="5">5</td></tr><tr><td data-q="8">8</td><td data-q="8">8</td><td data-q="12">12</td><td data-q="2">2</td><td data-q="11">11</td><td data-q="10">10</td><td data-q="4">4</td><td data-q="12">12</td><td data-q="8">8</td><td data-q="11">11</td><td data-q="11">11</td><td data-q="10">10</td><td data-q="10">10</td><td data-q="5">5</td><td data-q="11">11</td><td data-q="3">3</td><td data-q="8">8</td><td data-q="12">12</td></tr><tr><td data-q="11">11</td><td data-q="11">11</td><td data-q="2">2</td><td data-q="11">11</td><td data-q="11">11</td><td data-q="11">11</td><td data-q="2">2</td><td data-q="11">11</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="11">11</td><td data-q="11">11</td></tr><tr><td data-q="2">2</td><td data-q="11">11</td><td data-q="2">2</td><td data-q="11">11</td><td data-q="11">11</td><td data-q="11">11</td><td data-q="11">11</td><td data-q="2">2</td><td data-q="11">11</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="11">11</td><td data-q="11">11</td><td data-q="2">2</td><td data-q="2">2</td><td data-q="2">2</td></tr></table>
+  <div class="bravo" id="bravo"></div>
+ </div>
+</div>
+<script>
+const Q = [{"n": 1, "t": "decomp", "a": [2, 2, 3, 5], "c": "#f7a8c4"}, {"n": 2, "t": "decomp", "a": [2, 3, 3, 7], "c": "#f2d16b"}, {"n": 3, "t": "frac", "a": [3, 4], "c": "#7ec8f0"}, {"n": 4, "t": "frac", "a": [-3, 5], "c": "#d6336c"}, {"n": 5, "t": "frac", "a": [5, 6], "c": "#2a6fdb"}, {"n": 6, "t": "frac", "a": [2, 3], "c": "#f7a8c4"}, {"n": 7, "t": "frac", "a": [1, 10], "c": "#222222"}, {"n": 8, "t": "frac", "a": [-7, 12], "c": "#2a6fdb"}, {"n": 9, "t": "frac", "a": [1, 6], "c": "#7ec8f0"}, {"n": 10, "t": "frac", "a": [-21, 10], "c": "#d6336c"}, {"n": 11, "t": "frac", "a": [3, 7], "c": "#f2d16b"}, {"n": 12, "t": "int", "a": 14, "c": "#2a6fdb"}];
+const done = new Set();
+function pgcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a;}
+function estPremier(n){if(n<2)return false;for(let i=2;i*i<=n;i++)if(n%i===0)return false;return true;}
+function norm(s){return s.replace(/[−–]/g,'-').replace(/\s+/g,'');}
+function verifier(q,brut){
+  const s=norm(brut);
+  if(!s) return ['bad','Écris une réponse.'];
+  if(q.t==='decomp'){
+    const f=s.split(/[×xX*.]/);
+    if(f.some(v=>!/^\d+$/.test(v))) return ['bad','Écris les facteurs séparés par × (ex : 2 × 3 × 5).'];
+    const n=f.map(Number); const p=n.reduce((a,b)=>a*b,1);
+    const cible=q.a.reduce((a,b)=>a*b,1);
+    if(p!==cible) return ['bad','Le produit n\'est pas égal au nombre de départ.'];
+    if(n.some(v=>!estPremier(v))) return ['warn','Le produit est juste, mais tous les facteurs doivent être premiers.'];
+    return ['good','Bravo !'];
+  }
+  if(q.t==='int'){
+    const v=Number(s.replace(',','.').replace('€',''));
+    if(isNaN(v)) return ['bad','Écris un nombre.'];
+    return v===q.a?['good','Bravo !']:['bad','Ce n\'est pas le bon résultat.'];
+  }
+  // fraction
+  let m=s.match(/^(-?\d+)(?:\/(-?\d+))?$/);
+  if(!m) return ['bad','Écris une fraction comme 3/4 ou -3/4.'];
+  let n=Number(m[1]), d=m[2]===undefined?1:Number(m[2]);
+  if(d===0) return ['bad','Le dénominateur ne peut pas être 0.'];
+  if(n*q.a[1]!==d*q.a[0]) return ['bad','Ce n\'est pas le bon résultat.'];
+  if(pgcd(n,d)!==1) return ['warn','Le résultat est juste, mais la fraction peut encore être simplifiée.'];
+  return ['good','Bravo !'];
+}
+function valider(k){
+  if(done.has(k)) return;
+  const q=Q.find(x=>x.n===k), inp=document.getElementById('in'+k), msg=document.getElementById('msg'+k), card=document.getElementById('card'+k);
+  const [cls,txt]=verifier(q,inp.value);
+  msg.className='msg '+cls; msg.textContent=txt;
+  if(cls==='good'){
+    done.add(k); card.classList.add('ok'); inp.disabled=true;
+    document.querySelectorAll('.grid td[data-q="'+k+'"]').forEach((td,i)=>setTimeout(()=>{td.style.background=q.c;td.classList.add('on');},i*25));
+    document.getElementById('score').textContent=done.size;
+    if(done.size===Q.length) document.getElementById('bravo').textContent='Bravo, tout est juste !';
+  } else { card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake'); }
+}
+document.querySelectorAll('.saisie input').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter')valider(Number(inp.id.slice(2)));}));
+function recommencer(){
+  done.clear();
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('ok'));
+  document.querySelectorAll('.saisie input').forEach(i=>{i.value='';i.disabled=false;});
+  document.querySelectorAll('.msg').forEach(m=>{m.textContent='';m.className='msg';});
+  document.querySelectorAll('.grid td').forEach(td=>{td.style.background='';td.classList.remove('on');});
+  document.getElementById('score').textContent='0'; document.getElementById('bravo').textContent='';
+}
+</script>
+</body></html>
