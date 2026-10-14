@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Évaluation n°2 - Symétrie centrale - Sujet</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:22px;
+  }
+  .entete{
+    border:2px solid #333;
+    border-radius:8px;
+    padding:12px 16px;
+    line-height:2;
+    margin-bottom:22px;
+    font-size:0.95em;
+  }
+  .entete .ligne{
+    display:inline-block;
+    min-width:60px;
+    border-bottom:1px solid #333;
+    margin-left:4px;
+  }
+  .consigne{
+    background:#fff3b8;
+    border-left:6px solid #f39c12;
+    border-radius:6px;
+    padding:12px 16px;
+    font-size:0.95em;
+    margin-bottom:24px;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 12px;
+  }
+  .bareme{
+    float:right;
+    font-weight:normal;
+    text-decoration:none;
+    color:var(--gris);
+    font-size:0.85em;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:8px;
+    font-size:1.05em;
+  }
+  td{
+    border:1.5px solid #999;
+    padding:10px 14px;
+  }
+  .calc-cell{
+    height:70px;
+    vertical-align:top;
+    width:50%;
+  }
+  .q{
+    border:1.5px solid #999;
+    padding:10px 14px;
+    font-size:0.92em;
+    vertical-align:top;
+    height:56px;
+  }
+  .q b{ color:var(--bleu); }
+  th{
+    background:#e8e8e8;
+    padding:8px 10px;
+    font-size:0.85em;
+  }
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:16px;
+  }
+
+  /* ── Notation mathématique (identique à MathsIORI/styles.css) ── */
+  .frac, .fraction {
+    display: inline-block;
+    margin-left: .15em;
+    margin-right: .15em;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .frac > .num {
+    display: block;
+    padding: 0 .1em;
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+  }
+  .frac > .den {
+    display: block;
+    padding: 0 .1em;
+    padding-top: 2px;
+  }
+  .exposant {
+    vertical-align: super;
+    font-size: 0.8em;
+  }
+  .sqrt {
+    position: relative;
+    display: inline-block;
+    border-top: 2px solid black;
+    margin-left: .7em;
+    padding-left: .2em;
+    padding-right: .1em;
+  }
+  .sqrt:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    left: -.65em;
+    height: 56%;
+    width: .6em;
+    border-right: 2px solid black;
+    border-bottom: 2.5px solid black;
+    transform-origin: top right;
+    transform: rotate(55deg) skew(50deg);
+  }
+
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+  }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
+
+  .badge-correction{ display:block; text-align:center; margin:0 auto 24px; background:var(--rouge); color:#fff; font-weight:bold;
+    letter-spacing:0.06em; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .note{ float:right; font-weight:bold; }
+  p{ margin:6px 0; line-height:1.6; }
+  ul.consignes{ list-style:none; margin:6px 0 10px 18px; line-height:1.7; }
+  ul.consignes li:before{ content:"► "; }
+  .fig{ display:block; margin:10px auto; max-width:100%; }
+  @media print{ svg{ break-inside:avoid; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+<div class="entete">Nom &ndash; Prénom : <span class="ligne" style="min-width:260px;"></span> &nbsp;&nbsp; Classe : <span class="ligne" style="min-width:70px;"></span><span class="note">/ 7</span></div>
+<h2 class="exo">Exercice n° 1 <span class="bareme">/ 2</span></h2><p>Complète les phrases suivantes.</p>
+<p><i>Dire que deux points A et A' sont symétriques par rapport à un point O signifie que le point O est</i> <span style="display:inline-block;min-width:200px;border-bottom:1px dotted #333;">&nbsp;</span> du segment [AA'].</p>
+<p><i>Le symétrique du point O par rapport à O est</i> <span style="display:inline-block;min-width:200px;border-bottom:1px dotted #333;">&nbsp;</span></p>
+<h2 class="exo">Exercice n° 2 <span class="bareme">/ 3</span></h2><p>Sur la figure ci-dessous, place :</p><ul class="consignes"><li>le point A' symétrique du point A par rapport au point B ;</li><li>le point B' symétrique du point B par rapport au point C ;</li><li>le point D tel que les points B et C soient symétriques par rapport au point D.</li></ul>
+<svg class="fig" viewBox="0 0 574 232" width="574"><line x1="2.0" y1="2" x2="2.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="9.6" y1="2" x2="9.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="17.2" y1="2" x2="17.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="24.8" y1="2" x2="24.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="32.4" y1="2" x2="32.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="40.0" y1="2" x2="40.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="47.6" y1="2" x2="47.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="55.2" y1="2" x2="55.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="62.8" y1="2" x2="62.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="70.4" y1="2" x2="70.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="78.0" y1="2" x2="78.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="85.6" y1="2" x2="85.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="93.2" y1="2" x2="93.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="100.8" y1="2" x2="100.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="108.4" y1="2" x2="108.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="116.0" y1="2" x2="116.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="123.6" y1="2" x2="123.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="131.2" y1="2" x2="131.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="138.8" y1="2" x2="138.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="146.4" y1="2" x2="146.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="154.0" y1="2" x2="154.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="161.6" y1="2" x2="161.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="169.2" y1="2" x2="169.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="176.8" y1="2" x2="176.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="184.4" y1="2" x2="184.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="192.0" y1="2" x2="192.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="199.6" y1="2" x2="199.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="207.2" y1="2" x2="207.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="214.8" y1="2" x2="214.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="222.4" y1="2" x2="222.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="230.0" y1="2" x2="230.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="237.6" y1="2" x2="237.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="245.2" y1="2" x2="245.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="252.8" y1="2" x2="252.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="260.4" y1="2" x2="260.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="268.0" y1="2" x2="268.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="275.6" y1="2" x2="275.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="283.2" y1="2" x2="283.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="290.8" y1="2" x2="290.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="298.4" y1="2" x2="298.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="306.0" y1="2" x2="306.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="313.6" y1="2" x2="313.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="321.2" y1="2" x2="321.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="328.8" y1="2" x2="328.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="336.4" y1="2" x2="336.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="344.0" y1="2" x2="344.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="351.6" y1="2" x2="351.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="359.2" y1="2" x2="359.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="366.8" y1="2" x2="366.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="374.4" y1="2" x2="374.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="382.0" y1="2" x2="382.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="389.6" y1="2" x2="389.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="397.2" y1="2" x2="397.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="404.8" y1="2" x2="404.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="412.4" y1="2" x2="412.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="420.0" y1="2" x2="420.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="427.6" y1="2" x2="427.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="435.2" y1="2" x2="435.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="442.8" y1="2" x2="442.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="450.4" y1="2" x2="450.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="458.0" y1="2" x2="458.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="465.6" y1="2" x2="465.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="473.2" y1="2" x2="473.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="480.8" y1="2" x2="480.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="488.4" y1="2" x2="488.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="496.0" y1="2" x2="496.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="503.6" y1="2" x2="503.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="511.2" y1="2" x2="511.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="518.8" y1="2" x2="518.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="526.4" y1="2" x2="526.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="534.0" y1="2" x2="534.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="541.6" y1="2" x2="541.6" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="549.2" y1="2" x2="549.2" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="556.8" y1="2" x2="556.8" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="564.4" y1="2" x2="564.4" y2="230" stroke="#e6e6e6" stroke-width="1"/><line x1="572.0" y1="2" x2="572.0" y2="230" stroke="#aaa" stroke-width="1"/><line x1="2" y1="2.0" x2="572" y2="2.0" stroke="#aaa" stroke-width="1"/><line x1="2" y1="9.6" x2="572" y2="9.6" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="17.2" x2="572" y2="17.2" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="24.8" x2="572" y2="24.8" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="32.4" x2="572" y2="32.4" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="40.0" x2="572" y2="40.0" stroke="#aaa" stroke-width="1"/><line x1="2" y1="47.6" x2="572" y2="47.6" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="55.2" x2="572" y2="55.2" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="62.8" x2="572" y2="62.8" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="70.4" x2="572" y2="70.4" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="78.0" x2="572" y2="78.0" stroke="#aaa" stroke-width="1"/><line x1="2" y1="85.6" x2="572" y2="85.6" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="93.2" x2="572" y2="93.2" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="100.8" x2="572" y2="100.8" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="108.4" x2="572" y2="108.4" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="116.0" x2="572" y2="116.0" stroke="#aaa" stroke-width="1"/><line x1="2" y1="123.6" x2="572" y2="123.6" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="131.2" x2="572" y2="131.2" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="138.8" x2="572" y2="138.8" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="146.4" x2="572" y2="146.4" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="154.0" x2="572" y2="154.0" stroke="#aaa" stroke-width="1"/><line x1="2" y1="161.6" x2="572" y2="161.6" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="169.2" x2="572" y2="169.2" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="176.8" x2="572" y2="176.8" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="184.4" x2="572" y2="184.4" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="192.0" x2="572" y2="192.0" stroke="#aaa" stroke-width="1"/><line x1="2" y1="199.6" x2="572" y2="199.6" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="207.2" x2="572" y2="207.2" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="214.8" x2="572" y2="214.8" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="222.4" x2="572" y2="222.4" stroke="#e6e6e6" stroke-width="1"/><line x1="2" y1="230.0" x2="572" y2="230.0" stroke="#aaa" stroke-width="1"/><line x1="149" y1="35" x2="159" y2="45" stroke="#3b3bd6" stroke-width="2"/><line x1="149" y1="45" x2="159" y2="35" stroke="#3b3bd6" stroke-width="2"/><text x="162" y="32" font-size="16" font-family="Arial" fill="#3b3bd6">A</text><line x1="339" y1="35" x2="349" y2="45" stroke="#3b3bd6" stroke-width="2"/><line x1="339" y1="45" x2="349" y2="35" stroke="#3b3bd6" stroke-width="2"/><text x="352" y="32" font-size="16" font-family="Arial" fill="#3b3bd6">B</text><line x1="187" y1="111" x2="197" y2="121" stroke="#3b3bd6" stroke-width="2"/><line x1="187" y1="121" x2="197" y2="111" stroke="#3b3bd6" stroke-width="2"/><text x="200" y="108" font-size="16" font-family="Arial" fill="#3b3bd6">C</text></svg>
+<h2 class="exo">Exercice n° 3 <span class="bareme">/ 2</span></h2><p>Sur la figure ci-dessous, construis le symétrique du segment [ST] par rapport au point O.<br>Laisse les <b>traits de construction</b> et <b>code la figure</b>.</p>
+<svg class="fig" viewBox="0 0 680 268" width="520"><line x1="20" y1="37" x2="191" y2="242" stroke="#444" stroke-width="2"/><line x1="15" y1="32" x2="25" y2="42" stroke="#3b3bd6" stroke-width="2"/><line x1="15" y1="42" x2="25" y2="32" stroke="#3b3bd6" stroke-width="2"/><text x="26" y="29" font-size="16" font-family="Arial" fill="#3b3bd6">S</text><line x1="186" y1="237" x2="196" y2="247" stroke="#3b3bd6" stroke-width="2"/><line x1="186" y1="247" x2="196" y2="237" stroke="#3b3bd6" stroke-width="2"/><text x="197" y="234" font-size="16" font-family="Arial" fill="#3b3bd6">T</text><line x1="321" y1="138" x2="331" y2="148" stroke="#3b3bd6" stroke-width="2"/><line x1="321" y1="148" x2="331" y2="138" stroke="#3b3bd6" stroke-width="2"/><text x="332" y="135" font-size="16" font-family="Arial" fill="#3b3bd6">O</text></svg>
+</div>
+</body>
+</html>
