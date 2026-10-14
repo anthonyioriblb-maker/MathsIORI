@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interrogation - Théorème de Pythagore - Sujet B</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:22px;
+  }
+  .entete{
+    border:2px solid #333;
+    border-radius:8px;
+    padding:12px 16px;
+    line-height:2;
+    margin-bottom:22px;
+    font-size:0.95em;
+  }
+  .entete .ligne{
+    display:inline-block;
+    min-width:60px;
+    border-bottom:1px solid #333;
+    margin-left:4px;
+  }
+  .consigne{
+    background:#fff3b8;
+    border-left:6px solid #f39c12;
+    border-radius:6px;
+    padding:12px 16px;
+    font-size:0.95em;
+    margin-bottom:24px;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 12px;
+  }
+  .bareme{
+    float:right;
+    font-weight:normal;
+    text-decoration:none;
+    color:var(--gris);
+    font-size:0.85em;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:8px;
+    font-size:1.05em;
+  }
+  td{
+    border:1.5px solid #999;
+    padding:10px 14px;
+  }
+  .calc-cell{
+    height:70px;
+    vertical-align:top;
+    width:50%;
+  }
+  .q{
+    border:1.5px solid #999;
+    padding:10px 14px;
+    font-size:0.92em;
+    vertical-align:top;
+    height:56px;
+  }
+  .q b{ color:var(--bleu); }
+  th{
+    background:#e8e8e8;
+    padding:8px 10px;
+    font-size:0.85em;
+  }
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:16px;
+  }
+
+  /* ── Notation mathématique (identique à MathsIORI/styles.css) ── */
+  .frac, .fraction {
+    display: inline-block;
+    margin-left: .15em;
+    margin-right: .15em;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .frac > .num {
+    display: block;
+    padding: 0 .1em;
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+  }
+  .frac > .den {
+    display: block;
+    padding: 0 .1em;
+    padding-top: 2px;
+  }
+  .exposant {
+    vertical-align: super;
+    font-size: 0.8em;
+  }
+  .sqrt {
+    position: relative;
+    display: inline-block;
+    border-top: 2px solid black;
+    margin-left: .7em;
+    padding-left: .2em;
+    padding-right: .1em;
+  }
+  .sqrt:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    left: -.65em;
+    height: 56%;
+    width: .6em;
+    border-right: 2px solid black;
+    border-bottom: 2.5px solid black;
+    transform-origin: top right;
+    transform: rotate(55deg) skew(50deg);
+  }
+
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+  }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
+
+  .badge-correction{ display:block; text-align:center; margin:0 auto 24px; background:var(--rouge); color:#fff; font-weight:bold;
+    letter-spacing:0.06em; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .calcs{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px 20px; font-size:1.15em; margin:8px 0 6px; }
+  .blank{ display:inline-block; min-width:70px; border-bottom:1px dotted #333; }
+  table.tri td{ text-align:center; vertical-align:middle; width:33.3%; }
+  table.tri td.eg{ height:56px; font-size:1.1em; }
+  .ex3{ display:flex; gap:24px; align-items:flex-start; }
+  .ex3 .calc div{ line-height:2.1; }
+  svg{ display:block; margin:0 auto; }
+  @media print{ table, .ex3{ break-inside:avoid; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+<div class="entete">Nom &ndash; Prénom : <span class="ligne" style="min-width:260px;"></span> &nbsp;&nbsp; Classe : <span class="ligne" style="min-width:70px;"></span></div>
+<h2 class="exo">Exercice n° 1</h2><p>Calculer :</p><div class="calcs">
+<div>3² = <span class=blank>&nbsp;</span></div>
+<div>9² = <span class=blank>&nbsp;</span></div>
+<div><span class="sqrt">49</span> = <span class=blank>&nbsp;</span></div>
+<div><span class="sqrt">144</span> = <span class=blank>&nbsp;</span></div>
+</div><h2 class="exo">Exercice n° 2</h2><p>Écrire l'égalité de Pythagore dans chaque triangle.</p><table class="tri"><tr>
+<td><svg viewBox="0 0 360 280" width="198"><polygon points="232.0,80.0 118.0,128.0 303.8,250.5" fill="#55dbff" stroke="#111" stroke-width="2.5"/><polyline points="220.0,85.0 225.1,97.0 237.0,92.0" fill="none" stroke="#111" stroke-width="2"/><text x="236.2" y="66.4" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">Q</text><text x="96.6" y="130.7" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">H</text><text x="318.3" y="275.0" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">C</text></svg></td>
+<td><svg viewBox="0 0 360 280" width="198"><polygon points="318.0,232.0 65.0,212.0 327.5,112.4" fill="#55dbff" stroke="#111" stroke-width="2.5"/><polyline points="305.0,231.0 306.1,218.0 319.0,219.0" fill="none" stroke="#111" stroke-width="2"/><text x="337.1" y="250.9" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">G</text><text x="43.3" y="223.4" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">H</text><text x="344.6" y="106.6" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">I</text></svg></td>
+<td><svg viewBox="0 0 360 280" width="198"><polygon points="328.0,228.0 43.0,202.0 337.8,120.4" fill="#55dbff" stroke="#111" stroke-width="2.5"/><polyline points="315.1,226.8 316.2,213.9 329.2,215.1" fill="none" stroke="#111" stroke-width="2"/><text x="347.8" y="245.6" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">J</text><text x="21.1" y="212.1" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">S</text><text x="356.5" y="116.8" text-anchor="middle" font-size="26" font-family="Times New Roman" font-weight="bold">R</text></svg></td>
+</tr><tr>
+<td class="eg"></td>
+<td class="eg"></td>
+<td class="eg"></td>
+</tr></table><h2 class="exo">Exercice n° 3</h2><p>Calculer BC.</p>
+<div class="ex3"><svg viewBox="0 0 275 200" width="275"><polygon points="60,150 60,30 225,150" fill="none" stroke="#111" stroke-width="2.5"/><rect x="60" y="138" width="12" height="12" fill="#4a7fc1" stroke="#111"/><text x="38" y="168" font-size="17" font-family="Arial">A</text><text x="52" y="22" font-size="17" font-family="Arial">B</text><text x="233" y="156" font-size="17" font-family="Arial">C</text><text x="22" y="96.0" font-size="20" font-family="Arial">8</text><text x="134.5" y="178" font-size="20" font-family="Arial">11</text></svg></div><div style="height:120px;"></div>
+</div>
+</body>
+</html>
