@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interrogation - Théorème de Thalès - Sujet</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:22px;
+  }
+  .entete{
+    border:2px solid #333;
+    border-radius:8px;
+    padding:12px 16px;
+    line-height:2;
+    margin-bottom:22px;
+    font-size:0.95em;
+  }
+  .entete .ligne{
+    display:inline-block;
+    min-width:60px;
+    border-bottom:1px solid #333;
+    margin-left:4px;
+  }
+  .consigne{
+    background:#fff3b8;
+    border-left:6px solid #f39c12;
+    border-radius:6px;
+    padding:12px 16px;
+    font-size:0.95em;
+    margin-bottom:24px;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 12px;
+  }
+  .bareme{
+    float:right;
+    font-weight:normal;
+    text-decoration:none;
+    color:var(--gris);
+    font-size:0.85em;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:8px;
+    font-size:1.05em;
+  }
+  td{
+    border:1.5px solid #999;
+    padding:10px 14px;
+  }
+  .calc-cell{
+    height:70px;
+    vertical-align:top;
+    width:50%;
+  }
+  .q{
+    border:1.5px solid #999;
+    padding:10px 14px;
+    font-size:0.92em;
+    vertical-align:top;
+    height:56px;
+  }
+  .q b{ color:var(--bleu); }
+  th{
+    background:#e8e8e8;
+    padding:8px 10px;
+    font-size:0.85em;
+  }
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:16px;
+  }
+
+  /* ── Notation mathématique (identique à MathsIORI/styles.css) ── */
+  .frac, .fraction {
+    display: inline-block;
+    margin-left: .15em;
+    margin-right: .15em;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .frac > .num {
+    display: block;
+    padding: 0 .1em;
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+  }
+  .frac > .den {
+    display: block;
+    padding: 0 .1em;
+    padding-top: 2px;
+  }
+  .exposant {
+    vertical-align: super;
+    font-size: 0.8em;
+  }
+  .sqrt {
+    position: relative;
+    display: inline-block;
+    border-top: 2px solid black;
+    margin-left: .7em;
+    padding-left: .2em;
+    padding-right: .1em;
+  }
+  .sqrt:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    left: -.65em;
+    height: 56%;
+    width: .6em;
+    border-right: 2px solid black;
+    border-bottom: 2.5px solid black;
+    transform-origin: top right;
+    transform: rotate(55deg) skew(50deg);
+  }
+
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+  }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
+
+  .badge-correction{ display:block; text-align:center; margin:0 auto 24px; background:var(--rouge); color:#fff; font-weight:bold;
+    letter-spacing:0.06em; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .figs{ display:grid; grid-template-columns:1fr 1fr; gap:10px 24px; }
+  .fig{ border:1.5px solid #999; border-radius:6px; padding:8px 10px; }
+  .fig .lab{ font-weight:bold; color:var(--bleu); }
+  .fig svg{ display:block; margin:0 auto; }
+  .hyp{ text-align:center; font-weight:bold; font-size:0.92em; margin-top:2px; }
+  .ligne-rep{ border-bottom:1px dotted #555; height:34px; }
+  .eq{ display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:1.15em; }
+  .eq > div{ border:1.5px solid #999; padding:10px 14px; min-height:150px; }
+  .calc div{ line-height:2.3; }
+  .ex3{ display:flex; gap:20px; align-items:flex-start; }
+  .ex3 .txt{ flex:1; }
+  @media print{ .fig, .eq > div, .ex3{ break-inside:avoid; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+<div class="entete">Nom &ndash; Prénom : <span class="ligne" style="min-width:260px;"></span> &nbsp;&nbsp; Classe : <span class="ligne" style="min-width:70px;"></span></div>
+<h2 class="exo">Exercice n° 1</h2><p>Résoudre les équations suivantes :</p>
+<div class="eq"><div>a) <span class="frac"><span class="num">3</span><span class="den">𝑥</span></span> = <span class="frac"><span class="num">14</span><span class="den">9</span></span></div><div>b) <span class="frac"><span class="num">𝑥</span><span class="den">3</span></span> = <span class="frac"><span class="num">7</span><span class="den">12</span></span></div></div>
+<h2 class="exo">Exercice n° 2</h2><p>Écrire les égalités de quotients du théorème de Thalès dans chaque cas.</p><div class="figs">
+<div class="fig"><span class="lab">a.</span><svg viewBox="0 0 250 190" width="250" style="max-width:100%"><clipPath id="c140191482039936"><rect x="2" y="2" width="246" height="186"/></clipPath><g clip-path="url(#c140191482039936)"><line x1="14.5" y1="-13.0" x2="235.5" y2="230.1" stroke="#222" stroke-width="2"/><line x1="195.9" y1="44.2" x2="-2.9" y2="154.8" stroke="#222" stroke-width="2"/><line x1="26.8" y1="26.5" x2="188.2" y2="77.5" stroke="#222" stroke-width="2"/><line x1="-15.2" y1="115.2" x2="243.2" y2="196.8" stroke="#222" stroke-width="2"/></g><text x="64" y="27" font-size="15" font-family="Arial" font-weight="bold">H</text><text x="198.0" y="170.0" font-size="15" font-family="Arial" font-weight="bold">S</text><text x="159" y="59" font-size="15" font-family="Arial" font-weight="bold">P</text><text x="32.0" y="154.0" font-size="15" font-family="Arial" font-weight="bold">M</text><text x="104" y="114" font-size="15" font-family="Arial" font-weight="bold">A</text></svg><div class="hyp">(HP) est parallèle à (MS)</div><div class="ligne-rep"></div><div class="ligne-rep"></div></div>
+<div class="fig"><span class="lab">b.</span><svg viewBox="0 0 250 190" width="250" style="max-width:100%"><clipPath id="c140191480488256"><rect x="2" y="2" width="246" height="186"/></clipPath><g clip-path="url(#c140191480488256)"><line x1="171.4" y1="10.2" x2="67.4" y2="96.8" stroke="#222" stroke-width="2"/><line x1="141.7" y1="-6.5" x2="182.1" y2="161.1" stroke="#222" stroke-width="2"/><line x1="96.5" y1="48.2" x2="181.5" y2="95.8" stroke="#222" stroke-width="2"/><line x1="59.1" y1="62.3" x2="203.6" y2="143.3" stroke="#222" stroke-width="2"/></g><text x="158" y="30" font-size="15" font-family="Arial" font-weight="bold">O</text><text x="108" y="46" font-size="15" font-family="Arial" font-weight="bold">G</text><text x="90.80000000000001" y="101.0" font-size="15" font-family="Arial" font-weight="bold">R</text><text x="172" y="80" font-size="15" font-family="Arial" font-weight="bold">H</text><text x="155.8" y="140.6" font-size="15" font-family="Arial" font-weight="bold">S</text></svg><div class="hyp">(GH) est parallèle à (RS)</div><div class="ligne-rep"></div><div class="ligne-rep"></div></div>
+<div class="fig"><span class="lab">c.</span><svg viewBox="0 0 250 190" width="250" style="max-width:100%"><clipPath id="c140191482039936"><rect x="2" y="2" width="246" height="186"/></clipPath><g clip-path="url(#c140191482039936)"><line x1="250.0" y1="122.3" x2="31.3" y2="38.2" stroke="#222" stroke-width="2"/><line x1="228.1" y1="84.2" x2="115.9" y2="185.2" stroke="#222" stroke-width="2"/><line x1="113.7" y1="51.9" x2="178.3" y2="164.1" stroke="#222" stroke-width="2"/><line x1="54.4" y1="17.4" x2="160.9" y2="202.5" stroke="#222" stroke-width="2"/></g><text x="201" y="95" font-size="15" font-family="Arial" font-weight="bold">C</text><text x="125" y="65" font-size="15" font-family="Arial" font-weight="bold">I</text><text x="62.30000000000001" y="71.5" font-size="15" font-family="Arial" font-weight="bold">L</text><text x="175" y="139" font-size="15" font-family="Arial" font-weight="bold">K</text><text x="119.0" y="162.4" font-size="15" font-family="Arial" font-weight="bold">V</text></svg><div class="hyp">(IK) est parallèle à (LV)</div><div class="ligne-rep"></div><div class="ligne-rep"></div></div>
+<div class="fig"><span class="lab">d.</span><svg viewBox="0 0 250 190" width="250" style="max-width:100%"><clipPath id="c140191480488256"><rect x="2" y="2" width="246" height="186"/></clipPath><g clip-path="url(#c140191480488256)"><line x1="2.9" y1="-15.4" x2="241.5" y2="205.0" stroke="#222" stroke-width="2"/><line x1="45.2" y1="180.2" x2="204.4" y2="33.4" stroke="#222" stroke-width="2"/><line x1="42.9" y1="-12.0" x2="87.1" y2="192.0" stroke="#222" stroke-width="2"/><line x1="164.3" y1="30.0" x2="199.7" y2="193.2" stroke="#222" stroke-width="2"/></g><text x="58" y="28" font-size="15" font-family="Arial" font-weight="bold">I</text><text x="172.4" y="163.6" font-size="15" font-family="Arial" font-weight="bold">J</text><text x="86" y="154" font-size="15" font-family="Arial" font-weight="bold">K</text><text x="181.6" y="75.6" font-size="15" font-family="Arial" font-weight="bold">G</text><text x="126" y="90" font-size="15" font-family="Arial" font-weight="bold">H</text></svg><div class="hyp">(IK) est parallèle à (GJ)</div><div class="ligne-rep"></div><div class="ligne-rep"></div></div>
+</div>
+<h2 class="exo">Exercice n° 3</h2>
+<div class="ex3"><div class="txt"><p>Dans la figure ci-contre, les droites (AC) et (DE) sont parallèles.<br>Calculer BD et AC.</p></div><svg viewBox="0 0 290 250" width="290" style="max-width:100%"><clipPath id="c140191480485888"><rect x="2" y="2" width="286" height="246"/></clipPath><g clip-path="url(#c140191480485888)"><line x1="43.8" y1="-20.7" x2="268.2" y2="259.8" stroke="#222" stroke-width="2"/><line x1="270.4" y1="-40.2" x2="16.0" y2="281.4" stroke="#222" stroke-width="2"/><line x1="45.2" y1="40.9" x2="262.8" y2="22.1" stroke="#e67e22" stroke-width="2"/><line x1="14.6" y1="219.8" x2="275.8" y2="197.4" stroke="#e67e22" stroke-width="2"/></g><text x="80" y="27" font-size="15" font-family="Arial" font-weight="bold">E</text><text x="220" y="16" font-size="15" font-family="Arial" font-weight="bold">D</text><text x="158" y="132" font-size="15" font-family="Arial" font-weight="bold">B</text><text x="230.0" y="214.0" font-size="15" font-family="Arial" font-weight="bold">C</text><text x="60.400000000000006" y="235.2" font-size="15" font-family="Arial" font-weight="bold">A</text><text x="74.0" y="74.5" font-size="13" font-family="Arial">5 cm</text><text x="194.0" y="157.0" font-size="13" font-family="Arial">6 cm</text><text x="61.2" y="163.6" font-size="13" font-family="Arial">7 cm</text><text x="138.0" y="23.5" font-size="13" font-family="Arial">6 cm</text><text x="192.0" y="73.0" font-size="15" font-family="Arial" font-weight="bold" fill="#c0392b">?</text><text x="145.2" y="228.6" font-size="15" font-family="Arial" font-weight="bold" fill="#c0392b">?</text></svg></div><div style="height:220px;"></div>
+</div>
+</body>
+</html>
