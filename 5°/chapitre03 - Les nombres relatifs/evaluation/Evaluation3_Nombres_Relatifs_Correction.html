@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Évaluation - Les nombres relatifs - Correction</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:22px;
+  }
+  .entete{
+    border:2px solid #333;
+    border-radius:8px;
+    padding:12px 16px;
+    line-height:2;
+    margin-bottom:22px;
+    font-size:0.95em;
+  }
+  .entete .ligne{
+    display:inline-block;
+    min-width:60px;
+    border-bottom:1px solid #333;
+    margin-left:4px;
+  }
+  .consigne{
+    background:#fff3b8;
+    border-left:6px solid #f39c12;
+    border-radius:6px;
+    padding:12px 16px;
+    font-size:0.95em;
+    margin-bottom:24px;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 12px;
+  }
+  .bareme{
+    float:right;
+    font-weight:normal;
+    text-decoration:none;
+    color:var(--gris);
+    font-size:0.85em;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:8px;
+    font-size:1.05em;
+  }
+  td{
+    border:1.5px solid #999;
+    padding:10px 14px;
+  }
+  .calc-cell{
+    height:70px;
+    vertical-align:top;
+    width:50%;
+  }
+  .q{
+    border:1.5px solid #999;
+    padding:10px 14px;
+    font-size:0.92em;
+    vertical-align:top;
+    height:56px;
+  }
+  .q b{ color:var(--bleu); }
+  th{
+    background:#e8e8e8;
+    padding:8px 10px;
+    font-size:0.85em;
+  }
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:16px;
+  }
+
+  /* ── Notation mathématique (identique à MathsIORI/styles.css) ── */
+  .frac, .fraction {
+    display: inline-block;
+    margin-left: .15em;
+    margin-right: .15em;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .frac > .num {
+    display: block;
+    padding: 0 .1em;
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+  }
+  .frac > .den {
+    display: block;
+    padding: 0 .1em;
+    padding-top: 2px;
+  }
+  .exposant {
+    vertical-align: super;
+    font-size: 0.8em;
+  }
+  .sqrt {
+    position: relative;
+    display: inline-block;
+    border-top: 2px solid black;
+    margin-left: .7em;
+    padding-left: .2em;
+    padding-right: .1em;
+  }
+  .sqrt:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    left: -.65em;
+    height: 56%;
+    width: .6em;
+    border-right: 2px solid black;
+    border-bottom: 2.5px solid black;
+    transform-origin: top right;
+    transform: rotate(55deg) skew(50deg);
+  }
+
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+  }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
+
+  .badge-correction{ display:block; text-align:center; margin:0 auto 24px; background:var(--rouge); color:#fff; font-weight:bold;
+    letter-spacing:0.06em; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .note{ float:right; font-weight:bold; }
+  h2.exo{ margin:14px 0 8px !important; }
+  .entete{ margin-bottom:12px !important; }
+  p{ margin:6px 0; line-height:1.6; }
+  .g4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px 18px; font-size:1.1em; margin:8px 0; }
+  .g2{ display:grid; grid-template-columns:1fr 1fr; gap:14px 30px; font-size:1.1em; margin:8px 0; }
+  .blank{ display:inline-block; min-width:60px; border-bottom:1px dotted #333; }
+  .repr{ display:flex; gap:28px; align-items:center; }
+  .repr svg{ margin:0; }
+  svg{ display:block; margin:6px auto; }
+  @media print{ svg{ break-inside:avoid; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+<div class="badge-correction" style="margin-top:0;">CORRECTION</div>
+<h2 class="exo">Exercice n° 1 <span class="bareme">/ 2</span></h2><p>Compléter :</p><div class="g2">
+<div>|−8| = <span class=rep>8</span></div>
+<div>|+3,5| = <span class=rep>3,5</span></div>
+<div>l'opposé de −12 est <span class=rep>12</span></div>
+<div>l'opposé de 4,7 est <span class=rep>−4,7</span></div>
+</div>
+<h2 class="exo">Exercice n° 2 <span class="bareme">/ 2</span></h2>
+        <svg viewBox="0 0 710 80" width="710" style="max-width:100%;"><line x1="15" y1="40" x2="702" y2="40" stroke="#000" stroke-width="1.5"/><polygon points="702,40 692,35 692,45" fill="#000"/><line x1="30.0" y1="32" x2="30.0" y2="48" stroke="#000" stroke-width="1.5"/><line x1="65.0" y1="36" x2="65.0" y2="44" stroke="#000" stroke-width="1"/><line x1="100.0" y1="32" x2="100.0" y2="48" stroke="#000" stroke-width="1.5"/><line x1="135.0" y1="36" x2="135.0" y2="44" stroke="#000" stroke-width="1"/><line x1="170.0" y1="32" x2="170.0" y2="48" stroke="#000" stroke-width="1.5"/><line x1="205.0" y1="36" x2="205.0" y2="44" stroke="#000" stroke-width="1"/><line x1="240.0" y1="32" x2="240.0" y2="48" stroke="#000" stroke-width="1.5"/><line x1="275.0" y1="36" x2="275.0" y2="44" stroke="#000" stroke-width="1"/><line x1="310.0" y1="32" x2="310.0" y2="48" stroke="#000" stroke-width="1.5"/><line x1="345.0" y1="36" x2="345.0" y2="44" stroke="#000" stroke-width="1"/><line x1="380.0" y1="32" x2="380.0" y2="48" stroke="#000" stroke-width="1.5"/><text x="380.0" y="66" text-anchor="middle" font-size="14">0</text><line x1="415.0" y1="36" x2="415.0" y2="44" stroke="#000" stroke-width="1"/><line x1="450.0" y1="32" x2="450.0" y2="48" stroke="#000" stroke-width="1.5"/><text x="450.0" y="66" text-anchor="middle" font-size="14">1</text><line x1="485.0" y1="36" x2="485.0" y2="44" stroke="#000" stroke-width="1"/><line x1="520.0" y1="32" x2="520.0" y2="48" stroke="#000" stroke-width="1.5"/><line x1="555.0" y1="36" x2="555.0" y2="44" stroke="#000" stroke-width="1"/><line x1="590.0" y1="32" x2="590.0" y2="48" stroke="#000" stroke-width="1.5"/><line x1="625.0" y1="36" x2="625.0" y2="44" stroke="#000" stroke-width="1"/><line x1="660.0" y1="32" x2="660.0" y2="48" stroke="#000" stroke-width="1.5"/><line x1="130.0" y1="35" x2="140.0" y2="45" stroke="#c0392b" stroke-width="2"/><line x1="130.0" y1="45" x2="140.0" y2="35" stroke="#c0392b" stroke-width="2"/><text x="135.0" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">A</text><line x1="515" y1="35" x2="525" y2="45" stroke="#c0392b" stroke-width="2"/><line x1="515" y1="45" x2="525" y2="35" stroke="#c0392b" stroke-width="2"/><text x="520.0" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">B</text><line x1="235" y1="35" x2="245" y2="45" stroke="#c0392b" stroke-width="2"/><line x1="235" y1="45" x2="245" y2="35" stroke="#c0392b" stroke-width="2"/><text x="240.0" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">C</text><line x1="480.0" y1="35" x2="490.0" y2="45" stroke="#c0392b" stroke-width="2"/><line x1="480.0" y1="45" x2="490.0" y2="35" stroke="#c0392b" stroke-width="2"/><text x="485.0" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">D</text></svg>
+
+<p>1. Donner les abscisses des points A et B.</p>
+<p class="rep">A(−3,5) ; B(+2)</p>
+<p>2. Placer les points C(−2) et D(+1,5).</p>
+<h2 class="exo">Exercice n° 3 <span class="bareme">/ 3</span></h2><p>1. Compléter avec le signe &lt; ou &gt; :</p><div class="g4">
+<div>−7 <span class=rep>&lt;</span> 3</div>
+<div>−4 <span class=rep>&gt;</span> −9</div>
+<div>−2,5 <span class=rep>&lt;</span> −2,05</div>
+<div>0 <span class=rep>&gt;</span> −0,1</div>
+</div><p>2. Ranger dans l'ordre croissant : −3 ; 2 ; −5,5 ; 0 ; −0,5 ; 1,2</p>
+<p class="rep">−5,5 &lt; −3 &lt; −0,5 &lt; 0 &lt; 1,2 &lt; 2</p>
+<h2 class="exo">Exercice n° 4 <span class="bareme">/ 3</span></h2>
+<div class="repr"><svg viewBox="0 0 300 400.0" width="300" style="max-width:100%;"><line x1="25.0" y1="375.0" x2="25.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="50.0" y1="375.0" x2="50.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="75.0" y1="375.0" x2="75.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="100.0" y1="375.0" x2="100.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="125.0" y1="375.0" x2="125.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="150.0" y1="375.0" x2="150.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="175.0" y1="375.0" x2="175.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="200.0" y1="375.0" x2="200.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="225.0" y1="375.0" x2="225.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="250.0" y1="375.0" x2="250.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="275.0" y1="375.0" x2="275.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="375.0" x2="275.0" y2="375.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="350.0" x2="275.0" y2="350.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="325.0" x2="275.0" y2="325.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="300.0" x2="275.0" y2="300.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="275.0" x2="275.0" y2="275.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="250.0" x2="275.0" y2="250.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="225.0" x2="275.0" y2="225.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="200.0" x2="275.0" y2="200.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="175.0" x2="275.0" y2="175.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="150.0" x2="275.0" y2="150.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="125.0" x2="275.0" y2="125.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="100.0" x2="275.0" y2="100.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="75.0" x2="275.0" y2="75.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="50.0" x2="275.0" y2="50.0" stroke="#ccc" stroke-width="1"/><line x1="25.0" y1="25.0" x2="275.0" y2="25.0" stroke="#ccc" stroke-width="1"/><line x1="15.0" y1="200.0" x2="289.0" y2="200.0" stroke="#000" stroke-width="1.5"/><polygon points="293.0,200.0 283.0,195.0 283.0,205.0" fill="#000"/><line x1="150.0" y1="385.0" x2="150.0" y2="11.0" stroke="#000" stroke-width="1.5"/><polygon points="150.0,7.0 145.0,17.0 155.0,17.0" fill="#000"/><line x1="175.0" y1="195.0" x2="175.0" y2="205.0" stroke="#000" stroke-width="2"/><text x="175.0" y="218.0" text-anchor="middle" font-size="12">1</text><line x1="145.0" y1="150.0" x2="155.0" y2="150.0" stroke="#000" stroke-width="2"/><text x="141.0" y="154.0" text-anchor="end" font-size="12">1</text><text x="144.0" y="216.0" text-anchor="end" font-size="12">O</text><line x1="220.0" y1="95.0" x2="230.0" y2="105.0" stroke="#c0392b" stroke-width="2"/><line x1="220.0" y1="105.0" x2="230.0" y2="95.0" stroke="#c0392b" stroke-width="2"/><text x="233.0" y="93.0" text-anchor="start" font-size="15" font-weight="bold" fill="#c0392b">A</text><line x1="45.0" y1="145.0" x2="55.0" y2="155.0" stroke="#c0392b" stroke-width="2"/><line x1="45.0" y1="155.0" x2="55.0" y2="145.0" stroke="#c0392b" stroke-width="2"/><text x="42.0" y="143.0" text-anchor="end" font-size="15" font-weight="bold" fill="#c0392b">B</text><line x1="95.0" y1="345.0" x2="105.0" y2="355.0" stroke="#c0392b" stroke-width="2"/><line x1="95.0" y1="355.0" x2="105.0" y2="345.0" stroke="#c0392b" stroke-width="2"/><text x="92.0" y="343.0" text-anchor="end" font-size="15" font-weight="bold" fill="#c0392b">C</text><line x1="70.0" y1="45.0" x2="80.0" y2="55.0" stroke="#c0392b" stroke-width="2"/><line x1="70.0" y1="55.0" x2="80.0" y2="45.0" stroke="#c0392b" stroke-width="2"/><text x="67.0" y="43.0" text-anchor="end" font-size="15" font-weight="bold" fill="#c0392b">D</text><line x1="145.0" y1="345.0" x2="155.0" y2="355.0" stroke="#c0392b" stroke-width="2"/><line x1="145.0" y1="355.0" x2="155.0" y2="345.0" stroke="#c0392b" stroke-width="2"/><text x="158.0" y="343.0" text-anchor="start" font-size="15" font-weight="bold" fill="#c0392b">E</text><line x1="245.0" y1="245.0" x2="255.0" y2="255.0" stroke="#c0392b" stroke-width="2"/><line x1="245.0" y1="255.0" x2="255.0" y2="245.0" stroke="#c0392b" stroke-width="2"/><text x="258.0" y="243.0" text-anchor="start" font-size="15" font-weight="bold" fill="#c0392b">F</text></svg><div><p>1. Donner les coordonnées des points A, B et C.</p><p class="rep">A<span style="white-space:nowrap">(3 ; 2)</span></p><p class="rep">B<span style="white-space:nowrap">(−4 ; 1)</span></p><p class="rep">C<span style="white-space:nowrap">(−2 ; −3)</span></p><p>2. Placer les points D<span style="white-space:nowrap">(−3 ; 3)</span>, E<span style="white-space:nowrap">(0 ; −3)</span> et F<span style="white-space:nowrap">(4 ; −1)</span>.</p></div></div>
+</div>
+</body>
+</html>

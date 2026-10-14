@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Énigmes sur les nombres décimaux – correction interactive</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;margin:0;color:#222;}
+.wrap{max-width:980px;margin:0 auto;padding:16px;}
+h2{color:#2980b9;margin:26px 0 10px;}
+.card{background:#fff;border:2px solid #dde3ee;border-radius:10px;padding:14px 18px;margin-bottom:16px;}
+.enonce{line-height:1.55;margin:0 0 12px;}
+.boxes{display:flex;gap:6px;align-items:flex-end;justify-content:center;margin:6px 0 12px;}
+.box{display:flex;flex-direction:column;align-items:center;}
+.box .lab{font-size:12px;color:#666;margin-bottom:3px;}
+.box .val{width:52px;height:56px;border:2px solid #2980b9;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;color:#c0392b;background:#f7fbff;transition:background .4s;}
+.box .val.new{background:#fff3b8;}
+.virgule{font-size:40px;font-weight:bold;padding:0 2px 6px;}
+.steps{margin:0 0 10px 20px;padding:0;line-height:1.6;}
+.steps li.last{background:#fff3b8;border-radius:4px;}
+.rep{text-align:center;font-size:20px;font-weight:bold;color:#27ae60;min-height:26px;}
+.btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+button{font-size:15px;padding:8px 14px;border:0;border-radius:6px;cursor:pointer;color:#fff;}
+.btn-anim{background:#2980b9;} .btn-anim:hover{background:#1f6391;} .btn-anim:disabled{background:#9bb7cc;cursor:default;}
+.btn-auto{background:#4caf50;} .btn-auto:hover{background:#388e3c;}
+.btn-auto.on{background:#ff9800;}
+.btn-reset{background:#e74c3c;} .btn-reset:hover{background:#c0392b;}
+</style></head><body><div class="wrap">
+<h2>Énigmes</h2><div class="card" id="card0">
+  <p class="enonce"><b>1.</b> Je suis un nombre décimal qui s'écrit avec quatre chiffres : deux chiffres pour ma partie entière et deux pour ma partie décimale. Mon chiffre des unités est le double de celui des dizaines. Mon chiffre des dixièmes est égal à celui des dizaines. Mon chiffre des centièmes est 5. Mon chiffre des dizaines vaut 1 de moins que celui des centièmes.</p>
+  <div class="boxes" id="boxes0"></div>
+  <ol class="steps" id="steps0"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev0" onclick="prevStep(0)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next0" onclick="nextStep(0)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto0" onclick="toggleAuto(0)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(0)">Recommencer ↺</button>
+  </div>
+</div><div class="card" id="card1">
+  <p class="enonce"><b>2.</b> Je suis un nombre décimal qui s'écrit avec cinq chiffres : trois pour ma partie entière et deux pour ma partie décimale. Mon chiffre des dizaines est le triple de celui des centièmes. Mon chiffre des dixièmes est 0. Mon chiffre des unités est le double de celui des centièmes. Mon chiffre des centaines est égal à celui des centièmes. Mon chiffre des centièmes est 3.</p>
+  <div class="boxes" id="boxes1"></div>
+  <ol class="steps" id="steps1"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev1" onclick="prevStep(1)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next1" onclick="nextStep(1)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto1" onclick="toggleAuto(1)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(1)">Recommencer ↺</button>
+  </div>
+</div><div class="card" id="card2">
+  <p class="enonce"><b>3.</b> Je suis un nombre décimal qui s'écrit avec six chiffres : trois pour ma partie entière et trois pour ma partie décimale. Mon chiffre des millièmes est égal à celui des unités. Mon chiffre des dixièmes vaut 2 de plus que celui des unités. Mon chiffre des dizaines est 0. Mon chiffre des centièmes est le chiffre qui précède celui des dixièmes. Mon chiffre des unités est 5. Mon chiffre des centaines est la différence entre celui des dixièmes et celui des centièmes.</p>
+  <div class="boxes" id="boxes2"></div>
+  <ol class="steps" id="steps2"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev2" onclick="prevStep(2)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next2" onclick="nextStep(2)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto2" onclick="toggleAuto(2)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(2)">Recommencer ↺</button>
+  </div>
+</div><div class="card" id="card3">
+  <p class="enonce"><b>4.</b> Je suis un nombre décimal qui s'écrit avec quatre chiffres. Mon chiffre des centièmes vaut 4 de moins que celui des dixièmes. Ma partie entière est nulle. Mon chiffre des millièmes est le plus petit nombre pair différent de 0. Mon chiffre des dixièmes est le plus grand des chiffres.</p>
+  <div class="boxes" id="boxes3"></div>
+  <ol class="steps" id="steps3"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev3" onclick="prevStep(3)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next3" onclick="nextStep(3)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto3" onclick="toggleAuto(3)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(3)">Recommencer ↺</button>
+  </div>
+</div><div class="card" id="card4">
+  <p class="enonce"><b>5.</b> Je suis un nombre décimal qui s'écrit avec cinq chiffres : trois pour ma partie entière et deux pour ma partie décimale. Mon chiffre des centièmes est égal à celui des unités. Mon chiffre des dizaines est la moitié de 8. Mon chiffre des unités vaut 1 de plus que celui des dizaines. Mon chiffre des centaines est la somme de mon chiffre des dizaines et de celui des unités. Mon chiffre des dixièmes est le plus petit chiffre différent de 0.</p>
+  <div class="boxes" id="boxes4"></div>
+  <ol class="steps" id="steps4"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev4" onclick="prevStep(4)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next4" onclick="nextStep(4)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto4" onclick="toggleAuto(4)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(4)">Recommencer ↺</button>
+  </div>
+</div><h2>Énigmes plus difficiles</h2><div class="card" id="card5">
+  <p class="enonce"><b>6.</b> Je suis un nombre décimal qui s'écrit avec quatre chiffres : deux pour ma partie entière et deux pour ma partie décimale. La somme de mes quatre chiffres est 12. Mon chiffre des dizaines est le triple de celui des dixièmes. Mon chiffre des unités est 0. Mon chiffre des centièmes est le double de celui des dixièmes. Mes quatre chiffres sont tous différents.</p>
+  <div class="boxes" id="boxes5"></div>
+  <ol class="steps" id="steps5"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev5" onclick="prevStep(5)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next5" onclick="nextStep(5)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto5" onclick="toggleAuto(5)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(5)">Recommencer ↺</button>
+  </div>
+</div><div class="card" id="card6">
+  <p class="enonce"><b>7.</b> Je suis un nombre décimal qui s'écrit avec trois chiffres avant la virgule et deux après. Mon chiffre des centièmes est le double de celui des dixièmes, et la somme de ces deux chiffres est 9. Mon nombre de dizaines est 45. Mon chiffre des unités est égal à la somme de mes deux chiffres après la virgule.</p>
+  <div class="boxes" id="boxes6"></div>
+  <ol class="steps" id="steps6"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev6" onclick="prevStep(6)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next6" onclick="nextStep(6)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto6" onclick="toggleAuto(6)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(6)">Recommencer ↺</button>
+  </div>
+</div><div class="card" id="card7">
+  <p class="enonce"><b>8.</b> Je suis un nombre décimal qui s'écrit avec six chiffres : trois pour ma partie entière et trois pour ma partie décimale. La somme de tous mes chiffres est 20. On lit la même suite de chiffres de gauche à droite et de droite à gauche. Mon chiffre des centièmes est le triple de celui des millièmes. Mon chiffre des millièmes est 2.</p>
+  <div class="boxes" id="boxes7"></div>
+  <ol class="steps" id="steps7"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev7" onclick="prevStep(7)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next7" onclick="nextStep(7)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto7" onclick="toggleAuto(7)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(7)">Recommencer ↺</button>
+  </div>
+</div><div class="card" id="card8">
+  <p class="enonce"><b>9.</b> Je suis un nombre décimal qui s'écrit avec trois chiffres après la virgule. Mes trois chiffres après la virgule sont différents, et leur somme est égale à mon chiffre des unités. Mon chiffre des millièmes est le plus petit des trois, et il n'est pas nul. Je suis compris entre 7 et 8. Mon chiffre des dixièmes est le plus grand des trois.</p>
+  <div class="boxes" id="boxes8"></div>
+  <ol class="steps" id="steps8"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev8" onclick="prevStep(8)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next8" onclick="nextStep(8)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto8" onclick="toggleAuto(8)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(8)">Recommencer ↺</button>
+  </div>
+</div><div class="card" id="card9">
+  <p class="enonce"><b>10.</b> Je suis un nombre décimal qui s'écrit avec trois chiffres avant la virgule et deux après. Mon chiffre des dizaines est la différence entre celui des unités et celui des centaines. Mon chiffre des centaines est la moitié de celui des unités. Si on multiplie mes deux chiffres après la virgule, on obtient 0 ; si on les additionne, on obtient 7. Mon chiffre des unités est égal à cette somme moins 1. Mon chiffre des centièmes n'est pas nul.</p>
+  <div class="boxes" id="boxes9"></div>
+  <ol class="steps" id="steps9"></ol>
+  <div class="btns">
+    <button class="btn-anim" id="prev9" onclick="prevStep(9)" disabled>◀ Étape précédente</button>
+    <button class="btn-anim" id="next9" onclick="nextStep(9)">Étape suivante ▶</button>
+    <button class="btn-auto" id="auto9" onclick="toggleAuto(9)">⏵ Automatique</button>
+    <button class="btn-reset" onclick="resetAnimation(9)">Recommencer ↺</button>
+  </div>
+</div>
+</div>
+<script>
+const DATA = [{"fmt": "DU,dc", "steps": [{"t": "Mon chiffre des centièmes est 5.", "d": {"c": 5}}, {"t": "Dizaines : 1 de moins que les centièmes, 5 − 1 = 4.", "d": {"D": 4}}, {"t": "Unités : le double des dizaines, 2 × 4 = 8.", "d": {"U": 8}}, {"t": "Dixièmes : égal aux dizaines, 4.", "d": {"d": 4}}]}, {"fmt": "CDU,dc", "steps": [{"t": "Mon chiffre des centièmes est 3.", "d": {"c": 3}}, {"t": "Dizaines : le triple des centièmes, 3 × 3 = 9.", "d": {"D": 9}}, {"t": "Unités : le double des centièmes, 2 × 3 = 6.", "d": {"U": 6}}, {"t": "Centaines : égal aux centièmes, 3.", "d": {"C": 3}}, {"t": "Mon chiffre des dixièmes est 0.", "d": {"d": 0}}]}, {"fmt": "CDU,dcm", "steps": [{"t": "Mon chiffre des unités est 5.", "d": {"U": 5}}, {"t": "Millièmes : égal aux unités, 5.", "d": {"m": 5}}, {"t": "Dixièmes : 2 de plus que les unités, 5 + 2 = 7.", "d": {"d": 7}}, {"t": "Centièmes : le chiffre qui précède 7, c'est 6.", "d": {"c": 6}}, {"t": "Centaines : 7 − 6 = 1.", "d": {"C": 1}}, {"t": "Mon chiffre des dizaines est 0.", "d": {"D": 0}}]}, {"fmt": "U,dcm", "steps": [{"t": "Ma partie entière est nulle : unités 0.", "d": {"U": 0}}, {"t": "Dixièmes : le plus grand des chiffres, 9.", "d": {"d": 9}}, {"t": "Centièmes : 4 de moins que les dixièmes, 9 − 4 = 5.", "d": {"c": 5}}, {"t": "Millièmes : le plus petit nombre pair différent de 0, c'est 2.", "d": {"m": 2}}]}, {"fmt": "CDU,dc", "steps": [{"t": "Dizaines : la moitié de 8, c'est 4.", "d": {"D": 4}}, {"t": "Unités : 1 de plus que les dizaines, 4 + 1 = 5.", "d": {"U": 5}}, {"t": "Centièmes : égal aux unités, 5.", "d": {"c": 5}}, {"t": "Centaines : 4 + 5 = 9.", "d": {"C": 9}}, {"t": "Dixièmes : le plus petit chiffre différent de 0, c'est 1.", "d": {"d": 1}}]}, {"fmt": "DU,dc", "steps": [{"t": "Mon chiffre des unités est 0.", "d": {"U": 0}}, {"t": "Les dizaines valent 3 fois les dixièmes et les centièmes 2 fois les dixièmes : la somme des chiffres vaut 3 + 1 + 2 = 6 fois les dixièmes.", "d": {}}, {"t": "6 fois les dixièmes = 12, donc dixièmes : 12 ÷ 6 = 2.", "d": {"d": 2}}, {"t": "Centièmes : 2 × 2 = 4 ; dizaines : 3 × 2 = 6.", "d": {"c": 4, "D": 6}}, {"t": "Vérification : 6, 0, 2 et 4 sont bien tous différents et 6 + 0 + 2 + 4 = 12.", "d": {}}]}, {"fmt": "CDU,dc", "steps": [{"t": "Dixièmes + centièmes = dixièmes + 2 × dixièmes = 3 fois les dixièmes = 9, donc dixièmes : 3.", "d": {"d": 3}}, {"t": "Centièmes : 2 × 3 = 6.", "d": {"c": 6}}, {"t": "45 dizaines : centaines 4 et dizaines 5.", "d": {"C": 4, "D": 5}}, {"t": "Unités : la somme des chiffres après la virgule, 3 + 6 = 9.", "d": {"U": 9}}]}, {"fmt": "CDU,dcm", "steps": [{"t": "Mon chiffre des millièmes est 2.", "d": {"m": 2}}, {"t": "Centièmes : le triple des millièmes, 3 × 2 = 6.", "d": {"c": 6}}, {"t": "On lit les mêmes chiffres dans les deux sens : centaines = millièmes, dizaines = centièmes.", "d": {"C": 2, "D": 6}}, {"t": "Somme : 2 + 6 + ? + ? + 6 + 2 = 16 + 2 × ? = 20, donc 2 × ? = 4 et ? = 2 (unités et dixièmes).", "d": {"U": 2, "d": 2}}]}, {"fmt": "U,dcm", "steps": [{"t": "Compris entre 7 et 8 : unités 7.", "d": {"U": 7}}, {"t": "Trois chiffres différents, non nuls, de somme 7 : la seule possibilité est 4, 2 et 1.", "d": {}}, {"t": "Le plus grand pour les dixièmes, le plus petit pour les millièmes.", "d": {"d": 4, "c": 2, "m": 1}}]}, {"fmt": "CDU,dc", "steps": [{"t": "Produit nul : un des deux chiffres après la virgule est 0.", "d": {}}, {"t": "Les centièmes ne sont pas nuls : dixièmes 0, et comme la somme vaut 7, centièmes 7.", "d": {"d": 0, "c": 7}}, {"t": "Unités : 7 − 1 = 6.", "d": {"U": 6}}, {"t": "Centaines : la moitié des unités, 6 ÷ 2 = 3.", "d": {"C": 3}}, {"t": "Dizaines : 6 − 3 = 3.", "d": {"D": 3}}]}];
+const REP = ["48,45", "396,03", "105,765", "0,952", "945,15", "60,24", "459,36", "262,262", "7,421", "336,07"];
+const NOMS = {"C": "centaines", "D": "dizaines", "U": "unités", "d": "dixièmes", "c": "centièmes", "m": "millièmes"};
+const etat = DATA.map(() => 0), timers = {};
+function build(i) {
+  const b = document.getElementById('boxes' + i); b.innerHTML = '';
+  for (const ch of DATA[i].fmt) {
+    if (ch === ',') { const v = document.createElement('div'); v.className = 'virgule'; v.textContent = ','; b.appendChild(v); continue; }
+    const d = document.createElement('div'); d.className = 'box';
+    d.innerHTML = '<span class="lab">' + NOMS[ch] + '</span><span class="val" data-p="' + ch + '"></span>';
+    b.appendChild(d);
+  }
+  const r = document.createElement('div'); r.className = 'rep'; r.id = 'rep' + i;
+  document.getElementById('steps' + i).after(r);
+}
+function renderStep(i, n) {
+  etat[i] = n;
+  const st = DATA[i].steps, vals = {}, last = n > 0 ? st[n - 1].d : {};
+  for (let k = 0; k < n; k++) Object.assign(vals, st[k].d);
+  document.querySelectorAll('#boxes' + i + ' .val').forEach(v => {
+    const p = v.dataset.p; v.textContent = (p in vals) ? vals[p] : '';
+    v.classList.toggle('new', p in last);
+  });
+  const ol = document.getElementById('steps' + i); ol.innerHTML = '';
+  for (let k = 0; k < n; k++) { const li = document.createElement('li'); li.textContent = st[k].t; if (k === n - 1) li.className = 'last'; ol.appendChild(li); }
+  document.getElementById('rep' + i).textContent = n === st.length ? 'Je suis ' + REP[i] + '.' : '';
+  document.getElementById('prev' + i).disabled = n === 0;
+  document.getElementById('next' + i).disabled = n === st.length;
+}
+function nextStep(i) { if (etat[i] < DATA[i].steps.length) renderStep(i, etat[i] + 1); if (etat[i] === DATA[i].steps.length) stopAuto(i); }
+function prevStep(i) { stopAuto(i); if (etat[i] > 0) renderStep(i, etat[i] - 1); }
+function stopAuto(i) { if (timers[i]) { clearInterval(timers[i]); delete timers[i]; } const b = document.getElementById('auto' + i); b.classList.remove('on'); b.textContent = '⏵ Automatique'; }
+function toggleAuto(i) {
+  if (timers[i]) return stopAuto(i);
+  if (etat[i] === DATA[i].steps.length) renderStep(i, 0);
+  const b = document.getElementById('auto' + i); b.classList.add('on'); b.textContent = '⏸ Pause';
+  nextStep(i); timers[i] = setInterval(() => nextStep(i), 1800);
+}
+function resetAnimation(i) { stopAuto(i); renderStep(i, 0); }
+DATA.forEach((_, i) => { build(i); renderStep(i, 0); });
+</script>
+</body></html>
