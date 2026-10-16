@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interrogation - Nombres décimaux - Sujet</title>
+<style>
+  :root{ --rouge:#c0392b; --bleu:#2980b9; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; }
+  .page{ max-width:800px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:36px 44px 44px; }
+  .entete{ border:2px solid #333; border-radius:8px; padding:12px 16px; line-height:2; margin-bottom:10px; font-size:0.95em; }
+  .entete .ligne{ display:inline-block; min-width:60px; border-bottom:1px solid #333; margin-left:4px; }
+  h2.exo{ font-size:1.1em; color:var(--bleu); text-decoration:underline; margin:20px 0 8px; }
+  p{ margin:6px 0; line-height:1.6; }
+  .ligne-ecrire{ border-bottom:1px dotted #777; height:30px; margin:2px 0; }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .grille{ display:grid; grid-template-columns:1fr 1fr; gap:4px 30px; }
+  .grille3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px 20px; }
+  .grille p, .grille3 p{ margin:4px 0; }
+  .frac{ display:inline-block; margin:0 .1em; vertical-align:middle; text-align:center; }
+  .frac > .num{ display:block; padding:0 .15em 2px; border-bottom:1px solid black; }
+  .frac > .den{ display:block; padding:2px .15em 0; }
+  .ligne-calc{ line-height:2.4; }
+  svg{ display:block; margin:6px auto; max-width:100%; height:auto; }
+  .nobreak{ break-inside:avoid; page-break-inside:avoid; }
+  .badge-correction{ display:block; margin:0 auto 14px; background:var(--rouge); color:#fff; font-weight:bold; letter-spacing:0.06em; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  @media print{
+    @page{ margin:14mm 10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:0; max-width:none; font-size:13.5px; }
+    h2.exo{ margin:10px 0 4px; }
+    p{ margin:3px 0; line-height:1.45; }
+    .entete{ padding:6px 14px; margin-bottom:4px; }
+  }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+  <div class="entete">
+    Nom &ndash; Prénom : <span class="ligne" style="min-width:260px;"></span>
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 1 : rang des chiffres.</h2>
+  <p>On considère le nombre <b>2 739,468</b>. Quel est :</p>
+  <div class="grille">
+    <p>1. le chiffre des centièmes ? ……………</p>
+    <p>2. le chiffre des centaines ? ……………</p>
+    <p>3. le nombre de dixièmes ? ……………</p>
+    <p>4. le nombre de dizaines ? ……………</p>
+  </div>
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 2 : différentes écritures.</h2>
+  <p>Compléter.</p>
+  <div class="grille ligne-calc">
+    <p>a. 8,57 = <span class="frac"><span class="num">………</span><span class="den">100</span></span></p>
+    <p>b. <span class="frac"><span class="num">4 093</span><span class="den">1 000</span></span> = ……………</p>
+    <p>c. 15 + <span class="frac"><span class="num">3</span><span class="den">10</span></span> + <span class="frac"><span class="num">6</span><span class="den">100</span></span> = ……………</p>
+    <p>d. (2 × 10) + (5 × 1) + (7 × 0,01) = ……………</p>
+  </div>
+  <p>e. 3 dizaines, 8 dixièmes et 2 millièmes = ……………</p>
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 3 : comparer et ranger.</h2>
+  <p>1. Compléter avec &lt;, &gt; ou =.</p>
+  <div class="grille3">
+    <p>a. 15,8 … 15,63</p>
+    <p>b. 4,07 … 4,7</p>
+    <p>c. 120,1 … 98,99</p>
+    <p>d. 6,30 … 6,3</p>
+    <p>e. 0,58 … 0,6</p>
+    <p>f. 9,354 … 9,345</p>
+  </div>
+  <p>2. Ranger dans l'ordre croissant : 7,2 ; 7,02 ; 72 ; 7,22 ; 7,202</p>
+  <div class="ligne-ecrire"></div>
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 4 : encadrer et intercaler.</h2>
+  <p>1. Encadrer chaque nombre comme demandé.</p>
+  <div class="grille3">
+    <p>a. à l'unité :<br>……… &lt; 23,48 &lt; ………</p>
+    <p>b. au dixième :<br>……… &lt; 5,317 &lt; ………</p>
+    <p>c. au centième :<br>……… &lt; 0,684 &lt; ………</p>
+  </div>
+  <p>2. Intercaler un nombre.</p>
+  <div class="grille">
+    <p>d. 8,4 &lt; ……… &lt; 8,5</p>
+    <p>e. 3 &lt; ……… &lt; 3,1</p>
+  </div>
+  
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 5 : demi-droite graduée.</h2>
+  <p>1. Donner l'abscisse des points A et B.</p>
+  <div class="ligne-ecrire"></div>
+  <p>2. Placer les points C(1,4) et D(2,9).</p>
+  <svg width="700" height="110" viewBox="0 0 700 110"><line x1="40" y1="60" x2="680" y2="60" stroke="#000" stroke-width="2"/><line x1="40.0" y1="50" x2="40.0" y2="70" stroke="#000" stroke-width="2"/><text x="40.0" y="90" font-size="16" text-anchor="middle">O</text><line x1="60.0" y1="54" x2="60.0" y2="66" stroke="#000" stroke-width="1"/><line x1="80.0" y1="54" x2="80.0" y2="66" stroke="#000" stroke-width="1"/><line x1="100.0" y1="54" x2="100.0" y2="66" stroke="#000" stroke-width="1"/><line x1="120.0" y1="54" x2="120.0" y2="66" stroke="#000" stroke-width="1"/><line x1="140.0" y1="54" x2="140.0" y2="66" stroke="#000" stroke-width="1"/><line x1="160.0" y1="54" x2="160.0" y2="66" stroke="#000" stroke-width="1"/><line x1="180.0" y1="54" x2="180.0" y2="66" stroke="#000" stroke-width="1"/><line x1="200.0" y1="54" x2="200.0" y2="66" stroke="#000" stroke-width="1"/><line x1="220.0" y1="54" x2="220.0" y2="66" stroke="#000" stroke-width="1"/><line x1="240.0" y1="50" x2="240.0" y2="70" stroke="#000" stroke-width="2"/><text x="240.0" y="90" font-size="16" text-anchor="middle">1</text><line x1="260.0" y1="54" x2="260.0" y2="66" stroke="#000" stroke-width="1"/><line x1="280.0" y1="54" x2="280.0" y2="66" stroke="#000" stroke-width="1"/><line x1="300.0" y1="54" x2="300.0" y2="66" stroke="#000" stroke-width="1"/><line x1="320.0" y1="54" x2="320.0" y2="66" stroke="#000" stroke-width="1"/><line x1="340.0" y1="54" x2="340.0" y2="66" stroke="#000" stroke-width="1"/><line x1="360.0" y1="54" x2="360.0" y2="66" stroke="#000" stroke-width="1"/><line x1="380.0" y1="54" x2="380.0" y2="66" stroke="#000" stroke-width="1"/><line x1="400.0" y1="54" x2="400.0" y2="66" stroke="#000" stroke-width="1"/><line x1="420.0" y1="54" x2="420.0" y2="66" stroke="#000" stroke-width="1"/><line x1="440.0" y1="50" x2="440.0" y2="70" stroke="#000" stroke-width="2"/><text x="440.0" y="90" font-size="16" text-anchor="middle">2</text><line x1="460.0" y1="54" x2="460.0" y2="66" stroke="#000" stroke-width="1"/><line x1="480.0" y1="54" x2="480.0" y2="66" stroke="#000" stroke-width="1"/><line x1="500.0" y1="54" x2="500.0" y2="66" stroke="#000" stroke-width="1"/><line x1="520.0" y1="54" x2="520.0" y2="66" stroke="#000" stroke-width="1"/><line x1="540.0" y1="54" x2="540.0" y2="66" stroke="#000" stroke-width="1"/><line x1="560.0" y1="54" x2="560.0" y2="66" stroke="#000" stroke-width="1"/><line x1="580.0" y1="54" x2="580.0" y2="66" stroke="#000" stroke-width="1"/><line x1="600.0" y1="54" x2="600.0" y2="66" stroke="#000" stroke-width="1"/><line x1="620.0" y1="54" x2="620.0" y2="66" stroke="#000" stroke-width="1"/><line x1="640.0" y1="50" x2="640.0" y2="70" stroke="#000" stroke-width="2"/><text x="640.0" y="90" font-size="16" text-anchor="middle">3</text><line x1="154.0" y1="54" x2="166.0" y2="66" stroke="#000" stroke-width="2.5"/><line x1="154.0" y1="66" x2="166.0" y2="54" stroke="#000" stroke-width="2.5"/><text x="160.0" y="42" font-size="17" font-weight="bold" fill="#000" text-anchor="middle">A</text><line x1="493.99999999999994" y1="54" x2="505.99999999999994" y2="66" stroke="#000" stroke-width="2.5"/><line x1="493.99999999999994" y1="66" x2="505.99999999999994" y2="54" stroke="#000" stroke-width="2.5"/><text x="499.99999999999994" y="42" font-size="17" font-weight="bold" fill="#000" text-anchor="middle">B</text></svg>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interrogation - Écriture fractionnaire - Correction</title>
+<style>
+  :root{ --rouge:#c0392b; --bleu:#2980b9; --gris:#7f8c8d; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; }
+  .page{ max-width:800px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:36px 44px 44px; }
+  .entete{ border:2px solid #333; border-radius:8px; padding:8px 16px; line-height:2; margin-bottom:8px; font-size:0.95em; display:flex; justify-content:space-between; }
+  .entete .ligne{ display:inline-block; min-width:60px; border-bottom:1px solid #333; margin-left:4px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); text-decoration:underline; margin:16px 0 6px; }
+  .bareme{ float:right; font-weight:normal; text-decoration:none; color:var(--gris); font-size:0.85em; }
+  p{ margin:4px 0; line-height:1.6; }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .b{ color:var(--rouge); font-weight:bold; }
+  .grille2{ display:grid; grid-template-columns:1fr 1fr; gap:4px 24px; }
+  .grille3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px 18px; }
+  .grille4{ display:grid; grid-template-columns:repeat(4,1fr); gap:4px 14px; }
+  .calc{ line-height:2.3; break-inside:avoid; }
+  .esp{ }
+  .ligne-ecrire{ border-bottom:1px dotted #777; height:28px; }
+  .frac{ display:inline-block; margin:0 .12em; vertical-align:middle; text-align:center; line-height:1.25; }
+  .frac > .num{ display:block; padding:0 .15em 2px; border-bottom:1px solid black; }
+  .frac > .den{ display:block; padding:2px .15em 0; }
+  .concl{ margin-top:2px; }
+  .nobreak{ break-inside:avoid; page-break-inside:avoid; }
+  .badge-correction{ display:block; margin:0 auto 14px; background:var(--rouge); color:#fff; font-weight:bold; letter-spacing:0.06em; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  @media print{
+    @page{ margin:14mm 10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:0; max-width:none; font-size:13.5px; }
+    h2.exo{ margin:10px 0 4px; }
+    .badge-correction{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+  <div class="badge-correction">CORRECTION</div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 1 : signe d'une fraction.<span class="bareme">2 pts</span></h2>
+  <p>Pour chaque fraction, dire si elle est positive ou négative.</p>
+  <div class="grille4 calc">
+    <div><b>a.</b> <span class="frac"><span class="num">12</span><span class="den">−5</span></span> : <span class="rep">négative</span></div>
+    <div><b>b.</b> <span class="frac"><span class="num">−7</span><span class="den">−3</span></span> : <span class="rep">positive</span></div>
+    <div><b>c.</b> −<span class="frac"><span class="num">6</span><span class="den">11</span></span> : <span class="rep">négative</span></div>
+    <div><b>d.</b> <span class="frac"><span class="num">−2</span><span class="den">−9</span></span> : <span class="rep">positive</span></div>
+  </div>
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 2 : question de cours.<span class="bareme">2 pts</span></h2>
+  <p>Donner la liste de tous les nombres premiers inférieurs à 30.</p>
+  <p><span class="rep">2 ; 3 ; 5 ; 7 ; 11 ; 13 ; 17 ; 19 ; 23 ; 29</span></p>
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 3 : décomposer et simplifier.<span class="bareme">3 pts</span></h2>
+  <p>1. Décomposer 90 et 84 en produit de facteurs premiers.</p>
+  <div class="grille2">
+    <div class="calc"><div><b>a.</b> 90</div><div>= 2 × 45</div><div>= 2 × 3 × 15</div><div>= <span class="rep">2 × 3 × 3 × 5</span></div></div>
+    <div class="calc"><div><b>b.</b> 84</div><div>= 2 × 42</div><div>= 2 × 2 × 21</div><div>= <span class="rep">2 × 2 × 3 × 7</span></div></div>
+  </div>
+  <p>2. En déduire la forme irréductible de <span class="frac"><span class="num">84</span><span class="den">90</span></span>.</p>
+  <div class="calc"><div><b></b> <span class="frac"><span class="num">84</span><span class="den">90</span></span></div><div>= <span class="frac"><span class="num"><span class="b">2</span> × 2 × <span class="b">3</span> × 7</span><span class="den"><span class="b">2</span> × <span class="b">3</span> × 3 × 5</span></span></div><div>= <span class="frac"><span class="num">14</span><span class="den">15</span></span></div></div>
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 4 : additions et soustractions.<span class="bareme">3 pts</span></h2>
+  <p>Calculer et donner le résultat sous forme d'une fraction irréductible.</p>
+  <div class="grille2">
+    <div class="calc"><div><b>a.</b> <span class="frac"><span class="num">3</span><span class="den">4</span></span> + <span class="frac"><span class="num">5</span><span class="den">8</span></span></div><div>= <span class="frac"><span class="num">3 × 2</span><span class="den">4 × 2</span></span> + <span class="frac"><span class="num">5</span><span class="den">8</span></span></div><div>= <span class="frac"><span class="num">6</span><span class="den">8</span></span> + <span class="frac"><span class="num">5</span><span class="den">8</span></span></div><div>= <span class="frac"><span class="num">11</span><span class="den">8</span></span></div></div>
+    <div class="calc"><div><b>b.</b> <span class="frac"><span class="num">3</span><span class="den">10</span></span> − <span class="frac"><span class="num">7</span><span class="den">15</span></span></div><div>= <span class="frac"><span class="num">3 × 3</span><span class="den">10 × 3</span></span> − <span class="frac"><span class="num">7 × 2</span><span class="den">15 × 2</span></span></div><div>= <span class="frac"><span class="num">9</span><span class="den">30</span></span> − <span class="frac"><span class="num">14</span><span class="den">30</span></span></div><div>= −<span class="frac"><span class="num">5</span><span class="den">30</span></span></div><div>= −<span class="frac"><span class="num"><span class="b">5</span></span><span class="den">2 × 3 × <span class="b">5</span></span></span></div><div>= −<span class="frac"><span class="num">1</span><span class="den">6</span></span></div></div>
+  </div>
+  </div>
+
+  <div class="nobreak">
+  <h2 class="exo">Exercice n° 5 : multiplications.<span class="bareme">3 pts</span></h2>
+  <p>Calculer et donner le résultat sous forme d'une fraction irréductible.</p>
+  <div class="grille2">
+    <div class="calc"><div><b>a.</b> <span class="frac"><span class="num">4</span><span class="den">9</span></span> × <span class="frac"><span class="num">3</span><span class="den">8</span></span></div><div>= <span class="frac"><span class="num">4 × 3</span><span class="den">9 × 8</span></span></div><div>= <span class="frac"><span class="num"><span class="b">2</span> × <span class="b">2</span> × <span class="b">3</span></span><span class="den"><span class="b">3</span> × 3 × <span class="b">2</span> × <span class="b">2</span> × 2</span></span></div><div>= <span class="frac"><span class="num">1</span><span class="den">6</span></span></div></div>
+    <div class="calc"><div><b>b.</b> −<span class="frac"><span class="num">7</span><span class="den">4</span></span> × (−<span class="frac"><span class="num">8</span><span class="den">21</span></span>)</div><div>= <span class="frac"><span class="num">7 × 8</span><span class="den">4 × 21</span></span></div><div>= <span class="frac"><span class="num"><span class="b">7</span> × <span class="b">2</span> × <span class="b">2</span> × 2</span><span class="den"><span class="b">2</span> × <span class="b">2</span> × 3 × <span class="b">7</span></span></span></div><div>= <span class="frac"><span class="num">2</span><span class="den">3</span></span></div></div>
+  </div>
+  </div>
+
+</div>
+</body>
+</html>
