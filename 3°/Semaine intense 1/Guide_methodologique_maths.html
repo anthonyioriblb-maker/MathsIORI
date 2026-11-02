@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guide méthodologique – Mathématiques DNB</title>
+<style>
+  @font-face{ font-family:'LettresMath'; src:local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('LatinModernMath-Regular'); unicode-range:U+1D400-1D7FF, U+210E; }
+  :root{ --bleu:#2980b9; --vert:#1e8449; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'LettresMath','Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; line-height:1.45; }
+  .page{ max-width:820px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:28px 40px 32px; }
+  h1{ font-size:1.35em; text-align:center; margin-bottom:10px; }
+  h2{ font-size:1.1em; color:var(--bleu); border-bottom:2px solid var(--bleu); padding-bottom:2px; margin:18px 0 8px; }
+  h3{ font-size:1em; margin:12px 0 4px; }
+  p{ margin:5px 0; }
+  ul, ol{ padding-left:24px; margin:5px 0; }
+  li{ margin:2px 0; }
+  table{ width:100%; border-collapse:collapse; margin:8px 0; font-size:.95em; }
+  th, td{ border:1px solid #555; padding:5px 8px; text-align:left; vertical-align:top; }
+  th{ background:#e7f1fb; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .calc{ margin:4px 0 4px 18px; line-height:1.9; }
+  .concl{ color:var(--vert); font-weight:bold; }
+  .modele{ border-left:3px solid var(--bleu); padding:2px 0 2px 12px; margin:6px 0 10px; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; line-height:1.25; }
+  .frac > span:first-child{ border-bottom:1.5px solid #000; padding:0 3px; }
+  .sqrt{ position:relative; display:inline-block; border-top:2px solid black; margin-left:.7em; padding-left:.2em; padding-right:.1em; }
+  .sqrt:before{ content:" "; position:absolute; display:inline-block; left:-.65em; height:56%; width:.6em; border-right:2px solid black; border-bottom:2.5px solid black; transform-origin:top right; transform:rotate(55deg) skew(50deg); }
+  .formulaire{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
+  .formulaire td{ vertical-align:middle; }
+  .bilan td{ height:26px; }
+  .bilan td:not(:first-child), .bilan th:not(:first-child){ width:16%; text-align:center; }
+  .lignes div{ border-bottom:1px solid #888; height:26px; }
+  .toolbar{ max-width:820px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{
+    @page{ margin:14mm 10mm; }
+    body{ background:#fff; padding:0; font-size:10.5pt; line-height:1.35; }
+    .page{ box-shadow:none; border-radius:0; padding:0; max-width:none; }
+    h2{ break-after:avoid; margin-top:12px; }
+    h3{ break-after:avoid; }
+    .modele, tr, .formulaire{ break-inside:avoid; }
+    .saut{ break-before:page; }
+    .toolbar{ display:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+
+<h1>Guide méthodologique – Mathématiques DNB</h1>
+
+<h2>L'épreuve en bref</h2>
+<p>2 heures, notée sur 20 points, en deux parties.</p>
+<table>
+  <tr><th></th><th>Partie 1 – Automatismes</th><th>Partie 2 – Raisonnement et résolution de problèmes</th></tr>
+  <tr><td>Durée</td><td>20 min</td><td>1 h 40</td></tr>
+  <tr><td>Points</td><td>6</td><td>14 (dont 2 pour la rédaction)</td></tr>
+  <tr><td>Calculatrice</td><td>Interdite</td><td>Autorisée</td></tr>
+  <tr><td>Contenu</td><td>9 questions courtes</td><td>Plusieurs exercices indépendants, souvent en contexte (3 exercices de 4 points dans les sujets de référence)</td></tr>
+  <tr><td>Ce qui est attendu</td><td>Le résultat</td><td>La démarche, les justifications, la rédaction</td></tr>
+</table>
+<p>Sujet de référence : semaine intense 1, passé en trois fois : partie 1 le lundi 16 novembre (20 min), exercices 1 et 2 de la partie 2 le mardi 17 novembre (1 h), exercice 3 le jeudi 19 novembre (40 min).</p>
+
+<h2>Partie 1 – Automatismes</h2>
+<p>Une question = environ 2 minutes. On répond vite, sans justifier, mais sans se tromper.</p>
+<ol>
+  <li>Lire toute la question, puis repérer ce qui est demandé (unité, forme du résultat).</li>
+  <li>Calculer de tête ; poser un calcul au brouillon si besoin.</li>
+  <li>Vérifier l'ordre de grandeur avant d'écrire.</li>
+  <li>Bloqué plus de 2 minutes : passer et revenir à la fin.</li>
+  <li>Ne jamais laisser de réponse vide.</li>
+</ol>
+<p>Pièges fréquents :</p>
+<ul>
+  <li>priorités opératoires et signes : dans −3 + 4 × (−2) − (−5), on commence par la multiplication, et soustraire −5 revient à ajouter 5 ;</li>
+  <li>puissances de 10 : 10<sup>3</sup> = 1&nbsp;000 et 10<sup>−1</sup> = 0,1 ;</li>
+  <li>comparer des fractions et des décimaux : écrire chaque nombre en écriture décimale avant de classer, et vérifier le sens demandé (croissant ou décroissant) ;</li>
+  <li>fractions : réduire au même dénominateur avant d'additionner ou de soustraire, puis donner la fraction irréductible ;</li>
+  <li>développer : 4(𝑥 − 3) = 4 × 𝑥 − 4 × 3, attention au signe devant la parenthèse ;</li>
+  <li>équations : vérifier la solution en la remplaçant dans l'équation ;</li>
+  <li>pourcentages : une remise de 25&nbsp;% revient à multiplier par 0,75 ; ou alors, de tête, 10&nbsp;% c'est diviser par 10, et 25&nbsp;% c'est deux fois 10&nbsp;% plus la moitié de 10&nbsp;%. Exemple : 25&nbsp;% de 40 € → 10&nbsp;% = 4 €, donc 25&nbsp;% = 4 + 4 + 2 = 10 €, et le pull coûte 40 − 10 = 30 € ;</li>
+  <li>conversions d'unités : 1 h = 60 min, 1 m² = 10&nbsp;000 cm², 1 m³ = 1&nbsp;000 dm³ = 1&nbsp;000 L.</li>
+</ul>
+
+<h2>Partie 2 – Résolution de problèmes</h2>
+<p>Les exercices sont indépendants et les questions souvent aussi : un blocage ne doit pas faire abandonner la suite.</p>
+<ol>
+  <li><b>Lire</b> tout l'exercice une fois, sans calculer.</li>
+  <li><b>Surligner</b> les données utiles et la question posée.</li>
+  <li><b>Faire un schéma</b> à main levée, codé, en géométrie.</li>
+  <li><b>Choisir l'outil</b> : quelle propriété, quelle formule ? (voir la boîte à outils)</li>
+  <li><b>Rédiger</b> : données, outil, calcul, conclusion.</li>
+  <li><b>Contrôler</b> : le résultat est-il réaliste ? l'unité est-elle la bonne ?</li>
+</ol>
+<p>Une question non aboutie rapporte des points si la démarche est écrite : toute trace de recherche compte.</p>
+<p>Les questions en <b>gras</b> évaluent aussi la maîtrise de la langue : y répondre par des phrases complètes, avec le vocabulaire mathématique (théorème, réciproque, développer, solution…).</p>
+
+<h2>Bien rédiger</h2>
+<p>La rédaction vaut 2 points sur 20 : une réponse juste mais non justifiée ne rapporte pas tout. On écrit une égalité par ligne et on termine toujours par une phrase de conclusion avec l'unité. Les modèles ci-dessous viennent de la correction de la semaine intense 1.</p>
+
+<h3>Calculer une longueur dans un triangle rectangle</h3>
+<div class="modele">
+  <p>Le triangle ABC est rectangle en B, d'après le théorème de Pythagore on a :</p>
+  <div class="calc">
+    <div>AC² = AB² + BC²</div>
+    <div>AC² = 6² + 0,3²</div>
+    <div>AC² = 36 + 0,09</div>
+    <div>AC² = 36,09</div>
+    <div>AC = <span class="sqrt">36,09</span> ≈ 6,01</div>
+  </div>
+  <p class="concl">La rampe mesure environ 6,01 m.</p>
+</div>
+
+<h3>Prouver qu'un triangle est rectangle</h3>
+<div class="modele">
+  <p>Dans le triangle EFG le côté le plus long est [EG].</p>
+  <p>D'une part, EG² = 12,5² = 156,25</p>
+  <p>D'autre part, EF² + FG² = 7,5² + 10² = 56,25 + 100 = 156,25</p>
+  <p class="concl">Ainsi EF² + FG² = EG², d'après la réciproque du théorème de Pythagore, le triangle EFG est rectangle en F.</p>
+</div>
+
+<h3>Calculer une longueur avec des droites parallèles</h3>
+<div class="modele">
+  <p>Les droites (BM) et (CN) sont sécantes en A.<br>Les droites (MN) et (BC) sont parallèles.<br>D'après le théorème de Thalès :</p>
+  <div class="calc">
+    <div><span class="frac"><span>AM</span><span>AB</span></span> = <span class="frac"><span>AN</span><span>AC</span></span> = <span class="frac"><span>MN</span><span>BC</span></span> soit <span class="frac"><span>2</span><span>6</span></span> = <span class="frac"><span>3</span><span>AC</span></span></div>
+    <div>D'où AC = <span class="frac"><span>3 × 6</span><span>2</span></span> = <span class="frac"><span>18</span><span>2</span></span> = 9</div>
+  </div>
+  <p class="concl">[AC] mesure 9 cm.</p>
+</div>
+
+<h3>Démontrer avec le calcul littéral</h3>
+<div class="modele">
+  <p>On appelle 𝑥 le nombre de départ, on suit le programme avec des flèches, puis on développe une étape par ligne :</p>
+  <div class="calc">
+    <div>(𝑥 + 2)(𝑥 + 2) − 𝑥²</div>
+    <div>= 𝑥 × 𝑥 + 𝑥 × 2 + 2 × 𝑥 + 2 × 2 − 𝑥²</div>
+    <div>= 𝑥² + 2𝑥 + 2𝑥 + 4 − 𝑥²</div>
+    <div>= 4𝑥 + 4</div>
+  </div>
+  <p class="concl">Quel que soit le nombre de départ 𝑥, le résultat est 4𝑥 + 4 : l'affirmation est vraie.</p>
+</div>
+
+<h3>Résoudre une équation</h3>
+<div class="modele">
+  <div class="calc">
+    <div>4𝑥 + 4 = 6𝑥 + 10</div>
+    <div>4𝑥 − 6𝑥 = 10 − 4</div>
+    <div>−2𝑥 = 6</div>
+    <div>𝑥 = <span class="frac"><span>6</span><span>−2</span></span></div>
+    <div>𝑥 = −3</div>
+  </div>
+  <p class="concl">Il faut choisir −3.</p>
+</div>
+
+<p>À éviter : un résultat seul, un « = » entre deux grandeurs différentes, un arrondi sans le dire (écrire « ≈ » ou « arrondi au centième »), un nombre de sacs ou de pots non entier (arrondir à l'unité supérieure).</p>
+
+<h2>Gérer son temps</h2>
+<p>En partie 2, compter environ 7 minutes par point d'exercice.</p>
+<table>
+  <tr><th>Moment</th><th>Durée</th></tr>
+  <tr><td>Partie 1 : 9 automatismes</td><td>20 min</td></tr>
+  <tr><td>Partie 2 : lecture du sujet</td><td>5 min</td></tr>
+  <tr><td>Partie 2 : exercices</td><td>Environ 7 min par point (28 min pour un exercice de 4 points)</td></tr>
+  <tr><td>Partie 2 : relecture, questions laissées de côté</td><td>10 min</td></tr>
+</table>
+<p>Commencer par l'exercice où l'on se sent le plus à l'aise, en indiquant clairement son numéro sur la copie.</p>
+
+<h2>Boîte à outils</h2>
+<table>
+  <tr><th>Je cherche…</th><th>J'utilise…</th></tr>
+  <tr><td>Une longueur dans un triangle rectangle</td><td>Théorème de Pythagore</td></tr>
+  <tr><td>À prouver qu'un triangle est rectangle (ou non)</td><td>Réciproque (ou contraposée) de Pythagore</td></tr>
+  <tr><td>Une longueur avec des droites parallèles</td><td>Théorème de Thalès</td></tr>
+  <tr><td>À prouver que deux droites sont parallèles</td><td>Réciproque de Thalès</td></tr>
+  <tr><td>Un angle ou une longueur avec un angle (triangle rectangle)</td><td>cos, sin, tan</td></tr>
+  <tr><td>Une longueur dans une figure agrandie ou réduite</td><td>Coefficient k (aires × k², volumes × k³)</td></tr>
+  <tr><td>Une quatrième proportionnelle</td><td>Coefficient de proportionnalité</td></tr>
+  <tr><td>Un prix après une hausse ou une baisse de t %</td><td>Multiplier par 1 + t % ou 1 − t % (remise de 25 % : × 0,75)</td></tr>
+  <tr><td>Une vitesse, une distance, une durée</td><td>d = v × t (durée en heures décimales)</td></tr>
+  <tr><td>Une aire</td><td>Le formulaire des aires (ci-dessous), avec toutes les longueurs dans la même unité</td></tr>
+  <tr><td>Un volume</td><td>Le formulaire des volumes (ci-dessous), avec toutes les longueurs dans la même unité</td></tr>
+  <tr><td>Une probabilité</td><td><span class="frac"><span>nombre de cas favorables</span><span>nombre de cas possibles</span></span></td></tr>
+  <tr><td>À résumer une série</td><td>Moyenne, médiane, étendue</td></tr>
+  <tr><td>Une valeur inconnue</td><td>Une équation : choisir l'inconnue, résoudre, conclure</td></tr>
+  <tr><td>À montrer qu'un résultat est toujours vrai</td><td>Le calcul littéral : appeler 𝑥 le nombre, développer, réduire, conclure par une phrase</td></tr>
+  <tr><td>Une aire de faces (peinture, revêtement)</td><td>Rectangle : L × l, puis additionner les faces concernées</td></tr>
+  <tr><td>Image ou antécédent</td><td>Le tableau de valeurs, le graphique ou l'expression de 𝑓</td></tr>
+  <tr><td>Un partage en paquets identiques</td><td>Décomposition en facteurs premiers, diviseurs communs</td></tr>
+</table>
+
+<h2>Formulaire : aires, volumes, probabilité</h2>
+<p>Ces formules sont à connaître par cœur : elles ne sont pas données dans le sujet.</p>
+<div class="formulaire">
+<table>
+  <tr><th colspan="2">Aires</th></tr>
+  <tr><td>Carré de côté 𝑐</td><td>𝑐 × 𝑐 = 𝑐²</td></tr>
+  <tr><td>Rectangle</td><td>𝐿 × 𝑙</td></tr>
+  <tr><td>Triangle</td><td><span class="frac"><span>base × hauteur</span><span>2</span></span></td></tr>
+  <tr><td>Parallélogramme</td><td>base × hauteur</td></tr>
+  <tr><td>Disque de rayon 𝑟</td><td>π × 𝑟²</td></tr>
+  <tr><td>Périmètre d'un cercle de rayon 𝑟</td><td>2 × π × 𝑟</td></tr>
+</table>
+<table>
+  <tr><th colspan="2">Volumes</th></tr>
+  <tr><td>Cube d'arête 𝑐</td><td>𝑐 × 𝑐 × 𝑐 = 𝑐³</td></tr>
+  <tr><td>Pavé droit</td><td>𝐿 × 𝑙 × ℎ</td></tr>
+  <tr><td>Prisme droit</td><td>aire de la base × ℎ</td></tr>
+  <tr><td>Cylindre de rayon 𝑟</td><td>π × 𝑟² × ℎ</td></tr>
+  <tr><td>Pyramide</td><td><span class="frac"><span>aire de la base × ℎ</span><span>3</span></span></td></tr>
+  <tr><td>Cône de rayon 𝑟</td><td><span class="frac"><span>π × 𝑟² × ℎ</span><span>3</span></span></td></tr>
+  <tr><td>Boule de rayon 𝑟</td><td><span class="frac"><span>4</span><span>3</span></span> × π × 𝑟³</td></tr>
+</table>
+</div>
+<p><b>Probabilité</b> (quand toutes les issues ont la même chance de se produire) : &nbsp; 𝑃 = <span class="frac"><span>nombre de cas favorables</span><span>nombre de cas possibles</span></span></p>
+<p>Unités : une aire s'exprime en cm², m²… ; un volume en cm³, m³… ; 1 dm³ = 1 L.</p>
+
+<h2 class="saut">Mon bilan</h2>
+<p>À remplir après chaque correction : ✔ je maîtrise, ~ à consolider, ✘ à retravailler.</p>
+<table class="bilan">
+  <tr><th>Compétence</th><th>Novembre</th><th>Janvier</th><th>Mai</th></tr>
+  <tr><td>Automatismes sans calculatrice</td><td></td><td></td><td></td></tr>
+  <tr><td>Proportionnalité, pourcentages</td><td></td><td></td><td></td></tr>
+  <tr><td>Grandeurs, unités, conversions</td><td></td><td></td><td></td></tr>
+  <tr><td>Géométrie (Pythagore, Thalès, trigonométrie)</td><td></td><td></td><td></td></tr>
+  <tr><td>Aires et volumes</td><td></td><td></td><td></td></tr>
+  <tr><td>Fonctions, lecture graphique</td><td></td><td></td><td></td></tr>
+  <tr><td>Calcul littéral, équations</td><td></td><td></td><td></td></tr>
+  <tr><td>Statistiques, probabilités</td><td></td><td></td><td></td></tr>
+  <tr><td>Arithmétique</td><td></td><td></td><td></td></tr>
+  <tr><td>Rédaction, justifications</td><td></td><td></td><td></td></tr>
+  <tr><td>Gestion du temps</td><td></td><td></td><td></td></tr>
+</table>
+<p>Ce que je retravaille avant la prochaine semaine intense :</p>
+<div class="lignes"><div></div><div></div><div></div></div>
+
+</div>
+</body>
+</html>

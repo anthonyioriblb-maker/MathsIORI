@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Semaine intense 1 - Mathématiques - Sujet</title>
+<style>
+  @font-face{ font-family:'LettresMath'; src:local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('LatinModernMath-Regular'); unicode-range:U+1D400-1D7FF, U+210E; }
+  :root{ --bleu:#2980b9; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'LettresMath','Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; line-height:1.4; }
+  .page{ max-width:800px; margin:0 auto 24px; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:28px 40px 32px; }
+  h1.partie{ font-size:1.1em; border-bottom:2px solid #333; padding-bottom:4px; margin-bottom:10px; }
+  .consigne{ border:1.5px solid #333; border-radius:6px; padding:8px 12px; margin-bottom:10px; font-size:.95em; }
+  .consigne p + p{ margin-top:4px; }
+  h2.q{ font-size:1em; margin:12px 0 3px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); margin:16px 0 6px; font-weight:normal; }
+  h2.exo span{ text-decoration:underline; font-weight:bold; }
+  h2.exo em{ color:#555; font-size:.9em; }
+  .math{ text-align:center; font-size:1.15em; margin:6px 0; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; }
+  .frac > span:first-child{ border-bottom:1.5px solid #000; padding:0 3px; }
+  .frac > span{ line-height:1.25; }
+  .liste{ display:flex; justify-content:center; gap:42px; align-items:center; font-size:1.15em; margin:6px 0; }
+  ol.qs{ padding-left:26px; margin-top:6px; }
+  ol.qs > li{ margin:4px 0; }
+  ol.sub{ list-style:lower-alpha; padding-left:24px; margin-top:2px; }
+  ol.sub > li{ margin:2px 0; }
+  .txt-fig{ display:grid; grid-template-columns:1fr 260px; gap:16px; align-items:center; }
+  .fig{ text-align:center; margin:6px 0; }
+  .fig small{ display:block; font-style:italic; font-size:.8em; color:#444; }
+  .progs{ display:grid; grid-template-columns:1fr 1fr; border:1.5px solid #333; margin:6px 0; }
+  .progs > div{ padding:6px 12px; }
+  .progs > div + div{ border-left:1.5px solid #333; }
+  .progs ul{ padding-left:20px; }
+  table.donnees{ border-collapse:collapse; }
+  svg text{ font-family:Arial, sans-serif; }
+  b{ font-weight:bold; }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; margin:0; max-width:none; }
+    .page + .page{ break-before:page; }
+    h2.exo, h2.q{ break-after:avoid; }
+    .txt-fig, .fig, .progs, ol.qs > li{ break-inside:avoid; }
+    .toolbar{ display:none !important; }
+    body{ font-size:10.5pt; line-height:1.3; }
+    h2.q{ margin:7px 0 1px; }
+    .math, .liste{ margin:2px 0; }
+    h2.exo{ margin:10px 0 4px; }
+    ol.qs > li{ margin:2px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+
+<!-- ================= PARTIE 1 ================= -->
+<div class="page">
+  <h1 class="partie">Partie 1 – Automatismes et applications directes – 6 points – 20 minutes</h1>
+  <div class="consigne">
+    <p>Pour chaque question, recopier sur la copie son numéro et indiquer la réponse correspondante.</p>
+    <p>Pour cette partie, aucune justification n’est demandée. La calculatrice n’est pas autorisée.</p>
+  </div>
+
+  <h2 class="q">Question 1</h2>
+  <p>Calculer et donner le résultat sous forme de fraction irréductible :</p>
+  <div class="math">A = <span class="frac"><span>5</span><span>6</span></span> − <span class="frac"><span>1</span><span>4</span></span></div>
+
+  <h2 class="q">Question 2</h2>
+  <p>Calculer :</p>
+  <div class="math">B = 4 × 10<sup>3</sup> + 2 × 10<sup>2</sup> + 5 × 10<sup>−1</sup></div>
+
+  <h2 class="q">Question 3</h2>
+  <p>Calculer :</p>
+  <div class="math">C = −3 + 4 × (−2) − (−5)</div>
+
+  <h2 class="q">Question 4</h2>
+  <p>Classer par ordre croissant les nombres suivants :</p>
+  <div class="liste">
+    <span class="frac"><span>3</span><span>2</span></span>
+    <span>1,45</span>
+    <span>1 + <span class="frac"><span>3</span><span>10</span></span></span>
+    <span class="frac"><span>7</span><span>5</span></span>
+  </div>
+
+  <h2 class="q">Question 5</h2>
+  <p>Déterminer la solution de l’équation :</p>
+  <div class="math">5𝑥 + 3 = 2𝑥 − 9</div>
+
+  <h2 class="q">Question 6</h2>
+  <p>Développer et réduire l’expression :</p>
+  <div class="math">D = 4(𝑥 − 3) − 2(3𝑥 + 1)</div>
+
+  <h2 class="q">Question 7</h2>
+  <p>Un pull coûte 40 euros. Quel sera son prix après une remise de 25&nbsp;% ?</p>
+
+  <h2 class="q">Question 8</h2>
+  <p>Le triangle ABC est rectangle en A, avec AB = 5&nbsp;cm et AC = 12&nbsp;cm. Déterminer la longueur BC.</p>
+
+  <h2 class="q">Question 9</h2>
+  <div class="txt-fig">
+    <div>
+      <p>Sur la figure ci-contre, le point M appartient au segment [AB], le point N appartient au segment [AC], les droites (MN) et (BC) sont parallèles.</p>
+      <p style="margin-top:6px;">Déterminer la longueur AC.</p>
+    </div>
+    <svg viewBox="0 0 260 190" width="250">
+      <line x1="70" y1="20" x2="30" y2="160" stroke="#000" stroke-width="1.4"/>
+      <line x1="70" y1="20" x2="240" y2="160" stroke="#000" stroke-width="1.4"/>
+      <line x1="30" y1="160" x2="240" y2="160" stroke="#000" stroke-width="1.4"/>
+      <line x1="56.7" y1="66.7" x2="126.7" y2="66.7" stroke="#000" stroke-width="1.4"/>
+      <text x="64" y="14" font-size="15">A</text>
+      <text x="14" y="174" font-size="15">B</text>
+      <text x="242" y="174" font-size="15">C</text>
+      <text x="38" y="70" font-size="15">M</text>
+      <text x="130" y="66" font-size="15">N</text>
+      <text x="30" y="46" font-size="12">2 cm</text>
+      <text x="8" y="118" font-size="12">4 cm</text>
+      <text x="102" y="38" font-size="12">3 cm</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ================= PARTIE 2 – 1 heure ================= -->
+<div class="page">
+  <h1 class="partie">Partie 2 – Raisonnement et résolution de problèmes – 1 heure</h1>
+  <div class="consigne">
+    <p>Dans cette partie, toutes les réponses doivent être justifiées, sauf si une indication contraire est donnée.</p>
+    <p>La clarté et la précision des raisonnements ainsi que la rédaction sont évaluées sur 2 points. La maîtrise de la langue sera plus particulièrement évaluée sur les réponses aux questions <b>en gras</b>.</p>
+    <p>Pour chaque question, si le travail n’est pas terminé, laisser tout de même une trace de la recherche ; les essais et les démarches engagées, même non aboutis, seront pris en compte dans la notation. La calculatrice est autorisée.</p>
+  </div>
+
+  <h2 class="exo"><span>Exercice 1</span> <em>(4 points)</em></h2>
+  <p>Une commune veut installer 6 bacs à fleurs identiques. L’intérieur de chaque bac a la forme d’un pavé droit dont les dimensions sont indiquées ci-dessous.</p>
+  <div class="fig">
+    <svg viewBox="0 0 300 130" width="280">
+      <g stroke="#000" stroke-width="1.4" fill="none">
+        <polyline points="40,105 220,105 220,45 40,45 40,105"/>
+        <polyline points="40,45 85,15 265,15 265,75 220,105"/>
+        <line x1="220" y1="45" x2="265" y2="15"/>
+      </g>
+      <g stroke="#000" stroke-width="1.2" stroke-dasharray="5,4" fill="none">
+        <polyline points="40,105 85,75 265,75"/>
+        <line x1="85" y1="75" x2="85" y2="15"/>
+      </g>
+      <text x="130" y="123" font-size="13">1,2 m</text>
+      <text x="248" y="102" font-size="13">50 cm</text>
+      <text x="0" y="80" font-size="13">40 cm</text>
+    </svg>
+  </div>
+  <ol class="qs">
+    <li>Calculer le volume intérieur d’un bac en m³.</li>
+    <li>Convertir ce volume en litres. On rappelle que 1&nbsp;dm³&nbsp;=&nbsp;1&nbsp;L.</li>
+    <li>On remplit chaque bac de terreau jusqu’à 5&nbsp;cm du bord. Montrer que le volume de terreau dans un bac est égal à 210&nbsp;L.</li>
+    <li>Le terreau est vendu en sacs de 50&nbsp;L, au prix de 8,90&nbsp;€ le sac. <b>Combien la commune va-t-elle dépenser en terreau pour remplir les 6 bacs ? Présenter la démarche avec des phrases claires et précises.</b></li>
+    <li>On veut peindre les quatre faces latérales extérieures de chaque bac. On considère que leurs dimensions sont les mêmes que celles de l’intérieur.
+      <ol class="sub">
+        <li>Calculer l’aire à peindre pour un bac.</li>
+        <li>Un pot de peinture permet de couvrir 5&nbsp;m². Combien de pots faut-il acheter pour peindre les 6 bacs ?</li>
+      </ol>
+    </li>
+  </ol>
+
+  <h2 class="exo"><span>Exercice 2</span> <em>(4 points)</em></h2>
+  <p>Une rampe d’accès pour fauteuil roulant est schématisée ci-dessous. Le triangle ABC est rectangle en B.</p>
+  <div class="fig">
+    <svg viewBox="0 0 340 85" width="330">
+      <polygon points="20,60 300,60 300,18" fill="none" stroke="#000" stroke-width="1.4"/>
+      <polyline points="290,60 290,50 300,50" fill="none" stroke="#000" stroke-width="1"/>
+      <text x="6" y="64" font-size="14">A</text>
+      <text x="305" y="70" font-size="14">B</text>
+      <text x="305" y="18" font-size="14">C</text>
+      <text x="150" y="76" font-size="13">6 m</text>
+      <text x="306" y="44" font-size="13">0,3 m</text>
+      <text x="140" y="32" font-size="13" transform="rotate(-8.5 140 32)">rampe</text>
+    </svg>
+    <small>Le schéma n’est pas à l’échelle.</small>
+  </div>
+  <ol class="qs">
+    <li>Calculer la longueur AC de la rampe. Arrondir au centimètre.</li>
+    <li>La pente d’une rampe, exprimée en pourcentage, s’obtient en multipliant par 100 le quotient de la hauteur BC par la longueur AB. La réglementation impose une pente inférieure ou égale à 5&nbsp;%. <b>Cette rampe est-elle conforme ? Présenter la démarche avec des phrases claires et précises.</b></li>
+    <li>Pour vérifier un angle droit, un menuisier mesure les côtés d’un triangle EFG : EF&nbsp;=&nbsp;7,5&nbsp;cm ; FG&nbsp;=&nbsp;10&nbsp;cm et EG&nbsp;=&nbsp;12,5&nbsp;cm.
+      <ol class="sub">
+        <li><b>Énoncer la réciproque du théorème de Pythagore.</b></li>
+        <li>Le triangle EFG est-il rectangle ?</li>
+      </ol>
+    </li>
+  </ol>
+</div>
+
+<!-- ================= PARTIE 2 – 40 minutes ================= -->
+<div class="page">
+  <h1 class="partie">Partie 2 – Raisonnement et résolution de problèmes – 40 minutes</h1>
+  <div class="consigne">
+    <p>Dans cette partie, toutes les réponses doivent être justifiées, sauf si une indication contraire est donnée.</p>
+    <p>La clarté et la précision des raisonnements ainsi que la rédaction sont évaluées sur 2 points. La maîtrise de la langue sera plus particulièrement évaluée sur les réponses aux questions <b>en gras</b>.</p>
+    <p>Pour chaque question, si le travail n’est pas terminé, laisser tout de même une trace de la recherche ; les essais et les démarches engagées, même non aboutis, seront pris en compte dans la notation. La calculatrice est autorisée.</p>
+  </div>
+
+  <h2 class="exo"><span>Exercice 3</span> <em>(4 points)</em></h2>
+  <p>On considère les deux programmes de calcul suivants :</p>
+  <div class="progs">
+    <div><b>Programme A</b>
+      <ul><li>Choisir un nombre.</li><li>Lui ajouter 2.</li><li>Multiplier le résultat par lui-même.</li><li>Soustraire le carré du nombre de départ.</li></ul>
+    </div>
+    <div><b>Programme B</b>
+      <ul><li>Choisir un nombre.</li><li>Le multiplier par 6.</li><li>Ajouter 10.</li></ul>
+    </div>
+  </div>
+  <ol class="qs">
+    <li>Vérifier qu’en choisissant 5 avec le programme A, on obtient 24.</li>
+    <li>Quel résultat obtient-on avec le programme A en choisissant −4 ?</li>
+    <li>Léa affirme : « Le résultat du programme A est toujours égal à 4 fois le nombre de départ, augmenté de 4. » Vérifier son affirmation sur les deux exemples précédents.</li>
+  </ol>
+  <p style="margin:4px 0;">Dans toute la suite de cet exercice, on appelle 𝑥 le nombre choisi au départ.</p>
+  <ol class="qs" start="4" style="margin-top:0;">
+    <li><b>Démontrer l’affirmation de Léa. Présenter la démarche avec un vocabulaire mathématique adapté.</b></li>
+    <li>Exprimer en fonction de 𝑥 le résultat du programme B.</li>
+    <li>Quel nombre faut-il choisir pour que les programmes A et B donnent le même résultat ?</li>
+  </ol>
+</div>
+
+</body>
+</html>
