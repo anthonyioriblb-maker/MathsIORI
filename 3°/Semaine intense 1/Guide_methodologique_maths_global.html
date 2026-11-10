@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guide méthodologique – Mathématiques DNB</title>
+<style>
+  @font-face{ font-family:'LettresMath'; src:local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('LatinModernMath-Regular'); unicode-range:U+1D400-1D7FF, U+210E; }
+  :root{ --bleu:#2980b9; --vert:#1e8449; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'LettresMath','Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; line-height:1.45; }
+  .page{ max-width:820px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:28px 40px 32px; }
+  h1{ font-size:1.35em; text-align:center; margin-bottom:10px; }
+  h2{ font-size:1.1em; color:var(--bleu); border-bottom:2px solid var(--bleu); padding-bottom:2px; margin:18px 0 8px; }
+  h3{ font-size:1em; margin:12px 0 4px; }
+  p{ margin:5px 0; }
+  ul, ol{ padding-left:24px; margin:5px 0; }
+  li{ margin:2px 0; }
+  table{ width:100%; border-collapse:collapse; margin:8px 0; font-size:.95em; }
+  th, td{ border:1px solid #555; padding:5px 8px; text-align:left; vertical-align:top; }
+  th{ background:#e7f1fb; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .calc{ margin:4px 0 4px 18px; line-height:1.9; }
+  .concl{ color:var(--vert); font-weight:bold; }
+  .modele{ border-left:3px solid var(--bleu); padding:2px 0 2px 12px; margin:6px 0 10px; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; line-height:1.25; }
+  .frac > span:first-child{ border-bottom:1.5px solid #000; padding:0 3px; }
+  .sqrt{ position:relative; display:inline-block; border-top:2px solid black; margin-left:.7em; padding-left:.2em; padding-right:.1em; }
+  .sqrt:before{ content:" "; position:absolute; display:inline-block; left:-.65em; height:56%; width:.6em; border-right:2px solid black; border-bottom:2.5px solid black; transform-origin:top right; transform:rotate(55deg) skew(50deg); }
+  .formulaire{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
+  .formulaire td{ vertical-align:middle; }
+  .angle{ position:relative; display:inline-block; }
+  .angle::before{ content:'^'; position:absolute; top:-0.55em; left:50%; transform:translateX(-50%) scaleX(2.5) scaleY(1.1); font-size:1.3em; font-weight:300; }
+  .modeles{ display:grid; grid-template-columns:1fr 1fr; gap:0 24px; }
+  .toolbar{ max-width:820px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{
+    @page{ margin:14mm 10mm; }
+    body{ background:#fff; padding:0; font-size:12.5pt; line-height:1.5; }
+    .page{ box-shadow:none; border-radius:0; padding:0; max-width:none; }
+    h2{ break-after:avoid; margin-top:12px; }
+    h3{ break-after:avoid; }
+    .modele, tr, .formulaire, .bloc{ break-inside:avoid; }
+    .toolbar{ display:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+
+<h1>Guide méthodologique – Mathématiques DNB</h1>
+
+<h2>L'épreuve en bref</h2>
+<p>2 heures, notée sur 20 points, en deux parties.</p>
+<table>
+  <tr><th></th><th>Partie 1 – Automatismes</th><th>Partie 2 – Raisonnement et résolution de problèmes</th></tr>
+  <tr><td>Durée</td><td>20 min</td><td>1 h 40</td></tr>
+  <tr><td>Points</td><td>6</td><td>14 (dont 2 pour la rédaction)</td></tr>
+  <tr><td>Calculatrice</td><td>Interdite</td><td>Autorisée</td></tr>
+  <tr><td>Contenu</td><td>9 questions à réponses courtes (pas de QCM), sur tout le programme du cycle 4 : calculs, pourcentages, statistiques, lecture de graphique, géométrie, programme de calcul…</td><td>Plusieurs exercices indépendants, souvent en contexte, sur des thèmes variés (3 exercices dans les deux sujets de référence publiés, mais le texte officiel n'en fixe pas le nombre : il peut y en avoir plus)</td></tr>
+  <tr><td>Ce qui est attendu</td><td>Le résultat</td><td>La démarche, les justifications, la rédaction</td></tr>
+</table>
+<p>Pour s'entraîner : les sujets de référence du DNB 2027 (sur Éduscol) et les annales des sessions précédentes, disponibles par exemple sur le site de l'APMEP : <a href="https://www.apmep.fr/Annales-du-Brevet-des-colleges">www.apmep.fr/Annales-du-Brevet-des-colleges</a>.</p>
+
+<h2>Partie 1 – Automatismes</h2>
+<p>Une question = environ 2 minutes. On répond vite, sans justifier, mais sans se tromper.</p>
+<ol>
+  <li>Lire toute la question, puis repérer ce qui est demandé (unité, forme du résultat).</li>
+  <li>Calculer de tête ; poser un calcul au brouillon si besoin.</li>
+  <li>Vérifier l'ordre de grandeur avant d'écrire.</li>
+  <li>Bloqué plus de 2 minutes : passer et revenir à la fin.</li>
+  <li>Ne jamais laisser de réponse vide.</li>
+</ol>
+<p>Pièges fréquents :</p>
+<ul>
+  <li>priorités opératoires et signes : 5 − 2 × (−3) + (−4) = 5 + 6 − 4 = 7 (la multiplication d'abord) ;</li>
+  <li>puissances de 10 : 10<sup>4</sup> = 10&nbsp;000 ; 10<sup>−2</sup> = 0,01 ; 3,2 × 10<sup>3</sup> = 3&nbsp;200 ;</li>
+  <li>comparer des fractions et des décimaux : écrire chaque nombre en écriture décimale (<span class="frac"><span>3</span><span>4</span></span> = 0,75), et vérifier le sens demandé (croissant ou décroissant) ;</li>
+  <li>fractions : même dénominateur avant d'additionner : <span class="frac"><span>2</span><span>3</span></span> + <span class="frac"><span>1</span><span>4</span></span> = <span class="frac"><span>8</span><span>12</span></span> + <span class="frac"><span>3</span><span>12</span></span> = <span class="frac"><span>11</span><span>12</span></span> ;</li>
+  <li>développer : −3(2𝑥 − 5) = −6𝑥 + 15, le signe « − » devant le 3 change les deux signes ;</li>
+  <li>équations : vérifier la solution en la remplaçant dans l'équation ;</li>
+  <li>pourcentages : 10&nbsp;% c'est diviser par 10, donc 30&nbsp;% de 60 = 3 × 6 = 18 ; une hausse de 20&nbsp;% revient à multiplier par 1,2 ;</li>
+  <li>statistiques : la moyenne = somme des valeurs ÷ effectif ; pour la médiane, ranger d'abord les valeurs dans l'ordre (7 ; 3 ; 12 ; 9 ; 5 → 3 ; 5 ; <b>7</b> ; 9 ; 12, médiane 7) ;</li>
+  <li>lecture graphique : regarder les unités sur chaque axe ; une augmentation = valeur d'arrivée − valeur de départ ;</li>
+  <li>durées et vitesses : 30 min = 0,5 h et 15 min = 0,25 h ; 120 km en 1 h 30 → 120 ÷ 1,5 = 80 km/h ;</li>
+  <li>angles : la somme des angles d'un triangle vaut 180° ; dans un triangle rectangle, les deux angles aigus font 90° à eux deux ;</li>
+  <li>programme de calcul ou script : suivre les étapes une par une, dans l'ordre, en écrivant chaque résultat intermédiaire ;</li>
+  <li>conversions d'unités : 1 h = 60 min, 1 m² = 10&nbsp;000 cm², 1 m³ = 1&nbsp;000 dm³ = 1&nbsp;000 L.</li>
+</ul>
+
+<h2>Partie 2 – Résolution de problèmes</h2>
+<p>Les exercices sont indépendants et les questions souvent aussi : un blocage ne doit pas faire abandonner la suite.</p>
+<ol>
+  <li><b>Lire</b> tout l'exercice une fois, sans calculer.</li>
+  <li><b>Surligner</b> les données utiles et la question posée.</li>
+  <li><b>Faire un schéma</b> à main levée, codé, en géométrie.</li>
+  <li><b>Choisir l'outil</b> : quelle propriété, quelle formule ? (voir la boîte à outils)</li>
+  <li><b>Rédiger</b> : données, outil, calcul, conclusion.</li>
+  <li><b>Contrôler</b> : le résultat est-il réaliste ? l'unité est-elle la bonne ?</li>
+</ol>
+<p>Une question non aboutie rapporte des points si la démarche est écrite : toute trace de recherche compte.</p>
+<p>Les questions en <b>gras</b> évaluent aussi la maîtrise de la langue : y répondre par des phrases complètes, avec le vocabulaire mathématique (théorème, réciproque, développer, solution…).</p>
+
+<div class="bloc">
+<h2>Définitions et propriétés à connaître</h2>
+<p class="concl">Il y aura une question de cours. Elle peut porter sur tout le cycle 4 (5<sup>e</sup>, 4<sup>e</sup> et 3<sup>e</sup>), pas seulement sur le programme de 3<sup>e</sup>.</p>
+<p>À apprendre par cœur, mot pour mot :</p>
+<ul>
+  <li><b>toutes les définitions</b> du cycle 4, sans exception ;</li>
+  <li><b>les propriétés</b>, en particulier celles sur les droites (parallèles, perpendiculaires), les angles, les triangles et les quadrilatères ;</li>
+  <li><b>les théorèmes et leurs réciproques</b>.</li>
+</ul>
+<p><b>Démontrer en 3 étapes</b>, à chaque fois qu'on utilise une définition, une propriété ou un théorème :</p>
+<ol>
+  <li><b>Je sais que</b> … : les données de l'énoncé ou de la figure ;</li>
+  <li><b>Or</b> … : la définition, la propriété ou le théorème utilisé, énoncé en entier ;</li>
+  <li><b>Donc</b> … : la conclusion.</li>
+</ol>
+</div>
+
+<h2>Bien rédiger</h2>
+<p>La rédaction vaut 2 points sur 20 : une réponse juste mais non justifiée ne rapporte pas tout. On écrit une égalité par ligne et on termine toujours par une phrase de conclusion avec l'unité. Voici des modèles à suivre, sur les thèmes qui reviennent souvent.</p>
+
+<div class="modeles">
+<div>
+<h3>Calculer une longueur dans un triangle rectangle</h3>
+<div class="modele">
+  <p>Une échelle de 4 m est posée contre un mur vertical, son pied à 1,2 m du mur. Le triangle MPH (M pied du mur, P pied de l'échelle, H haut) est rectangle en M, d'après le théorème de Pythagore on a :</p>
+  <div class="calc">
+    <div>PH² = PM² + MH²</div>
+    <div>4² = 1,2² + MH²</div>
+    <div>16 = 1,44 + MH²</div>
+    <div>MH² = 16 − 1,44</div>
+    <div>MH² = 14,56</div>
+    <div>MH = <span class="sqrt">14,56</span> ≈ 3,82</div>
+  </div>
+  <p class="concl">Le haut de l'échelle est à environ 3,82 m du sol.</p>
+</div>
+</div>
+<div>
+<h3>Prouver qu'un triangle n'est pas rectangle</h3>
+<div class="modele">
+  <p>KL = 5 cm, LM = 7 cm, KM = 9 cm.</p>
+  <p>Dans le triangle KLM le côté le plus long est [KM].</p>
+  <p>D'une part, KM² = 9² = 81</p>
+  <p>D'autre part, KL² + LM² = 5² + 7² = 25 + 49 = 74</p>
+  <p class="concl">Ainsi KL² + LM² ≠ KM², d'après la contraposée du théorème de Pythagore, le triangle KLM n'est pas rectangle.</p>
+</div>
+</div>
+<div>
+<h3>Calculer une longueur avec des droites parallèles</h3>
+<div class="modele">
+  <p>D ∈ [AB], E ∈ [AC], AD = 4 cm, AB = 10 cm, DE = 3 cm.</p>
+  <p>Les droites (BD) et (CE) sont sécantes en A.<br>Les droites (DE) et (BC) sont parallèles.<br>D'après le théorème de Thalès :</p>
+  <div class="calc">
+    <div><span class="frac"><span>AD</span><span>AB</span></span> = <span class="frac"><span>AE</span><span>AC</span></span> = <span class="frac"><span>DE</span><span>BC</span></span> soit <span class="frac"><span>4</span><span>10</span></span> = <span class="frac"><span>3</span><span>BC</span></span></div>
+    <div>D'où BC = <span class="frac"><span>3 × 10</span><span>4</span></span> = <span class="frac"><span>30</span><span>4</span></span> = 7,5</div>
+  </div>
+  <p class="concl">[BC] mesure 7,5 cm.</p>
+</div>
+</div>
+<div>
+<h3>Calculer une longueur avec un angle</h3>
+<div class="modele">
+  <p>ABC est rectangle en A, <span class="angle">ABC</span> = 35° et BC = 8 cm.</p>
+  <p>Le triangle ABC est rectangle en A, on a :</p>
+  <div class="calc">
+    <div>sin(<span class="angle">ABC</span>) = <span class="frac"><span>AC</span><span>BC</span></span></div>
+    <div>sin(35°) = <span class="frac"><span>AC</span><span>8</span></span></div>
+    <div>AC = 8 × sin(35°)</div>
+    <div>AC ≈ 4,59</div>
+  </div>
+  <p class="concl">Le segment [AC] mesure environ 4,59 cm.</p>
+</div>
+</div>
+<div>
+<h3>Démontrer avec le calcul littéral</h3>
+<div class="modele">
+  <p>On appelle 𝑥 le nombre de départ, on écrit l'expression puis on développe une étape par ligne :</p>
+  <div class="calc">
+    <div>(𝑥 + 5)(𝑥 − 1) − 𝑥(𝑥 + 4)</div>
+    <div>= 𝑥 × 𝑥 − 𝑥 × 1 + 5 × 𝑥 − 5 × 1 − 𝑥 × 𝑥 − 𝑥 × 4</div>
+    <div>= 𝑥² − 𝑥 + 5𝑥 − 5 − 𝑥² − 4𝑥</div>
+    <div>= −5</div>
+  </div>
+  <p class="concl">Quel que soit le nombre de départ 𝑥, le résultat est toujours −5.</p>
+</div>
+</div>
+<div>
+<h3>Résoudre une équation</h3>
+<div class="modele">
+  <div class="calc">
+    <div>7𝑥 − 2 = 3𝑥 + 10</div>
+    <div>7𝑥 − 3𝑥 = 10 + 2</div>
+    <div>4𝑥 = 12</div>
+    <div>𝑥 = <span class="frac"><span>12</span><span>4</span></span></div>
+    <div>𝑥 = 3</div>
+  </div>
+  <p class="concl">La solution de l'équation est 3.</p>
+</div>
+</div>
+<div>
+<h3>Image et antécédent par une fonction</h3>
+<div class="modele">
+  <p>𝑓(𝑥) = 3𝑥 − 4.</p>
+  <div class="calc">
+    <div>Image de 2 : 𝑓(2) = 3 × 2 − 4 = 6 − 4 = 2</div>
+    <div>Antécédent de 11 : 3𝑥 − 4 = 11</div>
+    <div>3𝑥 = 15</div>
+    <div>𝑥 = 5</div>
+  </div>
+  <p class="concl">L'image de 2 est 2 et l'antécédent de 11 est 5.</p>
+</div>
+</div>
+<div>
+<h3>Calculer une probabilité</h3>
+<div class="modele">
+  <p>Une urne contient 5 boules rouges, 3 vertes et 2 bleues, indiscernables au toucher. On tire une boule au hasard.</p>
+  <div class="calc">
+    <div>Il y a 5 + 3 + 2 = 10 boules, toutes ont la même chance d'être tirées.</div>
+    <div>𝑃(verte) = <span class="frac"><span>3</span><span>10</span></span></div>
+  </div>
+  <p class="concl">La probabilité de tirer une boule verte est <span class="frac"><span>3</span><span>10</span></span>.</p>
+</div>
+</div>
+<div>
+<h3>Appliquer une évolution en pourcentage</h3>
+<div class="modele">
+  <p>Un jeu coûte 80 € ; son prix augmente de 15 %.</p>
+  <div class="calc">
+    <div>Augmenter de 15 % revient à multiplier par 1 + 0,15 = 1,15.</div>
+    <div>80 × 1,15 = 92</div>
+  </div>
+  <p class="concl">Le nouveau prix du jeu est 92 €.</p>
+</div>
+</div>
+<div>
+<h3>Faire des paquets identiques</h3>
+<div class="modele">
+  <p>On veut répartir 84 billes rouges et 60 billes bleues dans le plus grand nombre de sachets identiques.</p>
+  <div class="calc">
+    <div>84 = 2 × 2 × 3 × 7</div>
+    <div>60 = 2 × 2 × 3 × 5</div>
+    <div>Facteurs communs : 2 × 2 × 3 = 12</div>
+    <div>84 ÷ 12 = 7 et 60 ÷ 12 = 5</div>
+  </div>
+  <p class="concl">On peut faire 12 sachets contenant chacun 7 billes rouges et 5 billes bleues.</p>
+</div>
+</div>
+</div>
+
+<p>À éviter : un résultat seul, un « = » entre deux grandeurs différentes, un arrondi sans le dire (écrire « ≈ » ou « arrondi au centième »), un nombre d'objets non entier.</p>
+<p><b>Arrondir en restant cohérent avec la situation :</b></p>
+<ul>
+  <li>pour en avoir assez, on arrondit à l'unité supérieure : s'il faut 4,2 pots de peinture, on en achète 5 ;</li>
+  <li>quand on ne peut pas dépasser une somme ou une quantité, on arrondit à l'unité inférieure : si le budget permet de payer 4,9 places de cinéma, on ne peut en acheter que 4.</li>
+</ul>
+
+<div class="bloc">
+<h2>Gérer son temps</h2>
+<p>En partie 2, compter environ 7 minutes par point d'exercice.</p>
+<table>
+  <tr><th>Moment</th><th>Durée</th></tr>
+  <tr><td>Partie 1 : 9 automatismes</td><td>20 min</td></tr>
+  <tr><td>Partie 2 : lecture du sujet</td><td>5 min</td></tr>
+  <tr><td>Partie 2 : exercices</td><td>Environ 7 min par point (28 min pour un exercice de 4 points)</td></tr>
+  <tr><td>Partie 2 : relecture, questions laissées de côté</td><td>10 min</td></tr>
+</table>
+<p>Commencer par l'exercice où l'on se sent le plus à l'aise, en indiquant clairement son numéro sur la copie.</p>
+</div>
+
+<h2>Boîte à outils</h2>
+<table>
+  <tr><th>Je cherche…</th><th>J'utilise…</th></tr>
+  <tr><td>Une longueur dans un triangle rectangle</td><td>Théorème de Pythagore</td></tr>
+  <tr><td>À prouver qu'un triangle est rectangle (ou non)</td><td>Réciproque (ou contraposée) de Pythagore</td></tr>
+  <tr><td>Une longueur avec des droites parallèles</td><td>Théorème de Thalès</td></tr>
+  <tr><td>À prouver que deux droites sont parallèles</td><td>Réciproque de Thalès</td></tr>
+  <tr><td>Un angle ou une longueur avec un angle (triangle rectangle)</td><td>cos, sin, tan</td></tr>
+  <tr><td>Un angle dans un triangle</td><td>La somme des angles vaut 180°</td></tr>
+  <tr><td>Un angle avec des droites parallèles</td><td>Angles alternes-internes ou correspondants égaux</td></tr>
+  <tr><td>Une longueur dans une figure agrandie ou réduite</td><td>Coefficient k (aires × k², volumes × k³)</td></tr>
+  <tr><td>Une quatrième proportionnelle</td><td>Coefficient de proportionnalité</td></tr>
+  <tr><td>Un prix après une hausse ou une baisse de t %</td><td>Multiplier par 1 + t % ou 1 − t % (remise de 25 % : × 0,75)</td></tr>
+  <tr><td>Une vitesse, une distance, une durée</td><td>d = v × t (durée en heures décimales)</td></tr>
+  <tr><td>Une aire</td><td>Le formulaire des aires (ci-dessous), avec toutes les longueurs dans la même unité</td></tr>
+  <tr><td>Un volume</td><td>Le formulaire des volumes (ci-dessous), avec toutes les longueurs dans la même unité</td></tr>
+  <tr><td>Une probabilité</td><td><span class="frac"><span>nombre de cas favorables</span><span>nombre de cas possibles</span></span></td></tr>
+  <tr><td>À résumer une série</td><td>Moyenne, médiane, étendue</td></tr>
+  <tr><td>Une valeur inconnue</td><td>Une équation : choisir l'inconnue, résoudre, conclure</td></tr>
+  <tr><td>À montrer qu'un résultat est toujours vrai</td><td>Le calcul littéral : appeler 𝑥 le nombre, développer, réduire, conclure par une phrase</td></tr>
+  <tr><td>Une aire de faces (peinture, revêtement)</td><td>Rectangle : L × l, puis additionner les faces concernées</td></tr>
+  <tr><td>Image ou antécédent</td><td>Le tableau de valeurs, le graphique ou l'expression de 𝑓</td></tr>
+  <tr><td>Reconnaître une situation de proportionnalité sur un graphique</td><td>Une droite qui passe par l'origine (fonction linéaire)</td></tr>
+  <tr><td>Un partage en paquets identiques</td><td>Décomposition en facteurs premiers, diviseurs communs</td></tr>
+</table>
+
+<div class="bloc">
+<h2>Formulaire : aires, volumes, probabilité</h2>
+<p>Ces formules sont à connaître par cœur : elles ne sont pas données dans le sujet.</p>
+<div class="formulaire">
+<table>
+  <tr><th colspan="2">Aires</th></tr>
+  <tr><td>Carré de côté 𝑐</td><td>𝑐 × 𝑐 = 𝑐²</td></tr>
+  <tr><td>Rectangle</td><td>𝐿 × 𝑙</td></tr>
+  <tr><td>Triangle</td><td><span class="frac"><span>base × hauteur</span><span>2</span></span></td></tr>
+  <tr><td>Parallélogramme</td><td>base × hauteur</td></tr>
+  <tr><td>Disque de rayon 𝑟</td><td>π × 𝑟²</td></tr>
+  <tr><td>Périmètre d'un cercle de rayon 𝑟</td><td>2 × π × 𝑟</td></tr>
+</table>
+<table>
+  <tr><th colspan="2">Volumes</th></tr>
+  <tr><td>Cube d'arête 𝑐</td><td>𝑐 × 𝑐 × 𝑐 = 𝑐³</td></tr>
+  <tr><td>Pavé droit</td><td>𝐿 × 𝑙 × ℎ</td></tr>
+  <tr><td>Prisme droit</td><td>aire de la base × ℎ</td></tr>
+  <tr><td>Cylindre de rayon 𝑟</td><td>π × 𝑟² × ℎ</td></tr>
+  <tr><td>Pyramide</td><td><span class="frac"><span>aire de la base × ℎ</span><span>3</span></span></td></tr>
+  <tr><td>Cône de rayon 𝑟</td><td><span class="frac"><span>π × 𝑟² × ℎ</span><span>3</span></span></td></tr>
+  <tr><td>Boule de rayon 𝑟</td><td><span class="frac"><span>4</span><span>3</span></span> × π × 𝑟³</td></tr>
+</table>
+</div>
+<p><b>Probabilité</b> (quand toutes les issues ont la même chance de se produire) : &nbsp; 𝑃 = <span class="frac"><span>nombre de cas favorables</span><span>nombre de cas possibles</span></span></p>
+<p>Unités : une aire s'exprime en cm², m²… ; un volume en cm³, m³… ; 1 dm³ = 1 L.</p>
+</div>
+
+
+</div>
+</body>
+</html>
