@@ -51,10 +51,10 @@ Légende : ✅ = conforme, rien à signaler.
 ## Chapitre 5 — Opérations avec les relatifs
 
 **Manque :**
-- Addition et soustraction de relatifs **décimaux** — tous les exemples/exercices actuels utilisent des entiers.
-- Justifier dans quels cas les parenthèses sont indispensables.
-- Simplifier l'écriture d'une somme algébrique en supprimant les parenthèses inutiles.
-- Davantage de problèmes concrets mobilisant les relatifs.
+- ~~Addition et soustraction de relatifs **décimaux**~~ — fait (nov. 2026) : exemples décimaux dans le cours.
+- ~~Justifier dans quels cas les parenthèses sont indispensables~~ — fait (nov. 2026).
+- ~~Simplifier l'écriture d'une somme algébrique en supprimant les parenthèses inutiles~~ — fait (nov. 2026) : partie V du cours.
+- Davantage de problèmes concrets mobilisant les relatifs (à faire avec les exercices).
 
 **En trop :** Rien.
 

@@ -8,28 +8,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours : Écriture fractionnaire partie 2</title>
     <link rel="stylesheet" href="../../styles.css?v=20251120143124">
+    <style>
+        .exemples-colonnes.ligne-ex { grid-template-columns: repeat(2, 1fr); gap: 4px 20px; margin: 6px 0; }
+        .calc-col > div { margin: 6px 0; }
+        .concl { font-style: italic; }
+        @media print {
+            .ligne-ex { break-inside: avoid; page-break-inside: avoid; }
+            .example > strong:first-child { break-after: avoid; page-break-after: avoid; }
+        }
+    </style>
 </head>
 <body>
     <a href="../classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
 
     <h1>Chapitre 5 : Écriture fractionnaire partie 2</h1>
 
-    <h2>I. Notion d'inverse</h2>
+    <h2>Notion d'inverse</h2>
 
     <div class="definition">
         <span style="color: red;">Définition :</span> Deux nombres sont <span style="color: red;">inverses</span> si leur produit est égal à 1.
     </div>
 
     <div class="example">
-        <strong>Exemple :</strong> L'inverse de 3 est <span class="fraction"><span class="numerateur">1</span><span class="denominateur">3</span></span> car <span class="fraction"><span class="numerateur">1</span><span class="denominateur">3</span></span> × 3 = <span class="fraction"><span class="numerateur">3</span><span class="denominateur">3</span></span> = 1.
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes ligne-ex">
+            <div class="exemple-item calc-col">
+                <div>L'inverse de 3 est <span class="frac"><span class="num">1</span><span class="den">3</span></span> car :</div>
+                <div>A = <span class="frac"><span class="num">1</span><span class="den">3</span></span> × 3</div>
+                <div>A = <span class="frac"><span class="num">1 × 3</span><span class="den">3</span></span></div>
+                <div>A = <span class="frac"><span class="num">3</span><span class="den">3</span></span></div>
+                <div>A = 1</div>
+            </div>
+            <div class="exemple-item calc-col">
+                <div>L'inverse de −<span class="frac"><span class="num">2</span><span class="den">3</span></span> est −<span class="frac"><span class="num">3</span><span class="den">2</span></span> car :</div>
+                <div>B = −<span class="frac"><span class="num">2</span><span class="den">3</span></span> × ( −<span class="frac"><span class="num">3</span><span class="den">2</span></span> )</div>
+                <div>B = <span class="frac"><span class="num">2 × 3</span><span class="den">3 × 2</span></span></div>
+                <div>B = <span class="frac"><span class="num">6</span><span class="den">6</span></span></div>
+                <div>B = 1</div>
+            </div>
+        </div>
     </div>
 
     <div class="important">
-        <span style="color: red;">Propriété :</span> Soient a et b deux nombres non nuls, l'inverse de la fraction <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> est <span class="fraction"><span class="numerateur">b</span><span class="denominateur">a</span></span> car <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> × <span class="fraction"><span class="numerateur">b</span><span class="denominateur">a</span></span> = <span class="fraction"><span class="numerateur"><span class="strikethrough-red">a</span>×<span class="strikethrough-blue">b</span></span><span class="denominateur"><span class="strikethrough-blue">b</span>×<span class="strikethrough-red">a</span></span></span> = 1.
-    </div>
-
-    <div class="example">
-        <strong>Exemple :</strong> L'inverse de <span class="fraction"><span class="numerateur">−2</span><span class="denominateur">3</span></span> est <span class="fraction"><span class="numerateur">3</span><span class="denominateur">−2</span></span> car <span class="fraction"><span class="numerateur">−2</span><span class="denominateur">3</span></span> × <span class="fraction"><span class="numerateur">3</span><span class="denominateur">−2</span></span> = <span class="fraction"><span class="numerateur">−6</span><span class="denominateur">−6</span></span> = 1.
+        <span style="color: red;">Propriété :</span> Soient 𝑎 et 𝑏 deux nombres non nuls, l'inverse de la fraction <span class="frac"><span class="num">𝑎</span><span class="den">𝑏</span></span> est <span class="frac"><span class="num">𝑏</span><span class="den">𝑎</span></span> car <span class="frac"><span class="num">𝑎</span><span class="den">𝑏</span></span> × <span class="frac"><span class="num">𝑏</span><span class="den">𝑎</span></span> = <span class="frac"><span class="num"><span class="couleur-speciale">𝑎</span> × <span class="couleur-speciale">𝑏</span></span><span class="den"><span class="couleur-speciale">𝑏</span> × <span class="couleur-speciale">𝑎</span></span></span> = 1.
     </div>
 
     <div class="remarque">
@@ -37,19 +58,25 @@
         <ul>
             <li>Un nombre et son inverse ont le même signe.</li>
             <li>Tous les nombres ont un inverse sauf 0.</li>
+            <li>Il ne faut pas confondre l'<strong>inverse</strong> et l'<strong>opposé</strong> : l'inverse de 3 est <span class="frac"><span class="num">1</span><span class="den">3</span></span> car 3 × <span class="frac"><span class="num">1</span><span class="den">3</span></span> = 1, alors que l'opposé de 3 est −3 car 3 + ( −3 ) = 0.</li>
         </ul>
     </div>
 
-    <h2>II. Divisions</h2>
+    <h2>Divisions</h2>
 
     <div class="important">
-        <span style="color: red;">Propriété :</span> Diviser par un nombre, c'est multiplier par son inverse.<br><br>
-        C'est-à-dire : a ÷ b = a × <span class="fraction"><span class="numerateur">1</span><span class="denominateur">b</span></span>
+        <span style="color: red;">Propriété :</span> Diviser par un nombre non nul, c'est multiplier par son inverse.<br><br>
+        C'est-à-dire : 𝑎 ÷ 𝑏 = 𝑎 × <span class="frac"><span class="num">1</span><span class="den">𝑏</span></span> (avec 𝑏 ≠ 0).
     </div>
 
     <div class="method">
-        <strong>Preuve :</strong><br>
-        a × <span class="fraction"><span class="numerateur">1</span><span class="denominateur">b</span></span> = <span class="fraction"><span class="numerateur">a × 1</span><span class="denominateur">b</span></span> = <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> = a ÷ b
+        <strong>Preuve :</strong>
+        <div class="calc-col" style="margin-top: 6px;">
+            <div>𝑎 × <span class="frac"><span class="num">1</span><span class="den">𝑏</span></span></div>
+            <div>= <span class="frac"><span class="num">𝑎 × 1</span><span class="den">𝑏</span></span></div>
+            <div>= <span class="frac"><span class="num">𝑎</span><span class="den">𝑏</span></span></div>
+            <div>= 𝑎 ÷ 𝑏</div>
+        </div>
     </div>
 
     <div class="important">
@@ -57,108 +84,107 @@
     </div>
 
     <div class="example">
-        
-        <div class="calcul">
-            <strong>Exemple 1 :</strong><br>
-            <span class="fraction"><span class="numerateur">1</span><span class="denominateur">2</span></span> ÷ <span class="fraction"><span class="numerateur">3</span><span class="denominateur">4</span></span> = <span class="fraction"><span class="numerateur">1</span><span class="denominateur">2</span></span> × <span class="fraction"><span class="numerateur">4</span><span class="denominateur">3</span></span> = <span class="fraction"><span class="numerateur">1 × 4</span><span class="denominateur">2 × 3</span></span> = <span class="fraction"><span class="numerateur">4</span><span class="denominateur">6</span></span> =
-                <span class="fraction">
-                    <span class="numerateur"><span class="strikethrough-red">2</span> × 2</span>
-                    <span class="denominateur"><span class="strikethrough-red">2</span> × 3</span>
-                </span> =
-                <span class="fraction">
-                    <span class="numerateur">2</span>
-                    <span class="denominateur">3</span>
-                </span>
+        <strong>Exemples :</strong>
+        <div class="exemples-colonnes ligne-ex">
+            <div class="exemple-item calc-col">
+                <div>C = <span class="frac"><span class="num">1</span><span class="den">2</span></span> ÷ <span class="frac"><span class="num">3</span><span class="den">4</span></span></div>
+                <div>C = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × <span class="frac"><span class="num">4</span><span class="den">3</span></span></div>
+                <div>C = <span class="frac"><span class="num">1 × 4</span><span class="den">2 × 3</span></span></div>
+                <div>C = <span class="frac"><span class="num">4</span><span class="den">6</span></span></div>
+                <div>C = <span class="frac"><span class="num"><span class="couleur-speciale">2</span> × 2</span><span class="den"><span class="couleur-speciale">2</span> × 3</span></span></div>
+                <div>C = <span class="frac"><span class="num">2</span><span class="den">3</span></span></div>
+            </div>
+            <div class="exemple-item calc-col">
+                <div>D = −<span class="frac"><span class="num">4</span><span class="den">5</span></span> ÷ <span class="frac"><span class="num">3</span><span class="den">4</span></span></div>
+                <div>D = −<span class="frac"><span class="num">4</span><span class="den">5</span></span> × <span class="frac"><span class="num">4</span><span class="den">3</span></span></div>
+                <div>D = −<span class="frac"><span class="num">4 × 4</span><span class="den">5 × 3</span></span></div>
+                <div>D = −<span class="frac"><span class="num">16</span><span class="den">15</span></span></div>
+            </div>
         </div>
-
-        <div class="calcul">
-            <strong>Exemple 2 :</strong><br>
-            <span class="fraction"><span class="numerateur">−4</span><span class="denominateur">5</span></span> ÷ <span class="fraction"><span class="numerateur">3</span><span class="denominateur">4</span></span> = −<span class="fraction"><span class="numerateur">4</span><span class="denominateur">5</span></span> ÷ <span class="fraction"><span class="numerateur">3</span><span class="denominateur">4</span></span> = −<span class="fraction"><span class="numerateur">4</span><span class="denominateur">5</span></span> × <span class="fraction"><span class="numerateur">4</span><span class="denominateur">3</span></span> = −<span class="fraction"><span class="numerateur">16</span><span class="denominateur">15</span></span>
-        </div>
-
-        <div class="calcul">
-            <strong>Exemple 3 :</strong><br>
-            <span class="fraction"><span class="numerateur">5</span><span class="denominateur">7</span></span> ÷ 3 = <span class="fraction"><span class="numerateur">5</span><span class="denominateur">7</span></span> × <span class="fraction"><span class="numerateur">1</span><span class="denominateur">3</span></span> = <span class="fraction"><span class="numerateur">5 × 1</span><span class="denominateur">7 × 3</span></span> = <span class="fraction"><span class="numerateur">5</span><span class="denominateur">21</span></span>
-        </div>
-
-        <div class="calcul">
-            <strong>Exemple 4 :</strong><br>
-            <span class="fraction"><span class="numerateur">2</span><span class="denominateur">3</span></span> ÷ 4 = <span class="fraction"><span class="numerateur">2</span><span class="denominateur">3</span></span> ÷ 4 = <span class="fraction"><span class="numerateur">2</span><span class="denominateur">3</span></span> × <span class="fraction"><span class="numerateur">1</span><span class="denominateur">4</span></span> = <span class="fraction"><span class="numerateur">2</span><span class="denominateur">12</span></span> =
-                <span class="fraction">
-                    <span class="numerateur"><span class="strikethrough-blue">2</span></span>
-                    <span class="denominateur"><span class="strikethrough-blue">2</span> × 2 × 3</span>
-                </span> =
-                <span class="fraction">
-                    <span class="numerateur">1</span>
-                    <span class="denominateur">2 × 3</span>
-                </span> =
-                <span class="fraction">
-                    <span class="numerateur">1</span>
-                    <span class="denominateur">6</span>
-                </span>
+        <div class="exemples-colonnes ligne-ex">
+            <div class="exemple-item calc-col">
+                <div>E = <span class="frac"><span class="num">5</span><span class="den">7</span></span> ÷ 3</div>
+                <div>E = <span class="frac"><span class="num">5</span><span class="den">7</span></span> × <span class="frac"><span class="num">1</span><span class="den">3</span></span></div>
+                <div>E = <span class="frac"><span class="num">5 × 1</span><span class="den">7 × 3</span></span></div>
+                <div>E = <span class="frac"><span class="num">5</span><span class="den">21</span></span></div>
+            </div>
+            <div class="exemple-item calc-col">
+                <div>F = <span class="frac"><span class="num">2</span><span class="den">3</span></span> ÷ 4</div>
+                <div>F = <span class="frac"><span class="num">2</span><span class="den">3</span></span> × <span class="frac"><span class="num">1</span><span class="den">4</span></span></div>
+                <div>F = <span class="frac"><span class="num">2 × 1</span><span class="den">3 × 4</span></span></div>
+                <div>F = <span class="frac"><span class="num">2</span><span class="den">12</span></span></div>
+                <div>F = <span class="frac"><span class="num"><span class="couleur-speciale">2</span></span><span class="den"><span class="couleur-speciale">2</span> × 2 × 3</span></span></div>
+                <div>F = <span class="frac"><span class="num">1</span><span class="den">6</span></span></div>
+            </div>
         </div>
     </div>
 
-    <h2>III. Produit en croix</h2>
+    <h2>Produit en croix</h2>
 
     <div class="important">
-        <span style="color: red;">Propriété :</span> a, b, c, d désignent quatre nombres relatifs avec b ≠ 0 et d ≠ 0.<br><br>
-        Si <span class="fraction"><span class="numerateur">a</span><span class="denominateur">b</span></span> = <span class="fraction"><span class="numerateur">c</span><span class="denominateur">d</span></span>, alors a × d = b × c.<br><br>
+        <span style="color: red;">Propriété :</span> 𝑎, 𝑏, 𝑐, 𝑑 désignent quatre nombres relatifs avec 𝑏 ≠ 0 et 𝑑 ≠ 0.<br><br>
+        Si <span class="frac"><span class="num">𝑎</span><span class="den">𝑏</span></span> = <span class="frac"><span class="num">𝑐</span><span class="den">𝑑</span></span>, alors 𝑎 × 𝑑 = 𝑏 × 𝑐.<br><br>
+        Réciproquement, si 𝑎 × 𝑑 = 𝑏 × 𝑐, alors <span class="frac"><span class="num">𝑎</span><span class="den">𝑏</span></span> = <span class="frac"><span class="num">𝑐</span><span class="den">𝑑</span></span>.<br><br>
         On appelle cette propriété le <span style="color: red;">produit en croix</span>.
     </div>
 
     <div class="remarque">
         <strong>Schéma du produit en croix :</strong><br>
-        <div style="text-align: center; margin: 20px;">
-            <img src="images/4-51.png" alt="Schéma du produit en croix" style=" width: 10%;">
+        <svg viewBox="0 0 360 165" width="320" style="display:block;margin:6px auto;" xmlns="http://www.w3.org/2000/svg" font-family="Cambria Math, STIX Two Math, Latin Modern Math, serif" font-style="italic">
+  <defs>
+    <marker id="pcR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d62828"/></marker>
+    <marker id="pcB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d4ed8"/></marker>
+  </defs>
+  <text x="80" y="52" font-size="40" text-anchor="middle" fill="#d62828">a</text>
+  <line x1="55" y1="67" x2="105" y2="67" stroke="#000" stroke-width="2.5"/>
+  <text x="80" y="108" font-size="40" text-anchor="middle" fill="#1d4ed8">b</text>
+  <text x="280" y="52" font-size="40" text-anchor="middle" fill="#1d4ed8">c</text>
+  <line x1="255" y1="67" x2="305" y2="67" stroke="#000" stroke-width="2.5"/>
+  <text x="280" y="108" font-size="40" text-anchor="middle" fill="#d62828">d</text>
+  <line x1="108" y1="38" x2="252" y2="96" stroke="#d62828" stroke-width="2.5" marker-start="url(#pcR)" marker-end="url(#pcR)"/>
+  <line x1="108" y1="96" x2="252" y2="38" stroke="#1d4ed8" stroke-width="2.5" marker-start="url(#pcB)" marker-end="url(#pcB)"/>
+  <rect x="164" y="56" width="32" height="22" rx="4" fill="#f0f0f0"/>
+  <text x="180" y="78" font-size="36" text-anchor="middle" font-style="normal">=</text>
+  <text x="180" y="150" font-size="30" text-anchor="middle"><tspan fill="#d62828">a × d</tspan><tspan font-style="normal" fill="#000"> = </tspan><tspan fill="#1d4ed8">b × c</tspan></text>
+</svg>
+    </div>
+
+    <div class="example">
+        <strong>Exemple 1 :</strong> On cherche un nombre 𝑥 tel que <span class="frac"><span class="num">5</span><span class="den">2</span></span> = <span class="frac"><span class="num">4</span><span class="den">𝑥</span></span>.
+        <div class="calc-col" style="margin-top: 6px;">
+            <div><span class="frac"><span class="num">5</span><span class="den">2</span></span> = <span class="frac"><span class="num">4</span><span class="den">𝑥</span></span> donc 5 × 𝑥 = 2 × 4</div>
+            <div>𝑥 = <span class="frac"><span class="num">2 × 4</span><span class="den">5</span></span></div>
+            <div>𝑥 = <span class="frac"><span class="num">8</span><span class="den">5</span></span></div>
+            <div>𝑥 = 1,6</div>
+            <div class="concl">Le nombre cherché est 1,6.</div>
         </div>
     </div>
 
     <div class="example">
-        
-            <strong>Exemple 1 :</strong> On cherche un nombre x tel que <span class="fraction"><span class="numerateur">5</span><span class="denominateur">2</span></span> = <span class="fraction"><span class="numerateur">4</span><span class="denominateur">x</span></span>.<br><br>
-
-            <div class="calcul">
-                <span class="fraction"><span class="numerateur">5</span><span class="denominateur">2</span></span> = <span class="fraction"><span class="numerateur">4</span><span class="denominateur">x</span></span> donc 5 × x = 2 × 4<br><br>
-                Ainsi x = <span class="fraction"><span class="numerateur">2 × 4</span><span class="denominateur">5</span></span> = <span class="fraction"><span class="numerateur">8</span><span class="denominateur">5</span></span> = 1,6
+        <strong>Exemple 2 :</strong> Les quotients <span class="frac"><span class="num">12</span><span class="den">20</span></span> et <span class="frac"><span class="num">18</span><span class="den">30</span></span> sont-ils égaux ?
+        <div class="calc-col" style="margin-top: 6px;">
+            <div><strong>Méthode 1 : Produit en croix</strong></div>
+            <div>12 × 30 = 360</div>
+            <div>20 × 18 = 360</div>
+            <div class="concl">Les produits en croix sont égaux donc <span class="frac"><span class="num">12</span><span class="den">20</span></span> = <span class="frac"><span class="num">18</span><span class="den">30</span></span>.</div>
+        </div>
+        <div class="calc-col" style="margin-top: 14px;">
+            <div><strong>Méthode 2 : Simplification</strong></div>
+        </div>
+        <div class="exemples-colonnes ligne-ex">
+            <div class="exemple-item calc-col">
+                <div><span class="frac"><span class="num">12</span><span class="den">20</span></span></div>
+                <div>= <span class="frac"><span class="num"><span class="couleur-speciale">2</span> × <span class="couleur-speciale">2</span> × 3</span><span class="den"><span class="couleur-speciale">2</span> × <span class="couleur-speciale">2</span> × 5</span></span></div>
+                <div>= <span class="frac"><span class="num">3</span><span class="den">5</span></span></div>
             </div>
-     
-            <strong>Exemple 2 :</strong> Les quotients <span class="fraction"><span class="numerateur">12</span><span class="denominateur">20</span></span> et <span class="fraction"><span class="numerateur">18</span><span class="denominateur">30</span></span> sont-ils égaux ?<br><br>
-
-            <div class="calcul">
-                <strong>Méthode 1 : Produit en croix</strong><br>
-                12 × 30 = 360 et 20 × 18 = 360.<br><br>
-                Ainsi, <span class="fraction"><span class="numerateur">12</span><span class="denominateur">20</span></span> = <span class="fraction"><span class="numerateur">18</span><span class="denominateur">30</span></span>
-                <br><br><br>
-                <strong>Méthode 2 : Simplification</strong><br><br>
-                <span class="fraction">
-                    <span class="numerateur">12</span>
-                    <span class="denominateur">20</span>
-                </span> =
-                <span class="fraction">
-                    <span class="numerateur"><span class="strikethrough-green">2</span> × <span class="strikethrough-orange">2</span> × 3</span>
-                    <span class="denominateur"><span class="strikethrough-green">2</span> × <span class="strikethrough-orange">2</span> × 5</span>
-                </span> =
-                <span class="fraction">
-                    <span class="numerateur">3</span>
-                    <span class="denominateur">5</span>
-                </span>
-                <br><br>
-                <span class="fraction">
-                    <span class="numerateur">18</span>
-                    <span class="denominateur">30</span>
-                </span> =
-                <span class="fraction">
-                    <span class="numerateur"><span class="strikethrough-green">2</span> × <span class="strikethrough-purple">3</span> × 3</span>
-                    <span class="denominateur"><span class="strikethrough-green">2</span> × <span class="strikethrough-purple">3</span> × 5</span>
-                </span> =
-                <span class="fraction">
-                    <span class="numerateur">3</span>
-                    <span class="denominateur">5</span>
-                </span>
-                <br><br>
-                Donc <span class="fraction"><span class="numerateur">12</span><span class="denominateur">20</span></span> = <span class="fraction"><span class="numerateur">18</span><span class="denominateur">30</span></span> = <span class="fraction"><span class="numerateur">3</span><span class="denominateur">5</span></span>
+            <div class="exemple-item calc-col">
+                <div><span class="frac"><span class="num">18</span><span class="den">30</span></span></div>
+                <div>= <span class="frac"><span class="num"><span class="couleur-speciale">2</span> × <span class="couleur-speciale">3</span> × 3</span><span class="den"><span class="couleur-speciale">2</span> × <span class="couleur-speciale">3</span> × 5</span></span></div>
+                <div>= <span class="frac"><span class="num">3</span><span class="den">5</span></span></div>
             </div>
+        </div>
+        <div class="calc-col">
+            <div class="concl">Donc <span class="frac"><span class="num">12</span><span class="den">20</span></span> = <span class="frac"><span class="num">18</span><span class="den">30</span></span> = <span class="frac"><span class="num">3</span><span class="den">5</span></span>.</div>
         </div>
     </div>
 
