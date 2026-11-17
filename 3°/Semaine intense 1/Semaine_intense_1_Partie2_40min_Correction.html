@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Semaine intense 1 - Mathématiques - Partie 2 (40 minutes) - Correction</title>
+<style>
+  @font-face{ font-family:'LettresMath'; src:local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('LatinModernMath-Regular'); unicode-range:U+1D400-1D7FF, U+210E; }
+  :root{ --bleu:#2980b9; --vert:#1e8449; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'LettresMath','Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; line-height:1.4; }
+  .page{ max-width:800px; margin:0 auto 24px; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:28px 40px 32px; }
+  h1.partie{ font-size:1.1em; border-bottom:2px solid #333; padding-bottom:4px; margin-bottom:10px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); margin:16px 0 6px; font-weight:normal; }
+  h2.exo span{ text-decoration:underline; font-weight:bold; }
+  h2.exo em{ color:#555; font-size:.9em; }
+  .q{ font-weight:bold; margin-top:8px; }
+  .redac{ line-height:1.9; margin-left:10px; }
+  .rep{ color:var(--vert); font-weight:bold; }
+  .grille{ display:grid; grid-template-columns:1fr 1.35fr 1fr; gap:4px 22px; }
+  .grille > div{ break-inside:avoid; }
+  .calc{ line-height:2; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; line-height:1.25; }
+  .frac > span:first-child{ border-bottom:1.5px solid #000; padding:0 3px; }
+  .sqrt{ position:relative; display:inline-block; border-top:2px solid black; margin-left:.7em; padding-left:.2em; padding-right:.1em; }
+  .sqrt:before{ content:" "; position:absolute; display:inline-block; left:-.65em; height:56%; width:.6em; border-right:2px solid black; border-bottom:2.5px solid black; transform-origin:top right; transform:rotate(55deg) skew(50deg); }
+  .prog{ margin-left:10px; display:grid; grid-template-columns:1fr 1fr; gap:6px 30px; }
+  .chaine{ display:flex; flex-direction:column; align-items:flex-start; margin:4px 0 6px; }
+  .bx{ border:2px solid #333; border-radius:6px; padding:2px 10px; min-width:60px; text-align:center; background:#fff; }
+  .rep-bx{ border-color:var(--vert); color:var(--vert); font-weight:bold; }
+  .fl{ -webkit-print-color-adjust:exact; print-color-adjust:exact; position:relative; display:block; width:2px; height:24px; background:#333; margin:0 0 8px 30px; }
+  .fl::after{ content:""; position:absolute; bottom:-8px; left:-5px; border-top:9px solid #333; border-left:6px solid transparent; border-right:6px solid transparent; }
+  .fl .op{ position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:.9em; color:#c0392b; white-space:nowrap; }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; font-size:10.5pt; line-height:1.3; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; margin:0; max-width:none; }
+    .page + .page{ break-before:page; }
+    h2.exo, .q{ break-after:avoid; }
+    .redac, .prog{ break-inside:avoid; }
+    .toolbar{ display:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+
+<!-- ================= PARTIE 2 – 40 minutes ================= -->
+<div class="page">
+  <h1 class="partie">Partie 2 – Raisonnement et résolution de problèmes – Correction</h1>
+
+  <h2 class="exo"><span>Exercice 3</span> <em>(4 points)</em></h2>
+  <div class="prog">
+    <div>
+      <div class="q">1) Avec 5 comme nombre de départ :</div>
+      <div class="chaine"><span class="bx">5</span><span class="fl"><span class="op">+ 2</span></span><span class="bx">7</span><span class="fl"><span class="op">× 7</span></span><span class="bx">49</span><span class="fl"><span class="op">− 5²</span></span><span class="bx rep-bx">24</span></div>
+      <div>49 − 5² = 49 − 25 = 24</div>
+      <div class="rep">On obtient bien 24.</div>
+    </div>
+    <div>
+      <div class="q">2) Avec −4 comme nombre de départ :</div>
+      <div class="chaine"><span class="bx">−4</span><span class="fl"><span class="op">+ 2</span></span><span class="bx">−2</span><span class="fl"><span class="op">× (−2)</span></span><span class="bx">4</span><span class="fl"><span class="op">− (−4)²</span></span><span class="bx rep-bx">−12</span></div>
+      <div>4 − (−4)² = 4 − 16 = −12</div>
+      <div class="rep">On obtient −12.</div>
+    </div>
+  </div>
+
+  <div class="q">3) Vérification de l'affirmation de Léa</div>
+  <div class="redac">
+    <div>Avec 5 : 4 × 5 + 4 = 20 + 4 = 24, c'est bien le résultat obtenu.</div>
+    <div>Avec −4 : 4 × (−4) + 4 = −16 + 4 = −12, c'est bien le résultat obtenu.</div>
+    <div class="rep">L'affirmation de Léa est vérifiée sur ces deux exemples.</div>
+  </div>
+
+  <div class="q">4) Démontrer l'affirmation de Léa</div>
+  <div class="prog">
+    <div>
+      <div>On appelle 𝑥 le nombre de départ :</div>
+      <div class="chaine"><span class="bx">𝑥</span><span class="fl"><span class="op">+ 2</span></span><span class="bx">𝑥 + 2</span><span class="fl"><span class="op">× (𝑥 + 2)</span></span><span class="bx">(𝑥 + 2)(𝑥 + 2)</span><span class="fl"><span class="op">− 𝑥²</span></span><span class="bx rep-bx">(𝑥 + 2)(𝑥 + 2) − 𝑥²</span></div>
+    </div>
+    <div class="redac" style="margin-left:0;">
+      <div>(𝑥 + 2)(𝑥 + 2) − 𝑥²</div>
+      <div>= 𝑥 × 𝑥 + 𝑥 × 2 + 2 × 𝑥 + 2 × 2 − 𝑥²</div>
+      <div>= 𝑥² + 2𝑥 + 2𝑥 + 4 − 𝑥²</div>
+      <div>= 4𝑥 + 4</div>
+    </div>
+  </div>
+  <div class="redac">
+    <div class="rep">Quel que soit le nombre de départ 𝑥, le résultat est 4𝑥 + 4, c'est-à-dire 4 fois le nombre de départ augmenté de 4 : l'affirmation de Léa est vraie.</div>
+  </div>
+
+  <div class="prog" style="margin-left:0;">
+    <div>
+      <div class="q">5) Résultat du programme B</div>
+      <div class="chaine"><span class="bx">𝑥</span><span class="fl"><span class="op">× 6</span></span><span class="bx">6𝑥</span><span class="fl"><span class="op">+ 10</span></span><span class="bx rep-bx">6𝑥 + 10</span></div>
+    </div>
+    <div>
+      <div class="q">6) Même résultat avec les deux programmes</div>
+      <div class="redac" style="margin-left:0;">
+        <div>4𝑥 + 4 = 6𝑥 + 10</div>
+        <div>4𝑥 − 6𝑥 = 10 − 4</div>
+        <div>−2𝑥 = 6</div>
+        <div>𝑥 = <span class="frac"><span>6</span><span>−2</span></span></div>
+        <div>𝑥 = −3</div>
+      </div>
+    </div>
+  </div>
+  <div class="redac"><div class="rep">Il faut choisir −3 pour que les deux programmes donnent le même résultat.</div></div>
+</div>
+
+</body>
+</html>

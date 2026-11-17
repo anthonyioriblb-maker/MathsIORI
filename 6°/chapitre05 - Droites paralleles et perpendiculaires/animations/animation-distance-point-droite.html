@@ -44,7 +44,7 @@ button:hover { transform: translateY(-2px); }
 button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allowed; transform: none; }
 #btnReset { background: #f44336; color: white; }
 #btnPlay  { background: #4caf50; color: white; }
-#btnNext  { background: #2196f3; color: white; }
+#btnNext, #btnPrec { background: #2196f3; color: white; }
 </style>
 </head>
 <body>
@@ -87,9 +87,10 @@ button:disabled { background: #bdbdbd !important; color: #fff; cursor: not-allow
   </svg>
 
   <div class="controls">
-    <button id="btnPlay" onclick="togglePlay()">▶ Démarrer</button>
-    <button id="btnNext" onclick="goNext()" disabled>Suivant ▶</button>
-    <button id="btnReset" onclick="resetAnim()">↺ Recommencer</button>
+    <button id="btnPrec" onclick="goPrev()" disabled>◀ Étape précédente</button>
+    <button id="btnNext" onclick="goNext()">Étape suivante ▶</button>
+    <button id="btnPlay" onclick="togglePlay()">⏵ Automatique</button>
+    <button id="btnReset" onclick="resetAnim()">Recommencer ↺</button>
   </div>
 </div>
 
@@ -175,9 +176,8 @@ function frame(now) {
       document.getElementById('stepBox').innerHTML = MSG_END;
       playing = false;
       const btn = document.getElementById('btnPlay');
-      btn.textContent = '↺ Revoir';
+      btn.textContent = '⏵ Automatique';
       btn.style.background = '#4caf50';
-      btn.disabled = true;
       document.getElementById('btnNext').disabled = true;
       return;
     }
@@ -188,21 +188,18 @@ function frame(now) {
 
 function togglePlay() {
   const btn = document.getElementById('btnPlay');
-  if (mode === 'done') { resetAnim(); return; }
+  if (mode === 'done') resetAnim();
   if (playing) {
     playing = false;
     cancelAnimationFrame(rafId);
     lastTimestamp = null;
     phase2LastTimestamp = null;
-    btn.textContent = '▶ Reprendre';
+    btn.textContent = '⏵ Automatique';
     btn.style.background = '#4caf50';
   } else {
     playing = true;
     btn.textContent = '⏸ Pause';
     btn.style.background = '#ff9800';
-    if (mode === 'phase1') {
-      document.getElementById('btnNext').disabled = false;
-    }
     rafId = requestAnimationFrame(frame);
   }
 }
@@ -216,6 +213,7 @@ function goNext() {
   phase2Elapsed = 0;
   phase2LastTimestamp = null;
   document.getElementById('btnNext').disabled = true;
+  document.getElementById('btnPrec').disabled = false;
   document.getElementById('perpGuide').style.opacity = '1';
   document.getElementById('stepBox').innerHTML = MSG_PHASE2;
 
@@ -240,11 +238,18 @@ function resetAnim() {
   document.getElementById('perpGuide').style.opacity = '0';
   document.getElementById('stepBox').innerHTML = MSG_PHASE1;
   const btn = document.getElementById('btnPlay');
-  btn.textContent = '▶ Démarrer';
+  btn.textContent = '⏵ Automatique';
   btn.style.background = '#4caf50';
   btn.disabled = false;
-  document.getElementById('btnNext').disabled = true;
+  document.getElementById('btnNext').disabled = false;
+  document.getElementById('btnPrec').disabled = true;
   render(initialOffset());
+}
+
+// Retour au Temps 1 (M de nouveau en va-et-vient, perpendiculaire masquée)
+function goPrev() {
+  if (mode === 'phase1') return;
+  resetAnim();
 }
 
 // État initial : M à l'extrémité, pas déjà sur H

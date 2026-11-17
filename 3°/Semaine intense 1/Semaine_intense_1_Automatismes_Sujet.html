@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Semaine intense 1 - Mathématiques - Automatismes - Sujet</title>
+<style>
+  @font-face{ font-family:'LettresMath'; src:local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('LatinModernMath-Regular'); unicode-range:U+1D400-1D7FF, U+210E; }
+  :root{ --bleu:#2980b9; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'LettresMath','Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; line-height:1.4; }
+  .page{ max-width:800px; margin:0 auto 24px; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:28px 40px 32px; }
+  h1.partie{ font-size:1.1em; border-bottom:2px solid #333; padding-bottom:4px; margin-bottom:10px; }
+  .consigne{ border:1.5px solid #333; border-radius:6px; padding:8px 12px; margin-bottom:10px; font-size:.95em; }
+  .consigne p + p{ margin-top:4px; }
+  h2.q{ font-size:1em; margin:12px 0 3px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); margin:16px 0 6px; font-weight:normal; }
+  h2.exo span{ text-decoration:underline; font-weight:bold; }
+  h2.exo em{ color:#555; font-size:.9em; }
+  .math{ text-align:center; font-size:1.15em; margin:6px 0; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; }
+  .frac > span:first-child{ border-bottom:1.5px solid #000; padding:0 3px; }
+  .frac > span{ line-height:1.25; }
+  .liste{ display:flex; justify-content:center; gap:42px; align-items:center; font-size:1.15em; margin:6px 0; }
+  ol.qs{ padding-left:26px; margin-top:6px; }
+  ol.qs > li{ margin:4px 0; }
+  ol.sub{ list-style:lower-alpha; padding-left:24px; margin-top:2px; }
+  ol.sub > li{ margin:2px 0; }
+  .txt-fig{ display:grid; grid-template-columns:1fr 260px; gap:16px; align-items:center; }
+  .fig{ text-align:center; margin:6px 0; }
+  .fig small{ display:block; font-style:italic; font-size:.8em; color:#444; }
+  .progs{ display:grid; grid-template-columns:1fr 1fr; border:1.5px solid #333; margin:6px 0; }
+  .progs > div{ padding:6px 12px; }
+  .progs > div + div{ border-left:1.5px solid #333; }
+  .progs ul{ padding-left:20px; }
+  table.donnees{ border-collapse:collapse; }
+  svg text{ font-family:Arial, sans-serif; }
+  b{ font-weight:bold; }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; margin:0; max-width:none; }
+    .page + .page{ break-before:page; }
+    h2.exo, h2.q{ break-after:avoid; }
+    .txt-fig, .fig, .progs, ol.qs > li{ break-inside:avoid; }
+    .toolbar{ display:none !important; }
+    body{ font-size:10.5pt; line-height:1.3; }
+    h2.q{ margin:7px 0 1px; }
+    .math, .liste{ margin:2px 0; }
+    h2.exo{ margin:10px 0 4px; }
+    ol.qs > li{ margin:2px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+
+<!-- ================= PARTIE 1 ================= -->
+<div class="page">
+  <h1 class="partie">Partie 1 – Automatismes et applications directes – 6 points – 20 minutes</h1>
+  <div class="consigne">
+    <p>Pour chaque question, recopier sur la copie son numéro et indiquer la réponse correspondante.</p>
+    <p>Pour cette partie, aucune justification n’est demandée. La calculatrice n’est pas autorisée.</p>
+  </div>
+
+  <h2 class="q">Question 1</h2>
+  <p>Calculer et donner le résultat sous forme de fraction irréductible :</p>
+  <div class="math">A = <span class="frac"><span>5</span><span>6</span></span> − <span class="frac"><span>1</span><span>4</span></span></div>
+
+  <h2 class="q">Question 2</h2>
+  <p>Calculer :</p>
+  <div class="math">B = 4 × 10<sup>3</sup> + 2 × 10<sup>2</sup> + 5 × 10<sup>−1</sup></div>
+
+  <h2 class="q">Question 3</h2>
+  <p>Calculer :</p>
+  <div class="math">C = −3 + 4 × (−2) − (−5)</div>
+
+  <h2 class="q">Question 4</h2>
+  <p>Classer par ordre croissant les nombres suivants :</p>
+  <div class="liste">
+    <span class="frac"><span>3</span><span>2</span></span>
+    <span>1,45</span>
+    <span>1 + <span class="frac"><span>3</span><span>10</span></span></span>
+    <span class="frac"><span>7</span><span>5</span></span>
+  </div>
+
+  <h2 class="q">Question 5</h2>
+  <p>Déterminer la solution de l’équation :</p>
+  <div class="math">5𝑥 + 3 = 2𝑥 − 9</div>
+
+  <h2 class="q">Question 6</h2>
+  <p>Développer et réduire l’expression :</p>
+  <div class="math">D = 4(𝑥 − 3) − 2(3𝑥 + 1)</div>
+
+  <h2 class="q">Question 7</h2>
+  <p>Un pull coûte 40 euros. Quel sera son prix après une remise de 25&nbsp;% ?</p>
+
+  <h2 class="q">Question 8</h2>
+  <p>Le triangle ABC est rectangle en A, avec AB = 5&nbsp;cm et AC = 12&nbsp;cm. Déterminer la longueur BC.</p>
+
+  <h2 class="q">Question 9</h2>
+  <div class="txt-fig">
+    <div>
+      <p>Sur la figure ci-contre, le point M appartient au segment [AB], le point N appartient au segment [AC], les droites (MN) et (BC) sont parallèles.</p>
+      <p style="margin-top:6px;">Déterminer la longueur AC.</p>
+    </div>
+    <svg viewBox="0 0 260 190" width="250">
+      <line x1="70" y1="20" x2="30" y2="160" stroke="#000" stroke-width="1.4"/>
+      <line x1="70" y1="20" x2="240" y2="160" stroke="#000" stroke-width="1.4"/>
+      <line x1="30" y1="160" x2="240" y2="160" stroke="#000" stroke-width="1.4"/>
+      <line x1="56.7" y1="66.7" x2="126.7" y2="66.7" stroke="#000" stroke-width="1.4"/>
+      <text x="64" y="14" font-size="15">A</text>
+      <text x="14" y="174" font-size="15">B</text>
+      <text x="242" y="174" font-size="15">C</text>
+      <text x="38" y="70" font-size="15">M</text>
+      <text x="130" y="66" font-size="15">N</text>
+      <text x="30" y="46" font-size="12">2 cm</text>
+      <text x="8" y="118" font-size="12">4 cm</text>
+      <text x="102" y="38" font-size="12">3 cm</text>
+    </svg>
+  </div>
+</div>
+
+</body>
+</html>

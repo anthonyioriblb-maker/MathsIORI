@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Semaine intense 1 - Mathématiques - Partie 2 (40 minutes) - Sujet</title>
+<style>
+  @font-face{ font-family:'LettresMath'; src:local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('LatinModernMath-Regular'); unicode-range:U+1D400-1D7FF, U+210E; }
+  :root{ --bleu:#2980b9; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'LettresMath','Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; line-height:1.4; }
+  .page{ max-width:800px; margin:0 auto 24px; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:28px 40px 32px; }
+  h1.partie{ font-size:1.1em; border-bottom:2px solid #333; padding-bottom:4px; margin-bottom:10px; }
+  .consigne{ border:1.5px solid #333; border-radius:6px; padding:8px 12px; margin-bottom:10px; font-size:.95em; }
+  .consigne p + p{ margin-top:4px; }
+  h2.q{ font-size:1em; margin:12px 0 3px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); margin:16px 0 6px; font-weight:normal; }
+  h2.exo span{ text-decoration:underline; font-weight:bold; }
+  h2.exo em{ color:#555; font-size:.9em; }
+  .math{ text-align:center; font-size:1.15em; margin:6px 0; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; }
+  .frac > span:first-child{ border-bottom:1.5px solid #000; padding:0 3px; }
+  .frac > span{ line-height:1.25; }
+  .liste{ display:flex; justify-content:center; gap:42px; align-items:center; font-size:1.15em; margin:6px 0; }
+  ol.qs{ padding-left:26px; margin-top:6px; }
+  ol.qs > li{ margin:4px 0; }
+  ol.sub{ list-style:lower-alpha; padding-left:24px; margin-top:2px; }
+  ol.sub > li{ margin:2px 0; }
+  .txt-fig{ display:grid; grid-template-columns:1fr 260px; gap:16px; align-items:center; }
+  .fig{ text-align:center; margin:6px 0; }
+  .fig small{ display:block; font-style:italic; font-size:.8em; color:#444; }
+  .progs{ display:grid; grid-template-columns:1fr 1fr; border:1.5px solid #333; margin:6px 0; }
+  .progs > div{ padding:6px 12px; }
+  .progs > div + div{ border-left:1.5px solid #333; }
+  .progs ul{ padding-left:20px; }
+  table.donnees{ border-collapse:collapse; }
+  svg text{ font-family:Arial, sans-serif; }
+  b{ font-weight:bold; }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; margin:0; max-width:none; }
+    .page + .page{ break-before:page; }
+    h2.exo, h2.q{ break-after:avoid; }
+    .txt-fig, .fig, .progs, ol.qs > li{ break-inside:avoid; }
+    .toolbar{ display:none !important; }
+    body{ font-size:10.5pt; line-height:1.3; }
+    h2.q{ margin:7px 0 1px; }
+    .math, .liste{ margin:2px 0; }
+    h2.exo{ margin:10px 0 4px; }
+    ol.qs > li{ margin:2px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+
+<!-- ================= PARTIE 2 – 40 minutes ================= -->
+<div class="page">
+  <h1 class="partie">Partie 2 – Raisonnement et résolution de problèmes – 40 minutes</h1>
+  <div class="consigne">
+    <p>Dans cette partie, toutes les réponses doivent être justifiées, sauf si une indication contraire est donnée.</p>
+    <p>La clarté et la précision des raisonnements ainsi que la rédaction sont évaluées sur 2 points. La maîtrise de la langue sera plus particulièrement évaluée sur les réponses aux questions <b>en gras</b>.</p>
+    <p>Pour chaque question, si le travail n’est pas terminé, laisser tout de même une trace de la recherche ; les essais et les démarches engagées, même non aboutis, seront pris en compte dans la notation. La calculatrice est autorisée.</p>
+  </div>
+
+  <h2 class="exo"><span>Exercice 3</span> <em>(4 points)</em></h2>
+  <p>On considère les deux programmes de calcul suivants :</p>
+  <div class="progs">
+    <div><b>Programme A</b>
+      <ul><li>Choisir un nombre.</li><li>Lui ajouter 2.</li><li>Multiplier le résultat par lui-même.</li><li>Soustraire le carré du nombre de départ.</li></ul>
+    </div>
+    <div><b>Programme B</b>
+      <ul><li>Choisir un nombre.</li><li>Le multiplier par 6.</li><li>Ajouter 10.</li></ul>
+    </div>
+  </div>
+  <ol class="qs">
+    <li>Vérifier qu’en choisissant 5 avec le programme A, on obtient 24.</li>
+    <li>Quel résultat obtient-on avec le programme A en choisissant −4 ?</li>
+    <li>Léa affirme : « Le résultat du programme A est toujours égal à 4 fois le nombre de départ, augmenté de 4. » Vérifier son affirmation sur les deux exemples précédents.</li>
+  </ol>
+  <p style="margin:4px 0;">Dans toute la suite de cet exercice, on appelle 𝑥 le nombre choisi au départ.</p>
+  <ol class="qs" start="4" style="margin-top:0;">
+    <li><b>Démontrer l’affirmation de Léa. Présenter la démarche avec un vocabulaire mathématique adapté.</b></li>
+    <li>Exprimer en fonction de 𝑥 le résultat du programme B.</li>
+    <li>Quel nombre faut-il choisir pour que les programmes A et B donnent le même résultat ?</li>
+  </ol>
+</div>
+
+</body>
+</html>

@@ -329,6 +329,118 @@ function resetAnimation() {
 })();
 </script>
 <script>
+/* === Boutons « Étape précédente » / « Automatique » (ajout générique, nov. 2026) ===
+   Règle n°5 du CLAUDE.md. Ajoute les boutons manquants sans toucher à nextStep() :
+   - Précédent : recommence puis rejoue instantanément les étapes jusqu'à n-1
+     (les délais setTimeout sont neutralisés pendant le rejeu) ;
+   - Automatique : enchaîne les étapes toutes les 1,5 s (orange + « ⏸ Pause » en lecture). */
+(function () {
+    var realST = window.setTimeout;
+    var fast = false;
+    window.setTimeout = function (fn, ms) {
+        if (fast && typeof fn === 'function') {
+            var args = Array.prototype.slice.call(arguments, 2);
+            Promise.resolve().then(function () { fn.apply(null, args); });
+            return 0;
+        }
+        return realST.apply(window, arguments);
+    };
+    function wait(ms) { return new Promise(function (r) { realST(r, ms); }); }
+
+    var origNext = window.nextStep, origReset = window.resetAnimation;
+    if (typeof origNext !== 'function' || typeof origReset !== 'function') return;
+    var nextBtn = document.querySelector('button[onclick^="nextStep"]');
+    if (!nextBtn) return;
+    var hasPrev = !!document.querySelector('button[onclick^="goPrev"],button[onclick^="prevStep"]');
+    var hasAuto = typeof window.toggleAuto === 'function';
+
+    var count = 0, busy = false, gen = 0, autoOn = false;
+    var prevBtn = null, autoBtn = null;
+    function snap() { return document.body.innerHTML.replace(/<button[\s\S]*?<\/button>/g, ''); }
+    function refresh() { if (prevBtn) prevBtn.disabled = busy || count === 0; }
+
+    async function wrappedNext() {
+        if (busy) return false;
+        busy = true; refresh();
+        var g = gen, before = snap();
+        try { await origNext.apply(null, arguments); } catch (e) { console.error(e); }
+        var changed = (g === gen) && snap() !== before;
+        if (changed) count++;
+        if (g === gen) busy = false;
+        refresh();
+        return changed;
+    }
+    window.nextStep = wrappedNext;
+    window.resetAnimation = function () {
+        stopAuto(); gen++; busy = false;
+        origReset.apply(null, arguments);
+        count = 0; refresh();
+    };
+
+    function stopAuto() {
+        if (hasAuto) { if (typeof window.stopAuto === 'function') window.stopAuto(); return; }
+        autoOn = false;
+        if (autoBtn) { autoBtn.textContent = '⏵ Automatique'; autoBtn.style.background = '#4caf50'; }
+    }
+
+    if (!hasPrev) {
+        prevBtn = document.createElement('button');
+        prevBtn.className = nextBtn.className;
+        prevBtn.id = document.getElementById('btnPrec') ? 'btnPrecAuto' : 'btnPrec';
+        prevBtn.textContent = '◀ Étape précédente';
+        prevBtn.style.background = getComputedStyle(nextBtn).backgroundColor;
+        prevBtn.style.color = getComputedStyle(nextBtn).color;
+        nextBtn.parentNode.insertBefore(prevBtn, nextBtn);
+        prevBtn.addEventListener('click', async function () {
+            if (busy || count === 0) return;
+            stopAuto();
+            var target = count - 1;
+            gen++; busy = true; fast = true; refresh();
+            try {
+                origReset(); count = 0;
+                for (var i = 0; i < target; i++) {
+                    var b = snap();
+                    await origNext();
+                    if (snap() !== b) count++;
+                }
+            } catch (e) { console.error(e); }
+            fast = false; busy = false; refresh();
+        });
+        refresh();
+    }
+
+    if (!hasAuto) {
+        autoBtn = document.createElement('button');
+        autoBtn.className = nextBtn.className;
+        autoBtn.id = 'btnAuto';
+        autoBtn.textContent = '⏵ Automatique';
+        autoBtn.style.background = '#4caf50';
+        autoBtn.style.color = 'white';
+        nextBtn.parentNode.insertBefore(autoBtn, nextBtn.nextSibling);
+        window.toggleAuto = async function () {
+            if (autoOn) { stopAuto(); return; }
+            autoOn = true;
+            autoBtn.textContent = '⏸ Pause';
+            autoBtn.style.background = '#ff9800';
+            while (busy) await wait(100);
+            var first = true;
+            while (autoOn) {
+                var changed = await window.nextStep();
+                if (!autoOn) break;
+                if (!changed) {
+                    if (first && count > 0) { window.resetAnimation(); autoOn = true; autoBtn.textContent = '⏸ Pause'; autoBtn.style.background = '#ff9800'; first = false; continue; }
+                    break;
+                }
+                first = false;
+                await wait(1500);
+            }
+            stopAuto();
+        };
+        autoBtn.addEventListener('click', function () { window.toggleAuto(); });
+    }
+})();
+</script>
+<script>
 /* === Redimensionnement automatique (hauteur) === */
 (function () {
     if (window.parent === window) return;

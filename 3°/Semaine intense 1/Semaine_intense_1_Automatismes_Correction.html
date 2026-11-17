@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Semaine intense 1 - Mathématiques - Automatismes - Correction</title>
+<style>
+  @font-face{ font-family:'LettresMath'; src:local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('LatinModernMath-Regular'); unicode-range:U+1D400-1D7FF, U+210E; }
+  :root{ --bleu:#2980b9; --vert:#1e8449; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'LettresMath','Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; line-height:1.4; }
+  .page{ max-width:800px; margin:0 auto 24px; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:28px 40px 32px; }
+  h1.partie{ font-size:1.1em; border-bottom:2px solid #333; padding-bottom:4px; margin-bottom:10px; }
+  h2.exo{ font-size:1.05em; color:var(--bleu); margin:16px 0 6px; font-weight:normal; }
+  h2.exo span{ text-decoration:underline; font-weight:bold; }
+  h2.exo em{ color:#555; font-size:.9em; }
+  .q{ font-weight:bold; margin-top:8px; }
+  .redac{ line-height:1.9; margin-left:10px; }
+  .rep{ color:var(--vert); font-weight:bold; }
+  .grille{ display:grid; grid-template-columns:1fr 1.35fr 1fr; gap:4px 22px; }
+  .grille > div{ break-inside:avoid; }
+  .calc{ line-height:2; }
+  .frac{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; line-height:1.25; }
+  .frac > span:first-child{ border-bottom:1.5px solid #000; padding:0 3px; }
+  .sqrt{ position:relative; display:inline-block; border-top:2px solid black; margin-left:.7em; padding-left:.2em; padding-right:.1em; }
+  .sqrt:before{ content:" "; position:absolute; display:inline-block; left:-.65em; height:56%; width:.6em; border-right:2px solid black; border-bottom:2.5px solid black; transform-origin:top right; transform:rotate(55deg) skew(50deg); }
+  .prog{ margin-left:10px; display:grid; grid-template-columns:1fr 1fr; gap:6px 30px; }
+  .chaine{ display:flex; flex-direction:column; align-items:flex-start; margin:4px 0 6px; }
+  .bx{ border:2px solid #333; border-radius:6px; padding:2px 10px; min-width:60px; text-align:center; background:#fff; }
+  .rep-bx{ border-color:var(--vert); color:var(--vert); font-weight:bold; }
+  .fl{ -webkit-print-color-adjust:exact; print-color-adjust:exact; position:relative; display:block; width:2px; height:24px; background:#333; margin:0 0 8px 30px; }
+  .fl::after{ content:""; position:absolute; bottom:-8px; left:-5px; border-top:9px solid #333; border-left:6px solid transparent; border-right:6px solid transparent; }
+  .fl .op{ position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:.9em; color:#c0392b; white-space:nowrap; }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; font-size:10.5pt; line-height:1.3; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; margin:0; max-width:none; }
+    .page + .page{ break-before:page; }
+    h2.exo, .q{ break-after:avoid; }
+    .redac, .prog{ break-inside:avoid; }
+    .toolbar{ display:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+
+<!-- ================= PARTIE 1 ================= -->
+<div class="page">
+  <h1 class="partie">Partie 1 – Automatismes et applications directes – Correction</h1>
+
+  <div class="grille">
+    <div class="calc">
+      <div class="q">Question 1</div>
+      <div>A = <span class="frac"><span>5</span><span>6</span></span> − <span class="frac"><span>1</span><span>4</span></span></div>
+      <div>A = <span class="frac"><span>5 × 2</span><span>6 × 2</span></span> − <span class="frac"><span>1 × 3</span><span>4 × 3</span></span></div>
+      <div>A = <span class="frac"><span>10</span><span>12</span></span> − <span class="frac"><span>3</span><span>12</span></span></div>
+      <div>A = <span class="rep"><span class="frac"><span>7</span><span>12</span></span></span></div>
+    </div>
+    <div class="calc">
+      <div class="q">Question 2</div>
+      <div>B = 4 × 10<sup>3</sup> + 2 × 10<sup>2</sup> + 5 × 10<sup>−1</sup></div>
+      <div>B = 4 × 1&nbsp;000 + 2 × 100 + 5 × 0,1</div>
+      <div>B = 4&nbsp;000 + 200 + 0,5</div>
+      <div>B = <span class="rep">4&nbsp;200,5</span></div>
+    </div>
+    <div class="calc">
+      <div class="q">Question 3</div>
+      <div>C = −3 + 4 × (−2) − (−5)</div>
+      <div>C = −3 − 8 + 5</div>
+      <div>C = −11 + 5</div>
+      <div>C = <span class="rep">−6</span></div>
+    </div>
+
+    <div class="calc" style="grid-column:1 / span 2;">
+      <div class="q">Question 4</div>
+      <div><span class="frac"><span>3</span><span>2</span></span> = 1,5 ; &nbsp; 1 + <span class="frac"><span>3</span><span>10</span></span> = 1,3 ; &nbsp; <span class="frac"><span>7</span><span>5</span></span> = 1,4</div>
+      <div class="rep">1 + <span class="frac"><span>3</span><span>10</span></span> &lt; <span class="frac"><span>7</span><span>5</span></span> &lt; 1,45 &lt; <span class="frac"><span>3</span><span>2</span></span></div>
+    </div>
+    <div class="calc">
+      <div class="q">Question 5</div>
+      <div>5𝑥 + 3 = 2𝑥 − 9</div>
+      <div>5𝑥 − 2𝑥 = −9 − 3</div>
+      <div>3𝑥 = −12</div>
+      <div>𝑥 = <span class="frac"><span>−12</span><span>3</span></span></div>
+      <div>𝑥 = −4</div>
+      <div class="rep">La solution est −4.</div>
+    </div>
+
+    <div class="calc" style="grid-column:1 / span 2;">
+      <div class="q">Question 6</div>
+      <div>D = 4(𝑥 − 3) − 2(3𝑥 + 1)</div>
+      <div>D = 4 × 𝑥 − 4 × 3 − 2 × 3𝑥 − 2 × 1</div>
+      <div>D = 4𝑥 − 12 − 6𝑥 − 2</div>
+      <div>D = <span class="rep">−2𝑥 − 14</span></div>
+    </div>
+    <div class="calc">
+      <div class="q">Question 7</div>
+      <div>40 × (1 − <span class="frac"><span>25</span><span>100</span></span>)</div>
+      <div>= 40 × 0,75 = 30</div>
+      <div class="rep">Le pull coûte 30 €.</div>
+    </div>
+
+    <div class="calc">
+      <div class="q">Question 8</div>
+      <div>BC² = AB² + AC²</div>
+      <div>BC² = 5² + 12²</div>
+      <div>BC² = 25 + 144</div>
+      <div>BC² = 169</div>
+      <div>BC = <span class="sqrt">169</span> = 13</div>
+      <div class="rep">[BC] mesure 13 cm.</div>
+    </div>
+    <div class="calc" style="grid-column:2 / span 2;">
+      <div class="q">Question 9</div>
+      <div>AB = AM + MB = 2 + 4 = 6 cm</div>
+      <div><span class="frac"><span>AM</span><span>AB</span></span> = <span class="frac"><span>AN</span><span>AC</span></span> soit <span class="frac"><span>2</span><span>6</span></span> = <span class="frac"><span>3</span><span>AC</span></span></div>
+      <div>D'où AC = <span class="frac"><span>3 × 6</span><span>2</span></span> = <span class="frac"><span>18</span><span>2</span></span> = 9</div>
+      <div class="rep">[AC] mesure 9 cm.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

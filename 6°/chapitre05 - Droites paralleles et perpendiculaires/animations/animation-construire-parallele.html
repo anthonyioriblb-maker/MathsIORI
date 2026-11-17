@@ -28,8 +28,10 @@
         }
         button:hover { background:#2980b9; transform:translateY(-2px); }
         button:disabled { background:#bdc3c7; cursor:not-allowed; transform:none; }
-        button.reset { background:#e74c3c; }
-        button.reset:hover { background:#c0392b; }
+        .btn-reset { background:#e74c3c; }
+        .btn-reset:hover { background:#c0392b; }
+        .btn-auto  { background:#4caf50; }
+        .btn-auto:hover { background:#388e3c; }
     </style>
 </head>
 <body>
@@ -78,20 +80,18 @@
     </svg>
 
     <div class="controls">
-        <button id="nextBtn" onclick="nextStep()">▶ Étape suivante</button>
-        <button class="reset" onclick="resetAnimation()">🔄 Recommencer</button>
+        <button class="btn-anim" id="btnPrec" onclick="prevStep()" disabled>◀ Étape précédente</button>
+        <button class="btn-anim" id="btnNext" onclick="nextStep()">Étape suivante ▶</button>
+        <button class="btn-auto" id="btnAuto" onclick="toggleAuto()">⏵ Automatique</button>
+        <button class="btn-reset" id="btnReset" onclick="resetAnimation()">Recommencer ↺</button>
     </div>
 </div>
 
 <script>
-const el = id => document.getElementById(id);
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-
 const EQ_START = {x:350, y:300};        // sur (d)
 const EQ_END   = {x:291.9, y:140.3};    // glisse le long de la règle (perpendiculairement à (d)), jusqu'à ce que le côté passe par A
 const EQ_ANGLE = -20; // degrés, angle de (d)
-
-let currentStep = 0;
+const MAX_STEP = 6;
 
 const stepTexts = [
     'Cliquez sur « Étape suivante » pour voir la construction étape par étape.',
@@ -103,96 +103,119 @@ const stepTexts = [
     '<strong style="color:#27ae60;font-size:20px;">6.</strong> La droite tracée est parallèle à (d) et passe par A. ✓'
 ];
 
-async function slideSquare(from, to, duration) {
+function placeSquare(p) {
+    el('setSquare').setAttribute('transform', `translate(${p.x},${p.y}) rotate(${EQ_ANGLE})`);
+}
+
+async function slideSquare(from, to, duration, stale) {
     const N = 50;
     for (let i = 0; i <= N; i++) {
+        if (stale()) return;
         const t = i / N;
-        const x = from.x + (to.x - from.x) * t;
-        const y = from.y + (to.y - from.y) * t;
-        el('setSquare').setAttribute('transform', `translate(${x},${y}) rotate(${EQ_ANGLE})`);
+        placeSquare({x: from.x + (to.x - from.x) * t, y: from.y + (to.y - from.y) * t});
         await sleep(duration / N);
     }
 }
 
-async function nextStep() {
-    const txt = el('stepText');
-    const btn = el('nextBtn');
-    if (currentStep >= 6) return;
-    btn.disabled = true;
+// État final (instantané) de l'étape n
+function drawState(n) {
+    placeSquare(n >= 3 ? EQ_END : EQ_START);
+    el('setSquare').style.opacity = (n >= 1 && n <= 4) ? '1' : '0';
+    el('ruler').style.opacity     = (n >= 2 && n <= 4) ? '1' : '0';
+    el('paraLine').style.opacity  = n >= 4 ? '1' : '0';
+}
 
-    // 1 : équerre apparaît sur (d)
-    if (currentStep === 0) {
-        txt.innerHTML = stepTexts[1];
-        el('setSquare').setAttribute('transform', `translate(${EQ_START.x},${EQ_START.y}) rotate(${EQ_ANGLE})`);
+// Animation de passage à l'étape n
+async function playStep(n, stale) {
+    setText(n);
+    if (n === 1) {
+        placeSquare(EQ_START);
         el('setSquare').style.opacity = '1';
         await sleep(1000);
-        currentStep = 1;
-    }
-
-    // 2 : règle placée le long de l'autre côté
-    else if (currentStep === 1) {
-        txt.innerHTML = stepTexts[2];
+    } else if (n === 2) {
         el('ruler').style.opacity = '1';
         await sleep(1000);
-        currentStep = 2;
-    }
-
-    // 3 : équerre glisse le long de la règle jusqu'à A
-    else if (currentStep === 2) {
-        txt.innerHTML = stepTexts[3];
-        await sleep(400);
-        await slideSquare(EQ_START, EQ_END, 2200);
+    } else if (n === 3) {
+        await sleep(400); if (stale()) return;
+        await slideSquare(EQ_START, EQ_END, 2200, stale); if (stale()) return;
         await sleep(800);
-        currentStep = 3;
-    }
-
-    // 4 : parallèle tracée
-    else if (currentStep === 3) {
-        txt.innerHTML = stepTexts[4];
+    } else if (n === 4) {
         el('paraLine').style.opacity = '1';
         await sleep(1200);
-        currentStep = 4;
-    }
-
-    // 5 : ranger équerre et règle
-    else if (currentStep === 4) {
-        txt.innerHTML = stepTexts[5];
+    } else if (n === 5) {
         el('setSquare').style.opacity = '0';
         el('ruler').style.opacity = '0';
         await sleep(700);
-        currentStep = 5;
     }
-
-    // 6 : conclusion
-    else if (currentStep === 5) {
-        txt.innerHTML = stepTexts[6];
-        txt.style.background      = '#c8e6c9';
-        txt.style.borderLeftColor = '#4caf50';
-        txt.style.color           = '#2e7d32';
-        currentStep = 6;
-        btn.textContent = '✓ Terminé';
-    }
-
-    btn.disabled = false;
 }
 
-function resetAnimation() {
-    ['setSquare','ruler','paraLine'].forEach(id => {
-        el(id).style.opacity = '0';
-    });
-    el('setSquare').setAttribute('transform', `translate(${EQ_START.x},${EQ_START.y}) rotate(${EQ_ANGLE})`);
+const el = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+let currentStep = 0;
+let busy = false;
+let runId = 0;
+let autoOn = false;
 
+function setText(n) {
     const txt = el('stepText');
-    txt.innerHTML             = stepTexts[0];
-    txt.style.background      = '#e3f2fd';
-    txt.style.borderLeftColor = '#2196f3';
-    txt.style.color           = '#1565c0';
-
-    const btn = el('nextBtn');
-    btn.textContent = '▶ Étape suivante';
-    btn.disabled    = false;
-    currentStep     = 0;
+    txt.innerHTML = stepTexts[n];
+    const fin = (n === MAX_STEP);
+    txt.style.background      = fin ? '#c8e6c9' : '#e3f2fd';
+    txt.style.borderLeftColor = fin ? '#4caf50' : '#2196f3';
+    txt.style.color           = fin ? '#2e7d32' : '#1565c0';
 }
+
+function updateButtons() {
+    el('btnPrec').disabled = busy || currentStep === 0;
+    el('btnNext').disabled = busy || currentStep >= MAX_STEP;
+    el('btnNext').textContent = currentStep >= MAX_STEP ? '✓ Terminé' : 'Étape suivante ▶';
+}
+
+async function advanceStep() {
+    if (busy || currentStep >= MAX_STEP) return;
+    busy = true; updateButtons();
+    const id = ++runId;
+    await playStep(currentStep + 1, () => id !== runId);
+    if (id !== runId) return;
+    currentStep++;
+    busy = false; updateButtons();
+}
+
+// Retour arrière / reset : état final de l'étape n, instantané (sans animation)
+function renderStep(n) {
+    runId++;
+    busy = false;
+    currentStep = n;
+    drawState(n);
+    setText(n);
+    updateButtons();
+}
+
+function nextStep() { stopAuto(); advanceStep(); }
+function prevStep() { stopAuto(); if (currentStep > 0) renderStep(currentStep - 1); }
+function resetAnimation() { stopAuto(); renderStep(0); }
+
+async function toggleAuto() {
+    if (autoOn) { stopAuto(); return; }
+    if (currentStep >= MAX_STEP) renderStep(0);
+    autoOn = true;
+    el('btnAuto').textContent = '⏸ Pause';
+    el('btnAuto').style.background = '#ff9800';
+    while (autoOn && currentStep < MAX_STEP) {
+        await advanceStep();
+        if (!autoOn) break;
+        await sleep(1500);
+    }
+    stopAuto();
+}
+
+function stopAuto() {
+    autoOn = false;
+    el('btnAuto').textContent = '⏵ Automatique';
+    el('btnAuto').style.background = '#4caf50';
+}
+
+renderStep(0);
 </script>
 <script>
 /* === Redimensionnement automatique (hauteur) === */

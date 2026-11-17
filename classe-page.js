@@ -213,15 +213,18 @@ document.addEventListener('DOMContentLoaded', function() {
         container.appendChild(card);
     });
 
-    // Section « Devoirs » (devoirs portant sur plusieurs chapitres)
-    if (devoirsVisibles.length > 0) {
+    // Sections « Devoirs » et « Semaine intense » : même présentation (cartes Sujet / Correction)
+    // configSemaineIntense (optionnel) : [{ titre, description, sujet:{actif,fichier}, correction:{actif,fichier} }]
+    let ancre = container;
+    function afficherSection(liste, titreSection, emoji, prefixeId, descDefaut) {
+        if (liste.length === 0) return;
         const titre = document.createElement('h2');
         titre.className = 'devoirs-titre';
-        titre.textContent = '📝 Devoirs';
+        titre.textContent = titreSection;
         const zone = document.createElement('div');
         zone.className = 'chapters devoirs';
 
-        devoirsVisibles.forEach((d, i) => {
+        liste.forEach((d, i) => {
             const chips = (d.chapitres || []).map(n => {
                 const c = configChapitres['chapitre' + n];
                 const label = c ? `Ch. ${n} · ${c.titre}` : `Ch. ${n}`;
@@ -237,13 +240,13 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             const card = document.createElement('div');
             card.className = 'chapter-card devoir-card';
-            card.id = 'devoir-' + i;
+            card.id = prefixeId + i;
             card.innerHTML = `
                 <div class="chapter-header">
-                    <div class="chapter-title"><span class="emoji">📝</span>${d.titre}</div>
-                    <div class="chapter-desc">${d.description || 'Devoir sur plusieurs chapitres'}</div>
+                    <div class="chapter-title"><span class="emoji">${emoji}</span>${d.titre}</div>
+                    <div class="chapter-desc">${d.description || descDefaut}</div>
                 </div>
-                <div class="devoir-chips">${chips}</div>
+                ${chips ? `<div class="devoir-chips">${chips}</div>` : ''}
                 <div class="chapter-actions">
                     ${bouton(d.sujet, '📄 Sujet')}
                     ${bouton(d.correction, '✅ Correction')}
@@ -252,8 +255,18 @@ document.addEventListener('DOMContentLoaded', function() {
             zone.appendChild(card);
         });
 
-        container.after(titre, zone);
+        ancre.after(titre, zone);
+        ancre = zone;
     }
+
+    afficherSection(devoirsVisibles, '📝 Devoirs', '📝', 'devoir-', 'Devoir sur plusieurs chapitres');
+
+    // option « aPartirDu » ("AAAA-MM-JJTHH:MM", heure locale) sur une carte : masquée avant cette date/heure
+    const semainesIntenses = (typeof configSemaineIntense !== 'undefined' && Array.isArray(configSemaineIntense))
+        ? configSemaineIntense.filter(d => (!d.aPartirDu || new Date() >= new Date(d.aPartirDu))
+            && ((d.sujet && d.sujet.actif) || (d.correction && d.correction.actif)))
+        : [];
+    afficherSection(semainesIntenses, '🎯 Semaine intense', '🎯', 'semaine-intense-', 'Préparation au DNB');
 
     // Bandeau d'annonce en haut de page pour les devoirs marqués « alerte: true »
     // (option « date » : texte libre affiché dans le bandeau, ex. "jeudi 8 octobre")
