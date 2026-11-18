@@ -21,14 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Option « aPartirDu » ("AAAA-MM-JJ") sur un item (exercice, activité, évaluation, quiz) :
-    // l'item n'apparaît dans le menu qu'à partir de cette date (ex. une correction).
+    // Option « aPartirDu » ("AAAA-MM-JJ" ou "AAAA-MM-JJTHH:MM", heure locale) sur un item (exercice, activité,
+    // évaluation, quiz) : l'item n'apparaît dans le menu qu'à partir de cette date / heure (ex. une correction).
     // Option « cachee: true » : l'item est masqué tant qu'on ne la passe pas à false (activation manuelle).
     function itemVisible(it) {
         if (!it) return true;
         if (it.cachee) return false;
         if (!it.aPartirDu) return true;
-        return new Date() >= new Date(it.aPartirDu + 'T00:00:00');
+        return new Date() >= new Date(it.aPartirDu.indexOf('T') > 0 ? it.aPartirDu : it.aPartirDu + 'T00:00:00');
     }
     ['activites', 'exercices', 'evaluations', 'quiz'].forEach(function (k) {
         Object.keys(configChapitres).forEach(function (c) {

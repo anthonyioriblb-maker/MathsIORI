@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Semaine intense 1 - Grille de notation</title>
+<style>
+  @page { size: A4 landscape; margin: 7mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 11px; background: #eef1f4; }
+  .toolbar { text-align: center; padding: 10px; }
+  .toolbar button { font-size: 1em; padding: 9px 20px; border: none; border-radius: 6px; background: #2980b9; color: #fff; cursor: pointer; }
+  .page { width: 283mm; height: 192mm; margin: 0 auto 12px; background: #fff; display: grid;
+          grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6mm; padding: 0; }
+  .grille { display: flex; }
+  table { width: 100%; height: 100%; border-collapse: collapse; table-layout: fixed; }
+  td { border: 1px solid #000; text-align: center; padding: 1px 2px; }
+  td:first-child { text-align: left; font-weight: bold; white-space: nowrap; overflow: hidden; }
+  td { line-height: 1.1; }
+  .candidat-row td { font-weight: bold; text-align: left; height: 7mm; }
+  .label-row td { background: #d9d9d9; height: 4.5mm; font-weight: bold; font-size: 10px; }
+  .score-row td { height: 10mm; vertical-align: bottom; text-align: right; font-size: 10px; }
+  .total-row td { background: #1a5fa8; color: #fff; font-weight: bold; font-size: 13px; height: 9mm; text-align: right; }
+  @media print {
+    body { background: #fff; }
+    .toolbar { display: none; }
+    .page { margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+<div class="grille"><table>
+<colgroup><col style="width:17%"><col><col><col><col><col><col><col><col><col><col></colgroup>
+<tr class="candidat-row"><td colspan="11">Candidat : _______________________</td></tr>
+<tr class="label-row"><td>Automatismes</td><td colspan="9"></td><td></td></tr>
+<tr class="score-row"><td></td><td colspan="9"></td><td><b>/6</b></td></tr>
+<tr class="label-row"><td>Exercice 1</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5.a</td><td>5.b</td><td colspan="3"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/1</td><td>/1</td><td>/0,5</td><td>/0,5</td><td colspan="3"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Exercice 2</td><td>1</td><td>2</td><td>3.a</td><td>3.b</td><td colspan="5"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/1,5</td><td>/1</td><td>/0,5</td><td>/1</td><td colspan="5"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Exercice 3</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td colspan="3"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td>/1</td><td>/0,5</td><td>/1</td><td colspan="3"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Rédaction</td><td>Ex1 Q4</td><td>Ex2 Q2</td><td>Ex2 Q3.a</td><td>Ex3 Q4</td><td colspan="5"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td colspan="5"></td><td><b>/2</b></td></tr>
+<tr class="total-row"><td colspan="9">TOTAL</td><td colspan="2">/20</td></tr>
+</table></div>
+<div class="grille"><table>
+<colgroup><col style="width:17%"><col><col><col><col><col><col><col><col><col><col></colgroup>
+<tr class="candidat-row"><td colspan="11">Candidat : _______________________</td></tr>
+<tr class="label-row"><td>Automatismes</td><td colspan="9"></td><td></td></tr>
+<tr class="score-row"><td></td><td colspan="9"></td><td><b>/6</b></td></tr>
+<tr class="label-row"><td>Exercice 1</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5.a</td><td>5.b</td><td colspan="3"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/1</td><td>/1</td><td>/0,5</td><td>/0,5</td><td colspan="3"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Exercice 2</td><td>1</td><td>2</td><td>3.a</td><td>3.b</td><td colspan="5"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/1,5</td><td>/1</td><td>/0,5</td><td>/1</td><td colspan="5"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Exercice 3</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td colspan="3"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td>/1</td><td>/0,5</td><td>/1</td><td colspan="3"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Rédaction</td><td>Ex1 Q4</td><td>Ex2 Q2</td><td>Ex2 Q3.a</td><td>Ex3 Q4</td><td colspan="5"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td colspan="5"></td><td><b>/2</b></td></tr>
+<tr class="total-row"><td colspan="9">TOTAL</td><td colspan="2">/20</td></tr>
+</table></div>
+<div class="grille"><table>
+<colgroup><col style="width:17%"><col><col><col><col><col><col><col><col><col><col></colgroup>
+<tr class="candidat-row"><td colspan="11">Candidat : _______________________</td></tr>
+<tr class="label-row"><td>Automatismes</td><td colspan="9"></td><td></td></tr>
+<tr class="score-row"><td></td><td colspan="9"></td><td><b>/6</b></td></tr>
+<tr class="label-row"><td>Exercice 1</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5.a</td><td>5.b</td><td colspan="3"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/1</td><td>/1</td><td>/0,5</td><td>/0,5</td><td colspan="3"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Exercice 2</td><td>1</td><td>2</td><td>3.a</td><td>3.b</td><td colspan="5"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/1,5</td><td>/1</td><td>/0,5</td><td>/1</td><td colspan="5"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Exercice 3</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td colspan="3"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td>/1</td><td>/0,5</td><td>/1</td><td colspan="3"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Rédaction</td><td>Ex1 Q4</td><td>Ex2 Q2</td><td>Ex2 Q3.a</td><td>Ex3 Q4</td><td colspan="5"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td colspan="5"></td><td><b>/2</b></td></tr>
+<tr class="total-row"><td colspan="9">TOTAL</td><td colspan="2">/20</td></tr>
+</table></div>
+<div class="grille"><table>
+<colgroup><col style="width:17%"><col><col><col><col><col><col><col><col><col><col></colgroup>
+<tr class="candidat-row"><td colspan="11">Candidat : _______________________</td></tr>
+<tr class="label-row"><td>Automatismes</td><td colspan="9"></td><td></td></tr>
+<tr class="score-row"><td></td><td colspan="9"></td><td><b>/6</b></td></tr>
+<tr class="label-row"><td>Exercice 1</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5.a</td><td>5.b</td><td colspan="3"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/1</td><td>/1</td><td>/0,5</td><td>/0,5</td><td colspan="3"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Exercice 2</td><td>1</td><td>2</td><td>3.a</td><td>3.b</td><td colspan="5"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/1,5</td><td>/1</td><td>/0,5</td><td>/1</td><td colspan="5"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Exercice 3</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td colspan="3"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td>/1</td><td>/0,5</td><td>/1</td><td colspan="3"></td><td><b>/4</b></td></tr>
+<tr class="label-row"><td>Rédaction</td><td>Ex1 Q4</td><td>Ex2 Q2</td><td>Ex2 Q3.a</td><td>Ex3 Q4</td><td colspan="5"></td><td></td></tr>
+<tr class="score-row"><td></td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td>/0,5</td><td colspan="5"></td><td><b>/2</b></td></tr>
+<tr class="total-row"><td colspan="9">TOTAL</td><td colspan="2">/20</td></tr>
+</table></div>
+</div>
+</body>
+</html>

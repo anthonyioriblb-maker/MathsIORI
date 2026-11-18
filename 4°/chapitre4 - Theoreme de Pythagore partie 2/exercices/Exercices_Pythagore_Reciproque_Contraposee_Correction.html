@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correction - Théorème de Pythagore, réciproque et contraposée</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        .question { margin: 3px 0 3px 20px; font-size: 1.05em; line-height: 1.5; }
+        .sous { margin-left: 44px; }
+        .question:has(+ .calc) { break-after: avoid; page-break-after: avoid; }
+        .exercice-titre { font-weight: bold; text-decoration: underline; margin-bottom: 4px; break-after: avoid; }
+        .grille2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 20px; }
+        .question-label { font-weight: bold; margin-right: 8px; }
+        .calc { margin: 2px 0 4px 40px; line-height: 1.6; break-inside: avoid; }
+        .calc div { margin: 0; }
+        .fig { text-align: center; margin: 6px 0; }
+        .fig svg text { font-family: Arial, sans-serif; }
+        .vrai { color: #1e8449; font-weight: bold; } .faux { color: #c0392b; font-weight: bold; }
+        @page { margin: 14mm 10mm; }
+        @media print {
+            .exercice { background: none !important; border-left-color: #999 !important; }
+        }
+    </style>
+</head>
+<body>
+    <a href="../../classe-4e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+    <h1>Correction - Théorème de Pythagore, réciproque et contraposée</h1>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 1</div>
+        <div class="question"><span class="question-label">a.</span>Réciproque : Si un nombre est divisible par 10, alors il se termine par 0. <span class="vrai">Vraie.</span></div>
+        <div class="question sous">Contraposée : Si un nombre n'est pas divisible par 10, alors il ne se termine pas par 0.</div>
+        <div class="question"><span class="question-label">b.</span>Réciproque : Si un animal a quatre pattes, alors c'est un chat. <span class="faux">Fausse</span> (un chien a aussi quatre pattes).</div>
+        <div class="question sous">Contraposée : Si un animal n'a pas quatre pattes, alors ce n'est pas un chat.</div>
+        <div class="question"><span class="question-label">c.</span>Réciproque : Si les diagonales d'un quadrilatère sont perpendiculaires, alors c'est un losange. <span class="faux">Fausse</span> (un cerf-volant a aussi des diagonales perpendiculaires).</div>
+        <div class="question sous">Contraposée : Si les diagonales d'un quadrilatère ne sont pas perpendiculaires, alors ce n'est pas un losange.</div>
+        <p style="margin-left:20px">La contraposée d'une propriété vraie est toujours vraie.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 2</div>
+        <div class="question"><span class="question-label">a.</span></div>
+        <div class="calc">
+            <div>Dans le triangle ABC, le côté le plus long est [BC].</div>
+            <div>D'une part, BC² = 10² = 100</div>
+            <div>D'autre part, AB² + AC² = 6² + 8² = 36 + 64 = 100</div>
+            <div>Ainsi AB² + AC² = BC², d'après la réciproque du théorème de Pythagore, le triangle ABC est rectangle en A.</div>
+        </div>
+        <div class="question"><span class="question-label">b.</span></div>
+        <div class="calc">
+            <div>Dans le triangle DEF, le côté le plus long est [DF].</div>
+            <div>D'une part, DF² = 11² = 121</div>
+            <div>D'autre part, DE² + EF² = 7² + 9² = 49 + 81 = 130</div>
+            <div>Ainsi DE² + EF² ≠ DF², d'après la contraposée du théorème de Pythagore, le triangle DEF n'est pas rectangle.</div>
+        </div>
+        <div class="question"><span class="question-label">c.</span></div>
+        <div class="calc">
+            <div>Dans le triangle GHI, le côté le plus long est [GI].</div>
+            <div>D'une part, GI² = 5,3² = 28,09</div>
+            <div>D'autre part, GH² + HI² = 2,8² + 4,5² = 7,84 + 20,25 = 28,09</div>
+            <div>Ainsi GH² + HI² = GI², d'après la réciproque du théorème de Pythagore, le triangle GHI est rectangle en H.</div>
+        </div>
+        <div class="question"><span class="question-label">d.</span></div>
+        <div class="calc">
+            <div>Dans le triangle KLM, le côté le plus long est [LM].</div>
+            <div>D'une part, LM² = 13² = 169</div>
+            <div>D'autre part, KL² + KM² = 12² + 5² = 144 + 25 = 169</div>
+            <div>Ainsi KL² + KM² = LM², d'après la réciproque du théorème de Pythagore, le triangle KLM est rectangle en K.</div>
+        </div>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 3</div>
+        <div class="question"><span class="question-label">a.</span>Le triangle RST est rectangle en S, donc d'après le théorème de Pythagore :</div>
+        <div class="calc">
+            <div>RT² = RS² + ST²</div>
+            <div>RT² = 9² + 12²</div>
+            <div>RT² = 81 + 144</div>
+            <div>RT² = 225</div>
+            <div>RT = <span class="sqrt">225</span></div>
+            <div>RT = 15 cm</div>
+        </div>
+        <div class="question"><span class="question-label">b.</span>Le triangle UVW est rectangle en V, donc d'après le théorème de Pythagore :</div>
+        <div class="calc">
+            <div>UW² = UV² + VW²</div>
+            <div>13² = 5² + VW²</div>
+            <div>169 = 25 + VW²</div>
+            <div>VW² = 169 − 25</div>
+            <div>VW² = 144</div>
+            <div>VW = <span class="sqrt">144</span></div>
+            <div>VW = 12 cm</div>
+        </div>
+        <div class="question"><span class="question-label">c.</span>Le triangle XYZ est rectangle en Y, donc d'après le théorème de Pythagore :</div>
+        <div class="calc">
+            <div>XZ² = XY² + YZ²</div>
+            <div>XZ² = 4² + 7²</div>
+            <div>XZ² = 16 + 49</div>
+            <div>XZ² = 65</div>
+            <div>XZ = <span class="sqrt">65</span></div>
+            <div>XZ ≈ 8,1 cm</div>
+        </div>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 4</div>
+        <p>On note ABCD le cadre, avec AB = 60 cm, BC = 45 cm et la diagonale AC = 74 cm.</p>
+        <div class="calc">
+            <div>Dans le triangle ABC, le côté le plus long est [AC].</div>
+            <div>D'une part, AC² = 74² = 5 476</div>
+            <div>D'autre part, AB² + BC² = 60² + 45² = 3 600 + 2 025 = 5 625</div>
+            <div>Ainsi AB² + BC² ≠ AC², d'après la contraposée du théorème de Pythagore, le triangle ABC n'est pas rectangle.</div>
+        </div>
+        <p>Le coin B n'est donc pas un angle droit : le cadre n'est pas un rectangle.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 5</div>
+        <p>La largeur, la hauteur et la diagonale de l'écran forment un triangle rectangle. On note 𝑑 la diagonale. D'après le théorème de Pythagore :</p>
+        <div class="calc">
+            <div>𝑑² = 88,6² + 49,8²</div>
+            <div>𝑑² = 7 849,96 + 2 480,04</div>
+            <div>𝑑² = 10 330</div>
+            <div>𝑑 = <span class="sqrt">10 330</span></div>
+            <div>𝑑 ≈ 101,64 cm</div>
+        </div>
+        <p>En pouces : 101,64 ÷ 2,54 ≈ 40. L'écran mesure environ 40 pouces.</p>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 6 – Type brevet (6 points)</div>
+        <div class="question"><span class="question-label">1.</span>(1 point)</div>
+        <div class="calc">
+            <div>Dans le triangle ABD, le côté le plus long est [BD].</div>
+            <div>D'une part, BD² = 50² = 2 500</div>
+            <div>D'autre part, AB² + AD² = 30² + 40² = 900 + 1 600 = 2 500</div>
+            <div>Ainsi AB² + AD² = BD², d'après la réciproque du théorème de Pythagore, le triangle ABD est rectangle en A.</div>
+        </div>
+        <div class="question"><span class="question-label">2.</span>(1 point)</div>
+        <div class="calc">
+            <div>Dans le triangle BCD, le côté le plus long est [CD].</div>
+            <div>D'une part, CD² = 130² = 16 900</div>
+            <div>D'autre part, BD² + BC² = 50² + 120² = 2 500 + 14 400 = 16 900</div>
+            <div>Ainsi BD² + BC² = CD², d'après la réciproque du théorème de Pythagore, le triangle BCD est rectangle en B.</div>
+        </div>
+        <div class="question"><span class="question-label">3.</span>(1,5 point) Les deux triangles sont rectangles, on additionne leurs aires.</div>
+        <div class="calc">
+            <div>Aire de ABD = (AB × AD) ÷ 2 = (30 × 40) ÷ 2 = 600 m²</div>
+            <div>Aire de BCD = (BD × BC) ÷ 2 = (50 × 120) ÷ 2 = 3 000 m²</div>
+            <div>Aire de ABCD = 600 + 3 000 = 3 600 m²</div>
+        </div>
+        <div class="question"><span class="question-label">4.</span>(1,5 point)</div>
+        <div class="calc">
+            <div>Le périmètre du terrain est : AB + BC + CD + DA = 30 + 120 + 130 + 40 = 320 m.</div>
+            <div>Nombre de rouleaux : 320 ÷ 25 = 12,8. Il faut donc acheter 13 rouleaux.</div>
+            <div>Prix : 13 × 39,90 = 518,70 €.</div>
+            <div>M. Martin va dépenser 518,70 €.</div>
+        </div>
+        <div class="question"><span class="question-label">5.</span>(1 point)</div>
+        <div class="calc">
+            <div>Dans le triangle EFG, le côté le plus long est [EG].</div>
+            <div>D'une part, EG² = 2,1² = 4,41</div>
+            <div>D'autre part, EF² + FG² = 1,2² + 1,6² = 1,44 + 2,56 = 4</div>
+            <div>Ainsi EF² + FG² ≠ EG², d'après la contraposée du théorème de Pythagore, le triangle EFG n'est pas rectangle.</div>
+        </div>
+        <p>Le coin de l'abri n'est donc pas un angle droit.</p>
+    </div>
+
+<script src="../../../impression.js"></script>
+</body>
+</html>
