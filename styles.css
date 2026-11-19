@@ -258,21 +258,15 @@ img {
     border-bottom-color: red;
 }
 
-/* Angles */
-.angle {
-    position: relative;
-    display: inline-block;
+/* Angles : chapeau fin en deux traits (ne touche pas les lettres) */
+.angle { position: relative; display: inline-block; line-height: 1; }
+.angle::before, .angle::after {
+    content: ''; position: absolute; top: -0.16em; width: 52%; height: 0.065em;
+    font-size: 1em; font-weight: normal; background: currentColor; border-radius: 0.04em;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
-
-.angle::before {
-    content: '^';
-    position: absolute;
-    top: -0.5em;
-    left: 50%;
-    transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
-    font-size: 1.5em;
-    font-weight: 300;
-}
+.angle::before { left: 0; right: auto; transform-origin: 0 50%; transform: rotate(-11deg); }
+.angle::after { right: 0; left: auto; transform-origin: 100% 50%; transform: rotate(11deg); }
 
 /* Vecteurs */
 .vecteur {

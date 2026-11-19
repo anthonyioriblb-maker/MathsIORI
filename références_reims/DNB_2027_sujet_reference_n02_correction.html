@@ -27,8 +27,7 @@
   .frac>.den{ display:block; padding:1px .15em 0; }
   .sqrt{ position:relative; display:inline-block; border-top:1.5px solid currentColor; margin-left:.65em; padding:0 .1em 0 .15em; line-height:1.2; }
   .sqrt:before{ content:""; position:absolute; left:-.6em; top:0; height:100%; width:.55em; border-right:1.5px solid currentColor; transform:skewX(-12deg); }
-  .angle{ position:relative; display:inline-block; }
-  .angle::before{ content:'^'; position:absolute; top:-.55em; left:50%; transform:translateX(-50%) scaleX(2.6) scaleY(1.1); font-size:1.1em; font-weight:300; }
+  .angle{position:relative;display:inline-block;line-height:1}.angle::before,.angle::after{content:'';position:absolute;top:-.16em;width:52%;height:.065em;font-size:1em;font-weight:normal;background:currentColor;border-radius:.04em;-webkit-print-color-adjust:exact;print-color-adjust:exact}.angle::before{left:0;right:auto;transform-origin:0 50%;transform:rotate(-11deg)}.angle::after{right:0;left:auto;transform-origin:100% 50%;transform:rotate(11deg)}
   .note{ font-size:.9em; color:#666; }
   @media print{ @page{ margin:10mm; } body{ background:#fff; padding:0; font-size:13px; } .page{ box-shadow:none; border-radius:0; padding:0; max-width:none; } .q{ break-inside:avoid; } h2,h3{ break-after:avoid; } }
 </style>

@@ -42,21 +42,8 @@
         text-align: center; background: white; padding: 6px;
         border-radius: 5px; border: 2px solid #ddd;
     }
-    .angle {
-        position: relative;
-        display: inline-block;
-    }
-    .angle::before {
-        content: '^';
-        position: absolute;
-        top: -0.5em;
-        left: 50%;
-        transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
-        font-size: 1.5em;
-        font-weight: 300;
-    }
-
-    /* ── Animation tracer un angle : rapporteur glisse et arrive décalé, puis pivote une seule fois pour s'aligner sur [AB) ── */
+    .angle{position:relative;display:inline-block;line-height:1}.angle::before,.angle::after{content:'';position:absolute;top:-.16em;width:52%;height:.065em;font-size:1em;font-weight:normal;background:currentColor;border-radius:.04em;-webkit-print-color-adjust:exact;print-color-adjust:exact}.angle::before{left:0;right:auto;transform-origin:0 50%;transform:rotate(-11deg)}.angle::after{right:0;left:auto;transform-origin:100% 50%;transform:rotate(11deg)}
+  /* ── Animation tracer un angle : rapporteur glisse et arrive décalé, puis pivote une seule fois pour s'aligner sur [AB) ── */
     @keyframes rapTracArrive {
         0%   { transform: translate(320px,-90px) rotate(0deg);  opacity: 0; }
         30%  { opacity: 1; }

@@ -358,21 +358,8 @@
         }
         
         /* Angles avec chapeau */
-        .angle {
-            position: relative;
-            display: inline-block;
-        }
-        
-        .angle::before {
-            content: '^';
-            position: absolute;
-            top: -0.5em;
-            left: 50%;
-            transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
-            font-size: 1.5em;
-            font-weight: 300;
-        }
-    </style>
+        .angle{position:relative;display:inline-block;line-height:1}.angle::before,.angle::after{content:'';position:absolute;top:-.16em;width:52%;height:.065em;font-size:1em;font-weight:normal;background:currentColor;border-radius:.04em;-webkit-print-color-adjust:exact;print-color-adjust:exact}.angle::before{left:0;right:auto;transform-origin:0 50%;transform:rotate(-11deg)}.angle::after{right:0;left:auto;transform-origin:100% 50%;transform:rotate(11deg)}
+  </style>
 </head>
 <body>
     <a href="../../classe-6e.html" style="position: absolute; top: 20px; left: 20px; padding: 12px 24px; background: white; color: #667eea; text-decoration: none; border-radius: 12px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; z-index: 1000;">← Retour</a>

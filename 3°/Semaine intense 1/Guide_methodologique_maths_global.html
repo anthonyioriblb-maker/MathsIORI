@@ -28,8 +28,7 @@
   .sqrt:before{ content:" "; position:absolute; display:inline-block; left:-.65em; height:56%; width:.6em; border-right:2px solid black; border-bottom:2.5px solid black; transform-origin:top right; transform:rotate(55deg) skew(50deg); }
   .formulaire{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
   .formulaire td{ vertical-align:middle; }
-  .angle{ position:relative; display:inline-block; }
-  .angle::before{ content:'^'; position:absolute; top:-0.55em; left:50%; transform:translateX(-50%) scaleX(2.5) scaleY(1.1); font-size:1.3em; font-weight:300; }
+  .angle{position:relative;display:inline-block;line-height:1}.angle::before,.angle::after{content:'';position:absolute;top:-.16em;width:52%;height:.065em;font-size:1em;font-weight:normal;background:currentColor;border-radius:.04em;-webkit-print-color-adjust:exact;print-color-adjust:exact}.angle::before{left:0;right:auto;transform-origin:0 50%;transform:rotate(-11deg)}.angle::after{right:0;left:auto;transform-origin:100% 50%;transform:rotate(11deg)}
   .modeles{ display:grid; grid-template-columns:1fr 1fr; gap:0 24px; }
   .toolbar{ max-width:820px; margin:0 auto 12px; text-align:center; }
   .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }

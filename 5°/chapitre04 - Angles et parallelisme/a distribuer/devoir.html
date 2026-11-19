@@ -56,22 +56,8 @@
             margin: 5px 0;
         }
         
-        .angle {
-            position: relative;
-            display: inline-block;
-            padding-top: 8px;
-        }
-        
-        .angle::before {
-            content: '∧';
-            position: absolute;
-            top: -2px;
-            left: 50%;
-            transform: translateX(-50%) scaleX(1.3);
-            font-size: 0.8em;
-            font-weight: normal;
-        }
-    </style>
+        .angle{position:relative;display:inline-block;line-height:1}.angle::before,.angle::after{content:'';position:absolute;top:-.16em;width:52%;height:.065em;font-size:1em;font-weight:normal;background:currentColor;border-radius:.04em;-webkit-print-color-adjust:exact;print-color-adjust:exact}.angle::before{left:0;right:auto;transform-origin:0 50%;transform:rotate(-11deg)}.angle::after{right:0;left:auto;transform-origin:100% 50%;transform:rotate(11deg)}
+  </style>
 </head>
 <body>
     <div class="header">

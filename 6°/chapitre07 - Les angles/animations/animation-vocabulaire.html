@@ -32,20 +32,8 @@
         cursor: pointer; margin: 4px;
     }
     .btn-auto:hover { background: #388e3c; }
-    .angle {
-        position: relative;
-        display: inline-block;
-    }
-    .angle::before {
-        content: '^';
-        position: absolute;
-        top: -0.5em;
-        left: 50%;
-        transform: translateX(-50%) scaleX(2.5) scaleY(1.2);
-        font-size: 1.5em;
-        font-weight: 300;
-    }
-</style>
+    .angle{position:relative;display:inline-block;line-height:1}.angle::before,.angle::after{content:'';position:absolute;top:-.16em;width:52%;height:.065em;font-size:1em;font-weight:normal;background:currentColor;border-radius:.04em;-webkit-print-color-adjust:exact;print-color-adjust:exact}.angle::before{left:0;right:auto;transform-origin:0 50%;transform:rotate(-11deg)}.angle::after{right:0;left:auto;transform-origin:100% 50%;transform:rotate(11deg)}
+  </style>
 </head>
 <body>
 

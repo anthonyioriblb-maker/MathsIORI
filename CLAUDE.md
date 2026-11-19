@@ -550,3 +550,5 @@ Classes de boîtes définies dans `COURSPRESENTATION/styles.css` (`font-size: 2.
 - Ajouter des slides de plan / sommaire / conclusion absentes du cours.
 - Modifier la numérotation des sections par rapport au cours.
 - Oublier d'archiver avant modification.
+
+- Angles : `.angle` = chapeau fin en deux traits (::before et ::after, rotate ±11°), défini dans styles.css (MathsIORI et COURSPRESENTATION) et recopié en ligne dans les pages autonomes. Ne plus utiliser le « ^ » agrandi.

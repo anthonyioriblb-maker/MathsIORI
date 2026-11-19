@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correction - Exercices - Angles et parallélisme</title>
+    <link rel="stylesheet" href="../../../styles.css">
+    <style>
+        .question { white-space: nowrap; margin: 3px 0 3px 20px; font-size: 1.05em; line-height: 1.5; }
+        .question-label { font-weight: bold; margin-right: 8px; }
+        .exercice p { line-height: 1.75; }
+        .cote .question { margin-left: 0; }
+        .exercice-titre { font-weight: bold; text-decoration: underline; margin-bottom: 4px; break-after: avoid; }
+        .cote { display: flex; align-items: center; gap: 20px; }
+        .grille2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+        .fig { text-align: center; margin: 6px 0; }
+        .fig svg { max-width: 100%; height: auto; }
+        .paires { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+        .paires .exercice { margin-top: 0; }
+        .fig svg text { font-family: Arial, sans-serif; }
+        .niveau { font-weight: normal; font-style: italic; color: #555; }
+        .redac { margin: 4px 0 4px 20px; line-height: 1.7; }
+        .redac div:empty { height: .6em; }
+        .angle { margin: 0 1px; }
+        @page { margin: 14mm 10mm; }
+        @media print {
+            .exercice { background: none !important; border-left-color: #999 !important; break-inside: avoid; page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <a href="../../classe-5e.html" class="home-button" style="margin: 20px;">← Retour au choix des chapitres</a>
+    <h1>Correction - Exercices - Angles et parallélisme</h1>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 1</div>
+        <div class="question"><span class="question-label">a.</span><span class="angle">CAB</span> et <span class="angle">ABH</span> sont <strong>alternes-internes</strong>.</div><div class="question"><span class="question-label">b.</span><span class="angle">EAD</span> et <span class="angle">ABH</span> sont <strong>correspondants</strong>.</div><div class="question"><span class="question-label">c.</span><span class="angle">CAE</span> et <span class="angle">DAB</span> sont <strong>opposés par le sommet</strong>.</div><div class="question"><span class="question-label">d.</span><span class="angle">CAE</span> et <span class="angle">GBA</span> sont <strong>correspondants</strong>.</div><div class="question"><span class="question-label">e.</span><span class="angle">DAB</span> et <span class="angle">GBA</span> sont <strong>alternes-internes</strong>.</div><div class="question"><span class="question-label">f.</span><span class="angle">GBF</span> et <span class="angle">ABH</span> sont <strong>opposés par le sommet</strong>.</div>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 2</div>
+        <div class="redac"><div><strong>Je sais que :</strong> Les angles <span class="angle">PMS</span> et <span class="angle">MNU</span> sont des angles correspondants qui reposent sur les droites parallèles (d) et (d').</div><div><strong>Or,</strong> si deux droites sont parallèles alors les angles correspondants reposant sur ces droites sont égaux. (prop 3)</div><div><strong>Donc :</strong> <span class="angle">MNU</span> = <span class="angle">PMS</span> = 70°.</div></div>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 3</div>
+        <div class="redac"><div><strong>Je sais que :</strong> Les angles <span class="angle">IKL</span> et <span class="angle">KLS</span> sont alternes-internes et égaux.</div><div><strong>Or,</strong> si deux angles alternes-internes sont égaux alors les droites sur lesquelles ils reposent sont parallèles. (prop 2)</div><div><strong>Donc :</strong> (IJ) et (RS) sont parallèles.</div></div>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 4</div>
+        <div class="redac"><div><strong>Je sais que :</strong> Les angles <span class="angle">SUV</span> et <span class="angle">TVU</span> sont des angles alternes-internes qui reposent sur les droites parallèles (RS) et (TW).</div><div><strong>Or,</strong> si deux droites sont parallèles alors les angles alternes-internes reposant sur ces droites sont égaux. (prop 1)</div><div><strong>Donc :</strong> <span class="angle">TVU</span> = <span class="angle">SUV</span> = 112°.</div></div>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 5</div>
+        <div class="redac"><div><span class="angle">CAD</span> est un angle plat donc <span class="angle">EAD</span> = 180° − <span class="angle">CAE</span> = 180° − 118° = 62°</div><div><strong>Je sais que :</strong> Les angles <span class="angle">EAD</span> et <span class="angle">ABH</span> sont correspondants et égaux.</div><div><strong>Or,</strong> si deux angles correspondants sont égaux alors les droites sur lesquelles ils reposent sont parallèles. (prop 4)</div><div><strong>Donc :</strong> (CD) et (GH) sont parallèles.</div></div>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 6</div>
+        <div class="redac"><div><strong>Je sais que :</strong> Les angles <span class="angle">KMP</span> et <span class="angle">LMN</span> sont opposés par le sommet.</div><div><strong>Or,</strong> deux angles opposés par le sommet sont toujours égaux.</div><div><strong>Donc :</strong> <span class="angle">LMN</span> = <span class="angle">KMP</span> = 125°.</div><div></div><div><strong>Je sais que :</strong> Les angles <span class="angle">LMN</span> et <span class="angle">SNQ</span> sont des angles correspondants qui reposent sur les droites parallèles (KL) et (RS).</div><div><strong>Or,</strong> si deux droites sont parallèles alors les angles correspondants reposant sur ces droites sont égaux. (prop 3)</div><div><strong>Donc :</strong> <span class="angle">SNQ</span> = <span class="angle">LMN</span> = 125°.</div></div>
+    </div>
+
+    <div class="exercice">
+        <div class="exercice-titre">Exercice 7</div>
+        <div class="redac"><div><strong>Je sais que :</strong> Les angles <span class="angle">RMN</span> et <span class="angle">RST</span> sont des angles correspondants qui reposent sur les droites parallèles (MN) et (ST).</div><div><strong>Or,</strong> si deux droites sont parallèles alors les angles correspondants reposant sur ces droites sont égaux. (prop 3)</div><div><strong>Donc :</strong> <span class="angle">RMN</span> = <span class="angle">RST</span> = 62°.</div><div></div><div>La somme des angles d'un triangle est de 180° donc dans RMN :</div><div><span class="angle">RNM</span> = 180° − <span class="angle">RMN</span> − <span class="angle">MRN</span></div><div><span class="angle">RNM</span> = 180° − 62° − 50°</div><div><span class="angle">RNM</span> = 68°</div></div>
+    </div>
+
+</body>
+</html>
