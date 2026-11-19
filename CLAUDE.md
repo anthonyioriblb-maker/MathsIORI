@@ -552,3 +552,13 @@ Classes de boîtes définies dans `COURSPRESENTATION/styles.css` (`font-size: 2.
 - Oublier d'archiver avant modification.
 
 - Angles : `.angle` = chapeau fin en deux traits (::before et ::after, rotate ±11°), défini dans styles.css (MathsIORI et COURSPRESENTATION) et recopié en ligne dans les pages autonomes. Ne plus utiliser le « ^ » agrandi.
+
+## ✅ Checklist avant de livrer une page imprimable (exercices, correction, activité, évaluation, fiche à distribuer) — nov. 2026
+À relire à CHAQUE nouvelle page, avant de générer le PDF :
+1. `<script src="../../../impression.js"></script>` juste avant `</body>` (bouton « Imprimer » + lien « ← Retour » masqué à l'impression).
+2. PDF : vérifier avec `pdftotext` que « Retour au » n'apparaît pas en haut de la page 1.
+3. Figures géométriques : un point d'intersection n'est PAS marqué ; tout autre point est marqué d'une croix (×), jamais d'un rond.
+4. Démonstrations « en deux étapes » : vérifier qu'il n'existe pas de chemin direct en une étape (ex. angle donné et angle cherché correspondants ou alternes-internes).
+5. Pythagore : figure à main levée dans les corrections, jamais l'étiquette « figure à main levée » côté élève.
+6. Angles : `<span class="angle">ABC</span>` (chapeau fin défini dans styles.css), pas de « ^ » agrandi.
+7. Après modification : PDF dans `Cours PDF/…`, puis `python3 outils/generer_tous_exercices.py` dans COURSPRESENTATION si la fiche est en ligne.
