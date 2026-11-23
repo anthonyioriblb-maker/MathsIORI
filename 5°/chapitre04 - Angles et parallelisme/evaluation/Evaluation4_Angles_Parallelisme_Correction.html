@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Évaluation - Angles et parallélisme - Correction</title>
+<style>
+  :root{
+    --rouge:#c0392b;
+    --bleu:#2980b9;
+    --bleu-clair:#d4ebf7;
+    --gris:#7f8c8d;
+    --encre:#222;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#eef1f4;
+    color:var(--encre);
+    padding:24px 12px;
+  }
+  .page{
+    max-width:800px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    padding:36px 44px 44px;
+  }
+  h1{
+    font-size:1.5em;
+    color:var(--rouge);
+    text-align:center;
+    border-bottom:3px solid var(--rouge);
+    padding-bottom:10px;
+    margin-bottom:4px;
+  }
+  .souschapitre{
+    text-align:center;
+    color:var(--gris);
+    font-size:0.95em;
+    margin-bottom:22px;
+  }
+  .entete{
+    border:2px solid #333;
+    border-radius:8px;
+    padding:12px 16px;
+    line-height:2;
+    margin-bottom:22px;
+    font-size:0.95em;
+  }
+  .entete .ligne{
+    display:inline-block;
+    min-width:60px;
+    border-bottom:1px solid #333;
+    margin-left:4px;
+  }
+  .consigne{
+    background:#fff3b8;
+    border-left:6px solid #f39c12;
+    border-radius:6px;
+    padding:12px 16px;
+    font-size:0.95em;
+    margin-bottom:24px;
+  }
+  h2.exo{
+    font-size:1.1em;
+    color:var(--bleu);
+    text-decoration:underline;
+    margin:22px 0 12px;
+  }
+  .bareme{
+    float:right;
+    font-weight:normal;
+    text-decoration:none;
+    color:var(--gris);
+    font-size:0.85em;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:8px;
+    font-size:1.05em;
+  }
+  td{
+    border:1.5px solid #999;
+    padding:10px 14px;
+  }
+  .calc-cell{
+    height:70px;
+    vertical-align:top;
+    width:50%;
+  }
+  .q{
+    border:1.5px solid #999;
+    padding:10px 14px;
+    font-size:0.92em;
+    vertical-align:top;
+    height:56px;
+  }
+  .q b{ color:var(--bleu); }
+  th{
+    background:#e8e8e8;
+    padding:8px 10px;
+    font-size:0.85em;
+  }
+  footer{
+    text-align:center;
+    color:#aaa;
+    font-size:0.75em;
+    margin-top:16px;
+  }
+
+  /* ── Notation mathématique (identique à MathsIORI/styles.css) ── */
+  .frac, .fraction {
+    display: inline-block;
+    margin-left: .15em;
+    margin-right: .15em;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .frac > .num {
+    display: block;
+    padding: 0 .1em;
+    border-bottom: 1px solid black;
+    padding-bottom: 2px;
+  }
+  .frac > .den {
+    display: block;
+    padding: 0 .1em;
+    padding-top: 2px;
+  }
+  .exposant {
+    vertical-align: super;
+    font-size: 0.8em;
+  }
+  .sqrt {
+    position: relative;
+    display: inline-block;
+    border-top: 2px solid black;
+    margin-left: .7em;
+    padding-left: .2em;
+    padding-right: .1em;
+  }
+  .sqrt:before {
+    content: " ";
+    position: absolute;
+    display: inline-block;
+    left: -.65em;
+    height: 56%;
+    width: .6em;
+    border-right: 2px solid black;
+    border-bottom: 2.5px solid black;
+    transform-origin: top right;
+    transform: rotate(55deg) skew(50deg);
+  }
+
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+  }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{ .toolbar{ display:none !important; } }
+
+  .badge-correction{ display:block; text-align:center; margin:0 auto 24px; background:var(--rouge); color:#fff; font-weight:bold;
+    letter-spacing:0.06em; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .note{ float:right; font-weight:bold; }
+  h2.exo{ margin:14px 0 8px !important; }
+  .entete{ margin-bottom:12px !important; }
+  p{ margin:6px 0; line-height:1.6; }
+  .g4{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px 18px; font-size:1.1em; margin:8px 0; }
+  .g2{ display:grid; grid-template-columns:1fr 1fr; gap:14px 30px; font-size:1.1em; margin:8px 0; }
+  .blank{ display:inline-block; min-width:60px; border-bottom:1px dotted #333; }
+  .repr{ display:flex; gap:28px; align-items:center; }
+  .repr svg{ margin:0; }
+  svg{ display:block; margin:6px auto; }
+  @media print{ svg{ break-inside:avoid; } }
+
+  .cadres{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0 4px; }
+  .cadre{ border:1.5px solid #999; border-radius:6px; padding:6px 8px; height:310px; break-inside:avoid; }
+  .cadre .t{ font-size:0.95em; }
+  .cadre svg{ width:100%; height:auto; margin:4px auto 0; }
+  .lignes div{ height:34px; border-bottom:1px dotted #999; }
+  .remarque{ color:var(--gris); font-size:0.85em; font-style:italic; }
+  .rep ul{ margin:4px 0 4px 22px; } .rep li{ margin:2px 0; }
+  .props{ color:var(--rouge); } .props p{ margin:4px 0; }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+<div class="badge-correction" style="margin-top:0;">CORRECTION</div>
+<h2 class="exo">Exercice n° 1</h2>
+<p>Dans chaque cadre, faire une figure et y coder les angles demandés.</p>
+<div class="cadres"><div class="cadre"><div class="t"><b>1.</b> deux angles alternes-internes</div><div class="fig"><svg width="357" height="250" viewBox="0 0 357 250"><line x1="80.0" y1="65.0" x2="320.0" y2="65.0" stroke="#222" stroke-width="1.8"/><line x1="5.0" y1="185.0" x2="245.0" y2="185.0" stroke="#222" stroke-width="1.8"/><line x1="239.7" y1="1.4" x2="85.3" y2="248.6" stroke="#222" stroke-width="1.8"/><text x="187.0" y="57.0" font-size="15" font-weight="bold" text-anchor="middle">A</text><text x="138.0" y="204.0" font-size="15" font-weight="bold" text-anchor="middle">B</text><path d="M101.0,61.0 L109.0,69.0 M101.0,69.0 L109.0,61.0" stroke="#222" stroke-width="1.5"/><text x="105.0" y="56.0" font-size="15" font-weight="bold" text-anchor="middle">C</text><path d="M291.0,61.0 L299.0,69.0 M291.0,69.0 L299.0,61.0" stroke="#222" stroke-width="1.5"/><text x="295.0" y="56.0" font-size="15" font-weight="bold" text-anchor="middle">D</text><path d="M26.0,181.0 L34.0,189.0 M26.0,189.0 L34.0,181.0" stroke="#222" stroke-width="1.5"/><text x="30.0" y="176.0" font-size="15" font-weight="bold" text-anchor="middle">G</text><path d="M216.0,181.0 L224.0,189.0 M216.0,189.0 L224.0,181.0" stroke="#222" stroke-width="1.5"/><text x="220.0" y="176.0" font-size="15" font-weight="bold" text-anchor="middle">H</text><path d="M222.5,18.6 L230.5,26.6 M222.5,26.6 L230.5,18.6" stroke="#222" stroke-width="1.5"/><text x="239.5" y="26.6" font-size="15" font-weight="bold" text-anchor="middle">E</text><path d="M94.5,223.4 L102.5,231.4 M94.5,231.4 L102.5,223.4" stroke="#222" stroke-width="1.5"/><text x="85.5" y="233.4" font-size="15" font-weight="bold" text-anchor="middle">F</text><text x="325.0" y="83" font-size="14" font-style="italic">(d)</text><text x="250.0" y="203" font-size="14" font-style="italic">(d')</text><path d="M180.0,65.0 A20,20 0 0,0 189.4,82.0" fill="none" stroke="#e67e22" stroke-width="2"/><text x="168.5" y="87.5" font-size="14" font-weight="bold" fill="#e67e22" text-anchor="middle"></text><path d="M135.6,168.0 A20,20 0 0,1 145.0,185.0" fill="none" stroke="#e67e22" stroke-width="2"/><text x="156.5" y="172.5" font-size="14" font-weight="bold" fill="#e67e22" text-anchor="middle"></text></svg></div></div><div class="cadre"><div class="t"><b>2.</b> deux angles correspondants</div><div class="fig"><svg width="357" height="250" viewBox="0 0 357 250"><line x1="80.0" y1="65.0" x2="320.0" y2="65.0" stroke="#222" stroke-width="1.8"/><line x1="5.0" y1="185.0" x2="245.0" y2="185.0" stroke="#222" stroke-width="1.8"/><line x1="239.7" y1="1.4" x2="85.3" y2="248.6" stroke="#222" stroke-width="1.8"/><text x="187.0" y="57.0" font-size="15" font-weight="bold" text-anchor="middle">A</text><text x="138.0" y="204.0" font-size="15" font-weight="bold" text-anchor="middle">B</text><path d="M101.0,61.0 L109.0,69.0 M101.0,69.0 L109.0,61.0" stroke="#222" stroke-width="1.5"/><text x="105.0" y="56.0" font-size="15" font-weight="bold" text-anchor="middle">C</text><path d="M291.0,61.0 L299.0,69.0 M291.0,69.0 L299.0,61.0" stroke="#222" stroke-width="1.5"/><text x="295.0" y="56.0" font-size="15" font-weight="bold" text-anchor="middle">D</text><path d="M26.0,181.0 L34.0,189.0 M26.0,189.0 L34.0,181.0" stroke="#222" stroke-width="1.5"/><text x="30.0" y="176.0" font-size="15" font-weight="bold" text-anchor="middle">G</text><path d="M216.0,181.0 L224.0,189.0 M216.0,189.0 L224.0,181.0" stroke="#222" stroke-width="1.5"/><text x="220.0" y="176.0" font-size="15" font-weight="bold" text-anchor="middle">H</text><path d="M222.5,18.6 L230.5,26.6 M222.5,26.6 L230.5,18.6" stroke="#222" stroke-width="1.5"/><text x="239.5" y="26.6" font-size="15" font-weight="bold" text-anchor="middle">E</text><path d="M94.5,223.4 L102.5,231.4 M94.5,231.4 L102.5,223.4" stroke="#222" stroke-width="1.5"/><text x="85.5" y="233.4" font-size="15" font-weight="bold" text-anchor="middle">F</text><text x="325.0" y="83" font-size="14" font-style="italic">(d)</text><text x="250.0" y="203" font-size="14" font-style="italic">(d')</text><path d="M210.6,48.0 A20,20 0 0,1 220.0,65.0" fill="none" stroke="#e67e22" stroke-width="2"/><text x="231.5" y="52.5" font-size="14" font-weight="bold" fill="#e67e22" text-anchor="middle"></text><path d="M135.6,168.0 A20,20 0 0,1 145.0,185.0" fill="none" stroke="#e67e22" stroke-width="2"/><text x="156.5" y="172.5" font-size="14" font-weight="bold" fill="#e67e22" text-anchor="middle"></text></svg></div></div><div class="cadre"><div class="t"><b>3.</b> deux angles opposés par le sommet</div><div class="fig"><svg width="300" height="190" viewBox="0 0 300 190"><line x1="243.3" y1="36.7" x2="56.7" y2="153.3" stroke="#222" stroke-width="1.8"/><line x1="203.7" y1="191.0" x2="96.3" y2="-1.0" stroke="#222" stroke-width="1.8"/><path d="M168.7,83.3 A22,22 0 0,1 160.7,114.2" fill="none" stroke="#e67e22" stroke-width="2"/><text x="184.9" y="109.0" font-size="14" font-weight="bold" fill="#e67e22" text-anchor="middle"></text><path d="M131.3,106.7 A22,22 0 0,1 139.3,75.8" fill="none" stroke="#e67e22" stroke-width="2"/><text x="115.1" y="91.0" font-size="14" font-weight="bold" fill="#e67e22" text-anchor="middle"></text><text x="150" y="81" font-size="15" font-weight="bold" text-anchor="middle">O</text></svg></div></div></div>
+<p class="remarque">Toute figure correcte est acceptée : les deux droites n'ont pas besoin d'être parallèles.</p>
+<h2 class="exo">Exercice n° 2</h2>
+<p><b>1.</b> Donner la définition de deux angles alternes-internes.</p>
+<div class="rep"><p>On dit que deux angles sont alternes-internes si :</p><ul><li>ils se trouvent à l'intérieur (interne) de la bande formée par (d) et (d'),</li><li>ils sont de part et d'autre (alternes) de la sécante,</li><li>ils n'ont pas le même sommet.</li></ul></div>
+<p style="margin-top:14px"><b>2.</b> Énoncer une propriété du cours sur les angles.</p>
+<p class="remarque">Une seule propriété attendue, au choix parmi :</p><div class="props"><p>• Deux angles opposés par le sommet sont toujours égaux.</p><p>• Si deux droites sont parallèles alors les angles alternes-internes reposant sur ces droites sont égaux.</p><p>• Si deux angles alternes-internes sont égaux alors les droites sur lesquelles ils reposent sont parallèles.</p><p>• Si deux droites sont parallèles alors les angles correspondants reposant sur ces droites sont égaux.</p><p>• Si deux angles correspondants sont égaux alors les droites sur lesquelles ils reposent sont parallèles.</p></div>
+
+</div>
+<script src="../../../impression.js"></script>
+</body>
+</html>
