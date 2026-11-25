@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interrogation - Droites parallèles et perpendiculaires - Sujet</title>
+<style>
+  :root{ --rouge:#c0392b; --bleu:#2980b9; --gris:#7f8c8d; --encre:#222; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#eef1f4; color:var(--encre); padding:24px 12px; }
+  .page{ max-width:800px; margin:0 auto; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); padding:36px 44px 44px; }
+  .entete{ border:2px solid #333; border-radius:8px; padding:12px 16px; line-height:2; margin-bottom:22px; font-size:0.95em; display:flex; justify-content:space-between; align-items:center; }
+  .entete .ligne{ display:inline-block; min-width:60px; border-bottom:1px solid #333; margin-left:4px; }
+  .note{ border:1.5px solid #333; border-radius:6px; width:90px; height:52px; text-align:right; padding:24px 8px 0 0; }
+  h2.exo{ font-size:1.1em; color:var(--bleu); text-decoration:underline; margin:22px 0 12px; }
+  .bareme{ float:right; font-weight:normal; text-decoration:none; color:var(--gris); font-size:0.85em; }
+  p{ margin:4px 0; line-height:1.5; }
+  .ligne-rep{ border-bottom:1px dotted #555; height:34px; }
+  .fig{ text-align:center; margin:10px 0; }
+  .fig svg{ display:inline-block; max-width:100%; height:auto; }
+  .fig svg text{ font-family:Arial; font-size:4.6px; }
+  .k{ stroke:#000; stroke-width:0.35; } .kc{ stroke:#000; stroke-width:0.3; fill:none; }
+  .r{ stroke:#c0392b; stroke-width:0.4; } .rt{ fill:#c0392b; }
+  .b{ stroke:#1f5fbf; stroke-width:0.4; } .bt{ fill:#1f5fbf; }
+  .bc{ stroke:#1f5fbf; stroke-width:0.3; fill:none; }
+  .etapes{ display:grid; grid-template-columns:repeat(4,1fr); margin:10px 0; border:1.5px solid #4a6fd8; }
+  .etape{ background:#eef0fb; border-right:1.5px solid #4a6fd8; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .etape:last-child{ border-right:none; }
+  .etape svg{ width:100%; height:auto; display:block; }
+  .badge-correction{ display:block; text-align:center; margin:0 auto 24px; background:var(--rouge); color:#fff; font-weight:bold; letter-spacing:0.06em; width:fit-content; padding:4px 18px; border-radius:20px; font-size:0.85em; }
+  .rep{ color:var(--rouge); font-weight:bold; }
+  .bar{ color:var(--gris); font-size:0.85em; margin-top:6px; }
+  .toolbar{ max-width:800px; margin:0 auto 12px; text-align:center; }
+  .toolbar button{ font-size:1em; padding:10px 22px; border:none; border-radius:6px; background:#2980b9; color:#fff; cursor:pointer; }
+  .toolbar button:hover{ background:#1f6391; }
+  @media print{
+    @page{ margin:10mm; }
+    body{ background:#fff; padding:0; }
+    .page{ box-shadow:none; border-radius:0; padding:4mm; }
+    .toolbar{ display:none !important; }
+    .bloc{ break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar"><button onclick="window.print()">🖨️ Imprimer</button></div>
+<div class="page">
+<div class="entete"><div>Nom &ndash; Prénom : <span class="ligne" style="min-width:260px;"></span> &nbsp;&nbsp; Classe : <span class="ligne" style="min-width:70px;"></span></div><div class="note">/ 10</div></div>
+<div class="bloc"><h2 class="exo">Exercice n° 1 <span class="bareme">2 points</span></h2>
+<p>Écris la définition de deux droites parallèles.</p><div class="ligne-rep"></div><div class="ligne-rep"></div></div>
+<div class="bloc"><h2 class="exo">Exercice n° 2 <span class="bareme">4 points</span></h2>
+<p>Sur la figure ci-dessous :</p>
+<p>1. Trace la droite (d₁) parallèle à (BC) passant par A.</p>
+<p>2. Trace la droite (d₂) perpendiculaire à (BC) passant par E. Code la figure.</p>
+<p>3. Complète avec le symbole // ou ⟂ : &nbsp;&nbsp; (d₁) …… (BC) &nbsp;&nbsp;&nbsp; (d₂) …… (BC)</p>
+<div class="fig"><svg width="170mm" height="95mm" viewBox="0 0 170 95"><polygon points="45,20 20,78 130,70" class="k" fill="none"/><line x1="102.8" y1="25.8" x2="107.2" y2="30.2" class="k"/><line x1="102.8" y1="30.2" x2="107.2" y2="25.8" class="k"/><text x="43" y="16">A</text><text x="14" y="82">B</text><text x="132" y="75">C</text><text x="108" y="26">E</text></svg></div></div>
+<div class="bloc"><h2 class="exo">Exercice n° 3 <span class="bareme">4 points</span></h2>
+<p>Pour chaque étape de la construction, écris la consigne qui a été donnée. La droite (d) est parallèle à la droite (AB).</p>
+<div class="etapes"><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial">Étape 1 :</text><line x1="25" y1="100" x2="35" y2="110" stroke="#2e9e2e" stroke-width="1.8"/><line x1="25" y1="110" x2="35" y2="100" stroke="#2e9e2e" stroke-width="1.8"/><line x1="155" y1="70" x2="165" y2="80" stroke="#2e9e2e" stroke-width="1.8"/><line x1="155" y1="80" x2="165" y2="70" stroke="#2e9e2e" stroke-width="1.8"/><text x="28" y="123" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="162" y="93" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">B</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial">Étape 2 :</text><line x1="6.6" y1="110.4" x2="192.5" y2="67.5" stroke="#2e9e2e" stroke-width="1.6" stroke-linecap="round"/><line x1="25" y1="100" x2="35" y2="110" stroke="#222" stroke-width="1.8"/><line x1="25" y1="110" x2="35" y2="100" stroke="#222" stroke-width="1.8"/><line x1="155" y1="70" x2="165" y2="80" stroke="#222" stroke-width="1.8"/><line x1="155" y1="80" x2="165" y2="70" stroke="#222" stroke-width="1.8"/><text x="28" y="123" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="162" y="93" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">B</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial">Étape 3 :</text><line x1="6.6" y1="110.4" x2="192.5" y2="67.5" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="25" y1="100" x2="35" y2="110" stroke="#222" stroke-width="1.8"/><line x1="25" y1="110" x2="35" y2="100" stroke="#222" stroke-width="1.8"/><line x1="155" y1="70" x2="165" y2="80" stroke="#222" stroke-width="1.8"/><line x1="155" y1="80" x2="165" y2="70" stroke="#222" stroke-width="1.8"/><text x="28" y="123" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="162" y="93" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">B</text><line x1="65" y1="40" x2="75" y2="50" stroke="#2e9e2e" stroke-width="1.8"/><line x1="65" y1="50" x2="75" y2="40" stroke="#2e9e2e" stroke-width="1.8"/><text x="66" y="36" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">M</text></svg></div><div class="etape"><svg viewBox="0 0 200 140"><text x="6" y="18" font-size="13" fill="#c2185b" font-family="Arial">Étape 4 :</text><line x1="6.6" y1="110.4" x2="192.5" y2="67.5" stroke="#222" stroke-width="1.6" stroke-linecap="round"/><line x1="31.0" y1="54.0" x2="193.5" y2="16.5" stroke="#2e9e2e" stroke-width="1.6" stroke-linecap="round"/><text x="188" y="32" font-size="13" fill="#2e9e2e" font-family="Arial" text-anchor="middle">(d)</text><line x1="25" y1="100" x2="35" y2="110" stroke="#222" stroke-width="1.8"/><line x1="25" y1="110" x2="35" y2="100" stroke="#222" stroke-width="1.8"/><line x1="155" y1="70" x2="165" y2="80" stroke="#222" stroke-width="1.8"/><line x1="155" y1="80" x2="165" y2="70" stroke="#222" stroke-width="1.8"/><text x="28" y="123" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">A</text><text x="162" y="93" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">B</text><line x1="65" y1="40" x2="75" y2="50" stroke="#222" stroke-width="1.8"/><line x1="65" y1="50" x2="75" y2="40" stroke="#222" stroke-width="1.8"/><text x="66" y="36" font-size="13" fill="#222" font-family="Arial" text-anchor="middle">M</text></svg></div></div>
+<p>Étape 1 :</p><div class="ligne-rep"></div><div class="ligne-rep"></div><p>Étape 2 :</p><div class="ligne-rep"></div><div class="ligne-rep"></div><p>Étape 3 :</p><div class="ligne-rep"></div><div class="ligne-rep"></div><p>Étape 4 :</p><div class="ligne-rep"></div><div class="ligne-rep"></div></div>
+</div>
+<script src="../../../impression.js"></script>
+</body>
+</html>
